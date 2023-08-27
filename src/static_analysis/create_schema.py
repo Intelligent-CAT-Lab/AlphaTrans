@@ -40,7 +40,7 @@ def create_schema():
     
     for line in lines[2:]:
         res_row = line.split('|')[1:-1]
-        class_name, callable_name, annotation, start, end = [x.strip() for x in res_row]
+        class_name, class_location, callable_name, annotation, start, end = [x.strip() for x in res_row]
 
         if start == end:
             continue
@@ -53,6 +53,9 @@ def create_schema():
         start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0])
         end_line = int(end[end.find(':', end.find(':')+1)+1:].split(':')[2])
 
+        class_start_line = int(class_location[class_location.find(':', class_location.find(':')+1)+1:].split(':')[0])
+        class_end_line = int(class_location[class_location.find(':', class_location.find(':')+1)+1:].split(':')[2])
+
         callable_body = ''
         with open(path, 'r') as f:
             callable_body = f.readlines()[start_line-1:end_line]
@@ -61,6 +64,8 @@ def create_schema():
         schemas[path].setdefault("imports", {})
         schemas[path].setdefault("classes", {})
         schemas[path]["classes"].setdefault(class_name, {})
+        schemas[path]["classes"][class_name].setdefault("start", class_start_line)
+        schemas[path]["classes"][class_name].setdefault("end", class_end_line)
         schemas[path]["classes"][class_name].setdefault("is_abstract", False)
         schemas[path]["classes"][class_name].setdefault("is_interface", False)
         schemas[path]["classes"][class_name].setdefault("nested_inside", [])
@@ -83,7 +88,7 @@ def create_schema():
 
     for line in lines[2:]:
         res_row = line.split('|')[1:-1]
-        interface_name, callable_name, start = [x.strip() for x in res_row]
+        interface_name, interface_loc, callable_name, start = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
         path = path[path.find('java_projects'):]
@@ -93,6 +98,9 @@ def create_schema():
         start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0])
         end_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[2])
 
+        interface_start_line = int(interface_loc[interface_loc.find(':', interface_loc.find(':')+1)+1:].split(':')[0])
+        interface_end_line = int(interface_loc[interface_loc.find(':', interface_loc.find(':')+1)+1:].split(':')[2])
+
         callable_body = ''
         with open(path, 'r') as f:
             callable_body = f.readlines()[start_line-1:end_line]
@@ -101,6 +109,8 @@ def create_schema():
         schemas[path].setdefault("imports", {})
         schemas[path].setdefault("classes", {})
         schemas[path]["classes"].setdefault(interface_name, {})
+        schemas[path]["classes"][interface_name].setdefault("start", interface_start_line)
+        schemas[path]["classes"][interface_name].setdefault("end", interface_end_line)
         schemas[path]["classes"][interface_name].setdefault("is_abstract", False)
         schemas[path]["classes"][interface_name].setdefault("is_interface", True)
         schemas[path]["classes"][interface_name].setdefault("nested_inside", [])
@@ -115,6 +125,10 @@ def create_schema():
         
         if callable_name == interface_name:
             schemas[path]["classes"][interface_name]["methods"][pos_callable_name]['is_constructor'] = True
+
+    for path in schemas.keys():
+        for class_ in schemas[path]["classes"].keys():
+            schemas[path]["classes"][class_].setdefault("fields", {})
 
     fields_query_out = 'query_outputs/fields.txt'
     lines = []
