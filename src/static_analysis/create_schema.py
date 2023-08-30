@@ -40,7 +40,7 @@ def create_schema():
     
     for line in lines[2:]:
         res_row = line.split('|')[1:-1]
-        class_name, class_location, callable_name, annotation, start, end = [x.strip() for x in res_row]
+        class_name, class_location, callable_name, modifier, return_type, signature, annotation, start, end = [x.strip() for x in res_row]
 
         if start == end:
             continue
@@ -69,14 +69,24 @@ def create_schema():
         schemas[path]["classes"][class_name].setdefault("is_abstract", False)
         schemas[path]["classes"][class_name].setdefault("is_interface", False)
         schemas[path]["classes"][class_name].setdefault("nested_inside", [])
-        schemas[path]["classes"][class_name].setdefault("parent_class_interface", [])        
+        schemas[path]["classes"][class_name].setdefault("implements", [])
+        schemas[path]["classes"][class_name].setdefault("extends", [])
         pos_callable_name = f'{start_line}-{end_line}:{callable_name}'
         schemas[path]["classes"][class_name].setdefault("methods", {})
         schemas[path]["classes"][class_name]["methods"].setdefault(pos_callable_name, {"start": start_line,
                                                                             "end": end_line,
                                                                             "body": callable_body,
                                                                             "is_constructor": False,
-                                                                            "annotations": [] if annotation == 'null' else [annotation]})
+                                                                            "annotations": [] if annotation == 'null' else [annotation],
+                                                                            "modifiers": [],
+                                                                            "return_types": [],
+                                                                            "signature": signature})
+
+        if return_type not in schemas[path]["classes"][class_name]["methods"][pos_callable_name]["return_types"]:
+            schemas[path]["classes"][class_name]["methods"][pos_callable_name]["return_types"].append(return_type)
+
+        if modifier not in schemas[path]["classes"][class_name]["methods"][pos_callable_name]["modifiers"]:
+            schemas[path]["classes"][class_name]["methods"][pos_callable_name]["modifiers"].append(modifier)
 
         if callable_name == class_name:
             schemas[path]["classes"][class_name]["methods"][pos_callable_name]['is_constructor'] = True
@@ -88,7 +98,7 @@ def create_schema():
 
     for line in lines[2:]:
         res_row = line.split('|')[1:-1]
-        interface_name, interface_loc, callable_name, start = [x.strip() for x in res_row]
+        interface_name, interface_loc, callable_name, modifier, return_type, siganture, start = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
         path = path[path.find('java_projects'):]
@@ -114,15 +124,25 @@ def create_schema():
         schemas[path]["classes"][interface_name].setdefault("is_abstract", False)
         schemas[path]["classes"][interface_name].setdefault("is_interface", True)
         schemas[path]["classes"][interface_name].setdefault("nested_inside", [])
-        schemas[path]["classes"][interface_name].setdefault("parent_class_interface", [])        
+        schemas[path]["classes"][interface_name].setdefault("implements", [])
+        schemas[path]["classes"][interface_name].setdefault("extends", [])
         pos_callable_name = f'{start_line}-{end_line}:{callable_name}'
         schemas[path]["classes"][interface_name].setdefault("methods", {})
         schemas[path]["classes"][interface_name]["methods"].setdefault(pos_callable_name, {"start": start_line,
                                                                                 "end": end_line,
                                                                                 "body": callable_body,
                                                                                 "is_constructor": False,
-                                                                                "annotations": []})
-        
+                                                                                "annotations": [],
+                                                                                "modifiers": [],
+                                                                                "return_types": [],
+                                                                                "signature": siganture})
+
+        if return_type not in schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["return_types"]:
+            schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["return_types"].append(return_type)
+
+        if modifier not in schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["modifiers"]:
+            schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["modifiers"].append(modifier)
+
         if callable_name == interface_name:
             schemas[path]["classes"][interface_name]["methods"][pos_callable_name]['is_constructor'] = True
 
@@ -137,7 +157,7 @@ def create_schema():
     
     for line in lines[2:]:
         res_row = line.split('|')[1:-1]
-        field_name, start, class_name = [x.strip() for x in res_row]
+        field_name, modifer, return_type, start, class_name = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
         path = path[path.find('java_projects'):]
@@ -153,8 +173,15 @@ def create_schema():
 
         schemas[path]["classes"][class_name].setdefault("fields", {})
         schemas[path]["classes"][class_name]["fields"].setdefault(f'{start_line}-{end_line}:{field_name}', {"start": start_line,
-                                                                                                 "end": end_line,
-                                                                                                 "body": import_body,})
+                                                                                                            "end": end_line,
+                                                                                                            "body": import_body,
+                                                                                                            "modifiers": [],
+                                                                                                            "return_types": []})
+        if return_type not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["return_types"]:
+            schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["return_types"].append(return_type)
+
+        if modifer not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"]:
+            schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"].append(modifer)
 
     classes_query_out = 'query_outputs/classes.txt'
     lines = []
@@ -173,7 +200,10 @@ def create_schema():
         if parent_class == 'Object':
             continue
 
-        schemas[path]["classes"][class_name]["parent_class_interface"].append(parent_class)
+        if schemas[path]["classes"][class_name]["is_interface"]:
+            schemas[path]["classes"][class_name]["extends"].append(parent_class)
+        else:
+            schemas[path]["classes"][class_name]["implements"].append(parent_class)
 
     nested_classes_query_out = 'query_outputs/nested_classes.txt'
     lines = []
