@@ -9,6 +9,9 @@ function setup_env() {
 function install_requirements() {
     pip3 install tqdm==4.66.1;
     pip3 install graphviz==0.20.1;
+    pip3 install python-dotenv==1.0.0;
+    pip3 install openai==0.27.8;
+    pip3 install tiktoken==0.3.2;
 }
 
 function download_java_projects() {
