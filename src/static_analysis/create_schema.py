@@ -3,10 +3,10 @@ import json
 
 
 def create_schema():
-    os.makedirs('schemas', exist_ok=True)
+    os.makedirs('data/schemas', exist_ok=True)
     schemas = {}
 
-    imports_query_out = 'query_outputs/imports.txt'
+    imports_query_out = 'data/query_outputs/imports.txt'
     lines = []
     with open(imports_query_out, 'r') as f:
         lines = f.readlines()
@@ -33,7 +33,7 @@ def create_schema():
                                                                                        "end": end_line,
                                                                                        "body": import_body,})
 
-    callables_query_out = 'query_outputs/callables.txt'
+    callables_query_out = 'data/query_outputs/callables.txt'
     lines = []
     with open(callables_query_out, 'r') as f:
         lines = f.readlines()
@@ -91,7 +91,7 @@ def create_schema():
         if callable_name == class_name:
             schemas[path]["classes"][class_name]["methods"][pos_callable_name]['is_constructor'] = True
 
-    interfaces_query_out = 'query_outputs/interfaces.txt'
+    interfaces_query_out = 'data/query_outputs/interfaces.txt'
     lines = []
     with open(interfaces_query_out, 'r') as f:
         lines = f.readlines()
@@ -150,7 +150,7 @@ def create_schema():
         for class_ in schemas[path]["classes"].keys():
             schemas[path]["classes"][class_].setdefault("fields", {})
 
-    fields_query_out = 'query_outputs/fields.txt'
+    fields_query_out = 'data/query_outputs/fields.txt'
     lines = []
     with open(fields_query_out, 'r') as f:
         lines = f.readlines()
@@ -176,14 +176,14 @@ def create_schema():
                                                                                                             "end": end_line,
                                                                                                             "body": import_body,
                                                                                                             "modifiers": [],
-                                                                                                            "return_types": []})
-        if return_type not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["return_types"]:
-            schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["return_types"].append(return_type)
+                                                                                                            "types": []})
+        if return_type not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["types"]:
+            schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["types"].append(return_type)
 
         if modifer not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"]:
             schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"].append(modifer)
 
-    classes_query_out = 'query_outputs/classes.txt'
+    classes_query_out = 'data/query_outputs/classes.txt'
     lines = []
     with open(classes_query_out, 'r') as f:
         lines = f.readlines()
@@ -200,12 +200,19 @@ def create_schema():
         if parent_class == 'Object':
             continue
 
-        if schemas[path]["classes"][class_name]["is_interface"]:
+        class_start_line = schemas[path]["classes"][class_name]["start"]
+        class_end_line = schemas[path]["classes"][class_name]["end"]
+
+        with open(path, 'r') as f:
+            file_lines = f.readlines()
+            class_declaration = file_lines[class_start_line-1:class_end_line][0].split('{')[0]
+        
+        if 'extends' in class_declaration:
             schemas[path]["classes"][class_name]["extends"].append(parent_class)
-        else:
+        elif 'implements' in class_declaration:
             schemas[path]["classes"][class_name]["implements"].append(parent_class)
 
-    nested_classes_query_out = 'query_outputs/nested_classes.txt'
+    nested_classes_query_out = 'data/query_outputs/nested_classes.txt'
     lines = []
     with open(nested_classes_query_out, 'r') as f:
         lines = f.readlines()
@@ -221,7 +228,7 @@ def create_schema():
 
     for k,v in schemas.items():
         key = k.split('/')[-1].split('.')[0]
-        with open(f'schemas/{key}.json', 'w') as f:
+        with open(f'data/schemas/{key}.json', 'w') as f:
             json.dump(v, f, indent=4)
 
 
