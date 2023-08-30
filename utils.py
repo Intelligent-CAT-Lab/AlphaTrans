@@ -8,10 +8,10 @@ import graphviz
 def parse_dependencies():
     """
     you should have compiled and executed the following before running this function:
-    jdeps -verbose -dotoutput dependencies java_projects/<project_name>/target/classes/<path-to-class-files>/*.class
+    jdeps -verbose -dotoutput data/dependencies java_projects/<project_name>/target/classes/<path-to-class-files>/*.class
     rm -rf dependencies/summary.dot
     """
-    dependencies_dir = os.path.join(os.path.dirname(__file__), 'dependencies')
+    dependencies_dir = os.path.join(os.path.dirname(__file__), 'data/dependencies')
     class_deps = os.listdir(dependencies_dir)
     class_dependencies = {}
     for class_dep in class_deps:
