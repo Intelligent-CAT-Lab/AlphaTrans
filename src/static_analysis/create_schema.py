@@ -80,12 +80,13 @@ def create_schema():
                                                                             "annotations": [] if annotation == 'null' else [annotation],
                                                                             "modifiers": [],
                                                                             "return_types": [],
-                                                                            "signature": signature})
+                                                                            "signature": signature,
+                                                                            "parameters": []})
 
         if return_type not in schemas[path]["classes"][class_name]["methods"][pos_callable_name]["return_types"]:
             schemas[path]["classes"][class_name]["methods"][pos_callable_name]["return_types"].append(return_type)
 
-        if modifier not in schemas[path]["classes"][class_name]["methods"][pos_callable_name]["modifiers"]:
+        if modifier not in schemas[path]["classes"][class_name]["methods"][pos_callable_name]["modifiers"] and modifier != 'null':
             schemas[path]["classes"][class_name]["methods"][pos_callable_name]["modifiers"].append(modifier)
 
         if callable_name == class_name:
@@ -135,7 +136,8 @@ def create_schema():
                                                                                 "annotations": [],
                                                                                 "modifiers": [],
                                                                                 "return_types": [],
-                                                                                "signature": siganture})
+                                                                                "signature": siganture,
+                                                                                "parameters": []})
 
         if return_type not in schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["return_types"]:
             schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["return_types"].append(return_type)
@@ -225,6 +227,23 @@ def create_schema():
         path = path[path.find('java_projects'):]
 
         schemas[path]["classes"][class_name]["nested_inside"] = nested_inside
+
+    parameters = 'data/query_outputs/parameters.txt'
+    lines = []
+    with open(parameters, 'r') as f:
+        lines = f.readlines()
+    
+    for line in lines[2:]:
+        res_row = line.split('|')[1:-1]
+        class_name, method_name, parameter_name, start, end = [x.strip() for x in res_row]
+
+        path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
+        path = path[path.find('java_projects'):]
+
+        start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0])
+        end_line = int(end[end.find(':', end.find(':')+1)+1:].split(':')[2])
+
+        schemas[path]["classes"][class_name]["methods"][f'{start_line}-{end_line}:{method_name}']["parameters"].append(parameter_name)
 
     for k,v in schemas.items():
         key = k.split('/')[-1].split('.')[0]
