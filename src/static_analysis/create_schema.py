@@ -69,6 +69,7 @@ def create_schema():
         schemas[path]["classes"][class_name].setdefault("is_abstract", False)
         schemas[path]["classes"][class_name].setdefault("is_interface", False)
         schemas[path]["classes"][class_name].setdefault("nested_inside", [])
+        schemas[path]["classes"][class_name].setdefault("nests", [])
         schemas[path]["classes"][class_name].setdefault("implements", [])
         schemas[path]["classes"][class_name].setdefault("extends", [])
         pos_callable_name = f'{start_line}-{end_line}:{callable_name}'
@@ -125,6 +126,7 @@ def create_schema():
         schemas[path]["classes"][interface_name].setdefault("is_abstract", False)
         schemas[path]["classes"][interface_name].setdefault("is_interface", True)
         schemas[path]["classes"][interface_name].setdefault("nested_inside", [])
+        schemas[path]["classes"][interface_name].setdefault("nests", [])        
         schemas[path]["classes"][interface_name].setdefault("implements", [])
         schemas[path]["classes"][interface_name].setdefault("extends", [])
         pos_callable_name = f'{start_line}-{end_line}:{callable_name}'
@@ -227,6 +229,7 @@ def create_schema():
         path = path[path.find('java_projects'):]
 
         schemas[path]["classes"][class_name]["nested_inside"] = nested_inside
+        schemas[path]["classes"][nested_inside]["nests"].append(class_name)
 
     parameters = 'data/query_outputs/parameters.txt'
     lines = []
