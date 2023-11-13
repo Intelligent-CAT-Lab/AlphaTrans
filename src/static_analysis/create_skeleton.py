@@ -121,65 +121,40 @@ def main(args):
             skeleton += '\t' + field_name + ': <placeholder> = <placeholder>\n'
         skeleton += '\t# Class Fields End\n\n'
 
-        overloaded_methods = {}
-
-        for method in sorted(schema['classes'][class_]['methods']):
-            method_name = method.split(':')[1].strip()
-            overloaded_methods.setdefault(method_name, []).append(method)
-        
-        overloaded_method_names = [x for x in overloaded_methods if len(overloaded_methods[x]) > 1]
-
         skeleton += '\t# Class Methods Begin\n'
         for method in schema['classes'][class_]['methods']:
             method_name = method.split(':')[1].strip()
-            if method_name in overloaded_method_names:
-                if 'static' in schema['classes'][class_]['methods'][method]['modifiers']:
-                    skeleton += '\t@staticmethod\n'
-                
-                updated_method_name = method_name
-                if 'protected' in schema['classes'][class_]['methods'][method]['modifiers']:
-                    updated_method_name = '_' + method_name
-                elif 'private' in schema['classes'][class_]['methods'][method]['modifiers']:
-                    updated_method_name = '__' + method_name
-                
-                skeleton += '\t@dispatch(<placeholder>)\n'
 
-                if len(schema["classes"][class_]["methods"][method]["parameters"]) == 0:
-                    if class_ == method_name:
-                        skeleton += '\tdef __init__(self) -> <placeholder>:\n\t\tpass\n\n'
-                    else:
-                        skeleton += '\tdef ' + updated_method_name + '(self) -> <placeholder>:\n\t\tpass\n\n'
+            is_static = False
+            if 'static' in schema['classes'][class_]['methods'][method]['modifiers']:
+                is_static = True
+                skeleton += '\t@staticmethod\n'
+
+            updated_method_name = method_name
+            if 'protected' in schema['classes'][class_]['methods'][method]['modifiers']:
+                updated_method_name = '_' + method_name
+            elif 'private' in schema['classes'][class_]['methods'][method]['modifiers']:
+                updated_method_name = '__' + method_name
+
+            if len(schema["classes"][class_]["methods"][method]["parameters"]) == 0:
+                if class_ == method_name:
+                    skeleton += '\tdef __init__(self) -> <placeholder>:\n\t\tpass\n\n'
                 else:
-                    if class_ == method_name:
-                        skeleton += '\tdef __init__(self, ' + ', '.join([x + ': <placeholder>' for x in schema["classes"][class_]["methods"][method]["parameters"]]) + ') -> <placeholder>:\n\t\tpass\n\n'
-                    else:
-                        skeleton += '\tdef ' + updated_method_name + '(self, ' + ', '.join([x + ': <placeholder>' for x in schema["classes"][class_]["methods"][method]["parameters"]]) + ') -> <placeholder>:\n\t\tpass\n\n'
-
-            elif method_name not in overloaded_method_names:
-                if 'static' in schema['classes'][class_]['methods'][method]['modifiers']:
-                    skeleton += '\t@staticmethod\n'
-
-                updated_method_name = method_name
-                if 'protected' in schema['classes'][class_]['methods'][method]['modifiers']:
-                    updated_method_name = '_' + method_name
-                elif 'private' in schema['classes'][class_]['methods'][method]['modifiers']:
-                    updated_method_name = '__' + method_name
-
-                if len(schema["classes"][class_]["methods"][method]["parameters"]) == 0:
-                    if class_ == method_name:
-                        skeleton += '\tdef __init__(self) -> <placeholder>:\n\t\tpass\n\n'
-                    else:
+                    if not is_static:
                         skeleton += '\tdef ' + updated_method_name + '(self) -> <placeholder>:\n\t\tpass\n\n'
-                else:
-                    if class_ == method_name:
-                        skeleton += '\tdef __init__(self, ' + ', '.join([x + ': <placeholder>' for x in schema["classes"][class_]["methods"][method]["parameters"]]) + ') -> <placeholder>:\n\t\tpass\n\n'
                     else:
+                        skeleton += '\tdef ' + updated_method_name + '() -> <placeholder>:\n\t\tpass\n\n'
+            else:
+                if class_ == method_name:
+                    skeleton += '\tdef __init__(self, ' + ', '.join([x + ': <placeholder>' for x in schema["classes"][class_]["methods"][method]["parameters"]]) + ') -> <placeholder>:\n\t\tpass\n\n'
+                else:
+                    if not is_static:
                         skeleton += '\tdef ' + updated_method_name + '(self, ' + ', '.join([x + ': <placeholder>' for x in schema["classes"][class_]["methods"][method]["parameters"]]) + ') -> <placeholder>:\n\t\tpass\n\n'
+                    else:
+                        skeleton += '\tdef ' + updated_method_name + '(' + ', '.join([x + ': <placeholder>' for x in schema["classes"][class_]["methods"][method]["parameters"]]) + ') -> <placeholder>:\n\t\tpass\n\n'
 
         skeleton += '\t# Class Methods End\n\n\n'
 
-    if '@dispatch' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom multipledispatch import dispatch\n')
     if 'ABC' in skeleton:
         skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom abc import ABC\n')
     
