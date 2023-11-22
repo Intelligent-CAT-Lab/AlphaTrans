@@ -8,51 +8,51 @@ from dotenv import load_dotenv
 import parser
 
 
-def setup_api():
-    api_key = os.getenv("OPENAI_KEY")
-    openai.api_key = api_key
+def translate_with_openai(source_skeleton, target_skeleton, is_buggy=False, stack_trace=None):
 
+    def setup_api():
+        api_key = os.getenv("OPENAI_KEY")
+        openai.api_key = api_key
 
-def send_message_to_openai(message_log):
-    "Use OpenAI's ChatCompletion API to get the chatbot's response"
-    encoding = tiktoken.encoding_for_model("gpt-4")
-    num_tokens = len(encoding.encode(message_log[1]["content"]))
+    def send_message_to_openai(message_log):
+        "Use OpenAI's ChatCompletion API to get the chatbot's response"
+        encoding = tiktoken.encoding_for_model("gpt-4")
+        num_tokens = len(encoding.encode(message_log[1]["content"]))
 
-    response = "<problem with OpenAI API>"
-    is_success = False
-    max_attempts = 5
-    while max_attempts > 0:
-        try:
-            response = openai.ChatCompletion.create(
-                model="gpt-4",  # The name of the OpenAI chatbot model to use
-                # The conversation history up to this point, as a list of dictionaries
-                messages=message_log,
-                # The maximum number of tokens (words or subwords) in the generated response
-                max_tokens=max(1, 8000-num_tokens),
-                # The "creativity" of the generated response (higher temperature = more creative)
-                temperature=0,
-            )
-            is_success = True
-            break
-        except openai.error.InvalidRequestError as e:
-            return "# Token size exceeded."
-        except Exception as e:
-            max_attempts -= 1
-            continue
+        response = "<problem with OpenAI API>"
+        is_success = False
+        max_attempts = 5
+        while max_attempts > 0:
+            try:
+                response = openai.ChatCompletion.create(
+                    model="gpt-4",  # The name of the OpenAI chatbot model to use
+                    # The conversation history up to this point, as a list of dictionaries
+                    messages=message_log,
+                    # The maximum number of tokens (words or subwords) in the generated response
+                    max_tokens=max(1, 8000-num_tokens),
+                    # The "creativity" of the generated response (higher temperature = more creative)
+                    temperature=0,
+                )
+                is_success = True
+                break
+            except openai.error.InvalidRequestError as e:
+                return "# Token size exceeded."
+            except Exception as e:
+                max_attempts -= 1
+                continue
 
-    if not is_success:
-        return response
+        if not is_success:
+            return response
 
-    # Find the first response from the chatbot that has text in it (some responses may not have text)
-    for choice in response.choices:
-        if "text" in choice:
-            return choice.text
+        # Find the first response from the chatbot that has text in it (some responses may not have text)
+        for choice in response.choices:
+            if "text" in choice:
+                return choice.text
 
-    # If no response with text is found, return the first response's content (which may be empty)
-    return response.choices[0].message.content
+        # If no response with text is found, return the first response's content (which may be empty)
+        return response.choices[0].message.content
 
-
-def translate_with_OPENAI(source_skeleton, target_skeleton, is_buggy=False, stack_trace=None):
+    setup_api()
     persona = "I want you to act like a Java to Python translator expert. Make sure your translations are syntactically correct and satisfy all constrains in the prompt.\n\n"
     one_shot_learning = "Here is an example of a Java program skeleton:\n\n" \
                         "Java skeleton:\n\n" \
@@ -128,13 +128,22 @@ def translate_with_OPENAI(source_skeleton, target_skeleton, is_buggy=False, stac
     return response
 
 
+def translate_with_wizardcoder(source_skeleton, target_skeleton, is_buggy=False, stack_trace=None):
+    pass
+
+
 def main(args):
-    setup_api()
+
+    translation_functions = {
+        "GPT-4": translate_with_openai,
+        "WizardCoder-34B": translate_with_wizardcoder,
+    }
 
     with open(f"data/skeletons/{args.class_name}.json", "r") as f:
         skeletons = json.load(f)
 
-    response = translate_with_OPENAI(source_skeleton=skeletons[args.from_lang], target_skeleton=skeletons[args.to_lang])
+
+    response = translation_functions[args.model_name](source_skeleton=skeletons[args.from_lang], target_skeleton=skeletons[args.to_lang])
 
     max_fix_attempts = 5
 
@@ -154,10 +163,10 @@ def main(args):
         if stack_trace == '':
             break
 
-        response = translate_with_OPENAI(source_skeleton=skeletons[args.from_lang], target_skeleton=skeletons[args.to_lang], is_buggy=True, stack_trace=stack_trace)
+        response = translation_functions[args.model_name](source_skeleton=skeletons[args.from_lang], target_skeleton=skeletons[args.to_lang], is_buggy=True, stack_trace=stack_trace)
 
-    os.makedirs(f"data/responses/GPT-4/{args.project_name}", exist_ok=True)
-    with open(f"data/responses/GPT-4/{args.project_name}/{args.class_name}_{args.from_lang}_{args.to_lang}.txt", "w") as f:
+    os.makedirs(f"data/responses/{args.model_name}/{args.project_name}", exist_ok=True)
+    with open(f"data/responses/{args.model_name}/{args.project_name}/{args.class_name}_{args.from_lang}_{args.to_lang}.txt", "w") as f:
         f.write(response)
 
 
@@ -166,6 +175,7 @@ if __name__ == '__main__':
     parser_ = argparse.ArgumentParser(description='Translate a class skeleton')
     parser_.add_argument('--project_name', type=str, dest='project_name', help='project name')
     parser_.add_argument('--class_name', type=str, dest='class_name', help='class name')
+    parser_.add_argument('--model_name', type=str, dest='model_name', help='model name to use for translation')    
     parser_.add_argument('--from_lang', type=str, dest='from_lang', help='language to translate from')
     parser_.add_argument('--to_lang', type=str, dest='to_lang', help='language to translate to')
     args = parser_.parse_args()
