@@ -76,6 +76,10 @@ def create_schema():
         schemas[path]["classes"][class_name].setdefault("extends", [])
         pos_callable_name = f'{start_line}-{end_line}:{callable_name}'
         schemas[path]["classes"][class_name].setdefault("methods", {})
+
+        if 'public class' in ''.join(callable_body) or 'public static class' in ''.join(callable_body):
+            continue
+
         schemas[path]["classes"][class_name]["methods"].setdefault(pos_callable_name, {"start": start_line,
                                                                             "end": end_line,
                                                                             "body": callable_body,
