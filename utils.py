@@ -32,11 +32,11 @@ def parse_dependencies():
             lines = f.readlines()
             for line in lines[2:-1]:
 
-                if 'java.base' in line:
-                    continue
-
                 candidate_line = line.strip()
                 class_name = re.search(r'\((.*?)\)', candidate_line).group(1).split('.')[0]
+
+                if class_name in ['java', 'java.base', 'not found']:
+                    continue
 
                 if '$' in class_name:
                     class_name = class_name.split('$')[0]
