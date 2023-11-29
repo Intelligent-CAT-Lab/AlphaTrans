@@ -177,14 +177,14 @@ def create_schema():
         start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0])
         end_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[2])
 
-        import_body = ''
+        field_body = ''
         with open(path, 'r') as f:
-            import_body = f.readlines()[start_line-1:end_line]
+            field_body = f.readlines()[start_line-1:end_line]
 
         schemas[path]["classes"][class_name].setdefault("fields", {})
         schemas[path]["classes"][class_name]["fields"].setdefault(f'{start_line}-{end_line}:{field_name}', {"start": start_line,
                                                                                                             "end": end_line,
-                                                                                                            "body": import_body,
+                                                                                                            "body": field_body,
                                                                                                             "modifiers": [],
                                                                                                             "types": []})
         if return_type not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["types"]:
