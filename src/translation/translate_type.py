@@ -14,7 +14,7 @@ def main(args):
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-    if args.model_name == 'codellama-instruct':
+    if args.model_name == 'codellama-13b-instruct':
         kwargs = {}
         kwargs["torch_dtype"] = torch.float16
         tokenizer = CodeLlamaTokenizer.from_pretrained("codellama/CodeLlama-13b-Instruct-hf", cache_dir='/home/shared/huggingface')
