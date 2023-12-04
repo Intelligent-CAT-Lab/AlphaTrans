@@ -7,6 +7,8 @@ def main(args):
 
     with open('data/types.json', 'r') as f:
         extracted_types = json.load(f)
+    
+    extracted_types = {k.split('.')[-1]: v for k, v in extracted_types.items()}
 
     class_name = args.class_name
     schema_path = f'data/schemas/{class_name}.json'
@@ -133,8 +135,8 @@ def main(args):
             field_type = '<placeholder>'
             assert len(schema['classes'][class_]['fields'][field]['types']) == 1 or len(schema['classes'][class_]['fields'][field]['types']) == 0
 
-            if len(schema['classes'][class_]['fields'][field]['types']) == 1 and schema['classes'][class_]['fields'][field]['types'][0] in extracted_types:
-                field_type = extracted_types[schema['classes'][class_]['fields'][field]['types'][0]]
+            if len(schema['classes'][class_]['fields'][field]['types']) == 1 and schema['classes'][class_]['fields'][field]['types'][0][0] in extracted_types:
+                field_type = extracted_types[schema['classes'][class_]['fields'][field]['types'][0][0]]
 
             field_body = field_name + f': {field_type} = '
             if '=' not in ''.join(schema['classes'][class_]['fields'][field]['body']):
@@ -201,8 +203,8 @@ def main(args):
             assert len(schema['classes'][class_]['methods'][method]['return_types']) == 1 or len(schema['classes'][class_]['methods'][method]['return_types']) == 0
 
             return_type = '<placeholder>'
-            if len(schema['classes'][class_]['methods'][method]['return_types']) == 1 and schema['classes'][class_]['methods'][method]['return_types'][0] in extracted_types:
-                return_type = extracted_types[schema['classes'][class_]['methods'][method]['return_types'][0]]
+            if len(schema['classes'][class_]['methods'][method]['return_types']) == 1 and schema['classes'][class_]['methods'][method]['return_types'][0][0] in extracted_types:
+                return_type = extracted_types[schema['classes'][class_]['methods'][method]['return_types'][0][0]]
 
             skeleton += f'{return_type}:\n\t\tpass\n\n'
             current_method[-1] = current_method[-1] + f'{return_type}:\n'
@@ -210,6 +212,8 @@ def main(args):
             current_method = [x.replace('\t', '    ') for x in current_method]
 
             target_schema['classes'][class_]['methods'][method]['partial_translation'] = current_method
+
+            assert '<placeholder>' not in ''.join(current_method)
 
         skeleton += '\t# Class Methods End\n\n\n'
 

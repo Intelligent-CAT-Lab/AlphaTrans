@@ -42,7 +42,7 @@ def create_schema():
     
     for line in lines[2:]:
         res_row = line.split('|')[1:-1]
-        class_name, class_location, callable_name, modifier, return_type, signature, annotation, start, end = [x.strip() for x in res_row]
+        class_name, class_location, callable_name, modifier, return_type, return_type_qualified_name, signature, annotation, start, end = [x.strip() for x in res_row]
 
         if callable_name in ['<clinit>', '<obinit>']:
             continue
@@ -90,8 +90,15 @@ def create_schema():
                                                                             "signature": signature,
                                                                             "parameters": []})
 
-        if return_type not in schemas[path]["classes"][class_name]["methods"][pos_callable_name]["return_types"]:
-            schemas[path]["classes"][class_name]["methods"][pos_callable_name]["return_types"].append(return_type)
+        return_type_qualified = ''
+        if 'java' in return_type_qualified_name:
+            temp_name = return_type_qualified_name[return_type_qualified_name.find('java'):].replace('/', '.').replace(';', '')
+            return_type_qualified = '.'.join(temp_name.split('.')[:-1]) + '.' + return_type
+        else:
+            return_type_qualified = return_type
+
+        if (return_type, return_type_qualified) not in schemas[path]["classes"][class_name]["methods"][pos_callable_name]["return_types"]:
+            schemas[path]["classes"][class_name]["methods"][pos_callable_name]["return_types"].append((return_type, return_type_qualified))
 
         if modifier not in schemas[path]["classes"][class_name]["methods"][pos_callable_name]["modifiers"] and modifier != 'null':
             schemas[path]["classes"][class_name]["methods"][pos_callable_name]["modifiers"].append(modifier)
@@ -106,7 +113,7 @@ def create_schema():
 
     for line in lines[2:]:
         res_row = line.split('|')[1:-1]
-        interface_name, interface_loc, callable_name, modifier, return_type, siganture, start = [x.strip() for x in res_row]
+        interface_name, interface_loc, callable_name, modifier, return_type, return_type_qualified_name, siganture, start = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
         path = path[path.find(f'preprocessed_{project}'):]
@@ -147,8 +154,15 @@ def create_schema():
                                                                                 "signature": siganture,
                                                                                 "parameters": []})
 
-        if return_type not in schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["return_types"]:
-            schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["return_types"].append(return_type)
+        return_type_qualified = ''
+        if 'java' in return_type_qualified_name:
+            temp_name = return_type_qualified_name[return_type_qualified_name.find('java'):].replace('/', '.').replace(';', '')
+            return_type_qualified = '.'.join(temp_name.split('.')[:-1]) + '.' + return_type
+        else:
+            return_type_qualified = return_type
+
+        if (return_type, return_type_qualified) not in schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["return_types"]:
+            schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["return_types"].append((return_type, return_type_qualified))
 
         if modifier not in schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["modifiers"]:
             schemas[path]["classes"][interface_name]["methods"][pos_callable_name]["modifiers"].append(modifier)
@@ -167,7 +181,7 @@ def create_schema():
     
     for line in lines[2:]:
         res_row = line.split('|')[1:-1]
-        field_name, modifer, return_type, start, class_name = [x.strip() for x in res_row]
+        field_name, modifer, return_type, return_type_qualified_name, start, class_name = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
         path = path[path.find(f'preprocessed_{project}'):]
@@ -187,8 +201,15 @@ def create_schema():
                                                                                                             "body": field_body,
                                                                                                             "modifiers": [],
                                                                                                             "types": []})
-        if return_type not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["types"]:
-            schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["types"].append(return_type)
+        return_type_qualified = ''
+        if 'java' in return_type_qualified_name:
+            temp_name = return_type_qualified_name[return_type_qualified_name.find('java'):].replace('/', '.').replace(';', '')
+            return_type_qualified = '.'.join(temp_name.split('.')[:-1]) + '.' + return_type
+        else:
+            return_type_qualified = return_type
+
+        if (return_type, return_type_qualified) not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["types"]:
+            schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["types"].append((return_type, return_type_qualified))
 
         if modifer not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"]:
             schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"].append(modifer)
