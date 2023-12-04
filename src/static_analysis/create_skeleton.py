@@ -142,9 +142,9 @@ def main(args):
             else:
                 field_body += '<placeholder>\n'
 
-            target_schema['classes'][class_]['fields'][field]['partial_translation'] = field_body
+            target_schema['classes'][class_]['fields'][field]['partial_translation'] = f'    {field_body}'
 
-            skeleton += '\t' + field_body
+            skeleton += f'\t{field_body}'
         skeleton += '\t# Class Fields End\n\n'
 
         skeleton += '\t# Class Methods Begin\n'
@@ -218,50 +218,26 @@ def main(args):
     if 'ABC' in skeleton:
         skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom abc import ABC\n')
         python_imports.append('from abc import ABC')
-    
-    if 'List[' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom typing import List\n')
-        python_imports.append('from typing import List')
-    
-    if 'Dict[' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom typing import Dict\n')
-        python_imports.append('from typing import Dict')
-    
-    if 'Iterator[' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom typing import Iterator\n')
-        python_imports.append('from typing import Iterator')
-        
-    if '[Any]' in skeleton or 'Any' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom typing import Any\n')
-        python_imports.append('from typing import Any')
-    
-    if 'StringIO' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom io import StringIO\n')
-        python_imports.append('from io import StringIO')
-    
-    if 'Type[' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom typing import Type\n')
-        python_imports.append('from typing import Type')
-    
+
     if 'Path' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom pathlib import Path\n')
-        python_imports.append('from pathlib import Path')
+        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport pathlib\n')
+        python_imports.append('import pathlib')
     
-    if 'IOBase' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom io import IOBase\n')
-        python_imports.append('from io import IOBase')
+    if 'IOBase' in skeleton or 'StringIO' in skeleton:
+        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport io\n')
+        python_imports.append('import io')
     
     if 'Number' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom numbers import Number\n')
-        python_imports.append('from numbers import Number')
+        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport numbers\n')
+        python_imports.append('import numbers')
     
-    if 'Callable[' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom typing import Callable\n')
-        python_imports.append('from typing import Callable')
+    if 'Callable' in skeleton or 'Type' in skeleton or 'Any' in skeleton or 'Iterator' in skeleton or 'Dict' in skeleton or 'List' in skeleton:
+        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport typing\n')
+        python_imports.append('import typing')
     
-    if 'date' in skeleton:
-        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom datetime import date\n')
-        python_imports.append('from datetime import date')
+    if 'datetime' in skeleton:
+        skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport datetime\n')
+        python_imports.append('import datetime')
 
     for dependency in class_dependencies:
         path = dependency[0]
