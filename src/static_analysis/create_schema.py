@@ -88,7 +88,8 @@ def create_schema():
                                                                             "modifiers": [],
                                                                             "return_types": [],
                                                                             "signature": signature,
-                                                                            "parameters": []})
+                                                                            "parameters": [],
+                                                                            "calls": []})
 
         return_type_qualified = ''
         if 'java' in return_type_qualified_name:
@@ -152,7 +153,8 @@ def create_schema():
                                                                                 "modifiers": [],
                                                                                 "return_types": [],
                                                                                 "signature": siganture,
-                                                                                "parameters": []})
+                                                                                "parameters": [],
+                                                                                "calls": []})
 
         return_type_qualified = ''
         if 'java' in return_type_qualified_name:
