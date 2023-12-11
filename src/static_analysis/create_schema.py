@@ -277,6 +277,13 @@ def create_schema():
 
         schemas[path]["classes"][class_name]["methods"][f'{start_line}-{end_line}:{method_name}']["parameters"].append(parameter_name)
 
+    for path_ in schemas.copy().keys():
+        for class_ in schemas[path_]["classes"].copy().keys():
+            for method_ in schemas[path_]["classes"][class_]["methods"].copy().keys():
+                if schemas[path_]["classes"][class_]["methods"][method_]["is_constructor"]:
+                    if method_ == f'{schemas[path_]["classes"][class_]["start"]}-{schemas[path_]["classes"][class_]["end"]}:{class_}':
+                        schemas[path_]["classes"][class_]["methods"].pop(method_)
+
     for k,v in schemas.items():
         key = k.split('/')[-1].split('.')[0]
         with open(f'data/schemas/{key}.json', 'w') as f:
