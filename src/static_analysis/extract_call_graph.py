@@ -67,7 +67,8 @@ def main(args):
 
                 for method in caller_schema['classes'][class_]['methods']:
                     if caller_name == method.split(':')[1] and caller_start_line == caller_schema['classes'][class_]['methods'][method]['start']:
-                        caller_schema['classes'][class_]['methods'][method]['calls'].append((callee_schema_name, callee_method_class_name, callee_method_key_name))
+                        if [callee_schema_name, callee_method_class_name, callee_method_key_name] not in caller_schema['classes'][class_]['methods'][method]['calls']:
+                            caller_schema['classes'][class_]['methods'][method]['calls'].append((callee_schema_name, callee_method_class_name, callee_method_key_name))
                         is_available = True
                         break
 
