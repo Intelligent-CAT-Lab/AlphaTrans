@@ -43,7 +43,7 @@ def get_args(line):
 
 def get_overloaded_constructors():
     constructors_lines = []
-    with open('data/query_outputs/all_constructors.txt', 'r') as f:
+    with open(f'data/query_outputs/{project}_all_constructors.txt', 'r') as f:
         constructors_lines = f.readlines()
 
     constructors_lines = [x for x in constructors_lines if x.split('|')[7].strip() in ['super(...)', 'this(...)']]
@@ -62,7 +62,7 @@ def get_overloaded_constructors():
         if num_params == '0':
 
             path = constructor_location_start[constructor_location_start.find(':')+1:constructor_location_start.find(':', constructor_location_start.find(':')+1)]
-            path = path[path.find('commons-cli'):]
+            path = path[path.find(f'/{project}/')+1:]
 
             with open(temp_project_path + '/' + path, 'r') as f:
                 file_lines = f.readlines()
@@ -93,7 +93,7 @@ def get_overloaded_constructors():
                 constructor_name, constructor_location_start, constructor_location_end, constructor_signature, num_params, param_location, call, call_location = [x.strip() for x in res_row]
 
                 path = constructor_location_start[constructor_location_start.find(':')+1:constructor_location_start.find(':', constructor_location_start.find(':')+1)]
-                path = path[path.find('commons-cli'):]
+                path = path[path.find(f'/{project}/')+1:]
 
                 with open(temp_project_path + '/' + path, 'r') as f:
                     file_lines = f.readlines()
@@ -145,7 +145,7 @@ def get_overloaded_constructors():
 
 def get_constructor_call_sites():
     constructor_call_graph_lines = []
-    with open('data/query_outputs/constructor_call_graph.txt', 'r') as f:
+    with open(f'data/query_outputs/{project}_constructor_call_graph.txt', 'r') as f:
         constructor_call_graph_lines = f.readlines()
 
     constructor_call_sites = {}
@@ -157,7 +157,7 @@ def get_constructor_call_sites():
 
         if num_args == '0':
             path = constructor_call_location[constructor_call_location.find(':')+1:constructor_call_location.find(':', constructor_call_location.find(':')+1)]
-            path = path[path.find('commons-cli'):]
+            path = path[path.find(f'/{project}/')+1:]
 
             with open(temp_project_path + '/' + path, 'r') as f:
                 file_lines = f.readlines()
@@ -184,7 +184,7 @@ def get_constructor_call_sites():
                 _, called_constructor_signature, constructor_call_location, num_args, argument_location = [x.strip() for x in res_row]
 
                 path = constructor_call_location[constructor_call_location.find(':')+1:constructor_call_location.find(':', constructor_call_location.find(':')+1)]
-                path = path[path.find('commons-cli'):]
+                path = path[path.find(f'/{project}/')+1:]
 
                 with open(temp_project_path + '/' + path, 'r') as f:
                     file_lines = f.readlines()
@@ -620,6 +620,9 @@ def rewrite_call_sites(overloaded_constructors, constructor_call_sites, new_cons
                     called_constructor = overloaded_constructors[path_][called_constructor_signature]
                     called_constructor_path = path_
                     break
+            
+            if called_constructor is None:
+                continue
 
             if overloaded_constructors[called_constructor_path][called_constructor_signature]['rewrite_details']['overloaded_constructor_type'] == 'multiple statement dependent' \
             and overloaded_constructors[called_constructor_path][called_constructor_signature]['rewrite_details']['action'] == 'factory method':
