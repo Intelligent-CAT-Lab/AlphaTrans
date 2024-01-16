@@ -242,6 +242,13 @@ def rewrite_overloaded_constructors(overloaded_constructors):
                     current_statement.append(l)
                     overloaded_constructor_body_statements.append(current_statement)
                     current_statement = []
+                elif l.endswith('}'):
+                    if current_statement != []:
+                        current_statement.append(l)
+                        overloaded_constructor_body_statements.append(current_statement)
+                        current_statement = []
+                    else:
+                        overloaded_constructor_body_statements[-1].append(l)
                 else:
                     current_statement.append(l)
 
