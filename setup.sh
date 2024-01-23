@@ -68,49 +68,50 @@ function download_java_projects() {
 
 function build_java_projects() {
     main=`pwd`;
+    projects_dir=java_projects;
 
     echo "building commons-fileupload";
-    cd java_projects/commons-fileupload;
+    cd $projects_dir/commons-fileupload;
     mvn clean test --log-file build.log;
     cd $main;
 
     echo "building commons-validator";
-    cd java_projects/commons-validator;
+    cd $projects_dir/commons-validator;
     mvn clean test --log-file build.log;
     cd $main;
 
     echo "building commons-codec";
-    cd java_projects/commons-codec;
+    cd $projects_dir/commons-codec;
     mvn clean test --log-file build.log;
     cd $main;
 
     echo "building commons-pool";
-    cd java_projects/commons-pool;
+    cd $projects_dir/commons-pool;
     mvn clean test --log-file build.log;
     cd $main;
 
     echo "building commons-cli";
-    cd java_projects/commons-cli;
+    cd $projects_dir/commons-cli;
     mvn clean test --log-file build.log;
     cd $main;
 
     echo "building commons-csv";
-    cd java_projects/commons-csv;
+    cd $projects_dir/commons-csv;
     mvn clean test --log-file build.log;
     cd $main;
 
     echo "building commons-graph";
-    cd java_projects/commons-graph;
+    cd $projects_dir/commons-graph;
     mvn clean test --log-file build.log;
     cd $main;
 
     echo "building joda-money";
-    cd java_projects/joda-money;
+    cd $projects_dir/joda-money;
     mvn clean test --log-file build.log;
     cd $main;
 
     echo "building joda-convert";
-    cd java_projects/joda-convert;
+    cd $projects_dir/joda-convert;
     mvn clean test --log-file build.log;
     cd $main;
 }
@@ -118,41 +119,42 @@ function build_java_projects() {
 function create_database_java() {
     mkdir -p databases;
     main=`pwd`;
+    projects_dir=java_projects;
 
-    cd java_projects/commons-fileupload;
-    codeql database create ../../databases/commons-fileupload --language=java;
+    cd $projects_dir/commons-fileupload;
+    codeql database create ../../databases/commons-fileupload --language=java --overwrite;
     cd $main;
 
-    cd java_projects/commons-validator;
-    codeql database create ../../databases/commons-validator --language=java;
+    cd $projects_dir/commons-validator;
+    codeql database create ../../databases/commons-validator --language=java --overwrite;
     cd $main;
 
-    cd java_projects/commons-codec;
-    codeql database create ../../databases/commons-codec --language=java;
+    cd $projects_dir/commons-codec;
+    codeql database create ../../databases/commons-codec --language=java --overwrite;
     cd $main;
 
-    cd java_projects/commons-pool;
-    codeql database create ../../databases/commons-pool --language=java;
+    cd $projects_dir/commons-pool;
+    codeql database create ../../databases/commons-pool --language=java --overwrite;
     cd $main;
 
-    cd java_projects/commons-cli;
-    codeql database create ../../databases/commons-cli --language=java;
+    cd $projects_dir/commons-cli;
+    codeql database create ../../databases/commons-cli --language=java --overwrite;
     cd $main;
 
-    cd java_projects/commons-csv;
-    codeql database create ../../databases/commons-csv --language=java;
+    cd $projects_dir/commons-csv;
+    codeql database create ../../databases/commons-csv --language=java --overwrite;
     cd $main;
 
-    cd java_projects/commons-graph;
-    codeql database create ../../databases/commons-graph --language=java;
+    cd $projects_dir/commons-graph;
+    codeql database create ../../databases/commons-graph --language=java --overwrite;
     cd $main;
 
-    cd java_projects/joda-money;
-    codeql database create ../../databases/joda-money --language=java;
+    cd $projects_dir/joda-money;
+    codeql database create ../../databases/joda-money --language=java --overwrite;
     cd $main;
 
-    cd java_projects/joda-convert;
-    codeql database create ../../databases/joda-convert --language=java;
+    cd $projects_dir/joda-convert;
+    codeql database create ../../databases/joda-convert --language=java --overwrite;
     cd $main;
 }
 
