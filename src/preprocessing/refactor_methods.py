@@ -119,10 +119,6 @@ def get_overloaded_method_call_sites(overloaded_methods, all_methods):
         res_row = line.split('|')[1:-1]
         method_access_location, method_access_name, method_access_num_params, method_access_argument_location, method_access_signature, caller_name, caller_location, caller_class_name, callee_name, callee_location, callee_class_name = [x.strip() for x in res_row]
 
-        if caller_location == callee_location:
-            current_index += 1
-            continue
-
         if callee_location.endswith(':0:0:0:0'):
             current_index += 1
             continue
