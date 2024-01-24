@@ -24,23 +24,24 @@ def get_overloaded_methods():
         if class_location == method_location_start:
             continue
 
-        if class_name == method_name: # skip constructors
-            continue
-
         path = method_location_start[method_location_start.find(':')+1:method_location_start.find(':', method_location_start.find(':')+1)]
         path = path[path.find(project):]
 
         start_line = int(method_location_start[method_location_start.find(':', method_location_start.find(':')+1)+1:].split(':')[0])
         end_line = int(method_location_end[method_location_end.find(':', method_location_end.find(':')+1)+1:].split(':')[2])
 
-        overloaded_methods.setdefault(path, {})
         all_methods.setdefault(path, {})
-        overloaded_methods[path].setdefault(class_name, {})
         all_methods[path].setdefault(class_name, {})
-        overloaded_methods[path][class_name].setdefault(method_name, [])
         all_methods[path][class_name].setdefault(method_name, [])
-        overloaded_methods[path][class_name][method_name].append((start_line, end_line, method_signature))
         all_methods[path][class_name][method_name].append((start_line, end_line, method_signature))
+
+        if class_name == method_name: # skip constructors
+            continue
+
+        overloaded_methods.setdefault(path, {})
+        overloaded_methods[path].setdefault(class_name, {})
+        overloaded_methods[path][class_name].setdefault(method_name, [])
+        overloaded_methods[path][class_name][method_name].append((start_line, end_line, method_signature))
 
     for path_ in overloaded_methods.copy():
         for class_ in overloaded_methods[path_].copy():
@@ -72,6 +73,9 @@ def get_overloaded_methods():
                     current_method = ''.join(current_method)
 
                     file_lines[start_line-1:end_line] = [current_method]
+
+                    if file_lines[start_line-2].strip() == '@Override':
+                        file_lines[start_line-2] = file_lines[start_line-2].replace('@Override', '//@Override', 1)
 
                     with open(file_path, 'w') as f:
                         f.writelines(file_lines)
@@ -120,10 +124,6 @@ def get_overloaded_method_call_sites(overloaded_methods, all_methods):
             continue
 
         if callee_location.endswith(':0:0:0:0'):
-            current_index += 1
-            continue
-
-        if caller_name in ['<clinit>']:
             current_index += 1
             continue
         
@@ -212,7 +212,7 @@ def get_overloaded_method_call_sites(overloaded_methods, all_methods):
                 method_access_argument_end_column = int(method_access_argument_location[method_access_argument_location.find(':', method_access_argument_location.find(':')+1)+1:].split(':')[3])
 
                 argument_location.append((method_access_argument_start_line, method_access_argument_start_column, method_access_argument_end_line, method_access_argument_end_column))
-            
+
             if callee_path in overloaded_methods:
 
                 if callee_class_name in overloaded_methods[callee_path]:
@@ -222,6 +222,19 @@ def get_overloaded_method_call_sites(overloaded_methods, all_methods):
                         file_lines = []
                         with open(temp_project_path + method_access_path, 'r') as f:
                             file_lines = f.readlines()
+                        
+                        if '(...) { ... }' in caller_class_name: # nameless methods/functions
+                            caller_class_name = None
+                            caller_name = None
+
+                            for class_ in all_methods[caller_path]:
+                                for method_ in all_methods[caller_path][class_]:
+                                    for s,e,sign in all_methods[caller_path][class_][method_]:
+                                        if s <= method_access_start_line <= e:
+                                            caller_class_name = class_
+                                            caller_name = method_
+                                            caller_start_line = s
+                                            break
 
                         caller_method = 0
                         if caller_path in all_methods:
@@ -237,7 +250,7 @@ def get_overloaded_method_call_sites(overloaded_methods, all_methods):
                                 callee_method = (s,e,sign)
                                 break
                         
-                        assert caller_method != 0, f'caller_method: {caller_method} not found'
+                        assert caller_method != 0 or caller_name == '<clinit>', f'caller_method: {caller_method} not found'
                         assert callee_method != 0, f'callee_method: {callee_method} not found'
 
                         method_suffix = overloaded_methods[callee_path][callee_class_name][callee_name].index(callee_method)
