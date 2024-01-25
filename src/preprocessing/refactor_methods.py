@@ -153,6 +153,19 @@ def get_overloaded_method_call_sites(overloaded_methods, all_methods):
                         with open(temp_project_path + method_access_path, 'r') as f:
                             file_lines = f.readlines()
 
+                        if '(...) { ... }' in caller_class_name: # nameless methods/functions
+                            caller_class_name = None
+                            caller_name = None
+
+                            for class_ in all_methods[caller_path]:
+                                for method_ in all_methods[caller_path][class_]:
+                                    for s,e,sign in all_methods[caller_path][class_][method_]:
+                                        if s <= method_access_start_line <= e:
+                                            caller_class_name = class_
+                                            caller_name = method_
+                                            caller_start_line = s
+                                            break
+
                         caller_method = 0
                         if caller_path in all_methods:
                             if caller_name in all_methods[caller_path][caller_class_name]:
