@@ -4,8 +4,8 @@ import sys
 
 projects_dir = sys.argv[1]
 project = sys.argv[2]
-os.system(f'rm -rf preprocessed_projects/{project}')
-temp_project_path = f'preprocessed_projects/'
+os.system(f'rm -rf preprocessed_0/{project}')
+temp_project_path = f'preprocessed_0/'
 os.makedirs(temp_project_path, exist_ok=True)
 os.system(f'cp -r {projects_dir}/{project} {temp_project_path}')
 

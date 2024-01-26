@@ -1,7 +1,13 @@
 import sys
+import os
 
-project = sys.argv[1]
-temp_project_path = f'preprocessed_{project}'
+projects_dir = sys.argv[1]
+project = sys.argv[2]
+os.system(f'rm -rf preprocessed_1/{project}')
+temp_project_path = f'preprocessed_1/'
+os.makedirs(temp_project_path, exist_ok=True)
+os.system(f'cp -r {projects_dir}/{project} {temp_project_path}')
+
 
 def get_args(line):
     arguments = []
@@ -43,7 +49,7 @@ def get_args(line):
 
 def get_overloaded_constructors():
     constructors_lines = []
-    with open(f'data/query_outputs/{project}_all_constructors.txt', 'r') as f:
+    with open(f'data/query_outputs/{project}/{project}_all_constructors.txt', 'r') as f:
         constructors_lines = f.readlines()
 
     constructors_lines = [x for x in constructors_lines if x.split('|')[7].strip() in ['super(...)', 'this(...)']]
@@ -145,7 +151,7 @@ def get_overloaded_constructors():
 
 def get_constructor_call_sites():
     constructor_call_graph_lines = []
-    with open(f'data/query_outputs/{project}_constructor_call_graph.txt', 'r') as f:
+    with open(f'data/query_outputs/{project}/{project}_constructor_call_graph.txt', 'r') as f:
         constructor_call_graph_lines = f.readlines()
 
     constructor_call_sites = {}
