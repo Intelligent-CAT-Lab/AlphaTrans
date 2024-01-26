@@ -316,8 +316,8 @@ def rewrite_overloaded_constructors(overloaded_constructors):
         if called_constructor is None:
             continue
 
-        if 'rewrite_details' in overloaded_constructors[path][called_constructor]:
-            raise Exception('rewrite_details already exists')
+        # if 'rewrite_details' in overloaded_constructors[path][called_constructor]:
+        #     raise Exception('rewrite_details already exists')
 
         overloaded_constructors[path][called_constructor].setdefault('rewrite_details', {})
         overloaded_constructors[path][called_constructor]['rewrite_details']['action'] = 'public constructor'
@@ -778,6 +778,10 @@ def replace_overloaded_constructors(overloaded_constructors, new_constructors):
 
 def main():
     overloaded_constructors = get_overloaded_constructors()
+    # for path in overloaded_constructors:
+    #     for constructor in overloaded_constructors[path]:
+    #         print(path, constructor)
+    #     print()
     call_sites = get_constructor_call_sites()
     overloaded_constructors, new_constructors = rewrite_overloaded_constructors(overloaded_constructors)
     rewrite_call_sites(overloaded_constructors, call_sites, new_constructors)
