@@ -227,6 +227,7 @@ def rewrite_overloaded_constructors(overloaded_constructors):
 
     new_constructors = {}
     single_statement_dependent_constructors = {}
+    single_statement_super_constructors = {}
     multiple_statement_dependent_constructors = {}
     independent_constructors = {}
     parameters_union = {}
@@ -264,6 +265,12 @@ def rewrite_overloaded_constructors(overloaded_constructors):
                 overloaded_constructors[path][overloaded_constructor]['body_statements'] = overloaded_constructor_body_statements
                 single_statement_dependent_constructors[path][overloaded_constructor] = overloaded_constructors[path][overloaded_constructor]
             
+            if len(overloaded_constructor_body_statements) == 1 and 'super(' in overloaded_constructor_body:
+                    
+                single_statement_super_constructors.setdefault(path, {})
+                overloaded_constructors[path][overloaded_constructor]['body_statements'] = overloaded_constructor_body_statements
+                single_statement_super_constructors[path][overloaded_constructor] = overloaded_constructors[path][overloaded_constructor]
+
             if len(overloaded_constructor_body_statements) > 1 and 'this(' in overloaded_constructor_body:
 
                 multiple_statement_dependent_constructors.setdefault(path, {})
@@ -316,9 +323,6 @@ def rewrite_overloaded_constructors(overloaded_constructors):
         if called_constructor is None:
             continue
 
-        # if 'rewrite_details' in overloaded_constructors[path][called_constructor]:
-        #     raise Exception('rewrite_details already exists')
-
         overloaded_constructors[path][called_constructor].setdefault('rewrite_details', {})
         overloaded_constructors[path][called_constructor]['rewrite_details']['action'] = 'public constructor'
         overloaded_constructors[path][called_constructor]['rewrite_details']['overloaded_constructor_type'] = 'single statement constructor callee'
@@ -327,6 +331,41 @@ def rewrite_overloaded_constructors(overloaded_constructors):
         new_constructors.setdefault(path, {})
         new_constructors[path][called_constructor] = overloaded_constructors[path][called_constructor]
     # <rule 1> ends here
+
+    # <rule 1.1> if there are n constructors, and all constructors are single statement super, then rewrite the single statement super constructor with least params as static methods
+    for path in single_statement_super_constructors:
+
+        if not len(single_statement_super_constructors[path].keys()) == 2:
+            continue
+
+        least_param_constructor = [100, None]
+        most_param_constructor = [0, None]
+        for overloaded_constructor in single_statement_super_constructors[path]:
+            if len(single_statement_super_constructors[path][overloaded_constructor]['constructor_parameters']) < least_param_constructor[0]:
+                least_param_constructor[0] = len(single_statement_super_constructors[path][overloaded_constructor]['constructor_parameters'])
+                least_param_constructor[1] = overloaded_constructor
+            if len(single_statement_super_constructors[path][overloaded_constructor]['constructor_parameters']) > most_param_constructor[0]:
+                most_param_constructor[0] = len(single_statement_super_constructors[path][overloaded_constructor]['constructor_parameters'])
+                most_param_constructor[1] = overloaded_constructor
+
+        overloaded_constructors[path][least_param_constructor[1]].setdefault('rewrite_details', {})
+        overloaded_constructors[path][least_param_constructor[1]]['rewrite_details']['action'] = 'static method'
+        overloaded_constructors[path][least_param_constructor[1]]['rewrite_details']['overloaded_constructor_type'] = 'single statement dependent'
+        overloaded_constructors[path][least_param_constructor[1]]['rewrite_details']['called_constructor'] = most_param_constructor[1]
+        params = ', '.join([x.split()[-1] for x in overloaded_constructors[path][least_param_constructor[1]]['constructor_parameters']])
+        null_params = params
+        for i in range(most_param_constructor[0] - least_param_constructor[0]):
+            null_params += ', null'
+        overloaded_constructors[path][least_param_constructor[1]]['constructor_content_lines'][1] = overloaded_constructors[path][least_param_constructor[1]]['constructor_content_lines'][1].replace(f'super({params});', f'this({null_params});')
+
+        overloaded_constructors[path][most_param_constructor[1]].setdefault('rewrite_details', {})
+        overloaded_constructors[path][most_param_constructor[1]]['rewrite_details']['action'] = 'public constructor'
+        overloaded_constructors[path][most_param_constructor[1]]['rewrite_details']['overloaded_constructor_type'] = 'single statement constructor callee'
+        overloaded_constructors[path][most_param_constructor[1]]['rewrite_details']['called_constructor'] = 'none'
+
+        new_constructors.setdefault(path, {})
+        new_constructors[path][most_param_constructor[1]] = overloaded_constructors[path][most_param_constructor[1]]
+    # <rule 1.1> ends here
 
     # <rule 2> if there are n constructors, and at least 1 constructor is multiple statement dependent, then remove multiple statement dependent constructors and add a factory method
     for path in multiple_statement_dependent_constructors:
