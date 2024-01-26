@@ -16,9 +16,14 @@ def main(args):
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_constructor_call_graph_1.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_constructor_call_graph.txt")
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_constructor_call_graph_2.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_constructor_call_graph.txt")
 
+    if args.query_name == 'get_all_constructors':
+        os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_all_constructors_1.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_all_constructors.txt")
+        os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_all_constructors_2.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_all_constructors.txt")
+
     if args.query_name == 'get_all_methods':
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_all_methods_1.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_all_methods.txt")
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_all_methods_2.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_all_methods.txt")
+        os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_all_methods_3.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_all_methods.txt")
 
     if args.query_name == 'get_fields':
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_fields.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_fields.txt")
