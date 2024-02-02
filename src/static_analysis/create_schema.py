@@ -1,24 +1,25 @@
 import os
 import json
-import sys
+import argparse
 
 
-def create_schema():
-    project = sys.argv[1]
-    os.makedirs('data/schemas', exist_ok=True)
+def create_schema(args):
+    project = args.project_name
+    projects_dir = 'java_projects/cleaned_final_projects/'
+    os.makedirs(f'data/schemas/{project}', exist_ok=True)
     schemas = {}
 
-    imports_query_out = 'data/query_outputs/imports.txt'
+    imports_query_out = f'data/query_outputs/{project}/{project}_imports.txt'
     lines = []
     with open(imports_query_out, 'r') as f:
         lines = f.readlines()
 
-    for line in lines[2:]:
+    for line in lines:
         res_row = line.split('|')[1:-1]
         import_name, start = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
-        path = path[path.find(f'preprocessed_{project}'):]
+        path = projects_dir + path[path.find(project):]
 
         schemas.setdefault(path, {})
 
@@ -31,16 +32,17 @@ def create_schema():
 
         schemas[path].setdefault("path", path)
         schemas[path].setdefault("imports", {})
+        schemas[path].setdefault("classes", {})
         schemas[path]["imports"].setdefault(f'{start_line}-{end_line}:{import_name}', {"start": start_line,
                                                                                        "end": end_line,
                                                                                        "body": import_body,})
 
-    callables_query_out = 'data/query_outputs/class_callables.txt'
+    callables_query_out = f'data/query_outputs/{project}/{project}_class_callables.txt'
     lines = []
     with open(callables_query_out, 'r') as f:
         lines = f.readlines()
     
-    for line in lines[2:]:
+    for line in lines:
         res_row = line.split('|')[1:-1]
         class_name, class_location, callable_name, modifier, return_type, return_type_qualified_name, signature, annotation, start, end = [x.strip() for x in res_row]
 
@@ -48,7 +50,7 @@ def create_schema():
             continue
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
-        path = path[path.find(f'preprocessed_{project}'):]
+        path = projects_dir + path[path.find(project):]
 
         schemas.setdefault(path, {})
 
@@ -107,17 +109,17 @@ def create_schema():
         if callable_name == class_name:
             schemas[path]["classes"][class_name]["methods"][pos_callable_name]['is_constructor'] = True
 
-    interfaces_query_out = 'data/query_outputs/interfaces.txt'
+    interfaces_query_out = f'data/query_outputs/{project}/{project}_interfaces.txt'
     lines = []
     with open(interfaces_query_out, 'r') as f:
         lines = f.readlines()
 
-    for line in lines[2:]:
+    for line in lines:
         res_row = line.split('|')[1:-1]
         interface_name, interface_loc, callable_name, modifier, return_type, return_type_qualified_name, siganture, start = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
-        path = path[path.find(f'preprocessed_{project}'):]
+        path = projects_dir + path[path.find(project):]
 
         schemas.setdefault(path, {})
 
@@ -176,17 +178,17 @@ def create_schema():
         for class_ in schemas[path]["classes"].keys():
             schemas[path]["classes"][class_].setdefault("fields", {})
 
-    fields_query_out = 'data/query_outputs/fields.txt'
+    fields_query_out = f'data/query_outputs/{project}/{project}_fields.txt'
     lines = []
     with open(fields_query_out, 'r') as f:
         lines = f.readlines()
     
-    for line in lines[2:]:
+    for line in lines:
         res_row = line.split('|')[1:-1]
         field_name, modifer, return_type, return_type_qualified_name, start, class_name = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
-        path = path[path.find(f'preprocessed_{project}'):]
+        path = projects_dir + path[path.find(project):]
 
         schemas.setdefault(path, {})
 
@@ -216,17 +218,17 @@ def create_schema():
         if modifer not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"]:
             schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"].append(modifer)
 
-    classes_query_out = 'data/query_outputs/superclasses.txt'
+    classes_query_out = f'data/query_outputs/{project}/{project}_superclasses.txt'
     lines = []
     with open(classes_query_out, 'r') as f:
         lines = f.readlines()
     
-    for line in lines[2:]:
+    for line in lines:
         res_row = line.split('|')[1:-1]
         class_name, is_abstract, parent_class, start = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
-        path = path[path.find(f'preprocessed_{project}'):]
+        path = projects_dir + path[path.find(project):]
 
         schemas[path]["classes"][class_name]["is_abstract"] = True if is_abstract == 'true' else False
 
@@ -245,32 +247,32 @@ def create_schema():
         elif 'implements' in class_declaration:
             schemas[path]["classes"][class_name]["implements"].append(parent_class)
 
-    nested_classes_query_out = 'data/query_outputs/nested_classes.txt'
+    nested_classes_query_out = f'data/query_outputs/{project}/{project}_nested_classes.txt'
     lines = []
     with open(nested_classes_query_out, 'r') as f:
         lines = f.readlines()
 
-    for line in lines[2:]:
+    for line in lines:
         res_row = line.split('|')[1:-1]
         class_name, start, nested_inside = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
-        path = path[path.find(f'preprocessed_{project}'):]
+        path = projects_dir + path[path.find(project):]
 
         schemas[path]["classes"][class_name]["nested_inside"] = nested_inside
         schemas[path]["classes"][nested_inside]["nests"].append(class_name)
 
-    parameters = 'data/query_outputs/parameters.txt'
+    parameters = f'data/query_outputs/{project}/{project}_parameters.txt'
     lines = []
     with open(parameters, 'r') as f:
         lines = f.readlines()
     
-    for line in lines[2:]:
+    for line in lines:
         res_row = line.split('|')[1:-1]
         class_name, method_name, parameter_name, start, end = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
-        path = path[path.find(f'preprocessed_{project}'):]
+        path = projects_dir + path[path.find(project):]
 
         start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0])
         end_line = int(end[end.find(':', end.find(':')+1)+1:].split(':')[2])
@@ -286,9 +288,12 @@ def create_schema():
 
     for k,v in schemas.items():
         key = k.split('/')[-1].split('.')[0]
-        with open(f'data/schemas/{key}.json', 'w') as f:
+        with open(f'data/schemas/{project}/{key}.json', 'w') as f:
             json.dump(v, f, indent=4)
 
 
 if __name__ == '__main__':
-    create_schema()
+    parser = argparse.ArgumentParser(description='Create schema for the project')
+    parser.add_argument('--project_name', type=str, help='Name of the project')
+    args = parser.parse_args()
+    create_schema(args)
