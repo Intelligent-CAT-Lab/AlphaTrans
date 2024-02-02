@@ -1,14 +1,13 @@
 import json
-import os
 import argparse
 
 
 def main(args):
 
-    project = 'preprocessed_commons-cli'
+    project = args.project_name
 
     method_call_graph = []
-    with open('data/query_outputs/preprocessed_call_graph.txt') as f:
+    with open(f'data/query_outputs/{project}/{project}_call_graph.txt') as f:
         method_call_graph = f.readlines()
     
     for line in method_call_graph:
@@ -34,13 +33,13 @@ def main(args):
         caller_start_line = int(caller_location[caller_location.find(':', caller_location.find(':')+1)+1:].split(':')[0])
         callee_start_line = int(callee_location[callee_location.find(':', callee_location.find(':')+1)+1:].split(':')[0])
 
-        caller_schema_name = caller_path.split('/')[-1].split('.')[0]
-        callee_schema_name = callee_path.split('/')[-1].split('.')[0]
+        caller_schema_name = caller_path[caller_path.find(project):].replace('/', '.')
+        callee_schema_name = callee_path[callee_path.find(project):].replace('/', '.')
 
         callee_method_class_name, callee_method_key_name = None, None
         callee_schema = {}
         is_available = False
-        with open(f'data/schemas/{callee_schema_name}.json') as f:
+        with open(f'data/schemas/{project}/{callee_schema_name}.json') as f:
             callee_schema = json.load(f)
             for class_ in callee_schema['classes']:
 
@@ -57,11 +56,11 @@ def main(args):
                         is_available = True
                         break
 
-        assert is_available, f'callee is not available: {callee_name}'
+        assert is_available, f'callee is not available: {callee_name} in {callee_schema_name}'
 
         caller_schema = {}
         is_available = False
-        with open(f'data/schemas/{caller_schema_name}.json') as f:
+        with open(f'data/schemas/{project}/{caller_schema_name}.json') as f:
             caller_schema = json.load(f)
             for class_ in caller_schema['classes']:
 
@@ -72,13 +71,14 @@ def main(args):
                         is_available = True
                         break
 
-        assert is_available, f'caller is not available: {caller_name}'
+        assert is_available, f'caller is not available: {caller_name} in {caller_schema_name}'
 
-        with open(f'data/schemas/{caller_schema_name}.json', 'w') as f:
+        with open(f'data/schemas/{project}/{caller_schema_name}.json', 'w') as f:
             json.dump(caller_schema, f, indent=4)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='extract call graph of preprocessed project')
+    parser.add_argument('--project_name', type=str, help='Name of the project')    
     args = parser.parse_args()
     main(args)

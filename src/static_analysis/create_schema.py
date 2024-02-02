@@ -116,7 +116,7 @@ def create_schema(args):
 
     for line in lines:
         res_row = line.split('|')[1:-1]
-        interface_name, interface_loc, callable_name, modifier, return_type, return_type_qualified_name, siganture, start = [x.strip() for x in res_row]
+        interface_name, interface_loc, callable_name, modifier, return_type, return_type_qualified_name, siganture, start, end = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
         path = projects_dir + path[path.find(project):]
@@ -124,7 +124,7 @@ def create_schema(args):
         schemas.setdefault(path, {})
 
         start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0])
-        end_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[2])
+        end_line = int(end[end.find(':', end.find(':')+1)+1:].split(':')[2])
 
         interface_start_line = int(interface_loc[interface_loc.find(':', interface_loc.find(':')+1)+1:].split(':')[0])
         interface_end_line = int(interface_loc[interface_loc.find(':', interface_loc.find(':')+1)+1:].split(':')[2])
@@ -287,7 +287,7 @@ def create_schema(args):
                         schemas[path_]["classes"][class_]["methods"].pop(method_)
 
     for k,v in schemas.items():
-        key = k.split('/')[-1].split('.')[0]
+        key = k[k.find(project):].replace('/', '.')
         with open(f'data/schemas/{project}/{key}.json', 'w') as f:
             json.dump(v, f, indent=4)
 
