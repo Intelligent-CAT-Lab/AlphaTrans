@@ -65,7 +65,8 @@ def main(args):
         if type_dct[type_] != '':
             total_app_type_resolved += 1
     print('total resolved:', total_app_type_resolved)
-    with open(f'data/type_resolution/{project}/raw_types.json', 'w') as f:
+    print('-'*50)
+    with open(f'data/type_resolution/{project}/s1_input.json', 'w') as f:
         json.dump(type_dct, f, indent=4)
 
 

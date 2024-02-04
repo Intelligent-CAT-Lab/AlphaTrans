@@ -13,7 +13,7 @@ def main(args):
     if not os.path.exists(f'data/type_resolution/{project}/type_description.json'):
 
         types = {}
-        with open(f'data/type_resolution/{project}/raw_types.json') as f:
+        with open(f'data/type_resolution/{project}/s1_input.json') as f:
             types = json.load(f)
         
         type_descriptions = {}
