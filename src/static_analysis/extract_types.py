@@ -43,10 +43,10 @@ def main(args):
         else:
             all_types.append(type_name)
 
-    print(len(all_types))
+    print('total types:', len(all_types))
     all_classes = list(set(all_classes))
     all_types = list(set(all_types))
-    print(len(all_types))
+    print('total unique types:', len(all_types))
 
     os.makedirs(f'data/custom_types/{project}', exist_ok=True)
     os.makedirs(f'data/type_resolution/{project}', exist_ok=True)
@@ -64,7 +64,7 @@ def main(args):
     for type_ in type_dct:
         if type_dct[type_] != '':
             total_app_type_resolved += 1
-    print(total_app_type_resolved)
+    print('total resolved:', total_app_type_resolved)
     with open(f'data/type_resolution/{project}/raw_types.json', 'w') as f:
         json.dump(type_dct, f, indent=4)
 
