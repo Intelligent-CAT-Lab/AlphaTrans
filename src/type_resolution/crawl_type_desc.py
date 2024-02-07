@@ -18,6 +18,10 @@ def main(args):
         
         type_descriptions = {}
         for type_ in types:
+
+            if types[type_] != '':
+                continue
+
             type_descriptions[type_] = {
                 'link': '',
                 'text': '',
@@ -34,8 +38,7 @@ def main(args):
 
     for type_ in tqdm.tqdm(type_descriptions):
 
-        if type_descriptions[type_]['text'] != '':
-            continue
+        assert type_descriptions[type_]['text'] == ''
 
         formatted_type = ''
         if '<' in type_:
