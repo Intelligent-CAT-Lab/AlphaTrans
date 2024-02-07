@@ -5,16 +5,15 @@ import argparse
 
 def main(args):
 
-    with open('data/types.json', 'r') as f:
+    with open(f'data/type_resolution/universal_type_map.json', 'r') as f:
         extracted_types = json.load(f)
     
     extracted_types = {k.split('.')[-1]: v for k, v in extracted_types.items()}
 
-    class_name = args.class_name
-    schema_path = f'data/schemas/{class_name}.json'
+    schema_path = f'data/schemas/{args.project_name}/{args.project_name}.{args.class_name}.json'
 
     dependencies = {}
-    with open('data/dependencies/dependencies.json', 'r') as f:
+    with open(f'data/dependencies/{args.project_name}/dependencies.json', 'r') as f:
         dependencies = json.load(f)
     
     skeletons = {}
@@ -257,15 +256,16 @@ def main(args):
     skeleton = skeleton.replace('\t', '    ')
     skeletons['python'] = skeleton
 
-    os.makedirs('data/skeletons', exist_ok=True)
-    with open(f'data/skeletons/{class_name}.json', 'w') as f:
+    os.makedirs(f'data/skeletons/{args.project_name}', exist_ok=True)
+    with open(f'data/skeletons/{args.project_name}/{args.class_name}.json', 'w') as f:
         json.dump(skeletons, f, indent=4)
 
-    with open(f'data/schemas/{class_name}_python_partial.json', 'w') as f:
+    with open(f'data/schemas/{args.project_name}/{args.project_name}.{args.class_name}_python_partial.json', 'w') as f:
         json.dump(target_schema, f, indent=4)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a class skeleton')
+    parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project')
     parser.add_argument('--class_name', type=str, dest='class_name', help='name of the class')
     args = parser.parse_args()
     main(args)
