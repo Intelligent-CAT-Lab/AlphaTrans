@@ -5,13 +5,13 @@ import json
 import graphviz
 
 
-def parse_dependencies():
+def parse_dependencies(project_name):
     """
     you should have compiled and executed the following before running this function:
     jdeps -verbose -dotoutput data/dependencies java_projects/<project_name>/target/classes/<path-to-class-files>/*.class
     rm -rf dependencies/summary.dot
     """
-    dependencies_dir = os.path.join(os.path.dirname(__file__), 'data/dependencies')
+    dependencies_dir = os.path.join(os.path.dirname(__file__), f'data/dependencies/{project_name}')
     class_deps = os.listdir(dependencies_dir)
     class_dependencies = {}
     for class_dep in class_deps:
@@ -86,13 +86,14 @@ def parse_dependencies():
 def main(args):
     function_name = args.function
     if function_name == 'parse_dependencies':
-        parse_dependencies()
+        parse_dependencies(args.project_name)
     else:
         raise NotImplementedError(f'function {function_name} not implemented')
 
 
 def parse_args():
     parser = argparse.ArgumentParser("utilities")
+    parser.add_argument('--project_name', type=str, default='java_projects', help='project name', required=True)
     parser.add_argument('--function', type=str, default='parse_dependencies', help='function name in utility', required=True)
     return parser.parse_args()
 
