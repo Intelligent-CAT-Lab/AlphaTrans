@@ -288,6 +288,7 @@ def create_schema(args):
 
     for k,v in schemas.items():
         key = k[k.find(project):].replace('/', '.')
+        key = key.replace('.java', '')
         with open(f'data/schemas/{project}/{key}.json', 'w') as f:
             json.dump(v, f, indent=4)
 
