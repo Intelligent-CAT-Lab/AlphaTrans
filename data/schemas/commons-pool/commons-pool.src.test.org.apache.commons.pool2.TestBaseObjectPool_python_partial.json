@@ -1,0 +1,858 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-pool/src/test/java/org/apache/commons/pool2/TestBaseObjectPool.java",
+    "imports": {
+        "24-24:import Test": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "19-19:import static Assertions.assertEquals": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        },
+        "20-20:import static Assertions.assertThrows": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertThrows;\n"
+            ]
+        },
+        "21-21:import static Assertions.assertTrue": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertTrue;\n"
+            ]
+        },
+        "22-22:import static Assertions.fail": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.fail;\n"
+            ]
+        }
+    },
+    "classes": {
+        "TestObjectPool": {
+            "start": 28,
+            "end": 28,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TestBaseObjectPool",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "BaseObjectPool<Object>"
+            ],
+            "methods": {
+                "38-38:returnObject": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "        public void returnObject(final Object obj) {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "returnObject(Object)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def returnObject(self, obj: object) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "35-35:invalidateObject0": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "        public void invalidateObject0(final Object obj) {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "invalidateObject0(Object)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def invalidateObject0(self, obj: object) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "30-32:borrowObject": {
+                    "start": 30,
+                    "end": 32,
+                    "body": [
+                        "        public Object borrowObject() {\n",
+                        "            return null;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "borrowObject()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def borrowObject(self) -> object:\n",
+                        "        pass\n\n"
+                    ]
+                }
+            },
+            "fields": {}
+        },
+        "TestBaseObjectPool": {
+            "start": 27,
+            "end": 27,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "TestObjectPool",
+                "new Executable(...) { ... }",
+                "new Executable(...) { ... }",
+                "new Executable(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [
+                "TestObjectPool"
+            ],
+            "methods": {
+                "265-277:testUnsupportedOperations": {
+                    "start": 265,
+                    "end": 277,
+                    "body": [
+                        "    public void testUnsupportedOperations() throws Exception {\n",
+                        "        if (!getClass().equals(TestBaseObjectPool.class)) {\n",
+                        "            return; // skip redundant tests\n",
+                        "        }\n",
+                        "        try (final ObjectPool<Object> pool = new TestObjectPool()) {\n",
+                        "\n",
+                        "            assertTrue(pool.getNumIdle() < 0, \"Negative expected.\");\n",
+                        "            assertTrue(pool.getNumActive() < 0, \"Negative expected.\");\n",
+                        "\n",
+                        "            assertThrows(UnsupportedOperationException.class, pool::clear);\n",
+                        "            assertThrows(UnsupportedOperationException.class, pool::addObject);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsupportedOperations()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testUnsupportedOperations(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "256-262:testClose": {
+                    "start": 256,
+                    "end": 262,
+                    "body": [
+                        "    public void testClose() {\n",
+                        "        @SuppressWarnings(\"resource\")\n",
+                        "        final ObjectPool<Object> pool = new TestObjectPool();\n",
+                        "\n",
+                        "        pool.close();\n",
+                        "        pool.close(); // should not error as of Pool 2.0.\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testClose()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testClose(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "232-253:testBaseNumActiveNumIdle": {
+                    "start": 232,
+                    "end": 253,
+                    "body": [
+                        "    public void testBaseNumActiveNumIdle() throws Exception {\n",
+                        "        try {\n",
+                        "            pool = makeEmptyPool0(3);\n",
+                        "        } catch (final UnsupportedOperationException e) {\n",
+                        "            return; // skip this test if unsupported\n",
+                        "        }\n",
+                        "        assertEquals(0, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "        final String obj0 = pool.borrowObject();\n",
+                        "        assertEquals(1, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "        final String obj1 = pool.borrowObject();\n",
+                        "        assertEquals(2, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "        pool.returnObject(obj1);\n",
+                        "        assertEquals(1, pool.getNumActive());\n",
+                        "        assertEquals(1, pool.getNumIdle());\n",
+                        "        pool.returnObject(obj0);\n",
+                        "        assertEquals(0, pool.getNumActive());\n",
+                        "        assertEquals(2, pool.getNumIdle());\n",
+                        "        pool.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBaseNumActiveNumIdle()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testBaseNumActiveNumIdle(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "210-229:testBaseInvalidateObject": {
+                    "start": 210,
+                    "end": 229,
+                    "body": [
+                        "    public void testBaseInvalidateObject() throws Exception {\n",
+                        "        try {\n",
+                        "            pool = makeEmptyPool0(3);\n",
+                        "        } catch (final UnsupportedOperationException e) {\n",
+                        "            return; // skip this test if unsupported\n",
+                        "        }\n",
+                        "        assertEquals(0, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "        final String obj0 = pool.borrowObject();\n",
+                        "        final String obj1 = pool.borrowObject();\n",
+                        "        assertEquals(2, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "        pool.invalidateObject0(obj0);\n",
+                        "        assertEquals(1, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "        pool.invalidateObject0(obj1);\n",
+                        "        assertEquals(0, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "        pool.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBaseInvalidateObject()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testBaseInvalidateObject(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "196-207:testBaseClosePool": {
+                    "start": 196,
+                    "end": 207,
+                    "body": [
+                        "    public void testBaseClosePool() throws Exception {\n",
+                        "        try {\n",
+                        "            pool = makeEmptyPool0(3);\n",
+                        "        } catch (final UnsupportedOperationException e) {\n",
+                        "            return; // skip this test if unsupported\n",
+                        "        }\n",
+                        "        final String obj = pool.borrowObject();\n",
+                        "        pool.returnObject(obj);\n",
+                        "\n",
+                        "        pool.close();\n",
+                        "        assertThrows(IllegalStateException.class, pool::borrowObject);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBaseClosePool()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testBaseClosePool(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "171-193:testBaseClear": {
+                    "start": 171,
+                    "end": 193,
+                    "body": [
+                        "    public void testBaseClear() throws Exception {\n",
+                        "        try {\n",
+                        "            pool = makeEmptyPool0(3);\n",
+                        "        } catch (final UnsupportedOperationException e) {\n",
+                        "            return; // skip this test if unsupported\n",
+                        "        }\n",
+                        "        assertEquals(0, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "        final String obj0 = pool.borrowObject();\n",
+                        "        final String obj1 = pool.borrowObject();\n",
+                        "        assertEquals(2, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "        pool.returnObject(obj1);\n",
+                        "        pool.returnObject(obj0);\n",
+                        "        assertEquals(0, pool.getNumActive());\n",
+                        "        assertEquals(2, pool.getNumIdle());\n",
+                        "        pool.clear();\n",
+                        "        assertEquals(0, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "        final Object obj2 = pool.borrowObject();\n",
+                        "        assertEquals(getNthObject(2), obj2);\n",
+                        "        pool.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBaseClear()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testBaseClear(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "132-168:testBaseBorrowReturn": {
+                    "start": 132,
+                    "end": 168,
+                    "body": [
+                        "    public void testBaseBorrowReturn() throws Exception {\n",
+                        "        try {\n",
+                        "            pool = makeEmptyPool0(3);\n",
+                        "        } catch (final UnsupportedOperationException e) {\n",
+                        "            return; // skip this test if unsupported\n",
+                        "        }\n",
+                        "        String obj0 = pool.borrowObject();\n",
+                        "        assertEquals(getNthObject(0), obj0);\n",
+                        "        String obj1 = pool.borrowObject();\n",
+                        "        assertEquals(getNthObject(1), obj1);\n",
+                        "        String obj2 = pool.borrowObject();\n",
+                        "        assertEquals(getNthObject(2), obj2);\n",
+                        "        pool.returnObject(obj2);\n",
+                        "        obj2 = pool.borrowObject();\n",
+                        "        assertEquals(getNthObject(2), obj2);\n",
+                        "        pool.returnObject(obj1);\n",
+                        "        obj1 = pool.borrowObject();\n",
+                        "        assertEquals(getNthObject(1), obj1);\n",
+                        "        pool.returnObject(obj0);\n",
+                        "        pool.returnObject(obj2);\n",
+                        "        obj2 = pool.borrowObject();\n",
+                        "        if (isLifo()) {\n",
+                        "            assertEquals(getNthObject(2), obj2);\n",
+                        "        }\n",
+                        "        if (isFifo()) {\n",
+                        "            assertEquals(getNthObject(0), obj2);\n",
+                        "        }\n",
+                        "\n",
+                        "        obj0 = pool.borrowObject();\n",
+                        "        if (isLifo()) {\n",
+                        "            assertEquals(getNthObject(0), obj0);\n",
+                        "        }\n",
+                        "        if (isFifo()) {\n",
+                        "            assertEquals(getNthObject(2), obj0);\n",
+                        "        }\n",
+                        "        pool.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBaseBorrowReturn()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testBaseBorrowReturn(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "119-129:testBaseBorrow": {
+                    "start": 119,
+                    "end": 129,
+                    "body": [
+                        "    public void testBaseBorrow() throws Exception {\n",
+                        "        try {\n",
+                        "            pool = makeEmptyPool0(3);\n",
+                        "        } catch (final UnsupportedOperationException e) {\n",
+                        "            return; // skip this test if unsupported\n",
+                        "        }\n",
+                        "        assertEquals(getNthObject(0), pool.borrowObject());\n",
+                        "        assertEquals(getNthObject(1), pool.borrowObject());\n",
+                        "        assertEquals(getNthObject(2), pool.borrowObject());\n",
+                        "        pool.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBaseBorrow()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testBaseBorrow(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "92-116:testBaseAddObject": {
+                    "start": 92,
+                    "end": 116,
+                    "body": [
+                        "    public void testBaseAddObject() throws Exception {\n",
+                        "        try {\n",
+                        "            pool = makeEmptyPool0(3);\n",
+                        "        } catch (final UnsupportedOperationException e) {\n",
+                        "            return; // skip this test if unsupported\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            assertEquals(0, pool.getNumIdle());\n",
+                        "            assertEquals(0, pool.getNumActive());\n",
+                        "            pool.addObject();\n",
+                        "            assertEquals(1, pool.getNumIdle());\n",
+                        "            assertEquals(0, pool.getNumActive());\n",
+                        "            final String obj = pool.borrowObject();\n",
+                        "            assertEquals(getNthObject(0), obj);\n",
+                        "            assertEquals(0, pool.getNumIdle());\n",
+                        "            assertEquals(1, pool.getNumActive());\n",
+                        "            pool.returnObject(obj);\n",
+                        "            assertEquals(1, pool.getNumIdle());\n",
+                        "            assertEquals(0, pool.getNumActive());\n",
+                        "        } catch (final UnsupportedOperationException e) {\n",
+                        "            return; // skip this test if one of those calls is unsupported\n",
+                        "        } finally {\n",
+                        "            pool.close();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBaseAddObject()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testBaseAddObject(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "80-82:makeEmptyPool": {
+                    "start": 80,
+                    "end": 82,
+                    "body": [
+                        "    protected ObjectPool<Object> makeEmptyPool(final PooledObjectFactory<Object> factory) {\n",
+                        "        return makeEmptyPool1(factory);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "ObjectPool<Object>",
+                            "ObjectPool<Object>"
+                        ]
+                    ],
+                    "signature": "makeEmptyPool(PooledObjectFactory<Object>)",
+                    "parameters": [
+                        "factory"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _makeEmptyPool(self, factory: PooledObjectFactory[object]) -> List[object]:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "84-89:makeEmptyPool1": {
+                    "start": 84,
+                    "end": 89,
+                    "body": [
+                        "    protected ObjectPool<Object> makeEmptyPool1(final PooledObjectFactory<Object> factory) {\n",
+                        "        if (this.getClass() != TestBaseObjectPool.class) {\n",
+                        "            fail(\"Subclasses of TestBaseObjectPool must reimplement this method.\");\n",
+                        "        }\n",
+                        "        throw new UnsupportedOperationException(\"BaseObjectPool isn't a complete implementation.\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "ObjectPool<Object>",
+                            "ObjectPool<Object>"
+                        ]
+                    ],
+                    "signature": "makeEmptyPool1(PooledObjectFactory<Object>)",
+                    "parameters": [
+                        "factory"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _makeEmptyPool1(self, factory: PooledObjectFactory[object]) -> List[object]:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "72-77:makeEmptyPool0": {
+                    "start": 72,
+                    "end": 77,
+                    "body": [
+                        "    protected ObjectPool<String> makeEmptyPool0(final int minCapacity) {\n",
+                        "        if (this.getClass() != TestBaseObjectPool.class) {\n",
+                        "            fail(\"Subclasses of TestBaseObjectPool must reimplement this method.\");\n",
+                        "        }\n",
+                        "        throw new UnsupportedOperationException(\"BaseObjectPool isn't a complete implementation.\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "ObjectPool<String>",
+                            "ObjectPool<String>"
+                        ]
+                    ],
+                    "signature": "makeEmptyPool0(int)",
+                    "parameters": [
+                        "minCapacity"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _makeEmptyPool0(self, minCapacity: int) -> List[str]:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "61-66:isLifo": {
+                    "start": 61,
+                    "end": 66,
+                    "body": [
+                        "    protected boolean isLifo() {\n",
+                        "        if (this.getClass() != TestBaseObjectPool.class) {\n",
+                        "            fail(\"Subclasses of TestBaseObjectPool must reimplement this method.\");\n",
+                        "        }\n",
+                        "        return false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isLifo()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _isLifo(self) -> bool:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "54-59:isFifo": {
+                    "start": 54,
+                    "end": 59,
+                    "body": [
+                        "    protected boolean isFifo() {\n",
+                        "        if (this.getClass() != TestBaseObjectPool.class) {\n",
+                        "            fail(\"Subclasses of TestBaseObjectPool must reimplement this method.\");\n",
+                        "        }\n",
+                        "        return false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFifo()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _isFifo(self) -> bool:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "47-52:getNthObject": {
+                    "start": 47,
+                    "end": 52,
+                    "body": [
+                        "    protected Object getNthObject(final int n) {\n",
+                        "        if (this.getClass() != TestBaseObjectPool.class) {\n",
+                        "            fail(\"Subclasses of TestBaseObjectPool must reimplement this method.\");\n",
+                        "        }\n",
+                        "        throw new UnsupportedOperationException(\"BaseObjectPool isn't a complete implementation.\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "getNthObject(int)",
+                    "parameters": [
+                        "n"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _getNthObject(self, n: int) -> object:\n",
+                        "        pass\n\n"
+                    ]
+                }
+            },
+            "fields": {
+                "41-41:pool": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private ObjectPool<String> pool;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ObjectPool<String>",
+                            "ObjectPool<String>"
+                        ]
+                    ],
+                    "partial_translation": "    __pool: List[str] = None\n"
+                }
+            }
+        },
+        "new Executable(...) { ... }": {
+            "start": 206,
+            "end": 206,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TestBaseObjectPool",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "206-206:execute": {
+                    "start": 206,
+                    "end": 206,
+                    "body": [
+                        "        assertThrows(IllegalStateException.class, pool::borrowObject);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "T",
+                            "T"
+                        ]
+                    ],
+                    "signature": "execute()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def execute(self) -> Any:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "274-274:execute": {
+                    "start": 274,
+                    "end": 274,
+                    "body": [
+                        "            assertThrows(UnsupportedOperationException.class, pool::clear);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "execute()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def execute(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "275-275:execute": {
+                    "start": 275,
+                    "end": 275,
+                    "body": [
+                        "            assertThrows(UnsupportedOperationException.class, pool::addObject);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "execute()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def execute(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                }
+            },
+            "fields": {}
+        }
+    },
+    "python_imports": [
+        "import typing"
+    ]
+}

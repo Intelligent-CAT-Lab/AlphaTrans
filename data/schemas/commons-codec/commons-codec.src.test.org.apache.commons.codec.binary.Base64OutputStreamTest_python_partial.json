@@ -1,0 +1,658 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-codec/src/test/java/org/apache/commons/codec/binary/Base64OutputStreamTest.java",
+    "imports": {
+        "30-30:import OutputStream": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        },
+        "29-29:import ByteArrayOutputStream": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "27-27:import Test": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "26-26:import CodecPolicy": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.codec.CodecPolicy;\n"
+            ]
+        },
+        "24-24:import static Assert.fail": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.fail;\n"
+            ]
+        },
+        "21-21:import static Assert.assertEquals": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "20-20:import static Assert.assertArrayEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.Assert.assertArrayEquals;\n"
+            ]
+        },
+        "22-22:import static Assert.assertFalse": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.Assert.assertFalse;\n"
+            ]
+        },
+        "23-23:import static Assert.assertTrue": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.Assert.assertTrue;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Base64OutputStreamTest": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "331-351:testStrictDecoding": {
+                    "start": 331,
+                    "end": 351,
+                    "body": [
+                        "    public void testStrictDecoding() throws Exception {\n",
+                        "        for (final String s : Base64Test.BASE64_IMPOSSIBLE_CASES) {\n",
+                        "            final byte[] encoded = StringUtils.getBytesUtf8(s);\n",
+                        "            ByteArrayOutputStream bout = new ByteArrayOutputStream();\n",
+                        "            BaseNCodecOutputStream out = Base64OutputStream.Base64OutputStream1(bout, false);\n",
+                        "            assertFalse(out.isStrictDecoding());\n",
+                        "            out.write(encoded);\n",
+                        "            out.close();\n",
+                        "            assertTrue(bout.size() > 0);\n",
+                        "\n",
+                        "            bout = new ByteArrayOutputStream();\n",
+                        "            out = new Base64OutputStream(bout, false, 0, null, CodecPolicy.STRICT);\n",
+                        "            assertTrue(out.isStrictDecoding());\n",
+                        "            try {\n",
+                        "                out.write(encoded);\n",
+                        "                out.close();\n",
+                        "                fail();\n",
+                        "            } catch (final IllegalArgumentException ex) {\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testStrictDecoding()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testStrictDecoding(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "316-323:testWriteToNullCoverage": {
+                    "start": 316,
+                    "end": 323,
+                    "body": [
+                        "    public void testWriteToNullCoverage() throws Exception {\n",
+                        "        final ByteArrayOutputStream bout = new ByteArrayOutputStream();\n",
+                        "        try (final BaseNCodecOutputStream out = Base64OutputStream.Base64OutputStream0(bout)) {\n",
+                        "            out.write0(null, 0, 0);\n",
+                        "            fail(\"Expcted Base64OutputStream.write(null) to throw a NullPointerException\");\n",
+                        "        } catch (final NullPointerException e) {\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testWriteToNullCoverage()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testWriteToNullCoverage(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "271-308:testWriteOutOfBounds": {
+                    "start": 271,
+                    "end": 308,
+                    "body": [
+                        "    public void testWriteOutOfBounds() throws Exception {\n",
+                        "        final byte[] buf = new byte[1024];\n",
+                        "        final ByteArrayOutputStream bout = new ByteArrayOutputStream();\n",
+                        "        try (final BaseNCodecOutputStream out = Base64OutputStream.Base64OutputStream0(bout)) {\n",
+                        "\n",
+                        "            try {\n",
+                        "                out.write0(buf, -1, 1);\n",
+                        "                fail(\n",
+                        "                        \"Expected Base64OutputStream.write(buf, -1, 1) to throw a\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException ioobe) {\n",
+                        "            }\n",
+                        "\n",
+                        "            try {\n",
+                        "                out.write0(buf, 1, -1);\n",
+                        "                fail(\n",
+                        "                        \"Expected Base64OutputStream.write(buf, 1, -1) to throw a\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException ioobe) {\n",
+                        "            }\n",
+                        "\n",
+                        "            try {\n",
+                        "                out.write0(buf, buf.length + 1, 0);\n",
+                        "                fail(\n",
+                        "                        \"Expected Base64OutputStream.write(buf, buf.length + 1, 0) to throw a\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException ioobe) {\n",
+                        "            }\n",
+                        "\n",
+                        "            try {\n",
+                        "                out.write0(buf, buf.length - 1, 2);\n",
+                        "                fail(\n",
+                        "                        \"Expected Base64OutputStream.write(buf, buf.length - 1, 2) to throw a\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException ioobe) {\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testWriteOutOfBounds()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testWriteOutOfBounds(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "132-157:testBase64OutputStreamByteByByte": {
+                    "start": 132,
+                    "end": 157,
+                    "body": [
+                        "    public void testBase64OutputStreamByteByByte() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByteByByte(encoded, decoded, 64, LF);\n",
+                        "\n",
+                        "        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\");\n",
+                        "        encoded = StringUtils.getBytesUtf8(singleLine);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByteByByte(encoded, decoded, 0, LF);\n",
+                        "\n",
+                        "        final BaseNCodec codec = Base64.Base641(0, null, false);\n",
+                        "        for (int i = 0; i <= 150; i++) {\n",
+                        "            final byte[][] randomData = BaseNTestData.randomData(codec, i);\n",
+                        "            encoded = randomData[1];\n",
+                        "            decoded = randomData[0];\n",
+                        "            testByteByByte(encoded, decoded, 0, LF);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByteByByte()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testBase64OutputStreamByteByByte(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "99-124:testBase64OutputStreamByChunk": {
+                    "start": 99,
+                    "end": 124,
+                    "body": [
+                        "    public void testBase64OutputStreamByChunk() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);\n",
+                        "\n",
+                        "        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\");\n",
+                        "        encoded = StringUtils.getBytesUtf8(singleLine);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByChunk(encoded, decoded, 0, LF);\n",
+                        "\n",
+                        "        final BaseNCodec codec = Base64.Base641(0, null, false);\n",
+                        "        for (int i = 0; i <= 150; i++) {\n",
+                        "            final byte[][] randomData = BaseNTestData.randomData(codec, i);\n",
+                        "            encoded = randomData[1];\n",
+                        "            decoded = randomData[0];\n",
+                        "            testByChunk(encoded, decoded, 0, LF);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByChunk()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testBase64OutputStreamByChunk(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "82-84:testBase64EmptyOutputStreamPemChunkSize": {
+                    "start": 82,
+                    "end": 84,
+                    "body": [
+                        "    public void testBase64EmptyOutputStreamPemChunkSize() throws Exception {\n",
+                        "        testBase64EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64EmptyOutputStreamPemChunkSize()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testBase64EmptyOutputStreamPemChunkSize(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "72-74:testBase64EmptyOutputStreamMimeChunkSize": {
+                    "start": 72,
+                    "end": 74,
+                    "body": [
+                        "    public void testBase64EmptyOutputStreamMimeChunkSize() throws Exception {\n",
+                        "        testBase64EmptyOutputStream(BaseNCodec.MIME_CHUNK_SIZE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64EmptyOutputStreamMimeChunkSize()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testBase64EmptyOutputStreamMimeChunkSize(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "50-64:testCodec98NPE": {
+                    "start": 50,
+                    "end": 64,
+                    "body": [
+                        "    public void testCodec98NPE() throws Exception {\n",
+                        "        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);\n",
+                        "        final byte[] codec98_1024 = new byte[1024];\n",
+                        "        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);\n",
+                        "        final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);\n",
+                        "        try (final BaseNCodecOutputStream stream =\n",
+                        "                Base64OutputStream.Base64OutputStream1(data, false)) {\n",
+                        "            stream.write0(codec98_1024, 0, 1024);\n",
+                        "        }\n",
+                        "\n",
+                        "        final byte[] decodedBytes = data.toByteArray();\n",
+                        "        final String decoded = StringUtils.newStringUtf8(decodedBytes);\n",
+                        "        assertEquals(\n",
+                        "                \"codec-98 NPE Base64OutputStream\", Base64TestData.CODEC_98_NPE_DECODED, decoded);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec98NPE()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testCodec98NPE(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "217-263:testByteByByte": {
+                    "start": 217,
+                    "end": 263,
+                    "body": [
+                        "    private void testByteByByte(\n",
+                        "            final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator)\n",
+                        "            throws Exception {\n",
+                        "\n",
+                        "        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();\n",
+                        "        OutputStream out =\n",
+                        "                Base64OutputStream.Base64OutputStream2(byteOut, true, chunkSize, separator);\n",
+                        "        for (final byte element : decoded) {\n",
+                        "            out.write(element);\n",
+                        "        }\n",
+                        "        out.close();\n",
+                        "        byte[] output = byteOut.toByteArray();\n",
+                        "        assertArrayEquals(\"Streaming byte-by-byte base64 encode\", encoded, output);\n",
+                        "\n",
+                        "        byteOut = new ByteArrayOutputStream();\n",
+                        "        out = Base64OutputStream.Base64OutputStream1(byteOut, false);\n",
+                        "        for (final byte element : encoded) {\n",
+                        "            out.write(element);\n",
+                        "        }\n",
+                        "        out.close();\n",
+                        "        output = byteOut.toByteArray();\n",
+                        "        assertArrayEquals(\"Streaming byte-by-byte base64 decode\", decoded, output);\n",
+                        "\n",
+                        "        byteOut = new ByteArrayOutputStream();\n",
+                        "        out = Base64OutputStream.Base64OutputStream1(byteOut, false);\n",
+                        "        for (final byte element : encoded) {\n",
+                        "            out.write(element);\n",
+                        "            out.flush();\n",
+                        "        }\n",
+                        "        out.close();\n",
+                        "        output = byteOut.toByteArray();\n",
+                        "        assertArrayEquals(\"Streaming byte-by-byte flush() base64 decode\", decoded, output);\n",
+                        "\n",
+                        "        byteOut = new ByteArrayOutputStream();\n",
+                        "        out = byteOut;\n",
+                        "        for (int i = 0; i < 10; i++) {\n",
+                        "            out = Base64OutputStream.Base64OutputStream1(out, false);\n",
+                        "            out = Base64OutputStream.Base64OutputStream2(out, true, chunkSize, separator);\n",
+                        "        }\n",
+                        "        for (final byte element : decoded) {\n",
+                        "            out.write(element);\n",
+                        "        }\n",
+                        "        out.close();\n",
+                        "        output = byteOut.toByteArray();\n",
+                        "\n",
+                        "        assertArrayEquals(\"Streaming byte-by-byte base64 wrap-wrap-wrap!\", decoded, output);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testByteByByte(byte[], byte[], int, byte[])",
+                    "parameters": [
+                        "encoded",
+                        "decoded",
+                        "chunkSize",
+                        "separator"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __testByteByByte(self, encoded: bytes, decoded: bytes, chunkSize: int, separator: bytes) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "172-202:testByChunk": {
+                    "start": 172,
+                    "end": 202,
+                    "body": [
+                        "    private void testByChunk(\n",
+                        "            final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator)\n",
+                        "            throws Exception {\n",
+                        "\n",
+                        "        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();\n",
+                        "        OutputStream out =\n",
+                        "                Base64OutputStream.Base64OutputStream2(byteOut, true, chunkSize, separator);\n",
+                        "        out.write(decoded);\n",
+                        "        out.close();\n",
+                        "        byte[] output = byteOut.toByteArray();\n",
+                        "        assertArrayEquals(\"Streaming chunked base64 encode\", encoded, output);\n",
+                        "\n",
+                        "        byteOut = new ByteArrayOutputStream();\n",
+                        "        out = Base64OutputStream.Base64OutputStream1(byteOut, false);\n",
+                        "        out.write(encoded);\n",
+                        "        out.close();\n",
+                        "        output = byteOut.toByteArray();\n",
+                        "        assertArrayEquals(\"Streaming chunked base64 decode\", decoded, output);\n",
+                        "\n",
+                        "        byteOut = new ByteArrayOutputStream();\n",
+                        "        out = byteOut;\n",
+                        "        for (int i = 0; i < 10; i++) {\n",
+                        "            out = Base64OutputStream.Base64OutputStream1(out, false);\n",
+                        "            out = Base64OutputStream.Base64OutputStream2(out, true, chunkSize, separator);\n",
+                        "        }\n",
+                        "        out.write(decoded);\n",
+                        "        out.close();\n",
+                        "        output = byteOut.toByteArray();\n",
+                        "\n",
+                        "        assertArrayEquals(\"Streaming chunked base64 wrap-wrap-wrap!\", decoded, output);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testByChunk(byte[], byte[], int, byte[])",
+                    "parameters": [
+                        "encoded",
+                        "decoded",
+                        "chunkSize",
+                        "separator"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __testByChunk(self, encoded: bytes, decoded: bytes, chunkSize: int, separator: bytes) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "86-91:testBase64EmptyOutputStream": {
+                    "start": 86,
+                    "end": 91,
+                    "body": [
+                        "    private void testBase64EmptyOutputStream(final int chunkSize) throws Exception {\n",
+                        "        final byte[] emptyEncoded = {};\n",
+                        "        final byte[] emptyDecoded = {};\n",
+                        "        testByteByByte(emptyEncoded, emptyDecoded, chunkSize, CR_LF);\n",
+                        "        testByChunk(emptyEncoded, emptyDecoded, chunkSize, CR_LF);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64EmptyOutputStream(int)",
+                    "parameters": [
+                        "chunkSize"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __testBase64EmptyOutputStream(self, chunkSize: int) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                }
+            },
+            "fields": {
+                "41-41:STRING_FIXTURE": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private static final String STRING_FIXTURE = \"Hello World\";\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    __STRING_FIXTURE: str = <placeholder>\n"
+                },
+                "39-39:LF": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private static final byte[] LF = {(byte) '\\n'};\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": "    __LF: bytes = <placeholder>\n"
+                },
+                "37-37:CR_LF": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final byte[] CR_LF = {(byte) '\\r', (byte) '\\n'};\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": "    __CR_LF: bytes = <placeholder>\n"
+                }
+            }
+        }
+    },
+    "python_imports": []
+}

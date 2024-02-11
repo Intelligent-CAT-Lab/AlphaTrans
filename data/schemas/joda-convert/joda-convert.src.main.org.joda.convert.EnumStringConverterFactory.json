@@ -1,0 +1,256 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-convert/src/main/java/org/joda/convert/EnumStringConverterFactory.java",
+    "imports": {},
+    "classes": {
+        "EnumStringConverter": {
+            "start": 56,
+            "end": 56,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "EnumStringConverterFactory",
+            "nests": [],
+            "implements": [
+                "TypedStringConverter<Enum<?>>"
+            ],
+            "extends": [],
+            "methods": {
+                "76-78:getEffectiveType": {
+                    "start": 76,
+                    "end": 78,
+                    "body": [
+                        "        public Class<?> getEffectiveType() {\n",
+                        "            return effectiveType;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Class<?>",
+                            "java.lang.Class<?>"
+                        ]
+                    ],
+                    "signature": "getEffectiveType()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "71-73:convertFromString": {
+                    "start": 71,
+                    "end": 73,
+                    "body": [
+                        "        public Enum<?> convertFromString(Class<? extends Enum<?>> cls, String str) {\n",
+                        "            return RenameHandler.INSTANCE.lookupEnum((Class) cls, str);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Enum<?>",
+                            "java.lang.Enum<?>"
+                        ]
+                    ],
+                    "signature": "convertFromString(Class<? extends Enum<?>>, String)",
+                    "parameters": [
+                        "cls",
+                        "str"
+                    ],
+                    "calls": []
+                },
+                "65-67:convertToString": {
+                    "start": 65,
+                    "end": 67,
+                    "body": [
+                        "        public String convertToString(Enum<?> en) {\n",
+                        "            return en.name(); // avoid toString() as that can be overridden\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "convertToString(Enum<?>)",
+                    "parameters": [
+                        "en"
+                    ],
+                    "calls": []
+                },
+                "60-62:EnumStringConverter": {
+                    "start": 60,
+                    "end": 62,
+                    "body": [
+                        "        EnumStringConverter(Class<?> effectiveType) {\n",
+                        "            this.effectiveType = effectiveType;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "EnumStringConverter(Class<?>)",
+                    "parameters": [
+                        "effectiveType"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "58-58:effectiveType": {
+                    "start": 58,
+                    "end": 58,
+                    "body": [
+                        "        private final Class<?> effectiveType;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Class<?>",
+                            "java.lang.Class<?>"
+                        ]
+                    ]
+                }
+            }
+        },
+        "EnumStringConverterFactory": {
+            "start": 25,
+            "end": 25,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "EnumStringConverter"
+            ],
+            "implements": [
+                "StringConverterFactory"
+            ],
+            "extends": [],
+            "methods": {
+                "52-54:toString": {
+                    "start": 52,
+                    "end": 54,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return getClass().getSimpleName();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "41-49:findConverter": {
+                    "start": 41,
+                    "end": 49,
+                    "body": [
+                        "    public StringConverter<?> findConverter(Class<?> cls) {\n",
+                        "        Class<?> sup = cls.getSuperclass();\n",
+                        "        if (sup == Enum.class) {\n",
+                        "            return new EnumStringConverter(cls);\n",
+                        "        } else if (sup != null && sup.getSuperclass() == Enum.class) {\n",
+                        "            return new EnumStringConverter(sup);\n",
+                        "        }\n",
+                        "        return null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "StringConverter<?>",
+                            "StringConverter<?>"
+                        ]
+                    ],
+                    "signature": "findConverter(Class<?>)",
+                    "parameters": [
+                        "cls"
+                    ],
+                    "calls": []
+                },
+                "31-31:EnumStringConverterFactory": {
+                    "start": 31,
+                    "end": 31,
+                    "body": [
+                        "    private EnumStringConverterFactory() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "EnumStringConverterFactory()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "28-28:INSTANCE": {
+                    "start": 28,
+                    "end": 28,
+                    "body": [
+                        "    static final StringConverterFactory INSTANCE = new EnumStringConverterFactory();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "StringConverterFactory",
+                            "StringConverterFactory"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

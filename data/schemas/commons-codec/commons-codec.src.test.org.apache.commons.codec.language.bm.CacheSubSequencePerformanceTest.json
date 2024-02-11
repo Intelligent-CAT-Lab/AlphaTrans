@@ -1,0 +1,290 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-codec/src/test/java/org/apache/commons/codec/language/bm/CacheSubSequencePerformanceTest.java",
+    "imports": {
+        "20-20:import Test": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        }
+    },
+    "classes": {
+        "CacheSubSequencePerformanceTest": {
+            "start": 22,
+            "end": 22,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new CharSequence(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "25-35:test0": {
+                    "start": 25,
+                    "end": 35,
+                    "body": [
+                        "    public void test0() {\n",
+                        "        final int times = 10000000;\n",
+                        "        System.out.print(\"Test with String : \");\n",
+                        "        test1(\"Angelo\", times);\n",
+                        "        System.out.print(\"Test with StringBuilder : \");\n",
+                        "        test1(new StringBuilder(\"Angelo\"), times);\n",
+                        "        System.out.print(\"Test with cached String : \");\n",
+                        "        test1(cacheSubSequence(\"Angelo\"), times);\n",
+                        "        System.out.print(\"Test with cached StringBuilder : \");\n",
+                        "        test1(cacheSubSequence(new StringBuilder(\"Angelo\")), times);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test0()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "53-79:cacheSubSequence": {
+                    "start": 53,
+                    "end": 79,
+                    "body": [
+                        "    private CharSequence cacheSubSequence(final CharSequence cached) {\n",
+                        "        final CharSequence[][] cache = new CharSequence[cached.length()][cached.length()];\n",
+                        "        return new CharSequence() {\n",
+                        "            @Override\n",
+                        "            public char charAt(final int index) {\n",
+                        "                return cached.charAt(index);\n",
+                        "            }\n",
+                        "\n",
+                        "            @Override\n",
+                        "            public int length() {\n",
+                        "                return cached.length();\n",
+                        "            }\n",
+                        "\n",
+                        "            @Override\n",
+                        "            public CharSequence subSequence(final int start, final int end) {\n",
+                        "                if (start == end) {\n",
+                        "                    return \"\";\n",
+                        "                }\n",
+                        "                CharSequence res = cache[start][end - 1];\n",
+                        "                if (res == null) {\n",
+                        "                    res = cached.subSequence(start, end);\n",
+                        "                    cache[start][end - 1] = res;\n",
+                        "                }\n",
+                        "                return res;\n",
+                        "            }\n",
+                        "        };\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "CharSequence",
+                            "java.lang.CharSequence"
+                        ]
+                    ],
+                    "signature": "cacheSubSequence(CharSequence)",
+                    "parameters": [
+                        "cached"
+                    ],
+                    "calls": []
+                },
+                "45-51:test2": {
+                    "start": 45,
+                    "end": 51,
+                    "body": [
+                        "    private void test2(final CharSequence input) {\n",
+                        "        for (int i = 0; i < input.length(); i++) {\n",
+                        "            for (int j = i; j <= input.length(); j++) {\n",
+                        "                input.subSequence(i, j);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test2(CharSequence)",
+                    "parameters": [
+                        "input"
+                    ],
+                    "calls": []
+                },
+                "37-43:test1": {
+                    "start": 37,
+                    "end": 43,
+                    "body": [
+                        "    private void test1(final CharSequence input, final int times) {\n",
+                        "        final long beginTimeMillis = System.currentTimeMillis();\n",
+                        "        for (int i = 0; i < times; i++) {\n",
+                        "            test2(input);\n",
+                        "        }\n",
+                        "        System.out.println(System.currentTimeMillis() - beginTimeMillis + \" millis\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test1(CharSequence, int)",
+                    "parameters": [
+                        "input",
+                        "times"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        },
+        "new CharSequence(...) { ... }": {
+            "start": 55,
+            "end": 55,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "CacheSubSequencePerformanceTest",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "67-77:subSequence": {
+                    "start": 67,
+                    "end": 77,
+                    "body": [
+                        "            public CharSequence subSequence(final int start, final int end) {\n",
+                        "                if (start == end) {\n",
+                        "                    return \"\";\n",
+                        "                }\n",
+                        "                CharSequence res = cache[start][end - 1];\n",
+                        "                if (res == null) {\n",
+                        "                    res = cached.subSequence(start, end);\n",
+                        "                    cache[start][end - 1] = res;\n",
+                        "                }\n",
+                        "                return res;\n",
+                        "            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "CharSequence",
+                            "java.lang.CharSequence"
+                        ]
+                    ],
+                    "signature": "subSequence(int, int)",
+                    "parameters": [
+                        "start",
+                        "end"
+                    ],
+                    "calls": []
+                },
+                "62-64:length": {
+                    "start": 62,
+                    "end": 64,
+                    "body": [
+                        "            public int length() {\n",
+                        "                return cached.length();\n",
+                        "            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "length()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "57-59:charAt": {
+                    "start": 57,
+                    "end": 59,
+                    "body": [
+                        "            public char charAt(final int index) {\n",
+                        "                return cached.charAt(index);\n",
+                        "            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ],
+                    "signature": "charAt(int)",
+                    "parameters": [
+                        "index"
+                    ],
+                    "calls": []
+                },
+                "55-55:": {
+                    "start": 55,
+                    "end": 55,
+                    "body": [
+                        "        return new CharSequence() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        }
+    }
+}

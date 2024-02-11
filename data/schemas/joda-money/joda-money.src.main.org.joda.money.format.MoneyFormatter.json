@@ -1,0 +1,532 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-money/src/main/java/org/joda/money/format/MoneyFormatter.java",
+    "imports": {
+        "23-23:import Serializable": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "22-22:import IOException": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "24-24:import Locale": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "18-18:import BigMoney": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import org.joda.money.BigMoney;\n"
+            ]
+        },
+        "19-19:import BigMoneyProvider": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.joda.money.BigMoneyProvider;\n"
+            ]
+        },
+        "20-20:import Money": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.joda.money.Money;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MoneyFormatter": {
+            "start": 33,
+            "end": 33,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "Serializable"
+            ],
+            "extends": [],
+            "methods": {
+                "300-302:toString": {
+                    "start": 300,
+                    "end": 302,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return printerParser.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "279-292:parse": {
+                    "start": 279,
+                    "end": 292,
+                    "body": [
+                        "    public MoneyParseContext parse(CharSequence text, int startIndex) {\n",
+                        "        checkNotNull(text, \"Text must not be null\");\n",
+                        "        if (startIndex < 0 || startIndex > text.length()) {\n",
+                        "            throw new StringIndexOutOfBoundsException(\"Invalid start index: \" + startIndex);\n",
+                        "        }\n",
+                        "        if (isParser() == false) {\n",
+                        "            throw new UnsupportedOperationException(\n",
+                        "                    \"MoneyFomatter has not been configured to be able to parse\");\n",
+                        "        }\n",
+                        "        MoneyParseContext context =\n",
+                        "                new MoneyParseContext(1, text, startIndex, locale, null, 0, null);\n",
+                        "        printerParser.parse(context);\n",
+                        "        return context;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "MoneyParseContext",
+                            "MoneyParseContext"
+                        ]
+                    ],
+                    "signature": "parse(CharSequence, int)",
+                    "parameters": [
+                        "text",
+                        "startIndex"
+                    ],
+                    "calls": []
+                },
+                "261-263:parseMoney": {
+                    "start": 261,
+                    "end": 263,
+                    "body": [
+                        "    public Money parseMoney(CharSequence text) {\n",
+                        "        return parseBigMoney(text).toMoney0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Money",
+                            "Money"
+                        ]
+                    ],
+                    "signature": "parseMoney(CharSequence)",
+                    "parameters": [
+                        "text"
+                    ],
+                    "calls": []
+                },
+                "224-244:parseBigMoney": {
+                    "start": 224,
+                    "end": 244,
+                    "body": [
+                        "    public BigMoney parseBigMoney(CharSequence text) {\n",
+                        "        checkNotNull(text, \"Text must not be null\");\n",
+                        "        MoneyParseContext result = parse(text, 0);\n",
+                        "        if (result.isError() || result.isFullyParsed() == false || result.isComplete() == false) {\n",
+                        "            String str =\n",
+                        "                    (text.length() > 64\n",
+                        "                            ? text.subSequence(0, 64).toString() + \"...\"\n",
+                        "                            : text.toString());\n",
+                        "            if (result.isError()) {\n",
+                        "                throw MoneyFormatException.MoneyFormatException1(\n",
+                        "                        \"Text could not be parsed at index \" + result.getErrorIndex() + \": \" + str);\n",
+                        "            } else if (result.isFullyParsed() == false) {\n",
+                        "                throw MoneyFormatException.MoneyFormatException1(\n",
+                        "                        \"Unparsed text found at index \" + result.getIndex() + \": \" + str);\n",
+                        "            } else {\n",
+                        "                throw MoneyFormatException.MoneyFormatException1(\n",
+                        "                        \"Parsing did not find both currency and amount: \" + str);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return result.toBigMoney();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "BigMoney",
+                            "BigMoney"
+                        ]
+                    ],
+                    "signature": "parseBigMoney(CharSequence)",
+                    "parameters": [
+                        "text"
+                    ],
+                    "calls": []
+                },
+                "200-210:printIO": {
+                    "start": 200,
+                    "end": 210,
+                    "body": [
+                        "    public void printIO(Appendable appendable, BigMoneyProvider moneyProvider) throws IOException {\n",
+                        "        checkNotNull(moneyProvider, \"BigMoneyProvider must not be null\");\n",
+                        "        if (isPrinter() == false) {\n",
+                        "            throw new UnsupportedOperationException(\n",
+                        "                    \"MoneyFomatter has not been configured to be able to print\");\n",
+                        "        }\n",
+                        "\n",
+                        "        BigMoney money = BigMoney.of2(moneyProvider);\n",
+                        "        MoneyPrintContext context = new MoneyPrintContext(locale);\n",
+                        "        printerParser.print(context, appendable, money);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "printIO(Appendable, BigMoneyProvider)",
+                    "parameters": [
+                        "appendable",
+                        "moneyProvider"
+                    ],
+                    "calls": []
+                },
+                "179-185:print1": {
+                    "start": 179,
+                    "end": 185,
+                    "body": [
+                        "    public void print1(Appendable appendable, BigMoneyProvider moneyProvider) {\n",
+                        "        try {\n",
+                        "            printIO(appendable, moneyProvider);\n",
+                        "        } catch (IOException ex) {\n",
+                        "            throw new MoneyFormatException(ex.getMessage(), ex);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "print1(Appendable, BigMoneyProvider)",
+                    "parameters": [
+                        "appendable",
+                        "moneyProvider"
+                    ],
+                    "calls": []
+                },
+                "160-164:print0": {
+                    "start": 160,
+                    "end": 164,
+                    "body": [
+                        "    public String print0(BigMoneyProvider moneyProvider) {\n",
+                        "        StringBuilder buf = new StringBuilder();\n",
+                        "        print1(buf, moneyProvider);\n",
+                        "        return buf.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "print0(BigMoneyProvider)",
+                    "parameters": [
+                        "moneyProvider"
+                    ],
+                    "calls": []
+                },
+                "148-150:isParser": {
+                    "start": 148,
+                    "end": 150,
+                    "body": [
+                        "    public boolean isParser() {\n",
+                        "        return printerParser.isParser();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isParser()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "136-138:isPrinter": {
+                    "start": 136,
+                    "end": 138,
+                    "body": [
+                        "    public boolean isPrinter() {\n",
+                        "        return printerParser.isPrinter();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isPrinter()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "123-126:withLocale": {
+                    "start": 123,
+                    "end": 126,
+                    "body": [
+                        "    public MoneyFormatter withLocale(Locale locale) {\n",
+                        "        checkNotNull(locale, \"Locale must not be null\");\n",
+                        "        return new MoneyFormatter(1, locale, null, null, printerParser);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "MoneyFormatter",
+                            "MoneyFormatter"
+                        ]
+                    ],
+                    "signature": "withLocale(Locale)",
+                    "parameters": [
+                        "locale"
+                    ],
+                    "calls": []
+                },
+                "110-112:getLocale": {
+                    "start": 110,
+                    "end": 112,
+                    "body": [
+                        "    public Locale getLocale() {\n",
+                        "        return locale;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Locale",
+                            "java.util.Locale"
+                        ]
+                    ],
+                    "signature": "getLocale()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "71-94:MoneyFormatter": {
+                    "start": 71,
+                    "end": 94,
+                    "body": [
+                        "    public MoneyFormatter(\n",
+                        "            int constructorId,\n",
+                        "            Locale locale,\n",
+                        "            MoneyParser[] parsers,\n",
+                        "            MoneyPrinter[] printers,\n",
+                        "            MultiPrinterParser printerParser) {\n",
+                        "        if (constructorId == 0) {\n",
+                        "\n",
+                        "            MoneyFormatter.checkNotNull(locale, \"Locale must not be null\");\n",
+                        "            MoneyFormatter.checkNotNull(printers, \"Printers must not be null\");\n",
+                        "            MoneyFormatter.checkNotNull(parsers, \"Parsers must not be null\");\n",
+                        "            if (printers.length != parsers.length) {\n",
+                        "                throw new IllegalArgumentException(\"Printers and parsers must match\");\n",
+                        "            }\n",
+                        "            this.locale = locale;\n",
+                        "            this.printerParser = new MultiPrinterParser(printers, parsers);\n",
+                        "        } else {\n",
+                        "\n",
+                        "            MoneyFormatter.checkNotNull(locale, \"Locale must not be null\");\n",
+                        "            MoneyFormatter.checkNotNull(printerParser, \"PrinterParser must not be null\");\n",
+                        "            this.locale = locale;\n",
+                        "            this.printerParser = printerParser;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "MoneyFormatter(int, Locale, MoneyParser[], MoneyPrinter[], MultiPrinterParser)",
+                    "parameters": [
+                        "constructorId",
+                        "locale",
+                        "parsers",
+                        "printers",
+                        "printerParser"
+                    ],
+                    "calls": []
+                },
+                "51-55:checkNotNull": {
+                    "start": 51,
+                    "end": 55,
+                    "body": [
+                        "    static void checkNotNull(Object object, String message) {\n",
+                        "        if (object == null) {\n",
+                        "            throw new NullPointerException(message);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkNotNull(Object, String)",
+                    "parameters": [
+                        "object",
+                        "message"
+                    ],
+                    "calls": []
+                },
+                "101-103:getPrinterParser": {
+                    "start": 101,
+                    "end": 103,
+                    "body": [
+                        "    MultiPrinterParser getPrinterParser() {\n",
+                        "        return printerParser;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "MultiPrinterParser",
+                            "MultiPrinterParser"
+                        ]
+                    ],
+                    "signature": "getPrinterParser()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "42-42:printerParser": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    private final MultiPrinterParser printerParser;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "MultiPrinterParser",
+                            "MultiPrinterParser"
+                        ]
+                    ]
+                },
+                "39-39:locale": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private final Locale locale;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Locale",
+                            "java.util.Locale"
+                        ]
+                    ]
+                },
+                "36-36:serialVersionUID": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private static final long serialVersionUID = 2385346258L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

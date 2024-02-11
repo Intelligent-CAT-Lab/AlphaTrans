@@ -1,0 +1,161 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-convert/src/main/java/org/joda/convert/ConstructorFromStringConverter.java",
+    "imports": {
+        "19-19:import InvocationTargetException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.lang.reflect.InvocationTargetException;\n"
+            ]
+        },
+        "18-18:import Constructor": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.lang.reflect.Constructor;\n"
+            ]
+        },
+        "20-20:import Modifier": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.lang.reflect.Modifier;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ConstructorFromStringConverter": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "TypedFromStringConverter<T>",
+                "ConstructorFromStringConverter<>"
+            ],
+            "extends": [],
+            "methods": {
+                "75-77:getEffectiveType": {
+                    "start": 75,
+                    "end": 77,
+                    "body": [
+                        "    public Class<?> getEffectiveType() {\n",
+                        "        return fromString.getDeclaringClass();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Class<?>",
+                            "java.lang.Class<?>"
+                        ]
+                    ],
+                    "signature": "getEffectiveType()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "59-72:convertFromString": {
+                    "start": 59,
+                    "end": 72,
+                    "body": [
+                        "    public T convertFromString(Class<? extends T> cls, String str) {\n",
+                        "        try {\n",
+                        "            return fromString.newInstance(str);\n",
+                        "        } catch (IllegalAccessException ex) {\n",
+                        "            throw new IllegalStateException(\"Constructor is not accessible: \" + fromString);\n",
+                        "        } catch (InstantiationException ex) {\n",
+                        "            throw new IllegalStateException(\"Constructor is not valid: \" + fromString);\n",
+                        "        } catch (InvocationTargetException ex) {\n",
+                        "            if (ex.getCause() instanceof RuntimeException) {\n",
+                        "                throw (RuntimeException) ex.getCause();\n",
+                        "            }\n",
+                        "            throw new RuntimeException(ex.getMessage(), ex.getCause());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "T",
+                            "T"
+                        ]
+                    ],
+                    "signature": "convertFromString(Class<? extends T>, String)",
+                    "parameters": [
+                        "cls",
+                        "str"
+                    ],
+                    "calls": []
+                },
+                "43-56:ConstructorFromStringConverter": {
+                    "start": 43,
+                    "end": 56,
+                    "body": [
+                        "    ConstructorFromStringConverter(Class<T> cls, Constructor<T> fromString) {\n",
+                        "        if (cls.isInterface()\n",
+                        "                || Modifier.isAbstract(cls.getModifiers())\n",
+                        "                || cls.isLocalClass()\n",
+                        "                || cls.isMemberClass()) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"FromString constructor must be on an instantiable class: \" + fromString);\n",
+                        "        }\n",
+                        "        if (fromString.getDeclaringClass() != cls) {\n",
+                        "            throw new IllegalStateException(\n",
+                        "                    \"FromString constructor must be defined on specified class: \" + fromString);\n",
+                        "        }\n",
+                        "        this.fromString = fromString;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ConstructorFromStringConverter(Class<T>, Constructor<T>)",
+                    "parameters": [
+                        "cls",
+                        "fromString"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "34-34:fromString": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private final Constructor<T> fromString;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Constructor<T>",
+                            "java.lang.reflect.Constructor<T>"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

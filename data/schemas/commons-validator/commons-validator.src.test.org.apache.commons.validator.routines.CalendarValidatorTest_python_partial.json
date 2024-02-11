@@ -1,0 +1,666 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-validator/src/test/java/org/apache/commons/validator/routines/CalendarValidatorTest.java",
+    "imports": {
+        "23-23:import Locale": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "22-22:import Date": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Date;\n"
+            ]
+        },
+        "19-19:import DateFormat": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.text.DateFormat;\n"
+            ]
+        },
+        "20-20:import Format": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.text.Format;\n"
+            ]
+        },
+        "24-24:import TimeZone": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.TimeZone;\n"
+            ]
+        },
+        "21-21:import Calendar": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Calendar;\n"
+            ]
+        }
+    },
+    "classes": {
+        "CalendarValidatorTest": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new AbstractCalendarValidator(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [
+                "AbstractCalendarValidatorTest"
+            ],
+            "methods": {
+                "256-291:testFormat": {
+                    "start": 256,
+                    "end": 291,
+                    "body": [
+                        "    public void testFormat() {\n",
+                        "        Locale origDefault = Locale.getDefault();\n",
+                        "        Locale.setDefault(Locale.UK);\n",
+                        "\n",
+                        "        Calendar cal20050101 = createCalendar(GMT, 20051231, 11500);\n",
+                        "        assertNull(\"null\", calValidator.format0(null));\n",
+                        "        assertEquals(\"default\", \"31/12/05\", calValidator.format0(cal20050101));\n",
+                        "        assertEquals(\"locale\", \"12/31/05\", calValidator.format2(cal20050101, Locale.US));\n",
+                        "        assertEquals(\n",
+                        "                \"patternA\",\n",
+                        "                \"2005-12-31 01:15\",\n",
+                        "                calValidator.format1(cal20050101, \"yyyy-MM-dd HH:mm\"));\n",
+                        "        assertEquals(\n",
+                        "                \"patternB\", \"2005-12-31 GMT\", calValidator.format1(cal20050101, \"yyyy-MM-dd z\"));\n",
+                        "        assertEquals(\n",
+                        "                \"both\",\n",
+                        "                \"31 Dez 2005\",\n",
+                        "                calValidator.format3(cal20050101, \"dd MMM yyyy\", Locale.GERMAN));\n",
+                        "\n",
+                        "        assertEquals(\"EST default\", \"30/12/05\", calValidator.format0(cal20050101, EST));\n",
+                        "        assertEquals(\"EST locale\", \"12/30/05\", calValidator.format2(cal20050101, Locale.US, EST));\n",
+                        "        assertEquals(\n",
+                        "                \"EST patternA\",\n",
+                        "                \"2005-12-30 20:15\",\n",
+                        "                calValidator.format1(cal20050101, \"yyyy-MM-dd HH:mm\", EST));\n",
+                        "        assertEquals(\n",
+                        "                \"EST patternB\",\n",
+                        "                \"2005-12-30 EST\",\n",
+                        "                calValidator.format1(cal20050101, \"yyyy-MM-dd z\", EST));\n",
+                        "        assertEquals(\n",
+                        "                \"EST both\",\n",
+                        "                \"30 Dez 2005\",\n",
+                        "                calValidator.format4(cal20050101, \"dd MMM yyyy\", Locale.GERMAN, EST));\n",
+                        "\n",
+                        "        Locale.setDefault(origDefault);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testFormat()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testFormat(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "48-52:setUp": {
+                    "start": 48,
+                    "end": 52,
+                    "body": [
+                        "    protected void setUp() throws Exception {\n",
+                        "        super.setUp();\n",
+                        "        calValidator = CalendarValidator.CalendarValidator1();\n",
+                        "        validator = calValidator;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setUp()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _setUp(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "294-332:testAdjustToTimeZone": {
+                    "start": 294,
+                    "end": 332,
+                    "body": [
+                        "    public void testAdjustToTimeZone() {\n",
+                        "\n",
+                        "        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);\n",
+                        "        Date dateEST = calEST.getTime();\n",
+                        "\n",
+                        "        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);\n",
+                        "        Date dateGMT = calGMT.getTime();\n",
+                        "\n",
+                        "        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);\n",
+                        "        Date dateCET = calCET.getTime();\n",
+                        "\n",
+                        "        assertFalse(\"Check GMT != CET\", dateGMT.getTime() == dateCET.getTime());\n",
+                        "        assertFalse(\"Check GMT != EST\", dateGMT.getTime() == dateEST.getTime());\n",
+                        "        assertFalse(\"Check CET != EST\", dateCET.getTime() == dateEST.getTime());\n",
+                        "\n",
+                        "        CalendarValidator.adjustToTimeZone(calEST, GMT);\n",
+                        "        assertEquals(\"EST to GMT\", dateGMT, calEST.getTime());\n",
+                        "        assertFalse(\"Check EST = GMT\", dateEST == calEST.getTime());\n",
+                        "        CalendarValidator.adjustToTimeZone(calEST, EST);\n",
+                        "        assertEquals(\"back to EST\", dateEST, calEST.getTime());\n",
+                        "        assertFalse(\"Check EST != GMT\", dateGMT == calEST.getTime());\n",
+                        "\n",
+                        "        CalendarValidator.adjustToTimeZone(calCET, GMT);\n",
+                        "        assertEquals(\"CET to GMT\", dateGMT, calCET.getTime());\n",
+                        "        assertFalse(\"Check CET = GMT\", dateCET == calCET.getTime());\n",
+                        "        CalendarValidator.adjustToTimeZone(calCET, EET);\n",
+                        "        assertEquals(\"back to CET\", dateCET, calCET.getTime());\n",
+                        "        assertFalse(\"Check CET != GMT\", dateGMT == calCET.getTime());\n",
+                        "\n",
+                        "        Calendar calUTC = createCalendar(UTC, DATE_2005_11_23, TIME_12_03_45);\n",
+                        "        assertTrue(\"SAME: UTC = GMT\", UTC.hasSameRules(GMT));\n",
+                        "        assertEquals(\"SAME: Check time (A)\", calUTC.getTime(), calGMT.getTime());\n",
+                        "        assertFalse(\"SAME: Check GMT(A)\", GMT.equals(calUTC.getTimeZone()));\n",
+                        "        assertTrue(\"SAME: Check UTC(A)\", UTC.equals(calUTC.getTimeZone()));\n",
+                        "        CalendarValidator.adjustToTimeZone(calUTC, GMT);\n",
+                        "        assertEquals(\"SAME: Check time (B)\", calUTC.getTime(), calGMT.getTime());\n",
+                        "        assertTrue(\"SAME: Check GMT(B)\", GMT.equals(calUTC.getTimeZone()));\n",
+                        "        assertFalse(\"SAME: Check UTC(B)\", UTC.equals(calUTC.getTimeZone()));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testAdjustToTimeZone()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testAdjustToTimeZone(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "234-252:testDateTimeStyle": {
+                    "start": 234,
+                    "end": 252,
+                    "body": [
+                        "    public void testDateTimeStyle() {\n",
+                        "        Locale origDefault = Locale.getDefault();\n",
+                        "        Locale.setDefault(Locale.UK);\n",
+                        "\n",
+                        "        AbstractCalendarValidator dateTimeValidator =\n",
+                        "                new AbstractCalendarValidator(true, DateFormat.SHORT, DateFormat.SHORT) {\n",
+                        "                    private static final long serialVersionUID = 1L;\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    protected Object processParsedValue(Object value, Format formatter) {\n",
+                        "                        return value;\n",
+                        "                    }\n",
+                        "                };\n",
+                        "        assertTrue(\"validate(A) default\", dateTimeValidator.isValid0(\"31/12/05 14:23\"));\n",
+                        "        assertTrue(\n",
+                        "                \"validate(A) locale \", dateTimeValidator.isValid2(\"12/31/05 2:23 PM\", Locale.US));\n",
+                        "\n",
+                        "        Locale.setDefault(origDefault);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDateTimeStyle()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testDateTimeStyle(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "136-231:testCompare": {
+                    "start": 136,
+                    "end": 231,
+                    "body": [
+                        "    public void testCompare() {\n",
+                        "        int sameTime = 124522;\n",
+                        "        int testDate = 20050823;\n",
+                        "        Calendar diffHour = createCalendar(GMT, testDate, 115922); // same date, different time\n",
+                        "        Calendar diffMin = createCalendar(GMT, testDate, 124422); // same date, different time\n",
+                        "        Calendar diffSec = createCalendar(GMT, testDate, 124521); // same date, different time\n",
+                        "\n",
+                        "        Calendar value = createCalendar(GMT, testDate, sameTime); // test value\n",
+                        "        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime); // +1 day\n",
+                        "        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime); // -1 day\n",
+                        "\n",
+                        "        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime); // +1 week\n",
+                        "        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime); // -1 week\n",
+                        "\n",
+                        "        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime); // +1 month\n",
+                        "        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime); // same month\n",
+                        "        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime); // -1 month\n",
+                        "\n",
+                        "        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime); // +1 quarter (Feb Start)\n",
+                        "        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime); // +1 quarter\n",
+                        "        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime); // same quarter\n",
+                        "        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime); // -1 quarter\n",
+                        "\n",
+                        "        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime); // +1 year\n",
+                        "        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime); // same year\n",
+                        "        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime); // -1 year\n",
+                        "\n",
+                        "        assertEquals(\"hour GT\", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));\n",
+                        "        assertEquals(\"hour EQ\", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));\n",
+                        "        assertEquals(\"mins GT\", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));\n",
+                        "        assertEquals(\"mins EQ\", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));\n",
+                        "        assertEquals(\"secs GT\", 1, calValidator.compare(value, diffSec, Calendar.SECOND));\n",
+                        "\n",
+                        "        assertEquals(\"date LT\", -1, calValidator.compareDates(value, cal20050824)); // +1 day\n",
+                        "        assertEquals(\n",
+                        "                \"date EQ\", 0, calValidator.compareDates(value, diffHour)); // same day, diff hour\n",
+                        "        assertEquals(\n",
+                        "                \"date(B)\",\n",
+                        "                0,\n",
+                        "                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR)); // same day, diff hour\n",
+                        "        assertEquals(\"date GT\", 1, calValidator.compareDates(value, cal20050822)); // -1 day\n",
+                        "\n",
+                        "        assertEquals(\"week LT\", -1, calValidator.compareWeeks(value, cal20050830)); // +1 week\n",
+                        "        assertEquals(\"week =1\", 0, calValidator.compareWeeks(value, cal20050824)); // +1 day\n",
+                        "        assertEquals(\"week =2\", 0, calValidator.compareWeeks(value, cal20050822)); // same week\n",
+                        "        assertEquals(\n",
+                        "                \"week =3\",\n",
+                        "                0,\n",
+                        "                calValidator.compare(value, cal20050822, Calendar.WEEK_OF_MONTH)); // same week\n",
+                        "        assertEquals(\"week =4\", 0, calValidator.compareWeeks(value, cal20050822)); // -1 day\n",
+                        "        assertEquals(\"week GT\", 1, calValidator.compareWeeks(value, cal20050816)); // -1 week\n",
+                        "\n",
+                        "        assertEquals(\"mnth LT\", -1, calValidator.compareMonths(value, cal20050901)); // +1 month\n",
+                        "        assertEquals(\"mnth =1\", 0, calValidator.compareMonths(value, cal20050830)); // +1 week\n",
+                        "        assertEquals(\"mnth =2\", 0, calValidator.compareMonths(value, cal20050801)); // same month\n",
+                        "        assertEquals(\"mnth =3\", 0, calValidator.compareMonths(value, cal20050816)); // -1 week\n",
+                        "        assertEquals(\"mnth GT\", 1, calValidator.compareMonths(value, cal20050731)); // -1 month\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                \"qtrA <1\",\n",
+                        "                -1,\n",
+                        "                calValidator.compareQuarters0(value, cal20051101)); // +1 quarter (Feb)\n",
+                        "        assertEquals(\n",
+                        "                \"qtrA <2\", -1, calValidator.compareQuarters0(value, cal20051001)); // +1 quarter\n",
+                        "        assertEquals(\"qtrA =1\", 0, calValidator.compareQuarters0(value, cal20050901)); // +1 month\n",
+                        "        assertEquals(\n",
+                        "                \"qtrA =2\", 0, calValidator.compareQuarters0(value, cal20050701)); // same quarter\n",
+                        "        assertEquals(\"qtrA =3\", 0, calValidator.compareQuarters0(value, cal20050731)); // -1 month\n",
+                        "        assertEquals(\"qtrA GT\", 1, calValidator.compareQuarters0(value, cal20050630)); // -1 quarter\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                \"qtrB LT\",\n",
+                        "                -1,\n",
+                        "                calValidator.compareQuarters1(value, cal20051101, 2)); // +1 quarter (Feb)\n",
+                        "        assertEquals(\n",
+                        "                \"qtrB =1\", 0, calValidator.compareQuarters1(value, cal20051001, 2)); // same quarter\n",
+                        "        assertEquals(\n",
+                        "                \"qtrB =2\", 0, calValidator.compareQuarters1(value, cal20050901, 2)); // +1 month\n",
+                        "        assertEquals(\n",
+                        "                \"qtrB =3\", 1, calValidator.compareQuarters1(value, cal20050701, 2)); // same quarter\n",
+                        "        assertEquals(\n",
+                        "                \"qtrB =4\", 1, calValidator.compareQuarters1(value, cal20050731, 2)); // -1 month\n",
+                        "        assertEquals(\n",
+                        "                \"qtrB GT\", 1, calValidator.compareQuarters1(value, cal20050630, 2)); // -1 quarter\n",
+                        "\n",
+                        "        assertEquals(\"year LT\", -1, calValidator.compareYears(value, cal20060101)); // +1 year\n",
+                        "        assertEquals(\"year EQ\", 0, calValidator.compareYears(value, cal20050101)); // same year\n",
+                        "        assertEquals(\"year GT\", 1, calValidator.compareYears(value, cal20041231)); // -1 year\n",
+                        "\n",
+                        "        try {\n",
+                        "            calValidator.compare(value, value, -1);\n",
+                        "            fail(\"Invalid Compare field - expected IllegalArgumentException to be thrown\");\n",
+                        "        } catch (IllegalArgumentException e) {\n",
+                        "            assertEquals(\"check message\", \"Invalid field: -1\", e.getMessage());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCompare()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testCompare(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "55-133:testCalendarValidatorMethods": {
+                    "start": 55,
+                    "end": 133,
+                    "body": [
+                        "    public void testCalendarValidatorMethods() {\n",
+                        "        Locale.setDefault(Locale.US);\n",
+                        "        Locale locale = Locale.GERMAN;\n",
+                        "        String pattern = \"yyyy-MM-dd\";\n",
+                        "        String patternVal = \"2005-12-31\";\n",
+                        "        String germanVal = \"31 Dez 2005\";\n",
+                        "        String germanPattern = \"dd MMM yyyy\";\n",
+                        "        String localeVal = \"31.12.2005\";\n",
+                        "        String defaultVal = \"12/31/05\";\n",
+                        "        String XXXX = \"XXXX\";\n",
+                        "        Date expected = createCalendar(null, 20051231, 0).getTime();\n",
+                        "        assertEquals(\n",
+                        "                \"validate(A) default\",\n",
+                        "                expected,\n",
+                        "                CalendarValidator.getInstance().validate0(defaultVal).getTime());\n",
+                        "        assertEquals(\n",
+                        "                \"validate(A) locale \",\n",
+                        "                expected,\n",
+                        "                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());\n",
+                        "        assertEquals(\n",
+                        "                \"validate(A) pattern\",\n",
+                        "                expected,\n",
+                        "                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());\n",
+                        "        assertEquals(\n",
+                        "                \"validate(A) both\",\n",
+                        "                expected,\n",
+                        "                CalendarValidator.getInstance()\n",
+                        "                        .validate6(germanVal, germanPattern, Locale.GERMAN)\n",
+                        "                        .getTime());\n",
+                        "\n",
+                        "        assertTrue(\"isValid(A) default\", CalendarValidator.getInstance().isValid0(defaultVal));\n",
+                        "        assertTrue(\n",
+                        "                \"isValid(A) locale \", CalendarValidator.getInstance().isValid2(localeVal, locale));\n",
+                        "        assertTrue(\n",
+                        "                \"isValid(A) pattern\",\n",
+                        "                CalendarValidator.getInstance().isValid1(patternVal, pattern));\n",
+                        "        assertTrue(\n",
+                        "                \"isValid(A) both\",\n",
+                        "                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));\n",
+                        "\n",
+                        "        assertNull(\"validate(B) default\", CalendarValidator.getInstance().validate0(XXXX));\n",
+                        "        assertNull(\"validate(B) locale \", CalendarValidator.getInstance().validate4(XXXX, locale));\n",
+                        "        assertNull(\"validate(B) pattern\", CalendarValidator.getInstance().validate2(XXXX, pattern));\n",
+                        "        assertNull(\n",
+                        "                \"validate(B) both\",\n",
+                        "                CalendarValidator.getInstance()\n",
+                        "                        .validate6(\"31 Dec 2005\", germanPattern, Locale.GERMAN));\n",
+                        "\n",
+                        "        assertFalse(\"isValid(B) default\", CalendarValidator.getInstance().isValid0(XXXX));\n",
+                        "        assertFalse(\"isValid(B) locale \", CalendarValidator.getInstance().isValid2(XXXX, locale));\n",
+                        "        assertFalse(\"isValid(B) pattern\", CalendarValidator.getInstance().isValid1(XXXX, pattern));\n",
+                        "        assertFalse(\n",
+                        "                \"isValid(B) both\",\n",
+                        "                CalendarValidator.getInstance()\n",
+                        "                        .isValid3(\"31 Dec 2005\", germanPattern, Locale.GERMAN));\n",
+                        "\n",
+                        "        TimeZone zone = (TimeZone.getDefault().getRawOffset() == EET.getRawOffset() ? EST : EET);\n",
+                        "        Date expectedZone = createCalendar(zone, 20051231, 0).getTime();\n",
+                        "        assertFalse(\"default/EET same \", expected.getTime() == expectedZone.getTime());\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                \"validate(C) default\",\n",
+                        "                expectedZone,\n",
+                        "                CalendarValidator.getInstance().validate1(defaultVal, zone).getTime());\n",
+                        "        assertEquals(\n",
+                        "                \"validate(C) locale \",\n",
+                        "                expectedZone,\n",
+                        "                CalendarValidator.getInstance().validate5(localeVal, locale, zone).getTime());\n",
+                        "        assertEquals(\n",
+                        "                \"validate(C) pattern\",\n",
+                        "                expectedZone,\n",
+                        "                CalendarValidator.getInstance().validate3(patternVal, pattern, zone).getTime());\n",
+                        "        assertEquals(\n",
+                        "                \"validate(C) both\",\n",
+                        "                expectedZone,\n",
+                        "                CalendarValidator.getInstance()\n",
+                        "                        .validate7(germanVal, germanPattern, Locale.GERMAN, zone)\n",
+                        "                        .getTime());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCalendarValidatorMethods()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testCalendarValidatorMethods(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "43-45:CalendarValidatorTest": {
+                    "start": 43,
+                    "end": 45,
+                    "body": [
+                        "    public CalendarValidatorTest(String name) {\n",
+                        "        super(name);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "CalendarValidatorTest(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, name: str) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                }
+            },
+            "fields": {
+                "36-36:calValidator": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private CalendarValidator calValidator;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CalendarValidator",
+                            "CalendarValidator"
+                        ]
+                    ],
+                    "partial_translation": "    __calValidator: CalendarValidator = None\n"
+                },
+                "34-34:TIME_12_03_45": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private static final int TIME_12_03_45 = 120345;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": "    __TIME_12_03_45: int = <placeholder>\n"
+                },
+                "33-33:DATE_2005_11_23": {
+                    "start": 33,
+                    "end": 33,
+                    "body": [
+                        "    private static final int DATE_2005_11_23 = 20051123;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": "    __DATE_2005_11_23: int = <placeholder>\n"
+                }
+            }
+        },
+        "new AbstractCalendarValidator(...) { ... }": {
+            "start": 239,
+            "end": 239,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "CalendarValidatorTest",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "243-245:processParsedValue": {
+                    "start": 243,
+                    "end": 245,
+                    "body": [
+                        "                    protected Object processParsedValue(Object value, Format formatter) {\n",
+                        "                        return value;\n",
+                        "                    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "processParsedValue(Object, Format)",
+                    "parameters": [
+                        "value",
+                        "formatter"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _processParsedValue(self, value: object, formatter: str) -> object:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "239-239:": {
+                    "start": 239,
+                    "end": 239,
+                    "body": [
+                        "                new AbstractCalendarValidator(true, DateFormat.SHORT, DateFormat.SHORT) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "(boolean, int, int)",
+                    "parameters": [
+                        "strict",
+                        "dateStyle",
+                        "timeStyle"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def (self, strict: bool, dateStyle: int, timeStyle: int) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                }
+            },
+            "fields": {
+                "240-240:serialVersionUID": {
+                    "start": 240,
+                    "end": 240,
+                    "body": [
+                        "                    private static final long serialVersionUID = 1L;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n"
+                }
+            }
+        }
+    },
+    "python_imports": []
+}

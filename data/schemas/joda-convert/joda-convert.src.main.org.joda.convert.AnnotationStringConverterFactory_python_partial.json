@@ -1,0 +1,510 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-convert/src/main/java/org/joda/convert/AnnotationStringConverterFactory.java",
+    "imports": {
+        "18-18:import Constructor": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.lang.reflect.Constructor;\n"
+            ]
+        },
+        "19-19:import Method": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.lang.reflect.Method;\n"
+            ]
+        }
+    },
+    "classes": {
+        "AnnotationStringConverterFactory": {
+            "start": 28,
+            "end": 28,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "StringConverterFactory"
+            ],
+            "extends": [],
+            "methods": {
+                "272-274:toString": {
+                    "start": 272,
+                    "end": 274,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return getClass().getSimpleName();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "44-46:findConverter": {
+                    "start": 44,
+                    "end": 46,
+                    "body": [
+                        "    public StringConverter<?> findConverter(Class<?> cls) {\n",
+                        "        return findAnnotatedConverter(cls); // capture generics\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "StringConverter<?>",
+                            "StringConverter<?>"
+                        ]
+                    ],
+                    "signature": "findConverter(Class<?>)",
+                    "parameters": [
+                        "cls"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def findConverter(self, cls: Type) -> str:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "263-269:eliminateEnumSubclass": {
+                    "start": 263,
+                    "end": 269,
+                    "body": [
+                        "    private Class<?> eliminateEnumSubclass(Class<?> cls) {\n",
+                        "        Class<?> sup = cls.getSuperclass();\n",
+                        "        if (sup != null && sup.getSuperclass() == Enum.class) {\n",
+                        "            return sup;\n",
+                        "        }\n",
+                        "        return cls;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Class<?>",
+                            "java.lang.Class<?>"
+                        ]
+                    ],
+                    "signature": "eliminateEnumSubclass(Class<?>)",
+                    "parameters": [
+                        "cls"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __eliminateEnumSubclass(self, cls: Type) -> Type:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "220-261:findFromString": {
+                    "start": 220,
+                    "end": 261,
+                    "body": [
+                        "    private Method findFromString(Class<?> cls) {\n",
+                        "        Method[] methods = cls.getDeclaredMethods();\n",
+                        "        Method matched = null;\n",
+                        "        for (Method method : methods) {\n",
+                        "            if (!method.isBridge() && !method.isSynthetic()) {\n",
+                        "                FromString fromString = method.getAnnotation(FromString.class);\n",
+                        "                if (fromString != null) {\n",
+                        "                    if (matched != null) {\n",
+                        "                        throw new IllegalStateException(\n",
+                        "                                \"Two methods are annotated with @FromString: \" + cls.getName());\n",
+                        "                    }\n",
+                        "                    matched = method;\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "        FromStringFactory factory = cls.getAnnotation(FromStringFactory.class);\n",
+                        "        if (factory != null) {\n",
+                        "            if (matched != null) {\n",
+                        "                throw new IllegalStateException(\n",
+                        "                        \"Class annotated with @FromString and @FromStringFactory: \"\n",
+                        "                                + cls.getName());\n",
+                        "            }\n",
+                        "            Method[] factoryMethods = factory.factory().getDeclaredMethods();\n",
+                        "            for (Method method : factoryMethods) {\n",
+                        "                if (!method.isBridge() && !method.isSynthetic()) {\n",
+                        "                    if (cls.isAssignableFrom(method.getReturnType())) {\n",
+                        "                        FromString fromString = method.getAnnotation(FromString.class);\n",
+                        "                        if (fromString != null) {\n",
+                        "                            if (matched != null) {\n",
+                        "                                throw new IllegalStateException(\n",
+                        "                                        \"Two methods are annotated with @FromString on the factory:\"\n",
+                        "                                                + \" \"\n",
+                        "                                                + factory.factory().getName());\n",
+                        "                            }\n",
+                        "                            matched = method;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return matched;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Method",
+                            "java.lang.reflect.Method"
+                        ]
+                    ],
+                    "signature": "findFromString(Class<?>)",
+                    "parameters": [
+                        "cls"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __findFromString(self, cls: Type) -> inspect.Signature:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "181-210:findFromStringMethod": {
+                    "start": 181,
+                    "end": 210,
+                    "body": [
+                        "    private <T> TypedFromStringConverter<T> findFromStringMethod(\n",
+                        "            Class<T> cls, boolean searchSuperclasses) {\n",
+                        "        Class<?> loopCls = cls;\n",
+                        "        while (loopCls != null) {\n",
+                        "            Method fromString = findFromString(loopCls);\n",
+                        "            if (fromString != null) {\n",
+                        "                return new MethodFromStringConverter<T>(cls, fromString, loopCls);\n",
+                        "            }\n",
+                        "            if (searchSuperclasses == false) {\n",
+                        "                break;\n",
+                        "            }\n",
+                        "            loopCls = loopCls.getSuperclass();\n",
+                        "        }\n",
+                        "        TypedFromStringConverter<T> matched = null;\n",
+                        "        if (searchSuperclasses) {\n",
+                        "            for (Class<?> loopIfc : eliminateEnumSubclass(cls).getInterfaces()) {\n",
+                        "                Method fromString = findFromString(loopIfc);\n",
+                        "                if (fromString != null) {\n",
+                        "                    if (matched != null) {\n",
+                        "                        throw new IllegalStateException(\n",
+                        "                                \"Two different interfaces are annotated with \"\n",
+                        "                                        + \"@FromString or @FromStringFactory: \"\n",
+                        "                                        + cls.getName());\n",
+                        "                    }\n",
+                        "                    matched = new MethodFromStringConverter<T>(cls, fromString, loopIfc);\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return matched;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "TypedFromStringConverter<T>",
+                            "TypedFromStringConverter<T>"
+                        ]
+                    ],
+                    "signature": "findFromStringMethod(Class<T>, boolean)",
+                    "parameters": [
+                        "cls",
+                        "searchSuperclasses"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __findFromStringMethod(self, cls: typing.Type[typing.Any], searchSuperclasses: bool) -> TypedStringConverter[typing.Any]:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "155-171:findFromStringConstructor": {
+                    "start": 155,
+                    "end": 171,
+                    "body": [
+                        "    private <T> TypedFromStringConverter<T> findFromStringConstructor(Class<T> cls) {\n",
+                        "        Constructor<T> con;\n",
+                        "        try {\n",
+                        "            con = cls.getDeclaredConstructor(String.class);\n",
+                        "        } catch (NoSuchMethodException ex) {\n",
+                        "            try {\n",
+                        "                con = cls.getDeclaredConstructor(CharSequence.class);\n",
+                        "            } catch (NoSuchMethodException ex2) {\n",
+                        "                return null;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        FromString fromString = con.getAnnotation(FromString.class);\n",
+                        "        if (fromString == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        return new ConstructorFromStringConverter<T>(cls, con);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "TypedFromStringConverter<T>",
+                            "TypedFromStringConverter<T>"
+                        ]
+                    ],
+                    "signature": "findFromStringConstructor(Class<T>)",
+                    "parameters": [
+                        "cls"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __findFromStringConstructor(self, cls: typing.Type[typing.Any]) -> TypedStringConverter[typing.Any]:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "107-145:findToStringMethod": {
+                    "start": 107,
+                    "end": 145,
+                    "body": [
+                        "    private Method findToStringMethod(Class<?> cls) {\n",
+                        "        Method matched = null;\n",
+                        "        Class<?> loopCls = cls;\n",
+                        "        while (loopCls != null && matched == null) {\n",
+                        "            Method[] methods = loopCls.getDeclaredMethods();\n",
+                        "            for (Method method : methods) {\n",
+                        "                if (!method.isBridge() && !method.isSynthetic()) {\n",
+                        "                    ToString toString = method.getAnnotation(ToString.class);\n",
+                        "                    if (toString != null) {\n",
+                        "                        if (matched != null) {\n",
+                        "                            throw new IllegalStateException(\n",
+                        "                                    \"Two methods are annotated with @ToString: \" + cls.getName());\n",
+                        "                        }\n",
+                        "                        matched = method;\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "            loopCls = loopCls.getSuperclass();\n",
+                        "        }\n",
+                        "        if (matched == null) {\n",
+                        "            for (Class<?> loopIfc : eliminateEnumSubclass(cls).getInterfaces()) {\n",
+                        "                Method[] methods = loopIfc.getDeclaredMethods();\n",
+                        "                for (Method method : methods) {\n",
+                        "                    if (!method.isBridge() && !method.isSynthetic()) {\n",
+                        "                        ToString toString = method.getAnnotation(ToString.class);\n",
+                        "                        if (toString != null) {\n",
+                        "                            if (matched != null) {\n",
+                        "                                throw new IllegalStateException(\n",
+                        "                                        \"Two methods are annotated with @ToString on interfaces: \"\n",
+                        "                                                + cls.getName());\n",
+                        "                            }\n",
+                        "                            matched = method;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return matched;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Method",
+                            "java.lang.reflect.Method"
+                        ]
+                    ],
+                    "signature": "findToStringMethod(Class<?>)",
+                    "parameters": [
+                        "cls"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __findToStringMethod(self, cls: Type) -> inspect.Signature:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "89-98:findAnnotatedFromStringConverter": {
+                    "start": 89,
+                    "end": 98,
+                    "body": [
+                        "    private <T> TypedFromStringConverter<T> findAnnotatedFromStringConverter(Class<T> cls) {\n",
+                        "        TypedFromStringConverter<T> con = findFromStringConstructor(cls);\n",
+                        "        TypedFromStringConverter<T> mth =\n",
+                        "                findFromStringMethod(cls, con == null); // optionally checks superclasses\n",
+                        "        if (con != null && mth != null) {\n",
+                        "            throw new IllegalStateException(\n",
+                        "                    \"Both method and constructor are annotated with @FromString: \" + cls.getName());\n",
+                        "        }\n",
+                        "        return (con != null ? con : mth);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "TypedFromStringConverter<T>",
+                            "TypedFromStringConverter<T>"
+                        ]
+                    ],
+                    "signature": "findAnnotatedFromStringConverter(Class<T>)",
+                    "parameters": [
+                        "cls"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __findAnnotatedFromStringConverter(self, cls: typing.Type[typing.Any]) -> TypedStringConverter[typing.Any]:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "56-67:findAnnotatedConverter": {
+                    "start": 56,
+                    "end": 67,
+                    "body": [
+                        "    private <T> StringConverter<T> findAnnotatedConverter(Class<T> cls) {\n",
+                        "        Method toString = findToStringMethod(cls); // checks superclasses\n",
+                        "        if (toString == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        TypedFromStringConverter<T> fromString = findAnnotatedFromStringConverter(cls);\n",
+                        "        if (fromString == null) {\n",
+                        "            throw new IllegalStateException(\n",
+                        "                    \"Class annotated with @ToString but not with @FromString: \" + cls.getName());\n",
+                        "        }\n",
+                        "        return new ReflectionStringConverter<T>(cls, toString, fromString);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "StringConverter<T>",
+                            "StringConverter<T>"
+                        ]
+                    ],
+                    "signature": "findAnnotatedConverter(Class<T>)",
+                    "parameters": [
+                        "cls"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __findAnnotatedConverter(self, cls: typing.Type[typing.Any]) -> str:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "34-34:AnnotationStringConverterFactory": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private AnnotationStringConverterFactory() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "AnnotationStringConverterFactory()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ]
+                },
+                "77-79:findFromStringConverter": {
+                    "start": 77,
+                    "end": 79,
+                    "body": [
+                        "    <T> TypedFromStringConverter<T> findFromStringConverter(Class<T> cls) {\n",
+                        "        return findAnnotatedFromStringConverter(cls); // capture generics\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "TypedFromStringConverter<T>",
+                            "TypedFromStringConverter<T>"
+                        ]
+                    ],
+                    "signature": "findFromStringConverter(Class<T>)",
+                    "parameters": [
+                        "cls"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def findFromStringConverter(self, cls: typing.Type[typing.Any]) -> TypedStringConverter[typing.Any]:\n",
+                        "        pass\n\n"
+                    ]
+                }
+            },
+            "fields": {
+                "31-31:INSTANCE": {
+                    "start": 31,
+                    "end": 31,
+                    "body": [
+                        "    static final AnnotationStringConverterFactory INSTANCE = new AnnotationStringConverterFactory();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "AnnotationStringConverterFactory",
+                            "AnnotationStringConverterFactory"
+                        ]
+                    ],
+                    "partial_translation": "    INSTANCE: AnnotationStringConverterFactory = <placeholder>\n"
+                }
+            }
+        }
+    },
+    "python_imports": [
+        "import typing"
+    ]
+}

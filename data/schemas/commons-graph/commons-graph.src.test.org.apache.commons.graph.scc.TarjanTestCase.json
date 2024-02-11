@@ -1,0 +1,433 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-graph/src/test/java/org/apache/commons/graph/scc/TarjanTestCase.java",
+    "imports": {
+        "37-37:import Set": {
+            "start": 37,
+            "end": 37,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "35-35:import Collections": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import java.util.Collections;\n"
+            ]
+        },
+        "36-36:import HashSet": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "31-31:import DirectedMutableGraph": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.apache.commons.graph.model.DirectedMutableGraph;\n"
+            ]
+        },
+        "27-27:import AbstractGraphConnection": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.builder.AbstractGraphConnection;\n"
+            ]
+        },
+        "33-33:import Test": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "30-30:import BaseLabeledWeightedEdge": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledWeightedEdge;\n"
+            ]
+        },
+        "28-28:import BaseLabeledEdge": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledEdge;\n"
+            ]
+        },
+        "29-29:import BaseLabeledVertex": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledVertex;\n"
+            ]
+        },
+        "32-32:import Ignore": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.junit.Ignore;\n"
+            ]
+        },
+        "24-24:import static Assert.assertEquals": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "22-22:import static CommonsGraph.findStronglyConnectedComponent": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.findStronglyConnectedComponent;\n"
+            ]
+        },
+        "23-23:import static CommonsGraph.newDirectedMutableGraph": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.newDirectedMutableGraph;\n"
+            ]
+        },
+        "25-25:import static Assert.assertFalse": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import static org.junit.Assert.assertFalse;\n"
+            ]
+        }
+    },
+    "classes": {
+        "TarjanTestCase": {
+            "start": 44,
+            "end": 44,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Integer>>(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "87-140:verifyHasStronglyConnectedComponents": {
+                    "start": 87,
+                    "end": 140,
+                    "body": [
+                        "    public void verifyHasStronglyConnectedComponents() {\n",
+                        "        final BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        final BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        final BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        final BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "        final BaseLabeledVertex e = new BaseLabeledVertex(\"E\");\n",
+                        "        final BaseLabeledVertex f = new BaseLabeledVertex(\"F\");\n",
+                        "        final BaseLabeledVertex g = new BaseLabeledVertex(\"G\");\n",
+                        "        final BaseLabeledVertex h = new BaseLabeledVertex(\"H\");\n",
+                        "\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {\n",
+                        "                                addVertex(a);\n",
+                        "                                addVertex(b);\n",
+                        "                                addVertex(c);\n",
+                        "                                addVertex(d);\n",
+                        "                                addVertex(e);\n",
+                        "                                addVertex(f);\n",
+                        "                                addVertex(g);\n",
+                        "                                addVertex(h);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A -> F\")).from(a).to(f);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A -> B\")).from(a).to(b);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B -> D\")).from(b).to(d);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"C -> G\")).from(c).to(g);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"D -> A\")).from(d).to(a);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"D -> G\")).from(d).to(g);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E -> C\")).from(e).to(c);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E -> F\")).from(e).to(f);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"F -> E\")).from(f).to(e);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"G -> H\")).from(g).to(h);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"H -> C\")).from(h).to(c);\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "\n",
+                        "        Set<Set<BaseLabeledVertex>> expected = new HashSet<Set<BaseLabeledVertex>>();\n",
+                        "        Set<BaseLabeledVertex> scc1 = new HashSet<BaseLabeledVertex>();\n",
+                        "        Collections.addAll(scc1, a, b, d);\n",
+                        "        expected.add(scc1);\n",
+                        "        Set<BaseLabeledVertex> scc2 = new HashSet<BaseLabeledVertex>();\n",
+                        "        Collections.addAll(scc2, e, f);\n",
+                        "        expected.add(scc2);\n",
+                        "        Set<BaseLabeledVertex> scc3 = new HashSet<BaseLabeledVertex>();\n",
+                        "        Collections.addAll(scc3, g, h, c);\n",
+                        "        expected.add(scc3);\n",
+                        "\n",
+                        "        Set<Set<BaseLabeledVertex>> actual = findStronglyConnectedComponent(graph).applyingTarjan();\n",
+                        "\n",
+                        "        assertFalse(actual.isEmpty());\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Ignore"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "verifyHasStronglyConnectedComponents()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "61-83:testSparse": {
+                    "start": 61,
+                    "end": 83,
+                    "body": [
+                        "    public void testSparse() {\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>() {\n",
+                        "\n",
+                        "                            @Override\n",
+                        "                            public void connect0() {\n",
+                        "                                addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "\n",
+                        "        final int expected = 6;\n",
+                        "\n",
+                        "        Set<Set<BaseLabeledVertex>> actual = findStronglyConnectedComponent(graph).applyingTarjan();\n",
+                        "\n",
+                        "        assertEquals(actual.size(), expected);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSparse()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "55-58:testNullGraph": {
+                    "start": 55,
+                    "end": 58,
+                    "body": [
+                        "    public void testNullGraph() {\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph = null;\n",
+                        "        findStronglyConnectedComponent(graph).applyingTarjan();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullGraph()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "47-52:testEmptyGraph": {
+                    "start": 47,
+                    "end": 52,
+                    "body": [
+                        "    public void testEmptyGraph() {\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>();\n",
+                        "\n",
+                        "        findStronglyConnectedComponent(graph).applyingTarjan();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyGraph()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        },
+        "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Integer>>(...) { ... }": {
+            "start": 64,
+            "end": 65,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TarjanTestCase",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "68-75:connect0": {
+                    "start": 68,
+                    "end": 75,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "64-65:": {
+                    "start": 64,
+                    "end": 65,
+                    "body": [
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        },
+        "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }": {
+            "start": 99,
+            "end": 99,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TarjanTestCase",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "101-122:connect0": {
+                    "start": 101,
+                    "end": 122,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                addVertex(a);\n",
+                        "                                addVertex(b);\n",
+                        "                                addVertex(c);\n",
+                        "                                addVertex(d);\n",
+                        "                                addVertex(e);\n",
+                        "                                addVertex(f);\n",
+                        "                                addVertex(g);\n",
+                        "                                addVertex(h);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A -> F\")).from(a).to(f);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A -> B\")).from(a).to(b);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B -> D\")).from(b).to(d);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"C -> G\")).from(c).to(g);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"D -> A\")).from(d).to(a);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"D -> G\")).from(d).to(g);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E -> C\")).from(e).to(c);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E -> F\")).from(e).to(f);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"F -> E\")).from(f).to(e);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"G -> H\")).from(g).to(h);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"H -> C\")).from(h).to(c);\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "99-99:": {
+                    "start": 99,
+                    "end": 99,
+                    "body": [
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        }
+    }
+}

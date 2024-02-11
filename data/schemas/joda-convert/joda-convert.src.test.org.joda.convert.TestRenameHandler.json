@@ -1,0 +1,293 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-convert/src/test/java/org/joda/convert/TestRenameHandler.java",
+    "imports": {
+        "24-24:import ByteArrayOutputStream": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "25-25:import PrintStream": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.io.PrintStream;\n"
+            ]
+        },
+        "26-26:import AtomicBoolean": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.concurrent.atomic.AtomicBoolean;\n"
+            ]
+        },
+        "22-22:import Test": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "18-18:import static Assert.assertEquals": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "20-20:import static Assert.assertTrue": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.Assert.assertTrue;\n"
+            ]
+        },
+        "19-19:import static Assert.assertFalse": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import static org.junit.Assert.assertFalse;\n"
+            ]
+        }
+    },
+    "classes": {
+        "TestRenameHandler": {
+            "start": 29,
+            "end": 29,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "74-97:test_matchUsingConfigFile": {
+                    "start": 74,
+                    "end": 97,
+                    "body": [
+                        "    public void test_matchUsingConfigFile() throws Exception {\n",
+                        "        PrintStream originalErr = System.err;\n",
+                        "        try {\n",
+                        "            ByteArrayOutputStream baos = new ByteArrayOutputStream();\n",
+                        "            PrintStream ps = new PrintStream(baos, false, \"UTF-8\");\n",
+                        "            System.setErr(ps);\n",
+                        "            RenameHandler test = RenameHandler.create1(true);\n",
+                        "            System.err.flush();\n",
+                        "            assertEquals(Status.class, test.lookupType(\"com.foo.Bar\"));\n",
+                        "            assertEquals(Status.VALID, test.lookupEnum(Status.class, \"YES\"));\n",
+                        "            assertEquals(DistanceMethodMethod.class, test.lookupType(\"com.foo.Foo\"));\n",
+                        "            assertEquals(Status.INVALID, test.lookupEnum(Status.class, \"NO\"));\n",
+                        "            String logged = baos.toString(\"UTF-8\");\n",
+                        "            assertTrue(logged.startsWith(\"ERROR: Invalid Renamed.ini: \"));\n",
+                        "            assertTrue(logged.contains(\"org.joda.convert.ClassDoesNotExist\"));\n",
+                        "            assertTrue(\n",
+                        "                    test.getTypeRenames().containsKey(\"com.foo.convert.TestRenameHandlerBadInit\"));\n",
+                        "            assertTrue(Status.STRING_CONVERTIBLE);\n",
+                        "            assertFalse(BAD_INIT.get());\n",
+                        "\n",
+                        "        } finally {\n",
+                        "            System.setErr(originalErr);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_matchUsingConfigFile()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "66-71:test_locked": {
+                    "start": 66,
+                    "end": 71,
+                    "body": [
+                        "    public void test_locked() {\n",
+                        "        RenameHandler test = RenameHandler.create0();\n",
+                        "        test.renamedType(\"com.foo.Bar\", TestRenameHandler.class);\n",
+                        "        test.lock();\n",
+                        "        test.renamedType(\"com.foo.Foo\", TestRenameHandler.class);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_locked()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "60-63:test_renameBlockedType3": {
+                    "start": 60,
+                    "end": 63,
+                    "body": [
+                        "    public void test_renameBlockedType3() {\n",
+                        "        RenameHandler test = RenameHandler.create0();\n",
+                        "        test.renamedType(\"org.joda.foo.Bar\", TestRenameHandler.class);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_renameBlockedType3()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "54-57:test_renameBlockedType2": {
+                    "start": 54,
+                    "end": 57,
+                    "body": [
+                        "    public void test_renameBlockedType2() {\n",
+                        "        RenameHandler test = RenameHandler.create0();\n",
+                        "        test.renamedType(\"javax.foo.Bar\", TestRenameHandler.class);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_renameBlockedType2()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "48-51:test_renameBlockedType1": {
+                    "start": 48,
+                    "end": 51,
+                    "body": [
+                        "    public void test_renameBlockedType1() {\n",
+                        "        RenameHandler test = RenameHandler.create0();\n",
+                        "        test.renamedType(\"java.lang.String\", TestRenameHandler.class);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_renameBlockedType1()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "42-45:test_noMatchType": {
+                    "start": 42,
+                    "end": 45,
+                    "body": [
+                        "    public void test_noMatchType() throws ClassNotFoundException {\n",
+                        "        RenameHandler test = RenameHandler.create0();\n",
+                        "        test.lookupType(\"com.foo.Foo\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_noMatchType()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "34-39:test_matchRenamedType": {
+                    "start": 34,
+                    "end": 39,
+                    "body": [
+                        "    public void test_matchRenamedType() throws ClassNotFoundException {\n",
+                        "        RenameHandler test = RenameHandler.create0();\n",
+                        "        test.renamedType(\"com.foo.Bar\", TestRenameHandler.class);\n",
+                        "        Class<?> renamed = test.lookupType(\"com.foo.Bar\");\n",
+                        "        assertEquals(TestRenameHandler.class, renamed);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_matchRenamedType()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "31-31:BAD_INIT": {
+                    "start": 31,
+                    "end": 31,
+                    "body": [
+                        "    static final AtomicBoolean BAD_INIT = new AtomicBoolean();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "AtomicBoolean",
+                            "java.util.concurrent.atomic.AtomicBoolean"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

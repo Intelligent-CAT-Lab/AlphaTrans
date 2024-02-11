@@ -1,0 +1,385 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-cli/src/test/java/org/apache/commons/cli/OptionBuilderTest.java",
+    "imports": {
+        "26-26:import Test": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "20-20:import static Assert.assertEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "23-23:import static Assert.assertTrue": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.Assert.assertTrue;\n"
+            ]
+        },
+        "21-21:import static Assert.assertFalse": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.Assert.assertFalse;\n"
+            ]
+        },
+        "22-22:import static Assert.assertNull": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.Assert.assertNull;\n"
+            ]
+        },
+        "24-24:import static Assert.fail": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.fail;\n"
+            ]
+        }
+    },
+    "classes": {
+        "OptionBuilderTest": {
+            "start": 29,
+            "end": 29,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "140-171:testTwoCompleteOptions": {
+                    "start": 140,
+                    "end": 171,
+                    "body": [
+                        "    public void testTwoCompleteOptions() {\n",
+                        "        Option simple =\n",
+                        "                OptionBuilder.withLongOpt(\"simple option\")\n",
+                        "                        .hasArg0()\n",
+                        "                        .isRequired0()\n",
+                        "                        .hasArgs0()\n",
+                        "                        .withType0(Float.class)\n",
+                        "                        .withDescription(\"this is a simple option\")\n",
+                        "                        .create1('s');\n",
+                        "\n",
+                        "        assertEquals(\"s\", simple.getOpt());\n",
+                        "        assertEquals(\"simple option\", simple.getLongOpt());\n",
+                        "        assertEquals(\"this is a simple option\", simple.getDescription());\n",
+                        "        assertEquals(simple.getType(), Float.class);\n",
+                        "        assertTrue(simple.hasArg());\n",
+                        "        assertTrue(simple.isRequired());\n",
+                        "        assertTrue(simple.hasArgs());\n",
+                        "\n",
+                        "        simple =\n",
+                        "                OptionBuilder.withLongOpt(\"dimple option\")\n",
+                        "                        .hasArg0()\n",
+                        "                        .withDescription(\"this is a dimple option\")\n",
+                        "                        .create1('d');\n",
+                        "\n",
+                        "        assertEquals(\"d\", simple.getOpt());\n",
+                        "        assertEquals(\"dimple option\", simple.getLongOpt());\n",
+                        "        assertEquals(\"this is a dimple option\", simple.getDescription());\n",
+                        "        assertEquals(String.class, simple.getType());\n",
+                        "        assertTrue(simple.hasArg());\n",
+                        "        assertFalse(simple.isRequired());\n",
+                        "        assertFalse(simple.hasArgs());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testTwoCompleteOptions()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "125-137:testSpecialOptChars": {
+                    "start": 125,
+                    "end": 137,
+                    "body": [
+                        "    public void testSpecialOptChars() throws Exception {\n",
+                        "        final Option opt1 = OptionBuilder.withDescription(\"help options\").create1('?');\n",
+                        "        assertEquals(\"?\", opt1.getOpt());\n",
+                        "\n",
+                        "        final Option opt2 = OptionBuilder.withDescription(\"read from stdin\").create1('@');\n",
+                        "        assertEquals(\"@\", opt2.getOpt());\n",
+                        "\n",
+                        "        try {\n",
+                        "            OptionBuilder.create1(' ');\n",
+                        "            fail(\"IllegalArgumentException not caught\");\n",
+                        "        } catch (final IllegalArgumentException e) {\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSpecialOptChars()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "118-122:testOptionArgNumbers": {
+                    "start": 118,
+                    "end": 122,
+                    "body": [
+                        "    public void testOptionArgNumbers() {\n",
+                        "        final Option opt =\n",
+                        "                OptionBuilder.withDescription(\"option description\").hasArgs1(2).create1('o');\n",
+                        "        assertEquals(2, opt.getArgs());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testOptionArgNumbers()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "97-115:testIllegalOptions": {
+                    "start": 97,
+                    "end": 115,
+                    "body": [
+                        "    public void testIllegalOptions() {\n",
+                        "        try {\n",
+                        "            OptionBuilder.withDescription(\"option description\").create1('\"');\n",
+                        "            fail(\"IllegalArgumentException not caught\");\n",
+                        "        } catch (final IllegalArgumentException exp) {\n",
+                        "        }\n",
+                        "\n",
+                        "        try {\n",
+                        "            OptionBuilder.create2(\"opt`\");\n",
+                        "            fail(\"IllegalArgumentException not caught\");\n",
+                        "        } catch (final IllegalArgumentException exp) {\n",
+                        "        }\n",
+                        "\n",
+                        "        try {\n",
+                        "            OptionBuilder.create2(\"opt\");\n",
+                        "        } catch (final IllegalArgumentException exp) {\n",
+                        "            fail(\"IllegalArgumentException caught\");\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testIllegalOptions()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "86-94:testCreateIncompleteOption": {
+                    "start": 86,
+                    "end": 94,
+                    "body": [
+                        "    public void testCreateIncompleteOption() {\n",
+                        "        try {\n",
+                        "            OptionBuilder.hasArg0().create0();\n",
+                        "            fail(\"Incomplete option should be rejected\");\n",
+                        "        } catch (final IllegalArgumentException e) {\n",
+                        "\n",
+                        "            OptionBuilder.create2(\"opt\");\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCreateIncompleteOption()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "66-83:testCompleteOption": {
+                    "start": 66,
+                    "end": 83,
+                    "body": [
+                        "    public void testCompleteOption() {\n",
+                        "        final Option simple =\n",
+                        "                OptionBuilder.withLongOpt(\"simple option\")\n",
+                        "                        .hasArg0()\n",
+                        "                        .isRequired0()\n",
+                        "                        .hasArgs0()\n",
+                        "                        .withType0(Float.class)\n",
+                        "                        .withDescription(\"this is a simple option\")\n",
+                        "                        .create1('s');\n",
+                        "\n",
+                        "        assertEquals(\"s\", simple.getOpt());\n",
+                        "        assertEquals(\"simple option\", simple.getLongOpt());\n",
+                        "        assertEquals(\"this is a simple option\", simple.getDescription());\n",
+                        "        assertEquals(simple.getType(), Float.class);\n",
+                        "        assertTrue(simple.hasArg());\n",
+                        "        assertTrue(simple.isRequired());\n",
+                        "        assertTrue(simple.hasArgs());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCompleteOption()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "49-63:testBuilderIsResettedAlways": {
+                    "start": 49,
+                    "end": 63,
+                    "body": [
+                        "    public void testBuilderIsResettedAlways() {\n",
+                        "        try {\n",
+                        "            OptionBuilder.withDescription(\"JUnit\").create1('\"');\n",
+                        "            fail(\"IllegalArgumentException expected\");\n",
+                        "        } catch (final IllegalArgumentException e) {\n",
+                        "        }\n",
+                        "        assertNull(\"we inherited a description\", OptionBuilder.create1('x').getDescription());\n",
+                        "\n",
+                        "        try {\n",
+                        "            OptionBuilder.withDescription(\"JUnit\").create0();\n",
+                        "            fail(\"IllegalArgumentException expected\");\n",
+                        "        } catch (final IllegalArgumentException e) {\n",
+                        "        }\n",
+                        "        assertNull(\"we inherited a description\", OptionBuilder.create1('x').getDescription());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBuilderIsResettedAlways()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "40-46:testBaseOptionStringOpt": {
+                    "start": 40,
+                    "end": 46,
+                    "body": [
+                        "    public void testBaseOptionStringOpt() {\n",
+                        "        final Option base = OptionBuilder.withDescription(\"option description\").create2(\"o\");\n",
+                        "\n",
+                        "        assertEquals(\"o\", base.getOpt());\n",
+                        "        assertEquals(\"option description\", base.getDescription());\n",
+                        "        assertFalse(base.hasArg());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBaseOptionStringOpt()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "31-37:testBaseOptionCharOpt": {
+                    "start": 31,
+                    "end": 37,
+                    "body": [
+                        "    public void testBaseOptionCharOpt() {\n",
+                        "        final Option base = OptionBuilder.withDescription(\"option description\").create1('o');\n",
+                        "\n",
+                        "        assertEquals(\"o\", base.getOpt());\n",
+                        "        assertEquals(\"option description\", base.getDescription());\n",
+                        "        assertFalse(base.hasArg());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBaseOptionCharOpt()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        }
+    }
+}
