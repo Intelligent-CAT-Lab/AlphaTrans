@@ -33,8 +33,8 @@ def main(args):
         caller_start_line = int(caller_location[caller_location.find(':', caller_location.find(':')+1)+1:].split(':')[0])
         callee_start_line = int(callee_location[callee_location.find(':', callee_location.find(':')+1)+1:].split(':')[0])
 
-        caller_schema_name = caller_path[caller_path.find(project):].replace('/', '.')
-        callee_schema_name = callee_path[callee_path.find(project):].replace('/', '.')
+        caller_schema_name = caller_path[caller_path.find(project):].replace('/', '.').replace('.java', '')
+        callee_schema_name = callee_path[callee_path.find(project):].replace('/', '.').replace('.java', '')
 
         callee_method_class_name, callee_method_key_name = None, None
         callee_schema = {}
