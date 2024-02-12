@@ -19,6 +19,8 @@ package org.apache.commons.fileupload;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
+import org.graalvm.polyglot.Value;
+
 /** Exception for errors encountered while processing the request. */
 public class FileUploadException extends Exception {
 
@@ -26,10 +28,21 @@ public class FileUploadException extends Exception {
     private static final long serialVersionUID = 8881893724388807504L;
 
     /**
+     * Contains a reference to the Python class.
+     */
+    private static Value clz = ContextInitializer.getPythonClass("file_upload_exception.py",
+            "FileUploadException");
+
+    /**
+     * Contains a reference to the Python exception.
+     */
+    private final Value obj;
+
+    /**
      * The exceptions cause. We overwrite the cause of the super class, which isn't available in
      * Java 1.3.
      */
-    private final Throwable cause;
+    // private final Throwable cause;
 
     /** Constructs a new <code>FileUploadException</code> without message. */
     public static FileUploadException FileUploadException0() {
@@ -53,7 +66,8 @@ public class FileUploadException extends Exception {
      */
     public FileUploadException(String msg, Throwable cause) {
         super(msg);
-        this.cause = cause;
+        // this.cause = cause;
+        obj = clz.newInstance(msg, cause);
     }
 
     /**
@@ -63,10 +77,11 @@ public class FileUploadException extends Exception {
      */
     public void printStackTrace0(PrintStream stream) {
         super.printStackTrace(stream);
-        if (cause != null) {
-            stream.println("Caused by:");
-            cause.printStackTrace(stream);
-        }
+        // if (cause != null) {
+        //     stream.println("Caused by:");
+        //     cause.printStackTrace(stream);
+        // }
+        obj.invokeMember("printStackTrace0", stream);
     }
 
     /**
@@ -76,15 +91,17 @@ public class FileUploadException extends Exception {
      */
     public void printStackTrace1(PrintWriter writer) {
         super.printStackTrace(writer);
-        if (cause != null) {
-            writer.println("Caused by:");
-            cause.printStackTrace(writer);
-        }
+        // if (cause != null) {
+        //     writer.println("Caused by:");
+        //     cause.printStackTrace(writer);
+        // }
+        obj.invokeMember("printStackTrace1", writer);
     }
 
     /** {@inheritDoc} */
     @Override
     public Throwable getCause() {
-        return cause;
+        // return cause;
+        return obj.invokeMember("getCause").as(Throwable.class);
     }
 }
