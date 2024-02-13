@@ -26,7 +26,7 @@ import org.graalvm.polyglot.Value;
 /**
  * Provides a shared GraalVM engine and a method to get Python classes.
  */
-abstract class ContextInitializer {
+public abstract class ContextInitializer {
     /**
      * The shared GraalVM engine.
      */
