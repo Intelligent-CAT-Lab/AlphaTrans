@@ -55,6 +55,10 @@ public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
         obj = clz.newInstance();
     }
 
+    public FileItemHeadersImpl(Value foreignObj) {
+        obj = foreignObj;
+    }
+
     /** Map of <code>String</code> keys to a <code>List</code> of <code>String</code> instances. */
     // private final Map<String, List<String>> headerNameToValueListMap =
     //         new LinkedHashMap<String, List<String>>();
