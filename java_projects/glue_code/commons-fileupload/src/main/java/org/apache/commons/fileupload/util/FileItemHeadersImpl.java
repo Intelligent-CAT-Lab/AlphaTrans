@@ -44,7 +44,7 @@ public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
      * Contains a reference to the Python class.
      */
     private static Value clz = ContextInitializer.getPythonClass("file_upload_exception.py",
-            "FileUploadException");
+            "FileItemHeadersImpl");
 
     /**
      * Contains a reference to the Python exception.
