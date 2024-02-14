@@ -18,6 +18,7 @@ package org.apache.commons.fileupload.disk;
 
 import static java.lang.String.format;
 
+import org.apache.commons.fileupload.ContextInitializer;
 import org.apache.commons.fileupload.FileItemHeaders;
 import org.apache.commons.fileupload.ParameterParser;
 import org.apache.commons.fileupload.util.Streams;
@@ -26,6 +27,8 @@ import java.io.File;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.graalvm.polyglot.Value;
 
 /**
  * The default implementation of the {@link org.apache.commons.fileupload.FileItem FileItem}
@@ -53,6 +56,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DiskFileItem {
 
     /**
+     * Contains a reference to the Python class.
+     */
+    private static Value clz = ContextInitializer.getPythonClass("disk/disk_file_item.py",
+            "DiskFileItem");
+
+    /**
+     * Contains a reference to the Python exception.
+     */
+    private final Value obj;
+
+    /**
      * Default content charset to be used when no explicit charset parameter is provided by the
      * sender. Media subtypes of the "text" type are defined to have a default charset value of
      * "ISO-8859-1" when received via HTTP.
@@ -69,28 +83,28 @@ public class DiskFileItem {
     private String fieldName;
 
     /** The content type passed by the browser, or <code>null</code> if not defined. */
-    private final String contentType;
+    // private final String contentType;
 
     /** Whether or not this item is a simple form field. */
     private boolean isFormField;
 
     /** The original filename in the user's filesystem. */
-    private final String fileName;
+    // private final String fileName;
 
     /**
      * The size of the item, in bytes. This is used to cache the size when a file item is moved from
      * its original location.
      */
-    private long size = -1;
+    // private long size = -1;
 
     /** The threshold above which uploads will be stored on disk. */
-    private final int sizeThreshold;
+    // private final int sizeThreshold;
 
     /** The directory in which uploaded files will be stored, if stored on disk. */
-    private final File repository;
+    // private final File repository;
 
     /** Cached contents of the file. */
-    private byte[] cachedContent;
+    // private byte[] cachedContent;
 
     /** Output stream for this item. */
 
@@ -128,12 +142,13 @@ public class DiskFileItem {
             String fileName,
             int sizeThreshold,
             File repository) {
-        this.fieldName = fieldName;
-        this.contentType = contentType;
-        this.isFormField = isFormField;
-        this.fileName = fileName;
-        this.sizeThreshold = sizeThreshold;
-        this.repository = repository;
+        // this.fieldName = fieldName;
+        // this.contentType = contentType;
+        // this.isFormField = isFormField;
+        // this.fileName = fileName;
+        // this.sizeThreshold = sizeThreshold;
+        // this.repository = repository;
+        obj = clz.newInstance(fieldName, contentType, isFormField, fileName, sizeThreshold, repository);
     }
 
     /**
@@ -151,7 +166,8 @@ public class DiskFileItem {
      * @return The content type passed by the agent or <code>null</code> if not defined.
      */
     public String getContentType() {
-        return contentType;
+        // return contentType;
+        return obj.invokeMember("getContentType").asString();
     }
 
     /**
@@ -160,10 +176,11 @@ public class DiskFileItem {
      * @return The content charset passed by the agent or <code>null</code> if not defined.
      */
     public String getCharSet() {
-        ParameterParser parser = new ParameterParser();
-        parser.setLowerCaseNames(true);
-        Map<String, String> params = parser.parse1(getContentType(), ';');
-        return params.get("charset");
+        // ParameterParser parser = new ParameterParser();
+        // parser.setLowerCaseNames(true);
+        // Map<String, String> params = parser.parse1(getContentType(), ';');
+        // return params.get("charset");
+        return obj.invokeMember("getCharSet").asString();
     }
 
     /**
@@ -176,7 +193,8 @@ public class DiskFileItem {
      *     org.apache.commons.fileupload.InvalidFileNameException#getName()}.
      */
     public String getName() {
-        return Streams.checkFileName(fileName);
+        // return Streams.checkFileName(fileName);
+        return obj.invokeMember("getName").asString();
     }
 
     /**
@@ -249,7 +267,8 @@ public class DiskFileItem {
      * @see #setFieldName(java.lang.String)
      */
     public String getFieldName() {
-        return fieldName;
+        // return fieldName;
+        return obj.invokeMember("getFieldName").asString();
     }
 
     /**
@@ -259,7 +278,8 @@ public class DiskFileItem {
      * @see #getFieldName()
      */
     public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
+        // this.fieldName = fieldName;
+        obj.invokeMember("setFieldName", fieldName);
     }
 
     /**
@@ -270,7 +290,8 @@ public class DiskFileItem {
      * @see #setFormField(boolean)
      */
     public boolean isFormField() {
-        return isFormField;
+        // return isFormField;
+        return obj.invokeMember("isFormField").asBoolean();
     }
 
     /**
@@ -281,7 +302,8 @@ public class DiskFileItem {
      * @see #isFormField()
      */
     public void setFormField(boolean state) {
-        isFormField = state;
+        // isFormField = state;
+        obj.invokeMember("setFormField", state);
     }
 
     /**
@@ -317,17 +339,18 @@ public class DiskFileItem {
      * @return The {@link java.io.File File} to be used for temporary storage.
      */
     protected File getTempFile() {
-        if (tempFile == null) {
-            File tempDir = repository;
-            if (tempDir == null) {
-                tempDir = new File(System.getProperty("java.io.tmpdir"));
-            }
+        // if (tempFile == null) {
+        //     File tempDir = repository;
+        //     if (tempDir == null) {
+        //         tempDir = new File(System.getProperty("java.io.tmpdir"));
+        //     }
 
-            String tempFileName = format("upload_%s_%s.tmp", UID, getUniqueId());
+        //     String tempFileName = format("upload_%s_%s.tmp", UID, getUniqueId());
 
-            tempFile = new File(tempDir, tempFileName);
-        }
-        return tempFile;
+        //     tempFile = new File(tempDir, tempFileName);
+        // }
+        // return tempFile;
+        return obj.invokeMember("getTempFile").as(File.class);
     }
 
     /**
@@ -336,16 +359,16 @@ public class DiskFileItem {
      *
      * @return A String with the non-random looking instance identifier.
      */
-    private static String getUniqueId() {
-        final int limit = 100000000;
-        int current = COUNTER.getAndIncrement();
-        String id = Integer.toString(current);
+    // private static String getUniqueId() {
+        // final int limit = 100000000;
+        // int current = COUNTER.getAndIncrement();
+        // String id = Integer.toString(current);
 
-        if (current < limit) {
-            id = ("00000000" + id).substring(id.length());
-        }
-        return id;
-    }
+        // if (current < limit) {
+        //     id = ("00000000" + id).substring(id.length());
+        // }
+        // return id;
+    // }
 
     /**
      * Returns a string representation of this object.
@@ -359,7 +382,9 @@ public class DiskFileItem {
      * @return The file items headers.
      */
     public FileItemHeaders getHeaders() {
-        return headers;
+        // return headers;
+        Value fileItemHeadersObj = obj.invokeMember("getHeaders");
+        return FileItemHeaders(fileItemHeadersObj);
     }
 
     /**
@@ -368,7 +393,8 @@ public class DiskFileItem {
      * @param pHeaders The file items headers.
      */
     public void setHeaders(FileItemHeaders pHeaders) {
-        headers = pHeaders;
+        // headers = pHeaders;
+        obj.invokeMember("setHeaders", pHeaders);
     }
 
     /**
@@ -378,7 +404,8 @@ public class DiskFileItem {
      * @return the default charset
      */
     public String getDefaultCharset() {
-        return defaultCharset;
+        // return defaultCharset;
+        return obj.invokeMember("getDefaultCharset").asString();
     }
 
     /**
@@ -388,6 +415,7 @@ public class DiskFileItem {
      * @param charset the default charset
      */
     public void setDefaultCharset(String charset) {
-        defaultCharset = charset;
+        // defaultCharset = charset;
+        obj.invokeMember("setDefaultCharset", charset);
     }
 }
