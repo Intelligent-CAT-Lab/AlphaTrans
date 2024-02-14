@@ -16,6 +16,8 @@
  */
 package org.apache.commons.fileupload;
 
+import org.graalvm.polyglot.Value;
+
 /**
  * This exception is thrown in case of an invalid file name. A file name is invalid, if it contains
  * a NUL character. Attackers might use this to circumvent security checks: For example, a malicious
@@ -28,8 +30,19 @@ public class InvalidFileNameException extends RuntimeException {
     /** Serial version UID, being used, if the exception is serialized. */
     private static final long serialVersionUID = 7922042602454350470L;
 
+    /**
+     * Contains a reference to the Python class.
+     */
+    private static Value clz = ContextInitializer.getPythonClass("invalid_file_name_exception.py",
+            "InvalidFileNameException");
+
+    /**
+     * Contains a reference to the Python exception.
+     */
+    private final Value obj;
+
     /** The file name causing the exception. */
-    private final String name;
+    // private final String name;
 
     /**
      * Creates a new instance.
@@ -39,7 +52,8 @@ public class InvalidFileNameException extends RuntimeException {
      */
     public InvalidFileNameException(String pName, String pMessage) {
         super(pMessage);
-        name = pName;
+        // name = pName;
+        obj = clz.newInstance(pName, pMessage);
     }
 
     /**
@@ -48,6 +62,7 @@ public class InvalidFileNameException extends RuntimeException {
      * @return the invalid file name.
      */
     public String getName() {
-        return name;
+        // return name;
+        return obj.invokeMember("getName").asString();
     }
 }
