@@ -16,13 +16,26 @@
  */
 package org.apache.commons.fileupload;
 
+import org.graalvm.polyglot.Value;
+
 /** This exception is thrown if a request contains more files than the specified limit. */
 public class FileCountLimitExceededException extends FileUploadException {
 
     private static final long serialVersionUID = 6904179610227521789L;
 
+    /**
+     * Contains a reference to the Python class.
+     */
+    private static Value clz = ContextInitializer.getPythonClass("file_count_limit_exceeded_exception.py",
+            "FileCountLimitExceededException");
+
+    /**
+     * Contains a reference to the Python exception.
+     */
+    private final Value obj;
+
     /** The limit that was exceeded. */
-    private final long limit;
+    // private final long limit;
 
     /**
      * Creates a new instance.
@@ -32,7 +45,8 @@ public class FileCountLimitExceededException extends FileUploadException {
      */
     public FileCountLimitExceededException(final String message, final long limit) {
         super(message, null);
-        this.limit = limit;
+        // this.limit = limit;
+        obj = clz.newInstance(message, limit);
     }
 
     /**
@@ -41,6 +55,6 @@ public class FileCountLimitExceededException extends FileUploadException {
      * @return The limit that was exceeded by the request
      */
     public long getLimit() {
-        return limit;
+        return obj.invokeMember("getLimit").asLong();
     }
 }
