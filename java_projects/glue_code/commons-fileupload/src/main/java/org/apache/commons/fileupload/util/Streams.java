@@ -16,13 +16,22 @@
  */
 package org.apache.commons.fileupload.util;
 
+import org.apache.commons.fileupload.ContextInitializer;
 import org.apache.commons.fileupload.InvalidFileNameException;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.graalvm.polyglot.Value;
+
 /** Utility class for working with streams. */
 public final class Streams {
+
+    /**
+     * Contains a reference to the Python class.
+     */
+    private static Value clz = ContextInitializer.getPythonClass("util/streams.py",
+            "Streams");
 
     /** Private constructor, to prevent instantiation. This class has only static methods. */
     private Streams() {}
@@ -95,21 +104,22 @@ public final class Streams {
      * @throws InvalidFileNameException The file name was found to be invalid.
      */
     public static String checkFileName(String fileName) {
-        if (fileName != null && fileName.indexOf('\u0000') != -1) {
-            final StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < fileName.length(); i++) {
-                char c = fileName.charAt(i);
-                switch (c) {
-                    case 0:
-                        sb.append("\\0");
-                        break;
-                    default:
-                        sb.append(c);
-                        break;
-                }
-            }
-            throw new InvalidFileNameException(fileName, "Invalid file name: " + sb);
-        }
-        return fileName;
+        // if (fileName != null && fileName.indexOf('\u0000') != -1) {
+        //     final StringBuilder sb = new StringBuilder();
+        //     for (int i = 0; i < fileName.length(); i++) {
+        //         char c = fileName.charAt(i);
+        //         switch (c) {
+        //             case 0:
+        //                 sb.append("\\0");
+        //                 break;
+        //             default:
+        //                 sb.append(c);
+        //                 break;
+        //         }
+        //     }
+        //     throw new InvalidFileNameException(fileName, "Invalid file name: " + sb);
+        // }
+        // return fileName;
+        return clz.invokeMember("checkFileName", fileName).asString();
     }
 }
