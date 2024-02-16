@@ -67,6 +67,8 @@ def main(args):
 
                 # TODO: add comments for dev hints
                 if 'throws' in method_body:
+                    exception_name = method_body[method_body.find('throws')+6:method_body.find('{')].strip()
+                    
                     method_signature = method_body[:method_body.find('{')+1]
                     method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
                     
@@ -74,7 +76,7 @@ def main(args):
                     final_glue_code += "try {\n"
                     final_glue_code += method_content
                     final_glue_code += "} catch (PolyglotException e) {\n"
-                    final_glue_code += "    throw new RuntimeException(e);\n"
+                    final_glue_code += f"    throw ({exception_name}) ExceptionHandler.handle(e, {_class}.{_methods});\n"
                     final_glue_code += "}\n"
                     final_glue_code += "}\n"
 
