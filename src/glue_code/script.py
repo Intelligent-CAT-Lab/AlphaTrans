@@ -1,23 +1,40 @@
 import argparse
 import os
+import subprocess
 import json
 
+OUTPUT_DIR = "src/glue_code/output"
+
+def get_destination_path(project_name, file_name):
+    project_dirs = [x for x in project_name.split("-") if x != ""]
+
+    package_path = "/".join(["org", "apache"] + project_dirs)
+    final_path = f"{OUTPUT_DIR}/{project_name}/src/main/java/{package_path}"
+
+    # create the package directory if it doesn't exist
+    os.makedirs(final_path, exist_ok=True)
+
+    return f"{final_path}/{file_name}.java"
+
 def write_to_file(file, content):
-    # TODO: change to structured writing - projects/filenames
-    # write to java file
-    with open(file, 'w') as f:
+    with open(file, "w") as f:
         f.write(content)
-    
+
     # format java file
-    os.system(f'java -jar src/glue_code/google-java-format-1.20.0-all-deps.jar -r {file}')
+    try:
+        subprocess.run(['java', '-jar', 'src/glue_code/google-java-format-1.20.0-all-deps.jar', '-r', file], check=True)
+    except Exception as e:
+        print(f"Error formatting {file}: {e}")
     return
 
 def main(args):
     if not os.path.exists('data/schemas'):
-        raise Exception('Please run from the root directory')
+        raise Exception('Please run from the root directory!')
 
     schemas = os.listdir(f'data/schemas/{args.project_name}')
-    
+    # remove test and partial files
+    schemas = [file for file in schemas if 'Test' not in file and not file.endswith('_python_partial.json')]
+
     # TODO: Add ContextInitializer.java, IntegrationUtils.java, ExceptionHandler.java
 
     for schema in schemas:
@@ -25,7 +42,7 @@ def main(args):
             continue
 
         # !! specify schema to test !!
-        if not schema.endswith('.OptionGroup.json'):
+        if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
             continue
 
         with open(f'data/schemas/{args.project_name}/{schema}') as f:
@@ -136,11 +153,12 @@ def main(args):
                 
         final_glue_code += "}\n" * unclosed_brace_count
 
-        output_file = f"src/glue_code/{_class}.java"
+        output_file = get_destination_path(args.project_name, _class)
         write_to_file(output_file, final_glue_code)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate glue code for Java')
     parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project', required=True)
+    parser.add_argument('--class', type=str, dest='class_name', help='name of the class', required=False)
     args = parser.parse_args()
     main(args)
