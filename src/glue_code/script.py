@@ -19,6 +19,7 @@ def main(args):
             data = json.load(f)
         
         final_glue_code = ""
+        unclosed_brace_count = 0
 
         formatted_proj_name = args.project_name.replace('-', '.')
 
@@ -33,7 +34,7 @@ def main(args):
             final_glue_code += "".join(data['imports'][_import]["body"])
 
         # add class definition
-        for _class in data['classes']:
+        for _class in data['classes']:            
             lst = []
             with open("../../" + data['path'], 'r') as current_f:
                 lst = current_f.readlines()
@@ -113,8 +114,14 @@ def main(args):
                     final_glue_code += method_signature + "\n"
                     final_glue_code += final_content
                     final_glue_code += "}\n"
-
-        final_glue_code += "}\n"
+                    
+            # add nested classes
+            if not data['classes'][_class]["nests"]:
+                final_glue_code += "}\n"
+            else:
+                unclosed_brace_count += 1
+                
+        final_glue_code += "}\n" * unclosed_brace_count
 
         # TODO: change to structured writing - projects/filenames
         # write to java file
