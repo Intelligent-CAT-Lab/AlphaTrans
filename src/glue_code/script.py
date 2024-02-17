@@ -2,8 +2,21 @@ import argparse
 import os
 import json
 
+def write_to_file(file, content):
+    # TODO: change to structured writing - projects/filenames
+    # write to java file
+    with open(file, 'w') as f:
+        f.write(content)
+    
+    # format java file
+    os.system(f'java -jar src/glue_code/google-java-format-1.20.0-all-deps.jar -r {file}')
+    return
+
 def main(args):
-    schemas = os.listdir(f'../../data/schemas/{args.project_name}')
+    if not os.path.exists('data/schemas'):
+        raise Exception('Please run from the root directory')
+
+    schemas = os.listdir(f'data/schemas/{args.project_name}')
     
     # TODO: Add ContextInitializer.java, IntegrationUtils.java, ExceptionHandler.java
 
@@ -15,7 +28,7 @@ def main(args):
         if not schema.endswith('.OptionGroup.json'):
             continue
 
-        with open(f'../../data/schemas/{args.project_name}/{schema}') as f:
+        with open(f'data/schemas/{args.project_name}/{schema}') as f:
             data = json.load(f)
         
         final_glue_code = ""
@@ -36,7 +49,7 @@ def main(args):
         # add class definition
         for _class in data['classes']:            
             lst = []
-            with open("../../" + data['path'], 'r') as current_f:
+            with open(data['path'], 'r') as current_f:
                 lst = current_f.readlines()
             class_declaration = lst[data['classes'][_class]['start']-1:data['classes'][_class]['end']]
             final_glue_code += "".join(class_declaration)
@@ -63,13 +76,10 @@ def main(args):
             final_glue_code += "        return obj;\n"
             final_glue_code += "    }\n"
 
-            for _methods in data['classes'][_class]['methods']:
-                method_body = "".join(data['classes'][_class]['methods'][_methods]['body'])
-                method_name = _methods.split(':', 1)[1].strip()
-                
-                # TODO: handle constructors
-                if data['classes'][_class]['methods'][_methods]['is_constructor']:
-                    continue
+            for _method in data['classes'][_class]['methods']:
+                is_constructor = data['classes'][_class]['methods'][_method]['is_constructor']
+                method_body = "".join(data['classes'][_class]['methods'][_method]['body'])
+                method_name = _method.split(':', 1)[1].strip() if not is_constructor else "__init__"
                 
                 method_signature = method_body[:method_body.find('{')+1]
                 method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
@@ -80,17 +90,20 @@ def main(args):
                 final_content = commented_content
                 
                 # construct call to Python
-                if "static" in data['classes'][_class]['methods'][_methods]['modifiers']:
+                if "static" in data['classes'][_class]['methods'][_method]['modifiers'] or is_constructor:
                     caller = "clz"
                 else:
                     caller = "obj"
-                args_buildup = ", ".join(data['classes'][_class]['methods'][_methods]['parameters'])
+                
+                args_buildup = ", ".join(data['classes'][_class]['methods'][_method]['parameters'])
                 python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
                 
-                if 'void' in method_signature:
+                if is_constructor:
+                    final_content += f"\nthis.obj = {python_call};\n"
+                elif 'void' in method_signature:
                     final_content += f"\n{python_call};\n"
                 else:
-                    return_type = data['classes'][_class]['methods'][_methods]['return_types'][0][0] # taking the first return type for now (TODO: verify this)
+                    return_type = data['classes'][_class]['methods'][_method]['return_types'][0][0] # taking the first return type for now (TODO: verify this)
                     
                     # return <...> from the return type if any
                     return_type = return_type[:return_type.find('<')].strip() if '<' in return_type else return_type.strip()                    
@@ -123,16 +136,11 @@ def main(args):
                 
         final_glue_code += "}\n" * unclosed_brace_count
 
-        # TODO: change to structured writing - projects/filenames
-        # write to java file
-        with open('dump.java', 'w') as _f:
-            _f.write(final_glue_code)
-
-        # todo: add shell command to format java file
-        os.system('java -jar google-java-format-1.20.0-all-deps.jar -r dump.java')
+        output_file = f"src/glue_code/{_class}.java"
+        write_to_file(output_file, final_glue_code)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate glue code for Java')
-    parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project')
+    parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project', required=True)
     args = parser.parse_args()
     main(args)
