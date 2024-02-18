@@ -75,26 +75,36 @@ def main(args):
                     continue
                 final_glue_code += line
             
-            # add graal attributes
-            python_file = f'"<placeholder>"'
-            class_name = f'"{_class}"'
-            final_glue_code += f"    private static Value clz = ContextInitializer.getPythonClass({python_file}, {class_name});\n"
-            final_glue_code += "    private Value obj;\n"
+            if not data['classes'][_class]['is_interface']:
+                # add graal attributes
+                python_file = f'"<placeholder>"'
+                class_name = f'"{_class}"'
+                final_glue_code += f"    private static Value clz = ContextInitializer.getPythonClass({python_file}, {class_name});\n"
+                final_glue_code += "    private Value obj;\n"
 
-            # add value constructor
-            final_glue_code += f"    public {_class}(Value obj) {{\n"
-            final_glue_code += "        this.obj = obj;\n"
-            final_glue_code += "    }\n"
+                # add value constructor
+                final_glue_code += f"    public {_class}(Value obj) {{\n"
+                final_glue_code += "        this.obj = obj;\n"
+                final_glue_code += "    }\n"
 
-            # add getPythonObject()
-            final_glue_code += f"    public Value getPythonObject() {{\n"
-            final_glue_code += "        return obj;\n"
-            final_glue_code += "    }\n"
+                # add getPythonObject()
+                final_glue_code += f"    public Value getPythonObject() {{\n"
+                final_glue_code += "        return obj;\n"
+                final_glue_code += "    }\n"
 
             for _method in data['classes'][_class]['methods']:
                 is_constructor = data['classes'][_class]['methods'][_method]['is_constructor']
                 method_body = "".join(data['classes'][_class]['methods'][_method]['body'])
                 method_name = _method.split(':', 1)[1].strip() if not is_constructor else "__init__"
+                
+                if method_body.strip()[-1] != '}':
+                    # method is not implemented
+                    final_glue_code += method_body
+                    
+                    # add semi-colon if not present
+                    if method_body.strip()[-1] != ';':
+                        final_glue_code += ';'                    
+                    continue
                 
                 method_signature = method_body[:method_body.find('{')+1]
                 method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
