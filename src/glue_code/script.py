@@ -38,8 +38,6 @@ def main(args):
     # TODO: Add ContextInitializer.java, IntegrationUtils.java, ExceptionHandler.java
 
     for schema in schemas:
-        if schema.endswith('_python_partial.json'):
-            continue
 
         # !! specify schema to test !!
         if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
@@ -153,7 +151,8 @@ def main(args):
                 
         final_glue_code += "}\n" * unclosed_brace_count
 
-        output_file = get_destination_path(args.project_name, _class)
+        class_name = schema.split('.')[-2] # get the class name preceding '.json'
+        output_file = get_destination_path(args.project_name, class_name)
         write_to_file(output_file, final_glue_code)
 
 if __name__ == '__main__':
