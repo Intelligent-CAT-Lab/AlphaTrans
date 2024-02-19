@@ -98,7 +98,11 @@ def main(args):
                 mappings = make_exception_mappings(args, schemas)
             ))
     
-    # TODO: IntegrationUtils.java
+    # IntegrationUtils.java
+    with open("src/glue_code/misc/IntegrationUtils.java") as f:
+        write_to_file(get_destination_path(args.project_name, "IntegrationUtils"), f.read().format(
+                project = f"org.apache.{formatted_proj_name}"
+            ))
 
     for schema in schemas:
 
