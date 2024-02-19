@@ -27,6 +27,31 @@ def write_to_file(file, content):
         print(f"Error formatting {file}: {e}")
     return
 
+def make_mappings(args, schemas):
+    """
+    Create mappings for package classes.
+    """
+    classes_to_map = [] 
+    for schema in schemas:
+        if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
+            continue
+        with open(f'data/schemas/{args.project_name}/{schema}') as f:
+            data = json.load(f)
+
+        # add class definition
+        for _class in data['classes']:      
+            if not data['classes'][_class]['is_interface']:
+                if data['classes'][_class]["nested_inside"]:
+                    classes_to_map.append(f"{data['classes'][_class]['nested_inside']}.{_class}")
+                else:
+                    classes_to_map.append(_class)
+                    
+    return_string = ""
+    for _class in classes_to_map:
+        return_string += ('\t' * 5) + f".targetTypeMapping(Value.class, {_class}.class, (v) -> new {_class}(v))\n" 
+
+    return return_string + ('\t' * 5) + f"// TODO: Add other mappings"
+
 def main(args):
     if not os.path.exists('data/schemas'):
         raise Exception('Please run from the root directory!')
@@ -34,8 +59,20 @@ def main(args):
     schemas = os.listdir(f'data/schemas/{args.project_name}')
     # remove test and partial files
     schemas = [file for file in schemas if 'Test' not in file and not file.endswith('_python_partial.json')]
-
-    # TODO: Add ContextInitializer.java, IntegrationUtils.java, ExceptionHandler.java
+    
+    formatted_proj_name = args.project_name.replace('-', '.')
+    
+    # Add ContextInitializer.java
+    with open("src/glue_code/misc/ContextInitializer.java") as f:
+        with open(get_destination_path(args.project_name, "ContextInitializer"), "w") as f2:
+            f2.write(f.read().format(
+                project = f"org.apache.{formatted_proj_name}",
+                code_directory = "<placeholder>", # TODO: replace with actual path
+                package_directory = "<placeholder>",
+                mappings = make_mappings(args, schemas)
+            ))
+    
+    # TODO: IntegrationUtils.java, ExceptionHandler.java
 
     for schema in schemas:
 
@@ -48,8 +85,6 @@ def main(args):
         
         final_glue_code = ""
         unclosed_brace_count = 0
-
-        formatted_proj_name = args.project_name.replace('-', '.')
 
         final_glue_code += f"package org.apache.{formatted_proj_name};\n\n"
         # step 0: add graal imports
