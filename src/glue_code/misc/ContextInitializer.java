@@ -14,7 +14,7 @@ public abstract class ContextInitializer {{
     static {{
         try {{
             HostAccess hostAccess = HostAccess.newBuilder(HostAccess.ALL)
-                    {mappings}
+{mappings}
                     .build();
 
             sharedEngine = Engine.create();

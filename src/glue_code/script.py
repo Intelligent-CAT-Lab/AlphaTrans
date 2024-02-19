@@ -27,6 +27,31 @@ def write_to_file(file, content):
         print(f"Error formatting {file}: {e}")
     return
 
+def make_mappings(args, schemas):
+    """
+    Create mappings for package classes.
+    """
+    classes_to_map = [] 
+    for schema in schemas:
+        if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
+            continue
+        with open(f'data/schemas/{args.project_name}/{schema}') as f:
+            data = json.load(f)
+
+        # add class definition
+        for _class in data['classes']:      
+            if not data['classes'][_class]['is_interface']:
+                if data['classes'][_class]["nested_inside"]:
+                    classes_to_map.append(f"{data['classes'][_class]['nested_inside']}.{_class}")
+                else:
+                    classes_to_map.append(_class)
+                    
+    return_string = ""
+    for _class in classes_to_map:
+        return_string += ('\t' * 5) + f".targetTypeMapping(Value.class, {_class}.class, (v) -> new {_class}(v))\n" 
+
+    return return_string + ('\t' * 5) + f"// TODO: Add other mappings"
+
 def main(args):
     if not os.path.exists('data/schemas'):
         raise Exception('Please run from the root directory!')
@@ -44,7 +69,7 @@ def main(args):
                 project = f"org.apache.{formatted_proj_name}",
                 code_directory = "<placeholder>", # TODO: replace with actual path
                 package_directory = "<placeholder>",
-                mappings = "MAPPINGS..."
+                mappings = make_mappings(args, schemas)
             ))
     
     # TODO: IntegrationUtils.java, ExceptionHandler.java
