@@ -38,7 +38,6 @@ def make_mappings(args, schemas):
         with open(f'data/schemas/{args.project_name}/{schema}') as f:
             data = json.load(f)
 
-        # add class definition
         for _class in data['classes']:      
             if not data['classes'][_class]['is_interface']:
                 if data['classes'][_class]["nested_inside"]:
@@ -48,9 +47,30 @@ def make_mappings(args, schemas):
                     
     return_string = ""
     for _class in classes_to_map:
-        return_string += ('\t' * 5) + f".targetTypeMapping(Value.class, {_class}.class, (v) -> new {_class}(v))\n" 
+        return_string += f".targetTypeMapping(Value.class, {_class}.class, (v) -> new {_class}(v))\n" 
 
-    return return_string + ('\t' * 5) + f"// TODO: Add other mappings"
+    return return_string + "// TODO: Add other mappings"
+
+def make_exception_mappings(args, schemas):
+    """
+    Create mappings for package exception classes.
+    """
+    package_exception_classes = []
+    for schema in schemas:
+        if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
+            continue
+        with open(f'data/schemas/{args.project_name}/{schema}') as f:
+            data = json.load(f)
+            
+        for _class in data['classes']:
+            if _class.endswith('Exception'):
+                package_exception_classes.append(_class)
+                
+    return_string = ""
+    for _class in package_exception_classes:
+        return_string += f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(message);}}\n"
+        
+    return return_string + "// TODO: Add other mappings"
 
 def main(args):
     if not os.path.exists('data/schemas'):
@@ -64,15 +84,21 @@ def main(args):
     
     # Add ContextInitializer.java
     with open("src/glue_code/misc/ContextInitializer.java") as f:
-        with open(get_destination_path(args.project_name, "ContextInitializer"), "w") as f2:
-            f2.write(f.read().format(
+        write_to_file(get_destination_path(args.project_name, "ContextInitializer"), f.read().format(
                 project = f"org.apache.{formatted_proj_name}",
                 code_directory = "<placeholder>", # TODO: replace with actual path
                 package_directory = "<placeholder>",
                 mappings = make_mappings(args, schemas)
             ))
+            
+    # Add ExceptionHandler.java
+    with open("src/glue_code/misc/ExceptionHandler.java") as f:
+        write_to_file(get_destination_path(args.project_name, "ExceptionHandler"), f.read().format(
+                project = f"org.apache.{formatted_proj_name}",
+                mappings = make_exception_mappings(args, schemas)
+            ))
     
-    # TODO: IntegrationUtils.java, ExceptionHandler.java
+    # TODO: IntegrationUtils.java
 
     for schema in schemas:
 
