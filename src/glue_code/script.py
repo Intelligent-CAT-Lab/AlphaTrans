@@ -34,8 +34,20 @@ def main(args):
     schemas = os.listdir(f'data/schemas/{args.project_name}')
     # remove test and partial files
     schemas = [file for file in schemas if 'Test' not in file and not file.endswith('_python_partial.json')]
-
-    # TODO: Add ContextInitializer.java, IntegrationUtils.java, ExceptionHandler.java
+    
+    formatted_proj_name = args.project_name.replace('-', '.')
+    
+    # Add ContextInitializer.java
+    with open("src/glue_code/misc/ContextInitializer.java") as f:
+        with open(get_destination_path(args.project_name, "ContextInitializer"), "w") as f2:
+            f2.write(f.read().format(
+                project = f"org.apache.{formatted_proj_name}",
+                code_directory = "<placeholder>", # TODO: replace with actual path
+                package_directory = "<placeholder>",
+                mappings = "MAPPINGS..."
+            ))
+    
+    # TODO: IntegrationUtils.java, ExceptionHandler.java
 
     for schema in schemas:
 
@@ -48,8 +60,6 @@ def main(args):
         
         final_glue_code = ""
         unclosed_brace_count = 0
-
-        formatted_proj_name = args.project_name.replace('-', '.')
 
         final_glue_code += f"package org.apache.{formatted_proj_name};\n\n"
         # step 0: add graal imports
