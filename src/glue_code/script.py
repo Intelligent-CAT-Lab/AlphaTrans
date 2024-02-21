@@ -5,16 +5,22 @@ import json
 
 OUTPUT_DIR = "src/glue_code/output"
 
-def get_destination_path(project_name, file_name):
-    project_dirs = [x for x in project_name.split("-") if x != ""]
+def get_destination_path(path, file_name, is_full_path=False):
+    _path = [OUTPUT_DIR]
+    
+    # fully qualified path from schema. remove the first 2 directories
+    if is_full_path:
+        _path += path.split('/')[2:]
+        _directories = "/".join(_path[:-1])
+    else:
+        _path += [path, "src"]
+        print(_path, "/".join(_path))
+        _directories = "/".join(_path)
+    
+    # create the final path if it doesn't exist
+    os.makedirs(_directories, exist_ok=True)
 
-    package_path = "/".join(["org", "apache"] + project_dirs)
-    final_path = f"{OUTPUT_DIR}/{project_name}/src/main/java/{package_path}"
-
-    # create the package directory if it doesn't exist
-    os.makedirs(final_path, exist_ok=True)
-
-    return f"{final_path}/{file_name}.java"
+    return f"{_directories}/{file_name}.java"
 
 def write_to_file(file, content):
     with open(file, "w") as f:
@@ -227,7 +233,7 @@ def main(args):
         final_glue_code += "}\n" * unclosed_brace_count
 
         class_name = schema.split('.')[-2] # get the class name preceding '.json'
-        output_file = get_destination_path(args.project_name, class_name)
+        output_file = get_destination_path(data["path"], class_name, is_full_path=True)
         write_to_file(output_file, final_glue_code)
 
 if __name__ == '__main__':
