@@ -1,0 +1,31 @@
+# Imports Begin
+import typing
+from typing import *
+import io
+
+# Imports End
+
+
+class Base64Decoder:
+
+    # Class Fields Begin
+    __CRLF: str = "\r\n"
+    __ENCODING_TABLE: bytes = [0] * (Byte.MAX_VALUE - Byte.MIN_VALUE + 1)
+    __MAX_BYTE: int = 63
+    __PAD_BYTE: int = -2
+    __MASK_BYTE_UNSIGNED: int = 255
+    __INPUT_BYTES_PER_CHUNK: int = 4
+    __ENCODING_TABLE: typing.List[int] = ""  # LLM could not translate field
+    # Class Fields End
+
+    # Class Methods Begin
+    @staticmethod
+    def decode(data: typing.List[int], out: io.IOBase) -> int:
+
+        pass  # LLM could not translate method body
+
+    def __init__(self) -> None:
+
+        pass
+
+    # Class Methods End
