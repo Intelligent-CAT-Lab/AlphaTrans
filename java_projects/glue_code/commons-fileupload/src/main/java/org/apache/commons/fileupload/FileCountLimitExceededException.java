@@ -1,60 +1,36 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.apache.commons.fileupload;
 
 import org.graalvm.polyglot.Value;
 
-/** This exception is thrown if a request contains more files than the specified limit. */
 public class FileCountLimitExceededException extends FileUploadException {
+  private static final long serialVersionUID = 6904179610227521789L;
+  private static Value clz =
+      ContextInitializer.getPythonClass("<placeholder>", "FileCountLimitExceededException");
+  private Value obj;
 
-    private static final long serialVersionUID = 6904179610227521789L;
+  public FileCountLimitExceededException(Value obj) {
+    this.obj = obj;
+  }
 
-    /**
-     * Contains a reference to the Python class.
-     */
-    private static Value clz = ContextInitializer.getPythonClass("file_count_limit_exceeded_exception.py",
-            "FileCountLimitExceededException");
+  public Value getPythonObject() {
+    return obj;
+  }
 
-    /**
-     * Contains a reference to the Python exception.
-     */
-    private final Value obj;
+  public long getLimit() {
+    //
+    // return limit;
+    //
 
-    /** The limit that was exceeded. */
-    // private final long limit;
+    // TODO: Check the type mapping below!
+    return obj.invokeMember("getLimit").as(long.class);
+  }
 
-    /**
-     * Creates a new instance.
-     *
-     * @param message The detail message
-     * @param limit The limit that was exceeded
-     */
-    public FileCountLimitExceededException(final String message, final long limit) {
-        super(message, null);
-        // this.limit = limit;
-        obj = clz.newInstance(message, limit);
-    }
+  public FileCountLimitExceededException(final String message, final long limit) {
+    //
+    // super(message, null);
+    // this.limit = limit;
+    //
 
-    /**
-     * Retrieves the limit that was exceeded.
-     *
-     * @return The limit that was exceeded by the request
-     */
-    public long getLimit() {
-        return obj.invokeMember("getLimit").asLong();
-    }
+    this.obj = clz.invokeMember("__init__", message, limit);
+  }
 }
