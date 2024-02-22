@@ -1,8 +1,11 @@
-package org.apache.commons.fileupload;
+package org.apache.commons.fileupload.disk;
 
 import java.io.File;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.apache.commons.fileupload.ContextInitializer;
+import org.apache.commons.fileupload.FileItemHeaders;
 import org.graalvm.polyglot.Value;
 
 public class DiskFileItem {

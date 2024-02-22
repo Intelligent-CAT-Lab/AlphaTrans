@@ -1,6 +1,8 @@
-package org.apache.commons.fileupload;
+package org.apache.commons.fileupload.disk;
 
 import java.io.File;
+
+import org.apache.commons.fileupload.ContextInitializer;
 import org.graalvm.polyglot.Value;
 
 public class DiskFileItemFactory {

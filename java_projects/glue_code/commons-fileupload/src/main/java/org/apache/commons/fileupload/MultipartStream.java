@@ -11,15 +11,15 @@ import org.apache.commons.fileupload.FileUploadBase.FileUploadIOException;
 import org.apache.commons.fileupload.util.Closeable;
 import static java.lang.String.format;
 public class MultipartStream {
+    public static final byte DASH = 0x2D;
+    public static final byte LF = 0x0A;
+    public static final byte CR = 0x0D;
     protected static final byte[] BOUNDARY_PREFIX = {CR, LF, DASH, DASH};
     protected static final byte[] STREAM_TERMINATOR = {DASH, DASH};
     protected static final byte[] FIELD_SEPARATOR = {CR, LF};
     protected static final byte[] HEADER_SEPARATOR = {CR, LF, CR, LF};
     protected static final int DEFAULT_BUFSIZE = 4096;
     public static final int HEADER_PART_SIZE_MAX = 10240;
-    public static final byte DASH = 0x2D;
-    public static final byte LF = 0x0A;
-    public static final byte CR = 0x0D;
     private static Value clz = ContextInitializer.getPythonClass("<placeholder>", "MultipartStream");
     private Value obj;
     public MultipartStream(Value obj) {

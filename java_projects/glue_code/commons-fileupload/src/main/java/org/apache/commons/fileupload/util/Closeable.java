@@ -1,4 +1,4 @@
-package org.apache.commons.fileupload;
+package org.apache.commons.fileupload.util;
 
 import java.io.IOException;
 

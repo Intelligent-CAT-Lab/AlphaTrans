@@ -1,7 +1,10 @@
-package org.apache.commons.fileupload;
+package org.apache.commons.fileupload.util.mime;
 
 import java.io.IOException;
 import java.io.OutputStream;
+
+import org.apache.commons.fileupload.ContextInitializer;
+import org.apache.commons.fileupload.ExceptionHandler;
 import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Value;
 

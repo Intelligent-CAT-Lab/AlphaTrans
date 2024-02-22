@@ -1,8 +1,11 @@
-package org.apache.commons.fileupload;
+package org.apache.commons.fileupload.util.mime;
 
 import org.graalvm.polyglot.Value;
 import org.graalvm.polyglot.PolyglotException;
+
 import org.apache.commons.fileupload.ContextInitializer;
+import org.apache.commons.fileupload.ExceptionHandler;
+
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;

@@ -1,5 +1,8 @@
-package org.apache.commons.fileupload;
+package org.apache.commons.fileupload.portlet;
 
+import org.apache.commons.fileupload.ContextInitializer;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUpload;
 import org.graalvm.polyglot.Value;
 
 public class PortletFileUpload extends FileUpload {

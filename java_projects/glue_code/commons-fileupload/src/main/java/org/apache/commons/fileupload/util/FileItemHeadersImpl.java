@@ -1,10 +1,13 @@
-package org.apache.commons.fileupload;
+package org.apache.commons.fileupload.util;
 
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.fileupload.ContextInitializer;
+import org.apache.commons.fileupload.FileItemHeaders;
 import org.graalvm.polyglot.Value;
 
 public class FileItemHeadersImpl implements FileItemHeaders, Serializable {

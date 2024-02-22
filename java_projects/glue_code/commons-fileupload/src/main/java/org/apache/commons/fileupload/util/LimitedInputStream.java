@@ -1,8 +1,11 @@
-package org.apache.commons.fileupload;
+package org.apache.commons.fileupload.util;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.apache.commons.fileupload.ContextInitializer;
+import org.apache.commons.fileupload.ExceptionHandler;
 import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Value;
 
@@ -12,6 +15,7 @@ public abstract class LimitedInputStream extends FilterInputStream implements Cl
   private Value obj;
 
   public LimitedInputStream(Value obj) {
+    super(null);
     this.obj = obj;
   }
 
@@ -86,7 +90,7 @@ public abstract class LimitedInputStream extends FilterInputStream implements Cl
     // super(inputStream);
     // sizeMax = pSizeMax;
     //
-
+    super(inputStream);
     this.obj = clz.invokeMember("__init__", inputStream, pSizeMax);
   }
 
