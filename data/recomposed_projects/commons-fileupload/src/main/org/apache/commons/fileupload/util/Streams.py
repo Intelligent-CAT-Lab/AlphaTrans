@@ -1,7 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.util.InvalidFileNameException import (
-    InvalidFileNameException,
-)
+from src.main.org.apache.commons.fileupload.InvalidFileNameException import *
 
 # Imports End
 

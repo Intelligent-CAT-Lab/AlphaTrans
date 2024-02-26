@@ -1,7 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.util.FileItemHeaders import (
-    FileItemHeaders,
-)
+from src.main.org.apache.commons.fileupload.FileItemHeaders import *
 import typing
 from typing import *
 

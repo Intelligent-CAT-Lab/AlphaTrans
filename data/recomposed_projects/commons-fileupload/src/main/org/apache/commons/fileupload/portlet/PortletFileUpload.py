@@ -1,10 +1,6 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.portlet.FileUpload import (
-    FileUpload,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.portlet.FileItemFactory import (
-    FileItemFactory,
-)
+from src.main.org.apache.commons.fileupload.FileUpload import *
+from src.main.org.apache.commons.fileupload.FileItemFactory import *
 
 # Imports End
 

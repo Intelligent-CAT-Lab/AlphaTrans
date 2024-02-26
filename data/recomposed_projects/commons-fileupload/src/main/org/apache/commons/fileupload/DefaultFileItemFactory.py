@@ -1,7 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.DiskFileItemFactory import (
-    DiskFileItemFactory,
-)
+from src.main.org.apache.commons.fileupload.disk.DiskFileItemFactory import *
 import pathlib
 
 # Imports End

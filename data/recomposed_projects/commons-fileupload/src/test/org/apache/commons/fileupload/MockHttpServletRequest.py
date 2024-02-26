@@ -1,10 +1,4 @@
 # Imports Begin
-from commons.fileupload.src.test.java.org.apache.commons.fileupload.MockHttpServletRequest import (
-    MockHttpServletRequest,
-)
-from commons.fileupload.src.test.java.org.apache.commons.fileupload.MyServletInputStream import (
-    MyServletInputStream,
-)
 import unittest
 import typing
 from typing import *
@@ -17,7 +11,7 @@ import pathlib
 class MockHttpServletRequest(unittest.TestCase):
 
     # Class Fields Begin
-    __m_requestData: io.BytesIO = None
+    __m_requestData: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None
     __length: int = None
     __m_strContentType: str = None
     __readLimit: int = -1
@@ -53,7 +47,12 @@ class MockHttpServletRequest(unittest.TestCase):
 
         return False
 
-    def getLocales(self) -> typing.Iterator[typing.Any]:
+    def getLocales(
+        self,
+    ) -> typing.Union[
+        typing.Iterator[typing.Any],
+        typing.Generator[typing.Any, typing.Any, typing.Any],
+    ]:
 
         pass  # LLM could not translate method body
 
@@ -65,7 +64,7 @@ class MockHttpServletRequest(unittest.TestCase):
 
         pass  # LLM could not translate method body
 
-    def setAttribute(self, arg0: str, arg1: object) -> None:
+    def setAttribute(self, arg0: str, arg1: typing.Any) -> None:
 
         pass
 
@@ -105,7 +104,11 @@ class MockHttpServletRequest(unittest.TestCase):
 
         return None
 
-    def getParameterNames(self) -> typing.Iterator[str]:
+    def getParameterNames(
+        self,
+    ) -> typing.Union[
+        typing.Iterator[typing.Any], typing.Generator[str, typing.Any, typing.Any]
+    ]:
 
         pass  # LLM could not translate method body
 
@@ -137,11 +140,15 @@ class MockHttpServletRequest(unittest.TestCase):
 
         return None
 
-    def getAttributeNames(self) -> typing.Iterator[str]:
+    def getAttributeNames(
+        self,
+    ) -> typing.Union[
+        typing.Iterator[typing.Any], typing.Generator[str, typing.Any, typing.Any]
+    ]:
 
         pass  # LLM could not translate method body
 
-    def getAttribute(self, arg0: str) -> object:
+    def getAttribute(self, arg0: str) -> typing.Any:
 
         pass  # LLM could not translate method body
 
@@ -201,11 +208,19 @@ class MockHttpServletRequest(unittest.TestCase):
 
         return None
 
-    def getHeaderNames(self) -> typing.Iterator[str]:
+    def getHeaderNames(
+        self,
+    ) -> typing.Union[
+        typing.Iterator[typing.Any], typing.Generator[str, typing.Any, typing.Any]
+    ]:
 
         pass  # LLM could not translate method body
 
-    def getHeaders(self, arg0: str) -> typing.Iterator[str]:
+    def getHeaders(
+        self, arg0: str
+    ) -> typing.Union[
+        typing.Iterator[typing.Any], typing.Generator[str, typing.Any, typing.Any]
+    ]:
 
         pass  # LLM could not translate method body
 
@@ -233,7 +248,7 @@ class MockHttpServletRequest(unittest.TestCase):
     def __init__(
         self,
         constructorId: int,
-        requestData: io.BytesIO,
+        requestData: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         strContentType: str,
         requestLength: int,
     ) -> None:
@@ -255,7 +270,7 @@ class MockHttpServletRequest(unittest.TestCase):
 class MyServletInputStream(unittest.TestCase):
 
     # Class Fields Begin
-    __in: io.BytesIO = None
+    __in: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None
     __readLimit: int = None
     # Class Fields End
 
@@ -270,7 +285,11 @@ class MyServletInputStream(unittest.TestCase):
 
         return self.__in.read()
 
-    def __init__(self, pStream: io.BytesIO, readLimit: int) -> None:
+    def __init__(
+        self,
+        pStream: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        readLimit: int,
+    ) -> None:
 
         self.__in = pStream
         self.__readLimit = readLimit

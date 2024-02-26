@@ -1,7 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.MimeUtility import (
-    MimeUtility,
-)
+from src.main.org.apache.commons.fileupload.util.mime.MimeUtility import *
 import typing
 from typing import *
 

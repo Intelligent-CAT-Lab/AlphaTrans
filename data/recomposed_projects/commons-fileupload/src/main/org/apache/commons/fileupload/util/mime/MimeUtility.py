@@ -1,13 +1,7 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.util.mime.QuotedPrintableDecoder import (
-    QuotedPrintableDecoder,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.util.mime.ParseException import (
-    ParseException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.util.mime.Base64Decoder import (
-    Base64Decoder,
-)
+from src.main.org.apache.commons.fileupload.util.mime.QuotedPrintableDecoder import *
+from src.main.org.apache.commons.fileupload.util.mime.ParseException import *
+from src.main.org.apache.commons.fileupload.util.mime.Base64Decoder import *
 import typing
 from typing import *
 

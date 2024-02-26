@@ -1,7 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileUploadException import (
-    FileUploadException,
-)
+from src.main.org.apache.commons.fileupload.FileUploadException import *
 
 # Imports End
 

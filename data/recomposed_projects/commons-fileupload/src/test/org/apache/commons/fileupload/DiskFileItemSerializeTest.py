@@ -2,6 +2,7 @@
 import unittest
 import typing
 from typing import *
+import io
 
 # Imports End
 
@@ -15,11 +16,11 @@ class DiskFileItemSerializeTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def __deserialize(self, baos: bytearray) -> object:
+    def __deserialize(self, baos: typing.Union[io.BytesIO, bytearray]) -> typing.Any:
 
         pass  # LLM could not translate method body
 
-    def __serialize(self, target: object) -> bytearray:
+    def __serialize(self, target: typing.Any) -> typing.Union[io.BytesIO, bytearray]:
 
         pass  # LLM could not translate method body
 

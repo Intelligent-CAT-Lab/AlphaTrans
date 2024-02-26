@@ -1,7 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.DiskFileItem import (
-    DiskFileItem,
-)
+from src.main.org.apache.commons.fileupload.disk.DiskFileItem import *
 import typing
 from typing import *
 import pathlib

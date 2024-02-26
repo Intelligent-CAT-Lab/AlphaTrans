@@ -1,58 +1,12 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItemStreamImpl import (
-    FileItemStreamImpl,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileUploadBase import (
-    FileUploadBase,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItemHeadersImpl import (
-    FileItemHeadersImpl,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.RequestContext import (
-    RequestContext,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.ProgressListener import (
-    ProgressListener,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.ParameterParser import (
-    ParameterParser,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileUploadException import (
-    FileUploadException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.UnknownSizeException import (
-    UnknownSizeException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.SizeLimitExceededException import (
-    SizeLimitExceededException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.SizeException import (
-    SizeException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.InvalidContentTypeException import (
-    InvalidContentTypeException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.IOFileUploadException import (
-    IOFileUploadException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileUploadIOException import (
-    FileUploadIOException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileSizeLimitExceededException import (
-    FileSizeLimitExceededException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItemIteratorImpl import (
-    FileItemIteratorImpl,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItemHeaders import (
-    FileItemHeaders,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItemFactory import (
-    FileItemFactory,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItem import (
-    FileItem,
-)
+from src.main.org.apache.commons.fileupload.util.FileItemHeadersImpl import *
+from src.main.org.apache.commons.fileupload.RequestContext import *
+from src.main.org.apache.commons.fileupload.ProgressListener import *
+from src.main.org.apache.commons.fileupload.ParameterParser import *
+from src.main.org.apache.commons.fileupload.FileUploadException import *
+from src.main.org.apache.commons.fileupload.FileItemHeaders import *
+from src.main.org.apache.commons.fileupload.FileItemFactory import *
+from src.main.org.apache.commons.fileupload.FileItem import *
 import typing
 from typing import *
 from abc import ABC
@@ -278,7 +232,7 @@ class FileUploadIOException(IOException):
     # Class Fields End
 
     # Class Methods Begin
-    def getCause(self) -> Exception:
+    def getCause(self) -> BaseException:
 
         return self.__cause
 
@@ -293,15 +247,15 @@ class IOFileUploadException(FileUploadException):
 
     # Class Fields Begin
     __serialVersionUID: int = 1749796615868477269
-    __cause: IOError = None
+    __cause: typing.Union[IOError, OSError] = None
     # Class Fields End
 
     # Class Methods Begin
-    def getCause(self) -> Exception:
+    def getCause(self) -> BaseException:
 
         return self.__cause
 
-    def __init__(self, pMsg: str, pException: IOError) -> None:
+    def __init__(self, pMsg: str, pException: typing.Union[IOError, OSError]) -> None:
 
         super().__init__(pMsg, None)
         self.__cause = pException
@@ -438,7 +392,7 @@ class InvalidContentTypeException(FileUploadException):
     # Class Fields End
 
     # Class Methods Begin
-    def __init__(self, msg: str, cause: Exception) -> None:
+    def __init__(self, msg: str, cause: BaseException) -> None:
 
         super().__init__(msg, cause)
 

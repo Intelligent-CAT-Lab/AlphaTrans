@@ -1,7 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItem import (
-    FileItem,
-)
+from src.main.org.apache.commons.fileupload.FileItem import *
 import typing
 from typing import *
 from abc import ABC

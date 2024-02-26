@@ -14,7 +14,10 @@ class QuotedPrintableDecoder:
 
     # Class Methods Begin
     @staticmethod
-    def decode(data: typing.List[int], out: io.IOBase) -> int:
+    def decode(
+        data: typing.List[int],
+        out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter],
+    ) -> int:
 
         pass  # LLM could not translate method body
 

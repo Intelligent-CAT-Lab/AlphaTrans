@@ -1,37 +1,8 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.ProgressListener import (
-    ProgressListener,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.Closeable import (
-    Closeable,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.ItemSkippedException import (
-    ItemSkippedException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItemStream import (
-    FileItemStream,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.MultipartStream import (
-    MultipartStream,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.ProgressNotifier import (
-    ProgressNotifier,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.MalformedStreamException import (
-    MalformedStreamException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.ItemInputStream import (
-    ItemInputStream,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.IllegalBoundaryException import (
-    IllegalBoundaryException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileUploadIOException import (
-    FileUploadIOException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileUploadBase import (
-    FileUploadBase,
-)
+from src.main.org.apache.commons.fileupload.ProgressListener import *
+from src.main.org.apache.commons.fileupload.util.Closeable import *
+from src.main.org.apache.commons.fileupload.FileItemStream import *
+from src.main.org.apache.commons.fileupload.FileUploadBase import *
 import typing
 from typing import *
 import io
@@ -51,7 +22,7 @@ class MultipartStream:
     DEFAULT_ENCODING: str = "UTF-8"
     _DEFAULT_BUFFER_SIZE: int = 8192
     _BOUNDARY_PREFIX: bytes = b"\r\n--"
-    __input: io.BytesIO = None
+    __input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None
     __boundaryLength: int = None
     __keepRegion: int = None
     __boundary: typing.List[int] = None
@@ -67,14 +38,17 @@ class MultipartStream:
     # Class Methods Begin
     @staticmethod
     def MultipartStream3(
-        input: io.BytesIO, boundary: typing.List[int]
+        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        boundary: typing.List[int],
     ) -> MultipartStream:
 
         pass  # LLM could not translate method body
 
     @staticmethod
     def MultipartStream1(
-        input: io.BytesIO, boundary: typing.List[int], bufSize: int
+        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        boundary: typing.List[int],
+        bufSize: int,
     ) -> MultipartStream:
 
         return MultipartStream(input, boundary, bufSize, None)
@@ -202,14 +176,16 @@ class MultipartStream:
 
     @staticmethod
     def MultipartStream2(
-        input: io.BytesIO, boundary: typing.List[int], pNotifier: ProgressNotifier
+        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        boundary: typing.List[int],
+        pNotifier: ProgressNotifier,
     ) -> MultipartStream:
 
         pass  # LLM could not translate method body
 
     def __init__(
         self,
-        input: io.BytesIO,
+        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         boundary: typing.List[int],
         bufSize: int,
         pNotifier: ProgressNotifier,

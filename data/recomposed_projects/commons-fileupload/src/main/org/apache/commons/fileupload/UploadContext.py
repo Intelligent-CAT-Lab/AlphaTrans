@@ -1,7 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.RequestContext import (
-    RequestContext,
-)
+from src.main.org.apache.commons.fileupload.RequestContext import *
 from abc import ABC
 
 # Imports End

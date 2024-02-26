@@ -1,13 +1,7 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.disk.Streams import (
-    Streams,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.disk.ParameterParser import (
-    ParameterParser,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.disk.FileItemHeaders import (
-    FileItemHeaders,
-)
+from src.main.org.apache.commons.fileupload.util.Streams import *
+from src.main.org.apache.commons.fileupload.ParameterParser import *
+from src.main.org.apache.commons.fileupload.FileItemHeaders import *
 import typing
 from typing import *
 import pathlib

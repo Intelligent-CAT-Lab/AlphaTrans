@@ -1,13 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.ItemSkippedException import (
-    ItemSkippedException,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItemHeadersSupport import (
-    FileItemHeadersSupport,
-)
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItemStream import (
-    FileItemStream,
-)
+from src.main.org.apache.commons.fileupload.FileItemHeadersSupport import *
 import typing
 from typing import *
 import io
@@ -48,7 +40,7 @@ class FileItemStream(ABC):
 
         return "text/html"
 
-    def openStream(self) -> io.BytesIO:
+    def openStream(self) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:
 
         try:
             return io.BytesIO(self.read())

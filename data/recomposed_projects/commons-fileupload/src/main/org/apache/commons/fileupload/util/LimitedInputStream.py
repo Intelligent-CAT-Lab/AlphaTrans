@@ -1,7 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.util.Closeable import (
-    Closeable,
-)
+from src.main.org.apache.commons.fileupload.util.Closeable import *
 import typing
 from typing import *
 import io
@@ -44,7 +42,11 @@ class LimitedInputStream(Closeable, FilterInputStream, ABC):
             self.__checkLimit()
         return res
 
-    def __init__(self, inputStream: io.BytesIO, pSizeMax: int) -> None:
+    def __init__(
+        self,
+        inputStream: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        pSizeMax: int,
+    ) -> None:
 
         super().__init__(inputStream)
         self.__sizeMax = pSizeMax

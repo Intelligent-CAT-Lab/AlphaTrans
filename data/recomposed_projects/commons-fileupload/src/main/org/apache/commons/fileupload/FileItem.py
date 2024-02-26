@@ -1,7 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItemHeadersSupport import (
-    FileItemHeadersSupport,
-)
+from src.main.org.apache.commons.fileupload.FileItemHeadersSupport import *
 import typing
 from typing import *
 import io
@@ -17,7 +15,9 @@ class FileItem(ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def getOutputStream(self) -> io.IOBase:
+    def getOutputStream(
+        self,
+    ) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]:
 
         try:
             return self.getOutputStream()
@@ -80,7 +80,9 @@ class FileItem(ABC):
 
         return "text/html"
 
-    def getInputStream(self) -> io.BytesIO:
+    def getInputStream(
+        self,
+    ) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:
 
         return io.BytesIO(self.getBytes())
 

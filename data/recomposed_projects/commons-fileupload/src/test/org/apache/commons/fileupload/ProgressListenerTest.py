@@ -1,10 +1,4 @@
 # Imports Begin
-from commons.fileupload.src.test.java.org.apache.commons.fileupload.ProgressListenerImpl import (
-    ProgressListenerImpl,
-)
-from commons.fileupload.src.test.java.org.apache.commons.fileupload.ProgressListenerTest import (
-    ProgressListenerTest,
-)
 import unittest
 import typing
 from typing import *

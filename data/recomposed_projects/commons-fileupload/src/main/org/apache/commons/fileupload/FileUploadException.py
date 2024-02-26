@@ -1,4 +1,8 @@
 # Imports Begin
+import typing
+from typing import *
+import io
+
 # Imports End
 
 
@@ -6,11 +10,11 @@ class FileUploadException(Exception):
 
     # Class Fields Begin
     __version: str = "1.0"
-    __cause: Exception = None
+    __cause: BaseException = None
     # Class Fields End
 
     # Class Methods Begin
-    def getCause(self) -> Exception:
+    def getCause(self) -> BaseException:
 
         return self.__cause
 
@@ -21,14 +25,14 @@ class FileUploadException(Exception):
             writer.write("Caused by:\n")
             self.__cause.printStackTrace(writer)
 
-    def printStackTrace0(self, stream: io.TextIOWrapper) -> None:
+    def printStackTrace0(self, stream: typing.IO[str]) -> None:
 
         super().printStackTrace(stream)
         if self.__cause is not None:
             stream.write("Caused by:\n")
             self.__cause.printStackTrace(stream)
 
-    def __init__(self, msg: str, cause: Exception) -> None:
+    def __init__(self, msg: str, cause: BaseException) -> None:
 
         super().__init__(msg)
         self.cause = cause

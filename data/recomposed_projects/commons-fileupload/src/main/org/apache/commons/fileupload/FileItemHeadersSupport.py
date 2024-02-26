@@ -1,7 +1,5 @@
 # Imports Begin
-from commons.fileupload.src.main.java.org.apache.commons.fileupload.FileItemHeaders import (
-    FileItemHeaders,
-)
+from src.main.org.apache.commons.fileupload.FileItemHeaders import *
 from abc import ABC
 
 # Imports End

@@ -13,7 +13,9 @@ class RequestContext(ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def getInputStream(self) -> io.BytesIO:
+    def getInputStream(
+        self,
+    ) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:
 
         return io.BytesIO(self.getBytes())
 
