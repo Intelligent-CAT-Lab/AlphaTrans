@@ -35,9 +35,6 @@ def main(args):
 
     for translation_file in translation_files:
 
-        if 'src.test' not in translation_file:
-            continue
-
         fragment_translations = {}
         with open(f'data/translations/{args.project_name}/{translation_file}') as f:
             fragment_translations = json.load(f)
@@ -54,11 +51,14 @@ def main(args):
         for class_ in fragment_translations['classes']:
 
             main_class = class_
-            if fragment_translations['classes'][class_]['nested_inside'] != []:
-                main_class = fragment_translations['classes'][class_]['nested_inside']
-                dependencies[main_class].append(main_class)
+            while fragment_translations['classes'][main_class]['nested_inside'] != []:
+                main_class = fragment_translations['classes'][main_class]['nested_inside']
 
-            dependencies[main_class] += fragment_translations['classes'][main_class]['nests']
+            # if fragment_translations['classes'][class_]['nested_inside'] != []:
+            #     main_class = fragment_translations['classes'][class_]['nested_inside']
+            #     dependencies[main_class].append(main_class)
+
+            # dependencies[main_class] += fragment_translations['classes'][main_class]['nests']
 
             if class_ in dependencies:
                 class_dependencies.append((fragment_translations['path'], dependencies[class_]))
@@ -230,13 +230,13 @@ def main(args):
         if 'Path' in skeleton:
             skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport pathlib\n')
         
-        if 'IOBase' in skeleton or 'StringIO' in skeleton or 'BytesIO' in skeleton:
+        if 'IOBase' in skeleton or 'StringIO' in skeleton or 'BytesIO' in skeleton or 'TextIOWrapper' in skeleton:
             skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport io\n')
         
         if 'Number' in skeleton:
             skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport numbers\n')
         
-        if 'Callable' in skeleton or 'Type' in skeleton or 'Any' in skeleton or 'Iterator' in skeleton or 'Dict' in skeleton or 'List' in skeleton:
+        if 'Callable' in skeleton or 'Type' in skeleton or 'Any' in skeleton or 'Iterator' in skeleton or 'Dict' in skeleton or 'List' in skeleton or 'typing.IO' in skeleton:
             skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport typing\nfrom typing import *\n')
         
         if 'datetime' in skeleton:
@@ -251,14 +251,14 @@ def main(args):
                 skeleton = skeleton.replace(f'self.self.{element}(', f'self.{element}(')
 
         for dependency in class_dependencies:
-            path = dependency[0]
-            prefix = path.split('/')
-            prefix[-1] = prefix[-1].split('.')[0]
-            prefix = '.'.join(prefix[2:-1]).replace('-', '.')
             for dependent_class in dependency[1]:
-                if f'from {prefix}.{dependent_class} import {dependent_class}' in skeleton:
+                if 'src.main' in translation_file:
+                    path = f'src.main.{dependent_class[1]}'
+                else:
+                    path = f'src.test.{dependent_class[1]}'
+                if f'from {path} import *' in skeleton:
                     continue
-                skeleton = skeleton.replace('# Imports Begin\n', f'# Imports Begin\nfrom {prefix}.{dependent_class} import {dependent_class}\n')
+                skeleton = skeleton.replace('# Imports Begin\n', f'# Imports Begin\nfrom {path} import *\n')
 
         skeleton = skeleton.replace('\t', '    ')
 
