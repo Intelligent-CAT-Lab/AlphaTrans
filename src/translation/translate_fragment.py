@@ -9,16 +9,19 @@ import os
 from transformers import LlamaForCausalLM, CodeLlamaTokenizer
 
 
-def translate(model, tokenizer, prompt, device, fragment):
+def translate(model, tokenizer, prompt, device, fragment, partial_translated_fragment):
     max_attempts = 0
     extracted_string = None
     while max_attempts < 5:
 
         input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
+        max_new_tokens = 2000 - input_tokens.shape[1]
+        if fragment == 'field':
+            max_new_tokens = min(max_new_tokens, 512)
 
         raw_output = model.generate(
             input_tokens,
-            max_new_tokens=(2000 - input_tokens.shape[1]),
+            max_new_tokens=max_new_tokens,
             do_sample=True,
             output_scores=True,
             return_dict_in_generate=True,
@@ -42,9 +45,42 @@ def translate(model, tokenizer, prompt, device, fragment):
 
         match = re.search(pattern, generation, re.DOTALL)
 
+        if not match:
+            if '[PYTHON]' in generation and '[/PYTHON]' in generation:
+                generation = generation[generation.find('[PYTHON]')+8:generation.find('[/PYTHON]')]
+                try:
+                    ast.parse(generation.strip())
+                    if partial_translated_fragment.strip() not in generation:
+                        max_attempts += 1
+                        continue
+                    print(f'=======================PARSED=======================\n{generation}\n---' * 50, flush=True)
+                except (SyntaxError, MemoryError) as e:
+                    print(f'=======================PARSE ERROR=======================\n{e}\n---' * 50, flush=True)
+                    max_attempts += 1
+                    continue
+                extracted_string = generation.split('\n')
+                max_attempts = 5
+            if '```' in generation:
+                generation = generation[generation.find('```')+3:generation.find('```', generation.find('```')+3)]
+                try:
+                    ast.parse(generation.strip())
+                    if partial_translated_fragment.strip() not in generation:
+                        max_attempts += 1
+                        continue
+                    print(f'=======================PARSED=======================\n{generation}\n---' * 50, flush=True)
+                except (SyntaxError, MemoryError) as e:
+                    print(f'=======================PARSE ERROR=======================\n{e}\n---' * 50, flush=True)
+                    max_attempts += 1
+                    continue
+                extracted_string = generation.split('\n')
+                max_attempts = 5
+
         if match:
             try:
                 ast.parse(match.group(1).strip())
+                if partial_translated_fragment.strip() not in match.group(1):
+                    max_attempts += 1
+                    continue
                 print(f'=======================PARSED=======================\n{match.group(1)}\n---' * 50, flush=True)
             except (SyntaxError, MemoryError) as e:
                 print(f'=======================PARSE ERROR=======================\n{e}\n---' * 50, flush=True)
@@ -80,7 +116,10 @@ def main(args):
         if os.path.exists(f'data/translations/{args.project_name}/{schema.replace("python_partial", "translation")}'):
             continue
 
-        if 'src.test' not in schema:
+        if 'src.test' not in schema and args.translate_test:
+            continue
+
+        if 'src.main' not in schema and args.translate_main:
             continue
 
         # if 'FileItemHeadersTest' not in schema:
@@ -113,7 +152,7 @@ def main(args):
 
                     prompt = f"Translate the following {args.from_lang} field to {args.to_lang} like the example above:\n" + f"\n{args.from_lang} field:\n```\n" + original_field + f"\n```\n\n{args.to_lang} field:\n```\n{partial_translated_field.replace('<placeholder>', '')}"
                     prompt = f"<s>{icl}[INST] <<SYS>>\n{persona}\n<</SYS>>\n\n{prompt}[/INST]"
-                    translated_fragment = translate(model, tokenizer, prompt, device, 'field')
+                    translated_fragment = translate(model, tokenizer, prompt, device, 'field', partial_translated_field.replace('<placeholder>', ''))
                     data['classes'][class_]['fields'][field_][f'translation_{i + 1}'] = translated_fragment
 
             pbar = tqdm.tqdm(data['classes'][class_]['methods'])
@@ -155,7 +194,7 @@ def main(args):
                     prompt = f"{instruction}\n{args.from_lang} method:\n```\n" + original_method + f"\n```\n\n{args.to_lang} method:\n```\n{partial_translated_method.replace('pass', '')}"
 
                     prompt = f"\n<s>{icl}[INST] <<SYS>>\n{persona}\n<</SYS>>\n\n{prompt}[/INST]"
-                    translated_fragment = translate(model, tokenizer, prompt, device, 'method')
+                    translated_fragment = translate(model, tokenizer, prompt, device, 'method', partial_translated_method.replace('pass', ''))
                     data['classes'][class_]['methods'][method_][f'translation_{i + 1}'] = translated_fragment
     
         os.makedirs(f'data/translations/{args.project_name}', exist_ok=True)
