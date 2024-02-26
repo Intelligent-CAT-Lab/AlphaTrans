@@ -32,11 +32,11 @@ def parse_dependencies(project_name):
             for line in lines[2:-1]:
 
                 candidate_line = line.strip()
-                class_name = re.search(r'->\s(.*?)\s\(', candidate_line).group(1)
-                class_name = class_name.split('.')[-1].strip()
+                class_name_path = re.search(r'->\s(.*?)\s\(', candidate_line).group(1).replace('"', '').strip()
+                class_name = class_name_path.split('.')[-1].strip()
 
-                current_class = candidate_line[candidate_line.find('\"') + 1:candidate_line.find('\"', candidate_line.find('\"') + 1)]
-                current_class = current_class.split('.')[-1].strip()
+                current_class_path = candidate_line[candidate_line.find('\"') + 1:candidate_line.find('\"', candidate_line.find('\"') + 1)]
+                current_class = current_class_path.split('.')[-1].strip()
 
                 if 'java.base' in candidate_line or 'not found' in candidate_line or 'java' in candidate_line:
                     continue
@@ -48,7 +48,7 @@ def parse_dependencies(project_name):
                         class_dependencies.setdefault(class_name, [])
                     else:
                         # class_name = class_name.replace('$', '.')
-                        class_name = class_name.split('$')[-1]
+                        class_name = class_name.split('$')[0]
                         class_dependencies.setdefault(class_name, [])
                 
                 if '$' in current_class:
@@ -58,7 +58,7 @@ def parse_dependencies(project_name):
                         class_dependencies.setdefault(current_class, [])
                     else:
                         # current_class = current_class.replace('$', '.')
-                        current_class = current_class.split('$')[-1]
+                        current_class = current_class.split('$')[0]
                         class_dependencies.setdefault(current_class, [])
                 
                 if class_name == current_class:
@@ -67,16 +67,19 @@ def parse_dependencies(project_name):
                 if class_name in class_dependencies[current_class]:
                     continue
 
-                class_dependencies[current_class].append(class_name)
+                if (class_name, class_name_path.split('$')[0]) in class_dependencies[current_class]:
+                    continue
+
+                class_dependencies[current_class].append((class_name, class_name_path.split('$')[0]))
 
     with open(os.path.join(dependencies_dir, 'dependencies.json'), 'w') as f:
         json.dump(class_dependencies, f, indent=4)
 
-    g = graphviz.Digraph('G', filename=os.path.join(dependencies_dir, 'dependencies.gv'))
-    for class_name, dependencies in class_dependencies.items():
-        for dependency in dependencies:
-            g.edge(class_name, dependency)
-    g.render(os.path.join(dependencies_dir, 'dependency_graph'), format='png', cleanup=True)
+    # g = graphviz.Digraph('G', filename=os.path.join(dependencies_dir, 'dependencies.gv'))
+    # for class_name, dependencies in class_dependencies.items():
+    #     for dependency in dependencies:
+    #         g.edge(class_name, dependency)
+    # g.render(os.path.join(dependencies_dir, 'dependency_graph'), format='png', cleanup=True)
 
     # # remove cycles
     # removed_cycles = []
