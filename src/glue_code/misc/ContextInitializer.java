@@ -1,4 +1,5 @@
 package {project};
+{imports}
 import java.io.File;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.HostAccess;
