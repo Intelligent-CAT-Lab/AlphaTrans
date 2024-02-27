@@ -478,8 +478,8 @@ public abstract class FileUploadBase {
   }
 
   class FileItemStreamImpl {
-    private static Value clz =
-        ContextInitializer.getPythonClass("FileUploadBase.py", "FileItemStreamImpl");
+    private Value clz =
+        ContextInitializer.getPythonClass("FileUploadBase.py", "FileUploadBase.FileItemStreamImpl");
     private Value obj;
 
     public FileItemStreamImpl(Value obj) {
@@ -510,7 +510,7 @@ public abstract class FileUploadBase {
 
   private class FileItemIteratorImpl {
     private static Value clz =
-        ContextInitializer.getPythonClass("FileUploadBase.py", "FileItemIteratorImpl");
+        ContextInitializer.getPythonClass("FileUploadBase.py", "FileUploadBase.FileItemIteratorImpl");
     private Value obj;
 
     public FileItemIteratorImpl(Value obj) {
