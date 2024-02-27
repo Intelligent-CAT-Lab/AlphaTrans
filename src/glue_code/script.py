@@ -3,9 +3,22 @@ import os
 import subprocess
 import json
 
-OUTPUT_DIR = "src/glue_code/output"
+ORIGINAL_DIR = "java_projects/cleaned_final_projects"
+OUTPUT_DIR = "java_projects/glue_code"
 
-def get_destination_path(path, file_name, is_full_path=False):
+main_paths = {
+    "commons-fileupload": "main/java/org/apache/commons/fileupload/",
+    "commons-cli": "main/java/org/apache/commons/cli/",
+    "commons-codec": "main/java/org/apache/commons/codec/",
+    "commons-csv": "main/java/org/apache/commons/csv/",
+    "commons-graph": "main/java/org/apache/commons/graph/",
+    "commons-pool": "main/java/org/apache/commons/pool/",
+    "commons-validator": "main/java/org/apache/commons/validator/",
+    "joda-convert": "main/java/org/joda/convert/",
+    "joda-money": "main/java/org/joda/money/",
+}
+
+def get_destination_path(path, file_name, is_full_path=False, path_to_main=None):
     _path = [OUTPUT_DIR]
     
     # fully qualified path from schema. remove the first 2 directories
@@ -14,7 +27,9 @@ def get_destination_path(path, file_name, is_full_path=False):
         _directories = "/".join(_path[:-1])
     else:
         _path += [path, "src"]
-        print(_path, "/".join(_path))
+        if path_to_main:
+            _path += [path_to_main]
+        # print(_path, "/".join(_path))
         _directories = "/".join(_path)
     
     # create the final path if it doesn't exist
@@ -37,25 +52,41 @@ def make_mappings(args, schemas):
     """
     Create mappings for package classes.
     """
-    classes_to_map = [] 
+    classes_to_map = []
+    imports = []
+    
+    formatted_project_name = args.project_name.replace('-', '.')
     for schema in schemas:
         if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
             continue
         with open(f'data/schemas/{args.project_name}/{schema}') as f:
             data = json.load(f)
 
-        for _class in data['classes']:      
-            if not data['classes'][_class]['is_interface']:
+        for _class in data['classes']:
+            if not data['classes'][_class]['is_interface'] and not '/test/' in data['path']:
                 if data['classes'][_class]["nested_inside"]:
                     classes_to_map.append(f"{data['classes'][_class]['nested_inside']}.{_class}")
                 else:
                     classes_to_map.append(_class)
+                
+                # link subpackages
+                if main_paths[args.project_name] in data['path']:
+                    path_tail = data['path'].split(main_paths[args.project_name])[-1]
+                    if "/" in path_tail:
+                        # remove the last segment
+                        path_tail = path_tail[:path_tail.rfind('/')]
+                        subproj_name = "." + path_tail.replace('/', '.')
+                        imports.append(f"{subproj_name}.{_class}")
                     
     return_string = ""
     for _class in classes_to_map:
-        return_string += f".targetTypeMapping(Value.class, {_class}.class, (v) -> new {_class}(v))\n" 
+        return_string += f".targetTypeMapping(Value.class, {_class}.class, (v) -> new {_class}(v))\n"
+        
+    imports_string = ""
+    for _import in imports:
+        imports_string += f"import org.apache.{formatted_project_name}{_import};"
 
-    return return_string + "// TODO: Add other mappings"
+    return return_string + "// TODO: Add other mappings", imports_string
 
 def make_exception_mappings(args, schemas):
     """
@@ -88,25 +119,33 @@ def main(args):
     
     formatted_proj_name = args.project_name.replace('-', '.')
     
+    # Copy original project to glue_code directory
+    # skip if already exists
+    if not os.path.exists(f"{OUTPUT_DIR}/{args.project_name}"):
+        os.makedirs(f"{OUTPUT_DIR}/{args.project_name}")
+        subprocess.run(['cp', '-r', f"{ORIGINAL_DIR}/{args.project_name}/.", f"{OUTPUT_DIR}/{args.project_name}"], check=True)
+    
     # Add ContextInitializer.java
+    ctx_mappings, ctx_imports = make_mappings(args, schemas)
     with open("src/glue_code/misc/ContextInitializer.java") as f:
-        write_to_file(get_destination_path(args.project_name, "ContextInitializer"), f.read().format(
+        write_to_file(get_destination_path(args.project_name, "ContextInitializer", path_to_main=main_paths[args.project_name]), f.read().format(
                 project = f"org.apache.{formatted_proj_name}",
-                code_directory = "<placeholder>", # TODO: replace with actual path
+                imports = ctx_imports,
+                code_directory = "<placeholder>",
                 package_directory = "<placeholder>",
-                mappings = make_mappings(args, schemas)
+                mappings = ctx_mappings
             ))
             
     # Add ExceptionHandler.java
     with open("src/glue_code/misc/ExceptionHandler.java") as f:
-        write_to_file(get_destination_path(args.project_name, "ExceptionHandler"), f.read().format(
+        write_to_file(get_destination_path(args.project_name, "ExceptionHandler", path_to_main=main_paths[args.project_name]), f.read().format(
                 project = f"org.apache.{formatted_proj_name}",
                 mappings = make_exception_mappings(args, schemas)
             ))
     
     # IntegrationUtils.java
     with open("src/glue_code/misc/IntegrationUtils.java") as f:
-        write_to_file(get_destination_path(args.project_name, "IntegrationUtils"), f.read().format(
+        write_to_file(get_destination_path(args.project_name, "IntegrationUtils", path_to_main=main_paths[args.project_name]), f.read().format(
                 project = f"org.apache.{formatted_proj_name}"
             ))
 
@@ -121,8 +160,20 @@ def main(args):
         
         final_glue_code = ""
         unclosed_brace_count = 0
+        
+        # find subpackage names (if exist)
+        if main_paths[args.project_name] in data['path']:
+            path_tail = data['path'].split(main_paths[args.project_name])[-1]
+            if "/" in path_tail:
+                # remove the last segment
+                path_tail = path_tail[:path_tail.rfind('/')]
+                subproj_name = "." + path_tail.replace('/', '.')
+            else:
+                subproj_name = ""
+        else:
+            subproj_name = ""
 
-        final_glue_code += f"package org.apache.{formatted_proj_name};\n\n"
+        final_glue_code += f"package org.apache.{formatted_proj_name + subproj_name};\n\n"
         # step 0: add graal imports
         final_glue_code += "import org.graalvm.polyglot.Value;\n"
         final_glue_code += "import org.graalvm.polyglot.PolyglotException;\n"
@@ -215,6 +266,7 @@ def main(args):
                     final_glue_code += "try {\n"
                     final_glue_code += final_content
                     final_glue_code += "} catch (PolyglotException e) {\n"
+                    final_glue_code += f"    // TODO: Handle {exception_name}\n"
                     final_glue_code += f"    throw ({exception_name}) ExceptionHandler.handle(e, \"{_class}.{method_name}\");\n"
                     final_glue_code += "}\n"
                     final_glue_code += "}\n"
