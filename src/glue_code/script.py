@@ -65,7 +65,11 @@ def make_mappings(args, schemas):
             data = json.load(f)
 
         for _class in data['classes']:
-            if not data['classes'][_class]['is_interface'] and not '/test/' in data['path']:
+            if (
+                    not data['classes'][_class]['is_interface'] 
+                    and not '/test/' in data['path'] 
+                    and not _class.endswith('Exception')
+                ):
                 if data['classes'][_class]["nested_inside"]:
                     classes_to_map.append(f"{data['classes'][_class]['nested_inside']}.{_class}")
                 else:
@@ -82,7 +86,7 @@ def make_mappings(args, schemas):
                     
     return_string = ""
     for _class in classes_to_map:
-        return_string += f".targetTypeMapping(Value.class, {_class}.class, (v) -> new {_class}(v))\n"
+        return_string += f".targetTypeMapping(Value.class, {_class}.class, null, (v) -> new {_class}(v))\n"
         
     imports_string = ""
     for _import in imports:
@@ -137,7 +141,7 @@ def main(args):
                 package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/",
                 mappings = ctx_mappings
             ))
-            
+
     # Add ExceptionHandler.java
     with open("src/glue_code/misc/ExceptionHandler.java") as f:
         write_to_file(get_destination_path(args.project_name, "ExceptionHandler", path_to_main=main_paths[args.project_name]), f.read().format(
