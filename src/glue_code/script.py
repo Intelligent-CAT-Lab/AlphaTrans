@@ -5,6 +5,8 @@ import json
 
 ORIGINAL_DIR = "java_projects/cleaned_final_projects"
 OUTPUT_DIR = "java_projects/glue_code"
+TRANSLATION_DIR = "data/recomposed_projects"
+DIR_DEPTH = "../../../../../../../../"
 
 main_paths = {
     "commons-fileupload": "main/java/org/apache/commons/fileupload/",
@@ -105,7 +107,7 @@ def make_exception_mappings(args, schemas):
                 
     return_string = ""
     for _class in package_exception_classes:
-        return_string += f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(message);}}\n"
+        return_string += f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(exceptionMessage);}}\n"
         
     return return_string + "// TODO: Add other mappings"
 
@@ -131,8 +133,8 @@ def main(args):
         write_to_file(get_destination_path(args.project_name, "ContextInitializer", path_to_main=main_paths[args.project_name]), f.read().format(
                 project = f"org.apache.{formatted_proj_name}",
                 imports = ctx_imports,
-                code_directory = "<placeholder>",
-                package_directory = "<placeholder>",
+                code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name]}",
+                package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/",
                 mappings = ctx_mappings
             ))
             
@@ -199,7 +201,10 @@ def main(args):
             
             if not data['classes'][_class]['is_interface']:
                 # add graal attributes
-                python_file = f'"<placeholder>"'
+                python_file_dir = subproj_name.replace('.', '/')
+                python_file_dir = python_file_dir[:-1] if python_file_dir else python_file_dir
+                current_file_name = data["path"].split('/')[-1].split('.')[0]
+                python_file = f'"{python_file_dir}{current_file_name}.py"'
                 class_name = f'"{_class}"'
                 final_glue_code += f"    private static Value clz = ContextInitializer.getPythonClass({python_file}, {class_name});\n"
                 final_glue_code += "    private Value obj;\n"
