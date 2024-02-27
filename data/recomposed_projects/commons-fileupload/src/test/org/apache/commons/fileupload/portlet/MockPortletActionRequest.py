@@ -16,7 +16,7 @@ class MockPortletActionRequest(unittest.TestCase):
     __characterEncoding: str = None
     __length: int = None
     __contentType: str = None
-    __requestData: io.BytesIO = None
+    __requestData: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None
     # Class Fields End
 
     # Class Methods Begin
@@ -28,7 +28,9 @@ class MockPortletActionRequest(unittest.TestCase):
 
         return io.BufferedReader(self.getInputStream(), encoding="UTF-8")
 
-    def getPortletInputStream(self) -> io.BytesIO:
+    def getPortletInputStream(
+        self,
+    ) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:
 
         return self.__requestData
 
@@ -44,7 +46,7 @@ class MockPortletActionRequest(unittest.TestCase):
 
         pass  # LLM could not translate method body
 
-    def setAttribute(self, key: str, value: object) -> None:
+    def setAttribute(self, key: str, value: typing.Any) -> None:
 
         self.__attributes[key] = value
 
@@ -76,7 +78,12 @@ class MockPortletActionRequest(unittest.TestCase):
 
         pass  # LLM could not translate method body
 
-    def getResponseContentTypes(self) -> typing.Iterator[typing.Any]:
+    def getResponseContentTypes(
+        self,
+    ) -> typing.Union[
+        typing.Iterator[typing.Any],
+        typing.Generator[typing.Any, typing.Any, typing.Any],
+    ]:
 
         pass  # LLM could not translate method body
 
@@ -92,7 +99,12 @@ class MockPortletActionRequest(unittest.TestCase):
 
         return None
 
-    def getPropertyNames(self) -> typing.Iterator[typing.Any]:
+    def getPropertyNames(
+        self,
+    ) -> typing.Union[
+        typing.Iterator[typing.Any],
+        typing.Generator[typing.Any, typing.Any, typing.Any],
+    ]:
 
         return None
 
@@ -100,7 +112,10 @@ class MockPortletActionRequest(unittest.TestCase):
 
         pass  # LLM could not translate method body
 
-    def getProperties(self, arg0: str) -> typing.Iterator[typing.Any]:
+    def getProperties(self, arg0: str) -> typing.Union[
+        typing.Iterator[typing.Any],
+        typing.Generator[typing.Any, typing.Any, typing.Any],
+    ]:
 
         pass  # LLM could not translate method body
 
@@ -108,7 +123,12 @@ class MockPortletActionRequest(unittest.TestCase):
 
         return None
 
-    def getParameterNames(self) -> typing.Iterator[typing.Any]:
+    def getParameterNames(
+        self,
+    ) -> typing.Union[
+        typing.Iterator[typing.Any],
+        typing.Generator[typing.Any, typing.Any, typing.Any],
+    ]:
 
         return iter(self.__parameters.keys())
 
@@ -120,7 +140,12 @@ class MockPortletActionRequest(unittest.TestCase):
 
         return self.__parameters.get(key)
 
-    def getLocales(self) -> typing.Iterator[typing.Any]:
+    def getLocales(
+        self,
+    ) -> typing.Union[
+        typing.Iterator[typing.Any],
+        typing.Generator[typing.Any, typing.Any, typing.Any],
+    ]:
 
         pass  # LLM could not translate method body
 
@@ -136,11 +161,16 @@ class MockPortletActionRequest(unittest.TestCase):
 
         return None
 
-    def getAttributeNames(self) -> typing.Iterator[typing.Any]:
+    def getAttributeNames(
+        self,
+    ) -> typing.Union[
+        typing.Iterator[typing.Any],
+        typing.Generator[typing.Any, typing.Any, typing.Any],
+    ]:
 
         return self.__attributes.keys()
 
-    def getAttribute(self, key: str) -> object:
+    def getAttribute(self, key: str) -> typing.Any:
 
         return self.__attributes.get(key)
 
@@ -154,7 +184,10 @@ class MockPortletActionRequest(unittest.TestCase):
         )
 
     def __init__(
-        self, requestLength: int, byteArrayInputStream: io.BytesIO, contentType: str
+        self,
+        requestLength: int,
+        byteArrayInputStream: typing.Union[io.BytesIO, bytearray],
+        contentType: str,
     ) -> None:
 
         self.__requestData = byteArrayInputStream
