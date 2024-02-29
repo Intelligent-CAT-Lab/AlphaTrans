@@ -7,9 +7,11 @@ import typing
 from typing import *
 import io
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class MultipartStream:
 
     # Class Fields Begin
@@ -235,6 +237,7 @@ class MultipartStream:
     # Class Methods End
 
 
+@java_handler
 class ItemInputStream(Closeable, InputStream):
 
     # Class Fields Begin
@@ -369,6 +372,7 @@ class ItemInputStream(Closeable, InputStream):
     # Class Methods End
 
 
+@java_handler
 class IllegalBoundaryException(IOException):
 
     # Class Fields Begin
@@ -383,6 +387,7 @@ class IllegalBoundaryException(IOException):
     # Class Methods End
 
 
+@java_handler
 class MalformedStreamException(IOException):
 
     # Class Fields Begin
@@ -397,6 +402,7 @@ class MalformedStreamException(IOException):
     # Class Methods End
 
 
+@java_handler
 class ProgressNotifier:
 
     # Class Fields Begin

@@ -1,9 +1,11 @@
 # Imports Begin
 from src.main.org.apache.commons.fileupload.InvalidFileNameException import *
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class Streams:
 
     # Class Fields Begin

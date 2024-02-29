@@ -11,9 +11,11 @@ import typing
 from typing import *
 from abc import ABC
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class FileUploadBase(ABC):
 
     # Class Fields Begin
@@ -224,6 +226,7 @@ class FileUploadBase(ABC):
     # Class Methods End
 
 
+@java_handler
 class FileUploadIOException(IOException):
 
     # Class Fields Begin
@@ -243,6 +246,7 @@ class FileUploadIOException(IOException):
     # Class Methods End
 
 
+@java_handler
 class IOFileUploadException(FileUploadException):
 
     # Class Fields Begin
@@ -263,6 +267,7 @@ class IOFileUploadException(FileUploadException):
     # Class Methods End
 
 
+@java_handler
 class SizeLimitExceededException(SizeException):
 
     # Class Fields Begin
@@ -287,6 +292,7 @@ class SizeLimitExceededException(SizeException):
     # Class Methods End
 
 
+@java_handler
 class FileItemStreamImpl:
 
     # Class Fields Begin
@@ -306,6 +312,7 @@ class FileItemStreamImpl:
     # Class Methods End
 
 
+@java_handler
 class FileItemIteratorImpl:
 
     # Class Fields Begin
@@ -327,6 +334,7 @@ class FileItemIteratorImpl:
     # Class Methods End
 
 
+@java_handler
 class FileSizeLimitExceededException(SizeException):
 
     # Class Fields Begin
@@ -359,6 +367,7 @@ class FileSizeLimitExceededException(SizeException):
     # Class Methods End
 
 
+@java_handler
 class SizeException(FileUploadException, ABC):
 
     # Class Fields Begin
@@ -385,6 +394,7 @@ class SizeException(FileUploadException, ABC):
     # Class Methods End
 
 
+@java_handler
 class InvalidContentTypeException(FileUploadException):
 
     # Class Fields Begin
@@ -399,6 +409,7 @@ class InvalidContentTypeException(FileUploadException):
     # Class Methods End
 
 
+@java_handler
 class UnknownSizeException(FileUploadException):
 
     # Class Fields Begin

@@ -6,9 +6,11 @@ import io
 import pathlib
 from abc import ABC
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class FileItem(ABC):
 
     # Class Fields Begin

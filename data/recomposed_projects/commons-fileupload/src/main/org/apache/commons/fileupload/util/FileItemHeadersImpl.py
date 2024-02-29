@@ -3,9 +3,11 @@ from src.main.org.apache.commons.fileupload.FileItemHeaders import *
 import typing
 from typing import *
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class FileItemHeadersImpl(Serializable, FileItemHeaders):
 
     # Class Fields Begin

@@ -4,9 +4,11 @@ from typing import *
 import io
 from abc import ABC
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class RequestContext(ABC):
 
     # Class Fields Begin

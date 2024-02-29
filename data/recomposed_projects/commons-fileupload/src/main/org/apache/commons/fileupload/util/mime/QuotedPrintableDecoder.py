@@ -3,9 +3,11 @@ import typing
 from typing import *
 import io
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class QuotedPrintableDecoder:
 
     # Class Fields Begin

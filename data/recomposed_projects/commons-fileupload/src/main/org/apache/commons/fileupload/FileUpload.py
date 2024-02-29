@@ -2,9 +2,11 @@
 from src.main.org.apache.commons.fileupload.FileUploadBase import *
 from src.main.org.apache.commons.fileupload.FileItemFactory import *
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class FileUpload(FileUploadBase):
 
     # Class Fields Begin

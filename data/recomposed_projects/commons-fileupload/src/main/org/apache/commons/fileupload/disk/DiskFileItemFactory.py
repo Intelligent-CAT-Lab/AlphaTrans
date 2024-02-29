@@ -2,9 +2,11 @@
 from src.main.org.apache.commons.fileupload.disk.DiskFileItem import *
 import pathlib
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class DiskFileItemFactory:
 
     # Class Fields Begin
