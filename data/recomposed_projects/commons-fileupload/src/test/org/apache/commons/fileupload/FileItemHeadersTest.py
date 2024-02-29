@@ -12,7 +12,7 @@ class FileItemHeadersTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testFileItemHeaders(self) -> None:
+    def test_FileItemHeaders(self) -> None:
 
         aMutableFileItemHeaders = FileItemHeadersImpl()
         aMutableFileItemHeaders.addHeader(

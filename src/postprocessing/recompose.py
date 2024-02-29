@@ -271,6 +271,22 @@ def main(args):
         
         os.system(f'python3 -m black {file_path}')
 
+    # add __init__.py files for each subdirectory
+    for translation_file in translation_files:
+        formatted_schema_fname = '.'.join(translation_file.split('.')[:-1])
+        sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
+        os.makedirs(f'data/recomposed_projects/{args.project_name}/{sub_dir}', exist_ok=True)
+
+        sub_dirs = sub_dir.split('/')
+        for i in range(len(sub_dirs)):
+            current_sub_dir = '/'.join(sub_dirs[:i+1])
+            with open(f'data/recomposed_projects/{args.project_name}/{current_sub_dir}/__init__.py', 'w') as f:
+                f.write('')
+
+        file_path = f"data/recomposed_projects/{args.project_name}/{sub_dir}/__init__.py"
+        with open(file_path, 'w') as f:
+            f.write('')
+
     # print(f'total fragments: {total_fragments}, total unsuccessful: {total_unsuccessful}')
     # print(f'percentage unsuccessful: {total_unsuccessful / total_fragments * 100}%')
 

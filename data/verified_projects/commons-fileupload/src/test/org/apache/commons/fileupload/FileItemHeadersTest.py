@@ -2,9 +2,39 @@
 import unittest
 # Unused: import typing
 from typing import *
-from fileupload.util import FileItemHeadersImpl  # LLM missed this import
+from itertools import chain
+
+import sys
+sys.path.append('/Users/kekaiyao/Desktop/AlphaTrans/data/recomposed_projects/commons-fileupload/src/main/org/apache/commons/fileupload/util')
+from FileItemHeadersImpl import FileItemHeadersImpl
+#from fileupload.util import FileItemHeadersImpl  # LLM missed this import
 
 # Imports End
+
+from itertools import tee
+
+class PeekableIterator:
+    def __init__(self, iterator):
+        self.iterator = iter(iterator)
+        self.peeked = None
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.peeked is not None:
+            next_item = self.peeked
+            self.peeked = None
+            return next_item
+        return next(self.iterator)
+    
+    def hasNext(self):
+        if self.peeked is None:
+            try:
+                self.peeked = next(self.iterator)
+            except StopIteration:
+                return False
+        return True
 
 
 class FileItemHeadersTest(unittest.TestCase):
@@ -26,11 +56,11 @@ class FileItemHeadersTest(unittest.TestCase):
         aMutableFileItemHeaders.addHeader("TestHeader", "headerValue3")
         aMutableFileItemHeaders.addHeader("testheader", "headerValue4")
 
-        headerNameEnumeration = aMutableFileItemHeaders.getHeaderNames()
+        headerNameEnumeration = PeekableIterator(aMutableFileItemHeaders.getHeaderNames())
 
-        self.assertEqual("content-disposition", headerNameEnumeration.next())
-        self.assertEqual("content-type", headerNameEnumeration.next())
-        self.assertEqual("testheader", headerNameEnumeration.next())
+        self.assertEqual("content-disposition", next(headerNameEnumeration))
+        self.assertEqual("content-type", next(headerNameEnumeration))
+        self.assertEqual("testheader", next(headerNameEnumeration))
         self.assertFalse(headerNameEnumeration.hasNext())
 
         self.assertEqual(
@@ -48,30 +78,30 @@ class FileItemHeadersTest(unittest.TestCase):
         )
         self.assertIsNone(aMutableFileItemHeaders.getHeader("DummyHeader"))
 
-        headerValueEnumeration = aMutableFileItemHeaders.getHeaders("Content-Type")
+        headerValueEnumeration = PeekableIterator(aMutableFileItemHeaders.getHeaders("Content-Type"))
 
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEqual(headerValueEnumeration.next(), "text/plain")
+        self.assertEqual(next(headerValueEnumeration), "text/plain")
         self.assertFalse(headerValueEnumeration.hasNext())
 
-        headerValueEnumeration = aMutableFileItemHeaders.getHeaders("content-type")
+        headerValueEnumeration = PeekableIterator(aMutableFileItemHeaders.getHeaders("content-type"))
 
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEqual(headerValueEnumeration.next(), "text/plain")
+        self.assertEqual(next(headerValueEnumeration), "text/plain")
         self.assertFalse(headerValueEnumeration.hasNext())
 
-        headerValueEnumeration = aMutableFileItemHeaders.getHeaders("TestHeader")
+        headerValueEnumeration = PeekableIterator(aMutableFileItemHeaders.getHeaders("TestHeader"))
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEqual(headerValueEnumeration.next(), "headerValue1")
+        self.assertEqual(next(headerValueEnumeration), "headerValue1")
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEqual(headerValueEnumeration.next(), "headerValue2")
+        self.assertEqual(next(headerValueEnumeration), "headerValue2")
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEqual(headerValueEnumeration.next(), "headerValue3")
+        self.assertEqual(next(headerValueEnumeration), "headerValue3")
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEqual(headerValueEnumeration.next(), "headerValue4")
+        self.assertEqual(next(headerValueEnumeration), "headerValue4")
         self.assertFalse(headerValueEnumeration.hasNext())
 
-        headerValueEnumeration = aMutableFileItemHeaders.getHeaders("DummyHeader")
+        headerValueEnumeration = PeekableIterator(aMutableFileItemHeaders.getHeaders("DummyHeader"))
         self.assertFalse(headerValueEnumeration.hasNext())
 
     # Class Methods End
