@@ -22,7 +22,7 @@ public abstract class ContextInitializer {
   private static String codeDirectory =
       "../../../data/recomposed_projects/commons-fileupload/src/main/org/apache/commons/fileupload/";
   private static String packageDirectory =
-      "../../../data/recomposed_projects/commons-fileupload/";
+      "../../../data/recomposed_projects/commons-fileupload";
   private static Context context;
 
   static {
@@ -93,6 +93,7 @@ public abstract class ContextInitializer {
       context =
           Context.newBuilder("python")
               .allowHostAccess(hostAccess)
+              .allowAllAccess(true)
               .option("python.PythonPath", packageDirectory)
               .engine(sharedEngine)
               .build();

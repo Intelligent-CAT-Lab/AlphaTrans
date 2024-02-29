@@ -8,7 +8,7 @@ from src.main.org.apache.commons.fileupload.java_handler import java_handler
 
 
 @java_handler
-class FileItemHeadersImpl(Serializable, FileItemHeaders):
+class FileItemHeadersImpl(FileItemHeaders):
 
     # Class Fields Begin
     __version: str = "1.0.0"
