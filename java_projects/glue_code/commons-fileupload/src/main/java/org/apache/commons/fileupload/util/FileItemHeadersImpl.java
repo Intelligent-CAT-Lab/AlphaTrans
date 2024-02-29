@@ -14,7 +14,7 @@ public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
       new LinkedHashMap<String, List<String>>();
   private static final long serialVersionUID = -4455695752627032559L;
   private static Value clz =
-      ContextInitializer.getPythonClass("/utiFileItemHeadersImpl.py", "FileItemHeadersImpl");
+      ContextInitializer.getPythonClass("/util/FileItemHeadersImpl.py", "FileItemHeadersImpl");
   private Value obj;
 
   public FileItemHeadersImpl(Value obj) {
