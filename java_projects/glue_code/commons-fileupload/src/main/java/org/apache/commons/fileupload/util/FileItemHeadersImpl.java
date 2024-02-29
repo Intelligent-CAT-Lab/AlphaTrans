@@ -21,6 +21,10 @@ public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
     this.obj = obj;
   }
 
+  public FileItemHeadersImpl() {
+    this.obj = clz.newInstance();
+  }
+
   public Value getPythonObject() {
     return obj;
   }

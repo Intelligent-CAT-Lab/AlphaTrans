@@ -9,9 +9,9 @@ public class FileCountLimitExceededException extends FileUploadException {
           "FileCountLimitExceededException.py", "FileCountLimitExceededException");
   private Value obj;
 
-  public FileCountLimitExceededException(Value obj) {
-    this.obj = obj;
-  }
+  // public FileCountLimitExceededException(Value obj) {
+  //   this.obj = obj;
+  // }
 
   public Value getPythonObject() {
     return obj;
@@ -27,10 +27,8 @@ public class FileCountLimitExceededException extends FileUploadException {
   }
 
   public FileCountLimitExceededException(final String message, final long limit) {
-    //
-    // super(message, null);
+    super(message, null);
     // this.limit = limit;
-    //
 
     this.obj = clz.invokeMember("__init__", message, limit);
   }

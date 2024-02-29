@@ -10,6 +10,7 @@ public class DefaultFileItem extends DiskFileItem {
   private Value obj;
 
   public DefaultFileItem(Value obj) {
+    super(obj);
     this.obj = obj;
   }
 
@@ -24,9 +25,7 @@ public class DefaultFileItem extends DiskFileItem {
       String fileName,
       int sizeThreshold,
       File repository) {
-    //
-    // super(fieldName, contentType, isFormField, fileName, sizeThreshold, repository);
-    //
+    super(fieldName, contentType, isFormField, fileName, sizeThreshold, repository);
 
     this.obj =
         clz.invokeMember(

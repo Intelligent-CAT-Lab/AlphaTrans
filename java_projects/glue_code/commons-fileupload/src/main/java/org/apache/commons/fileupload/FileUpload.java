@@ -32,8 +32,7 @@ public class FileUpload extends FileUploadBase {
   }
 
   public FileUpload(int constructorId, FileItemFactory fileItemFactory) {
-    //
-    // super();
+    super();
     // if (constructorId == 1) {
     // this.fileItemFactory = fileItemFactory;
     // }

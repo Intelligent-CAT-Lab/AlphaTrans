@@ -3,6 +3,7 @@ package org.apache.commons.fileupload.util.mime;
 import org.graalvm.polyglot.Value;
 import org.graalvm.polyglot.PolyglotException;
 import org.apache.commons.fileupload.ContextInitializer;
+import org.apache.commons.fileupload.ExceptionHandler;
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -179,7 +180,8 @@ try {
 return clz.invokeMember("decodeWord", word).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle ParseException, UnsupportedEncodingException
-    throw (ParseException, UnsupportedEncodingException) ExceptionHandler.handle(e, "MimeUtility.decodeWord");
+    // throw (ParseException, UnsupportedEncodingException) ExceptionHandler.handle(e, "MimeUtility.decodeWord");
+    throw (UnsupportedEncodingException) ExceptionHandler.handle(e, "MimeUtility.decodeWord");
 }
 }
     private MimeUtility() {

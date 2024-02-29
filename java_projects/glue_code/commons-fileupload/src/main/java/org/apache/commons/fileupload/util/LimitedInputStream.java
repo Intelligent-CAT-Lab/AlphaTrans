@@ -1,4 +1,5 @@
 package org.apache.commons.fileupload.util;
+import org.apache.commons.fileupload.ExceptionHandler;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -12,9 +13,9 @@ public abstract class LimitedInputStream extends FilterInputStream implements Cl
       ContextInitializer.getPythonClass("/utiLimitedInputStream.py", "LimitedInputStream");
   private Value obj;
 
-  public LimitedInputStream(Value obj) {
-    this.obj = obj;
-  }
+  // public LimitedInputStream(Value obj) {
+  //   this.obj = obj;
+  // }
 
   public Value getPythonObject() {
     return obj;
@@ -87,8 +88,7 @@ public abstract class LimitedInputStream extends FilterInputStream implements Cl
   }
 
   public LimitedInputStream(InputStream inputStream, long pSizeMax) {
-    //
-    // super(inputStream);
+    super(inputStream);
     // sizeMax = pSizeMax;
     //
 
