@@ -4,12 +4,12 @@ import java.util.Map;
 import org.graalvm.polyglot.Value;
 
 public class ParameterParser {
-  private boolean lowerCaseNames = false;
-  private int i2 = 0;
-  private int i1 = 0;
-  private int len = 0;
-  private int pos = 0;
-  private char[] chars = null;
+  // private boolean lowerCaseNames = false;
+  // private int i2 = 0;
+  // private int i1 = 0;
+  // private int len = 0;
+  // private int pos = 0;
+  // private char[] chars = null;
   private static Value clz =
       ContextInitializer.getPythonClass("ParameterParser.py", "ParameterParser");
   private Value obj;
@@ -133,104 +133,102 @@ public class ParameterParser {
   }
 
   public ParameterParser() {
-    //
-    // super();
-    //
+    super();
 
     this.obj = clz.invokeMember("__init__");
   }
 
-  private String parseQuotedToken(final char[] terminators) {
-    //
-    // char ch;
-    // i1 = pos;
-    // i2 = pos;
-    // boolean quoted = false;
-    // boolean charEscaped = false;
-    // while (hasChar()) {
-    // ch = chars[pos];
-    // if (!quoted && isOneOf(ch, terminators)) {
-    // break;
-    // }
-    // if (!charEscaped && ch == '"') {
-    // quoted = !quoted;
-    // }
-    // charEscaped = (!charEscaped && ch == '\\');
-    // i2++;
-    // pos++;
-    // }
-    // return getToken(true);
-    //
+  // private String parseQuotedToken(final char[] terminators) {
+  //   //
+  //   // char ch;
+  //   // i1 = pos;
+  //   // i2 = pos;
+  //   // boolean quoted = false;
+  //   // boolean charEscaped = false;
+  //   // while (hasChar()) {
+  //   // ch = chars[pos];
+  //   // if (!quoted && isOneOf(ch, terminators)) {
+  //   // break;
+  //   // }
+  //   // if (!charEscaped && ch == '"') {
+  //   // quoted = !quoted;
+  //   // }
+  //   // charEscaped = (!charEscaped && ch == '\\');
+  //   // i2++;
+  //   // pos++;
+  //   // }
+  //   // return getToken(true);
+  //   //
 
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("parseQuotedToken", terminators).as(String.class);
-  }
+  //   // TODO: Check the type mapping below!
+  //   return obj.invokeMember("parseQuotedToken", terminators).as(String.class);
+  // }
 
-  private String parseToken(final char[] terminators) {
-    //
-    // char ch;
-    // i1 = pos;
-    // i2 = pos;
-    // while (hasChar()) {
-    // ch = chars[pos];
-    // if (isOneOf(ch, terminators)) {
-    // break;
-    // }
-    // i2++;
-    // pos++;
-    // }
-    // return getToken(false);
-    //
+  // private String parseToken(final char[] terminators) {
+  //   //
+  //   // char ch;
+  //   // i1 = pos;
+  //   // i2 = pos;
+  //   // while (hasChar()) {
+  //   // ch = chars[pos];
+  //   // if (isOneOf(ch, terminators)) {
+  //   // break;
+  //   // }
+  //   // i2++;
+  //   // pos++;
+  //   // }
+  //   // return getToken(false);
+  //   //
 
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("parseToken", terminators).as(String.class);
-  }
+  //   // TODO: Check the type mapping below!
+  //   return obj.invokeMember("parseToken", terminators).as(String.class);
+  // }
 
-  private boolean isOneOf(char ch, final char[] charray) {
-    //
-    // boolean result = false;
-    // for (char element : charray) {
-    // if (ch == element) {
-    // result = true;
-    // break;
-    // }
-    // }
-    // return result;
-    //
+  // private boolean isOneOf(char ch, final char[] charray) {
+  //   //
+  //   // boolean result = false;
+  //   // for (char element : charray) {
+  //   // if (ch == element) {
+  //   // result = true;
+  //   // break;
+  //   // }
+  //   // }
+  //   // return result;
+  //   //
 
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("isOneOf", ch, charray).as(boolean.class);
-  }
+  //   // TODO: Check the type mapping below!
+  //   return obj.invokeMember("isOneOf", ch, charray).as(boolean.class);
+  // }
 
-  private String getToken(boolean quoted) {
-    //
-    // while ((i1 < i2) && (Character.isWhitespace(chars[i1]))) {
-    // i1++;
-    // }
-    // while ((i2 > i1) && (Character.isWhitespace(chars[i2 - 1]))) {
-    // i2--;
-    // }
-    // if (quoted && ((i2 - i1) >= 2) && (chars[i1] == '"') && (chars[i2 - 1] == '"')) {
-    // i1++;
-    // i2--;
-    // }
-    // String result = null;
-    // if (i2 > i1) {
-    // result = new String(chars, i1, i2 - i1);
-    // }
-    // return result;
-    //
+  // private String getToken(boolean quoted) {
+  //   //
+  //   // while ((i1 < i2) && (Character.isWhitespace(chars[i1]))) {
+  //   // i1++;
+  //   // }
+  //   // while ((i2 > i1) && (Character.isWhitespace(chars[i2 - 1]))) {
+  //   // i2--;
+  //   // }
+  //   // if (quoted && ((i2 - i1) >= 2) && (chars[i1] == '"') && (chars[i2 - 1] == '"')) {
+  //   // i1++;
+  //   // i2--;
+  //   // }
+  //   // String result = null;
+  //   // if (i2 > i1) {
+  //   // result = new String(chars, i1, i2 - i1);
+  //   // }
+  //   // return result;
+  //   //
 
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("getToken", quoted).as(String.class);
-  }
+  //   // TODO: Check the type mapping below!
+  //   return obj.invokeMember("getToken", quoted).as(String.class);
+  // }
 
-  private boolean hasChar() {
-    //
-    // return this.pos < this.len;
-    //
+  // private boolean hasChar() {
+  //   //
+  //   // return this.pos < this.len;
+  //   //
 
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("hasChar").as(boolean.class);
-  }
+  //   // TODO: Check the type mapping below!
+  //   return obj.invokeMember("hasChar").as(boolean.class);
+  // }
 }
