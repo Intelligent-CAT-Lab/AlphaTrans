@@ -205,6 +205,8 @@ def main(args):
         final_glue_code += "import org.graalvm.polyglot.Value;\n"
         final_glue_code += "import org.graalvm.polyglot.PolyglotException;\n"
         final_glue_code += f"import org.apache.{formatted_proj_name}.ContextInitializer;\n"
+        final_glue_code += f"import org.apache.{formatted_proj_name}.ExceptionHandler;\n"
+        final_glue_code += f"import org.apache.{formatted_proj_name}.IntegrationUtils;\n"
 
         # add existing imports
         for _import in data['imports']:
