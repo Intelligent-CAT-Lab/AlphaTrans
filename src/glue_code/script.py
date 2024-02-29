@@ -99,6 +99,9 @@ def make_exception_mappings(args, schemas):
     Create mappings for package exception classes.
     """
     package_exception_classes = []
+    imports = []
+
+    formatted_project_name = args.project_name.replace('-', '.')
     for schema in schemas:
         if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
             continue
@@ -107,13 +110,29 @@ def make_exception_mappings(args, schemas):
             
         for _class in data['classes']:
             if _class.endswith('Exception'):
-                package_exception_classes.append(_class)
+                if data['classes'][_class]["nested_inside"]:
+                    package_exception_classes.append(f"{data['classes'][_class]['nested_inside']}.{_class}")
+                else:
+                    package_exception_classes.append(_class)
+                
+                # link subpackages
+                if main_paths[args.project_name] in data['path']:
+                    path_tail = data['path'].split(main_paths[args.project_name])[-1]
+                    if "/" in path_tail:
+                        # remove the last segment
+                        path_tail = path_tail[:path_tail.rfind('/')]
+                        subproj_name = "." + path_tail.replace('/', '.')
+                        imports.append(f"{subproj_name}.{_class}")
                 
     return_string = ""
     for _class in package_exception_classes:
-        return_string += f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(exceptionMessage);}}\n"
+        return_string += f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(exceptionObj);}}\n"
+    
+    imports_string = ""
+    for _import in imports:
+        imports_string += f"import org.apache.{formatted_project_name}{_import};"
         
-    return return_string + "// TODO: Add other mappings"
+    return return_string + "// TODO: Add other mappings", imports_string
 
 def main(args):
     if not os.path.exists('data/schemas'):
@@ -143,10 +162,12 @@ def main(args):
             ))
 
     # Add ExceptionHandler.java
+    exp_mappings, exp_imports = make_exception_mappings(args, schemas)
     with open("src/glue_code/misc/ExceptionHandler.java") as f:
         write_to_file(get_destination_path(args.project_name, "ExceptionHandler", path_to_main=main_paths[args.project_name]), f.read().format(
                 project = f"org.apache.{formatted_proj_name}",
-                mappings = make_exception_mappings(args, schemas)
+                imports = exp_imports,
+                mappings = exp_mappings
             ))
     
     # IntegrationUtils.java
