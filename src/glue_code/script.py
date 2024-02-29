@@ -6,7 +6,7 @@ import json
 ORIGINAL_DIR = "java_projects/cleaned_final_projects"
 OUTPUT_DIR = "java_projects/glue_code"
 TRANSLATION_DIR = "data/recomposed_projects"
-DIR_DEPTH = "../../../../../../../../"
+DIR_DEPTH = "../../../"
 
 main_paths = {
     "commons-fileupload": "main/java/org/apache/commons/fileupload/",
