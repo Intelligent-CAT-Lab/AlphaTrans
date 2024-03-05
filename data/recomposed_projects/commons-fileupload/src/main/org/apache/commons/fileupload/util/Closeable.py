@@ -1,4 +1,5 @@
 # Imports Begin
+import os
 from abc import ABC
 
 # Imports End
@@ -13,7 +14,7 @@ class Closeable(ABC):
     def isClosed(self) -> bool:
 
         try:
-            self.file.close()
+            self.close()
             return True
         except IOError:
             return False

@@ -29,6 +29,6 @@ class RequestContext(ABC):
 
     def getCharacterEncoding(self) -> str:
 
-        return self.characterEncoding
+        return "UTF-8"
 
     # Class Methods End

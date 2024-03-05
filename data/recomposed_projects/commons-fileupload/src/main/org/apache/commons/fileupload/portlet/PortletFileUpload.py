@@ -12,7 +12,7 @@ class PortletFileUpload(FileUpload):
 
     # Class Methods Begin
     @staticmethod
-    def PortletFileUpload1() -> PortletFileUpload:
+    def PortletFileUpload1() -> "PortletFileUpload":
 
         pass  # LLM could not translate method body
 

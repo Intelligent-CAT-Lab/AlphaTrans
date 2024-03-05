@@ -1,5 +1,7 @@
 # Imports Begin
+from src.main.org.apache.commons.fileupload.util.FileItemHeadersImpl import *
 import unittest
+import os
 import typing
 from typing import *
 
@@ -12,7 +14,7 @@ class FileItemHeadersTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def test_FileItemHeaders(self) -> None:
+    def testFileItemHeaders(self) -> None:
 
         aMutableFileItemHeaders = FileItemHeadersImpl()
         aMutableFileItemHeaders.addHeader(
@@ -24,41 +26,41 @@ class FileItemHeadersTest(unittest.TestCase):
         aMutableFileItemHeaders.addHeader("TestHeader", "headerValue3")
         aMutableFileItemHeaders.addHeader("testheader", "headerValue4")
         headerNameEnumeration = aMutableFileItemHeaders.getHeaderNames()
-        self.assertEquals("content-disposition", headerNameEnumeration.next())
-        self.assertEquals("content-type", headerNameEnumeration.next())
-        self.assertEquals("testheader", headerNameEnumeration.next())
+        self.assertEqual("content-disposition", headerNameEnumeration.next())
+        self.assertEqual("content-type", headerNameEnumeration.next())
+        self.assertEqual("testheader", headerNameEnumeration.next())
         self.assertFalse(headerNameEnumeration.hasNext())
-        self.assertEquals(
+        self.assertEqual(
             aMutableFileItemHeaders.getHeader("Content-Disposition"),
             'form-data; name="FileItem"; filename="file1.txt"',
         )
-        self.assertEquals(
+        self.assertEqual(
             aMutableFileItemHeaders.getHeader("Content-Type"), "text/plain"
         )
-        self.assertEquals(
+        self.assertEqual(
             aMutableFileItemHeaders.getHeader("content-type"), "text/plain"
         )
-        self.assertEquals(
+        self.assertEqual(
             aMutableFileItemHeaders.getHeader("TestHeader"), "headerValue1"
         )
         self.assertIsNone(aMutableFileItemHeaders.getHeader("DummyHeader"))
         headerValueEnumeration = aMutableFileItemHeaders.getHeaders("Content-Type")
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEquals(headerValueEnumeration.next(), "text/plain")
+        self.assertEqual(headerValueEnumeration.next(), "text/plain")
         self.assertFalse(headerValueEnumeration.hasNext())
         headerValueEnumeration = aMutableFileItemHeaders.getHeaders("content-type")
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEquals(headerValueEnumeration.next(), "text/plain")
+        self.assertEqual(headerValueEnumeration.next(), "text/plain")
         self.assertFalse(headerValueEnumeration.hasNext())
         headerValueEnumeration = aMutableFileItemHeaders.getHeaders("TestHeader")
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEquals(headerValueEnumeration.next(), "headerValue1")
+        self.assertEqual(headerValueEnumeration.next(), "headerValue1")
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEquals(headerValueEnumeration.next(), "headerValue2")
+        self.assertEqual(headerValueEnumeration.next(), "headerValue2")
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEquals(headerValueEnumeration.next(), "headerValue3")
+        self.assertEqual(headerValueEnumeration.next(), "headerValue3")
         self.assertTrue(headerValueEnumeration.hasNext())
-        self.assertEquals(headerValueEnumeration.next(), "headerValue4")
+        self.assertEqual(headerValueEnumeration.next(), "headerValue4")
         self.assertFalse(headerValueEnumeration.hasNext())
         headerValueEnumeration = aMutableFileItemHeaders.getHeaders("DummyHeader")
         self.assertFalse(headerValueEnumeration.hasNext())

@@ -25,12 +25,12 @@ class DefaultFileItemTest(unittest.TestCase):
     __textContentType: str = "text/plain"
     __fileContentType: str = "application/octet-stream"
     __threshold: int = 16
-    MAX_CACHE_SIZE: int = 1000
-    MAX_VALUE: int = 2147483647
-    DEFAULT_PORT: int = 8080
-    MAX_VALUE: int = 2147483647
-    MAX_VALUE: int = 2147483647
-    SWISS_GERMAN_STUFF_UNICODE: List[int] = [
+    CHARSET_ISO88591: str = ""  # LLM could not translate field
+    CHARSET_ASCII: str = ""  # LLM could not translate field
+    CHARSET_UTF8: str = "UTF-8"
+    CHARSET_KOI8_R: str = "KOI8_R"
+    CHARSET_WIN1251: str = "Cp1251"
+    SWISS_GERMAN_STUFF_UNICODE: List = [
         0x47,
         0x72,
         0xFC,
@@ -43,7 +43,7 @@ class DefaultFileItemTest(unittest.TestCase):
         0x6D,
         0xE4,
     ]
-    SWISS_GERMAN_STUFF_ISO8859_1: List[int] = [
+    SWISS_GERMAN_STUFF_ISO8859_1: List = [
         0x47,
         0x72,
         0xFC,
@@ -57,11 +57,21 @@ class DefaultFileItemTest(unittest.TestCase):
         0xE4,
     ]
     SWISS_GERMAN_STUFF_UTF8: typing.List[int] = ""  # LLM could not translate field
-    RUSSIAN_STUFF: str = (
-        "\u0412\u0441\u0435\u043C\u005F\u043F\u0440\u0438\u0432\u0435\u0442"
-    )
+    RUSSIAN_STUFF_UNICODE: List = [
+        0x412,
+        0x441,
+        0x435,
+        0x43C,
+        0x5F,
+        0x43F,
+        0x440,
+        0x438,
+        0x432,
+        0x435,
+        0x442,
+    ]
     RUSSIAN_STUFF_UTF8: typing.List[int] = ""  # LLM could not translate field
-    RUSSIAN_STUFF_KOI8R: List[int] = [
+    RUSSIAN_STUFF_KOI8R: List = [
         0xF7,
         0xD3,
         0xC5,

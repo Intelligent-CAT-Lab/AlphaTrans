@@ -1,5 +1,6 @@
 # Imports Begin
 from src.main.org.apache.commons.fileupload.disk.DiskFileItemFactory import *
+import os
 import pathlib
 
 # Imports End
@@ -16,7 +17,7 @@ class DefaultFileItemFactory(DiskFileItemFactory):
         super().__init__(sizeThreshold, repository)
 
     @staticmethod
-    def DefaultFileItemFactory1() -> DefaultFileItemFactory:
+    def DefaultFileItemFactory1() -> "DefaultFileItemFactory":
 
         pass  # LLM could not translate method body
 

@@ -1,4 +1,5 @@
 # Imports Begin
+from src.main.org.apache.commons.fileupload.util.mime.MimeUtility import *
 import unittest
 
 # Imports End
@@ -27,11 +28,12 @@ class MimeUtilityTestCase(unittest.TestCase):
 
     def decodeIso88591Base64Encoded(self) -> None:
 
-        self.__assertEncoded(
-            "If you can read this you understand the example.",
+        expected = "If you can read this you understand the example."
+        encoded = (
             "=?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaXMgeW8=?="
-            + ' =?ISO-8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?="\r\n',
+            "=?ISO-8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?="
         )
+        self.__assertEncoded(expected, encoded)
 
     def decodeUtf8Base64Encoded(self) -> None:
 

@@ -9,8 +9,10 @@ from typing import *
 class FileItemHeadersImpl(Serializable, FileItemHeaders):
 
     # Class Fields Begin
-    __version: str = "1.0.0"
-    headerNameToValueListMap: Dict[str, List[str]] = {}
+    __serialVersionUID: int = -4455695752627032559
+    __headerNameToValueListMap: typing.Dict[str, typing.List[str]] = (
+        ""  # LLM could not translate field
+    )
     # Class Fields End
 
     # Class Methods Begin
@@ -24,15 +26,15 @@ class FileItemHeadersImpl(Serializable, FileItemHeaders):
 
     def getHeaderNames(self) -> typing.Iterator[str]:
 
-        return self.__headerNameToValueListMap.keys()
+        return iter(self.__headerNameToValueListMap.keys())
 
     def getHeader(self, name: str) -> str:
 
-        nameLower = name.lower()
-        headerValueList = self.__headerNameToValueListMap.get(nameLower)
-        if headerValueList is None:
+        name_lower = name.lower()
+        header_value_list = self.__headerNameToValueListMap.get(name_lower)
+        if header_value_list is None:
             return None
-        return headerValueList[0]
+        return header_value_list[0]
 
     def addHeader(self, name: str, value: str) -> None:
 

@@ -1,5 +1,6 @@
 # Imports Begin
 from src.main.org.apache.commons.fileupload.disk.DiskFileItem import *
+import os
 import pathlib
 
 # Imports End
@@ -10,8 +11,8 @@ class DiskFileItemFactory:
     # Class Fields Begin
     DEFAULT_SIZE_THRESHOLD: int = 10240
     __repository: pathlib.Path = None
-    DEFAULT_SIZE_THRESHOLD: int = 100
-    __DEFAULT_BUFFER_SIZE: int = 4096
+    __sizeThreshold: int = DEFAULT_SIZE_THRESHOLD
+    __defaultCharset: str = DiskFileItem.DEFAULT_CHARSET
     # Class Fields End
 
     # Class Methods Begin
@@ -40,9 +41,9 @@ class DiskFileItemFactory:
         return self.__repository
 
     @staticmethod
-    def DiskFileItemFactory1() -> DiskFileItemFactory:
+    def DiskFileItemFactory1() -> "DiskFileItemFactory":
 
-        return DiskFileItemFactory(DEFAULT_SIZE_THRESHOLD, None)
+        pass  # LLM could not translate method body
 
     def __init__(self, sizeThreshold: int, repository: pathlib.Path) -> None:
 
