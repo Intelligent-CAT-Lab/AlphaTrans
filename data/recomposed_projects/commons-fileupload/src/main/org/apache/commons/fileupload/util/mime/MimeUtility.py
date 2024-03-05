@@ -32,7 +32,7 @@ class MimeUtility:
 
         if charset is None:
             return None
-        mapped_charset = MIME2JAVA.get(charset.lower())
+        mapped_charset = MimeUtility.__MIME2JAVA.get(charset.lower())
         if mapped_charset is None:
             return charset
         return mapped_charset

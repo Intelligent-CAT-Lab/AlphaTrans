@@ -12,7 +12,7 @@ class FileItemHeadersImpl(FileItemHeaders):
 
     # Class Fields Begin
     __version: str = "1.0.0"
-    headerNameToValueListMap: Dict[str, List[str]] = {}
+    __headerNameToValueListMap: Dict[str, List[str]] = {}
     # Class Fields End
 
     # Class Methods Begin
@@ -26,7 +26,7 @@ class FileItemHeadersImpl(FileItemHeaders):
 
     def getHeaderNames(self) -> typing.Iterator[str]:
 
-        return self.__headerNameToValueListMap.keys()
+        return list(self.__headerNameToValueListMap.keys())
 
     def getHeader(self, name: str) -> str:
 

@@ -81,7 +81,7 @@ final class Base64Decoder {
   private static final int PAD_BYTE = -2; // must be outside range 0-63
   private static final int INVALID_BYTE = -1; // must be outside range 0-63
   private static Value clz =
-      ContextInitializer.getPythonClass("/util/mimBase64Decoder.py", "Base64Decoder");
+      ContextInitializer.getPythonClass("/util/mime/Base64Decoder.py", "Base64Decoder");
   private Value obj;
 
   public Base64Decoder(Value obj) {

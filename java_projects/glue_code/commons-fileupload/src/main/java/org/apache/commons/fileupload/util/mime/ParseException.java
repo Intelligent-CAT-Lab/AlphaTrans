@@ -6,7 +6,7 @@ import org.graalvm.polyglot.Value;
 final class ParseException extends Exception {
   private static final long serialVersionUID = 5355281266579392077L;
   private static Value clz =
-      ContextInitializer.getPythonClass("/util/mimParseException.py", "ParseException");
+      ContextInitializer.getPythonClass("/util/mime/ParseException.py", "ParseException");
   private Value obj;
 
   public ParseException(Value obj) {

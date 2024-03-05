@@ -11,7 +11,7 @@ final class QuotedPrintableDecoder {
   private static final int UPPER_NIBBLE_SHIFT = Byte.SIZE / 2;
   private static Value clz =
       ContextInitializer.getPythonClass(
-          "/util/mimQuotedPrintableDecoder.py", "QuotedPrintableDecoder");
+          "/util/mime/QuotedPrintableDecoder.py", "QuotedPrintableDecoder");
   private Value obj;
 
   public QuotedPrintableDecoder(Value obj) {

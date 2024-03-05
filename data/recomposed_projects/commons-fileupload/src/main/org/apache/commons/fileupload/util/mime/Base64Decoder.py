@@ -6,13 +6,14 @@ import io
 from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
-
+MAX_VALUE = 127
+MIN_VALUE = -128
 @java_handler
 class Base64Decoder:
 
     # Class Fields Begin
     __CRLF: str = "\r\n"
-    __ENCODING_TABLE: bytes = [0] * (Byte.MAX_VALUE - Byte.MIN_VALUE + 1)
+    __ENCODING_TABLE: bytes = [0] * (MAX_VALUE - MIN_VALUE + 1)
     __MAX_BYTE: int = 63
     __PAD_BYTE: int = -2
     __MASK_BYTE_UNSIGNED: int = 255
