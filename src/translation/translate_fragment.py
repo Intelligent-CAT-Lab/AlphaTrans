@@ -53,23 +53,38 @@ def translate(model, tokenizer, prompt, device, fragment, partial_translated_fra
                     if partial_translated_fragment.strip() not in generation:
                         max_attempts += 1
                         continue
-                    print(f'=======================PARSED=======================\n{generation}\n---' * 50, flush=True)
+                    print(f'=======================PARSED=======================\n{generation}\n' + '---' * 50, flush=True)
                 except (SyntaxError, MemoryError) as e:
-                    print(f'=======================PARSE ERROR=======================\n{e}\n---' * 50, flush=True)
+                    print(f'=======================PARSE ERROR=======================\n{e}\n' + '---' * 50, flush=True)
                     max_attempts += 1
                     continue
                 extracted_string = generation.split('\n')
                 max_attempts = 5
-            if '```' in generation:
+            if '```' in generation and generation.count('```') != 1:
                 generation = generation[generation.find('```')+3:generation.find('```', generation.find('```')+3)]
                 try:
                     ast.parse(generation.strip())
                     if partial_translated_fragment.strip() not in generation:
                         max_attempts += 1
                         continue
-                    print(f'=======================PARSED=======================\n{generation}\n---' * 50, flush=True)
+                    print(f'=======================PARSED=======================\n{generation}\n' + '---' * 50, flush=True)
                 except (SyntaxError, MemoryError) as e:
-                    print(f'=======================PARSE ERROR=======================\n{e}\n---' * 50, flush=True)
+                    print(f'=======================PARSE ERROR=======================\n{e}\n' + '---' * 50, flush=True)
+                    max_attempts += 1
+                    continue
+                extracted_string = generation.split('\n')
+                max_attempts = 5
+            
+            if '```' in generation and generation.count('```') == 1:
+                generation = generation.replace('```', '')
+                try:
+                    ast.parse(generation.strip())
+                    if partial_translated_fragment.strip() not in generation:
+                        max_attempts += 1
+                        continue
+                    print(f'=======================PARSED=======================\n{generation}\n' + '---' * 50, flush=True)
+                except (SyntaxError, MemoryError) as e:
+                    print(f'=======================PARSE ERROR=======================\n{e}\n' + '---' * 50, flush=True)
                     max_attempts += 1
                     continue
                 extracted_string = generation.split('\n')
@@ -81,9 +96,9 @@ def translate(model, tokenizer, prompt, device, fragment, partial_translated_fra
                 if partial_translated_fragment.strip() not in match.group(1):
                     max_attempts += 1
                     continue
-                print(f'=======================PARSED=======================\n{match.group(1)}\n---' * 50, flush=True)
+                print(f'=======================PARSED=======================\n{match.group(1)}\n' + '---' * 50, flush=True)
             except (SyntaxError, MemoryError) as e:
-                print(f'=======================PARSE ERROR=======================\n{e}\n---' * 50, flush=True)
+                print(f'=======================PARSE ERROR=======================\n{e}\n' + '---' * 50, flush=True)
                 max_attempts += 1
                 continue
             extracted_string = match.group(1).split('\n')

@@ -187,6 +187,8 @@ def main(args):
                 return_type = '<placeholder>'
                 if len(fragment_translations['classes'][class_]['methods'][method]['return_types']) == 1 and fragment_translations['classes'][class_]['methods'][method]['return_types'][0][0] in extracted_types:
                     return_type = extracted_types[fragment_translations['classes'][class_]['methods'][method]['return_types'][0][0]]
+                    if return_type == class_:
+                        return_type = f'"{class_}"'
 
                 selected_translation = 1
                 for i in range(args.num_translations):
@@ -218,6 +220,19 @@ def main(args):
                 total_fragments += 1
                 current_method[-1] = current_method[-1] + f'{return_type}:\n'
                 current_method += method_body
+
+                # replace fields with self.field in method body
+                for field in fragment_translations['classes'][class_]['fields']:
+                    field_name = field.split(':')[1].strip()
+                    if 'protected' in fragment_translations['classes'][class_]['fields'][field]['modifiers']:
+                        field_name = '_' + field_name
+                    elif 'private' in fragment_translations['classes'][class_]['fields'][field]['modifiers']:
+                        field_name = '__' + field_name
+                    for i in range(1, len(current_method)):
+                        if f'self.{field_name}' in current_method[i]:
+                            continue
+                        current_method[i] = current_method[i].replace(field_name, f'self.{field_name}')
+
                 skeleton += '\n'.join(current_method) + '\n\n'
 
                 assert '<placeholder>' not in ''.join(current_method)
@@ -242,13 +257,30 @@ def main(args):
         if 'datetime' in skeleton:
             skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport datetime\n')
         
+        if 'os' in skeleton:
+            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport os\n')
+        
+        if 'pickle' in skeleton:
+            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport pickle\n')
+        
+        if 'itertools' in skeleton:
+            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport itertools\n')
+        
+        if 'sys' in skeleton:
+            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport sys\n')
+        
+        if 'collections' in skeleton:
+            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport collections\n')
+
         if 'unittest.TestCase' in skeleton:
             skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport unittest\n')
         
-        for element in ['assertEquals', 'assertTrue', 'assertFalse', 'assertRaises', 'assertIsNone', 'assertIsNotNone', 'assertIn', 'assertNotIn', 'assertIsInstance', 'assertNotIsInstance']:
+        for element in ['assertEquals', 'assertEqual', 'assertTrue', 'assertFalse', 'assertRaises', 'assertIsNone', 'assertIsNotNone', 'assertIn', 'assertNotIn', 'assertIsInstance', 'assertNotIsInstance']:
             skeleton = skeleton.replace(f'{element}(', f'self.{element}(')
             if f'self.self.{element}(' in skeleton:
                 skeleton = skeleton.replace(f'self.self.{element}(', f'self.{element}(')
+            
+            skeleton = skeleton.replace(f'self.assertEquals(', f'self.assertEqual(')
 
         for dependency in class_dependencies:
             for dependent_class in dependency[1]:
