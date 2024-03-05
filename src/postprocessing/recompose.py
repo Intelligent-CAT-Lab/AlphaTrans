@@ -252,10 +252,7 @@ def main(args):
 
         for dependency in class_dependencies:
             for dependent_class in dependency[1]:
-                if 'src.main' in translation_file:
-                    path = f'src.main.{dependent_class[1]}'
-                else:
-                    path = f'src.test.{dependent_class[1]}'
+                path = f'src.main.{dependent_class[1]}'
                 if f'from {path} import *' in skeleton:
                     continue
                 skeleton = skeleton.replace('# Imports Begin\n', f'# Imports Begin\nfrom {path} import *\n')
