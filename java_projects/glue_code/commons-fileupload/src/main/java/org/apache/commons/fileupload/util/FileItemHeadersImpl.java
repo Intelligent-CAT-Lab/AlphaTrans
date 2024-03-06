@@ -49,7 +49,7 @@ public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
     //
 
     // TODO: Check the type mapping below!
-    return obj.invokeMember("getHeaderNames").as(List.class).iterator();
+    return obj.invokeMember("getHeaderNames").as(Iterator.class);
   }
 
   public String getHeader(String name) {
