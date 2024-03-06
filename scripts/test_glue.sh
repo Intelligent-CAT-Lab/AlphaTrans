@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# To execute, run `bash scripts/test_glue.sh <project>` from the root directory
+
 projects=(
     'commons-cli' \
     'commons-codec' \
@@ -17,6 +19,7 @@ if [[ " ${projects[@]} " =~ " $1 " ]]; then
 else
     echo "Invalid project name! Please provide a valid project name from the following:
     ${projects[@]}"
+    echo "Usage: bash scripts/test_glue.sh <project>"
     exit 1
 fi
 
