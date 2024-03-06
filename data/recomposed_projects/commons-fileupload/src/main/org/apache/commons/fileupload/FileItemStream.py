@@ -29,7 +29,7 @@ class FileItemStream(ABC):
     # Class Methods Begin
     def isFormField(self) -> bool:
 
-        return True
+        return self.isFormField()
 
     def getFieldName(self) -> str:
 

@@ -27,19 +27,22 @@ def parse_dependencies(project_name):
     class_deps = os.listdir(dependencies_dir)
     for class_dep in class_deps:
 
+        if not class_dep.endswith('.dot'):
+            continue
+
         with open(os.path.join(dependencies_dir, class_dep), 'r') as f:
             lines = f.readlines()
             for line in lines[2:-1]:
 
                 candidate_line = line.strip()
+                if 'java.base' in candidate_line or 'java' in candidate_line or 'junit' in candidate_line:
+                    continue
+
                 class_name_path = re.search(r'->\s(.*?)\s\(', candidate_line).group(1).replace('"', '').strip()
                 class_name = class_name_path.split('.')[-1].strip()
 
                 current_class_path = candidate_line[candidate_line.find('\"') + 1:candidate_line.find('\"', candidate_line.find('\"') + 1)]
                 current_class = current_class_path.split('.')[-1].strip()
-
-                if 'java.base' in candidate_line or 'not found' in candidate_line or 'java' in candidate_line:
-                    continue
 
                 if '$' in class_name:
                     if class_name.split('$')[-1].isdigit():

@@ -13,11 +13,12 @@ from src.main.org.apache.commons.fileupload.java_handler import java_handler
 class MimeUtility:
 
     # Class Fields Begin
-
+    __US_ASCII_CHARSET: str = "US-ASCII"
     __BASE64_ENCODING_MARKER: str = "B"
-
+    __QUOTEDPRINTABLE_ENCODING_MARKER: str = ""  # LLM could not translate field
+    __ENCODED_TOKEN_MARKER: str = "=?"
     __ENCODED_TOKEN_FINISHER: str = "?="
-
+    __LINEAR_WHITESPACE: str = " \t\r\n"
     __MIME2JAVA: Dict[str, str] = {}
     # Class Fields End
 
@@ -30,12 +31,7 @@ class MimeUtility:
     @staticmethod
     def __javaCharset(charset: str) -> str:
 
-        if charset is None:
-            return None
-        mapped_charset = MimeUtility.__MIME2JAVA.get(charset.lower())
-        if mapped_charset is None:
-            return charset
-        return mapped_charset
+        pass  # LLM could not translate method body
 
     @staticmethod
     def __decodeWord(word: str) -> str:

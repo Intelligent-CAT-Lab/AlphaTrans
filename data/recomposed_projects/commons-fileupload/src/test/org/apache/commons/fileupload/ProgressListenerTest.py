@@ -1,4 +1,5 @@
 # Imports Begin
+from src.main.org.apache.commons.fileupload.ProgressListener import *
 import unittest
 import typing
 from typing import *
@@ -28,8 +29,8 @@ class ProgressListenerImpl(unittest.TestCase, ProgressListener):
 
     def checkFinished(self) -> None:
 
-        assert self.__expectedContentLength == self.__bytesRead
-        assert self.__expectedItems == self.__items
+        assert self.__bytesRead == self.__expectedContentLength
+        assert self.__items == self.__expectedItems
 
     def __init__(self, pContentLength: int, pItems: int) -> None:
 

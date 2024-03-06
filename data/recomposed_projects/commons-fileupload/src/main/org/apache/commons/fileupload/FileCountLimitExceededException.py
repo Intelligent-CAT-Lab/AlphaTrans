@@ -21,6 +21,6 @@ class FileCountLimitExceededException(FileUploadException):
     def __init__(self, message: str, limit: int) -> None:
 
         super().__init__(message, None)
-        self.__limit = limit
+        self.limit = limit
 
     # Class Methods End

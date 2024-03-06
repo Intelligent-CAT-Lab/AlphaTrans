@@ -11,7 +11,7 @@ from src.main.org.apache.commons.fileupload.java_handler import java_handler
 class FileUploadException(Exception):
 
     # Class Fields Begin
-    __version: str = "1.0"
+    __serialVersionUID: int = 8881893724388807504
     __cause: BaseException = None
     # Class Fields End
 
@@ -40,12 +40,12 @@ class FileUploadException(Exception):
         self.cause = cause
 
     @staticmethod
-    def FileUploadException1(msg: str) -> FileUploadException:
+    def FileUploadException1(msg: str) -> "FileUploadException":
 
         return FileUploadException(msg, None)
 
     @staticmethod
-    def FileUploadException0() -> FileUploadException:
+    def FileUploadException0() -> "FileUploadException":
 
         pass  # LLM could not translate method body
 

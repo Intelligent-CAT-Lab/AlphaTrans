@@ -1,4 +1,5 @@
 # Imports Begin
+import os
 from abc import ABC
 
 from src.main.org.apache.commons.fileupload.java_handler import java_handler
@@ -15,7 +16,7 @@ class Closeable(ABC):
     def isClosed(self) -> bool:
 
         try:
-            self.file.close()
+            self.close()
             return True
         except IOError:
             return False

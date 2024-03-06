@@ -7,6 +7,7 @@ from src.main.org.apache.commons.fileupload.FileUploadException import *
 from src.main.org.apache.commons.fileupload.FileItemHeaders import *
 from src.main.org.apache.commons.fileupload.FileItemFactory import *
 from src.main.org.apache.commons.fileupload.FileItem import *
+import os
 import typing
 from typing import *
 from abc import ABC
@@ -22,17 +23,17 @@ class FileUploadBase(ABC):
     MAX_HEADER_SIZE: int = 1024
     __sizeMax: int = ""  # LLM could not translate field
     __fileSizeMax: int = -1
-    __fileCountMax: int = -1
+    __fileCountMax: int = ""  # LLM could not translate field
     __headerEncoding: str = None
     __listener: ProgressListener = None
     CONTENT_TYPE: str = "Content-type"
-    CONTENT_DISPOSITION: str = ""  # LLM could not translate field
+    CONTENT_DISPOSITION: str = "Content-disposition"
     CONTENT_LENGTH: str = "Content-length"
     FORM_DATA: str = "form-data"
     ATTACHMENT: str = "attachment"
     MULTIPART: str = "multipart/"
-    MULTIPART_FORM_DATA: str = ""  # LLM could not translate field
-    MULTIPART_MIXED: str = ""  # LLM could not translate field
+    MULTIPART_FORM_DATA: str = "multipart/form-data"
+    MULTIPART_MIXED: str = "multipart/mixed"
     # Class Fields End
 
     # Class Methods Begin
@@ -55,18 +56,18 @@ class FileUploadBase(ABC):
 
         return self.getFileItemFactory().createItem(
             self._getFieldName2(headers),
-            self._getHeader(headers, CONTENT_TYPE),
+            self._getHeader(headers, self.CONTENT_TYPE),
             isFormField,
             self._getFileName0(headers),
         )
 
     def _getFieldName2(self, headers: typing.Dict[str, str]) -> str:
 
-        return self.__getFieldName1(self._getHeader(headers, CONTENT_DISPOSITION))
+        return self.__getFieldName1(self._getHeader(headers, self.CONTENT_DISPOSITION))
 
     def _getFileName0(self, headers: typing.Dict[str, str]) -> str:
 
-        return self.__getFileName2(self._getHeader(headers, CONTENT_DISPOSITION))
+        return self.__getFileName2(self._getHeader(headers, self.CONTENT_DISPOSITION))
 
     def setProgressListener(self, pListener: ProgressListener) -> None:
 
@@ -94,7 +95,7 @@ class FileUploadBase(ABC):
                 non_ws = start
                 while non_ws < len(headerPart):
                     c = headerPart[non_ws]
-                    if c not in [" ", "\t"]:
+                    if c not in " \t":
                         break
                     non_ws += 1
                 if non_ws == start:
@@ -107,7 +108,7 @@ class FileUploadBase(ABC):
 
     def _getFieldName0(self, headers: FileItemHeaders) -> str:
 
-        return self.__getFieldName1(headers.getHeader(CONTENT_DISPOSITION))
+        return self.__getFieldName1(headers.getHeader(self.CONTENT_DISPOSITION))
 
     def _getFileName1(self, headers: FileItemHeaders) -> str:
 
@@ -188,22 +189,24 @@ class FileUploadBase(ABC):
 
     def __getFieldName1(self, pContentDisposition: str) -> str:
 
-        field_name = None
-        if pContentDisposition and pContentDisposition.lower().startswith(FORM_DATA):
+        fieldName = None
+        if pContentDisposition and pContentDisposition.lower().startswith(
+            self.FORM_DATA
+        ):
             parser = ParameterParser()
             parser.setLowerCaseNames(True)
             params = parser.parse1(pContentDisposition, ";")
-            field_name = params.get("name")
-            if field_name:
-                field_name = field_name.strip()
-        return field_name
+            fieldName = params.get("name")
+            if fieldName:
+                fieldName = fieldName.strip()
+        return fieldName
 
     def __getFileName2(self, pContentDisposition: str) -> str:
 
         fileName = None
         if pContentDisposition is not None:
             cdl = pContentDisposition.lower()
-            if cdl.startswith(FORM_DATA) or cdl.startswith(ATTACHMENT):
+            if cdl.startswith(self.FORM_DATA) or cdl.startswith(self.ATTACHMENT):
                 parser = ParameterParser()
                 parser.setLowerCaseNames(True)
                 params = parser.parse1(pContentDisposition, ";")
@@ -217,7 +220,7 @@ class FileUploadBase(ABC):
 
     def setFileItemFactory(self, factory: FileItemFactory) -> None:
 
-        self.file_item_factory = factory
+        self.fileItemFactory = factory
 
     def getFileItemFactory(self) -> FileItemFactory:
 
@@ -276,12 +279,12 @@ class SizeLimitExceededException(SizeException):
 
     # Class Methods Begin
     @staticmethod
-    def SizeLimitExceededException1(message: str) -> SizeLimitExceededException:
+    def SizeLimitExceededException1(message: str) -> "SizeLimitExceededException":
 
         return SizeLimitExceededException(message, 0, 0)
 
     @staticmethod
-    def SizeLimitExceededException0() -> SizeLimitExceededException:
+    def SizeLimitExceededException0() -> "SizeLimitExceededException":
 
         pass  # LLM could not translate method body
 

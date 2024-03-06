@@ -22,7 +22,7 @@ class FileItem(ABC):
     ) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]:
 
         try:
-            return self.getOutputStream()
+            return self.get_output_stream()
         except IOException as e:
             raise e
 
@@ -32,11 +32,11 @@ class FileItem(ABC):
 
     def isFormField(self) -> bool:
 
-        return self.isFormField()
+        return True
 
     def setFieldName(self, name: str) -> None:
 
-        self.fieldName = name
+        self.field_name = name
 
     def getFieldName(self) -> str:
 
@@ -59,8 +59,8 @@ class FileItem(ABC):
 
         try:
             return self.getString(encoding)
-        except UnsupportedEncodingException:
-            raise ValueError(f"Unsupported encoding: {encoding}")
+        except UnsupportedEncodingException as e:
+            raise ValueError(f"Unsupported encoding: {encoding}") from e
 
     def get(self) -> typing.List[int]:
 
@@ -80,12 +80,15 @@ class FileItem(ABC):
 
     def getContentType(self) -> str:
 
-        return "text/html"
+        return "text/plain"
 
     def getInputStream(
         self,
     ) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:
 
-        return io.BytesIO(self.getBytes())
+        try:
+            return io.BytesIO(self.getBytes())
+        except IOException as e:
+            raise e
 
     # Class Methods End

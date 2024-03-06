@@ -1,4 +1,5 @@
 # Imports Begin
+from src.main.org.apache.commons.fileupload.util.mime.Base64Decoder import *
 import unittest
 import io
 
@@ -8,7 +9,7 @@ import io
 class Base64DecoderTestCase(unittest.TestCase):
 
     # Class Fields Begin
-    __UTF_8_CHARSET: str = "UTF-8"
+    __US_ASCII_CHARSET: str = "US-ASCII"
     # Class Fields End
 
     # Class Methods Begin
@@ -70,7 +71,13 @@ class Base64DecoderTestCase(unittest.TestCase):
 
     def rfc4648Section10Decode(self) -> None:
 
-        pass  # LLM could not translate method body
+        self.__assertEncoded("", "")
+        self.__assertEncoded("f", "Zg==")
+        self.__assertEncoded("fo", "Zm8=")
+        self.__assertEncoded("foo", "Zm9v")
+        self.__assertEncoded("foob", "Zm9vYg==")
+        self.__assertEncoded("fooba", "Zm9vYmE=")
+        self.__assertEncoded("foobar", "Zm9vYmFy")
 
     @staticmethod
     def __assertIOException(messageText: str, encoded: str) -> None:

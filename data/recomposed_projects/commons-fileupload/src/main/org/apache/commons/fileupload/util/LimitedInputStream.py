@@ -1,5 +1,6 @@
 # Imports Begin
 from src.main.org.apache.commons.fileupload.util.Closeable import *
+import os
 import typing
 from typing import *
 import io
@@ -60,6 +61,6 @@ class LimitedInputStream(Closeable, FilterInputStream, ABC):
 
     def _raiseError(self, pSizeMax: int, pCount: int) -> None:
 
-        raise IOError(f"Maximum size exceeded: {pSizeMax} bytes, {pCount} bytes read")
+        raise IOError(f"Maximum size exceeded: {pSizeMax} bytes, {pCount} items")
 
     # Class Methods End
