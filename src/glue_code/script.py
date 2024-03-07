@@ -229,9 +229,9 @@ def main(args):
             if not data['classes'][_class]['is_interface']:
                 # add graal attributes
                 python_file_dir = subproj_name.replace('.', '/')
-                python_file_dir = python_file_dir[:-1] if python_file_dir else python_file_dir
+                python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
                 current_file_name = data["path"].split('/')[-1].split('.')[0]
-                python_file = f'"{python_file_dir}{current_file_name}.py"'
+                python_file = f'"{python_file_dir}/{current_file_name}.py"'
                 class_name = f'"{_class}"'
                 final_glue_code += f"    private static Value clz = ContextInitializer.getPythonClass({python_file}, {class_name});\n"
                 final_glue_code += "    private Value obj;\n"
