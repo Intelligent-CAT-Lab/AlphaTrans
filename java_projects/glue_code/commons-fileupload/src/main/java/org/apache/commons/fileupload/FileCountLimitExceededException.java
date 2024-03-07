@@ -5,12 +5,13 @@ import org.graalvm.polyglot.Value;
 public class FileCountLimitExceededException extends FileUploadException {
   private static final long serialVersionUID = 6904179610227521789L;
   private static Value clz =
-      ContextInitializer.getPythonClass("<placeholder>", "FileCountLimitExceededException");
+      ContextInitializer.getPythonClass(
+          "FileCountLimitExceededException.py", "FileCountLimitExceededException");
   private Value obj;
 
-  public FileCountLimitExceededException(Value obj) {
-    this.obj = obj;
-  }
+  // public FileCountLimitExceededException(Value obj) {
+  //   this.obj = obj;
+  // }
 
   public Value getPythonObject() {
     return obj;
@@ -26,10 +27,8 @@ public class FileCountLimitExceededException extends FileUploadException {
   }
 
   public FileCountLimitExceededException(final String message, final long limit) {
-    //
-    // super(message, null);
+    super(message, null);
     // this.limit = limit;
-    //
 
     this.obj = clz.invokeMember("__init__", message, limit);
   }

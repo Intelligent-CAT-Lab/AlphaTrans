@@ -21,6 +21,7 @@ public abstract class ContextInitializer {{
             sharedEngine = Engine.create();
             context = Context.newBuilder("python")
                     .allowHostAccess(hostAccess)
+                    .allowAllAccess(true)
                     .option("python.PythonPath", packageDirectory)
                     .engine(sharedEngine)
                     .build();

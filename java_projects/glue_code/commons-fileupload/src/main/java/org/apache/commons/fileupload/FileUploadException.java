@@ -7,7 +7,7 @@ import org.graalvm.polyglot.Value;
 public class FileUploadException extends Exception {
   private static final long serialVersionUID = 8881893724388807504L;
   private static Value clz =
-      ContextInitializer.getPythonClass("<placeholder>", "FileUploadException");
+      ContextInitializer.getPythonClass("FileUploadException.py", "FileUploadException");
   private Value obj;
 
   public FileUploadException(Value obj) {

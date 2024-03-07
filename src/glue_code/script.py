@@ -5,6 +5,8 @@ import json
 
 ORIGINAL_DIR = "java_projects/cleaned_final_projects"
 OUTPUT_DIR = "java_projects/glue_code"
+TRANSLATION_DIR = "data/recomposed_projects"
+DIR_DEPTH = "../../../"
 
 main_paths = {
     "commons-fileupload": "main/java/org/apache/commons/fileupload/",
@@ -63,7 +65,11 @@ def make_mappings(args, schemas):
             data = json.load(f)
 
         for _class in data['classes']:
-            if not data['classes'][_class]['is_interface'] and not '/test/' in data['path']:
+            if (
+                    not data['classes'][_class]['is_interface'] 
+                    and not '/test/' in data['path'] 
+                    and not _class.endswith('Exception')
+                ):
                 if data['classes'][_class]["nested_inside"]:
                     classes_to_map.append(f"{data['classes'][_class]['nested_inside']}.{_class}")
                 else:
@@ -80,7 +86,7 @@ def make_mappings(args, schemas):
                     
     return_string = ""
     for _class in classes_to_map:
-        return_string += f".targetTypeMapping(Value.class, {_class}.class, (v) -> new {_class}(v))\n"
+        return_string += f".targetTypeMapping(Value.class, {_class}.class, null, (v) -> new {_class}(v))\n"
         
     imports_string = ""
     for _import in imports:
@@ -93,6 +99,9 @@ def make_exception_mappings(args, schemas):
     Create mappings for package exception classes.
     """
     package_exception_classes = []
+    imports = []
+
+    formatted_project_name = args.project_name.replace('-', '.')
     for schema in schemas:
         if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
             continue
@@ -101,13 +110,29 @@ def make_exception_mappings(args, schemas):
             
         for _class in data['classes']:
             if _class.endswith('Exception'):
-                package_exception_classes.append(_class)
+                if data['classes'][_class]["nested_inside"]:
+                    package_exception_classes.append(f"{data['classes'][_class]['nested_inside']}.{_class}")
+                else:
+                    package_exception_classes.append(_class)
+                
+                # link subpackages
+                if main_paths[args.project_name] in data['path']:
+                    path_tail = data['path'].split(main_paths[args.project_name])[-1]
+                    if "/" in path_tail:
+                        # remove the last segment
+                        path_tail = path_tail[:path_tail.rfind('/')]
+                        subproj_name = "." + path_tail.replace('/', '.')
+                        imports.append(f"{subproj_name}.{_class}")
                 
     return_string = ""
     for _class in package_exception_classes:
-        return_string += f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(message);}}\n"
+        return_string += f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(exceptionObj);}}\n"
+    
+    imports_string = ""
+    for _import in imports:
+        imports_string += f"import org.apache.{formatted_project_name}{_import};"
         
-    return return_string + "// TODO: Add other mappings"
+    return return_string + "// TODO: Add other mappings", imports_string
 
 def main(args):
     if not os.path.exists('data/schemas'):
@@ -131,16 +156,18 @@ def main(args):
         write_to_file(get_destination_path(args.project_name, "ContextInitializer", path_to_main=main_paths[args.project_name]), f.read().format(
                 project = f"org.apache.{formatted_proj_name}",
                 imports = ctx_imports,
-                code_directory = "<placeholder>",
-                package_directory = "<placeholder>",
+                code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name]}",
+                package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/",
                 mappings = ctx_mappings
             ))
-            
+
     # Add ExceptionHandler.java
+    exp_mappings, exp_imports = make_exception_mappings(args, schemas)
     with open("src/glue_code/misc/ExceptionHandler.java") as f:
         write_to_file(get_destination_path(args.project_name, "ExceptionHandler", path_to_main=main_paths[args.project_name]), f.read().format(
                 project = f"org.apache.{formatted_proj_name}",
-                mappings = make_exception_mappings(args, schemas)
+                imports = exp_imports,
+                mappings = exp_mappings
             ))
     
     # IntegrationUtils.java
@@ -178,6 +205,8 @@ def main(args):
         final_glue_code += "import org.graalvm.polyglot.Value;\n"
         final_glue_code += "import org.graalvm.polyglot.PolyglotException;\n"
         final_glue_code += f"import org.apache.{formatted_proj_name}.ContextInitializer;\n"
+        final_glue_code += f"import org.apache.{formatted_proj_name}.ExceptionHandler;\n"
+        final_glue_code += f"import org.apache.{formatted_proj_name}.IntegrationUtils;\n"
 
         # add existing imports
         for _import in data['imports']:
@@ -199,7 +228,10 @@ def main(args):
             
             if not data['classes'][_class]['is_interface']:
                 # add graal attributes
-                python_file = f'"<placeholder>"'
+                python_file_dir = subproj_name.replace('.', '/')
+                python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
+                current_file_name = data["path"].split('/')[-1].split('.')[0]
+                python_file = f'"{python_file_dir}/{current_file_name}.py"'
                 class_name = f'"{_class}"'
                 final_glue_code += f"    private static Value clz = ContextInitializer.getPythonClass({python_file}, {class_name});\n"
                 final_glue_code += "    private Value obj;\n"

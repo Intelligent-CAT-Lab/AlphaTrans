@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.fileupload.ContextInitializer;
 import org.apache.commons.fileupload.FileItemHeaders;
 import org.graalvm.polyglot.Value;
@@ -15,11 +14,15 @@ public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
       new LinkedHashMap<String, List<String>>();
   private static final long serialVersionUID = -4455695752627032559L;
   private static Value clz =
-      ContextInitializer.getPythonClass("<placeholder>", "FileItemHeadersImpl");
+      ContextInitializer.getPythonClass("/util/FileItemHeadersImpl.py", "FileItemHeadersImpl");
   private Value obj;
 
   public FileItemHeadersImpl(Value obj) {
     this.obj = obj;
+  }
+
+  public FileItemHeadersImpl() {
+    this.obj = clz.newInstance();
   }
 
   public Value getPythonObject() {

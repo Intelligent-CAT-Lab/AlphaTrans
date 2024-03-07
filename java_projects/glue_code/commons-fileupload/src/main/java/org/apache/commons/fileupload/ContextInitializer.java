@@ -1,6 +1,16 @@
 package org.apache.commons.fileupload;
 
 import java.io.File;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.portlet.PortletFileUpload;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.apache.commons.fileupload.util.FileItemHeadersImpl;
+import org.apache.commons.fileupload.util.LimitedInputStream;
+import org.apache.commons.fileupload.util.Streams;
+// import org.apache.commons.fileupload.util.mime.Base64Decoder;
+import org.apache.commons.fileupload.util.mime.MimeUtility;
+// import org.apache.commons.fileupload.util.mime.QuotedPrintableDecoder;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.HostAccess;
@@ -9,116 +19,73 @@ import org.graalvm.polyglot.Value;
 
 public abstract class ContextInitializer {
   private static Engine sharedEngine;
-  private static String codeDirectory = "<placeholder>";
-  private static String packageDirectory = "<placeholder>";
+  private static String codeDirectory =
+      "../../../data/recomposed_projects/commons-fileupload/src/main/org/apache/commons/fileupload/";
+  private static String packageDirectory =
+      "../../../data/recomposed_projects/commons-fileupload";
   private static Context context;
 
   static {
     try {
       HostAccess hostAccess =
           HostAccess.newBuilder(HostAccess.ALL)
-            //   .targetTypeMapping(Value.class, MultipartStream.class, (v) -> new MultipartStream(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       MultipartStream.ItemInputStream.class,
-            //       (v) -> new MultipartStream.ItemInputStream(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       MultipartStream.IllegalBoundaryException.class,
-            //       (v) -> new MultipartStream.IllegalBoundaryException(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       MultipartStream.MalformedStreamException.class,
-            //       (v) -> new MultipartStream.MalformedStreamException(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       MultipartStream.ProgressNotifier.class,
-            //       (v) -> new MultipartStream.ProgressNotifier(v))
-            //   .targetTypeMapping(
-            //       Value.class, PortletFileUpload.class, (v) -> new PortletFileUpload(v))
-            //   .targetTypeMapping(Value.class, Streams.class, (v) -> new Streams(v))
-            //   .targetTypeMapping(Value.class, MimeUtility.class, (v) -> new MimeUtility(v))
-            //   .targetTypeMapping(
-            //       Value.class, QuotedPrintableDecoder.class, (v) -> new QuotedPrintableDecoder(v))
-            //   .targetTypeMapping(Value.class, Base64Decoder.class, (v) -> new Base64Decoder(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       InvalidFileNameException.class,
-            //       (v) -> new InvalidFileNameException(v))
-            //   .targetTypeMapping(Value.class, ParseException.class, (v) -> new ParseException(v))
-            //   .targetTypeMapping(
-            //       Value.class, DiskFileItemFactory.class, (v) -> new DiskFileItemFactory(v))
-            //   .targetTypeMapping(
-            //       Value.class, ServletRequestContext.class, (v) -> new ServletRequestContext(v))
-            //   .targetTypeMapping(
-            //       Value.class, MockHttpServletRequest.class, (v) -> new MockHttpServletRequest(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       MockHttpServletRequest.MyServletInputStream.class,
-            //       (v) -> new MockHttpServletRequest.MyServletInputStream(v))
-            //   .targetTypeMapping(Value.class, FileUploadBase.class, (v) -> new FileUploadBase(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       FileUploadBase.FileUploadIOException.class,
-            //       (v) -> new FileUploadBase.FileUploadIOException(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       FileUploadBase.IOFileUploadException.class,
-            //       (v) -> new FileUploadBase.IOFileUploadException(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       FileUploadBase.SizeLimitExceededException.class,
-            //       (v) -> new FileUploadBase.SizeLimitExceededException(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       FileItemIteratorImpl.FileItemStreamImpl.class,
-            //       (v) -> new FileItemIteratorImpl.FileItemStreamImpl(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       FileUploadBase.FileItemIteratorImpl.class,
-            //       (v) -> new FileUploadBase.FileItemIteratorImpl(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       FileUploadBase.FileSizeLimitExceededException.class,
-            //       (v) -> new FileUploadBase.FileSizeLimitExceededException(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       FileUploadBase.SizeException.class,
-            //       (v) -> new FileUploadBase.SizeException(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       FileUploadBase.InvalidContentTypeException.class,
-            //       (v) -> new FileUploadBase.InvalidContentTypeException(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       FileUploadBase.UnknownSizeException.class,
-            //       (v) -> new FileUploadBase.UnknownSizeException(v))
-            //   .targetTypeMapping(Value.class, Util.class, (v) -> new Util(v))
-            //   .targetTypeMapping(
-            //       Value.class, FileItemHeadersImpl.class, (v) -> new FileItemHeadersImpl(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       FileCountLimitExceededException.class,
-            //       (v) -> new FileCountLimitExceededException(v))
-            //   .targetTypeMapping(Value.class, FileUpload.class, (v) -> new FileUpload(v))
-            //   .targetTypeMapping(Value.class, DiskFileItem.class, (v) -> new DiskFileItem(v))
-            //   .targetTypeMapping(Value.class, DefaultFileItem.class, (v) -> new DefaultFileItem(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       FileItemStream.ItemSkippedException.class,
-            //       (v) -> new FileItemStream.ItemSkippedException(v))
-            //   .targetTypeMapping(
-            //       Value.class, LimitedInputStream.class, (v) -> new LimitedInputStream(v))
-            //   .targetTypeMapping(Value.class, ParameterParser.class, (v) -> new ParameterParser(v))
-            //   .targetTypeMapping(
-            //       Value.class, DefaultFileItemFactory.class, (v) -> new DefaultFileItemFactory(v))
-            //   .targetTypeMapping(Value.class, Constants.class, (v) -> new Constants(v))
-            //   .targetTypeMapping(
-            //       Value.class,
-            //       MockPortletActionRequest.class,
-            //       (v) -> new MockPortletActionRequest(v))
-            //   .targetTypeMapping(
-            //       Value.class, FileUploadException.class, (v) -> new FileUploadException(v))
+              // .targetTypeMapping(
+              //     Value.class,
+              //     QuotedPrintableDecoder.class,
+              //     null,
+              //     (v) -> new QuotedPrintableDecoder(v))
+              .targetTypeMapping(
+                  Value.class, MultipartStream.class, null, (v) -> new MultipartStream(v))
+              // .targetTypeMapping(
+              //     Value.class,
+              //     MultipartStream.ItemInputStream.class,
+              //     null,
+              //     (v) -> new MultipartStream.ItemInputStream(v))
+              .targetTypeMapping(
+                  Value.class,
+                  MultipartStream.ProgressNotifier.class,
+                  null,
+                  (v) -> new MultipartStream.ProgressNotifier(v))
+              .targetTypeMapping(
+                  Value.class, DiskFileItemFactory.class, null, (v) -> new DiskFileItemFactory(v))
+              .targetTypeMapping(
+                  Value.class, ParameterParser.class, null, (v) -> new ParameterParser(v))
+              .targetTypeMapping(Value.class, Streams.class, null, (v) -> new Streams(v))
+              .targetTypeMapping(
+                  Value.class, PortletFileUpload.class, null, (v) -> new PortletFileUpload(v))
+              .targetTypeMapping(
+                  Value.class, FileItemHeadersImpl.class, null, (v) -> new FileItemHeadersImpl(v))
+              .targetTypeMapping(
+                  Value.class,
+                  DefaultFileItemFactory.class,
+                  null,
+                  (v) -> new DefaultFileItemFactory(v))
+              // .targetTypeMapping(
+              //     Value.class, FileUploadBase.class, null, (v) -> new FileUploadBase(v))
+              // .targetTypeMapping(
+              //     Value.class,
+              //     FileUploadBase.FileItemStreamImpl.class,
+              //     null,
+              //     (v) -> new FileUploadBase.FileItemStreamImpl(v))
+              // .targetTypeMapping(
+              //     Value.class,
+              //     FileUploadBase.FileItemIteratorImpl.class,
+              //     null,
+              //     (v) -> new FileUploadBase.FileItemIteratorImpl(v))
+              .targetTypeMapping(
+                  Value.class, DefaultFileItem.class, null, (v) -> new DefaultFileItem(v))
+              .targetTypeMapping(Value.class, MimeUtility.class, null, (v) -> new MimeUtility(v))
+              .targetTypeMapping(
+                  Value.class,
+                  ServletRequestContext.class,
+                  null,
+                  (v) -> new ServletRequestContext(v))
+              .targetTypeMapping(Value.class, FileUpload.class, null, (v) -> new FileUpload(v))
+              // .targetTypeMapping(
+              //     Value.class, Base64Decoder.class, null, (v) -> new Base64Decoder(v))
+              // .targetTypeMapping(
+                  // Value.class, LimitedInputStream.class, null, (v) -> new LimitedInputStream(v))
+              .targetTypeMapping(Value.class, DiskFileItem.class, null, (v) -> new DiskFileItem(v))
               // TODO: Add other mappings
               .build();
 
@@ -126,6 +93,7 @@ public abstract class ContextInitializer {
       context =
           Context.newBuilder("python")
               .allowHostAccess(hostAccess)
+              .allowAllAccess(true)
               .option("python.PythonPath", packageDirectory)
               .engine(sharedEngine)
               .build();

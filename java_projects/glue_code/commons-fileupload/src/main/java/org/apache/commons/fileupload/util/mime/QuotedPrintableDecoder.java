@@ -2,7 +2,6 @@ package org.apache.commons.fileupload.util.mime;
 
 import java.io.IOException;
 import java.io.OutputStream;
-
 import org.apache.commons.fileupload.ContextInitializer;
 import org.apache.commons.fileupload.ExceptionHandler;
 import org.graalvm.polyglot.PolyglotException;
@@ -11,7 +10,8 @@ import org.graalvm.polyglot.Value;
 final class QuotedPrintableDecoder {
   private static final int UPPER_NIBBLE_SHIFT = Byte.SIZE / 2;
   private static Value clz =
-      ContextInitializer.getPythonClass("<placeholder>", "QuotedPrintableDecoder");
+      ContextInitializer.getPythonClass(
+          "/util/mime/QuotedPrintableDecoder.py", "QuotedPrintableDecoder");
   private Value obj;
 
   public QuotedPrintableDecoder(Value obj) {
@@ -67,6 +67,7 @@ final class QuotedPrintableDecoder {
       // TODO: Check the type mapping below!
       return clz.invokeMember("decode", data, out).as(int.class);
     } catch (PolyglotException e) {
+      // TODO: Handle IOException
       throw (IOException) ExceptionHandler.handle(e, "QuotedPrintableDecoder.decode");
     }
   }
@@ -84,6 +85,7 @@ final class QuotedPrintableDecoder {
       // TODO: Check the type mapping below!
       return clz.invokeMember("hexToBinary", b).as(int.class);
     } catch (PolyglotException e) {
+      // TODO: Handle IOException
       throw (IOException) ExceptionHandler.handle(e, "QuotedPrintableDecoder.hexToBinary");
     }
   }

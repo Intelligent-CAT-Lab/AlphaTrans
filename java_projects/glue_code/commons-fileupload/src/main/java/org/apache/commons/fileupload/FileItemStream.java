@@ -7,7 +7,7 @@ import org.graalvm.polyglot.Value;
 class ItemSkippedException extends IOException {
   private static final long serialVersionUID = -7280778431581963740L;
   private static Value clz =
-      ContextInitializer.getPythonClass("<placeholder>", "ItemSkippedException");
+      ContextInitializer.getPythonClass("FileItemStream.py", "ItemSkippedException");
   private Value obj;
 
   public ItemSkippedException(Value obj) {

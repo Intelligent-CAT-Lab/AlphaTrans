@@ -5,9 +5,11 @@ from typing import *
 import io
 from abc import ABC
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class ItemSkippedException(IOException):
 
     # Class Fields Begin
@@ -18,6 +20,7 @@ class ItemSkippedException(IOException):
     # Class Methods End
 
 
+@java_handler
 class FileItemStream(ABC):
 
     # Class Fields Begin

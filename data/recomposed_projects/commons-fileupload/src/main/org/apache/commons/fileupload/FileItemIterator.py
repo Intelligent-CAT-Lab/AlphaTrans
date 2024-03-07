@@ -5,9 +5,11 @@ import typing
 from typing import *
 from abc import ABC
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class FileItemIterator(ABC):
 
     # Class Fields Begin

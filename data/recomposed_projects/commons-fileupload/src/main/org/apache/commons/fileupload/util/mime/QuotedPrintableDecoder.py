@@ -3,13 +3,15 @@ import typing
 from typing import *
 import io
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
-
+SIZE = 8
+@java_handler
 class QuotedPrintableDecoder:
 
     # Class Fields Begin
-    __UPPER_NIBBLE_SHIFT: int = Byte.SIZE / 2
+    __UPPER_NIBBLE_SHIFT: int = SIZE / 2
     # Class Fields End
 
     # Class Methods Begin

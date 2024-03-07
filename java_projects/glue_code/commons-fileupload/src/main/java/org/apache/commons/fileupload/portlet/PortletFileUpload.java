@@ -7,10 +7,11 @@ import org.graalvm.polyglot.Value;
 
 public class PortletFileUpload extends FileUpload {
   private static Value clz =
-      ContextInitializer.getPythonClass("<placeholder>", "PortletFileUpload");
+      ContextInitializer.getPythonClass("/portlePortletFileUpload.py", "PortletFileUpload");
   private Value obj;
 
   public PortletFileUpload(Value obj) {
+    super(obj);
     this.obj = obj;
   }
 
@@ -28,9 +29,7 @@ public class PortletFileUpload extends FileUpload {
   }
 
   public PortletFileUpload(FileItemFactory fileItemFactory) {
-    //
-    // super(0, fileItemFactory);
-    //
+    super(0, fileItemFactory);    
 
     this.obj = clz.invokeMember("__init__", fileItemFactory);
   }

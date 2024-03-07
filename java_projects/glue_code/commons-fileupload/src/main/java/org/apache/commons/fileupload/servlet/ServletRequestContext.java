@@ -5,7 +5,7 @@ import org.graalvm.polyglot.Value;
 
 public class ServletRequestContext {
   private static Value clz =
-      ContextInitializer.getPythonClass("<placeholder>", "ServletRequestContext");
+      ContextInitializer.getPythonClass("/servleServletRequestContext.py", "ServletRequestContext");
   private Value obj;
 
   public ServletRequestContext(Value obj) {

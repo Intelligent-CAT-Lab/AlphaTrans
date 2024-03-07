@@ -1,23 +1,21 @@
 package org.apache.commons.fileupload.util;
+import org.apache.commons.fileupload.ExceptionHandler;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import org.apache.commons.fileupload.ContextInitializer;
-import org.apache.commons.fileupload.ExceptionHandler;
 import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Value;
 
 public abstract class LimitedInputStream extends FilterInputStream implements Closeable {
   private static Value clz =
-      ContextInitializer.getPythonClass("<placeholder>", "LimitedInputStream");
+      ContextInitializer.getPythonClass("/utiLimitedInputStream.py", "LimitedInputStream");
   private Value obj;
 
-  public LimitedInputStream(Value obj) {
-    super(null);
-    this.obj = obj;
-  }
+  // public LimitedInputStream(Value obj) {
+  //   this.obj = obj;
+  // }
 
   public Value getPythonObject() {
     return obj;
@@ -32,6 +30,7 @@ public abstract class LimitedInputStream extends FilterInputStream implements Cl
 
       obj.invokeMember("close");
     } catch (PolyglotException e) {
+      // TODO: Handle IOException
       throw (IOException) ExceptionHandler.handle(e, "LimitedInputStream.close");
     }
   }
@@ -45,6 +44,7 @@ public abstract class LimitedInputStream extends FilterInputStream implements Cl
       // TODO: Check the type mapping below!
       return obj.invokeMember("isClosed").as(boolean.class);
     } catch (PolyglotException e) {
+      // TODO: Handle IOException
       throw (IOException) ExceptionHandler.handle(e, "LimitedInputStream.isClosed");
     }
   }
@@ -63,6 +63,7 @@ public abstract class LimitedInputStream extends FilterInputStream implements Cl
       // TODO: Check the type mapping below!
       return obj.invokeMember("read1", b, off, len).as(int.class);
     } catch (PolyglotException e) {
+      // TODO: Handle IOException
       throw (IOException) ExceptionHandler.handle(e, "LimitedInputStream.read1");
     }
   }
@@ -81,16 +82,16 @@ public abstract class LimitedInputStream extends FilterInputStream implements Cl
       // TODO: Check the type mapping below!
       return obj.invokeMember("read0").as(int.class);
     } catch (PolyglotException e) {
+      // TODO: Handle IOException
       throw (IOException) ExceptionHandler.handle(e, "LimitedInputStream.read0");
     }
   }
 
   public LimitedInputStream(InputStream inputStream, long pSizeMax) {
-    //
-    // super(inputStream);
+    super(inputStream);
     // sizeMax = pSizeMax;
     //
-    super(inputStream);
+
     this.obj = clz.invokeMember("__init__", inputStream, pSizeMax);
   }
 
@@ -104,6 +105,7 @@ public abstract class LimitedInputStream extends FilterInputStream implements Cl
 
       obj.invokeMember("checkLimit");
     } catch (PolyglotException e) {
+      // TODO: Handle IOException
       throw (IOException) ExceptionHandler.handle(e, "LimitedInputStream.checkLimit");
     }
   }

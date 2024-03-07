@@ -4,9 +4,11 @@ import os
 import typing
 from typing import *
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class ParameterParser:
 
     # Class Fields Begin

@@ -1,6 +1,7 @@
 package org.apache.commons.fileupload;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Properties;
@@ -8,9 +9,9 @@ import java.util.function.Function;
 import org.graalvm.polyglot.Value;
 
 /** Provides utility methods for integration with GraalVM. */
-public final class IntegrationUtil {
+public final class IntegrationUtils {
 
-  private IntegrationUtil() {}
+  private IntegrationUtils() {}
 
   public static <T, C extends Collection<T>> C valueArrayToCollection(
       Value source, Class<T> clazz, Class<C> collectionType) {
@@ -18,7 +19,8 @@ public final class IntegrationUtil {
     try {
       result = collectionType.newInstance();
       for (Value value : source.as(Value[].class)) {
-        T object = clazz.cast(clazz.getMethod("create", Value.class).invoke(null, value));
+        Constructor<T> constructor = clazz.getDeclaredConstructor(Value.class);
+        T object = clazz.cast(constructor.newInstance(value));
         result.add(object);
       }
     } catch (Exception e) {

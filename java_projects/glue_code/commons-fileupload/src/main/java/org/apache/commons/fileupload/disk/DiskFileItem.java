@@ -3,7 +3,6 @@ package org.apache.commons.fileupload.disk;
 import java.io.File;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.commons.fileupload.ContextInitializer;
 import org.apache.commons.fileupload.FileItemHeaders;
 import org.graalvm.polyglot.Value;
@@ -14,7 +13,8 @@ public class DiskFileItem {
   private long size = -1;
   private static final AtomicInteger COUNTER = new AtomicInteger(0);
   private static final String UID = UUID.randomUUID().toString().replace('-', '_');
-  private static Value clz = ContextInitializer.getPythonClass("<placeholder>", "DiskFileItem");
+  private static Value clz =
+      ContextInitializer.getPythonClass("/disDiskFileItem.py", "DiskFileItem");
   private Value obj;
 
   public DiskFileItem(Value obj) {

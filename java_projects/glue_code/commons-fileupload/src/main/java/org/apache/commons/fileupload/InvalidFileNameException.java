@@ -5,7 +5,7 @@ import org.graalvm.polyglot.Value;
 public class InvalidFileNameException extends RuntimeException {
   private static final long serialVersionUID = 7922042602454350470L;
   private static Value clz =
-      ContextInitializer.getPythonClass("<placeholder>", "InvalidFileNameException");
+      ContextInitializer.getPythonClass("InvalidFileNameException.py", "InvalidFileNameException");
   private Value obj;
 
   public InvalidFileNameException(Value obj) {

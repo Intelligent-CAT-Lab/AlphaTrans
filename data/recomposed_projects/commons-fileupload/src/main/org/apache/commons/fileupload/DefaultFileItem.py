@@ -5,9 +5,11 @@ import typing
 from typing import *
 import pathlib
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class DefaultFileItem(DiskFileItem):
 
     # Class Fields Begin

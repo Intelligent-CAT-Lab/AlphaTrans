@@ -2,7 +2,6 @@ package org.apache.commons.fileupload.util.mime;
 
 import java.io.IOException;
 import java.io.OutputStream;
-
 import org.apache.commons.fileupload.ContextInitializer;
 import org.apache.commons.fileupload.ExceptionHandler;
 import org.graalvm.polyglot.PolyglotException;
@@ -81,7 +80,8 @@ final class Base64Decoder {
   private static final int MASK_BYTE_UNSIGNED = 0xFF;
   private static final int PAD_BYTE = -2; // must be outside range 0-63
   private static final int INVALID_BYTE = -1; // must be outside range 0-63
-  private static Value clz = ContextInitializer.getPythonClass("<placeholder>", "Base64Decoder");
+  private static Value clz =
+      ContextInitializer.getPythonClass("/util/mime/Base64Decoder.py", "Base64Decoder");
   private Value obj;
 
   public Base64Decoder(Value obj) {
@@ -142,6 +142,7 @@ final class Base64Decoder {
       // TODO: Check the type mapping below!
       return clz.invokeMember("decode", data, out).as(int.class);
     } catch (PolyglotException e) {
+      // TODO: Handle IOException
       throw (IOException) ExceptionHandler.handle(e, "Base64Decoder.decode");
     }
   }

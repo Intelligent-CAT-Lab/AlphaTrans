@@ -7,7 +7,8 @@ import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Value;
 
 public abstract class FileUploadBase {
-  @Deprecated public static final int MAX_HEADER_SIZE = 1024;
+  @Deprecated
+  public static final int MAX_HEADER_SIZE = 1024;
   public static final String MULTIPART_MIXED = "multipart/mixed";
   public static final String MULTIPART_FORM_DATA = "multipart/form-data";
   public static final String MULTIPART = "multipart/";
@@ -19,12 +20,12 @@ public abstract class FileUploadBase {
   private long fileCountMax = -1;
   private long fileSizeMax = -1;
   private long sizeMax = -1;
-  private static Value clz = ContextInitializer.getPythonClass("<placeholder>", "FileUploadBase");
+  private static Value clz = ContextInitializer.getPythonClass("FileUploadBase.py", "FileUploadBase");
   private Value obj;
 
-  public FileUploadBase(Value obj) {
-    this.obj = obj;
-  }
+  // public FileUploadBase(Value obj) {
+  //   this.obj = obj;
+  // }
 
   public Value getPythonObject() {
     return obj;
@@ -74,6 +75,7 @@ public abstract class FileUploadBase {
       // TODO: Check the type mapping below!
       return obj.invokeMember("createItem", headers, isFormField).as(FileItem.class);
     } catch (PolyglotException e) {
+      // TODO: Handle FileUploadException
       throw (FileUploadException) ExceptionHandler.handle(e, "FileUploadBase.createItem");
     }
   }
@@ -181,7 +183,8 @@ public abstract class FileUploadBase {
     //
     // ParameterParser parser = new ParameterParser();
     // parser.setLowerCaseNames(true);
-    // Map<String, String> params = parser.parse0(contentType, new char[] {';', ','});
+    // Map<String, String> params = parser.parse0(contentType, new char[] {';',
+    // ','});
     // String boundaryStr = params.get("boundary");
     //
     // if (boundaryStr == null) {
@@ -191,7 +194,8 @@ public abstract class FileUploadBase {
     // try {
     // boundary = boundaryStr.getBytes("ISO-8859-1");
     // } catch (UnsupportedEncodingException e) {
-    // boundary = boundaryStr.getBytes(); // Intentionally falls back to default charset
+    // boundary = boundaryStr.getBytes(); // Intentionally falls back to default
+    // charset
     // }
     // return boundary;
     //
@@ -370,8 +374,7 @@ public abstract class FileUploadBase {
 
   public static class FileUploadIOException extends IOException {
     private static final long serialVersionUID = -7047616958165584154L;
-    private static Value clz =
-        ContextInitializer.getPythonClass("<placeholder>", "FileUploadIOException");
+    private static Value clz = ContextInitializer.getPythonClass("FileUploadBase.py", "FileUploadIOException");
     private Value obj;
 
     public FileUploadIOException(Value obj) {
@@ -402,13 +405,12 @@ public abstract class FileUploadBase {
 
   public static class IOFileUploadException extends FileUploadException {
     private static final long serialVersionUID = 1749796615868477269L;
-    private static Value clz =
-        ContextInitializer.getPythonClass("<placeholder>", "IOFileUploadException");
+    private static Value clz = ContextInitializer.getPythonClass("FileUploadBase.py", "IOFileUploadException");
     private Value obj;
 
-    public IOFileUploadException(Value obj) {
-      this.obj = obj;
-    }
+    // public IOFileUploadException(Value obj) {
+    // this.obj = obj;
+    // }
 
     public Value getPythonObject() {
       return obj;
@@ -425,7 +427,7 @@ public abstract class FileUploadBase {
 
     public IOFileUploadException(String pMsg, IOException pException) {
       //
-      // super(pMsg, null);
+      super(pMsg, null);
       // cause = pException;
       //
 
@@ -435,13 +437,12 @@ public abstract class FileUploadBase {
 
   public static class SizeLimitExceededException extends SizeException {
     private static final long serialVersionUID = -2474893167098052828L;
-    private static Value clz =
-        ContextInitializer.getPythonClass("<placeholder>", "SizeLimitExceededException");
+    private static Value clz = ContextInitializer.getPythonClass("FileUploadBase.py", "SizeLimitExceededException");
     private Value obj;
 
-    public SizeLimitExceededException(Value obj) {
-      this.obj = obj;
-    }
+    // public SizeLimitExceededException(Value obj) {
+    // this.obj = obj;
+    // }
 
     public Value getPythonObject() {
       return obj;
@@ -467,17 +468,14 @@ public abstract class FileUploadBase {
     }
 
     public SizeLimitExceededException(String message, long actual, long permitted) {
-      //
-      // super(message, actual, permitted);
-      //
+      super(message, actual, permitted);
 
       this.obj = clz.invokeMember("__init__", message, actual, permitted);
     }
   }
 
   class FileItemStreamImpl {
-    private static Value clz =
-        ContextInitializer.getPythonClass("<placeholder>", "FileItemStreamImpl");
+    private Value clz = ContextInitializer.getPythonClass("FileUploadBase.py", "FileUploadBase.FileItemStreamImpl");
     private Value obj;
 
     public FileItemStreamImpl(Value obj) {
@@ -507,8 +505,7 @@ public abstract class FileUploadBase {
   }
 
   private class FileItemIteratorImpl {
-    private static Value clz =
-        ContextInitializer.getPythonClass("<placeholder>", "FileItemIteratorImpl");
+    private Value clz = ContextInitializer.getPythonClass("FileUploadBase.py", "FileUploadBase.FileItemIteratorImpl");
     private Value obj;
 
     public FileItemIteratorImpl(Value obj) {
@@ -531,151 +528,140 @@ public abstract class FileUploadBase {
       // TODO: Check the type mapping below!
       return obj.invokeMember("getContentLength", pHeaders).as(long.class);
     }
+  }
 
-    public static class FileSizeLimitExceededException extends SizeException {
-      private static final long serialVersionUID = 8150776562029630058L;
-      private static Value clz =
-          ContextInitializer.getPythonClass("<placeholder>", "FileSizeLimitExceededException");
-      private Value obj;
+  public static class FileSizeLimitExceededException extends SizeException {
+    private static final long serialVersionUID = 8150776562029630058L;
+    private Value clz = ContextInitializer.getPythonClass("FileUploadBase.py", "FileSizeLimitExceededException");
+    private Value obj;
 
-      public FileSizeLimitExceededException(Value obj) {
-        this.obj = obj;
-      }
+    // public FileSizeLimitExceededException(Value obj) {
+    // this.obj = obj;
+    // }
 
-      public Value getPythonObject() {
-        return obj;
-      }
-
-      public void setFieldName(String pFieldName) {
-        //
-        // fieldName = pFieldName;
-        //
-
-        obj.invokeMember("setFieldName", pFieldName);
-      }
-
-      public String getFieldName() {
-        //
-        // return fieldName;
-        //
-
-        // TODO: Check the type mapping below!
-        return obj.invokeMember("getFieldName").as(String.class);
-      }
-
-      public void setFileName(String pFileName) {
-        //
-        // fileName = pFileName;
-        //
-
-        obj.invokeMember("setFileName", pFileName);
-      }
-
-      public String getFileName() {
-        //
-        // return fileName;
-        //
-
-        // TODO: Check the type mapping below!
-        return obj.invokeMember("getFileName").as(String.class);
-      }
-
-      public FileSizeLimitExceededException(String message, long actual, long permitted) {
-        //
-        // super(message, actual, permitted);
-        //
-
-        this.obj = clz.invokeMember("__init__", message, actual, permitted);
-      }
+    public Value getPythonObject() {
+      return obj;
     }
 
-    protected abstract static class SizeException extends FileUploadException {
-      private static final long serialVersionUID = -8776225574705254126L;
-      private static Value clz =
-          ContextInitializer.getPythonClass("<placeholder>", "SizeException");
-      private Value obj;
+    public void setFieldName(String pFieldName) {
+      //
+      // fieldName = pFieldName;
+      //
 
-      public SizeException(Value obj) {
-        this.obj = obj;
-      }
-
-      public Value getPythonObject() {
-        return obj;
-      }
-
-      public long getPermittedSize() {
-        //
-        // return permitted;
-        //
-
-        // TODO: Check the type mapping below!
-        return obj.invokeMember("getPermittedSize").as(long.class);
-      }
-
-      public long getActualSize() {
-        //
-        // return actual;
-        //
-
-        // TODO: Check the type mapping below!
-        return obj.invokeMember("getActualSize").as(long.class);
-      }
-
-      protected SizeException(String message, long actual, long permitted) {
-        //
-        // super(message, null);
-        // this.actual = actual;
-        // this.permitted = permitted;
-        //
-
-        this.obj = clz.invokeMember("__init__", message, actual, permitted);
-      }
+      obj.invokeMember("setFieldName", pFieldName);
     }
 
-    public static class InvalidContentTypeException extends FileUploadException {
-      private static final long serialVersionUID = -9073026332015646668L;
-      private static Value clz =
-          ContextInitializer.getPythonClass("<placeholder>", "InvalidContentTypeException");
-      private Value obj;
+    public String getFieldName() {
+      //
+      // return fieldName;
+      //
 
-      public InvalidContentTypeException(Value obj) {
-        this.obj = obj;
-      }
-
-      public Value getPythonObject() {
-        return obj;
-      }
-
-      public InvalidContentTypeException(String msg, Throwable cause) {
-        //
-        // super(msg, cause);
-        //
-
-        this.obj = clz.invokeMember("__init__", msg, cause);
-      }
+      // TODO: Check the type mapping below!
+      return obj.invokeMember("getFieldName").as(String.class);
     }
 
-    public static class UnknownSizeException extends FileUploadException {
-      private static final long serialVersionUID = 7062279004812015273L;
-      private static Value clz =
-          ContextInitializer.getPythonClass("<placeholder>", "UnknownSizeException");
-      private Value obj;
+    public void setFileName(String pFileName) {
+      //
+      // fileName = pFileName;
+      //
 
-      public UnknownSizeException(Value obj) {
-        this.obj = obj;
-      }
+      obj.invokeMember("setFileName", pFileName);
+    }
 
-      public Value getPythonObject() {
-        return obj;
-      }
+    public String getFileName() {
+      //
+      // return fileName;
+      //
 
-      public UnknownSizeException(String message) {
-        //
-        // super(message, null);
-        //
+      // TODO: Check the type mapping below!
+      return obj.invokeMember("getFileName").as(String.class);
+    }
 
-        this.obj = clz.invokeMember("__init__", message);
-      }
+    public FileSizeLimitExceededException(String message, long actual, long permitted) {
+      super(message, actual, permitted);
+
+      this.obj = clz.invokeMember("__init__", message, actual, permitted);
+    }
+  }
+
+  protected abstract static class SizeException extends FileUploadException {
+    private static final long serialVersionUID = -8776225574705254126L;
+    private Value clz = ContextInitializer.getPythonClass("FileUploadBase.py", "SizeException");
+    private Value obj;
+
+    // public SizeException(Value obj) {
+    // this.obj = obj;
+    // }
+
+    public Value getPythonObject() {
+      return obj;
+    }
+
+    public long getPermittedSize() {
+      //
+      // return permitted;
+      //
+
+      // TODO: Check the type mapping below!
+      return obj.invokeMember("getPermittedSize").as(long.class);
+    }
+
+    public long getActualSize() {
+      //
+      // return actual;
+      //
+
+      // TODO: Check the type mapping below!
+      return obj.invokeMember("getActualSize").as(long.class);
+    }
+
+    protected SizeException(String message, long actual, long permitted) {
+      super(message, null);
+      // this.actual = actual;
+      // this.permitted = permitted;
+      //
+
+      this.obj = clz.invokeMember("__init__", message, actual, permitted);
+    }
+  }
+
+  public static class InvalidContentTypeException extends FileUploadException {
+    private static final long serialVersionUID = -9073026332015646668L;
+    private Value clz = ContextInitializer.getPythonClass("FileUploadBase.py", "InvalidContentTypeException");
+    private Value obj;
+
+    // public InvalidContentTypeException(Value obj) {
+    // this.obj = obj;
+    // }
+
+    public Value getPythonObject() {
+      return obj;
+    }
+
+    public InvalidContentTypeException(String msg, Throwable cause) {
+      super(msg, cause);
+
+      this.obj = clz.invokeMember("__init__", msg, cause);
+    }
+  }
+
+  public static class UnknownSizeException extends FileUploadException {
+    private static final long serialVersionUID = 7062279004812015273L;
+    private Value clz = ContextInitializer.getPythonClass("FileUploadBase.py", "UnknownSizeException");
+    private Value obj;
+
+    // public UnknownSizeException(Value obj) {
+    // this.obj = obj;
+    // }
+
+    public Value getPythonObject() {
+      return obj;
+    }
+
+    public UnknownSizeException(String message) {
+      super(message, null);
+
+      this.obj = clz.invokeMember("__init__", message);
     }
   }
 }

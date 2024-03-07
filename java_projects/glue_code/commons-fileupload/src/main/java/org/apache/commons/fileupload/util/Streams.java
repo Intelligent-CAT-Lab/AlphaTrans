@@ -5,7 +5,7 @@ import org.graalvm.polyglot.Value;
 
 public final class Streams {
   public static final int DEFAULT_BUFFER_SIZE = 8192;
-  private static Value clz = ContextInitializer.getPythonClass("<placeholder>", "Streams");
+  private static Value clz = ContextInitializer.getPythonClass("/utiStreams.py", "Streams");
   private Value obj;
 
   public Streams(Value obj) {

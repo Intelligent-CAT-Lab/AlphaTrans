@@ -6,10 +6,11 @@ import org.graalvm.polyglot.Value;
 
 public class DefaultFileItemFactory extends DiskFileItemFactory {
   private static Value clz =
-      ContextInitializer.getPythonClass("<placeholder>", "DefaultFileItemFactory");
+      ContextInitializer.getPythonClass("DefaultFileItemFactory.py", "DefaultFileItemFactory");
   private Value obj;
 
   public DefaultFileItemFactory(Value obj) {
+    super(obj);
     this.obj = obj;
   }
 
@@ -18,9 +19,7 @@ public class DefaultFileItemFactory extends DiskFileItemFactory {
   }
 
   public DefaultFileItemFactory(int sizeThreshold, File repository) {
-    //
-    // super(sizeThreshold, repository);
-    //
+    super(sizeThreshold, repository);
 
     this.obj = clz.invokeMember("__init__", sizeThreshold, repository);
   }

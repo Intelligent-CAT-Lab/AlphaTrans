@@ -1,7 +1,6 @@
 package org.apache.commons.fileupload.disk;
 
 import java.io.File;
-
 import org.apache.commons.fileupload.ContextInitializer;
 import org.graalvm.polyglot.Value;
 
@@ -10,7 +9,7 @@ public class DiskFileItemFactory {
   private String defaultCharset = DiskFileItem.DEFAULT_CHARSET;
   private int sizeThreshold = DEFAULT_SIZE_THRESHOLD;
   private static Value clz =
-      ContextInitializer.getPythonClass("<placeholder>", "DiskFileItemFactory");
+      ContextInitializer.getPythonClass("/disDiskFileItemFactory.py", "DiskFileItemFactory");
   private Value obj;
 
   public DiskFileItemFactory(Value obj) {

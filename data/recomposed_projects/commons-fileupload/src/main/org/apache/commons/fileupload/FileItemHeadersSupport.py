@@ -2,9 +2,11 @@
 from src.main.org.apache.commons.fileupload.FileItemHeaders import *
 from abc import ABC
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
+@java_handler
 class FileItemHeadersSupport(ABC):
 
     # Class Fields Begin

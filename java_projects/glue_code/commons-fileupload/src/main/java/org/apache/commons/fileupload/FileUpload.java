@@ -3,7 +3,7 @@ package org.apache.commons.fileupload;
 import org.graalvm.polyglot.Value;
 
 public class FileUpload extends FileUploadBase {
-  private static Value clz = ContextInitializer.getPythonClass("<placeholder>", "FileUpload");
+  private static Value clz = ContextInitializer.getPythonClass("FileUpload.py", "FileUpload");
   private Value obj;
 
   public FileUpload(Value obj) {
@@ -32,8 +32,7 @@ public class FileUpload extends FileUploadBase {
   }
 
   public FileUpload(int constructorId, FileItemFactory fileItemFactory) {
-    //
-    // super();
+    super();
     // if (constructorId == 1) {
     // this.fileItemFactory = fileItemFactory;
     // }

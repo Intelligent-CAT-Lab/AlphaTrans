@@ -3,16 +3,16 @@ from src.main.org.apache.commons.fileupload.FileItemHeaders import *
 import typing
 from typing import *
 
+from src.main.org.apache.commons.fileupload.java_handler import java_handler
 # Imports End
 
 
-class FileItemHeadersImpl(Serializable, FileItemHeaders):
+@java_handler
+class FileItemHeadersImpl(FileItemHeaders):
 
     # Class Fields Begin
     __serialVersionUID: int = -4455695752627032559
-    __headerNameToValueListMap: typing.Dict[str, typing.List[str]] = (
-        ""  # LLM could not translate field
-    )
+    __headerNameToValueListMap: typing.Dict[str, typing.List[str]] = {}
     # Class Fields End
 
     # Class Methods Begin
