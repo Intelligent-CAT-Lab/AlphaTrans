@@ -272,7 +272,7 @@ def main(args):
                 if "static" in data['classes'][_class]['methods'][_method]['modifiers'] or is_constructor:
                     caller = "clz"
                 else:
-                    caller = "obj"
+                    caller = "this.obj"
                 
                 args_buildup = ", ".join(data['classes'][_class]['methods'][_method]['parameters'])
                 python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
