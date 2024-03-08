@@ -5,7 +5,7 @@ import json
 
 ORIGINAL_DIR = "java_projects/cleaned_final_projects"
 OUTPUT_DIR = "java_projects/glue_code"
-TRANSLATION_DIR = "data/recomposed_projects"
+TRANSLATION_DIR = "data/verified_projects"
 DIR_DEPTH = "../../../"
 
 main_paths = {
