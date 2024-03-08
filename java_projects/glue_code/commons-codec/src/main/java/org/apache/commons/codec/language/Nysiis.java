@@ -54,7 +54,7 @@ public class Nysiis implements StringEncoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode", obj).as(Object.class);
+      return this.obj.invokeMember("encode", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "Nysiis.encode");
@@ -158,7 +158,7 @@ public class Nysiis implements StringEncoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode0", obj).as(Object.class);
+      return this.obj.invokeMember("encode0", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "Nysiis.encode0");

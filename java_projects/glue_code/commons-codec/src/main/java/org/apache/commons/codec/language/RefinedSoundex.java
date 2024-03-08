@@ -11,8 +11,7 @@ public class RefinedSoundex implements StringEncoder {
   public static final RefinedSoundex US_ENGLISH = new RefinedSoundex(2, null, null);
   public static final String US_ENGLISH_MAPPING_STRING = "01360240043788015936020505";
   private static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
-  private static Value clz =
-      ContextInitializer.getPythonClass("/language/RefinedSoundex.py", "RefinedSoundex");
+  private static Value clz = ContextInitializer.getPythonClass("/language/RefinedSoundex.py", "RefinedSoundex");
   private Value obj;
 
   public RefinedSoundex(Value obj) {
@@ -39,7 +38,7 @@ public class RefinedSoundex implements StringEncoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode", obj).as(Object.class);
+      return this.obj.invokeMember("encode", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "RefinedSoundex.encode");
@@ -96,14 +95,15 @@ public class RefinedSoundex implements StringEncoder {
       //
       // if (!(obj instanceof String)) {
       // throw new EncoderException(
-      // "Parameter supplied to RefinedSoundex encode is not of type java.lang.String",
+      // "Parameter supplied to RefinedSoundex encode is not of type
+      // java.lang.String",
       // null);
       // }
       // return soundex((String) obj);
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode0", obj).as(Object.class);
+      return this.obj.invokeMember("encode0", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "RefinedSoundex.encode0");

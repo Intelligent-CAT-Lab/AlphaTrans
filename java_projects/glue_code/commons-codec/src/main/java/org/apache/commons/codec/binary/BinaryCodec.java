@@ -10,7 +10,6 @@ import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Value;
 
 public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
-  private static final int[] BITS = {BIT_0, BIT_1, BIT_2, BIT_3, BIT_4, BIT_5, BIT_6, BIT_7};
   private static final int BIT_7 = 0x80;
   private static final int BIT_6 = 0x40;
   private static final int BIT_5 = 0x20;
@@ -19,6 +18,7 @@ public class BinaryCodec implements BinaryDecoder, BinaryEncoder {
   private static final int BIT_2 = 0x04;
   private static final int BIT_1 = 0x02;
   private static final int BIT_0 = 1;
+  private static final int[] BITS = {BIT_0, BIT_1, BIT_2, BIT_3, BIT_4, BIT_5, BIT_6, BIT_7};
   private static final byte[] EMPTY_BYTE_ARRAY = {};
   private static final char[] EMPTY_CHAR_ARRAY = {};
   private static Value clz =

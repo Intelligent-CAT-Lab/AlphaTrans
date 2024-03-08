@@ -32,18 +32,22 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     this.obj = obj;
   }
 
+  public BaseNCodec() {
+    this.obj = clz.newInstance();
+  }
+
   public Value getPythonObject() {
     return obj;
   }
 
-  public Object encode(final Object obj) throws EncoderException {
+  public Object encode(final Object obj2) throws EncoderException {
     try {
       //
       // return encode3(obj);
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode", obj).as(Object.class);
+      return obj.invokeMember("encode", obj2).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "BaseNCodec.encode");
@@ -59,14 +63,14 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     return obj.invokeMember("encode", pArray).as(byte[].class);
   }
 
-  public Object decode(final Object obj) throws DecoderException {
+  public Object decode(final Object obj2) throws DecoderException {
     try {
       //
       // return decode2(obj);
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("decode", obj).as(Object.class);
+      return obj.invokeMember("decode", obj2).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle DecoderException
       throw (DecoderException) ExceptionHandler.handle(e, "BaseNCodec.decode");
@@ -182,7 +186,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     return obj.invokeMember("encodeAsString", pArray).as(String.class);
   }
 
-  public Object encode3(final Object obj) throws EncoderException {
+  public Object encode3(final Object obj2) throws EncoderException {
     try {
       //
       // if (!(obj instanceof byte[])) {
@@ -192,7 +196,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode3", obj).as(Object.class);
+      return obj.invokeMember("encode3", obj2).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "BaseNCodec.encode3");
@@ -237,7 +241,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
     return obj.invokeMember("decode3", pArray).as(byte[].class);
   }
 
-  public Object decode2(final Object obj) throws DecoderException {
+  public Object decode2(final Object obj2) throws DecoderException {
     try {
       //
       // if (obj instanceof byte[]) {
@@ -251,7 +255,7 @@ public abstract class BaseNCodec implements BinaryEncoder, BinaryDecoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("decode2", obj).as(Object.class);
+      return obj.invokeMember("decode2", obj2).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle DecoderException
       throw (DecoderException) ExceptionHandler.handle(e, "BaseNCodec.decode2");

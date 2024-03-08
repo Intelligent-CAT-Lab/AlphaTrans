@@ -1,5 +1,8 @@
 package org.apache.commons.codec.language.bm;
 
+import org.apache.commons.codec.language.bm.Languages.LanguageSet;
+import org.apache.commons.codec.language.bm.Rule.Phoneme;
+
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -7,109 +10,109 @@ import java.util.Set;
 import org.apache.commons.codec.ContextInitializer;
 import org.graalvm.polyglot.Value;
 
-static final class PhonemeBuilder {
-  private static Value clz =
-      ContextInitializer.getPythonClass("/language/bm/PhoneticEngine.py", "PhonemeBuilder");
-  private Value obj;
-
-  public PhonemeBuilder(Value obj) {
-    this.obj = obj;
-  }
-
-  public Value getPythonObject() {
-    return obj;
-  }
-
-  public String makeString() {
-    //
-    // final StringBuilder sb = new StringBuilder();
-    //
-    // for (final Rule.Phoneme ph : this.phonemes) {
-    // if (sb.length() > 0) {
-    // sb.append("|");
-    // }
-    // sb.append(ph.getPhonemeText());
-    // }
-    //
-    // return sb.toString();
-    //
-
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("makeString").as(String.class);
-  }
-
-  public Set<Rule.Phoneme> getPhonemes() {
-    //
-    // return this.phonemes;
-    //
-
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("getPhonemes").as(Set.class);
-  }
-
-  public void apply(final Rule.PhonemeExpr phonemeExpr, final int maxPhonemes) {
-    //
-    // final Set<Rule.Phoneme> newPhonemes = new LinkedHashSet<>(maxPhonemes);
-    //
-    // EXPR:
-    // for (final Rule.Phoneme left : this.phonemes) {
-    // for (final Rule.Phoneme right : phonemeExpr.getPhonemes()) {
-    // final LanguageSet languages =
-    // left.getLanguages().restrictTo(right.getLanguages());
-    // if (!languages.isEmpty()) {
-    // final Rule.Phoneme join = Phoneme.Phoneme1(left, right, languages);
-    // if (newPhonemes.size() < maxPhonemes) {
-    // newPhonemes.add(join);
-    // if (newPhonemes.size() >= maxPhonemes) {
-    // break EXPR;
-    // }
-    // }
-    // }
-    // }
-    // }
-    //
-    // this.phonemes.clear();
-    // this.phonemes.addAll(newPhonemes);
-    //
-
-    obj.invokeMember("apply", phonemeExpr, maxPhonemes);
-  }
-
-  public void append(final CharSequence str) {
-    //
-    // for (final Rule.Phoneme ph : this.phonemes) {
-    // ph.append(str);
-    // }
-    //
-
-    obj.invokeMember("append", str);
-  }
-
-  public PhonemeBuilder(
-      int constructorId, final Set<Rule.Phoneme> phonemes, final Rule.Phoneme phoneme) {
-    //
-    // if (constructorId == 0) {
-    // this.phonemes = phonemes;
-    // } else {
-    // this.phonemes = new LinkedHashSet<>();
-    // this.phonemes.add(phoneme);
-    // }
-    //
-
-    this.obj = clz.invokeMember("__init__", constructorId, phonemes, phoneme);
-  }
-
-  public static PhonemeBuilder empty(final Languages.LanguageSet languages) {
-    //
-    // return new PhonemeBuilder(3, null, new Rule.Phoneme(2, "", languages, null));
-    //
-
-    // TODO: Check the type mapping below!
-    return clz.invokeMember("empty", languages).as(PhonemeBuilder.class);
-  }
-}
-
 public class PhoneticEngine {
+  static final class PhonemeBuilder {
+    private static Value clz =
+        ContextInitializer.getPythonClass("/language/bm/PhoneticEngine.py", "PhoneticEngine.PhonemeBuilder");
+    private Value obj;
+  
+    public PhonemeBuilder(Value obj) {
+      this.obj = obj;
+    }
+  
+    public Value getPythonObject() {
+      return obj;
+    }
+  
+    public String makeString() {
+      //
+      // final StringBuilder sb = new StringBuilder();
+      //
+      // for (final Rule.Phoneme ph : this.phonemes) {
+      // if (sb.length() > 0) {
+      // sb.append("|");
+      // }
+      // sb.append(ph.getPhonemeText());
+      // }
+      //
+      // return sb.toString();
+      //
+  
+      // TODO: Check the type mapping below!
+      return obj.invokeMember("makeString").as(String.class);
+    }
+  
+    public Set<Rule.Phoneme> getPhonemes() {
+      //
+      // return this.phonemes;
+      //
+  
+      // TODO: Check the type mapping below!
+      return obj.invokeMember("getPhonemes").as(Set.class);
+    }
+  
+    public void apply(final Rule.PhonemeExpr phonemeExpr, final int maxPhonemes) {
+      //
+      // final Set<Rule.Phoneme> newPhonemes = new LinkedHashSet<>(maxPhonemes);
+      //
+      // EXPR:
+      // for (final Rule.Phoneme left : this.phonemes) {
+      // for (final Rule.Phoneme right : phonemeExpr.getPhonemes()) {
+      // final LanguageSet languages =
+      // left.getLanguages().restrictTo(right.getLanguages());
+      // if (!languages.isEmpty()) {
+      // final Rule.Phoneme join = Phoneme.Phoneme1(left, right, languages);
+      // if (newPhonemes.size() < maxPhonemes) {
+      // newPhonemes.add(join);
+      // if (newPhonemes.size() >= maxPhonemes) {
+      // break EXPR;
+      // }
+      // }
+      // }
+      // }
+      // }
+      //
+      // this.phonemes.clear();
+      // this.phonemes.addAll(newPhonemes);
+      //
+  
+      obj.invokeMember("apply", phonemeExpr, maxPhonemes);
+    }
+  
+    public void append(final CharSequence str) {
+      //
+      // for (final Rule.Phoneme ph : this.phonemes) {
+      // ph.append(str);
+      // }
+      //
+  
+      obj.invokeMember("append", str);
+    }
+  
+    public PhonemeBuilder(
+        int constructorId, final Set<Rule.Phoneme> phonemes, final Rule.Phoneme phoneme) {
+      //
+      // if (constructorId == 0) {
+      // this.phonemes = phonemes;
+      // } else {
+      // this.phonemes = new LinkedHashSet<>();
+      // this.phonemes.add(phoneme);
+      // }
+      //
+  
+      this.obj = clz.invokeMember("__init__", constructorId, phonemes, phoneme);
+    }
+  
+    public static PhonemeBuilder empty(final Languages.LanguageSet languages) {
+      //
+      // return new PhonemeBuilder(3, null, new Rule.Phoneme(2, "", languages, null));
+      //
+  
+      // TODO: Check the type mapping below!
+      return clz.invokeMember("empty", languages).as(PhonemeBuilder.class);
+    }
+  }
+
   private static final int DEFAULT_MAX_PHONEMES = 20;
   private static final Map<NameType, Set<String>> NAME_PREFIXES = new EnumMap<>(NameType.class);
   private static Value clz =

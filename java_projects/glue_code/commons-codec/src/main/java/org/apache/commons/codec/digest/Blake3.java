@@ -26,11 +26,11 @@ public final class Blake3 {
   private static final int CHAINING_VALUE_INTS = 8;
   private static final int CHUNK_LEN = 1024;
   private static final int OUT_LEN = 32;
-  private static final int KEY_INTS = KEY_LEN / INT_BYTES;
   private static final int KEY_LEN = 32;
-  private static final int BLOCK_INTS = BLOCK_LEN / INT_BYTES;
   private static final int BLOCK_LEN = 64;
   private static final int INT_BYTES = Integer.SIZE / Byte.SIZE;
+  private static final int KEY_INTS = KEY_LEN / INT_BYTES;
+  private static final int BLOCK_INTS = BLOCK_LEN / INT_BYTES;
   private static Value clz = ContextInitializer.getPythonClass("/digest/Blake3.py", "Blake3");
   private Value obj;
 

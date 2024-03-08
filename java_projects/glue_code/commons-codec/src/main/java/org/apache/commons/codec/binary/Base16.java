@@ -7,188 +7,188 @@ import org.graalvm.polyglot.Value;
 public class Base16 extends BaseNCodec {
   private static final int MASK_4BITS = 0x0f;
   private static final byte[] LOWER_CASE_ENCODE_TABLE = {
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+      '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
   };
   private static final byte[] LOWER_CASE_DECODE_TABLE = {
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1, // 00-0f
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1, // 10-1f
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1, // 20-2f
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1, // 30-3f 0-9
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1, // 40-4f
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1, // 50-5f
-    -1,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15 // 60-66 a-f
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1, // 00-0f
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1, // 10-1f
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1, // 20-2f
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1, // 30-3f 0-9
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1, // 40-4f
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1, // 50-5f
+      -1,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15 // 60-66 a-f
   };
   private static final byte[] UPPER_CASE_ENCODE_TABLE = {
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
+      '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
   };
   private static final byte[] UPPER_CASE_DECODE_TABLE = {
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1, // 00-0f
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1, // 10-1f
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1, // 20-2f
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1, // 30-3f 0-9
-    -1,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15 // 40-46 A-F
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1, // 00-0f
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1, // 10-1f
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1, // 20-2f
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1, // 30-3f 0-9
+      -1,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15 // 40-46 A-F
   };
   private static final int BYTES_PER_UNENCODED_BLOCK = 1;
   private static final int BYTES_PER_ENCODED_BLOCK = 2;
@@ -197,7 +197,7 @@ public class Base16 extends BaseNCodec {
   private Value obj;
 
   public Base16(Value obj) {
-    this.obj = obj;
+  this.obj = obj;
   }
 
   public Value getPythonObject() {
@@ -232,22 +232,20 @@ public class Base16 extends BaseNCodec {
   }
 
   public Base16(final boolean lowerCase, final CodecPolicy decodingPolicy) {
-    //
     // super(
-    // BYTES_PER_UNENCODED_BLOCK,
-    // BYTES_PER_ENCODED_BLOCK,
-    // 0,
-    // 0,
-    // PAD_DEFAULT,
-    // decodingPolicy);
+    //     BYTES_PER_UNENCODED_BLOCK,
+    //     BYTES_PER_ENCODED_BLOCK,
+    //     0,
+    //     0,
+    //     PAD_DEFAULT,
+    //     decodingPolicy);
     // if (lowerCase) {
-    // this.encodeTable = LOWER_CASE_ENCODE_TABLE;
-    // this.decodeTable = LOWER_CASE_DECODE_TABLE;
+    //   this.encodeTable = LOWER_CASE_ENCODE_TABLE;
+    //   this.decodeTable = LOWER_CASE_DECODE_TABLE;
     // } else {
-    // this.encodeTable = UPPER_CASE_ENCODE_TABLE;
-    // this.decodeTable = UPPER_CASE_DECODE_TABLE;
+    //   this.encodeTable = UPPER_CASE_ENCODE_TABLE;
+    //   this.decodeTable = UPPER_CASE_DECODE_TABLE;
     // }
-    //
 
     this.obj = clz.invokeMember("__init__", lowerCase, decodingPolicy);
   }
@@ -273,7 +271,8 @@ public class Base16 extends BaseNCodec {
     // }
     //
     // if (decoded == -1) {
-    // throw new IllegalArgumentException("Invalid octet in encoded value: " + (int) octet);
+    // throw new IllegalArgumentException("Invalid octet in encoded value: " + (int)
+    // octet);
     // }
     //
     // return decoded;
@@ -334,9 +333,11 @@ public class Base16 extends BaseNCodec {
     // }
     //
     // final int charsToProcess =
-    // availableChars % BYTES_PER_ENCODED_BLOCK == 0 ? availableChars : availableChars - 1;
+    // availableChars % BYTES_PER_ENCODED_BLOCK == 0 ? availableChars :
+    // availableChars - 1;
     //
-    // final byte[] buffer = ensureBufferSize(charsToProcess / BYTES_PER_ENCODED_BLOCK, context);
+    // final byte[] buffer = ensureBufferSize(charsToProcess /
+    // BYTES_PER_ENCODED_BLOCK, context);
     //
     // int result;
     // int i = 0;

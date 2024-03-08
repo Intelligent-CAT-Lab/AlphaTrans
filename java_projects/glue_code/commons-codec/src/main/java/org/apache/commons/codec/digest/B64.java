@@ -5,9 +5,9 @@ import org.apache.commons.codec.ContextInitializer;
 import org.graalvm.polyglot.Value;
 
 class B64 {
-  static final char[] B64T_ARRAY = B64T_STRING.toCharArray();
   static final String B64T_STRING =
       "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      static final char[] B64T_ARRAY = B64T_STRING.toCharArray();
   private static Value clz = ContextInitializer.getPythonClass("/digest/B64.py", "B64");
   private Value obj;
 

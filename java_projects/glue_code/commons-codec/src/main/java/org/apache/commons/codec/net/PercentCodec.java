@@ -12,7 +12,6 @@ import org.graalvm.polyglot.Value;
 
 public class PercentCodec implements BinaryEncoder, BinaryDecoder {
   private int alwaysEncodeCharsMin = Integer.MAX_VALUE, alwaysEncodeCharsMax = Integer.MIN_VALUE;
-  private int alwaysEncodeCharsMin = Integer.MAX_VALUE, alwaysEncodeCharsMax = Integer.MIN_VALUE;
   private final BitSet alwaysEncodeChars = new BitSet();
   private static final byte ESCAPE_CHAR = '%';
   private static Value clz =
@@ -34,7 +33,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("decode", obj).as(Object.class);
+      return this.obj.invokeMember("decode", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle DecoderException
       throw (DecoderException) ExceptionHandler.handle(e, "PercentCodec.decode");
@@ -48,7 +47,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode", obj).as(Object.class);
+      return this.obj.invokeMember("encode", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "PercentCodec.encode");
@@ -97,7 +96,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("decode1", obj).as(Object.class);
+      return this.obj.invokeMember("decode1", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle DecoderException
       throw (DecoderException) ExceptionHandler.handle(e, "PercentCodec.decode1");
@@ -118,7 +117,7 @@ public class PercentCodec implements BinaryEncoder, BinaryDecoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode1", obj).as(Object.class);
+      return this.obj.invokeMember("encode1", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "PercentCodec.encode1");

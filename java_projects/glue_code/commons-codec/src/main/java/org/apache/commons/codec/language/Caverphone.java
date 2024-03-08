@@ -30,14 +30,14 @@ public class Caverphone implements StringEncoder {
     return obj.invokeMember("encode", str).as(String.class);
   }
 
-  public Object encode(final Object obj) throws EncoderException {
+  public Object encode(final Object obj2) throws EncoderException {
     try {
       //
       // return encode0(obj);
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode", obj).as(Object.class);
+      return obj.invokeMember("encode", obj2).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "Caverphone.encode");
@@ -62,7 +62,7 @@ public class Caverphone implements StringEncoder {
     return obj.invokeMember("encode1", str).as(String.class);
   }
 
-  public Object encode0(final Object obj) throws EncoderException {
+  public Object encode0(final Object obj2) throws EncoderException {
     try {
       //
       // if (!(obj instanceof String)) {
@@ -74,7 +74,7 @@ public class Caverphone implements StringEncoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode0", obj).as(Object.class);
+      return obj.invokeMember("encode0", obj2).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "Caverphone.encode0");

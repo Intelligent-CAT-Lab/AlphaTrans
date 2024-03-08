@@ -19,7 +19,7 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringDecoder;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.binary.StringUtils;
-public class QuotedPrintableCodec
+public class QuotedPrintableCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, StringDecoder {
     private static final int SAFE_LENGTH = 73;
     private static final byte LF = 10;
     private static final byte CR = 13;
@@ -43,7 +43,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode", obj).as(Object.class);
+return this.obj.invokeMember("decode", obj).as(Object.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.decode");
@@ -57,7 +57,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode", obj).as(Object.class);
+return this.obj.invokeMember("encode", obj).as(Object.class);
 } catch (PolyglotException e) {
     // TODO: Handle EncoderException
     throw (EncoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.encode");
@@ -71,7 +71,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode", sourceStr).as(String.class);
+return this.obj.invokeMember("decode", sourceStr).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.decode");
@@ -85,7 +85,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode", sourceStr).as(String.class);
+return this.obj.invokeMember("encode", sourceStr).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle EncoderException
     throw (EncoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.encode");
@@ -99,7 +99,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode", bytes).as(byte[].class);
+return this.obj.invokeMember("decode", bytes).as(byte[].class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.decode");
@@ -112,7 +112,7 @@ return obj.invokeMember("decode", bytes).as(byte[].class);
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode", bytes).as(byte[].class);
+return this.obj.invokeMember("encode", bytes).as(byte[].class);
 }
     public String encode4(final String sourceStr, final String sourceCharset)
             throws UnsupportedEncodingException {
@@ -126,7 +126,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode4", sourceStr, sourceCharset).as(String.class);
+return this.obj.invokeMember("encode4", sourceStr, sourceCharset).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle UnsupportedEncodingException
     throw (UnsupportedEncodingException) ExceptionHandler.handle(e, "QuotedPrintableCodec.encode4");
@@ -142,7 +142,7 @@ return obj.invokeMember("encode4", sourceStr, sourceCharset).as(String.class);
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode3", sourceStr, sourceCharset).as(String.class);
+return this.obj.invokeMember("encode3", sourceStr, sourceCharset).as(String.class);
 }
     public String getDefaultCharset() {
 // 
@@ -151,7 +151,7 @@ return obj.invokeMember("encode3", sourceStr, sourceCharset).as(String.class);
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("getDefaultCharset").as(String.class);
+return this.obj.invokeMember("getDefaultCharset").as(String.class);
 }
     public Charset getCharset() {
 // 
@@ -160,7 +160,7 @@ return obj.invokeMember("getDefaultCharset").as(String.class);
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("getCharset").as(Charset.class);
+return this.obj.invokeMember("getCharset").as(Charset.class);
 }
     public Object decode4(final Object obj) throws DecoderException {
 try {
@@ -183,7 +183,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode4", obj).as(Object.class);
+return this.obj.invokeMember("decode4", obj).as(Object.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.decode4");
@@ -210,7 +210,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode2", obj).as(Object.class);
+return this.obj.invokeMember("encode2", obj).as(Object.class);
 } catch (PolyglotException e) {
     // TODO: Handle EncoderException
     throw (EncoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.encode2");
@@ -224,7 +224,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode3", sourceStr).as(String.class);
+return this.obj.invokeMember("decode3", sourceStr).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.decode3");
@@ -242,10 +242,11 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode2", sourceStr, sourceCharset).as(String.class);
+return this.obj.invokeMember("decode2", sourceStr, sourceCharset).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException, UnsupportedEncodingException
-    throw (DecoderException, UnsupportedEncodingException) ExceptionHandler.handle(e, "QuotedPrintableCodec.decode2");
+    // throw (DecoderException, UnsupportedEncodingException) ExceptionHandler.handle(e, "QuotedPrintableCodec.decode2");
+    throw (DecoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.decode2");
 }
 }
     public String decode1(final String sourceStr, final Charset sourceCharset)
@@ -260,7 +261,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode1", sourceStr, sourceCharset).as(String.class);
+return this.obj.invokeMember("decode1", sourceStr, sourceCharset).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.decode1");
@@ -274,7 +275,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode1", sourceStr).as(String.class);
+return this.obj.invokeMember("encode1", sourceStr).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle EncoderException
     throw (EncoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.encode1");
@@ -288,7 +289,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode0", bytes).as(byte[].class);
+return this.obj.invokeMember("decode0", bytes).as(byte[].class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "QuotedPrintableCodec.decode0");
@@ -301,7 +302,7 @@ return obj.invokeMember("decode0", bytes).as(byte[].class);
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode0", bytes).as(byte[].class);
+return this.obj.invokeMember("encode0", bytes).as(byte[].class);
 }
     public static final byte[] decodeQuotedPrintable(final byte[] bytes) throws DecoderException {
 try {
@@ -450,11 +451,12 @@ try {
 return clz.invokeMember("QuotedPrintableCodec0", charsetName).as(QuotedPrintableCodec.class);
 } catch (PolyglotException e) {
     // TODO: Handle IllegalCharsetNameException,
-                    IllegalArgumentException,
-                    UnsupportedCharsetException
-    throw (IllegalCharsetNameException,
-                    IllegalArgumentException,
-                    UnsupportedCharsetException) ExceptionHandler.handle(e, "QuotedPrintableCodec.QuotedPrintableCodec0");
+                    // IllegalArgumentException,
+                    // UnsupportedCharsetException
+    // throw (IllegalCharsetNameException,
+    // IllegalArgumentException,
+    // UnsupportedCharsetException) ExceptionHandler.handle(e, "QuotedPrintableCodec.QuotedPrintableCodec0");
+    throw (IllegalCharsetNameException) ExceptionHandler.handle(e, "QuotedPrintableCodec.QuotedPrintableCodec0");
 }
 }
     public QuotedPrintableCodec(

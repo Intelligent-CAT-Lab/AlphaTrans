@@ -599,6 +599,10 @@ public final class MurmurHash3 {
       this.obj = obj;
     }
 
+    public IncrementalHash32x86() {
+      this.obj = clz.newInstance();
+    }
+
     public Value getPythonObject() {
       return obj;
     }

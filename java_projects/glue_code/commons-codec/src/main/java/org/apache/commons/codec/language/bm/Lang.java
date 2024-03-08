@@ -8,40 +8,39 @@ import java.util.regex.Pattern;
 import org.apache.commons.codec.ContextInitializer;
 import org.graalvm.polyglot.Value;
 
-private static final class LangRule {
-  private static Value clz = ContextInitializer.getPythonClass("/language/bm/Lang.py", "LangRule");
-  private Value obj;
-
-  public LangRule(Value obj) {
-    this.obj = obj;
-  }
-
-  public Value getPythonObject() {
-    return obj;
-  }
-
-  public boolean matches(final String txt) {
-    //
-    // return this.pattern.matcher(txt).find();
-    //
-
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("matches", txt).as(boolean.class);
-  }
-
-  private LangRule(
-      final Pattern pattern, final Set<String> languages, final boolean acceptOnMatch) {
-    //
-    // this.pattern = pattern;
-    // this.languages = languages;
-    // this.acceptOnMatch = acceptOnMatch;
-    //
-
-    this.obj = clz.invokeMember("__init__", pattern, languages, acceptOnMatch);
-  }
-}
-
 public class Lang {
+  private static final class LangRule {
+    private static Value clz = ContextInitializer.getPythonClass("/language/bm/Lang.py", "LangRule");
+    private Value obj;
+  
+    public LangRule(Value obj) {
+      this.obj = obj;
+    }
+  
+    public Value getPythonObject() {
+      return obj;
+    }
+  
+    public boolean matches(final String txt) {
+      //
+      // return this.pattern.matcher(txt).find();
+      //
+  
+      // TODO: Check the type mapping below!
+      return obj.invokeMember("matches", txt).as(boolean.class);
+    }
+  
+    private LangRule(
+        final Pattern pattern, final Set<String> languages, final boolean acceptOnMatch) {
+      //
+      // this.pattern = pattern;
+      // this.languages = languages;
+      // this.acceptOnMatch = acceptOnMatch;
+      //
+  
+      this.obj = clz.invokeMember("__init__", pattern, languages, acceptOnMatch);
+    }
+  }
   private static final String LANGUAGE_RULES_RN =
       "org/apache/commons/codec/language/bm/%s_lang.txt";
   private static final Map<NameType, Lang> Langs = new EnumMap<>(NameType.class);
@@ -76,7 +75,7 @@ public class Lang {
     //
 
     // TODO: Check the type mapping below!
-    return obj.invokeMember("guessLanguages", input).as(LanguageSet.class);
+    return obj.invokeMember("guessLanguages", input).as(Languages.LanguageSet.class);
   }
 
   public String guessLanguage(final String text) {

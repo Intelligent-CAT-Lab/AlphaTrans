@@ -13,6 +13,10 @@ public class Caverphone2 extends AbstractCaverphone {
     this.obj = obj;
   }
 
+  public Caverphone2() {
+    obj = clz.newInstance();
+  }
+
   public Value getPythonObject() {
     return obj;
   }

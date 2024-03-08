@@ -34,7 +34,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("decode", obj).as(Object.class);
+      return this.obj.invokeMember("decode", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle DecoderException
       throw (DecoderException) ExceptionHandler.handle(e, "QCodec.decode");
@@ -48,7 +48,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode", obj).as(Object.class);
+      return this.obj.invokeMember("encode", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "QCodec.encode");
@@ -62,7 +62,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("decode", str).as(String.class);
+      return this.obj.invokeMember("decode", str).as(String.class);
     } catch (PolyglotException e) {
       // TODO: Handle DecoderException
       throw (DecoderException) ExceptionHandler.handle(e, "QCodec.decode");
@@ -76,7 +76,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode", sourceStr).as(String.class);
+      return this.obj.invokeMember("encode", sourceStr).as(String.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "QCodec.encode");
@@ -112,7 +112,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("doDecoding", bytes).as(byte[].class);
+      return this.obj.invokeMember("doDecoding", bytes).as(byte[].class);
     } catch (PolyglotException e) {
       // TODO: Handle DecoderException
       throw (DecoderException) ExceptionHandler.handle(e, "QCodec.doDecoding");
@@ -136,7 +136,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     //
 
     // TODO: Check the type mapping below!
-    return obj.invokeMember("doEncoding", bytes).as(byte[].class);
+    return this.obj.invokeMember("doEncoding", bytes).as(byte[].class);
   }
 
   protected String getEncoding() {
@@ -145,7 +145,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     //
 
     // TODO: Check the type mapping below!
-    return obj.invokeMember("getEncoding").as(String.class);
+    return this.obj.invokeMember("getEncoding").as(String.class);
   }
 
   public void setEncodeBlanks(final boolean b) {
@@ -162,7 +162,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     //
 
     // TODO: Check the type mapping below!
-    return obj.invokeMember("isEncodeBlanks").as(boolean.class);
+    return this.obj.invokeMember("isEncodeBlanks").as(boolean.class);
   }
 
   public String getDefaultCharset() {
@@ -171,7 +171,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     //
 
     // TODO: Check the type mapping below!
-    return obj.invokeMember("getDefaultCharset").as(String.class);
+    return this.obj.invokeMember("getDefaultCharset").as(String.class);
   }
 
   public Charset getCharset() {
@@ -180,7 +180,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
     //
 
     // TODO: Check the type mapping below!
-    return obj.invokeMember("getCharset").as(Charset.class);
+    return this.obj.invokeMember("getCharset").as(Charset.class);
   }
 
   public Object decode1(final Object obj) throws DecoderException {
@@ -198,7 +198,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("decode1", obj).as(Object.class);
+      return this.obj.invokeMember("decode1", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle DecoderException
       throw (DecoderException) ExceptionHandler.handle(e, "QCodec.decode1");
@@ -220,7 +220,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode3", obj).as(Object.class);
+      return this.obj.invokeMember("encode3", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "QCodec.encode3");
@@ -241,7 +241,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("decode0", str).as(String.class);
+      return this.obj.invokeMember("decode0", str).as(String.class);
     } catch (PolyglotException e) {
       // TODO: Handle DecoderException
       throw (DecoderException) ExceptionHandler.handle(e, "QCodec.decode0");
@@ -258,7 +258,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode2", sourceStr).as(String.class);
+      return this.obj.invokeMember("encode2", sourceStr).as(String.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "QCodec.encode2");
@@ -280,7 +280,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode1", sourceStr, sourceCharset).as(String.class);
+      return this.obj.invokeMember("encode1", sourceStr, sourceCharset).as(String.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "QCodec.encode1");
@@ -298,7 +298,7 @@ public class QCodec extends RFC1522Codec implements StringEncoder, StringDecoder
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode0", sourceStr, sourceCharset).as(String.class);
+      return this.obj.invokeMember("encode0", sourceStr, sourceCharset).as(String.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "QCodec.encode0");

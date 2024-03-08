@@ -34,7 +34,7 @@ public class URLCodec implements BinaryEncoder, BinaryDecoder, StringEncoder, St
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("getEncoding").as(String.class);
+return this.obj.invokeMember("getEncoding").as(String.class);
 }
     public Object decode(final Object obj) throws DecoderException {
 try {
@@ -44,7 +44,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode", obj).as(Object.class);
+return this.obj.invokeMember("decode", obj).as(Object.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "URLCodec.decode");
@@ -58,7 +58,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode", obj).as(Object.class);
+return this.obj.invokeMember("encode", obj).as(Object.class);
 } catch (PolyglotException e) {
     // TODO: Handle EncoderException
     throw (EncoderException) ExceptionHandler.handle(e, "URLCodec.encode");
@@ -72,7 +72,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode", str).as(String.class);
+return this.obj.invokeMember("decode", str).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "URLCodec.decode");
@@ -86,7 +86,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode", str).as(String.class);
+return this.obj.invokeMember("encode", str).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle EncoderException
     throw (EncoderException) ExceptionHandler.handle(e, "URLCodec.encode");
@@ -100,7 +100,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode", bytes).as(byte[].class);
+return this.obj.invokeMember("decode", bytes).as(byte[].class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "URLCodec.decode");
@@ -113,7 +113,7 @@ return obj.invokeMember("decode", bytes).as(byte[].class);
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode", bytes).as(byte[].class);
+return this.obj.invokeMember("encode", bytes).as(byte[].class);
 }
     public String getDefaultCharset() {
 // 
@@ -122,7 +122,7 @@ return obj.invokeMember("encode", bytes).as(byte[].class);
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("getDefaultCharset").as(String.class);
+return this.obj.invokeMember("getDefaultCharset").as(String.class);
 }
     public Object decode3(final Object obj) throws DecoderException {
 try {
@@ -142,7 +142,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode3", obj).as(Object.class);
+return this.obj.invokeMember("decode3", obj).as(Object.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "URLCodec.decode3");
@@ -166,7 +166,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode3", obj).as(Object.class);
+return this.obj.invokeMember("encode3", obj).as(Object.class);
 } catch (PolyglotException e) {
     // TODO: Handle EncoderException
     throw (EncoderException) ExceptionHandler.handle(e, "URLCodec.encode3");
@@ -187,7 +187,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode2", str).as(String.class);
+return this.obj.invokeMember("decode2", str).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "URLCodec.decode2");
@@ -205,10 +205,11 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode1", str, charsetName).as(String.class);
+return this.obj.invokeMember("decode1", str, charsetName).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException, UnsupportedEncodingException
-    throw (DecoderException, UnsupportedEncodingException) ExceptionHandler.handle(e, "URLCodec.decode1");
+    // throw (DecoderException, UnsupportedEncodingException) ExceptionHandler.handle(e, "URLCodec.decode1");
+    throw (DecoderException) ExceptionHandler.handle(e, "URLCodec.decode1");
 }
 }
     public String decode(final String str, final String charsetName)
@@ -220,10 +221,11 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode", str, charsetName).as(String.class);
+return this.obj.invokeMember("decode", str, charsetName).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException, UnsupportedEncodingException
-    throw (DecoderException, UnsupportedEncodingException) ExceptionHandler.handle(e, "URLCodec.decode");
+    // throw (DecoderException, UnsupportedEncodingException) ExceptionHandler.handle(e, "URLCodec.decode");
+    throw (DecoderException) ExceptionHandler.handle(e, "URLCodec.decode");
 }
 }
     public String encode2(final String str) throws EncoderException {
@@ -241,7 +243,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode2", str).as(String.class);
+return this.obj.invokeMember("encode2", str).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle EncoderException
     throw (EncoderException) ExceptionHandler.handle(e, "URLCodec.encode2");
@@ -259,7 +261,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode1", str, charsetName).as(String.class);
+return this.obj.invokeMember("encode1", str, charsetName).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle UnsupportedEncodingException
     throw (UnsupportedEncodingException) ExceptionHandler.handle(e, "URLCodec.encode1");
@@ -274,7 +276,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode", str, charsetName).as(String.class);
+return this.obj.invokeMember("encode", str, charsetName).as(String.class);
 } catch (PolyglotException e) {
     // TODO: Handle UnsupportedEncodingException
     throw (UnsupportedEncodingException) ExceptionHandler.handle(e, "URLCodec.encode");
@@ -288,7 +290,7 @@ try {
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("decode0", bytes).as(byte[].class);
+return this.obj.invokeMember("decode0", bytes).as(byte[].class);
 } catch (PolyglotException e) {
     // TODO: Handle DecoderException
     throw (DecoderException) ExceptionHandler.handle(e, "URLCodec.decode0");
@@ -301,7 +303,7 @@ return obj.invokeMember("decode0", bytes).as(byte[].class);
 
 
 // TODO: Check the type mapping below!
-return obj.invokeMember("encode0", bytes).as(byte[].class);
+return this.obj.invokeMember("encode0", bytes).as(byte[].class);
 }
     public static final byte[] decodeUrl(final byte[] bytes) throws DecoderException {
 try {

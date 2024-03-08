@@ -17,6 +17,10 @@ abstract class CologneBuffer {
     this.obj = obj;
   }
 
+  public CologneBuffer() {
+    this.obj = clz.newInstance();
+  }
+
   public Value getPythonObject() {
     return obj;
   }
@@ -278,8 +282,8 @@ public class ColognePhonetic implements StringEncoder {
   }
 
   private class CologneInputBuffer extends CologneBuffer {
-    private static Value clz =
-        ContextInitializer.getPythonClass("/language/ColognePhonetic.py", "CologneInputBuffer");
+    private Value clz =
+        ContextInitializer.getPythonClass("/language/ColognePhonetic.py", "ColognePhonetic.CologneInputBuffer");
     private Value obj;
 
     public CologneInputBuffer(Value obj) {
@@ -340,8 +344,8 @@ public class ColognePhonetic implements StringEncoder {
   }
 
   private class CologneOutputBuffer extends CologneBuffer {
-    private static Value clz =
-        ContextInitializer.getPythonClass("/language/ColognePhonetic.py", "CologneOutputBuffer");
+    private Value clz =
+        ContextInitializer.getPythonClass("/language/ColognePhonetic.py", "ColognePhonetic.CologneOutputBuffer");
     private Value obj;
 
     public CologneOutputBuffer(Value obj) {

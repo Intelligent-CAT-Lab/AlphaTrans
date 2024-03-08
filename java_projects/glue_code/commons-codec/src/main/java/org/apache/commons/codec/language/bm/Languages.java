@@ -13,417 +13,267 @@ import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import org.apache.commons.codec.Resources;
-    public static final class SomeLanguages extends LanguageSet {
-    private static Value clz = ContextInitializer.getPythonClass("/language/bm/Languages.py", "SomeLanguages");
-    private Value obj;
-    public SomeLanguages(Value obj) {
-        this.obj = obj;
-    }
-    public Value getPythonObject() {
-        return obj;
-    }
-        public String toString() {
-// 
-// return "Languages(" + languages.toString() + ")";
-// 
 
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("toString").as(String.class);
-}
-        public LanguageSet merge(final LanguageSet other) {
-// 
-// if (other == NO_LANGUAGES) {
-// return this;
-// }
-// if (other == ANY_LANGUAGE) {
-// return other;
-// }
-// final SomeLanguages someLanguages = (SomeLanguages) other;
-// final Set<String> set = new HashSet<>(languages);
-// set.addAll(someLanguages.languages);
-// return from(set);
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("merge", other).as(LanguageSet.class);
-}
-        public LanguageSet restrictTo(final LanguageSet other) {
-// 
-// if (other == NO_LANGUAGES) {
-// return other;
-// }
-// if (other == ANY_LANGUAGE) {
-// return this;
-// }
-// final SomeLanguages someLanguages = (SomeLanguages) other;
-// final Set<String> set =
-// new HashSet<>(Math.min(languages.size(), someLanguages.languages.size()));
-// for (final String lang : languages) {
-// if (someLanguages.languages.contains(lang)) {
-// set.add(lang);
-// }
-// }
-// return from(set);
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("restrictTo", other).as(LanguageSet.class);
-}
-        public boolean isSingleton() {
-// 
-// return this.languages.size() == 1;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("isSingleton").as(boolean.class);
-}
-        public boolean isEmpty() {
-// 
-// return this.languages.isEmpty();
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("isEmpty").as(boolean.class);
-}
-        public String getAny() {
-// 
-// return this.languages.iterator().next();
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("getAny").as(String.class);
-}
-        public boolean contains(final String language) {
-// 
-// return this.languages.contains(language);
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("contains", language).as(boolean.class);
-}
-        public Set<String> getLanguages() {
-// 
-// return this.languages;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("getLanguages").as(Set.class);
-}
-        private SomeLanguages(final Set<String> languages) {
-// 
-// this.languages = Collections.unmodifiableSet(languages);
-// 
-
-this.obj = clz.invokeMember("__init__", languages);
-}
-}
-    public abstract static class LanguageSet {
-    private static Value clz = ContextInitializer.getPythonClass("/language/bm/Languages.py", "LanguageSet");
-    private Value obj;
-    public LanguageSet(Value obj) {
-        this.obj = obj;
-    }
-    public Value getPythonObject() {
-        return obj;
-    }
-        public static LanguageSet from(final Set<String> langs) {
-// 
-// return langs.isEmpty() ? NO_LANGUAGES : new SomeLanguages(langs);
-// 
-
-
-// TODO: Check the type mapping below!
-return clz.invokeMember("from", langs).as(LanguageSet.class);
-}
-        abstract LanguageSet merge(LanguageSet other);
-        public abstract LanguageSet restrictTo(LanguageSet other);
-        public abstract boolean isSingleton();
-        public abstract boolean isEmpty();
-        public abstract String getAny();
-        public abstract boolean contains(String language);
-}
 public class Languages {
-    public static final LanguageSet ANY_LANGUAGE =
-            new LanguageSet() {
-                public boolean contains(final String language) {
-                    return true;
-                }
-
-                public String getAny() {
-                    throw new NoSuchElementException(
-                            "Can't fetch any language from the any language set.");
-                }
-
-                public boolean isEmpty() {
-                    return false;
-                }
-
-                public boolean isSingleton() {
-                    return false;
-                }
-
-                public LanguageSet restrictTo(final LanguageSet other) {
-                    return other;
-                }
-
-                public LanguageSet merge(final LanguageSet other) {
-                    return other;
-                }
-
-                public String toString() {
-                    return "ANY_LANGUAGE";
-                }
-            };
-    public static final LanguageSet NO_LANGUAGES =
-            new LanguageSet() {
-                public boolean contains(final String language) {
-                    return false;
-                }
-
-                public String getAny() {
-                    throw new NoSuchElementException(
-                            "Can't fetch any language from the empty language set.");
-                }
-
-                public boolean isEmpty() {
-                    return true;
-                }
-
-                public boolean isSingleton() {
-                    return false;
-                }
-
-                public LanguageSet restrictTo(final LanguageSet other) {
-                    return this;
-                }
-
-                public LanguageSet merge(final LanguageSet other) {
-                    return other;
-                }
-
-                public String toString() {
-                    return "NO_LANGUAGES";
-                }
-            };
-    public static final String ANY = "any";
-    private static final Map<NameType, Languages> LANGUAGES = new EnumMap<>(NameType.class);
     private static Value clz = ContextInitializer.getPythonClass("/language/bm/Languages.py", "Languages");
     private Value obj;
+
     public Languages(Value obj) {
-        this.obj = obj;
+    this.obj = obj;
     }
+
     public Value getPythonObject() {
         return obj;
     }
-    public Set<String> getLanguages() {
-// 
-// return this.languages;
-// 
 
+    /** A set of languages. */
+    public abstract static class LanguageSet {
+        private static Value clz = ContextInitializer.getPythonClass("/language/bm/Languages.py",
+                "Languages.LanguageSet");
+        private Value obj;
 
-// TODO: Check the type mapping below!
-return obj.invokeMember("getLanguages").as(Set.class);
-}
-    public static Languages getInstance1(final String languagesResourceName) {
-// 
-// final Set<String> ls = new HashSet<>();
-// try (final Scanner lsScanner =
-// new Scanner(
-// Resources.getInputStream(languagesResourceName),
-// ResourceConstants.ENCODING)) {
-// boolean inExtendedComment = false;
-// while (lsScanner.hasNextLine()) {
-// final String line = lsScanner.nextLine().trim();
-// if (inExtendedComment) {
-// if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
-// inExtendedComment = false;
-// }
-// } else if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
-// inExtendedComment = true;
-// } else if (!line.isEmpty()) {
-// ls.add(line);
-// }
-// }
-// return new Languages(Collections.unmodifiableSet(ls));
-// }
-// 
+        public LanguageSet(Value obj) {
+            this.obj = obj;
+        }
 
+        public LanguageSet() {
+            obj = clz.newInstance();
+        }
 
-// TODO: Check the type mapping below!
-return clz.invokeMember("getInstance1", languagesResourceName).as(Languages.class);
-}
+        public Value getPythonObject() {
+            return obj;
+        }
+
+        public static LanguageSet from(final Set<String> langs) {
+            // return langs.isEmpty() ? NO_LANGUAGES : new SomeLanguages(langs);
+            return clz.invokeMember("from", langs).as(LanguageSet.class);
+        }
+
+        public abstract boolean contains(String language);
+
+        public abstract String getAny();
+
+        public abstract boolean isEmpty();
+
+        public abstract boolean isSingleton();
+
+        public abstract LanguageSet restrictTo(LanguageSet other);
+
+        abstract LanguageSet merge(LanguageSet other);
+    }
+
+    /** Some languages, explicitly enumerated. */
+    public static final class SomeLanguages extends LanguageSet {
+        private static Value clz = ContextInitializer.getPythonClass("/language/bm/Languages.py",
+                "Languages.SomeLanguages");
+        private Value obj;
+
+        public SomeLanguages(Value obj) {
+            this.obj = obj;
+        }
+
+        public SomeLanguages() {
+            obj = clz.newInstance();
+        }
+
+        public Value getPythonObject() {
+            return obj;
+        }
+
+        // private final Set<String> languages;
+
+        private SomeLanguages(final Set<String> languages) {
+            // this.languages = Collections.unmodifiableSet(languages);
+            obj = clz.newInstance(languages);
+        }
+
+        @Override
+        public boolean contains(final String language) {
+            // return this.languages.contains(language);
+            return obj.invokeMember("contains", language).as(boolean.class);
+        }
+
+        @Override
+        public String getAny() {
+            // return this.languages.iterator().next();
+            return obj.invokeMember("getAny").asString();
+        }
+
+        public Set<String> getLanguages() {
+            // return this.languages;
+            return obj.invokeMember("getLanguages").as(Set.class);
+        }
+
+        @Override
+        public boolean isEmpty() {
+            // return this.languages.isEmpty();
+            return obj.invokeMember("isEmpty").as(boolean.class);
+        }
+
+        @Override
+        public boolean isSingleton() {
+            // return this.languages.size() == 1;
+            return obj.invokeMember("isSingleton").as(boolean.class);
+        }
+
+        @Override
+        public LanguageSet restrictTo(final LanguageSet other) {
+            // if (other == NO_LANGUAGES) {
+            //     return other;
+            // }
+            // if (other == ANY_LANGUAGE) {
+            //     return this;
+            // }
+            // final SomeLanguages someLanguages = (SomeLanguages) other;
+            // final Set<String> set = new HashSet<>(Math.min(languages.size(), someLanguages.languages.size()));
+            // for (final String lang : languages) {
+            //     if (someLanguages.languages.contains(lang)) {
+            //         set.add(lang);
+            //     }
+            // }
+            // return from(set);
+            return obj.invokeMember("restrictTo", other).as(LanguageSet.class);
+        }
+
+        @Override
+        public LanguageSet merge(final LanguageSet other) {
+            // if (other == NO_LANGUAGES) {
+            //     return this;
+            // }
+            // if (other == ANY_LANGUAGE) {
+            //     return other;
+            // }
+            // final SomeLanguages someLanguages = (SomeLanguages) other;
+            // final Set<String> set = new HashSet<>(languages);
+            // set.addAll(someLanguages.languages);
+            // return from(set);
+            return obj.invokeMember("merge", other).as(LanguageSet.class);
+        }
+
+        @Override
+        public String toString() {
+            // return "Languages(" + languages.toString() + ")";
+            return obj.invokeMember("toString").asString();
+        }
+    }
+
+    public static final String ANY = "any";
+
+    // private static final Map<NameType, Languages> LANGUAGES = new EnumMap<>(NameType.class);
+
+    // static {
+    //     for (final NameType s : NameType.values()) {
+    //         LANGUAGES.put(s, getInstance1(langResourceName(s)));
+    //     }
+    // }
+
     public static Languages getInstance0(final NameType nameType) {
-// 
-// return LANGUAGES.get(nameType);
-// 
+        // return LANGUAGES.get(nameType);
+        return clz.invokeMember("getInstance0", nameType).as(Languages.class);
+    }
 
+    public static Languages getInstance1(final String languagesResourceName) {
+        // final Set<String> ls = new HashSet<>();
+        // try (final Scanner lsScanner = new Scanner(
+        //         Resources.getInputStream(languagesResourceName),
+        //         ResourceConstants.ENCODING)) {
+        //     boolean inExtendedComment = false;
+        //     while (lsScanner.hasNextLine()) {
+        //         final String line = lsScanner.nextLine().trim();
+        //         if (inExtendedComment) {
+        //             if (line.endsWith(ResourceConstants.EXT_CMT_END)) {
+        //                 inExtendedComment = false;
+        //             }
+        //         } else if (line.startsWith(ResourceConstants.EXT_CMT_START)) {
+        //             inExtendedComment = true;
+        //         } else if (!line.isEmpty()) {
+        //             ls.add(line);
+        //         }
+        //     }
+        //     return new Languages(Collections.unmodifiableSet(ls));
+        // }
+        return clz.invokeMember("getInstance1", languagesResourceName).as(Languages.class);
+    }
 
-// TODO: Check the type mapping below!
-return clz.invokeMember("getInstance0", nameType).as(Languages.class);
-}
-    private Languages(final Set<String> languages) {
-// 
-// this.languages = languages;
-// 
-
-this.obj = clz.invokeMember("__init__", languages);
-}
     private static String langResourceName(final NameType nameType) {
-// 
-// return String.format(
-// "org/apache/commons/codec/language/bm/%s_languages.txt", nameType.getName());
-// 
-
-
-// TODO: Check the type mapping below!
-return clz.invokeMember("langResourceName", nameType).as(String.class);
-}
-            new LanguageSet() {
-    private static Value clz = ContextInitializer.getPythonClass("/language/bm/Languages.py", "new LanguageSet(...) { ... }");
-    private Value obj;
-    public new LanguageSet(...) { ... }(Value obj) {
-        this.obj = obj;
+        // return String.format(
+        //         "org/apache/commons/codec/language/bm/%s_languages.txt", nameType.getName());
+        return clz.invokeMember("langResourceName", nameType).asString();
     }
-    public Value getPythonObject() {
-        return obj;
+
+    // private final Set<String> languages;
+
+    /** No languages at all. */
+    public static final LanguageSet NO_LANGUAGES = clz.getMember("NO_LANGUAGES").as(LanguageSet.class); /*new LanguageSet() {
+        public boolean contains(final String language) {
+            return false;
+        }
+
+        public String getAny() {
+            throw new NoSuchElementException(
+                    "Can't fetch any language from the empty language set.");
+        }
+
+        public boolean isEmpty() {
+            return true;
+        }
+
+        public boolean isSingleton() {
+            return false;
+        }
+
+        public LanguageSet restrictTo(final LanguageSet other) {
+            return this;
+        }
+
+        public LanguageSet merge(final LanguageSet other) {
+            return other;
+        }
+
+        public String toString() {
+            return "NO_LANGUAGES";
+        }
+    };*/
+
+    /** Any/all languages. */
+    public static final LanguageSet ANY_LANGUAGE = clz.getMember("ANY_LANGUAGE").as(LanguageSet.class); /*new LanguageSet() {
+        public boolean contains(final String language) {
+            return true;
+        }
+
+        public String getAny() {
+            throw new NoSuchElementException(
+                    "Can't fetch any language from the any language set.");
+        }
+
+        public boolean isEmpty() {
+            return false;
+        }
+
+        public boolean isSingleton() {
+            return false;
+        }
+
+        public LanguageSet restrictTo(final LanguageSet other) {
+            return other;
+        }
+
+        public LanguageSet merge(final LanguageSet other) {
+            return other;
+        }
+
+        public String toString() {
+            return "ANY_LANGUAGE";
+        }
+    };*/
+
+    private Languages(final Set<String> languages) {
+        // this.languages = languages;
+        obj = clz.newInstance(languages);
     }
-                public String toString() {
-// 
-// return "NO_LANGUAGES";
-// 
 
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("toString").as(String.class);
-}
-                public LanguageSet merge(final LanguageSet other) {
-// 
-// return other;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("merge", other).as(LanguageSet.class);
-}
-                public LanguageSet restrictTo(final LanguageSet other) {
-// 
-// return this;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("restrictTo", other).as(LanguageSet.class);
-}
-                public boolean isSingleton() {
-// 
-// return false;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("isSingleton").as(boolean.class);
-}
-                public boolean isEmpty() {
-// 
-// return true;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("isEmpty").as(boolean.class);
-}
-                public String getAny() {
-// 
-// throw new NoSuchElementException(
-// "Can't fetch any language from the empty language set.");
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("getAny").as(String.class);
-}
-                public boolean contains(final String language) {
-// 
-// return false;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("contains", language).as(boolean.class);
-}
-                public String toString() {
-// 
-// return "ANY_LANGUAGE";
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("toString").as(String.class);
-}
-                public LanguageSet merge(final LanguageSet other) {
-// 
-// return other;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("merge", other).as(LanguageSet.class);
-}
-                public LanguageSet restrictTo(final LanguageSet other) {
-// 
-// return other;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("restrictTo", other).as(LanguageSet.class);
-}
-                public boolean isSingleton() {
-// 
-// return false;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("isSingleton").as(boolean.class);
-}
-                public boolean isEmpty() {
-// 
-// return false;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("isEmpty").as(boolean.class);
-}
-                public String getAny() {
-// 
-// throw new NoSuchElementException(
-// "Can't fetch any language from the any language set.");
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("getAny").as(String.class);
-}
-                public boolean contains(final String language) {
-// 
-// return true;
-// 
-
-
-// TODO: Check the type mapping below!
-return obj.invokeMember("contains", language).as(boolean.class);
-}
-            new LanguageSet() {
-;            new LanguageSet() {
-;}
+    public Set<String> getLanguages() {
+        // return this.languages;
+        return obj.invokeMember("getLanguages").as(Set.class);
+    }
 }

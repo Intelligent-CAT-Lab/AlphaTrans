@@ -8,14 +8,13 @@ import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Value;
 
 public class Soundex implements StringEncoder {
-  public static final Soundex US_ENGLISH_GENEALOGY =
-      new Soundex(1, false, "-123-12--22455-12623-1-2-2", null);
-  public static final Soundex US_ENGLISH_SIMPLIFIED =
-      new Soundex(0, false, US_ENGLISH_MAPPING_STRING, null);
+  public static final Soundex US_ENGLISH_GENEALOGY = new Soundex(1, false, "-123-12--22455-12623-1-2-2", null);
   public static final Soundex US_ENGLISH = new Soundex(3, false, null, null);
   public static final String US_ENGLISH_MAPPING_STRING = "01230120022455012623010202";
+  public static final Soundex US_ENGLISH_SIMPLIFIED = new Soundex(0, false, US_ENGLISH_MAPPING_STRING, null);
   public static final char SILENT_MARKER = '-';
-  @Deprecated private int maxLength = 4;
+  @Deprecated
+  private int maxLength = 4;
   private static final char[] US_ENGLISH_MAPPING = US_ENGLISH_MAPPING_STRING.toCharArray();
   private static Value clz = ContextInitializer.getPythonClass("/language/Soundex.py", "Soundex");
   private Value obj;
@@ -61,7 +60,7 @@ public class Soundex implements StringEncoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode", obj).as(Object.class);
+      return this.obj.invokeMember("encode", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "Soundex.encode");
@@ -84,7 +83,8 @@ public class Soundex implements StringEncoder {
     // char lastDigit = map(first); // previous digit
     // for (int i = 1; i < str.length() && count < out.length; i++) {
     // final char ch = str.charAt(i);
-    // if ((this.specialCaseHW) && (ch == 'H' || ch == 'W')) { // these are ignored completely
+    // if ((this.specialCaseHW) && (ch == 'H' || ch == 'W')) { // these are ignored
+    // completely
     // continue;
     // }
     // final char digit = map(ch);
@@ -117,13 +117,14 @@ public class Soundex implements StringEncoder {
       //
       // if (!(obj instanceof String)) {
       // throw new EncoderException(
-      // "Parameter supplied to Soundex encode is not of type java.lang.String", null);
+      // "Parameter supplied to Soundex encode is not of type java.lang.String",
+      // null);
       // }
       // return soundex((String) obj);
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode0", obj).as(Object.class);
+      return this.obj.invokeMember("encode0", obj).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "Soundex.encode0");

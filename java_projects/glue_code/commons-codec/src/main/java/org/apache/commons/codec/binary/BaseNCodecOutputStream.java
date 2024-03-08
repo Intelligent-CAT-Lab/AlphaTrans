@@ -17,8 +17,13 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
           "/binary/BaseNCodecOutputStream.py", "BaseNCodecOutputStream");
   private Value obj;
 
-  public BaseNCodecOutputStream(Value obj) {
-    this.obj = obj;
+  // public BaseNCodecOutputStream(Value obj) {
+  //   this.obj = obj;
+  // }
+
+  public BaseNCodecOutputStream() {
+    super(null);
+    this.obj = clz.newInstance();
   }
 
   public Value getPythonObject() {
@@ -135,8 +140,7 @@ public class BaseNCodecOutputStream extends FilterOutputStream {
 
   public BaseNCodecOutputStream(
       final OutputStream output, final BaseNCodec basedCodec, final boolean doEncode) {
-    //
-    // super(output);
+    super(output);
     // this.baseNCodec = basedCodec;
     // this.doEncode = doEncode;
     //

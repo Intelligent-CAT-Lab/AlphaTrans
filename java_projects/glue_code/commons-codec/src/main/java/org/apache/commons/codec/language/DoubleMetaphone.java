@@ -39,14 +39,14 @@ public class DoubleMetaphone implements StringEncoder {
     return obj.invokeMember("encode", value).as(String.class);
   }
 
-  public Object encode(final Object obj) throws EncoderException {
+  public Object encode(final Object obj2) throws EncoderException {
     try {
       //
       // return encode0(obj);
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode", obj).as(Object.class);
+      return obj.invokeMember("encode", obj2).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "DoubleMetaphone.encode");
@@ -132,7 +132,7 @@ public class DoubleMetaphone implements StringEncoder {
     return obj.invokeMember("encode1", value).as(String.class);
   }
 
-  public Object encode0(final Object obj) throws EncoderException {
+  public Object encode0(final Object obj2) throws EncoderException {
     try {
       //
       // if (!(obj instanceof String)) {
@@ -143,7 +143,7 @@ public class DoubleMetaphone implements StringEncoder {
       //
 
       // TODO: Check the type mapping below!
-      return obj.invokeMember("encode0", obj).as(Object.class);
+      return obj.invokeMember("encode0", obj2).as(Object.class);
     } catch (PolyglotException e) {
       // TODO: Handle EncoderException
       throw (EncoderException) ExceptionHandler.handle(e, "DoubleMetaphone.encode0");
@@ -927,7 +927,7 @@ public class DoubleMetaphone implements StringEncoder {
   public class DoubleMetaphoneResult {
     private final StringBuilder alternate = new StringBuilder(getMaxCodeLen());
     private final StringBuilder primary = new StringBuilder(getMaxCodeLen());
-    private static Value clz =
+    private Value clz =
         ContextInitializer.getPythonClass("/language/DoubleMetaphone.py", "DoubleMetaphoneResult");
     private Value obj;
 
