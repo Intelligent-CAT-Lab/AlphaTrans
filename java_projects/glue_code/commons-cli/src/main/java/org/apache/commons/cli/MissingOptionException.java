@@ -10,6 +10,7 @@ public class MissingOptionException extends ParseException {
   private Value obj;
 
   public MissingOptionException(Value obj) {
+    super(obj);
     this.obj = obj;
   }
 
@@ -43,9 +44,7 @@ public class MissingOptionException extends ParseException {
 
   public MissingOptionException(
       int constructorId, final List missingOptions, final String message) {
-    //
-    //
-    // super(message);
+    super(message);
     // if (constructorId == 1) {
     // this.missingOptions = missingOptions;
     // }

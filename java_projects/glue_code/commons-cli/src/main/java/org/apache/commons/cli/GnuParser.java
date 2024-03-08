@@ -10,6 +10,10 @@ public class GnuParser extends Parser {
     this.obj = obj;
   }
 
+  public GnuParser() { 
+    this.obj = clz.newInstance();
+  }
+
   public Value getPythonObject() {
     return obj;
   }

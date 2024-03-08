@@ -21,6 +21,10 @@ public class Options implements Serializable {
     this.obj = obj;
   }
 
+  public Options() {
+    this.obj = clz.newInstance();
+  }
+
   public Value getPythonObject() {
     return obj;
   }

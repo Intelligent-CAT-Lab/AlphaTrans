@@ -14,6 +14,10 @@ public abstract class Parser implements CommandLineParser {
     this.obj = obj;
   }
 
+  public Parser(){
+    this.obj = clz.newInstance();
+  }
+
   public Value getPythonObject() {
     return obj;
   }
@@ -320,5 +324,5 @@ public abstract class Parser implements CommandLineParser {
     }
   }
 
-  protected abstract String[] flatten(Options opts, String[] arguments, boolean stopAtNonOption);
+  protected abstract String[] flatten(Options opts, String[] arguments, boolean stopAtNonOption) throws ParseException;
 }

@@ -53,7 +53,7 @@ public class TypeHandler {
       //
 
       // TODO: Check the type mapping below!
-      return clz.invokeMember("createValue0", str, clazz).as(T.class);
+      return clz.invokeMember("createValue0", str, clazz).as(clazz);
     } catch (PolyglotException e) {
       // TODO: Handle ParseException
       throw (ParseException) ExceptionHandler.handle(e, "TypeHandler.createValue0");

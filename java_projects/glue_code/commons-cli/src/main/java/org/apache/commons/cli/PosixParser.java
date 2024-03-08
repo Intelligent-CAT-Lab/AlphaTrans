@@ -15,6 +15,10 @@ public class PosixParser extends Parser {
     this.obj = obj;
   }
 
+  public PosixParser() {
+    this.obj = clz.newInstance();
+  }
+
   public Value getPythonObject() {
     return obj;
   }

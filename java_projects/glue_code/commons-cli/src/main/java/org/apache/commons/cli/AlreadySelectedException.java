@@ -9,6 +9,7 @@ public class AlreadySelectedException extends ParseException {
   private Value obj;
 
   public AlreadySelectedException(Value obj) {
+    super(obj);
     this.obj = obj;
   }
 
@@ -65,8 +66,7 @@ public class AlreadySelectedException extends ParseException {
 
   public AlreadySelectedException(
       final String message, final OptionGroup group, final Option option) {
-    //
-    // super(message);
+    super(message);
     // this.group = group;
     // this.option = option;
     //

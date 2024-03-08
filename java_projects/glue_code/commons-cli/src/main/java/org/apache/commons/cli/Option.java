@@ -74,7 +74,7 @@ public class Option implements Cloneable, Serializable {
     return obj.invokeMember("hashCode").as(int.class);
   }
 
-  public boolean equals(final Object obj) {
+  public boolean equals(final Object obj2) {
     //
     // if (this == obj) {
     // return true;
@@ -87,7 +87,7 @@ public class Option implements Cloneable, Serializable {
     //
 
     // TODO: Check the type mapping below!
-    return obj.invokeMember("equals", obj).as(boolean.class);
+    return obj.invokeMember("equals", obj2).as(boolean.class);
   }
 
   public Object clone() {

@@ -10,6 +10,10 @@ public class BasicParser extends Parser {
     this.obj = obj;
   }
 
+  public BasicParser() {
+    this.obj = clz.newInstance();
+  }
+
   public Value getPythonObject() {
     return obj;
   }

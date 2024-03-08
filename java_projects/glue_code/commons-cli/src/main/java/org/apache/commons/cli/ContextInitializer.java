@@ -28,7 +28,7 @@ public abstract class ContextInitializer {
               .targetTypeMapping(
                   Value.class, OptionValidator.class, null, (v) -> new OptionValidator(v))
               .targetTypeMapping(Value.class, BasicParser.class, null, (v) -> new BasicParser(v))
-              .targetTypeMapping(Value.class, Parser.class, null, (v) -> new Parser(v))
+              // .targetTypeMapping(Value.class, Parser.class, null, (v) -> new Parser(v))
               .targetTypeMapping(Value.class, CommandLine.class, null, (v) -> new CommandLine(v))
               .targetTypeMapping(
                   Value.class, CommandLine.Builder.class, null, (v) -> new CommandLine.Builder(v))
@@ -38,11 +38,11 @@ public abstract class ContextInitializer {
               .targetTypeMapping(
                   Value.class, OptionBuilder.class, null, (v) -> new OptionBuilder(v))
               .targetTypeMapping(Value.class, PosixParser.class, null, (v) -> new PosixParser(v))
-              .targetTypeMapping(
-                  Value.class,
-                  HelpFormatter.OptionComparator.class,
-                  null,
-                  (v) -> new HelpFormatter.OptionComparator(v))
+              // .targetTypeMapping(
+              //     Value.class,
+              //     HelpFormatter.OptionComparator.class,
+              //     null,
+              //     (v) -> new HelpFormatter.OptionComparator(v))
               .targetTypeMapping(
                   Value.class, HelpFormatter.class, null, (v) -> new HelpFormatter(v))
               .targetTypeMapping(Value.class, OptionGroup.class, null, (v) -> new OptionGroup(v))

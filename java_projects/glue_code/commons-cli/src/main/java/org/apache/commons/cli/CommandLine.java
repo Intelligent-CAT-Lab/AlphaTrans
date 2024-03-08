@@ -352,6 +352,10 @@ public class CommandLine implements Serializable {
       this.obj = obj;
     }
 
+    public Builder() {
+      this.obj = clz.newInstance();
+    }
+
     public Value getPythonObject() {
       return obj;
     }

@@ -10,6 +10,7 @@ public class UnrecognizedOptionException extends ParseException {
   private Value obj;
 
   public UnrecognizedOptionException(Value obj) {
+    super(obj);
     this.obj = obj;
   }
 
@@ -37,8 +38,7 @@ public class UnrecognizedOptionException extends ParseException {
   }
 
   public UnrecognizedOptionException(final String message, final String option) {
-    //
-    // super(message);
+    super(message);
     // this.option = option;
     //
 

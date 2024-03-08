@@ -9,6 +9,7 @@ public class MissingArgumentException extends ParseException {
   private Value obj;
 
   public MissingArgumentException(Value obj) {
+    super(obj);
     this.obj = obj;
   }
 
@@ -41,9 +42,7 @@ public class MissingArgumentException extends ParseException {
   }
 
   public MissingArgumentException(int constructorId, final String message, final Option option) {
-    //
-    //
-    // super(message);
+    super(message);
     // if (constructorId == 1) {
     // this.option = option;
     // }

@@ -5,40 +5,24 @@ import java.io.Serializable;
 import java.util.Comparator;
 import org.graalvm.polyglot.Value;
 
-private static class OptionComparator implements Comparator<Option>, Serializable {
-  private static final long serialVersionUID = 5305467873966684014L;
-  private static Value clz =
-      ContextInitializer.getPythonClass("/HelpFormatter.py", "OptionComparator");
-  private Value obj;
-
-  public OptionComparator(Value obj) {
-    this.obj = obj;
-  }
-
-  public Value getPythonObject() {
-    return obj;
-  }
-
-  public int compare(final Option opt1, final Option opt2) {
-    //
-    // return opt1.getKey().compareToIgnoreCase(opt2.getKey());
-    //
-
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("compare", opt1, opt2).as(int.class);
-  }
-}
-
 public class HelpFormatter {
   protected Comparator<Option> optionComparator = new OptionComparator();
-  @Deprecated public String defaultArgName = DEFAULT_ARG_NAME;
-  @Deprecated public String defaultLongOptPrefix = DEFAULT_LONG_OPT_PREFIX;
-  @Deprecated public String defaultOptPrefix = DEFAULT_OPT_PREFIX;
-  @Deprecated public String defaultNewLine = System.getProperty("line.separator");
-  @Deprecated public String defaultSyntaxPrefix = DEFAULT_SYNTAX_PREFIX;
-  @Deprecated public int defaultDescPad = DEFAULT_DESC_PAD;
-  @Deprecated public int defaultLeftPad = DEFAULT_LEFT_PAD;
-  @Deprecated public int defaultWidth = DEFAULT_WIDTH;
+  @Deprecated
+  public String defaultArgName = DEFAULT_ARG_NAME;
+  @Deprecated
+  public String defaultLongOptPrefix = DEFAULT_LONG_OPT_PREFIX;
+  @Deprecated
+  public String defaultOptPrefix = DEFAULT_OPT_PREFIX;
+  @Deprecated
+  public String defaultNewLine = System.getProperty("line.separator");
+  @Deprecated
+  public String defaultSyntaxPrefix = DEFAULT_SYNTAX_PREFIX;
+  @Deprecated
+  public int defaultDescPad = DEFAULT_DESC_PAD;
+  @Deprecated
+  public int defaultLeftPad = DEFAULT_LEFT_PAD;
+  @Deprecated
+  public int defaultWidth = DEFAULT_WIDTH;
   public static final String DEFAULT_ARG_NAME = "arg";
   public static final String DEFAULT_LONG_OPT_SEPARATOR = " ";
   public static final String DEFAULT_LONG_OPT_PREFIX = "--";
@@ -48,12 +32,15 @@ public class HelpFormatter {
   public static final int DEFAULT_LEFT_PAD = 1;
   public static final int DEFAULT_WIDTH = 74;
   private String longOptSeparator = DEFAULT_LONG_OPT_SEPARATOR;
-  private static Value clz =
-      ContextInitializer.getPythonClass("/HelpFormatter.py", "HelpFormatter");
+  private static Value clz = ContextInitializer.getPythonClass("/HelpFormatter.py", "HelpFormatter");
   private Value obj;
 
   public HelpFormatter(Value obj) {
     this.obj = obj;
+  }
+
+  public HelpFormatter() {
+    this.obj = clz.newInstance();
   }
 
   public Value getPythonObject() {
@@ -224,7 +211,7 @@ public class HelpFormatter {
     //
     // if (option.getOpt() == null) {
     // optBuf.append(lpad)
-    // .append("   ")
+    // .append(" ")
     // .append(getLongOptPrefix())
     // .append(option.getLongOpt());
     // } else {
@@ -255,7 +242,8 @@ public class HelpFormatter {
     //
     // for (final Iterator<Option> it = optList.iterator(); it.hasNext(); ) {
     // final Option option = it.next();
-    // final StringBuilder optBuf = new StringBuilder(prefixList.get(x++).toString());
+    // final StringBuilder optBuf = new
+    // StringBuilder(prefixList.get(x++).toString());
     //
     // if (optBuf.length() < max) {
     // optBuf.append(createPadding(max - optBuf.length()));
@@ -307,7 +295,8 @@ public class HelpFormatter {
   public void printUsage1(
       final PrintWriter pw, final int width, final String app, final Options options) {
     //
-    // final StringBuffer buff = new StringBuffer(getSyntaxPrefix()).append(app).append(" ");
+    // final StringBuffer buff = new
+    // StringBuffer(getSyntaxPrefix()).append(app).append(" ");
     //
     // final Collection<OptionGroup> processedGroups = new ArrayList<>();
     //
@@ -347,7 +336,8 @@ public class HelpFormatter {
     // final int argPos = cmdLineSyntax.indexOf(' ') + 1;
     //
     // printWrapped0(
-    // pw, width, getSyntaxPrefix().length() + argPos, getSyntaxPrefix() + cmdLineSyntax);
+    // pw, width, getSyntaxPrefix().length() + argPos, getSyntaxPrefix() +
+    // cmdLineSyntax);
     //
 
     obj.invokeMember("printUsage0", pw, width, cmdLineSyntax);
@@ -463,7 +453,8 @@ public class HelpFormatter {
       final int descPad,
       final String footer) {
     //
-    // printHelp3(pw, width, cmdLineSyntax, header, options, leftPad, descPad, footer, false);
+    // printHelp3(pw, width, cmdLineSyntax, header, options, leftPad, descPad,
+    // footer, false);
     //
 
     obj.invokeMember(
@@ -711,7 +702,8 @@ public class HelpFormatter {
     // buff.append("--").append(option.getLongOpt());
     // }
     //
-    // if (option.hasArg() && (option.getArgName() == null || !option.getArgName().isEmpty())) {
+    // if (option.hasArg() && (option.getArgName() == null ||
+    // !option.getArgName().isEmpty())) {
     // buff.append(option.getOpt() == null ? longOptSeparator : " ");
     // buff.append("<")
     // .append(option.getArgName() != null ? option.getArgName() : getArgName())
@@ -724,5 +716,32 @@ public class HelpFormatter {
     //
 
     obj.invokeMember("appendOption", buff, option, required);
+  }
+
+  private static class OptionComparator implements Comparator<Option>, Serializable {
+    private static final long serialVersionUID = 5305467873966684014L;
+    private static Value clz = ContextInitializer.getPythonClass("/HelpFormatter.py", "OptionComparator");
+    private Value obj;
+
+    public OptionComparator(Value obj) {
+      this.obj = obj;
+    }
+
+    public OptionComparator() {
+      this.obj = clz.newInstance();
+    }
+
+    public Value getPythonObject() {
+      return obj;
+    }
+
+    public int compare(final Option opt1, final Option opt2) {
+      //
+      // return opt1.getKey().compareToIgnoreCase(opt2.getKey());
+      //
+
+      // TODO: Check the type mapping below!
+      return obj.invokeMember("compare", opt1, opt2).as(int.class);
+    }
   }
 }

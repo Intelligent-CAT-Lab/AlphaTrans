@@ -17,6 +17,10 @@ public class OptionGroup implements Serializable {
     this.obj = obj;
   }
 
+  public OptionGroup() {
+    this.obj = clz.newInstance();
+  }
+
   public Value getPythonObject() {
     return obj;
   }

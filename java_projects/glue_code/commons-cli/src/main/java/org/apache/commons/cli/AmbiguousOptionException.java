@@ -10,6 +10,7 @@ public class AmbiguousOptionException extends UnrecognizedOptionException {
   private Value obj;
 
   public AmbiguousOptionException(Value obj) {
+    super(obj);
     this.obj = obj;
   }
 
@@ -28,7 +29,7 @@ public class AmbiguousOptionException extends UnrecognizedOptionException {
 
   public AmbiguousOptionException(final String option, final Collection<String> matchingOptions) {
     //
-    // super(createMessage(option, matchingOptions), option);
+    super(createMessage(option, matchingOptions), option);
     // this.matchingOptions = matchingOptions;
     //
 

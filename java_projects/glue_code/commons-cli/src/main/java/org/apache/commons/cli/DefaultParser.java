@@ -5,59 +5,60 @@ import java.util.Properties;
 import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Value;
 
-public static final class Builder {
-  private boolean allowPartialMatching = true;
-  private static Value clz = ContextInitializer.getPythonClass("/DefaultParser.py", "Builder");
-  private Value obj;
-
-  public Builder(Value obj) {
-    this.obj = obj;
-  }
-
-  public Value getPythonObject() {
-    return obj;
-  }
-
-  public Builder setStripLeadingAndTrailingQuotes(final Boolean stripLeadingAndTrailingQuotes) {
-    //
-    // this.stripLeadingAndTrailingQuotes = stripLeadingAndTrailingQuotes;
-    // return this;
-    //
-
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("setStripLeadingAndTrailingQuotes", stripLeadingAndTrailingQuotes)
-        .as(Builder.class);
-  }
-
-  public Builder setAllowPartialMatching(final boolean allowPartialMatching) {
-    //
-    // this.allowPartialMatching = allowPartialMatching;
-    // return this;
-    //
-
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("setAllowPartialMatching", allowPartialMatching).as(Builder.class);
-  }
-
-  public DefaultParser build() {
-    //
-    // return new DefaultParser(1, allowPartialMatching, stripLeadingAndTrailingQuotes);
-    //
-
-    // TODO: Check the type mapping below!
-    return obj.invokeMember("build").as(DefaultParser.class);
-  }
-
-  private Builder() {
-    //
-
-    this.obj = clz.invokeMember("__init__");
-  }
-}
-
 public class DefaultParser implements CommandLineParser {
-  private static Value clz =
-      ContextInitializer.getPythonClass("/DefaultParser.py", "DefaultParser");
+
+  public static final class Builder {
+    private boolean allowPartialMatching = true;
+    private static Value clz = ContextInitializer.getPythonClass("/DefaultParser.py", "Builder");
+    private Value obj;
+
+    public Builder(Value obj) {
+      this.obj = obj;
+    }
+
+    public Value getPythonObject() {
+      return obj;
+    }
+
+    public Builder setStripLeadingAndTrailingQuotes(final Boolean stripLeadingAndTrailingQuotes) {
+      //
+      // this.stripLeadingAndTrailingQuotes = stripLeadingAndTrailingQuotes;
+      // return this;
+      //
+
+      // TODO: Check the type mapping below!
+      return obj.invokeMember("setStripLeadingAndTrailingQuotes", stripLeadingAndTrailingQuotes)
+          .as(Builder.class);
+    }
+
+    public Builder setAllowPartialMatching(final boolean allowPartialMatching) {
+      //
+      // this.allowPartialMatching = allowPartialMatching;
+      // return this;
+      //
+
+      // TODO: Check the type mapping below!
+      return obj.invokeMember("setAllowPartialMatching", allowPartialMatching).as(Builder.class);
+    }
+
+    public DefaultParser build() {
+      //
+      // return new DefaultParser(1, allowPartialMatching,
+      // stripLeadingAndTrailingQuotes);
+      //
+
+      // TODO: Check the type mapping below!
+      return obj.invokeMember("build").as(DefaultParser.class);
+    }
+
+    private Builder() {
+      //
+
+      this.obj = clz.invokeMember("__init__");
+    }
+  }
+
+  private static Value clz = ContextInitializer.getPythonClass("/DefaultParser.py", "DefaultParser");
   private Value obj;
 
   public DefaultParser(Value obj) {
@@ -196,8 +197,7 @@ public class DefaultParser implements CommandLineParser {
       obj.invokeMember("checkRequiredOptions");
     } catch (PolyglotException e) {
       // TODO: Handle MissingOptionException
-      throw (MissingOptionException)
-          ExceptionHandler.handle(e, "DefaultParser.checkRequiredOptions");
+      throw (MissingOptionException) ExceptionHandler.handle(e, "DefaultParser.checkRequiredOptions");
     }
   }
 
@@ -221,9 +221,8 @@ public class DefaultParser implements CommandLineParser {
     // }
     //
 
-    this.obj =
-        clz.invokeMember(
-            "__init__", constructorId, allowPartialMatching, stripLeadingAndTrailingQuotes);
+    this.obj = clz.invokeMember(
+        "__init__", constructorId, allowPartialMatching, stripLeadingAndTrailingQuotes);
   }
 
   public static Builder builder() {
@@ -256,8 +255,7 @@ public class DefaultParser implements CommandLineParser {
       obj.invokeMember("updateRequiredOptions", option);
     } catch (PolyglotException e) {
       // TODO: Handle AlreadySelectedException
-      throw (AlreadySelectedException)
-          ExceptionHandler.handle(e, "DefaultParser.updateRequiredOptions");
+      throw (AlreadySelectedException) ExceptionHandler.handle(e, "DefaultParser.updateRequiredOptions");
     }
   }
 
@@ -292,11 +290,13 @@ public class DefaultParser implements CommandLineParser {
     // }
     //
     // final int pos = token.indexOf("=");
-    // final String optName = pos == -1 ? token.substring(1) : token.substring(1, pos);
+    // final String optName = pos == -1 ? token.substring(1) : token.substring(1,
+    // pos);
     // if (options.hasShortOption(optName)) {
     // return true;
     // }
-    // return !optName.isEmpty() && options.hasShortOption(String.valueOf(optName.charAt(0)));
+    // return !optName.isEmpty() &&
+    // options.hasShortOption(String.valueOf(optName.charAt(0)));
     //
 
     // TODO: Check the type mapping below!
@@ -375,7 +375,8 @@ public class DefaultParser implements CommandLineParser {
     try {
       //
       // if (token.startsWith("-") && token.length() > 1 && !stopAtNonOption) {
-      // throw new UnrecognizedOptionException("Unrecognized option: " + token, token);
+      // throw new UnrecognizedOptionException("Unrecognized option: " + token,
+      // token);
       // }
       //
       // cmd.addArg(token);
@@ -400,7 +401,8 @@ public class DefaultParser implements CommandLineParser {
       // cmd.addArg(token);
       // } else if ("--".equals(token)) {
       // skipParsing = true;
-      // } else if (currentOption != null && currentOption.acceptsArg() && isArgument(token)) {
+      // } else if (currentOption != null && currentOption.acceptsArg() &&
+      // isArgument(token)) {
       // currentOption.addValueForProcessing(stripLeadingAndTrailingQuotesDefaultOn(token));
       // } else if (token.startsWith("--")) {
       // handleLongOption(token);
@@ -495,12 +497,14 @@ public class DefaultParser implements CommandLineParser {
       // return;
       // }
       //
-      // for (final Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {
+      // for (final Enumeration<?> e = properties.propertyNames();
+      // e.hasMoreElements(); ) {
       // final String option = e.nextElement().toString();
       //
       // final Option opt = options.getOption(option);
       // if (opt == null) {
-      // throw new UnrecognizedOptionException("Default option wasn't defined", option);
+      // throw new UnrecognizedOptionException("Default option wasn't defined",
+      // option);
       // }
       //
       // final OptionGroup group = options.getOptionGroup(opt);
@@ -566,7 +570,8 @@ public class DefaultParser implements CommandLineParser {
       // } else if (matchingOpts.size() > 1 && !options.hasLongOption(token)) {
       // throw new AmbiguousOptionException(token, matchingOpts);
       // } else {
-      // final String key = options.hasLongOption(token) ? token : matchingOpts.get(0);
+      // final String key = options.hasLongOption(token) ? token :
+      // matchingOpts.get(0);
       // handleOption(options.getOption(key));
       // }
       //
@@ -574,8 +579,7 @@ public class DefaultParser implements CommandLineParser {
       obj.invokeMember("handleLongOptionWithoutEqual", token);
     } catch (PolyglotException e) {
       // TODO: Handle ParseException
-      throw (ParseException)
-          ExceptionHandler.handle(e, "DefaultParser.handleLongOptionWithoutEqual");
+      throw (ParseException) ExceptionHandler.handle(e, "DefaultParser.handleLongOptionWithoutEqual");
     }
   }
 
@@ -674,7 +678,8 @@ public class DefaultParser implements CommandLineParser {
     try {
       //
       // if (currentOption != null && currentOption.requiresArg()) {
-      // throw MissingArgumentException.MissingArgumentException1(1, null, currentOption);
+      // throw MissingArgumentException.MissingArgumentException1(1, null,
+      // currentOption);
       // }
       //
 
