@@ -5,8 +5,9 @@ from typing import *
 from itertools import chain
 
 import sys
-sys.path.append('/Users/kekaiyao/Desktop/AlphaTrans/data/recomposed_projects/commons-fileupload/src/main/org/apache/commons/fileupload/util')
-from FileItemHeadersImpl import FileItemHeadersImpl
+from src.main.org.apache.commons.fileupload.util.FileItemHeadersImpl import FileItemHeadersImpl
+# sys.path.append('/Users/kekaiyao/Desktop/AlphaTrans/data/recomposed_projects/commons-fileupload/src/main/org/apache/commons/fileupload/util')
+# from FileItemHeadersImpl import FileItemHeadersImpl
 #from fileupload.util import FileItemHeadersImpl  # LLM missed this import
 
 # Imports End

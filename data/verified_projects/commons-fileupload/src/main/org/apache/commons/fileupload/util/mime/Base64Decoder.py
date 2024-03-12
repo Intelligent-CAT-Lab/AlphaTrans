@@ -2,6 +2,7 @@
 import typing
 from typing import *
 import io
+from abc import ABC
 
 # Imports End
 
@@ -9,13 +10,17 @@ import io
 class Base64Decoder:
 
     # Class Fields Begin
-    __CRLF: str = "\r\n"
-    __ENCODING_TABLE: bytes = [0] * (Byte.MAX_VALUE - Byte.MIN_VALUE + 1)
-    __MAX_BYTE: int = 63
+    __BYTE_MIN_VALUE = 0
+    __BYTE_MAX_VALUE = 255
+    __PADDING: int = ""  # LLM could not translate field
+    __DECODING_TABLE: bytes = bytearray(range(__BYTE_MIN_VALUE, __BYTE_MAX_VALUE + 1))
+    __INVALID_BYTE: int = -1
     __PAD_BYTE: int = -2
     __MASK_BYTE_UNSIGNED: int = 255
     __INPUT_BYTES_PER_CHUNK: int = 4
-    __ENCODING_TABLE: typing.List[int] = ""  # LLM could not translate field
+    __ENCODING_TABLE: bytes = (
+        b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+    )
     # Class Fields End
 
     # Class Methods Begin

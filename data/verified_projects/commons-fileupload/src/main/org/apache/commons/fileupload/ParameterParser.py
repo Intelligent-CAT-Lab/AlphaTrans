@@ -1,5 +1,6 @@
 # Imports Begin
 from src.main.org.apache.commons.fileupload.util.mime.MimeUtility import *
+import os
 import typing
 from typing import *
 
@@ -9,7 +10,7 @@ from typing import *
 class ParameterParser:
 
     # Class Fields Begin
-    __chars: List[str] = None
+    __chars: List[str] = []
     __pos: int = 0
     __len: int = ""  # LLM could not translate field
     __i1: int = ""  # LLM could not translate field
@@ -66,11 +67,11 @@ class ParameterParser:
 
     def __parseQuotedToken(self, terminators: typing.List[str]) -> str:
 
-        ch: str
-        i1: int = self.__pos
-        i2: int = self.__pos
-        quoted: bool = False
-        charEscaped: bool = False
+        ch = None
+        self.__i1 = self.__pos
+        self.__i2 = self.__pos
+        quoted = False
+        charEscaped = False
         while self.__hasChar():
             ch = self.__chars[self.__pos]
             if not quoted and self.__isOneOf(ch, terminators):
@@ -78,7 +79,7 @@ class ParameterParser:
             if not charEscaped and ch == '"':
                 quoted = not quoted
             charEscaped = not charEscaped and ch == "\\"
-            i2 += 1
+            self.__i2 += 1
             self.__pos += 1
         return self.__getToken(True)
 

@@ -2,7 +2,7 @@
 import unittest
 import typing
 from typing import *
-from fileupload import ParameterParser
+from src.main.org.apache.commons.fileupload.ParameterParser import ParameterParser
 
 # Imports End
 

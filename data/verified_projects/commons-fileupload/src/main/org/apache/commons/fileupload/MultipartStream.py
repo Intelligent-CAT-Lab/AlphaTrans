@@ -3,239 +3,47 @@ from src.main.org.apache.commons.fileupload.ProgressListener import *
 from src.main.org.apache.commons.fileupload.util.Closeable import *
 from src.main.org.apache.commons.fileupload.FileItemStream import *
 from src.main.org.apache.commons.fileupload.FileUploadBase import *
+import os
 import typing
 from typing import *
 import io
 
 # Imports End
 
-
-class MultipartStream:
+class ProgressNotifier:
 
     # Class Fields Begin
-    MAX_VALUE: int = 2147483647
-    MAX_VALUE: int = 2147483647
-    EMPTY_STRING: str = ""
-    HEADER_PART_SIZE_MAX: int = 10240
-    _DEFAULT_ENCODING: str = "UTF-8"
-    _HEADER_SEPARATOR_STRING: str = b"\r\n\r\n".decode("ascii")
-    DEFAULT_ENCODING: str = "UTF-8"
-    _DEFAULT_BUFFER_SIZE: int = 8192
-    _BOUNDARY_PREFIX: bytes = b"\r\n--"
-    __input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None
-    __boundaryLength: int = None
-    __keepRegion: int = None
-    __boundary: typing.List[int] = None
-    __boundaryTable: typing.List[int] = None
-    __bufSize: int = None
-    __buffer: typing.List[int] = None
-    __head: int = None
-    __tail: int = None
-    __headerEncoding: str = None
-    __notifier: ProgressNotifier = None
+    __listener: ProgressListener = None
+    __contentLength: int = None
+    __bytesRead: int = None
+    __items: int = None
     # Class Fields End
 
     # Class Methods Begin
-    @staticmethod
-    def MultipartStream3(
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
-        boundary: typing.List[int],
-    ) -> MultipartStream:
+    def __notifyListener(self) -> None:
 
-        pass  # LLM could not translate method body
+        if self.__listener is not None:
+            self.__listener.update(self.__bytesRead, self.__contentLength, self.__items)
 
-    @staticmethod
-    def MultipartStream1(
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
-        boundary: typing.List[int],
-        bufSize: int,
-    ) -> MultipartStream:
+    def noteItem(self) -> None:
 
-        return MultipartStream(input, boundary, bufSize, None)
+        self.__items += 1
+        self.__notifyListener()
 
-    @staticmethod
-    def MultipartStream0() -> MultipartStream:
+    def noteBytesRead(self, pBytes: int) -> None:
 
-        pass  # LLM could not translate method body
+        self.__bytesRead += pBytes
+        self.__notifyListener()
 
-    def _findSeparator(self) -> int:
+    def __init__(self, pListener: ProgressListener, pContentLength: int) -> None:
 
-        buffer_pos = self.__head
-        table_pos = 0
-        while buffer_pos < self.__tail:
-            while (
-                table_pos >= 0
-                and self.__buffer[buffer_pos] != self.__boundary[table_pos]
-            ):
-                table_pos = self.__boundaryTable[table_pos]
-            buffer_pos += 1
-            table_pos += 1
-            if table_pos == self.__boundaryLength:
-                return buffer_pos - self.__boundaryLength
-        return -1
-
-    def _findByte(self, value: int, pos: int) -> int:
-
-        for i in range(pos, self.__tail):
-            if self.__buffer[i] == value:
-                return i
-        return -1
-
-    @staticmethod
-    def arrayequals(a: typing.List[int], b: typing.List[int], count: int) -> bool:
-
-        pass  # LLM could not translate method body
-
-    def readHeaders(self) -> str:
-
-        i = 0
-        b = 0
-        baos = ByteArrayOutputStream()
-        size = 0
-        while i < _HEADER_SEPARATOR:
-            try:
-                b = self.readByte()
-            except FileUploadIOException as e:
-                raise e
-            except IOException as e:
-                raise MalformedStreamException("Stream ended unexpectedly")
-            if size > HEADER_PART_SIZE_MAX:
-                raise MalformedStreamException(
-                    "Header section has more than {} bytes (maybe it is not properly terminated)".format(
-                        HEADER_PART_SIZE_MAX
-                    )
-                )
-            if b == _HEADER_SEPARATOR[i]:
-                i += 1
-            else:
-                i = 0
-            baos.write(b)
-        headers = None
-        if self.__headerEncoding is not None:
-            try:
-                headers = baos.toString(self.__headerEncoding)
-            except UnsupportedEncodingException as e:
-                headers = baos.toString()
-        else:
-            headers = baos.toString()
-        return headers
-
-    def setBoundary(self, boundary: typing.List[int]) -> None:
-
-        if len(boundary) != self.__boundaryLength - len(self._BOUNDARY_PREFIX):
-            raise IllegalBoundaryException(
-                "The length of a boundary token cannot be changed"
-            )
-        boundary.copy_to(self.__boundary, self._BOUNDARY_PREFIX.length, len(boundary))
-        self.__computeBoundaryTable()
-
-    def readBoundary(self) -> bool:
-
-        marker = bytearray(2)
-        next_chunk = False
-        self.__head += self.__boundaryLength
-        try:
-            marker[0] = self.readByte()
-            if marker[0] == self.LF:
-                return True
-            marker[1] = self.readByte()
-            if self.arrayequals(marker, self._STREAM_TERMINATOR, 2):
-                next_chunk = False
-            elif self.arrayequals(marker, self._FIELD_SEPARATOR, 2):
-                next_chunk = True
-            else:
-                raise MalformedStreamException(
-                    "Unexpected characters follow a boundary"
-                )
-        except FileUploadIOException as e:
-            raise e
-        except IOException as e:
-            raise MalformedStreamException("Stream ended unexpectedly")
-        return next_chunk
-
-    def readByte(self) -> int:
-
-        if self.__head == self.__tail:
-            self.__head = 0
-            self.__tail = self.__input.readinto(
-                self.__buffer, self.__head, self.__bufSize
-            )
-            if self.__tail == -1:
-                raise IOError("No more data is available")
-            if self.__notifier is not None:
-                self.__notifier.noteBytesRead(self.__tail)
-        return self.__buffer[self.__head]
-
-    def setHeaderEncoding(self, encoding: str) -> None:
-
-        self.__headerEncoding = encoding
-
-    def getHeaderEncoding(self) -> str:
-
-        return self.__headerEncoding
-
-    @staticmethod
-    def MultipartStream2(
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
-        boundary: typing.List[int],
-        pNotifier: ProgressNotifier,
-    ) -> MultipartStream:
-
-        pass  # LLM could not translate method body
-
-    def __init__(
-        self,
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
-        boundary: typing.List[int],
-        bufSize: int,
-        pNotifier: ProgressNotifier,
-    ) -> None:
-
-        if boundary is None:
-            raise ValueError("boundary may not be None")
-        self.boundaryLength = len(boundary) + len(BOUNDARY_PREFIX)
-        if bufSize < self.boundaryLength + 1:
-            raise ValueError(
-                "The buffer size specified for the MultipartStream is too small"
-            )
-        self.input = input
-        self.bufSize = max(bufSize, self.boundaryLength * 2)
-        self.buffer = bytearray(self.bufSize)
-        self.notifier = pNotifier
-        self.boundary = bytearray(self.boundaryLength)
-        self.boundaryTable = [0] * (self.boundaryLength + 1)
-        self.keepRegion = len(self.boundary)
-        self.boundary[: len(BOUNDARY_PREFIX)] = BOUNDARY_PREFIX
-        self.boundary[len(BOUNDARY_PREFIX) :] = boundary
-        self.__computeBoundaryTable()
-        self.head = 0
-        self.tail = 0
-
-    def __computeBoundaryTable(self) -> None:
-
-        position = 2
-        candidate = 0
-        self.__boundaryTable[0] = -1
-        self.__boundaryTable[1] = 0
-        while position <= self.__boundaryLength:
-            if self.__boundary[position - 1] == self.__boundary[candidate]:
-                self.__boundaryTable[position] = candidate + 1
-                candidate += 1
-                position += 1
-            elif candidate > 0:
-                candidate = self.__boundaryTable[candidate]
-            else:
-                self.__boundaryTable[position] = 0
-                position += 1
-
-    def newInputStream(self) -> ItemInputStream:
-
-        return ItemInputStream()
+        self.__listener = pListener
+        self.__contentLength = pContentLength
 
     # Class Methods End
 
 
-class ItemInputStream(Closeable, InputStream):
+class ItemInputStream(Closeable, io.BytesIO):
 
     # Class Fields Begin
     __total: int = None
@@ -332,21 +140,19 @@ class ItemInputStream(Closeable, InputStream):
 
         if self.__pos != -1:
             return 0
-        self.__total += self.__tail - self.__head - self.__pad
-        self.__buffer = (
-            self.__buffer[: self.__tail - self.__pad] + self.__buffer[self.__tail :]
-        )
-        self.__head = 0
-        self.__tail = self.__pad
+        self.__total += self.tail - self.head - self.__pad
+        self.buffer = self.buffer[: self.__pad]
+        self.head = 0
+        self.tail = self.__pad
         while True:
-            bytes_read = self.__input.read(
-                self.__buffer, self.__tail, self.__bufSize - self.__tail
+            bytes_read = self.input.read(
+                self.buffer, self.tail, self.bufSize - self.tail
             )
             if bytes_read == -1:
                 raise MalformedStreamException("Stream ended unexpectedly")
-            if self.__notifier:
-                self.__notifier.noteBytesRead(bytes_read)
-            self.__tail += bytes_read
+            if self.notifier:
+                self.notifier.noteBytesRead(bytes_read)
+            self.tail += bytes_read
             self.__findSeparator()
             av = self.available()
             if av > 0 or self.__pos != -1:
@@ -354,13 +160,12 @@ class ItemInputStream(Closeable, InputStream):
 
     def __findSeparator(self) -> None:
 
-        def _findSeparator(self) -> None:
-            self.__pos = self._findSeparator()
-            if self.__pos == -1:
-                if self.tail - self.head > self.keepRegion:
-                    self.__pad = self.keepRegion
-                else:
-                    self.__pad = self.tail - self.head
+        self.__pos = self._findSeparator()
+        if self.__pos == -1:
+            if self.tail - self.head > self.__keepRegion:
+                self.__pad = self.__keepRegion
+            else:
+                self.__pad = self.tail - self.head
 
     def __init__(self) -> None:
 
@@ -368,11 +173,232 @@ class ItemInputStream(Closeable, InputStream):
 
     # Class Methods End
 
-
-class IllegalBoundaryException(IOException):
+class MultipartStream:
 
     # Class Fields Begin
-    MAX_VALUE: int = 100
+    CR: int = ""  # LLM could not translate field
+    LF: int = 0x0A
+    DASH: int = ""  # LLM could not translate field
+    HEADER_PART_SIZE_MAX: int = 10240
+    _DEFAULT_BUFSIZE: int = ""  # LLM could not translate field
+    _HEADER_SEPARATOR: bytes = b"\r\n\r\n"
+    _FIELD_SEPARATOR: typing.List[int] = ""  # LLM could not translate field
+    _STREAM_TERMINATOR: bytes = b"--\n"
+    _BOUNDARY_PREFIX: bytes = b"\r\n--"
+    __input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None
+    __boundaryLength: int = None
+    __keepRegion: int = None
+    __boundary: typing.List[int] = None
+    __boundaryTable: typing.List[int] = None
+    __bufSize: int = None
+    __buffer: typing.List[int] = None
+    __head: int = None
+    __tail: int = None
+    __headerEncoding: str = None
+    __notifier: ProgressNotifier = None
+    # Class Fields End
+
+    # Class Methods Begin
+    @staticmethod
+    def MultipartStream3(
+        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        boundary: typing.List[int],
+    ) -> "MultipartStream":
+
+        pass  # LLM could not translate method body
+
+    @staticmethod
+    def MultipartStream1(
+        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        boundary: typing.List[int],
+        bufSize: int,
+    ) -> "MultipartStream":
+
+        pass  # LLM could not translate method body
+
+    @staticmethod
+    def MultipartStream0() -> "MultipartStream":
+
+        pass  # LLM could not translate method body
+
+    def _findSeparator(self) -> int:
+
+        buffer_pos = self.__head
+        table_pos = 0
+        while buffer_pos < self.__tail:
+            while (
+                table_pos >= 0
+                and self.__buffer[buffer_pos] != self.__boundary[table_pos]
+            ):
+                table_pos = self.__boundaryTable[table_pos]
+            buffer_pos += 1
+            table_pos += 1
+            if table_pos == self.__boundaryLength:
+                return buffer_pos - self.__boundaryLength
+        return -1
+
+    def _findByte(self, value: int, pos: int) -> int:
+
+        for i in range(pos, self.__tail):
+            if self.__buffer[i] == value:
+                return i
+        return -1
+
+    @staticmethod
+    def arrayequals(a: typing.List[int], b: typing.List[int], count: int) -> bool:
+
+        pass  # LLM could not translate method body
+
+    def readHeaders(self) -> str:
+
+        i = 0
+        b = 0
+        baos = io.BytesIO()
+        size = 0
+        while i < self._HEADER_SEPARATOR:
+            try:
+                b = self.readByte()
+            except FileUploadIOException as e:
+                raise e
+            except IOError as e:
+                raise MalformedStreamException("Stream ended unexpectedly")
+            if size > self.HEADER_PART_SIZE_MAX:
+                raise MalformedStreamException(
+                    "Header section has more than {} bytes (maybe it is not properly"
+                    + " terminated)".format(self.HEADER_PART_SIZE_MAX)
+                )
+            if b == self._HEADER_SEPARATOR[i]:
+                i += 1
+            else:
+                i = 0
+            baos.write(b)
+        headers = None
+        if self.__headerEncoding is not None:
+            try:
+                headers = baos.getvalue().decode(self.__headerEncoding)
+            except UnicodeError:
+                headers = baos.getvalue()
+        else:
+            headers = baos.getvalue()
+        return headers
+
+    def setBoundary(self, boundary: typing.List[int]) -> None:
+
+        if len(boundary) != self.__boundaryLength - len(self._BOUNDARY_PREFIX):
+            raise IllegalBoundaryException(
+                "The length of a boundary token cannot be changed"
+            )
+        boundary.copy_to(self.__boundary, self._BOUNDARY_PREFIX.length, len(boundary))
+        self.__computeBoundaryTable()
+
+    def readBoundary(self) -> bool:
+
+        marker = bytearray(2)
+        next_chunk = False
+        self.__head += self.__boundaryLength
+        try:
+            marker[0] = self.readByte()
+            if marker[0] == self.LF:
+                return True
+            marker[1] = self.readByte()
+            if self.arrayequals(marker, self._STREAM_TERMINATOR, 2):
+                next_chunk = False
+            elif self.arrayequals(marker, self._FIELD_SEPARATOR, 2):
+                next_chunk = True
+            else:
+                raise MalformedStreamException(
+                    "Unexpected characters follow a boundary"
+                )
+        except FileUploadIOException as e:
+            raise e
+        except IOException as e:
+            raise MalformedStreamException("Stream ended unexpectedly")
+        return next_chunk
+
+    def readByte(self) -> int:
+
+        if self.__head == self.__tail:
+            self.__head = 0
+            self.__tail = self.__input.read(self.__buffer, self.__head, self.__bufSize)
+            if self.__tail == -1:
+                raise IOError("No more data is available")
+            if self.__notifier is not None:
+                self.__notifier.noteBytesRead(self.__tail)
+        return self.__buffer[self.__head]
+
+    def setHeaderEncoding(self, encoding: str) -> None:
+
+        self.__headerEncoding = encoding
+
+    def getHeaderEncoding(self) -> str:
+
+        return self.__headerEncoding
+
+    @staticmethod
+    def MultipartStream2(
+        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        boundary: typing.List[int],
+        pNotifier: ProgressNotifier,
+    ) -> "MultipartStream":
+
+        pass  # LLM could not translate method body
+
+    def __init__(
+        self,
+        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        boundary: typing.List[int],
+        bufSize: int,
+        pNotifier: ProgressNotifier,
+    ) -> None:
+
+        if boundary is None:
+            raise ValueError("boundary may not be None")
+        self.boundaryLength = len(boundary) + len(self._BOUNDARY_PREFIX)
+        if bufSize < self.boundaryLength + 1:
+            raise ValueError(
+                "The buffer size specified for the MultipartStream is too small"
+            )
+        self.input = input
+        self.bufSize = max(bufSize, self.boundaryLength * 2)
+        self.buffer = bytearray(self.bufSize)
+        self.notifier = pNotifier
+        self.boundary = bytearray(self.boundaryLength)
+        self.boundaryTable = [0] * (self.boundaryLength + 1)
+        self.keepRegion = len(self.boundary)
+        self.boundary[: len(self._BOUNDARY_PREFIX)] = self._BOUNDARY_PREFIX
+        self.boundary[len(self._BOUNDARY_PREFIX) :] = boundary
+        self.__computeBoundaryTable()
+        self.head = 0
+        self.tail = 0
+
+    def __computeBoundaryTable(self) -> None:
+
+        position = 2
+        candidate = 0
+        self.__boundaryTable[0] = -1
+        self.__boundaryTable[1] = 0
+        while position <= self.__boundaryLength:
+            if self.__boundary[position - 1] == self.__boundary[candidate]:
+                self.__boundaryTable[position] = candidate + 1
+                candidate += 1
+                position += 1
+            elif candidate > 0:
+                candidate = self.__boundaryTable[candidate]
+            else:
+                self.__boundaryTable[position] = 0
+                position += 1
+
+    def newInputStream(self) -> ItemInputStream:
+
+        return ItemInputStream()
+
+    # Class Methods End
+
+
+class IllegalBoundaryException(OSError):
+
+    # Class Fields Begin
+    __serialVersionUID: int = -161533165102632918
     # Class Fields End
 
     # Class Methods Begin
@@ -383,7 +409,7 @@ class IllegalBoundaryException(IOException):
     # Class Methods End
 
 
-class MalformedStreamException(IOException):
+class MalformedStreamException(OSError):
 
     # Class Fields Begin
     __serialVersionUID: int = 6466926458059796677
@@ -396,35 +422,3 @@ class MalformedStreamException(IOException):
 
     # Class Methods End
 
-
-class ProgressNotifier:
-
-    # Class Fields Begin
-    __listener: ProgressListener = None
-    __contentLength: int = None
-    __bytesRead: int = None
-    __items: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def __notifyListener(self) -> None:
-
-        if self.__listener is not None:
-            self.__listener.update(self.__bytesRead, self.__contentLength, self.__items)
-
-    def noteItem(self) -> None:
-
-        self.__items += 1
-        self.__notifyListener()
-
-    def noteBytesRead(self, pBytes: int) -> None:
-
-        self.__bytesRead += pBytes
-        self.__notifyListener()
-
-    def __init__(self, pListener: ProgressListener, pContentLength: int) -> None:
-
-        self.__listener = pListener
-        self.__contentLength = pContentLength
-
-    # Class Methods End

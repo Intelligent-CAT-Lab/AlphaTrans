@@ -27,9 +27,9 @@ class FileItemIterator(ABC):
 
         try:
             return self.file.read(1) != b""
-        except FileUploadException:
-            raise
-        except IOException:
-            raise
+        except FileUploadException as e:
+            raise e
+        except IOError as e:
+            raise e
 
     # Class Methods End
