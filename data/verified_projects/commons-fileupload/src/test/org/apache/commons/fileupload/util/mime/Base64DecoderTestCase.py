@@ -1,7 +1,7 @@
 # Imports Begin
 import unittest
 from io import BytesIO
-from fileupload.util.mime import Base64Decoder
+from src.main.org.apache.commons.fileupload.util.mime.Base64Decoder import Base64Decoder
 
 # Imports End
 
@@ -108,7 +108,7 @@ class Base64DecoderTestCase(unittest.TestCase):
         encoded_data = encoded.encode(Base64DecoderTestCase.__US_ASCII_CHARSET)
         try:
             Base64Decoder.decode(encoded_data, out)
-            unittest.fail("Expected IO-related Exception")
+            unittest.TestCase().fail("Expected IO-related Exception")
         except (IOError, OSError) as e:
             em = str(e)
             unittest.TestCase().assertIn(messageText, em, f"Expected to find {messageText} in '{em}'") 

@@ -8,7 +8,7 @@ from abc import ABC
 # Imports End
 
 
-class ItemSkippedException(IOException):
+class ItemSkippedException(OSError):
 
     # Class Fields Begin
     __serialVersionUID: int = -7280778431581963740
@@ -26,7 +26,7 @@ class FileItemStream(ABC):
     # Class Methods Begin
     def isFormField(self) -> bool:
 
-        return True
+        return self.isFormField()
 
     def getFieldName(self) -> str:
 

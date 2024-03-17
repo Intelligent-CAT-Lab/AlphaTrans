@@ -3,8 +3,7 @@ import unittest
 import typing
 from typing import *
 #import io
-# Not used: import pathlib
-from fileupload import FileUploadBase
+from src.main.org.apache.commons.fileupload.FileUploadBase import FileUploadBase
 from io import BufferedReader
 from io import BytesIO
 import sys

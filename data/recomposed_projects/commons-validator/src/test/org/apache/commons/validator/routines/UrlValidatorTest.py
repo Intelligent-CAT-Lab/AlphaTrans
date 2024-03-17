@@ -1,0 +1,545 @@
+# Imports Begin
+from src.main.org.apache.commons.validator.routines.UrlValidator import *
+from src.main.org.apache.commons.validator.routines.RegexValidator import *
+from src.main.org.apache.commons.validator.routines.DomainValidator import *
+from src.main.org.apache.commons.validator.ResultPair import *
+import unittest
+import os
+import typing
+from typing import *
+
+# Imports End
+
+
+class UrlValidatorTest(unittest.TestCase):
+
+    # Class Fields Begin
+    __printStatus: bool = ""  # LLM could not translate field
+    __printIndex: bool = False
+    __schemes: typing.List[str] = ""  # LLM could not translate field
+    # Class Fields End
+
+    # Class Methods Begin
+    def testFragments(self) -> None:
+
+        schemes = ["http", "https"]
+        url_validator = UrlValidator.UrlValidator3(schemes, UrlValidator.NO_FRAGMENTS)
+        assert False == url_validator.isValid("http://apache.org/a/b/c#frag")
+        url_validator = UrlValidator.UrlValidator5(schemes)
+        assert True == url_validator.isValid("http://apache.org/a/b/c#frag")
+
+    def testValidator283(self) -> None:
+
+        pass  # LLM could not translate method body
+
+    def testValidator467(self) -> None:
+
+        validator = UrlValidator.UrlValidator4(UrlValidator.ALLOW_2_SLASHES)
+        self.assertTrue(validator.isValid("https://example.com/some_path/path/"))
+        self.assertTrue(validator.isValid("https://example.com//somepath/path/"))
+        self.assertTrue(validator.isValid("https://example.com//some_path/path/"))
+        self.assertTrue(validator.isValid("http://example.com//_test"))  # VALIDATOR-429
+
+    def testValidator420(self) -> None:
+
+        validator = UrlValidator.UrlValidator6()
+        self.assertFalse(
+            validator.isValid("http://example.com/serach?address=Main Avenue")
+        )
+        self.assertTrue(
+            validator.isValid("http://example.com/serach?address=Main%20Avenue")
+        )
+        self.assertTrue(
+            validator.isValid("http://example.com/serach?address=Main+Avenue")
+        )
+
+    def testValidator380(self) -> None:
+
+        pass  # LLM could not translate method body
+
+    def testValidator382(self) -> None:
+
+        pass  # LLM could not translate method body
+
+    def testValidator353(self) -> None:
+
+        pass  # LLM could not translate method body
+
+    def testValidator375(self) -> None:
+
+        validator = UrlValidator.UrlValidator6()
+        url = "http://[FEDC:BA98:7654:3210:FEDC:BA98:7654:3210]:80/index.html"
+        self.assertTrue(
+            "IPv6 address URL should validate: " + url, validator.isValid(url)
+        )
+        url = "http://[::1]:80/index.html"
+        self.assertTrue(
+            "IPv6 address URL should validate: " + url, validator.isValid(url)
+        )
+        url = "http://FEDC:BA98:7654:3210:FEDC:BA98:7654:3210:80/index.html"
+        self.assertFalse(
+            "IPv6 address without [] should not validate: " + url,
+            validator.isValid(url),
+        )
+
+    def testValidator363(self) -> None:
+
+        urlValidator = UrlValidator.UrlValidator6()
+        self.assertTrue(urlValidator.isValid("http://www.example.org/a/b/hello..world"))
+        self.assertTrue(urlValidator.isValid("http://www.example.org/a/hello..world"))
+        self.assertTrue(urlValidator.isValid("http://www.example.org/hello.world/"))
+        self.assertTrue(urlValidator.isValid("http://www.example.org/hello..world/"))
+        self.assertTrue(urlValidator.isValid("http://www.example.org/hello.world"))
+        self.assertTrue(urlValidator.isValid("http://www.example.org/hello..world"))
+        self.assertTrue(urlValidator.isValid("http://www.example.org/..world"))
+        self.assertTrue(urlValidator.isValid("http://www.example.org/.../world"))
+        self.assertFalse(urlValidator.isValid("http://www.example.org/../world"))
+        self.assertFalse(urlValidator.isValid("http://www.example.org/.."))
+        self.assertFalse(urlValidator.isValid("http://www.example.org/../"))
+        self.assertFalse(urlValidator.isValid("http://www.example.org/./.."))
+        self.assertFalse(urlValidator.isValid("http://www.example.org/././.."))
+        self.assertTrue(urlValidator.isValid("http://www.example.org/..."))
+        self.assertTrue(urlValidator.isValid("http://www.example.org/.../"))
+        self.assertTrue(urlValidator.isValid("http://www.example.org/.../.."))
+
+    def testValidator361(self) -> None:
+
+        validator = UrlValidator.UrlValidator6()
+        self.assertTrue(validator.isValid("http://hello.tokyo/"))
+
+    def testValidator290(self) -> None:
+
+        validator = UrlValidator.UrlValidator6()
+        self.assertTrue(validator.isValid("http://xn--h1acbxfam.idn.icann.org/"))
+        self.assertTrue(validator.isValid("http://test.xn--lgbbat1ad8j"))  # Algeria
+        self.assertTrue(validator.isValid("http://test.xn--fiqs8s"))  # China
+        self.assertTrue(validator.isValid("http://test.xn--fiqz9s"))  # China
+        self.assertTrue(validator.isValid("http://test.xn--wgbh1c"))  # Egypt
+        self.assertTrue(validator.isValid("http://test.xn--j6w193g"))  # Hong Kong
+        self.assertTrue(validator.isValid("http://test.xn--h2brj9c"))  # India
+        self.assertTrue(validator.isValid("http://test.xn--mgbbh1a71e"))  # India
+        self.assertTrue(validator.isValid("http://test.xn--fpcrj9c3d"))  # India
+        self.assertTrue(validator.isValid("http://test.xn--gecrj9c"))  # India
+        self.assertTrue(validator.isValid("http://test.xn--s9brj9c"))  # India
+        self.assertTrue(validator.isValid("http://test.xn--xkc2dl3a5ee0h"))  # India
+        self.assertTrue(validator.isValid("http://test.xn--45brj9c"))  # India
+        self.assertTrue(validator.isValid("http://test.xn--mgba3a4f16a"))  # Iran
+        self.assertTrue(validator.isValid("http://test.xn--mgbayh7gpa"))  # Jordan
+        self.assertTrue(validator.isValid("http://test.xn--mgbc0a9azcg"))  # Morocco
+        self.assertTrue(
+            validator.isValid("http://test.xn--ygbi2ammx")
+        )  # Palestinian Territory
+        self.assertTrue(validator.isValid("http://test.xn--wgbl6a"))  # Qatar
+        self.assertTrue(validator.isValid("http://test.xn--p1ai"))  # Russia
+        self.assertTrue(
+            validator.isValid("http://test.xn--mgberp4a5d4ar")
+        )  # Saudi Arabia
+        self.assertTrue(validator.isValid("http://test.xn--90a3ac"))  # Serbia
+        self.assertTrue(validator.isValid("http://test.xn--yfro4i67o"))  # Singapore
+        self.assertTrue(
+            validator.isValid("http://test.xn--clchc0ea0b2g2a9gcd")
+        )  # Singapore
+        self.assertTrue(validator.isValid("http://test.xn--3e0b707e"))  # South Korea
+        self.assertTrue(validator.isValid("http://test.xn--fzc2c9e2c"))  # Sri Lanka
+        self.assertTrue(validator.isValid("http://test.xn--xkc2al3hye2a"))  # Sri Lanka
+        self.assertTrue(validator.isValid("http://test.xn--ogbpf8fl"))
+
+    def testValidateUrl(self) -> None:
+
+        assert True
+
+    def testValidator473_3(self) -> None:
+
+        items = []
+        UrlValidator(
+            schemes=[],
+            authorityValidator=None,
+            options=UrlValidator.ALLOW_LOCAL_URLS,
+            domainValidator=DomainValidator.getInstance2(False, items),
+        )
+
+    def testValidator473_2(self) -> None:
+
+        items = []
+        UrlValidator(
+            schemes=[],
+            authorityValidator=None,
+            options=0,
+            domainValidator=DomainValidator.getInstance2(allowLocal=True, items=items),
+        )
+
+    def testValidator473_1(self) -> None:
+
+        with self.assertRaises(ValueError):
+            UrlValidator(
+                schemes=None, authorityValidator=None, options=0, domainValidator=None
+            )
+
+    def testValidator452(self) -> None:
+
+        urlValidator = UrlValidator.UrlValidator6()
+        self.assertTrue(
+            urlValidator.isValid("http://[::FFFF:129.144.52.38]:80/index.html")
+        )
+
+    def testValidator464(self) -> None:
+
+        schemes = ["file"]
+        urlValidator = UrlValidator.UrlValidator5(schemes)
+        fileNAK = "file://bad ^ domain.com/label/test"
+        self.assertFalse(fileNAK, urlValidator.isValid(fileNAK))
+
+    def testValidator411(self) -> None:
+
+        pass  # LLM could not translate method body
+
+    def testValidator342(self) -> None:
+
+        urlValidator = UrlValidator.UrlValidator6()
+        self.assertTrue(urlValidator.isValid("http://example.rocks/"))
+        self.assertTrue(urlValidator.isValid("http://example.rocks"))
+
+    def testValidator339IDN(self) -> None:
+
+        urlValidator = UrlValidator.UrlValidator6()
+        self.assertTrue(
+            urlValidator.isValid("http://президент.рф/WORLD/?hpt=sitenav")
+        )  # without
+        self.assertTrue(
+            urlValidator.isValid("http://президент.рф./WORLD/?hpt=sitenav")
+        )  # with
+        self.assertFalse(urlValidator.isValid("http://президент.рф..../"))  # very dotty
+        self.assertFalse(
+            urlValidator.isValid("http://президент.рф.../")
+        )  # triply dotty
+        self.assertFalse(urlValidator.isValid("http://президент.рф../"))  # doubly dotty
+
+    def testValidator339(self) -> None:
+
+        urlValidator = UrlValidator.UrlValidator6()
+        self.assertTrue(
+            urlValidator.isValid("http://www.cnn.com/WORLD/?hpt=sitenav")
+        )  # without
+        self.assertTrue(
+            urlValidator.isValid("http://www.cnn.com./WORLD/?hpt=sitenav")
+        )  # with
+        self.assertFalse(urlValidator.isValid("http://www.cnn.com../"))  # doubly dotty
+        self.assertFalse(urlValidator.isValid("http://www.cnn.invalid/"))
+        self.assertFalse(
+            urlValidator.isValid(
+                "http://www.cnn.invalid./"
+            )  # check . does not affect invalid domains
+        )
+
+    def testValidator309(self) -> None:
+
+        pass  # LLM could not translate method body
+
+    def testValidator391FAILS(self) -> None:
+
+        schemes = ["file"]
+        urlValidator = UrlValidator.UrlValidator5(schemes)
+        self.assertTrue(urlValidator.isValid("file:/C:/path/to/dir/"))
+
+    def testValidator391OK(self) -> None:
+
+        schemes = ["file"]
+        urlValidator = UrlValidator.UrlValidator5(schemes)
+        self.assertTrue(urlValidator.isValid("file:///C:/path/to/dir/"))
+
+    def testValidator276(self) -> None:
+
+        validator = UrlValidator.UrlValidator6()
+        assert True(
+            "http://apache.org/ should be allowed by default",
+            validator.isValid("http://www.apache.org/test/index.html"),
+        )
+        assert False(
+            "file:///c:/ shouldn't be allowed by default",
+            validator.isValid("file:///C:/some.file"),
+        )
+        assert False(
+            "file:///c:\\ shouldn't be allowed by default",
+            validator.isValid("file:///C:\\some.file"),
+        )
+        assert False(
+            "file:///etc/ shouldn't be allowed by default",
+            validator.isValid("file:///etc/hosts"),
+        )
+        assert False(
+            "file://localhost/etc/ shouldn't be allowed by default",
+            validator.isValid("file://localhost/etc/hosts"),
+        )
+        assert False(
+            "file://localhost/c:/ shouldn't be allowed by default",
+            validator.isValid("file://localhost/c:/some.file"),
+        )
+        validator = UrlValidator.UrlValidator3(
+            ["http", "file"], UrlValidator.ALLOW_LOCAL_URLS
+        )
+        assert True(
+            "http://apache.org/ should be allowed by default",
+            validator.isValid("http://www.apache.org/test/index.html"),
+        )
+        assert True(
+            "file:///c:/ should now be allowed",
+            validator.isValid("file:///C:/some.file"),
+        )
+        assert False(
+            "file:///c:\\ should not be allowed",
+            validator.isValid("file:///C:\\some.file"),
+        )
+        assert True(
+            "file:///etc/ should now be allowed", validator.isValid("file:///etc/hosts")
+        )
+        assert True(
+            "file://localhost/etc/ should now be allowed",
+            validator.isValid("file://localhost/etc/hosts"),
+        )
+        assert True(
+            "file://localhost/c:/ should now be allowed",
+            validator.isValid("file://localhost/c:/some.file"),
+        )
+        assert False(
+            "file://c:/ shouldn't ever be allowed, needs file:///c:/",
+            validator.isValid("file://C:/some.file"),
+        )
+        assert False(
+            "file://c:\\ shouldn't ever be allowed, needs file:///c:/",
+            validator.isValid("file://C:\\some.file"),
+        )
+
+    def testValidator288(self) -> None:
+
+        validator = UrlValidator.UrlValidator4(UrlValidator.ALLOW_LOCAL_URLS)
+        self.assertTrue(
+            "hostname should validate", validator.isValid("http://hostname")
+        )
+        self.assertTrue(
+            "hostname with path should validate",
+            validator.isValid("http://hostname/test/index.html"),
+        )
+        self.assertTrue(
+            "localhost URL should validate",
+            validator.isValid("http://localhost/test/index.html"),
+        )
+        self.assertFalse(
+            "first.my-testing should not validate",
+            validator.isValid("http://first.my-testing/test/index.html"),
+        )
+        self.assertFalse(
+            "broke.hostname should not validate",
+            validator.isValid("http://broke.hostname/test/index.html"),
+        )
+        self.assertTrue(
+            "www.apache.org should still validate",
+            validator.isValid("http://www.apache.org/test/index.html"),
+        )
+        validator = UrlValidator.UrlValidator4(0)
+        self.assertFalse(
+            "hostname should no longer validate", validator.isValid("http://hostname")
+        )
+        self.assertFalse(
+            "localhost URL should no longer validate",
+            validator.isValid("http://localhost/test/index.html"),
+        )
+        self.assertTrue(
+            "www.apache.org should still validate",
+            validator.isValid("http://www.apache.org/test/index.html"),
+        )
+
+    def testValidator248(self) -> None:
+
+        regex = RegexValidator.RegexValidator1(["localhost", ".*\\.my-testing"])
+        validator = UrlValidator.UrlValidator2(regex, 0)
+        self.assertTrue(
+            "localhost URL should validate",
+            validator.isValid("http://localhost/test/index.html"),
+        )
+        self.assertTrue(
+            "first.my-testing should validate",
+            validator.isValid("http://first.my-testing/test/index.html"),
+        )
+        self.assertTrue(
+            "sup3r.my-testing should validate",
+            validator.isValid("http://sup3r.my-testing/test/index.html"),
+        )
+        self.assertFalse(
+            "broke.my-test should not validate",
+            validator.isValid("http://broke.my-test/test/index.html"),
+        )
+        self.assertTrue(
+            "www.apache.org should still validate",
+            validator.isValid("http://www.apache.org/test/index.html"),
+        )
+        validator = UrlValidator.UrlValidator4(UrlValidator.ALLOW_LOCAL_URLS)
+        self.assertTrue(
+            "localhost URL should validate",
+            validator.isValid("http://localhost/test/index.html"),
+        )
+        self.assertTrue(
+            "machinename URL should validate",
+            validator.isValid("http://machinename/test/index.html"),
+        )
+        self.assertTrue(
+            "www.apache.org should still validate",
+            validator.isValid("http://www.apache.org/test/index.html"),
+        )
+
+    def testValidator235(self) -> None:
+
+        version = System.getProperty("java.version")
+        if version.compareTo("1.6") < 0:
+            print("Cannot run Unicode IDN tests")
+            return None  # Cannot run the test
+        validator = UrlValidator.UrlValidator6()
+        self.assertTrue(
+            "xn--d1abbgf6aiiy.xn--p1ai should validate",
+            validator.isValid("http://xn--d1abbgf6aiiy.xn--p1ai"),
+        )
+        self.assertTrue(
+            "президент.рф should validate", validator.isValid("http://президент.рф")
+        )
+        self.assertTrue(
+            "www.b\u00fccher.ch should validate",
+            validator.isValid("http://www.b\u00fccher.ch"),
+        )
+        self.assertFalse(
+            "www.\uFFFD.ch FFFD should fail", validator.isValid("http://www.\uFFFD.ch")
+        )
+        self.assertTrue(
+            "www.b\u00fccher.ch should validate",
+            validator.isValid("ftp://www.b\u00fccher.ch"),
+        )
+        self.assertFalse(
+            "www.\uFFFD.ch FFFD should fail", validator.isValid("ftp://www.\uFFFD.ch")
+        )
+
+    def testValidator218(self) -> None:
+
+        validator = UrlValidator.UrlValidator4(UrlValidator.ALLOW_2_SLASHES)
+        self.assertTrue(
+            "parentheses should be valid in URLs",
+            validator.isValid("http://somewhere.com/pathxyz/file(1).html"),
+        )
+
+    def testValidator204(self) -> None:
+
+        schemes = ["http", "https"]
+        urlValidator = UrlValidator.UrlValidator5(schemes)
+        self.assertTrue(
+            urlValidator.isValid(
+                "http://tech.yahoo.com/rc/desktops/102;_ylt=Ao8yevQHlZ4On0O3ZJGXLEQFLZA5"
+            )
+        )
+
+    def testValidator202(self) -> None:
+
+        pass  # LLM could not translate method body
+
+    def testIsValidScheme(self) -> None:
+
+        if self.__printStatus:
+            print("\n testIsValidScheme() ", end="")
+        urlVal = UrlValidator.UrlValidator3(self.__schemes, 0)
+        for sIndex in range(len(testScheme)):
+            testPair = testScheme[sIndex]
+            result = urlVal.isValidScheme(testPair.item)
+            assert result == testPair.valid
+            if self.__printStatus:
+                if result == testPair.valid:
+                    print(".", end="")
+                else:
+                    print("X", end="")
+        if self.__printStatus:
+            print()
+
+    def testIsValid0(self) -> None:
+
+        self.testIsValid1(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES)
+        self.setUp()
+        options = (
+            UrlValidator.ALLOW_2_SLASHES
+            + UrlValidator.ALLOW_ALL_SCHEMES
+            + UrlValidator.NO_FRAGMENTS
+        )
+        self.testIsValid1(testUrlPartsOptions, options)
+
+    def setUp(self) -> None:
+
+        for index in range(len(testPartsIndex) - 1):
+            testPartsIndex[index] = 0
+
+    @staticmethod
+    def main(args: typing.List[str]) -> None:
+
+        pass  # LLM could not translate method body
+
+    @staticmethod
+    def incrementTestPartsIndex(
+        testPartsIndex: typing.List[int], testParts: typing.List[typing.Any]
+    ) -> bool:
+
+        carry = True  # add 1 to lowest order part.
+        maxIndex = True
+        for testPartsIndexIndex in range(len(testPartsIndex) - 1, -1, -1):
+            index = testPartsIndex[testPartsIndexIndex]
+            part = testParts[testPartsIndexIndex]
+            maxIndex &= index == (len(part) - 1)
+            if carry:
+                if index < len(part) - 1:
+                    index += 1
+                    testPartsIndex[testPartsIndexIndex] = index
+                    carry = False
+                else:
+                    testPartsIndex[testPartsIndexIndex] = 0
+                    carry = True
+        return not maxIndex
+
+    def testIsValid1(self, testObjects: typing.List[typing.Any], options: int) -> None:
+
+        urlVal = UrlValidator.UrlValidator1(None, None, options)
+        self.assertTrue(urlVal.isValid("http://www.google.com"))
+        self.assertTrue(urlVal.isValid("http://www.google.com/"))
+        statusPerLine = 60
+        printed = 0
+        if self.__printIndex:
+            statusPerLine = 6
+        while incrementTestPartsIndex(testPartsIndex, testObjects):
+            testBuffer = StringBuilder()
+            expected = True
+            for testPartsIndexIndex in range(len(testPartsIndex)):
+                index = testPartsIndex[testPartsIndexIndex]
+                part = testObjects[testPartsIndexIndex]
+                testBuffer.append(part[index].item)
+                expected &= part[index].valid
+            url = testBuffer.toString()
+            result = urlVal.isValid(url)
+            self.assertEqual(url, expected, result)
+            if self.__printStatus:
+                if self.__printIndex:
+                    print(self.__testPartsIndextoString())
+                else:
+                    if result == expected:
+                        print(".")
+                    else:
+                        print("X")
+                printed += 1
+                if printed == statusPerLine:
+                    print()
+                    printed = 0
+        if self.__printStatus:
+            print()
+
+    def __testPartsIndextoString(self) -> str:
+
+        carry_msg = "{"
+        for test_parts_index_index in range(len(self.test_parts_index)):
+            carry_msg += str(self.test_parts_index[test_parts_index_index])
+            if test_parts_index_index < len(self.test_parts_index) - 1:
+                carry_msg += ","
+            else:
+                carry_msg += "}"
+        return carry_msg
+
+    # Class Methods End

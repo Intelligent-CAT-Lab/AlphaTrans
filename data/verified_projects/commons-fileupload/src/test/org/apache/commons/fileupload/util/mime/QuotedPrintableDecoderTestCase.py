@@ -1,7 +1,7 @@
 # Imports Begin
 import unittest
 from io import BytesIO
-from fileupload.util.mime import QuotedPrintableDecoder
+from src.main.org.apache.commons.fileupload.util.mime.QuotedPrintableDecoder import QuotedPrintableDecoder
 
 # Imports End
 
@@ -13,13 +13,13 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def emptyDecode(self) -> None:
+    def test_emptyDecode(self) -> None:
         try:
             self.__assertEncoded("", "")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def plainDecode(self) -> None:
+    def test_plainDecode(self) -> None:
         try:
             self.__assertEncoded(
                 "The quick brown fox jumps over the lazy dog.",
@@ -28,13 +28,13 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def basicEncodeDecode(self) -> None:
+    def test_basicEncodeDecode(self) -> None:
         try:
             self.__assertEncoded("= Hello there =\r\n", "=3D Hello there =3D=0D=0A")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def invalidQuotedPrintableEncoding(self) -> None:
+    def test_invalidQuotedPrintableEncoding(self) -> None:
         try:
             self.__assertIOException(
                 "truncated escape sequence",
@@ -43,24 +43,24 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def unsafeDecode(self) -> None:
+    def test_unsafeDecode(self) -> None:
         try:
             self.__assertEncoded("=\r\n", "=3D=0D=0A")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def unsafeDecodeLowerCase(self) -> None:
+    def test_unsafeDecodeLowerCase(self) -> None:
         try:
             self.__assertEncoded("=\r\n", "=3d=0d=0a")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def invalidCharDecode(self) -> None:
+    def test_invalidCharDecode(self) -> None:
         with self.assertRaises(Exception) as context:
             self.__assertEncoded("=\r\n", "=3D=XD=XA")
         self.assertTrue(isinstance(context.exception, IOError) or isinstance(context.exception, OSError))
 
-    def soft_line_break_decode(self) -> None:
+    def test_SoftLineBreakDecode(self) -> None:
         try:
             self.__assertEncoded(
                 "If you believe that truth=beauty, then surely mathematics is the most beautiful"
@@ -71,19 +71,19 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def invalidSoftBreak1(self) -> None:
+    def test_invalidSoftBreak1(self) -> None:
         try:
             self.__assertIOException("CR must be followed by LF", "=\r\r")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def invalidSoftBreak2(self) -> None:
+    def test_invalidSoftBreak2(self) -> None:
         try:
             self.__assertIOException("CR must be followed by LF", "=\rn")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def truncatedEscape(self) -> None:
+    def test_truncatedEscape(self) -> None:
         try:
             self.__assertIOException("truncated", "=1")
         except Exception as e:

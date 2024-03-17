@@ -1,7 +1,7 @@
 # Imports Begin
 import unittest
 from io import BytesIO
-from fileupload import MultipartStream
+from src.main.org.apache.commons.fileupload.MultipartStream import MultipartStream, ProgressNotifier
 
 # Imports End
 
@@ -20,12 +20,12 @@ class MultipartStreamTest(unittest.TestCase):
             contents = strData.encode()
             input = BytesIO(contents)
             boundary = self.__BOUNDARY_TEXT.encode()
-            iBufSize = len(boundary) + len(MultipartStream.BOUNDARY_PREFIX) + 1
+            iBufSize = len(boundary) + len(MultipartStream._BOUNDARY_PREFIX) + 1
             ms = MultipartStream(
                 input,
                 boundary,
                 iBufSize,
-                MultipartStream.ProgressNotifier(None, len(contents))
+                ProgressNotifier(None, len(contents))
             )
             self.assertIsNotNone(ms)
         except Exception as e:
@@ -43,7 +43,7 @@ class MultipartStreamTest(unittest.TestCase):
                 input,
                 boundary,
                 iBufSize,
-                MultipartStream.ProgressNotifier(None, len(contents))
+                ProgressNotifier(None, len(contents))
             )
 
     def test_TwoParamConstructor(self) -> None:
@@ -56,7 +56,7 @@ class MultipartStreamTest(unittest.TestCase):
             ms = MultipartStream.MultipartStream2(
                 input,
                 boundary,
-                MultipartStream.ProgressNotifier(None, len(contents))
+                ProgressNotifier(None, len(contents))
             )
             self.assertIsNotNone(ms)
         except Exception as e:

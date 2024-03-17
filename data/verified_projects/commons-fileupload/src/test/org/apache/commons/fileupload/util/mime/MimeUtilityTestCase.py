@@ -1,6 +1,6 @@
 # Imports Begin
 import unittest
-from fileupload.util.mime import MimeUtility
+from src.main.org.apache.commons.fileupload.util.mime.MimeUtility import MimeUtility
 
 # Imports End
 

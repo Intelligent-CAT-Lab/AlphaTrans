@@ -2,7 +2,7 @@
 import unittest
 import typing
 from typing import *
-from fileupload import ProgressListener
+from src.main.org.apache.commons.fileupload.ProgressListener import ProgressListener
 
 # Imports End
 
