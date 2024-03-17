@@ -50,6 +50,13 @@ def write_to_file(file, content):
         print(f"Error formatting {file}: {e}")
     return
 
+def get_org_name(project_name):
+    paths = main_paths[project_name].split('/')
+    # find 'org', return the next segment
+    org_name = paths[paths.index('org')+1]
+    # return org name if project does not already contain it
+    return f"org.{org_name}" if org_name not in project_name.split('-') else "org"
+
 def make_mappings(args, schemas):
     """
     Create mappings for package classes.
@@ -90,7 +97,7 @@ def make_mappings(args, schemas):
         
     imports_string = ""
     for _import in imports:
-        imports_string += f"import org.apache.{formatted_project_name}{_import};"
+        imports_string += f"import {get_org_name(args.project_name)}.{formatted_project_name}{_import};"
 
     return return_string + "// TODO: Add other mappings", imports_string
 
@@ -130,7 +137,7 @@ def make_exception_mappings(args, schemas):
     
     imports_string = ""
     for _import in imports:
-        imports_string += f"import org.apache.{formatted_project_name}{_import};"
+        imports_string += f"import {get_org_name(args.project_name)}.{formatted_project_name}{_import};"
         
     return return_string + "// TODO: Add other mappings", imports_string
 
@@ -154,7 +161,7 @@ def main(args):
     ctx_mappings, ctx_imports = make_mappings(args, schemas)
     with open("src/glue_code/misc/ContextInitializer.java") as f:
         write_to_file(get_destination_path(args.project_name, "ContextInitializer", path_to_main=main_paths[args.project_name]), f.read().format(
-                project = f"org.apache.{formatted_proj_name}",
+                project = f"{get_org_name(args.project_name)}.{formatted_proj_name}",
                 imports = ctx_imports,
                 code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name]}",
                 package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/",
@@ -165,7 +172,7 @@ def main(args):
     exp_mappings, exp_imports = make_exception_mappings(args, schemas)
     with open("src/glue_code/misc/ExceptionHandler.java") as f:
         write_to_file(get_destination_path(args.project_name, "ExceptionHandler", path_to_main=main_paths[args.project_name]), f.read().format(
-                project = f"org.apache.{formatted_proj_name}",
+                project = f"{get_org_name(args.project_name)}.{formatted_proj_name}",
                 imports = exp_imports,
                 mappings = exp_mappings
             ))
@@ -173,7 +180,7 @@ def main(args):
     # IntegrationUtils.java
     with open("src/glue_code/misc/IntegrationUtils.java") as f:
         write_to_file(get_destination_path(args.project_name, "IntegrationUtils", path_to_main=main_paths[args.project_name]), f.read().format(
-                project = f"org.apache.{formatted_proj_name}"
+                project = f"{get_org_name(args.project_name)}.{formatted_proj_name}"
             ))
 
     for schema in schemas:
@@ -200,13 +207,13 @@ def main(args):
         else:
             subproj_name = ""
 
-        final_glue_code += f"package org.apache.{formatted_proj_name + subproj_name};\n\n"
+        final_glue_code += f"package {get_org_name(args.project_name)}.{formatted_proj_name + subproj_name};\n\n"
         # step 0: add graal imports
         final_glue_code += "import org.graalvm.polyglot.Value;\n"
         final_glue_code += "import org.graalvm.polyglot.PolyglotException;\n"
-        final_glue_code += f"import org.apache.{formatted_proj_name}.ContextInitializer;\n"
-        final_glue_code += f"import org.apache.{formatted_proj_name}.ExceptionHandler;\n"
-        final_glue_code += f"import org.apache.{formatted_proj_name}.IntegrationUtils;\n"
+        final_glue_code += f"import {get_org_name(args.project_name)}.{formatted_proj_name}.ContextInitializer;\n"
+        final_glue_code += f"import {get_org_name(args.project_name)}.{formatted_proj_name}.ExceptionHandler;\n"
+        final_glue_code += f"import {get_org_name(args.project_name)}.{formatted_proj_name}.IntegrationUtils;\n"
 
         # add existing imports
         for _import in data['imports']:
