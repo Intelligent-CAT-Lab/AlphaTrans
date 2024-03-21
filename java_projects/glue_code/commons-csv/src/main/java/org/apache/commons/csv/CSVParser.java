@@ -62,7 +62,8 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
       // Objects.requireNonNull(charset, "charset");
       // Objects.requireNonNull(format, "format");
       //
-      // return CSVParser.CSVParser1(new InputStreamReader(url.openStream(), charset), format);
+      // return CSVParser.CSVParser1(new InputStreamReader(url.openStream(), charset),
+      // format);
       //
 
       // TODO: Check the type mapping below!
@@ -110,7 +111,8 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
 
   private void addRecordValue(final boolean lastRecord) {
     //
-    // final String input = this.format.trim1(this.reusableToken.content.toString());
+    // final String input =
+    // this.format.trim1(this.reusableToken.content.toString());
     // if (lastRecord && input.isEmpty() && this.format.getTrailingDelimiter()) {
     // return;
     // }
@@ -340,7 +342,8 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
     // if (input.equals(nullString)) {
     // return strictQuoteMode && isQuoted ? input : null;
     // }
-    // return strictQuoteMode && nullString == null && input.isEmpty() && !isQuoted ? null : input;
+    // return strictQuoteMode && nullString == null && input.isEmpty() && !isQuoted
+    // ? null : input;
     //
 
     // TODO: Check the type mapping below!
@@ -385,7 +388,8 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
       // final boolean containsHeader =
       // blankHeader ? observedMissing : hdrMap.containsKey(header);
       // final DuplicateHeaderMode headerMode = this.format.getDuplicateHeaderMode();
-      // final boolean duplicatesAllowed = headerMode == DuplicateHeaderMode.ALLOW_ALL;
+      // final boolean duplicatesAllowed = headerMode ==
+      // DuplicateHeaderMode.ALLOW_ALL;
       // final boolean emptyDuplicatesAllowed =
       // headerMode == DuplicateHeaderMode.ALLOW_EMPTY;
       //
@@ -443,7 +447,8 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
       // CSVRecord result = null;
       // this.recordList.clear();
       // StringBuilder sb = null;
-      // final long startCharPosition = lexer.getCharacterPosition() + this.characterOffset;
+      // final long startCharPosition = lexer.getCharacterPosition() +
+      // this.characterOffset;
       // do {
       // this.reusableToken.reset();
       // this.lexer.nextToken(this.reusableToken);
@@ -511,8 +516,7 @@ public final class CSVParser implements Iterable<CSVRecord>, Closeable {
   }
 
   class CSVRecordIterator implements Iterator<CSVRecord> {
-    private static Value clz =
-        ContextInitializer.getPythonClass("/CSVParser.py", "CSVRecordIterator");
+    private Value clz = ContextInitializer.getPythonClass("/CSVParser.py", "CSVRecordIterator");
     private Value obj;
 
     public CSVRecordIterator(Value obj) {

@@ -14,9 +14,15 @@ final class ExtendedBufferedReader extends BufferedReader {
       ContextInitializer.getPythonClass("/ExtendedBufferedReader.py", "ExtendedBufferedReader");
   private Value obj;
 
-  public ExtendedBufferedReader(Value obj) {
-    this.obj = obj;
-  }
+  // public ExtendedBufferedReader(Value obj) {
+  //   super(null);
+  //   this.obj = obj;
+  // }
+
+  // public ExtendedBufferedReader() {
+  //   super(null);
+  //   this.obj = clz.newInstance();
+  // }
 
   public Value getPythonObject() {
     return obj;
@@ -228,10 +234,7 @@ final class ExtendedBufferedReader extends BufferedReader {
   }
 
   ExtendedBufferedReader(final Reader reader) {
-    //
-    // super(reader);
-    //
-
+    super(reader);
     this.obj = clz.invokeMember("__init__", reader);
   }
 }
