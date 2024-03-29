@@ -18,6 +18,10 @@ public class ParameterParser {
     this.obj = obj;
   }
 
+  public ParameterParser(){
+    this.obj = clz.newInstance();
+  }
+
   public Value getPythonObject() {
     return obj;
   }
@@ -89,7 +93,8 @@ public class ParameterParser {
     //
 
     // TODO: Check the type mapping below!
-    return obj.invokeMember("parse1", str, separator).as(Map.class);
+    Value val = obj.invokeMember("parse1", str, separator);
+    return val.as(Map.class); // or IntegrationUtils.valueToMap(val, String.class, String.class)?
   }
 
   public Map<String, String> parse0(final String str, char[] separators) {
@@ -130,12 +135,6 @@ public class ParameterParser {
 
     // TODO: Check the type mapping below!
     return obj.invokeMember("isLowerCaseNames").as(boolean.class);
-  }
-
-  public ParameterParser() {
-    super();
-
-    this.obj = clz.invokeMember("__init__");
   }
 
   // private String parseQuotedToken(final char[] terminators) {

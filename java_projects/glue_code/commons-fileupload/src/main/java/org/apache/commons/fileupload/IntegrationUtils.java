@@ -3,6 +3,7 @@ package org.apache.commons.fileupload;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.function.Function;
@@ -70,5 +71,17 @@ public final class IntegrationUtils {
       properties.setProperty(key, value);
     }
     return properties;
+  }
+
+  public static <K, V> Map<K, V> valueToMap(Value valueObj, Class<K> keyType, Class<V> valueType) {
+    Map<K, V> map = new HashMap<>();
+    Map<Value, Value> valueMap = valueObj.as(Map.class);
+
+    for (Map.Entry<Value, Value> entry : valueMap.entrySet()) {
+      K key = entry.getKey().as(keyType);
+      V value = entry.getValue().as(valueType);
+      map.put(key, value);
+    }
+    return map;
   }
 }
