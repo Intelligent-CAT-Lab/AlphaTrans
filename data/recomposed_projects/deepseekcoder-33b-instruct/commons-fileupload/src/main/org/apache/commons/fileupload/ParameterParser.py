@@ -10,7 +10,7 @@ from typing import *
 class ParameterParser:
 
     # Class Fields Begin
-    chars: List[str] = None
+    __chars: List[str] = None
     __pos: int = 0
     __len: int = 0
     __i1: int = 0
@@ -32,14 +32,14 @@ class ParameterParser:
         paramName = None
         paramValue = None
         while self.__hasChar():
-            paramName = self.__parseToken(["=", separator])
+            paramName = self.__parseToken([separator, "="])
             paramValue = None
             if self.__hasChar() and self.__chars[self.__pos] == "=":
                 self.__pos += 1  # skip '='
                 paramValue = self.__parseQuotedToken([separator])
                 if paramValue is not None:
                     try:
-                        paramValue = self.decodeText(paramValue)
+                        paramValue = MimeUtility.decodeText(paramValue)
                     except Exception:
                         pass
             if self.__hasChar() and self.__chars[self.__pos] == separator:
@@ -80,8 +80,7 @@ class ParameterParser:
 
     def setLowerCaseNames(self, b: bool) -> None:
 
-        def set_lowerCaseNames(self, b: bool) -> None:
-            self.__lowerCaseNames = b
+        self.__lowerCaseNames = b
 
     def isLowerCaseNames(self) -> bool:
 
@@ -89,8 +88,7 @@ class ParameterParser:
 
     def __init__(self) -> None:
 
-        def __init__(self):
-            pass
+        pass
 
     def __parseQuotedToken(self, terminators: typing.List[str]) -> str:
 
