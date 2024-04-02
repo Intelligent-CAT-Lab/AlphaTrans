@@ -20,9 +20,9 @@ import org.graalvm.polyglot.Value;
 public abstract class ContextInitializer {
   private static Engine sharedEngine;
   private static String codeDirectory =
-      "../../../data/verified_projects/commons-fileupload/src/main/org/apache/commons/fileupload/";
+      "../../../data/recomposed_projects/deepseekcoder-33b-instruct/commons-fileupload/src/main/org/apache/commons/fileupload/";
   private static String packageDirectory =
-      "../../../data/verified_projects/commons-fileupload";
+      "../../../data/recomposed_projects/deepseekcoder-33b-instruct/commons-fileupload";
   private static Context context;
 
   static {
