@@ -108,7 +108,7 @@ class MockPortletActionRequest(unittest.TestCase):
         typing.Generator[typing.Any, typing.Any, typing.Any],
     ]:
 
-        return None
+        return iter([])
 
     def getProperty(self, arg0: str) -> str:
 
@@ -119,7 +119,7 @@ class MockPortletActionRequest(unittest.TestCase):
         typing.Generator[typing.Any, typing.Any, typing.Any],
     ]:
 
-        return iter([])
+        return None
 
     def getParameterValues(self, arg0: str) -> typing.List[str]:
 

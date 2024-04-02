@@ -60,6 +60,6 @@ class LimitedInputStream(Closeable, ABC):
 
     def _raiseError(self, pSizeMax: int, pCount: int) -> None:
 
-        raise NotImplementedError
+        raise NotImplementedError("Subclass must implement abstract method")
 
     # Class Methods End

@@ -16,7 +16,7 @@ class FileItemIterator(ABC):
     # Class Methods Begin
     def next(self) -> FileItemStream:
 
-        raise NotImplementedError("Subclass must implement abstract method")
+        pass
 
     def hasNext(self) -> bool:
 

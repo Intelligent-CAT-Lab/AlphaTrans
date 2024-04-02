@@ -20,7 +20,7 @@ class MultipartStreamTest(unittest.TestCase):
         contents = strData.encode()
         input = io.BytesIO(contents)
         boundary = self.__BOUNDARY_TEXT.encode()
-        ms = MultipartStream.MultipartStream2(input, boundary, lambda: None)
+        ms = MultipartStream.MultipartStream2(input, boundary, lambda x: None)
         self.assertTrue(ms is not None)
 
     def testSmallBuffer(self) -> None:
@@ -30,7 +30,11 @@ class MultipartStreamTest(unittest.TestCase):
         input = io.BytesIO(contents)
         boundary = self.__BOUNDARY_TEXT.encode()
         iBufSize = 1
-        MultipartStream(input, boundary, iBufSize, lambda progress, total: None)
+        self.assertTrue(
+            MultipartStream(
+                input, boundary, iBufSize, ProgressNotifier(None, len(contents))
+            )
+        )
 
     def testThreeParamConstructor(self) -> None:
 
@@ -39,7 +43,9 @@ class MultipartStreamTest(unittest.TestCase):
         input = io.BytesIO(contents)
         boundary = self.__BOUNDARY_TEXT.encode()
         iBufSize = len(boundary) + len(MultipartStream.BOUNDARY_PREFIX) + 1
-        ms = MultipartStream(input, boundary, iBufSize, lambda: None)
+        ms = MultipartStream(
+            input, boundary, iBufSize, ProgressNotifier(None, len(contents))
+        )
         self.assertTrue(ms is not None)
 
     # Class Methods End

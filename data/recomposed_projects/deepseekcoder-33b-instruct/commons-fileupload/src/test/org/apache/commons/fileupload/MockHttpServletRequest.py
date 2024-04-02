@@ -23,8 +23,8 @@ class MyServletInputStream(unittest.TestCase):
     def read1(self, b: typing.List[int], off: int, len: int) -> int:
 
         if self.__readLimit > 0:
-            return self.__in.read(b[off : off + min(self.__readLimit, len)])
-        return self.__in.read(b[off : off + len])
+            return self.__in.read(b, off, min(self.__readLimit, len))
+        return self.__in.read(b, off, len)
 
     def read0(self) -> int:
 
@@ -132,7 +132,7 @@ class MockHttpServletRequest(unittest.TestCase):
 
     def getParameterMap(self) -> typing.Dict[str, typing.List[str]]:
 
-        return None
+        return {}
 
     def getParameterValues(self, arg0: str) -> typing.List[str]:
 

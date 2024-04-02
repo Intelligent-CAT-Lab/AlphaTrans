@@ -13,6 +13,6 @@ class UploadContext(ABC):
     # Class Methods Begin
     def contentLength(self) -> int:
 
-        pass
+        pass  # LLM could not translate method body
 
     # Class Methods End

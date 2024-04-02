@@ -46,7 +46,7 @@ class FileItem(ABC):
 
         try:
             with open(file, "w") as f:
-                pass
+                f.write()
         except Exception as e:
             raise e
 
@@ -82,6 +82,6 @@ class FileItem(ABC):
         self,
     ) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:
 
-        pass
+        raise NotImplementedError
 
     # Class Methods End

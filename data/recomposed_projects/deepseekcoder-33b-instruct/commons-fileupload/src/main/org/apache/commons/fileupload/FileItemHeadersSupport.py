@@ -13,8 +13,7 @@ class FileItemHeadersSupport(ABC):
     # Class Methods Begin
     def setHeaders(self, headers: FileItemHeaders) -> None:
 
-        def setHeaders(self, headers):
-            pass
+        pass
 
     def getHeaders(self) -> FileItemHeaders:
 

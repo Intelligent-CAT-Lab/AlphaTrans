@@ -10,7 +10,7 @@ import io
 class QuotedPrintableDecoder:
 
     # Class Fields Begin
-    __UPPER_NIBBLE_SHIFT: int = 8
+    __UPPER_NIBBLE_SHIFT = BYTE_SIZE // 2
     # Class Fields End
 
     # Class Methods Begin

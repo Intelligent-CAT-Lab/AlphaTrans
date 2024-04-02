@@ -48,8 +48,8 @@ class IOFileUploadException(FileUploadException):
 
     def __init__(self, pMsg: str, pException: typing.Union[IOError, OSError]) -> None:
 
-        super().__init__(pMsg, None)
-        self.__cause = pException
+        super().__init__(pMsg)
+        self.__cause__ = pException
 
     # Class Methods End
 
@@ -232,8 +232,8 @@ class FileUploadBase(ABC):
 
         headers = self._getParsedHeaders(headerPart)
         result = {}
-        for headerName in self.getHeaderNames():
-            iter2 = self.getHeaders(headerName)
+        for headerName in headers.getHeaderNames():
+            iter2 = headers.getHeaders(headerName)
             headerValue = next(iter2)
             for value in iter2:
                 headerValue += "," + value
@@ -253,7 +253,7 @@ class FileUploadBase(ABC):
 
     def _getFieldName2(self, headers: typing.Dict[str, str]) -> str:
 
-        return self._getFieldName1(self._getHeader(headers, self.CONTENT_DISPOSITION))
+        return self.__getFieldName1(self._getHeader(headers, self.CONTENT_DISPOSITION))
 
     def _getFileName0(self, headers: typing.Dict[str, str]) -> str:
 
@@ -294,7 +294,7 @@ class FileUploadBase(ABC):
                 end = self.__parseEndOfLine(headerPart, nonWs)
                 header.append(" ").append(headerPart[nonWs:end])
                 start = end + 2
-            self.__parseHeaderLine(headers, str(header))
+            self.__parseHeaderLine(headers, header.toString())
         return headers
 
     def _getFieldName0(self, headers: FileItemHeaders) -> str:
@@ -315,7 +315,7 @@ class FileUploadBase(ABC):
             return None
         try:
             boundary = boundaryStr.encode("ISO-8859-1")
-        except UnicodeEncodeError:
+        except Exception:
             boundary = (
                 boundaryStr.encode()
             )  # Intentionally falls back to default charset
@@ -360,12 +360,12 @@ class FileUploadBase(ABC):
 
     def __parseHeaderLine(self, headers: FileItemHeadersImpl, header: str) -> None:
 
-        colon_offset = header.find(":")
-        if colon_offset == -1:
+        colonOffset = header.find(":")
+        if colonOffset == -1:
             return
-        header_name = header[:colon_offset].strip()
-        header_value = header[colon_offset + 1 :].strip()
-        headers.addHeader(header_name, header_value)
+        headerName = header[:colonOffset].strip()
+        headerValue = header[colonOffset + 1 :].strip()
+        headers.addHeader(headerName, headerValue)
 
     def __parseEndOfLine(self, headerPart: str, end: int) -> int:
 
@@ -390,7 +390,7 @@ class FileUploadBase(ABC):
 
     def setFileItemFactory(self, factory: FileItemFactory) -> None:
 
-        raise NotImplementedError
+        pass
 
     def getFileItemFactory(self) -> FileItemFactory:
 

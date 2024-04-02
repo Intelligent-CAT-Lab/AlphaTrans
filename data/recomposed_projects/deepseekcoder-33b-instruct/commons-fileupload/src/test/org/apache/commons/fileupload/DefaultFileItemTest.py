@@ -9,7 +9,7 @@ from typing import *
 class DefaultFileItemTest(unittest.TestCase):
 
     # Class Fields Begin
-    RUSSIAN_STUFF_WIN1251: List[int] = [
+    RUSSIAN_STUFF_WIN1251: List = [
         0xC2,
         0xF1,
         0xE5,
@@ -23,14 +23,14 @@ class DefaultFileItemTest(unittest.TestCase):
         0xF2,
     ]
     __textContentType: str = "text/plain"
-    fileContentType: str = "application/octet-stream"
+    __fileContentType: str = "application/octet-stream"
     __threshold: int = 16
     CHARSET_ISO88591: str = "ISO-8859-1"
     CHARSET_ASCII: str = "US-ASCII"
     CHARSET_UTF8: str = "UTF-8"
     CHARSET_KOI8_R: str = "KOI8_R"
     CHARSET_WIN1251: str = "Cp1251"
-    SWISS_GERMAN_STUFF_UNICODE: List = [
+    SWISS_GERMAN_STUFF_UNICODE: List[int] = [
         0x47,
         0x72,
         0xFC,

@@ -14,7 +14,7 @@ class Base64Decoder:
     __PADDING: int = ord("=")
     __DECODING_TABLE: bytes = bytearray(Byte.MAX_VALUE - Byte.MIN_VALUE + 1)
     __INVALID_BYTE: int = -1
-    __PAD_BYTE: int = -2  # must be outside range 0-63
+    __PAD_BYTE: int = -2
     __MASK_BYTE_UNSIGNED: int = 0xFF
     __INPUT_BYTES_PER_CHUNK: int = 4
     __ENCODING_TABLE: bytes = (

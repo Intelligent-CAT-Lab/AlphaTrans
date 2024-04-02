@@ -15,7 +15,8 @@ class Base64DecoderTestCase(unittest.TestCase):
     # Class Methods Begin
     def nonASCIIcharacter(self) -> None:
 
-        self.assertTrue(False, "The method is not implemented yet.")
+        self.assertTrue(self.__assertEncoded("f", "Zg=�="))
+        self.assertTrue(self.__assertEncoded("f", "Zg=\u0100="))
 
     def badLength(self) -> None:
 
@@ -47,7 +48,7 @@ class Base64DecoderTestCase(unittest.TestCase):
 
     def decodeTrailing1(self) -> None:
 
-        self.assertIOException("truncated", "Zm9vYmFy1")
+        self.__assertIOException("truncated", "Zm9vYmFy1")
 
     def decodeTrailingJunk(self) -> None:
 
@@ -55,17 +56,21 @@ class Base64DecoderTestCase(unittest.TestCase):
 
     def truncatedString(self) -> None:
 
-        x = bytearray([ord("n")])
-        self.decode(x, io.BytesIO())
+        x = bytearray(b"n")
+        self.assertTrue(Base64Decoder.decode(x, io.BytesIO()))
 
     def nonBase64Bytes(self) -> None:
 
-        self.assertTrue(False, "S?G VsbG 8g Vt 29ybGQ*=")
+        self.assertTrue(
+            self.__assertEncoded("Hello World", "S?G i VsbG 8g\rV\t\n29ybGQ*=")
+        )
 
     def decodeWithInnerPad(self) -> None:
 
-        self.__assertEncoded(
-            "Hello WorldHello World", "SGVsbG8gV29ybGQ=SGVsbG8gV29ybGQ="
+        self.assertTrue(
+            self.__assertEncoded(
+                "Hello WorldHello World", "SGVsbG8gV29ybGQ=SGVsbG8gV29ybGQ="
+            )
         )
 
     def rfc4648Section10Decode(self) -> None:
@@ -81,7 +86,17 @@ class Base64DecoderTestCase(unittest.TestCase):
     @staticmethod
     def __assertIOException(messageText: str, encoded: str) -> None:
 
-        pass  # LLM could not translate method body
+        out = io.BytesIO()
+        encodedData = encoded.encode(Base64Decoder.self.__US_ASCII_CHARSET)
+        try:
+            Base64Decoder.decode(encodedData, out)
+            self.fail("Expected IOException")
+        except Exception as e:
+            em = str(e)
+            self.assertTrue(
+                "Expected to find " + messageText + " in '" + em + "'",
+                messageText in em,
+            )
 
     @staticmethod
     def __assertEncoded(clearText: str, encoded: str) -> None:
@@ -89,8 +104,8 @@ class Base64DecoderTestCase(unittest.TestCase):
         expected = clearText.encode(MyTestCase.self.__US_ASCII_CHARSET)
         out = io.BytesIO()
         encodedData = encoded.encode(MyTestCase.self.__US_ASCII_CHARSET)
-        MyTestCase.decode(encodedData, out)
+        Base64Decoder.decode(encodedData, out)
         actual = out.getvalue()
-        MyTestCase.self.assertTrue(expected == actual)
+        TestCase.self.assertTrue(TestCase(), expected == actual)
 
     # Class Methods End

@@ -27,7 +27,7 @@ class FileItemStream(ABC):
     # Class Methods Begin
     def isFormField(self) -> bool:
 
-        pass
+        pass  # LLM could not translate method body
 
     def getFieldName(self) -> str:
 
@@ -43,6 +43,6 @@ class FileItemStream(ABC):
 
     def openStream(self) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:
 
-        pass
+        raise NotImplementedError
 
     # Class Methods End

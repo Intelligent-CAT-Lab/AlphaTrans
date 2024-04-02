@@ -37,7 +37,7 @@ class DiskFileItemSerializeTest(unittest.TestCase):
         pickle.dump(target, baos)
         baos.flush()
         baos.close()
-        return baos.getvalue()
+        return baos
 
     def __createContentBytes(self, size: int) -> typing.List[int]:
 

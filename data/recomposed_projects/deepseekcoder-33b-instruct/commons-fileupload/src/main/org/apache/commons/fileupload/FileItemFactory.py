@@ -17,6 +17,6 @@ class FileItemFactory(ABC):
         self, fieldName: str, contentType: str, isFormField: bool, fileName: str
     ) -> FileItem:
 
-        pass  # LLM could not translate method body
+        pass
 
     # Class Methods End

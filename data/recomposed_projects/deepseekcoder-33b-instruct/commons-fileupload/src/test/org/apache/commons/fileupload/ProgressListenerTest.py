@@ -21,22 +21,24 @@ class ProgressListenerImpl(unittest.TestCase, ProgressListener):
 
         self.assertTrue(
             pBytesRead >= 0 and pBytesRead <= self.__expectedContentLength,
-            "pBytesRead is out of range",
+            "pBytesRead is not in the expected range",
         )
         self.assertTrue(
             pContentLength == -1 or pContentLength == self.__expectedContentLength,
-            "pContentLength is out of range",
+            "pContentLength is not in the expected range",
         )
         self.assertTrue(
-            pItems >= 0 and pItems <= self.__expectedItems, "pItems is out of range"
+            pItems >= 0 and pItems <= self.__expectedItems,
+            "pItems is not in the expected range",
         )
         self.assertTrue(
             self.__bytesRead is None or pBytesRead >= self.__bytesRead,
-            "pBytesRead is less than bytesRead",
+            "pBytesRead is less than the previous value",
         )
         self.__bytesRead = pBytesRead
         self.assertTrue(
-            self.__items is None or pItems >= self.__items, "pItems is less than items"
+            self.__items is None or pItems >= self.__items,
+            "pItems is less than the previous value",
         )
         self.__items = pItems
 
@@ -44,11 +46,11 @@ class ProgressListenerImpl(unittest.TestCase, ProgressListener):
 
         self.assertTrue(
             self.__expectedContentLength == self.__bytesRead,
-            f"Expected content length {self.__expectedContentLength} does not match bytes read {self.__bytesRead}",
+            "Expected content length does not match bytes read",
         )
         self.assertTrue(
             self.__expectedItems == self.__items,
-            f"Expected items {self.__expectedItems} does not match actual items {self.__items}",
+            "Expected items does not match actual items",
         )
 
     def __init__(self, pContentLength: int, pItems: int) -> None:

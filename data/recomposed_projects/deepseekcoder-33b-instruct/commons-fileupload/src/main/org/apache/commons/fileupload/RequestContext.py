@@ -18,7 +18,7 @@ class RequestContext(ABC):
         self,
     ) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:
 
-        pass
+        raise NotImplementedError
 
     def getContentLength(self) -> int:
 

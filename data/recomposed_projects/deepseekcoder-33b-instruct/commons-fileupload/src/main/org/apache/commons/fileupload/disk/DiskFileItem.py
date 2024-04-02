@@ -68,8 +68,7 @@ class DiskFileItem:
 
     def setFieldName(self, fieldName: str) -> None:
 
-        def set_fieldName(self, fieldName: str) -> None:
-            self.__fieldName = fieldName
+        self.__fieldName = fieldName
 
     def getFieldName(self) -> str:
 
@@ -77,7 +76,7 @@ class DiskFileItem:
 
     def getName(self) -> str:
 
-        pass  # LLM could not translate method body
+        return Streams.checkFileName(self.__fileName)
 
     def getCharSet(self) -> str:
 

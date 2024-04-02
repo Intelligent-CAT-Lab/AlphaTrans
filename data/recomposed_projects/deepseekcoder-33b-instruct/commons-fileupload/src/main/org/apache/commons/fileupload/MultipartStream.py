@@ -109,20 +109,22 @@ class ItemInputStream(Closeable):
 
         if self.__pos != -1:
             return 0
-        self.__total += self.tail - self.head - self.pad
-        self.buffer[0 : self.pad] = self.buffer[self.tail - self.pad : self.tail]
-        self.head = 0
-        self.tail = self.pad
+        self.__total += self.__tail - self.__head - self.__pad
+        self.__buffer[0 : self.__pad] = self.__buffer[
+            self.__tail - self.__pad : self.__tail
+        ]
+        self.__head = 0
+        self.__tail = self.__pad
         while True:
-            bytesRead = self.input.read(
-                self.buffer, self.tail, self.bufSize - self.tail
+            bytesRead = self.__input.read(
+                self.__buffer, self.__tail, self.__bufSize - self.__tail
             )
             if bytesRead == -1:
                 msg = "Stream ended unexpectedly"
                 raise MalformedStreamException(msg)
-            if self.notifier is not None:
-                self.notifier.noteBytesRead(bytesRead)
-            self.tail += bytesRead
+            if self.__notifier is not None:
+                self.__notifier.noteBytesRead(bytesRead)
+            self.__tail += bytesRead
             self.__findSeparator()
             av = self.available()
             if av > 0 or self.__pos != -1:
@@ -132,7 +134,7 @@ class ItemInputStream(Closeable):
 
         self.__pos = self._findSeparator()
         if self.__pos == -1:
-            if self.__tail - self.__head > self.__pad:
+            if self.__tail - self.__head > self.__keepRegion:
                 self.__pad = self.__keepRegion
             else:
                 self.__pad = self.__tail - self.__head
@@ -290,14 +292,13 @@ class MultipartStream:
                 b = self.readByte()
             except FileUploadIOException as e:
                 raise e
-            except IOError:
+            except Exception:
                 raise MalformedStreamException("Stream ended unexpectedly")
-            if size > self.HEADER_PART_SIZE_MAX:
+            if size + 1 > self.HEADER_PART_SIZE_MAX:
                 raise MalformedStreamException(
-                    "Header section has more than {} bytes (maybe it is not properly terminated)".format(
-                        self.HEADER_PART_SIZE_MAX
-                    )
+                    f"Header section has more than {self.HEADER_PART_SIZE_MAX} bytes (maybe it is not properly terminated)"
                 )
+            size += 1
             if b == self._HEADER_SEPARATOR[i]:
                 i += 1
             else:
@@ -342,7 +343,7 @@ class MultipartStream:
                 )
         except FileUploadIOException as e:
             raise e
-        except IOError:
+        except Exception:
             raise MalformedStreamException("Stream ended unexpectedly")
         return nextChunk
 
@@ -355,9 +356,9 @@ class MultipartStream:
                 raise IOError("No more data is available")
             if self.__notifier is not None:
                 self.__notifier.noteBytesRead(self.__tail)
-        byte_read = self.__buffer[self.__head]
+        byte_value = self.__buffer[self.__head]
         self.__head += 1
-        return byte_read
+        return byte_value
 
     def setHeaderEncoding(self, encoding: str) -> None:
 
