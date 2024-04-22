@@ -4,6 +4,6 @@ import unittest
 # Imports End
 
 
-class Util(unittest.TestCase):
+class Util:
 
     pass

@@ -4,7 +4,7 @@ import unittest
 # Imports End
 
 
-class Constants(unittest.TestCase):
+class Constants:
 
     # Class Fields Begin
     CONTENT_TYPE: str = "multipart/form-data; boundary=---1234"

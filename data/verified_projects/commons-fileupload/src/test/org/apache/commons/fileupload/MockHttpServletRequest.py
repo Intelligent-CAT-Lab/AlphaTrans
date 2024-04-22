@@ -12,7 +12,7 @@ import sys
 # Imports End
 
 
-class MockHttpServletRequest(unittest.TestCase):
+class MockHttpServletRequest:
 
     def __init__(self, constructorId, requestData, strContentType, requestLength):
         self._readLimit = -1

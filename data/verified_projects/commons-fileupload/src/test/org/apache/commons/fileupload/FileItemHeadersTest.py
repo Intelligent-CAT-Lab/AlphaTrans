@@ -15,8 +15,8 @@ from src.main.org.apache.commons.fileupload.util.FileItemHeadersImpl import File
 from itertools import tee
 
 class PeekableIterator:
-    def __init__(self, iterator):
-        self.iterator = iter(iterator)
+    def __init__(self, iterable):
+        self.iterator = iter(iterable)
         self.peeked = None
 
     def __iter__(self):
