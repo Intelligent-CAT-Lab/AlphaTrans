@@ -2,11 +2,12 @@ import argparse
 import os
 import subprocess
 import json
+import xml.etree.ElementTree as ET
 
 ORIGINAL_DIR = "java_projects/cleaned_final_projects"
 OUTPUT_DIR = "java_projects/compositional_glue_tests"
 TRANSLATION_DIR = "data/verified_projects"
-DIR_DEPTH = "../../../../"
+DIR_DEPTH = "../../../"
 
 main_paths = {
     "commons-fileupload": "main/java/org/apache/commons/fileupload/",
@@ -20,7 +21,7 @@ main_paths = {
     "joda-money": "main/java/org/joda/money/",
 }
 
-def get_destination_path(path, method_name, file_name, is_full_path=False, path_to_main=None):
+def get_destination_path(path, file_name, is_full_path=False, path_to_main=None):
     _path = [OUTPUT_DIR]
     
     # fully qualified path from schema. remove the first 2 directories
@@ -33,9 +34,6 @@ def get_destination_path(path, method_name, file_name, is_full_path=False, path_
             _path += [path_to_main]
         # print(_path, "/".join(_path))
         _directories = "/".join(_path)
-        
-    # add method_name to the path before the src directory
-    _directories = _directories.replace("src", f"{method_name}/src")
     
     # create the final path if it doesn't exist
     os.makedirs(_directories, exist_ok=True)
@@ -157,15 +155,28 @@ def main(args):
     formatted_proj_name = args.project_name.replace('-', '.')
     
     # Copy original project to glue_code directory
-    # skip if already exists
-    if not os.path.exists(f"{OUTPUT_DIR}/{args.project_name}/{args.method_name}"):
-        os.makedirs(f"{OUTPUT_DIR}/{args.project_name}/{args.method_name}")
-        subprocess.run(['cp', '-r', f"{ORIGINAL_DIR}/{args.project_name}/.", f"{OUTPUT_DIR}/{args.project_name}/{args.method_name}"], check=True)
+    
+    # but first check if pom.xml exists in the output directory and
+    # and if it does, store its contents 
+    
+    pom_contents = None
+    if os.path.exists(f"{OUTPUT_DIR}/{args.project_name}/pom.xml"):
+        with open(f"{OUTPUT_DIR}/{args.project_name}/pom.xml") as f:
+            pom_contents = f.read()
+    
+    if not os.path.exists(f"{OUTPUT_DIR}/{args.project_name}/"):
+        os.makedirs(f"{OUTPUT_DIR}/{args.project_name}/")
+    subprocess.run(['cp', '-r', f"{ORIGINAL_DIR}/{args.project_name}/.", f"{OUTPUT_DIR}/{args.project_name}/"], check=True)
+    
+    # if pom.xml existed, write it back
+    if pom_contents:
+        with open(f"{OUTPUT_DIR}/{args.project_name}/pom.xml", "w") as f:
+            f.write(pom_contents)
     
     # Add ContextInitializer.java
     ctx_mappings, ctx_imports = make_mappings(args, schemas)
     with open("src/compositional_glue_tests/misc/ContextInitializer.java") as f:
-        write_to_file(get_destination_path(args.project_name, args.method_name, "ContextInitializer", path_to_main=main_paths[args.project_name]), f.read().format(
+        write_to_file(get_destination_path(args.project_name, "ContextInitializer", path_to_main=main_paths[args.project_name]), f.read().format(
                 project = f"org.apache.{formatted_proj_name}",
                 imports = ctx_imports,
                 code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name].replace('/java/', '/')}",
@@ -175,18 +186,21 @@ def main(args):
 
     # Add ExceptionHandler.java
     exp_mappings, exp_imports = make_exception_mappings(args, schemas)
-    with open("src/glue_code/misc/ExceptionHandler.java") as f:
-        write_to_file(get_destination_path(args.project_name, args.method_name, "ExceptionHandler", path_to_main=main_paths[args.project_name]), f.read().format(
+    with open("src/compositional_glue_tests/misc/ExceptionHandler.java") as f:
+        write_to_file(get_destination_path(args.project_name, "ExceptionHandler", path_to_main=main_paths[args.project_name]), f.read().format(
                 project = f"org.apache.{formatted_proj_name}",
                 imports = exp_imports,
                 mappings = exp_mappings
             ))
     
     # IntegrationUtils.java
-    with open("src/glue_code/misc/IntegrationUtils.java") as f:
-        write_to_file(get_destination_path(args.project_name, args.method_name, "IntegrationUtils", path_to_main=main_paths[args.project_name]), f.read().format(
+    with open("src/compositional_glue_tests/misc/IntegrationUtils.java") as f:
+        write_to_file(get_destination_path(args.project_name, "IntegrationUtils", path_to_main=main_paths[args.project_name]), f.read().format(
                 project = f"org.apache.{formatted_proj_name}"
             ))
+        
+    # copy java_handler.py to the translated project
+    subprocess.run(['cp', 'src/compositional_glue_tests/misc/java_handler.py', f"{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name].replace('/java/', '/')}/"], check=True)
 
     with open(f'data/schemas/{args.project_name}/{schema}') as f:
         data = json.load(f)
@@ -194,177 +208,222 @@ def main(args):
     final_glue_code = ""
     unclosed_brace_count = 0
     
-    # sync() method body
-    sync_method_body = "    private void sync() {\n"
-    
-    # find subpackage names (if exist)
-    if main_paths[args.project_name] in data['path']:
-        path_tail = data['path'].split(main_paths[args.project_name])[-1]
-        if "/" in path_tail:
-            # remove the last segment
-            path_tail = path_tail[:path_tail.rfind('/')]
-            subproj_name = "." + path_tail.replace('/', '.')
+    methods_under_test = []
+    if args.method_name is not None:
+        methods_under_test = [args.method_name]
+    else:
+        for _method in data['classes'][args.class_name]['methods']:
+            is_constructor = data['classes'][args.class_name]['methods'][_method]['is_constructor']
+            method_body = "".join(data['classes'][args.class_name]['methods'][_method]['body'])
+            method_name = _method.split(':', 1)[1].strip() if not is_constructor else "__init__"
+            methods_under_test.append(method_name)
+            
+    for mut in methods_under_test:
+        
+        # sync() method body
+        sync_method_body = "    private void sync() {\n"
+        
+        # find subpackage names (if exist)
+        if main_paths[args.project_name] in data['path']:
+            path_tail = data['path'].split(main_paths[args.project_name])[-1]
+            if "/" in path_tail:
+                # remove the last segment
+                path_tail = path_tail[:path_tail.rfind('/')]
+                subproj_name = "." + path_tail.replace('/', '.')
+            else:
+                subproj_name = ""
         else:
             subproj_name = ""
-    else:
-        subproj_name = ""
 
-    final_glue_code += f"package org.apache.{formatted_proj_name + subproj_name};\n\n"
-    # step 0: add graal imports
-    final_glue_code += "import org.graalvm.polyglot.Value;\n"
-    final_glue_code += "import org.graalvm.polyglot.PolyglotException;\n"
-    final_glue_code += f"import org.apache.{formatted_proj_name}.ContextInitializer;\n"
-    final_glue_code += f"import org.apache.{formatted_proj_name}.ExceptionHandler;\n"
-    final_glue_code += f"import org.apache.{formatted_proj_name}.IntegrationUtils;\n"
+        final_glue_code += f"package org.apache.{formatted_proj_name + subproj_name};\n\n"
+        # step 0: add graal imports
+        final_glue_code += "import org.graalvm.polyglot.Value;\n"
+        final_glue_code += "import org.graalvm.polyglot.PolyglotException;\n"
+        final_glue_code += f"import org.apache.{formatted_proj_name}.ContextInitializer;\n"
+        final_glue_code += f"import org.apache.{formatted_proj_name}.ExceptionHandler;\n"
+        final_glue_code += f"import org.apache.{formatted_proj_name}.IntegrationUtils;\n"
 
-    # add existing imports
-    for _import in data['imports']:
-        final_glue_code += "".join(data['imports'][_import]["body"])
+        # add existing imports
+        for _import in data['imports']:
+            final_glue_code += "".join(data['imports'][_import]["body"])
 
-    # add class definition
-    for _class in data['classes']:            
-        lst = []
-        with open(data['path'], 'r') as current_f:
-            lst = current_f.readlines()
-        class_declaration = lst[data['classes'][_class]['start']-1:data['classes'][_class]['end']]
-        final_glue_code += "".join(class_declaration)
+        # add class definition
+        for _class in data['classes']:            
+            lst = []
+            with open(data['path'], 'r') as current_f:
+                lst = current_f.readlines()
+            class_declaration = lst[data['classes'][_class]['start']-1:data['classes'][_class]['end']]
+            final_glue_code += "".join(class_declaration)
 
-        for _field in data['classes'][_class]['fields']:
-            line = "".join(data['classes'][_class]['fields'][_field]['body'])
+            for _field in data['classes'][_class]['fields']:
+                line = "".join(data['classes'][_class]['fields'][_field]['body'])
+                
+                if _class == args.class_name:
+                    # if field is 'final', remove the 'final' keyword
+                    if 'final' in data['classes'][_class]['fields'][_field]['modifiers']:
+                        line = line.replace(' final', '', 1)
+                    
+                    # add field to sync() method
+                    field_name = _field.split(':')[1].strip()
+                    
+                    if 'private' in data['classes'][_class]['fields'][_field]['modifiers']:
+                        python_field_name = f"_{args.class_name}__{field_name}"
+                    else:
+                        python_field_name = field_name
+                        
+                    field_type = data['classes'][_class]['fields'][_field]['types'][0][0]
+                    field_from_python = type_handling[field_type].format("this.obj.getMember(\"" + python_field_name + "\")")                
+                        
+                    sync_method_body += f"{field_name} = ({field_type}) {field_from_python};\n"
+
+                if '=' not in line:
+                    continue
+                final_glue_code += line
             
+            if not data['classes'][_class]['is_interface'] and _class == args.class_name:
+                # add graal attributes
+                python_file_dir = subproj_name.replace('.', '/')
+                python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
+                current_file_name = data["path"].split('/')[-1].split('.')[0]
+                python_file = f'"{python_file_dir}/{current_file_name}.py"'
+                class_name = f'"{_class}"'
+                final_glue_code += f"    private static Value clz = ContextInitializer.getPythonClass({python_file}, {class_name});\n"
+                final_glue_code += "    private Value obj;\n"
+
+                # add value constructor
+                final_glue_code += f"    public {_class}(Value obj) {{\n"
+                final_glue_code += "        this.obj = obj;\n"
+                final_glue_code += "    }\n"
+
+                # add getPythonObject()
+                final_glue_code += f"    public Value getPythonObject() {{\n"
+                final_glue_code += "        return obj;\n"
+                final_glue_code += "    }\n"
+
+                # add a new empty constructor
+                final_glue_code += f"public {_class}() {{this.obj = clz.newInstance();}}\n"
+                
             if _class == args.class_name:
-                # if field is 'final', remove the 'final' keyword
-                if 'final' in data['classes'][_class]['fields'][_field]['modifiers']:
-                    line = line.replace(' final', '', 1)
+                # add sync() method
+                sync_method_body += "    }\n"
+                final_glue_code += sync_method_body
+
+            for _method in data['classes'][_class]['methods']:
+                is_constructor = data['classes'][_class]['methods'][_method]['is_constructor']
+                method_body = "".join(data['classes'][_class]['methods'][_method]['body'])
+                method_name = _method.split(':', 1)[1].strip() if not is_constructor else "__init__"
+                            
+                if method_body.strip()[-1] != '}':
+                    # method is not implemented
+                    final_glue_code += method_body
+                    
+                    # add semi-colon if not present
+                    if method_body.strip()[-1] != ';':
+                        final_glue_code += ';'                    
+                    continue
                 
-                # add field to sync() method
-                field_name = _field.split(':')[1].strip()
+                method_signature = method_body[:method_body.find('{')+1]
+                method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
+
+                if method_name != mut or _class != args.class_name:
+                    # not our target method
+                    final_glue_code += method_signature + "\n" + method_content + "}\n"
+                    continue
                 
-                if 'private' in data['classes'][_class]['fields'][_field]['modifiers']:
-                    python_field_name = f"_{args.class_name}__{field_name}"
+                # comment out the original method contents
+                commented_content = "".join([f"// {line.strip()}\n" for line in method_content.split('\n')])
+                
+                final_content = commented_content
+                
+                # construct call to Python
+                if "static" in data['classes'][_class]['methods'][_method]['modifiers'] or is_constructor:
+                    caller = "clz"
                 else:
-                    python_field_name = field_name
-                    
-                field_type = data['classes'][_class]['fields'][_field]['types'][0][0]
-                field_from_python = type_handling[field_type].format("this.obj.getMember(\"" + python_field_name + "\")")                
-                    
-                sync_method_body += f"{field_name} = ({field_type}) {field_from_python};\n"
+                    caller = "this.obj"
+                
+                args_buildup = ", ".join(data['classes'][_class]['methods'][_method]['parameters'])
+                python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
+                
+                if is_constructor:
+                    final_content += f"\nsync();\nthis.obj = {python_call};\n"
+                elif 'void' in method_signature:
+                    final_content += f"\nsync();\n{python_call};\n"
+                else:
+                    return_type = data['classes'][_class]['methods'][_method]['return_types'][0][0] # taking the first return type for now (TODO: check if this is OK)
 
-            if '=' not in line:
-                continue
-            final_glue_code += line
+                    return_type_casted = type_handling[return_type].format(python_call)                
+                    final_content += f"\nreturn {return_type_casted};\n"               
+
+                # TODO: add comments for dev hints
+                if 'throws' in method_body:
+                    exception_name = method_body[method_body.find('throws')+6:method_body.find('{')].strip()
+
+                    final_glue_code += method_signature + "\n"
+                    final_glue_code += "try {\n"
+                    final_glue_code += final_content
+                    final_glue_code += "} catch (PolyglotException e) {\n"
+                    final_glue_code += f"    // TODO: Handle {exception_name}\n"
+                    final_glue_code += f"    throw ({exception_name}) ExceptionHandler.handle(e, \"{_class}.{method_name}\");\n"
+                    final_glue_code += "}\n"
+                    final_glue_code += "}\n"
+
+                else:
+                    final_glue_code += method_signature + "\n"
+                    final_glue_code += final_content
+                    final_glue_code += "}\n"
+                    
+            # add nested classes
+            if not data['classes'][_class]["nests"]:
+                final_glue_code += "}\n"
+            else:
+                unclosed_brace_count += 1
+                
+        final_glue_code += "}\n" * unclosed_brace_count
+
+        class_name = schema.split('.')[-2] # get the class name preceding '.json'
+        output_file = get_destination_path(data["path"], class_name, is_full_path=True)
+        write_to_file(output_file, final_glue_code)
         
-        if not data['classes'][_class]['is_interface'] and _class == args.class_name:
-            # add graal attributes
-            python_file_dir = subproj_name.replace('.', '/')
-            python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
-            current_file_name = data["path"].split('/')[-1].split('.')[0]
-            python_file = f'"{python_file_dir}/{current_file_name}.py"'
-            class_name = f'"{_class}"'
-            final_glue_code += f"    private static Value clz = ContextInitializer.getPythonClass({python_file}, {class_name});\n"
-            final_glue_code += "    private Value obj;\n"
+        # run the test
+        print("Method currently under test:", f"{class_name}#{mut}")
+        try:
+            subprocess.run(['mvn', 'clean', 'test', '-Drat.skip', '-q'], cwd=f"{OUTPUT_DIR}/{args.project_name}/", stderr=subprocess.DEVNULL, check=True)
+        except Exception as e:
+            print(f"Error running test for {args.project_name}.")
+            continue
 
-            # add value constructor
-            final_glue_code += f"    public {_class}(Value obj) {{\n"
-            final_glue_code += "        this.obj = obj;\n"
-            final_glue_code += "    }\n"
-
-            # add getPythonObject()
-            final_glue_code += f"    public Value getPythonObject() {{\n"
-            final_glue_code += "        return obj;\n"
-            final_glue_code += "    }\n"
-
-            # add a new empty constructor
-            final_glue_code += f"public {_class}() {{this.obj = clz.newInstance();}}\n"
+        # get the test results
+        failed_tests = []
+        
+        # first get all XML files in the target/surefire-reports directory
+        for report_file in [f for f in os.listdir(f"{OUTPUT_DIR}/{args.project_name}/target/surefire-reports/") if f.endswith('.xml')]:
+            test_class_name = report_file.split('.')[0]
+            root = ET.parse(f"{OUTPUT_DIR}/{args.project_name}/target/surefire-reports/{report_file}").getroot()
             
-        if _class == args.class_name:
-            # add sync() method
-            sync_method_body += "    }\n"
-            final_glue_code += sync_method_body
-
-        for _method in data['classes'][_class]['methods']:
-            is_constructor = data['classes'][_class]['methods'][_method]['is_constructor']
-            method_body = "".join(data['classes'][_class]['methods'][_method]['body'])
-            method_name = _method.split(':', 1)[1].strip() if not is_constructor else "__init__"
-                         
-            if method_body.strip()[-1] != '}':
-                # method is not implemented
-                final_glue_code += method_body
-                
-                # add semi-colon if not present
-                if method_body.strip()[-1] != ';':
-                    final_glue_code += ';'                    
+            # get the <testsuite> element
+            if not  root.find('testsuite'):
                 continue
-            
-            method_signature = method_body[:method_body.find('{')+1]
-            method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
 
-            if method_name != args.method_name or _class != args.class_name:
-                # not our target method
-                final_glue_code += method_signature + "\n" + method_content + "}\n"
-                continue
+            testsuite = root.find('testsuite')
             
-            # comment out the original method contents
-            commented_content = "".join([f"// {line.strip()}\n" for line in method_content.split('\n')])
-            
-            final_content = commented_content
-            
-            # construct call to Python
-            if "static" in data['classes'][_class]['methods'][_method]['modifiers'] or is_constructor:
-                caller = "clz"
-            else:
-                caller = "this.obj"
-            
-            args_buildup = ", ".join(data['classes'][_class]['methods'][_method]['parameters'])
-            python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
-            
-            if is_constructor:
-                final_content += f"\nsync();\nthis.obj = {python_call};\n"
-            elif 'void' in method_signature:
-                final_content += f"\nsync();\n{python_call};\n"
-            else:
-                return_type = data['classes'][_class]['methods'][_method]['return_types'][0][0] # taking the first return type for now (TODO: verify this)
+            # iterate over all testcase elements
+            for testcase in testsuite.findall('testcase'):
+                # does the testcase have an error element?
+                error = testcase.find('error')
                 
-                # return <...> from the return type if any
-                return_type = return_type[:return_type.find('<')].strip() if '<' in return_type else return_type.strip()                    
-                
-                final_content += "\n\n// TODO: Check the type mapping below!"
-                final_content += f"\nreturn {python_call}.as({return_type}.class);\n"               
-
-            # TODO: add comments for dev hints
-            if 'throws' in method_body:
-                exception_name = method_body[method_body.find('throws')+6:method_body.find('{')].strip()
-
-                final_glue_code += method_signature + "\n"
-                final_glue_code += "try {\n"
-                final_glue_code += final_content
-                final_glue_code += "} catch (PolyglotException e) {\n"
-                final_glue_code += f"    // TODO: Handle {exception_name}\n"
-                final_glue_code += f"    throw ({exception_name}) ExceptionHandler.handle(e, \"{_class}.{method_name}\");\n"
-                final_glue_code += "}\n"
-                final_glue_code += "}\n"
-
-            else:
-                final_glue_code += method_signature + "\n"
-                final_glue_code += final_content
-                final_glue_code += "}\n"
-                
-        # add nested classes
-        if not data['classes'][_class]["nests"]:
-            final_glue_code += "}\n"
+                if error is not None:
+                    failed_tests.append(f"{test_class_name}#{testcase.get('name')}")
+                    
+        if failed_tests:
+            print("Test failures were found.")
+            print(*failed_tests, sep='\n')
         else:
-            unclosed_brace_count += 1
-            
-    final_glue_code += "}\n" * unclosed_brace_count
-
-    class_name = schema.split('.')[-2] # get the class name preceding '.json'
-    output_file = get_destination_path(data["path"], args.method_name, class_name, is_full_path=True)
-    write_to_file(output_file, final_glue_code)
+            print("All tests passed!")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate glue code for Compositional Testing.')
     parser.add_argument('--project', type=str, dest='project_name', help='name of the project', required=True)
     parser.add_argument('--class', type=str, dest='class_name', help='name of the class', required=True)
-    parser.add_argument('--method', type=str, dest='method_name', help='name of the method', required=True)
+    parser.add_argument('--method', type=str, dest='method_name', help='name of the method', required=False)
     args = parser.parse_args()
     main(args)
