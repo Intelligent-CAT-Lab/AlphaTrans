@@ -48,7 +48,7 @@ def write_to_file(file, content):
 
     # format java file
     try:
-        subprocess.run(['java', '-jar', 'src/glue_code/google-java-format-1.20.0-all-deps.jar', '-r', file], check=True)
+        subprocess.run(['java', '-jar', 'src/compositional_glue_tests/google-java-format-1.20.0-all-deps.jar', '--skip-removing-unused-imports', '-r', file], check=True)
     except Exception as e:
         print(f"Error formatting {file}: {e}")
     return
@@ -140,6 +140,10 @@ def make_exception_mappings(args, schemas):
 def main(args):
     if not os.path.exists('data/schemas'):
         raise Exception('Please run from the root directory!')
+    
+    # load type handling information
+    with open('src/compositional_glue_tests/type_handling.json') as f:
+        type_handling = json.load(f)
 
     schemas = os.listdir(f'data/schemas/{args.project_name}')
     
@@ -164,8 +168,8 @@ def main(args):
         write_to_file(get_destination_path(args.project_name, args.method_name, "ContextInitializer", path_to_main=main_paths[args.project_name]), f.read().format(
                 project = f"org.apache.{formatted_proj_name}",
                 imports = ctx_imports,
-                code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name]}",
-                package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/{args.method_name}/",
+                code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name].replace('/java/', '/')}",
+                package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/",
                 mappings = ctx_mappings
             ))
 
@@ -189,6 +193,9 @@ def main(args):
     
     final_glue_code = ""
     unclosed_brace_count = 0
+    
+    # sync() method body
+    sync_method_body = "    private void sync() {\n"
     
     # find subpackage names (if exist)
     if main_paths[args.project_name] in data['path']:
@@ -224,11 +231,30 @@ def main(args):
 
         for _field in data['classes'][_class]['fields']:
             line = "".join(data['classes'][_class]['fields'][_field]['body'])
+            
+            if _class == args.class_name:
+                # if field is 'final', remove the 'final' keyword
+                if 'final' in data['classes'][_class]['fields'][_field]['modifiers']:
+                    line = line.replace(' final', '', 1)
+                
+                # add field to sync() method
+                field_name = _field.split(':')[1].strip()
+                
+                if 'private' in data['classes'][_class]['fields'][_field]['modifiers']:
+                    python_field_name = f"_{args.class_name}__{field_name}"
+                else:
+                    python_field_name = field_name
+                    
+                field_type = data['classes'][_class]['fields'][_field]['types'][0][0]
+                field_from_python = type_handling[field_type].format("this.obj.getMember(\"" + python_field_name + "\")")                
+                    
+                sync_method_body += f"{field_name} = ({field_type}) {field_from_python};\n"
+
             if '=' not in line:
                 continue
             final_glue_code += line
         
-        if not data['classes'][_class]['is_interface']:
+        if not data['classes'][_class]['is_interface'] and _class == args.class_name:
             # add graal attributes
             python_file_dir = subproj_name.replace('.', '/')
             python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
@@ -248,6 +274,14 @@ def main(args):
             final_glue_code += "        return obj;\n"
             final_glue_code += "    }\n"
 
+            # add a new empty constructor
+            final_glue_code += f"public {_class}() {{this.obj = clz.newInstance();}}\n"
+            
+        if _class == args.class_name:
+            # add sync() method
+            sync_method_body += "    }\n"
+            final_glue_code += sync_method_body
+
         for _method in data['classes'][_class]['methods']:
             is_constructor = data['classes'][_class]['methods'][_method]['is_constructor']
             method_body = "".join(data['classes'][_class]['methods'][_method]['body'])
@@ -265,7 +299,7 @@ def main(args):
             method_signature = method_body[:method_body.find('{')+1]
             method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
 
-            if method_name != args.method_name:
+            if method_name != args.method_name or _class != args.class_name:
                 # not our target method
                 final_glue_code += method_signature + "\n" + method_content + "}\n"
                 continue
@@ -285,9 +319,9 @@ def main(args):
             python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
             
             if is_constructor:
-                final_content += f"\nthis.obj = {python_call};\n"
+                final_content += f"\nsync();\nthis.obj = {python_call};\n"
             elif 'void' in method_signature:
-                final_content += f"\n{python_call};\n"
+                final_content += f"\nsync();\n{python_call};\n"
             else:
                 return_type = data['classes'][_class]['methods'][_method]['return_types'][0][0] # taking the first return type for now (TODO: verify this)
                 

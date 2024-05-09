@@ -1,6 +1,7 @@
 package org.apache.commons.fileupload.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -8,13 +9,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import org.apache.commons.fileupload.ContextInitializer;
+import org.apache.commons.fileupload.ExceptionHandler;
 import org.apache.commons.fileupload.FileItemHeaders;
+import org.apache.commons.fileupload.IntegrationUtils;
+import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Value;
 
 public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
-  private final Map<String, List<String>> headerNameToValueListMap =
+  private Map<String, List<String>> headerNameToValueListMap =
       new LinkedHashMap<String, List<String>>();
-  private static final long serialVersionUID = -4455695752627032559L;
+  private static long serialVersionUID = -4455695752627032559L;
   private static Value clz =
       ContextInitializer.getPythonClass("/util/FileItemHeadersImpl.py", "FileItemHeadersImpl");
   private Value obj;
@@ -25,6 +29,17 @@ public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
 
   public Value getPythonObject() {
     return obj;
+  }
+
+  public FileItemHeadersImpl() {
+    this.obj = clz.newInstance();
+  }
+
+  private void sync() {
+    headerNameToValueListMap =
+        (Map<String, List<String>>)
+            this.obj.getMember("_FileItemHeadersImpl__headerNameToValueListMap").as(Map.class);
+    serialVersionUID = (long) this.obj.getMember("_FileItemHeadersImpl__serialVersionUID").asLong();
   }
 
   public Iterator<String> getHeaders(String name) {
@@ -63,6 +78,7 @@ public class FileItemHeadersImpl implements FileItemHeaders, Serializable {
     // headerValueList.add(value);
     //
 
+    sync();
     this.obj.invokeMember("addHeader", name, value);
   }
 }
