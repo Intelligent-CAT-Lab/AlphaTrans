@@ -154,60 +154,9 @@ def main(args):
     
     formatted_proj_name = args.project_name.replace('-', '.')
     
-    # Copy original project to glue_code directory
-    
-    # but first check if pom.xml exists in the output directory and
-    # and if it does, store its contents 
-    
-    pom_contents = None
-    if os.path.exists(f"{OUTPUT_DIR}/{args.project_name}/pom.xml"):
-        with open(f"{OUTPUT_DIR}/{args.project_name}/pom.xml") as f:
-            pom_contents = f.read()
-    
-    if not os.path.exists(f"{OUTPUT_DIR}/{args.project_name}/"):
-        os.makedirs(f"{OUTPUT_DIR}/{args.project_name}/")
-    subprocess.run(['cp', '-r', f"{ORIGINAL_DIR}/{args.project_name}/.", f"{OUTPUT_DIR}/{args.project_name}/"], check=True)
-    
-    # if pom.xml existed, write it back
-    if pom_contents:
-        with open(f"{OUTPUT_DIR}/{args.project_name}/pom.xml", "w") as f:
-            f.write(pom_contents)
-    
-    # Add ContextInitializer.java
-    ctx_mappings, ctx_imports = make_mappings(args, schemas)
-    with open("src/compositional_glue_tests/misc/ContextInitializer.java") as f:
-        write_to_file(get_destination_path(args.project_name, "ContextInitializer", path_to_main=main_paths[args.project_name]), f.read().format(
-                project = f"org.apache.{formatted_proj_name}",
-                imports = ctx_imports,
-                code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name].replace('/java/', '/')}",
-                package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/",
-                mappings = ctx_mappings
-            ))
-
-    # Add ExceptionHandler.java
-    exp_mappings, exp_imports = make_exception_mappings(args, schemas)
-    with open("src/compositional_glue_tests/misc/ExceptionHandler.java") as f:
-        write_to_file(get_destination_path(args.project_name, "ExceptionHandler", path_to_main=main_paths[args.project_name]), f.read().format(
-                project = f"org.apache.{formatted_proj_name}",
-                imports = exp_imports,
-                mappings = exp_mappings
-            ))
-    
-    # IntegrationUtils.java
-    with open("src/compositional_glue_tests/misc/IntegrationUtils.java") as f:
-        write_to_file(get_destination_path(args.project_name, "IntegrationUtils", path_to_main=main_paths[args.project_name]), f.read().format(
-                project = f"org.apache.{formatted_proj_name}"
-            ))
-        
-    # copy java_handler.py to the translated project
-    subprocess.run(['cp', 'src/compositional_glue_tests/misc/java_handler.py', f"{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name].replace('/java/', '/')}/"], check=True)
-
     with open(f'data/schemas/{args.project_name}/{schema}') as f:
         data = json.load(f)
-    
-    final_glue_code = ""
-    unclosed_brace_count = 0
-    
+
     methods_under_test = []
     if args.method_name is not None:
         methods_under_test = [args.method_name]
@@ -217,11 +166,64 @@ def main(args):
             method_body = "".join(data['classes'][args.class_name]['methods'][_method]['body'])
             method_name = _method.split(':', 1)[1].strip() if not is_constructor else "__init__"
             methods_under_test.append(method_name)
-            
+    
+    
     for mut in methods_under_test:
+                
+        # Copy original project to glue_code directory
         
-        # sync() method body
+        # but first check if pom.xml exists in the output directory and
+        # and if it does, store its contents 
+        
+        pom_contents = None
+        if os.path.exists(f"{OUTPUT_DIR}/{args.project_name}/pom.xml"):
+            with open(f"{OUTPUT_DIR}/{args.project_name}/pom.xml") as f:
+                pom_contents = f.read()
+        
+        if not os.path.exists(f"{OUTPUT_DIR}/{args.project_name}/"):
+            os.makedirs(f"{OUTPUT_DIR}/{args.project_name}/")
+        subprocess.run(['cp', '-r', f"{ORIGINAL_DIR}/{args.project_name}/.", f"{OUTPUT_DIR}/{args.project_name}/"], check=True)
+        
+        # if pom.xml existed, write it back
+        if pom_contents:
+            with open(f"{OUTPUT_DIR}/{args.project_name}/pom.xml", "w") as f:
+                f.write(pom_contents)
+        
+        # Add ContextInitializer.java
+        ctx_mappings, ctx_imports = make_mappings(args, schemas)
+        with open("src/compositional_glue_tests/misc/ContextInitializer.java") as f:
+            write_to_file(get_destination_path(args.project_name, "ContextInitializer", path_to_main=main_paths[args.project_name]), f.read().format(
+                    project = f"org.apache.{formatted_proj_name}",
+                    imports = ctx_imports,
+                    code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name].replace('/java/', '/')}",
+                    package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/",
+                    mappings = ctx_mappings
+                ))
+
+        # Add ExceptionHandler.java
+        exp_mappings, exp_imports = make_exception_mappings(args, schemas)
+        with open("src/compositional_glue_tests/misc/ExceptionHandler.java") as f:
+            write_to_file(get_destination_path(args.project_name, "ExceptionHandler", path_to_main=main_paths[args.project_name]), f.read().format(
+                    project = f"org.apache.{formatted_proj_name}",
+                    imports = exp_imports,
+                    mappings = exp_mappings
+                ))
+        
+        # IntegrationUtils.java
+        with open("src/compositional_glue_tests/misc/IntegrationUtils.java") as f:
+            write_to_file(get_destination_path(args.project_name, "IntegrationUtils", path_to_main=main_paths[args.project_name]), f.read().format(
+                    project = f"org.apache.{formatted_proj_name}"
+                ))
+            
+        # copy java_handler.py to the translated project
+        subprocess.run(['cp', 'src/compositional_glue_tests/misc/java_handler.py', f"{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name].replace('/java/', '/')}/"], check=True)
+        
+        final_glue_code = ""
+        unclosed_brace_count = 0
+            
+        # sync() and revsync() method bodies
         sync_method_body = "    private void sync() {\n"
+        revsync_method_body = "    private void revsync() {\n"
         
         # find subpackage names (if exist)
         if main_paths[args.project_name] in data['path']:
@@ -275,6 +277,7 @@ def main(args):
                     field_from_python = type_handling[field_type].format("this.obj.getMember(\"" + python_field_name + "\")")                
                         
                     sync_method_body += f"{field_name} = ({field_type}) {field_from_python};\n"
+                    revsync_method_body += f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}));\n"
 
                 if '=' not in line:
                     continue
@@ -306,7 +309,10 @@ def main(args):
             if _class == args.class_name:
                 # add sync() method
                 sync_method_body += "    }\n"
+                revsync_method_body += "    }\n"
+                
                 final_glue_code += sync_method_body
+                final_glue_code += revsync_method_body
 
             for _method in data['classes'][_class]['methods']:
                 is_constructor = data['classes'][_class]['methods'][_method]['is_constructor']
@@ -345,14 +351,17 @@ def main(args):
                 python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
                 
                 if is_constructor:
-                    final_content += f"\nsync();\nthis.obj = {python_call};\n"
+                    final_content += f"\nrevsync();\nthis.obj = {python_call};\nsync();\n"
                 elif 'void' in method_signature:
-                    final_content += f"\nsync();\n{python_call};\n"
+                    final_content += f"\nrevsync();\n{python_call};\nsync();\n"
                 else:
                     return_type = data['classes'][_class]['methods'][_method]['return_types'][0][0] # taking the first return type for now (TODO: check if this is OK)
 
-                    return_type_casted = type_handling[return_type].format(python_call)                
-                    final_content += f"\nreturn {return_type_casted};\n"               
+                    return_type_casted = type_handling[return_type].format(python_call)
+                    final_content += f"\nrevsync();\n"
+                    final_content += f"{return_type} val = ({return_type}) {return_type_casted};\n"
+                    final_content += "sync();\n"
+                    final_content += f"return val;\n"               
 
                 # TODO: add comments for dev hints
                 if 'throws' in method_body:
