@@ -1,9 +1,8 @@
 # Imports Begin
-from src.main.org.apache.commons.cli.ParserTestCase import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.BasicParser import *
 import unittest
-import ParserTestCase
+from ParserTestCase import ParserTestCase
 
 # Imports End
 

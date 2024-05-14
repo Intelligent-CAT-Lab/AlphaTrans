@@ -1,10 +1,9 @@
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
-from src.main.org.apache.commons.cli.ParserTestCase import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 import unittest
 import os
-import ParserTestCase
+from ParserTestCase import ParserTestCase
 
 # Imports End
 
