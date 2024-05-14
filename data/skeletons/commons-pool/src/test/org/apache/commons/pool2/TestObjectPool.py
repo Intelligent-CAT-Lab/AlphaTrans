@@ -1,0 +1,56 @@
+# Imports Begin
+from src.main.org.apache.commons.pool2.PooledObjectFactory import *
+from src.main.org.apache.commons.pool2.ObjectPool import *
+from src.main.org.apache.commons.pool2.MethodCallPoolableObjectFactory import *
+from src.main.org.apache.commons.pool2.MethodCall import *
+import typing
+from abc import ABC
+
+# Imports End
+
+
+class TestObjectPool(ABC):
+
+    # Class Fields Begin
+    __ZERO: int = None
+    __ONE: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    @staticmethod
+    def removeDestroyObjectCall(calls: typing.List[MethodCall]) -> None:
+        pass
+
+    @staticmethod
+    def __reset(
+        pool: ObjectPool[object],
+        factory: MethodCallPoolableObjectFactory,
+        expectedMethods: typing.List[MethodCall],
+    ) -> None:
+        pass
+
+    @staticmethod
+    def __clear(
+        factory: MethodCallPoolableObjectFactory,
+        expectedMethods: typing.List[MethodCall],
+    ) -> None:
+        pass
+
+    def _makeEmptyPool(
+        self, factory: PooledObjectFactory[typing.Any]
+    ) -> ObjectPool[object]:
+        pass
+
+    # Class Methods End
+
+
+class Predicate:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def test(self, call: MethodCall) -> bool:
+        pass
+
+    # Class Methods End
