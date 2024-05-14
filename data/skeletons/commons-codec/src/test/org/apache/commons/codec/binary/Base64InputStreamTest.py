@@ -1,0 +1,90 @@
+# Imports Begin
+from src.main.org.apache.commons.codec.binary.StringUtils import *
+from src.main.org.apache.commons.codec.binary.Codec105ErrorInputStream import *
+from src.main.org.apache.commons.codec.binary.BaseNTestData import *
+from src.main.org.apache.commons.codec.binary.BaseNCodecInputStream import *
+from src.main.org.apache.commons.codec.binary.BaseNCodec import *
+from src.main.org.apache.commons.codec.binary.Base64TestData import *
+from src.main.org.apache.commons.codec.binary.Base64InputStream import *
+import typing
+
+# Imports End
+
+
+class Base64InputStreamTest:
+
+    # Class Fields Begin
+    __ENCODED_B64: str = None
+    __CRLF: typing.List[int] = None
+    __LF: typing.List[int] = None
+    __STRING_FIXTURE: str = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def testSkipWrongArgument(self) -> None:
+        pass
+
+    def testSkipToEnd(self) -> None:
+        pass
+
+    def testSkipPastEnd(self) -> None:
+        pass
+
+    def testSkipNone(self) -> None:
+        pass
+
+    def testSkipBig(self) -> None:
+        pass
+
+    def testReadOutOfBounds(self) -> None:
+        pass
+
+    def testReadNull(self) -> None:
+        pass
+
+    def testRead0(self) -> None:
+        pass
+
+    def testMarkSupported(self) -> None:
+        pass
+
+    def testBase64EmptyInputStreamPemChuckSize(self) -> None:
+        pass
+
+    def testBase64EmptyInputStreamMimeChuckSize(self) -> None:
+        pass
+
+    def testAvailable(self) -> None:
+        pass
+
+    def testInputStreamReader(self) -> None:
+        pass
+
+    def testCodec101(self) -> None:
+        pass
+
+    def testCodec105(self) -> None:
+        pass
+
+    def __testByteByByte(
+        self,
+        encoded: typing.List[int],
+        decoded: typing.List[int],
+        chunkSize: int,
+        separator: typing.List[int],
+    ) -> None:
+        pass
+
+    def __testByChunk(
+        self,
+        encoded: typing.List[int],
+        decoded: typing.List[int],
+        chunkSize: int,
+        separator: typing.List[int],
+    ) -> None:
+        pass
+
+    def __testBase64EmptyInputStream(self, chuckSize: int) -> None:
+        pass
+
+    # Class Methods End

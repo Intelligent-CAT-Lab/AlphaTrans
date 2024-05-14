@@ -1,0 +1,45 @@
+# Imports Begin
+from src.main.org.apache.commons.codec.digest.XXHash32 import *
+import typing
+import io
+import pathlib
+
+# Imports End
+
+
+class XXHash32Test:
+
+    # Class Fields Begin
+    __file: pathlib.Path = None
+    __expectedChecksum: str = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def verifyIncrementalChecksum(self) -> None:
+        pass
+
+    def verifyChecksum(self) -> None:
+        pass
+
+    @staticmethod
+    def factory() -> typing.Collection[typing.List[typing.Any]]:
+        pass
+
+    def __init__(self, path: str, c: str) -> None:
+        pass
+
+    @staticmethod
+    def __copy(
+        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        output: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter],
+        buffersize: int,
+    ) -> int:
+        pass
+
+    @staticmethod
+    def __toByteArray(
+        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]
+    ) -> typing.List[int]:
+        pass
+
+    # Class Methods End
