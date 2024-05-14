@@ -1,0 +1,81 @@
+# Imports Begin
+from src.main.org.apache.commons.validator.routines.AbstractFormatValidator import *
+import datetime
+import typing
+import numbers
+from abc import ABC
+
+# Imports End
+
+
+class AbstractNumberValidator(AbstractFormatValidator, ABC):
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    STANDARD_FORMAT: int = None
+    CURRENCY_FORMAT: int = None
+    PERCENT_FORMAT: int = None
+    __allowFractions: bool = None
+    __formatType: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def _getFormat(
+        self, pattern: str, locale: typing.Any
+    ) -> typing.Union[str, datetime.datetime]:
+        pass
+
+    def isValid3(self, value: str, pattern: str, locale: typing.Any) -> bool:
+        pass
+
+    def _getFormat1(self, locale: typing.Any) -> typing.Union[str, datetime.datetime]:
+        pass
+
+    def _determineScale(self, format: typing.Any) -> int:
+        pass
+
+    def _getFormat0(
+        self, pattern: str, locale: typing.Any
+    ) -> typing.Union[str, datetime.datetime]:
+        pass
+
+    def _parse(self, value: str, pattern: str, locale: typing.Any) -> typing.Any:
+        pass
+
+    def maxValue(
+        self,
+        value: typing.Union[int, float, numbers.Number],
+        max: typing.Union[int, float, numbers.Number],
+    ) -> bool:
+        pass
+
+    def minValue(
+        self,
+        value: typing.Union[int, float, numbers.Number],
+        min: typing.Union[int, float, numbers.Number],
+    ) -> bool:
+        pass
+
+    def isInRange(
+        self,
+        value: typing.Union[int, float, numbers.Number],
+        min: typing.Union[int, float, numbers.Number],
+        max: typing.Union[int, float, numbers.Number],
+    ) -> bool:
+        pass
+
+    def getFormatType(self) -> int:
+        pass
+
+    def isAllowFractions(self) -> bool:
+        pass
+
+    def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:
+        pass
+
+    def _processParsedValue(
+        self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]
+    ) -> typing.Any:
+        pass
+
+    # Class Methods End

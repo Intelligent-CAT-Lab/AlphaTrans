@@ -1,0 +1,64 @@
+# Imports Begin
+from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
+import datetime
+import typing
+import numbers
+
+# Imports End
+
+
+class LongValidator(AbstractNumberValidator):
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    __VALIDATOR: LongValidator = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def _processParsedValue(
+        self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]
+    ) -> typing.Any:
+        pass
+
+    def maxValue1(self, value: int, max: int) -> bool:
+        pass
+
+    def maxValue0(self, value: int, max: int) -> bool:
+        pass
+
+    def minValue1(self, value: int, min: int) -> bool:
+        pass
+
+    def minValue0(self, value: int, min: int) -> bool:
+        pass
+
+    def isInRange1(self, value: int, min: int, max: int) -> bool:
+        pass
+
+    def isInRange0(self, value: int, min: int, max: int) -> bool:
+        pass
+
+    def validate3(self, value: str, pattern: str, locale: typing.Any) -> int:
+        pass
+
+    def validate2(self, value: str, locale: typing.Any) -> int:
+        pass
+
+    def validate1(self, value: str, pattern: str) -> int:
+        pass
+
+    def validate0(self, value: str) -> int:
+        pass
+
+    @staticmethod
+    def LongValidator1() -> "LongValidator":
+        pass
+
+    def __init__(self, strict: bool, formatType: int) -> None:
+        pass
+
+    @staticmethod
+    def getInstance() -> "LongValidator":
+        pass
+
+    # Class Methods End
