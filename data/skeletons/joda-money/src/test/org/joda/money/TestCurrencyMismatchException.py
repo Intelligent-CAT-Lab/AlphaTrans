@@ -1,0 +1,28 @@
+# Imports Begin
+from src.main.org.joda.money.CurrencyUnit import *
+from src.main.org.joda.money.CurrencyMismatchException import *
+
+# Imports End
+
+
+class TestCurrencyMismatchException:
+
+    # Class Fields Begin
+    __GBP: CurrencyUnit = None
+    __EUR: CurrencyUnit = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def test_new_nullnull(self) -> None:
+        pass
+
+    def test_new_GBPnull(self) -> None:
+        pass
+
+    def test_new_nullEUR(self) -> None:
+        pass
+
+    def test_new_GBPEUR(self) -> None:
+        pass
+
+    # Class Methods End
