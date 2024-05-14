@@ -33,83 +33,18 @@ def main(args):
 
     for schema_fname in schemas:
 
+        if 'python_partial' in schema_fname:
+            continue
+
         schema_path = f'data/schemas/{args.project_name}/{schema_fname}'
 
         dependencies = {}
         with open(f'data/dependencies/{args.project_name}/dependencies.json', 'r') as f:
             dependencies = json.load(f)
         
-        skeletons = {}
         schema = {}
         with open(schema_path, 'r') as f:
             schema = json.load(f)
-
-        skeleton = '// Imports Begin\n'
-        for import_ in sorted(schema['imports']):
-            skeleton += ''.join(schema['imports'][import_]['body'])
-        skeleton += '// Imports End\n\n'
-
-        added_classes = []
-
-        for class_ in schema['classes']:
-
-            if class_ in added_classes:
-                continue
-
-            file_lines = ''
-            with open(schema['path'], 'r') as f:
-                file_lines = f.readlines()
-            
-            class_start_line = schema['classes'][class_]['start']
-            class_end_line = schema['classes'][class_]['end']
-
-            class_declaration = file_lines[class_start_line-1:class_end_line][0].split('{')[0]
-            skeleton += class_declaration + ' {\n\n'
-
-            if schema['classes'][class_]['nests'] != '':
-
-                for nested_class in schema['classes'][class_]['nests']:
-
-                    nested_class_start_line = schema['classes'][nested_class]['start']
-                    nested_class_end_line = schema['classes'][nested_class]['end']
-
-                    nested_class_declaration = file_lines[nested_class_start_line-1:nested_class_end_line][0].split('{')[0]
-                    skeleton += '\t' + nested_class_declaration.strip() + ' {\n\n'
-
-                    skeleton += '\t\t// Class Fields Begin\n'
-                    for field in sorted(schema['classes'][nested_class]['fields']):
-                        skeleton += '\t\t' + ''.join(schema['classes'][nested_class]['fields'][field]['body']).strip() + '\n'
-                    skeleton += '\t\t// Class Fields End\n\n'
-
-                    skeleton += '\t\t// Class Methods Begin\n'
-                    for method in sorted(schema['classes'][nested_class]['methods']):
-                        if schema['classes'][nested_class]['is_interface']:
-                            skeleton += '\t\t' + ''.join(schema['classes'][nested_class]['methods'][method]['body']).strip().split('{')[0] + '\n'
-                        else:
-                            skeleton += '\t\t' + ''.join(schema['classes'][nested_class]['methods'][method]['body']).strip().split('{')[0] + '{}\n'
-                    skeleton += '\t\t// Class Methods End\n'
-
-                    skeleton += '\t}\n\n'
-
-                    added_classes.append(nested_class)
-
-            skeleton += '\t// Class Fields Begin\n'
-            for field in sorted(schema['classes'][class_]['fields']):
-                skeleton += '\t' + ''.join(schema['classes'][class_]['fields'][field]['body']).strip() + '\n'
-            skeleton += '\t// Class Fields End\n\n'
-
-            skeleton += '\t// Class Methods Begin\n'
-            for method in sorted(schema['classes'][class_]['methods']):
-                if schema['classes'][class_]['is_interface']:
-                    skeleton += '\t' + ''.join(schema['classes'][class_]['methods'][method]['body']).strip().split('{')[0] + '\n'
-                else:
-                    skeleton += '\t' + ''.join(schema['classes'][class_]['methods'][method]['body']).strip().split('{')[0] + '{}\n'
-            skeleton += '\t// Class Methods End\n'
-
-            skeleton += '}'
-
-        skeleton = skeleton.replace('\t', '    ')
-        skeletons['java'] = skeleton
 
         skeleton = ''
         skeleton += '# Imports Begin\n'
@@ -117,37 +52,61 @@ def main(args):
 
         target_schema = schema.copy()
 
-        class_dependencies = []
-        for class_ in schema['classes']:
+        topological_classes = []
+        while len(topological_classes) != len(schema['classes']):
+            for class_ in schema['classes']:
+                if class_ in topological_classes:
+                    continue
 
+                if schema['classes'][class_]['nested_inside'] != []:
+                    if schema['classes'][class_]['nested_inside'] not in topological_classes:
+                        continue
+
+                topological_classes.append(class_)
+
+        class_dependencies = []
+        for class_ in topological_classes:
             main_class = class_
             if schema['classes'][class_]['nested_inside'] != []:
                 main_class = schema['classes'][class_]['nested_inside']
+                dependencies.setdefault(main_class, [])
                 dependencies[main_class].append(main_class)
 
             dependencies[main_class] += schema['classes'][main_class]['nests']
 
             if class_ in dependencies:
                 class_dependencies.append((schema['path'], dependencies[class_]))
+            
+            class_name = class_
+            if '<' in class_:
+                class_name = class_.split('<')[0].replace('new ', '').strip()
+            elif '(' in class_:
+                class_name = class_.split('(')[0].replace('new ', '').strip()
 
             if schema['classes'][class_]['extends'] != []:
+                schema['classes'][class_]['extends'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
+                schema['classes'][class_]['extends'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
-                    skeleton += 'class ' + class_ + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
+                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
                 else:
-                    skeleton += 'class ' + class_ + '(' + ', '.join(schema['classes'][class_]['extends']) + '):\n\n'
+                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends']) + '):\n\n'
             elif schema['classes'][class_]['implements'] != []:
+                schema['classes'][class_]['implements'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
+                schema['classes'][class_]['implements'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
-                    skeleton += 'class ' + class_ + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
+                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
                 else:
-                    skeleton += 'class ' + class_ + '(' + ', '.join(schema['classes'][class_]['implements']) + '):\n\n'
+                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements']) + '):\n\n'
             else:
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
-                    skeleton += 'class ' + class_ + '(ABC):\n\n'
+                    skeleton += 'class ' + class_name + '(ABC):\n\n'
                 else:
-                    skeleton += 'class ' + class_ + ':\n\n'            
+                    skeleton += 'class ' + class_name + ':\n\n'            
 
+            is_empty_class = True
             skeleton += '\t# Class Fields Begin\n'
             for field in sorted(schema['classes'][class_]['fields']):
+                is_empty_class = False
                 field_name = field.split(':')[1].strip()
                 if 'protected' in schema['classes'][class_]['fields'][field]['modifiers']:
                     field_name = '_' + field_name
@@ -168,13 +127,21 @@ def main(args):
 
                 target_schema['classes'][class_]['fields'][field]['partial_translation'] = f'    {field_body}'
 
-                skeleton += f'\t{field_body}'
+                skeleton += f'\t{field_name}: {field_type} = None\n'
             skeleton += '\t# Class Fields End\n\n'
 
             skeleton += '\t# Class Methods Begin\n'
             for method in schema['classes'][class_]['methods']:
                 current_method = []
                 method_name = method.split(':')[1].strip()
+
+                if method_name.strip() == '':
+                    continue
+
+                if method_name in ['from']:
+                    method_name = 'from_'
+
+                is_empty_class = False
 
                 is_static = False
                 if 'static' in schema['classes'][class_]['methods'][method]['modifiers']:
@@ -210,6 +177,8 @@ def main(args):
                     
                     parameters = schema["classes"][class_]["methods"][method]["parameters"]
                     param_types = [(x, y) for x, y in zip(parameters, parameter_types)]
+                    param_types = [('in_', y) if x == 'in' else (x, y) for x, y in param_types]
+                    param_types = [('from_', y) if x == 'from' else (x, y) for x, y in param_types]
 
                     if class_ == method_name:
                         skeleton += '\tdef __init__(self, ' + ', '.join([x + f': {y.strip()}' for x, y in param_types]) + ') -> '
@@ -227,6 +196,8 @@ def main(args):
                 return_type = '<placeholder>'
                 if len(schema['classes'][class_]['methods'][method]['return_types']) == 1 and schema['classes'][class_]['methods'][method]['return_types'][0][0] in extracted_types:
                     return_type = extracted_types[schema['classes'][class_]['methods'][method]['return_types'][0][0]]
+                    if return_type == class_:
+                        return_type = f'"{class_}"'
 
                 skeleton += f'{return_type}:\n\t\tpass\n\n'
                 current_method[-1] = current_method[-1] + f'{return_type}:\n'
@@ -239,11 +210,18 @@ def main(args):
 
             skeleton += '\t# Class Methods End\n\n\n'
 
+            if is_empty_class:
+                skeleton += '\tpass\n\n'
+
         python_imports = []
 
         if 'ABC' in skeleton:
             skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom abc import ABC\n')
             python_imports.append('from abc import ABC')
+
+        if 'configparser' in skeleton:
+            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport configparser\n')
+            python_imports.append('import configparser')
 
         if 'Path' in skeleton:
             skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport pathlib\n')
@@ -266,23 +244,33 @@ def main(args):
             python_imports.append('import datetime')
 
         for dependency in class_dependencies:
-            path = dependency[0]
-            prefix = path.split('/')
-            prefix[-1] = prefix[-1].split('.')[0]
-            prefix = '.'.join(prefix[2:-1])
             for dependent_class in dependency[1]:
-                skeleton = skeleton.replace('# Imports Begin\n', f'# Imports Begin\nfrom {prefix}.{dependent_class} import {dependent_class}\n')
+                if len(dependent_class) != 2:
+                    continue
+
+                path = f'src.main.{dependent_class[1]}'
+                if f'from {path} import *' in skeleton:
+                    continue
+                skeleton = skeleton.replace('# Imports Begin\n', f'# Imports Begin\nfrom {path} import *\n')
 
         target_schema.setdefault('python_imports', [])
         target_schema['python_imports'] = python_imports
 
         skeleton = skeleton.replace('\t', '    ')
-        skeletons['python'] = skeleton
         formatted_schema_fname = '.'.join(schema_fname.split('.')[:-1])
 
         os.makedirs(f'data/skeletons/{args.project_name}', exist_ok=True)
-        with open(f'data/skeletons/{args.project_name}/{formatted_schema_fname}.json', 'w') as f:
-            json.dump(skeletons, f, indent=4)
+
+        skeleton = skeleton.replace('\t', '    ')
+
+        formatted_schema_fname = '.'.join(schema_fname.split('.')[:-1])
+        sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
+        os.makedirs(f'data/skeletons/{args.project_name}/{sub_dir}', exist_ok=True)
+        file_path = f"data/skeletons/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_translation', '')}.py"
+        with open(file_path, 'w') as f:
+            f.write(skeleton)
+        
+        os.system(f'python3 -m black {file_path}')
 
         with open(f'data/schemas/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
             json.dump(target_schema, f, indent=4)
