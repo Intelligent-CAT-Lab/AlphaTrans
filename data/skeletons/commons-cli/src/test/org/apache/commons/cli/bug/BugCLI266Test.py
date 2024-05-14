@@ -1,0 +1,31 @@
+# Imports Begin
+from src.main.org.apache.commons.cli.Options import *
+from src.main.org.apache.commons.cli.OptionGroup import *
+from src.main.org.apache.commons.cli.Option import *
+from src.main.org.apache.commons.cli.HelpFormatter import *
+import typing
+
+# Imports End
+
+
+class BugCLI266Test:
+
+    # Class Fields Begin
+    __insertedOrder: typing.List[str] = None
+    __sortOrder: typing.List[str] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def testOptionComparatorInsertedOrder(self) -> None:
+        pass
+
+    def testOptionComparatorDefaultOrder(self) -> None:
+        pass
+
+    def __getOptions(self) -> Options:
+        pass
+
+    def __buildOptionsGroup(self, options: Options) -> None:
+        pass
+
+    # Class Methods End

@@ -1,0 +1,22 @@
+# Imports Begin
+import typing
+
+# Imports End
+
+
+class Util:
+
+    # Class Fields Begin
+    EMPTY_STRING_ARRAY: typing.List[str] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    @staticmethod
+    def stripLeadingHyphens(str: str) -> str:
+        pass
+
+    @staticmethod
+    def stripLeadingAndTrailingQuotes(str: str) -> str:
+        pass
+
+    # Class Methods End
