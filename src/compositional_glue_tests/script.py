@@ -389,14 +389,17 @@ def main(args):
                 if is_constructor:
                     final_content += f"\nthis.obj = {python_call};\nsync();\n"
                 elif 'void' in method_signature:
-                    final_content += f"\nrevsync();\n{python_call};\nsync();\n"
+                    if 'static' in data['classes'][_class]['methods'][_method]['modifiers']:
+                        final_content += f"\n{python_call};\n" # no need to sync for static methods
+                    else:                    
+                        final_content += f"\nrevsync();\n{python_call};\nsync();\n"
                 else:
                     return_type = data['classes'][_class]['methods'][_method]['return_types'][0][0] # taking the first return type for now (TODO: check if this is OK)
 
                     return_type_casted = type_handling[return_type].format(python_call)
-                    final_content += f"\nrevsync();\n"
+                    final_content += f"\nrevsync();\n" if 'static' not in data['classes'][_class]['methods'][_method]['modifiers'] else '' # no need to sync for static methods
                     final_content += f"{return_type} val = ({return_type}) {return_type_casted};\n"
-                    final_content += "sync();\n"
+                    final_content += "sync();\n" if 'static' not in data['classes'][_class]['methods'][_method]['modifiers'] else '' # no need to sync for static methods
                     final_content += f"return val;\n"               
 
                 # TODO: add comments for dev hints
