@@ -279,8 +279,6 @@ def main(args):
                     sync_method_body += f"{field_name} = ({field_type}) {field_from_python};\n"
                     revsync_method_body += f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}));\n"
 
-                if '=' not in line:
-                    continue
                 final_glue_code += line
             
             if not data['classes'][_class]['is_interface'] and _class == args.class_name:
@@ -336,10 +334,12 @@ def main(args):
                     final_glue_code += method_signature + "\n" + method_content + "}\n"
                     continue
                 
-                # comment out the original method contents
-                commented_content = "".join([f"// {line.strip()}\n" for line in method_content.split('\n')])
-                
-                final_content = commented_content
+                # comment out the original method contents if method is not a constructor, else leave it as it is
+                if is_constructor:
+                    final_content = method_content
+                else:
+                    commented_content = "".join([f"// {line.strip()}\n" for line in method_content.split('\n')])
+                    final_content = commented_content
                 
                 # construct call to Python
                 if "static" in data['classes'][_class]['methods'][_method]['modifiers'] or is_constructor:
@@ -348,10 +348,14 @@ def main(args):
                     caller = "this.obj"
                 
                 args_buildup = ", ".join(data['classes'][_class]['methods'][_method]['parameters'])
-                python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
                 
                 if is_constructor:
-                    final_content += f"\nrevsync();\nthis.obj = {python_call};\nsync();\n"
+                    python_call = f"clz.newInstance({args_buildup})"
+                else:
+                    python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
+                
+                if is_constructor:
+                    final_content += f"\nthis.obj = {python_call};\nsync();\n"
                 elif 'void' in method_signature:
                     final_content += f"\nrevsync();\n{python_call};\nsync();\n"
                 else:
@@ -396,7 +400,7 @@ def main(args):
         # run the test
         print("Method currently under test:", f"{class_name}#{mut}")
         try:
-            subprocess.run(['mvn', 'clean', 'test', '-Drat.skip', '-q'], cwd=f"{OUTPUT_DIR}/{args.project_name}/", stderr=subprocess.DEVNULL, check=True)
+            subprocess.run(['mvn', 'clean', 'test', '-Drat.skip', '-q'], cwd=f"{OUTPUT_DIR}/{args.project_name}/", stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, check=True)
         except Exception as e:
             print(f"Error running test for {args.project_name}.")
             continue
