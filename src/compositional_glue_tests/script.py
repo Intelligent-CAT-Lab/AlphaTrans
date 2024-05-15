@@ -3,6 +3,7 @@ import os
 import subprocess
 import json
 import xml.etree.ElementTree as ET
+from collections import defaultdict
 
 ORIGINAL_DIR = "java_projects/cleaned_final_projects"
 OUTPUT_DIR = "java_projects/compositional_glue_tests"
@@ -20,6 +21,15 @@ main_paths = {
     "joda-convert": "main/java/org/joda/convert/",
     "joda-money": "main/java/org/joda/money/",
 }
+
+default_type_value = defaultdict(lambda: "null")
+default_type_value.update({
+    "int": "0",
+    "boolean": "false",
+    "float": "0",
+    "double": "0",
+    "long": "0",
+})
 
 def get_destination_path(path, file_name, is_full_path=False, path_to_main=None):
     _path = [OUTPUT_DIR]
@@ -256,6 +266,8 @@ def main(args):
                 lst = current_f.readlines()
             class_declaration = lst[data['classes'][_class]['start']-1:data['classes'][_class]['end']]
             final_glue_code += "".join(class_declaration)
+            
+            unitialized_fields = []
 
             for _field in data['classes'][_class]['fields']:
                 line = "".join(data['classes'][_class]['fields'][_field]['body'])
@@ -280,6 +292,10 @@ def main(args):
                     revsync_method_body += f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}));\n"
 
                 final_glue_code += line
+                
+                # check if this field was not initialized
+                if '=' not in line:
+                    unitialized_fields.append(_field)
             
             if not data['classes'][_class]['is_interface'] and _class == args.class_name:
                 # add graal attributes
@@ -303,7 +319,23 @@ def main(args):
 
                 # add a new empty constructor
                 final_glue_code += f"public {_class}() {{this.obj = clz.newInstance();}}\n"
+
+            if _class in data['classes'][args.class_name]['extends']:
+                # This will take care of the super class constructor when
+                # the super class is defined in the same file
                 
+                # add empty constructor for super class
+                final_glue_code += f"    public {_class}() {{\n"
+                
+                # initialize all uninitialized fields inside the constructor
+                for _field in unitialized_fields:
+                    field_name = _field.split(':')[1].strip()
+                    field_type = data['classes'][_class]['fields'][_field]['types'][0][0]
+                    
+                    final_glue_code += f"        {field_name} = {default_type_value[field_type]};\n"
+                    
+                final_glue_code += "    }\n"                
+            
             if _class == args.class_name:
                 # add sync() method
                 sync_method_body += "    }\n"
@@ -392,6 +424,55 @@ def main(args):
                 unclosed_brace_count += 1
                 
         final_glue_code += "}\n" * unclosed_brace_count
+        
+        # If the super class is not defined in the same file, we handle it separately
+        # note that a class can only extend at most one class
+        
+        # We have assumed (for now) that the parent class will have a file of its own
+        if data['classes'][args.class_name]['extends']:
+            super_class = data['classes'][args.class_name]['extends'][0]
+            if super_class not in data['classes']:
+                # find the schema where the super class is defined
+                super_schema = [s for s in schemas if s.endswith(f'.{super_class}.json')][0]
+                
+                # get the path to the super class
+                with open(f'data/schemas/{args.project_name}/{super_schema}') as f:
+                    super_data = json.load(f)
+                    
+                super_file_path = get_destination_path(super_data["path"], super_class, is_full_path=True)
+                
+                # read the super class file
+                with open(super_file_path) as f:
+                    super_class_file = f.read()
+                    
+                # add the empty constructor for the super class
+                unitialized_fields = []
+                for _field in super_data['classes'][super_class]['fields']:
+                    line = "".join(super_data['classes'][super_class]['fields'][_field]['body'])
+                    
+                    if '=' not in line:
+                        unitialized_fields.append(_field)
+                        
+                new_constructor_code = f"    public {super_class}() {{\n"
+                
+                # initialize all uninitialized fields inside the constructor
+                for _field in unitialized_fields:
+                    field_name = _field.split(':')[1].strip()
+                    field_type = super_data['classes'][super_class]['fields'][_field]['types'][0][0]
+                    
+                    new_constructor_code += f"        {field_name} = {default_type_value[field_type]};\n"
+                    
+                new_constructor_code += "    }\n"
+                
+                # note: parent class has a file of its own
+                
+                # add the new constructor to the super class file
+                super_class_file = super_class_file[:super_class_file.rfind('}')]
+                super_class_file += new_constructor_code
+                super_class_file += "}\n"
+                
+                # write the super class file back
+                write_to_file(super_file_path, super_class_file)
 
         class_name = schema.split('.')[-2] # get the class name preceding '.json'
         output_file = get_destination_path(data["path"], class_name, is_full_path=True)
