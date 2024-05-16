@@ -166,6 +166,11 @@ def main(args):
     
     with open(f'data/schemas/{args.project_name}/{schema}') as f:
         data = json.load(f)
+        
+    # check if the class is an interface and if so, quit
+    if data['classes'][args.class_name]['is_interface']:
+        print(f"{args.class_name} is an interface. No compositional tests will be generated.")
+        quit()
 
     methods_under_test = []
     if args.method_name is not None:
