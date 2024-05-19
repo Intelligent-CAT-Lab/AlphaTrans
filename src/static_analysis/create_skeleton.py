@@ -52,20 +52,27 @@ def main(args):
 
         target_schema = schema.copy()
 
-        topological_classes = []
-        while len(topological_classes) != len(schema['classes']):
+        class_order = []
+        while len(class_order) != len(schema['classes']):
             for class_ in schema['classes']:
-                if class_ in topological_classes:
+                if class_ in class_order:
                     continue
 
-                if schema['classes'][class_]['nested_inside'] != []:
-                    if schema['classes'][class_]['nested_inside'] not in topological_classes:
-                        continue
+                if not set(schema['classes'][class_]['extends']).issubset(set(class_order)) and all([x in schema['classes'].keys() for x in schema['classes'][class_]['extends']]):
+                    continue
+                
+                if not set(schema['classes'][class_]['implements']).issubset(set(class_order)) and all([x in schema['classes'].keys() for x in schema['classes'][class_]['implements']]):
+                    continue                                                                                                                       
+                
+                if schema['classes'][class_]['nests'] == []:
+                    class_order.append(class_)
+                    continue
 
-                topological_classes.append(class_)
+                if all([x in class_order for x in schema['classes'][class_]['nests']]):
+                    class_order.append(class_)
 
         class_dependencies = []
-        for class_ in topological_classes:
+        for class_ in class_order:
             main_class = class_
             if schema['classes'][class_]['nested_inside'] != []:
                 main_class = schema['classes'][class_]['nested_inside']
@@ -86,6 +93,8 @@ def main(args):
             if schema['classes'][class_]['extends'] != []:
                 schema['classes'][class_]['extends'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
+                schema['classes'][class_]['extends'] = [extracted_types[cls_name] if cls_name in extracted_types else cls_name for cls_name in schema['classes'][class_]['extends']]
+                schema['classes'][class_]['extends'] = [cls_name for cls_name in schema['classes'][class_]['extends'] if 'typing.Any' not in cls_name and 'typing.Union' not in cls_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
                 else:
@@ -93,6 +102,8 @@ def main(args):
             elif schema['classes'][class_]['implements'] != []:
                 schema['classes'][class_]['implements'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
                 schema['classes'][class_]['implements'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
+                schema['classes'][class_]['implements'] = [extracted_types[cls_name] if cls_name in extracted_types else cls_name for cls_name in schema['classes'][class_]['implements']]
+                schema['classes'][class_]['implements'] = [cls_name for cls_name in schema['classes'][class_]['implements'] if 'typing.Any' not in cls_name and 'typing.Union' not in cls_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
                 else:
@@ -101,7 +112,7 @@ def main(args):
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
                     skeleton += 'class ' + class_name + '(ABC):\n\n'
                 else:
-                    skeleton += 'class ' + class_name + ':\n\n'            
+                    skeleton += 'class ' + class_name + ':\n\n'
 
             is_empty_class = True
             skeleton += '\t# Class Fields Begin\n'
@@ -213,36 +224,20 @@ def main(args):
             if is_empty_class:
                 skeleton += '\tpass\n\n'
 
+        import_map = {'ABC': 'from abc import ABC\n', 'Path': 'import pathlib\n', 'IOBase': 'import io\n', 'StringIO': 'import io\n', 'io': 'import io\n', 
+                      'BytesIO': 'import io\n', 'TextIOWrapper': 'import io\n', 'Number': 'import numbers\n', 'Callable': 'import typing\nfrom typing import *\n', 
+                      'Type': 'import typing\nfrom typing import *\n', 'Any': 'import typing\nfrom typing import *\n', 'Iterator': 'import typing\nfrom typing import *\n', 
+                      'Dict': 'import typing\nfrom typing import *\n', 'List': 'import typing\nfrom typing import *\n', 'Union': 'import typing\nfrom typing import *\n', 'datetime': 'import datetime\n', 
+                      'os': 'import os\n', 'pickle': 'import pickle\n', 'itertools': 'import itertools\n', 'sys': 'import sys\n', 'collections': 'import collections\n', 
+                      'unittest.TestCase': 'import unittest\n', 'uuid': 'import uuid\n', 'tempfile': 'import tempfile\n', 'typing': 'import typing\n', 'BytesIO': 'from io import BytesIO\n',
+                      'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n'}
+
         python_imports = []
-
-        if 'ABC' in skeleton:
-            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nfrom abc import ABC\n')
-            python_imports.append('from abc import ABC')
-
-        if 'configparser' in skeleton:
-            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport configparser\n')
-            python_imports.append('import configparser')
-
-        if 'Path' in skeleton:
-            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport pathlib\n')
-            python_imports.append('import pathlib')
-        
-        if 'IOBase' in skeleton or 'StringIO' in skeleton:
-            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport io\n')
-            python_imports.append('import io')
-        
-        if 'Number' in skeleton:
-            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport numbers\n')
-            python_imports.append('import numbers')
-        
-        if 'Callable' in skeleton or 'Type' in skeleton or 'Any' in skeleton or 'Iterator' in skeleton or 'Dict' in skeleton or 'List' in skeleton:
-            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport typing\n')
-            python_imports.append('import typing')
-        
-        if 'datetime' in skeleton:
-            skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\nimport datetime\n')
-            python_imports.append('import datetime')
-
+        for key in import_map:
+            if key in skeleton and import_map[key] not in skeleton:
+                skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\n' + import_map[key])
+                python_imports.append(import_map[key].strip())
+                
         for dependency in class_dependencies:
             for dependent_class in dependency[1]:
                 if len(dependent_class) != 2:
@@ -270,10 +265,33 @@ def main(args):
         with open(file_path, 'w') as f:
             f.write(skeleton)
         
-        os.system(f'python3 -m black {file_path}')
+        os.system(f'python3 -m black {file_path}') # check for syntactical errors
+
+        # add __init__.py files for each subdirectory
+        sub_dirs = sub_dir.split('/')
+        for i in range(len(sub_dirs)):
+            current_sub_dir = '/'.join(sub_dirs[:i+1])
+            with open(f'data/skeletons/{args.project_name}/{current_sub_dir}/__init__.py', 'w') as f:
+                f.write('')
+
+        fp = f"data/skeletons/{args.project_name}/{sub_dir}/__init__.py"
+        with open(fp, 'w') as f:
+            f.write('')
 
         with open(f'data/schemas/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
             json.dump(target_schema, f, indent=4)
+
+    # find all .py files in a given directory
+    def find_files(directory):
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                if file.endswith('.py'):
+                    yield os.path.join(root, file)
+    
+    # run black on all files in the directory
+    for file in find_files(f'data/skeletons/{args.project_name}'):
+        print(f'checking {file} for runtime errors...')
+        os.system(f'python3 {file}')
 
 
 if __name__ == '__main__':
