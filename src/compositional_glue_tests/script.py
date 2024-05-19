@@ -3,147 +3,8 @@ import os
 import subprocess
 import json
 import xml.etree.ElementTree as ET
-from collections import defaultdict
-
-ORIGINAL_DIR = "java_projects/cleaned_final_projects"
-OUTPUT_DIR = "java_projects/compositional_glue_tests"
-TRANSLATION_DIR = "data/verified_projects"
-DIR_DEPTH = "../../../"
-
-main_paths = {
-    "commons-fileupload": "main/java/org/apache/commons/fileupload/",
-    "commons-cli": "main/java/org/apache/commons/cli/",
-    "commons-codec": "main/java/org/apache/commons/codec/",
-    "commons-csv": "main/java/org/apache/commons/csv/",
-    "commons-graph": "main/java/org/apache/commons/graph/",
-    "commons-pool": "main/java/org/apache/commons/pool/",
-    "commons-validator": "main/java/org/apache/commons/validator/",
-    "joda-convert": "main/java/org/joda/convert/",
-    "joda-money": "main/java/org/joda/money/",
-}
-
-default_type_value = defaultdict(lambda: "null")
-default_type_value.update({
-    "int": "0",
-    "boolean": "false",
-    "float": "0",
-    "double": "0",
-    "long": "0",
-})
-
-def get_destination_path(path, file_name, is_full_path=False, path_to_main=None):
-    _path = [OUTPUT_DIR]
-    
-    # fully qualified path from schema. remove the first 2 directories
-    if is_full_path:
-        _path += path.split('/')[2:]
-        _directories = "/".join(_path[:-1])
-    else:
-        _path += [path, "src"]
-        if path_to_main:
-            _path += [path_to_main]
-        # print(_path, "/".join(_path))
-        _directories = "/".join(_path)
-    
-    # create the final path if it doesn't exist
-    os.makedirs(_directories, exist_ok=True)
-
-    return f"{_directories}/{file_name}.java"
-
-def write_to_file(file, content):
-    with open(file, "w") as f:
-        f.write(content)
-
-    # format java file
-    try:
-        subprocess.run(['java', '-jar', 'src/compositional_glue_tests/google-java-format-1.20.0-all-deps.jar', '--skip-removing-unused-imports', '-r', file], check=True)
-    except Exception as e:
-        print(f"Error formatting {file}: {e}")
-    return
-
-def make_mappings(args, schemas):
-    """
-    Create mappings for package classes.
-    """
-    classes_to_map = []
-    imports = []
-    
-    formatted_project_name = args.project_name.replace('-', '.')
-    for schema in schemas:
-        if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
-            continue
-        with open(f'data/schemas/{args.project_name}/{schema}') as f:
-            data = json.load(f)
-
-        for _class in data['classes']:
-            if (
-                    not data['classes'][_class]['is_interface'] 
-                    and not '/test/' in data['path'] 
-                    and not _class.endswith('Exception')
-                ):
-                if data['classes'][_class]["nested_inside"]:
-                    classes_to_map.append(f"{data['classes'][_class]['nested_inside']}.{_class}")
-                else:
-                    classes_to_map.append(_class)
-                
-                # link subpackages
-                if main_paths[args.project_name] in data['path']:
-                    path_tail = data['path'].split(main_paths[args.project_name])[-1]
-                    if "/" in path_tail:
-                        # remove the last segment
-                        path_tail = path_tail[:path_tail.rfind('/')]
-                        subproj_name = "." + path_tail.replace('/', '.')
-                        imports.append(f"{subproj_name}.{_class}")
-                    
-    return_string = ""
-    for _class in classes_to_map:
-        return_string += f".targetTypeMapping(Value.class, {_class}.class, null, (v) -> new {_class}(v))\n"
-        
-    imports_string = ""
-    for _import in imports:
-        imports_string += f"import org.apache.{formatted_project_name}{_import};"
-
-    return return_string + "// TODO: Add other mappings", imports_string
-
-def make_exception_mappings(args, schemas):
-    """
-    Create mappings for package exception classes.
-    """
-    package_exception_classes = []
-    imports = []
-
-    formatted_project_name = args.project_name.replace('-', '.')
-    for schema in schemas:
-        if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
-            continue
-        with open(f'data/schemas/{args.project_name}/{schema}') as f:
-            data = json.load(f)
-            
-        for _class in data['classes']:
-            if _class.endswith('Exception'):
-                if data['classes'][_class]["nested_inside"]:
-                    package_exception_classes.append(f"{data['classes'][_class]['nested_inside']}.{_class}")
-                else:
-                    package_exception_classes.append(_class)
-                
-                # link subpackages
-                if main_paths[args.project_name] in data['path']:
-                    path_tail = data['path'].split(main_paths[args.project_name])[-1]
-                    if "/" in path_tail:
-                        # remove the last segment
-                        path_tail = path_tail[:path_tail.rfind('/')]
-                        subproj_name = "." + path_tail.replace('/', '.')
-                        imports.append(f"{subproj_name}.{_class}")
-                
-    return_string = ""
-    for _class in package_exception_classes:
-        return_string += f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(exceptionObj);}}\n"
-    
-    imports_string = ""
-    for _import in imports:
-        imports_string += f"import org.apache.{formatted_project_name}{_import};"
-        
-    return return_string + "// TODO: Add other mappings", imports_string
+from utils import default_type_value, make_mappings, make_exception_mappings, write_to_file, get_destination_path
+from constants import *
 
 def main(args):
     if not os.path.exists('data/schemas'):
@@ -166,6 +27,11 @@ def main(args):
     
     with open(f'data/schemas/{args.project_name}/{schema}') as f:
         data = json.load(f)
+        
+    # check if the class is an interface and if so, quit
+    if data['classes'][args.class_name]['is_interface']:
+        print(f"{args.class_name} is an interface. No compositional tests will be generated.")
+        quit()
 
     methods_under_test = []
     if args.method_name is not None:
@@ -202,7 +68,7 @@ def main(args):
         # Add ContextInitializer.java
         ctx_mappings, ctx_imports = make_mappings(args, schemas)
         with open("src/compositional_glue_tests/misc/ContextInitializer.java") as f:
-            write_to_file(get_destination_path(args.project_name, "ContextInitializer", path_to_main=main_paths[args.project_name]), f.read().format(
+            write_to_file(get_destination_path(args.project_name, "ContextInitializer", OUTPUT_DIR, path_to_main=main_paths[args.project_name]), f.read().format(
                     project = f"org.apache.{formatted_proj_name}",
                     imports = ctx_imports,
                     code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name].replace('/java/', '/')}",
@@ -213,7 +79,7 @@ def main(args):
         # Add ExceptionHandler.java
         exp_mappings, exp_imports = make_exception_mappings(args, schemas)
         with open("src/compositional_glue_tests/misc/ExceptionHandler.java") as f:
-            write_to_file(get_destination_path(args.project_name, "ExceptionHandler", path_to_main=main_paths[args.project_name]), f.read().format(
+            write_to_file(get_destination_path(args.project_name, "ExceptionHandler", OUTPUT_DIR, path_to_main=main_paths[args.project_name]), f.read().format(
                     project = f"org.apache.{formatted_proj_name}",
                     imports = exp_imports,
                     mappings = exp_mappings
@@ -221,7 +87,7 @@ def main(args):
         
         # IntegrationUtils.java
         with open("src/compositional_glue_tests/misc/IntegrationUtils.java") as f:
-            write_to_file(get_destination_path(args.project_name, "IntegrationUtils", path_to_main=main_paths[args.project_name]), f.read().format(
+            write_to_file(get_destination_path(args.project_name, "IntegrationUtils", OUTPUT_DIR, path_to_main=main_paths[args.project_name]), f.read().format(
                     project = f"org.apache.{formatted_proj_name}"
                 ))
             
@@ -442,7 +308,7 @@ def main(args):
                 with open(f'data/schemas/{args.project_name}/{super_schema}') as f:
                     super_data = json.load(f)
                     
-                super_file_path = get_destination_path(super_data["path"], super_class, is_full_path=True)
+                super_file_path = get_destination_path(super_data["path"], super_class, OUTPUT_DIR, is_full_path=True)
                 
                 # read the super class file
                 with open(super_file_path) as f:
@@ -478,7 +344,7 @@ def main(args):
                 write_to_file(super_file_path, super_class_file)
 
         class_name = schema.split('.')[-2] # get the class name preceding '.json'
-        output_file = get_destination_path(data["path"], class_name, is_full_path=True)
+        output_file = get_destination_path(data["path"], class_name, OUTPUT_DIR, is_full_path=True)
         write_to_file(output_file, final_glue_code)
         
         # run the test
