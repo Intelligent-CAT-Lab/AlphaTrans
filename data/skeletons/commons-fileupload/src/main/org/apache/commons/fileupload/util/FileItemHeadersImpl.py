@@ -1,11 +1,13 @@
 # Imports Begin
 from src.main.org.apache.commons.fileupload.FileItemHeaders import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class FileItemHeadersImpl(Serializable, FileItemHeaders):
+class FileItemHeadersImpl(FileItemHeaders):
 
     # Class Fields Begin
     __serialVersionUID: int = None

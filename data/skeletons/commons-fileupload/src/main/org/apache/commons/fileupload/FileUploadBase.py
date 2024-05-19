@@ -7,10 +7,176 @@ from src.main.org.apache.commons.fileupload.FileUploadException import *
 from src.main.org.apache.commons.fileupload.FileItemHeaders import *
 from src.main.org.apache.commons.fileupload.FileItemFactory import *
 from src.main.org.apache.commons.fileupload.FileItem import *
+import os
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
+
+
+class FileUploadIOException:
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    __cause: FileUploadException = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def getCause(self) -> BaseException:
+        pass
+
+    def __init__(self, pCause: FileUploadException) -> None:
+        pass
+
+    # Class Methods End
+
+
+class IOFileUploadException(FileUploadException):
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    __cause: typing.Union[IOError, OSError] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def getCause(self) -> BaseException:
+        pass
+
+    def __init__(self, pMsg: str, pException: typing.Union[IOError, OSError]) -> None:
+        pass
+
+    # Class Methods End
+
+
+class FileItemStreamImpl:
+
+    # Class Fields Begin
+    __opened: bool = None
+    __headers: FileItemHeaders = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def setHeaders(self, pHeaders: FileItemHeaders) -> None:
+        pass
+
+    def getHeaders(self) -> FileItemHeaders:
+        pass
+
+    # Class Methods End
+
+
+class FileItemIteratorImpl:
+
+    # Class Fields Begin
+    __currentItem: FileItemStreamImpl = None
+    __currentFieldName: str = None
+    __skipPreamble: bool = None
+    __itemValid: bool = None
+    __eof: bool = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def __getContentLength(self, pHeaders: FileItemHeaders) -> int:
+        pass
+
+    # Class Methods End
+
+
+class SizeException(FileUploadException, ABC):
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    __actual: int = None
+    __permitted: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def getPermittedSize(self) -> int:
+        pass
+
+    def getActualSize(self) -> int:
+        pass
+
+    def __init__(self, message: str, actual: int, permitted: int) -> None:
+        pass
+
+    # Class Methods End
+
+
+class InvalidContentTypeException(FileUploadException):
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def __init__(self, msg: str, cause: BaseException) -> None:
+        pass
+
+    # Class Methods End
+
+
+class UnknownSizeException(FileUploadException):
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def __init__(self, message: str) -> None:
+        pass
+
+    # Class Methods End
+
+
+class SizeLimitExceededException(SizeException):
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    @staticmethod
+    def SizeLimitExceededException1(message: str) -> "SizeLimitExceededException":
+        pass
+
+    @staticmethod
+    def SizeLimitExceededException0() -> "SizeLimitExceededException":
+        pass
+
+    def __init__(self, message: str, actual: int, permitted: int) -> None:
+        pass
+
+    # Class Methods End
+
+
+class FileSizeLimitExceededException(SizeException):
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    __fileName: str = None
+    __fieldName: str = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def setFieldName(self, pFieldName: str) -> None:
+        pass
+
+    def getFieldName(self) -> str:
+        pass
+
+    def setFileName(self, pFileName: str) -> None:
+        pass
+
+    def getFileName(self) -> str:
+        pass
+
+    def __init__(self, message: str, actual: int, permitted: int) -> None:
+        pass
+
+    # Class Methods End
 
 
 class FileUploadBase(ABC):
@@ -115,169 +281,6 @@ class FileUploadBase(ABC):
         pass
 
     def getFileItemFactory(self) -> FileItemFactory:
-        pass
-
-    # Class Methods End
-
-
-class FileUploadIOException(IOException):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    __cause: FileUploadException = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def getCause(self) -> BaseException:
-        pass
-
-    def __init__(self, pCause: FileUploadException) -> None:
-        pass
-
-    # Class Methods End
-
-
-class IOFileUploadException(FileUploadException):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    __cause: typing.Union[IOError, OSError] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def getCause(self) -> BaseException:
-        pass
-
-    def __init__(self, pMsg: str, pException: typing.Union[IOError, OSError]) -> None:
-        pass
-
-    # Class Methods End
-
-
-class SizeLimitExceededException(SizeException):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    @staticmethod
-    def SizeLimitExceededException1(message: str) -> "SizeLimitExceededException":
-        pass
-
-    @staticmethod
-    def SizeLimitExceededException0() -> "SizeLimitExceededException":
-        pass
-
-    def __init__(self, message: str, actual: int, permitted: int) -> None:
-        pass
-
-    # Class Methods End
-
-
-class FileItemIteratorImpl:
-
-    # Class Fields Begin
-    __currentItem: FileItemStreamImpl = None
-    __currentFieldName: str = None
-    __skipPreamble: bool = None
-    __itemValid: bool = None
-    __eof: bool = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def __getContentLength(self, pHeaders: FileItemHeaders) -> int:
-        pass
-
-    # Class Methods End
-
-
-class FileSizeLimitExceededException(SizeException):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    __fileName: str = None
-    __fieldName: str = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def setFieldName(self, pFieldName: str) -> None:
-        pass
-
-    def getFieldName(self) -> str:
-        pass
-
-    def setFileName(self, pFileName: str) -> None:
-        pass
-
-    def getFileName(self) -> str:
-        pass
-
-    def __init__(self, message: str, actual: int, permitted: int) -> None:
-        pass
-
-    # Class Methods End
-
-
-class SizeException(FileUploadException, ABC):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    __actual: int = None
-    __permitted: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def getPermittedSize(self) -> int:
-        pass
-
-    def getActualSize(self) -> int:
-        pass
-
-    def __init__(self, message: str, actual: int, permitted: int) -> None:
-        pass
-
-    # Class Methods End
-
-
-class InvalidContentTypeException(FileUploadException):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def __init__(self, msg: str, cause: BaseException) -> None:
-        pass
-
-    # Class Methods End
-
-
-class UnknownSizeException(FileUploadException):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def __init__(self, message: str) -> None:
-        pass
-
-    # Class Methods End
-
-
-class FileItemStreamImpl:
-
-    # Class Fields Begin
-    __opened: bool = None
-    __headers: FileItemHeaders = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def setHeaders(self, pHeaders: FileItemHeaders) -> None:
-        pass
-
-    def getHeaders(self) -> FileItemHeaders:
         pass
 
     # Class Methods End
