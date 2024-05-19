@@ -1,6 +1,5 @@
 # Imports Begin
 import typing
-from typing import *
 from abc import ABC
 
 # Imports End

@@ -1,10 +1,8 @@
 # Imports Begin
-import io
-
 # Imports End
 
 
-class InvalidFileNameException(RuntimeError):
+class InvalidFileNameException(RuntimeException):
 
     # Class Fields Begin
     __serialVersionUID: int = None

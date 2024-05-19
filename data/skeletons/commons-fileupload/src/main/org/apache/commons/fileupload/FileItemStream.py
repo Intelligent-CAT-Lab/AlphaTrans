@@ -1,23 +1,10 @@
 # Imports Begin
 from src.main.org.apache.commons.fileupload.FileItemHeadersSupport import *
 import typing
-from typing import *
-from io import BytesIO
 import io
-from io import StringIO
 from abc import ABC
 
 # Imports End
-
-
-class ItemSkippedException:
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
 
 
 class FileItemStream(ABC):
@@ -41,4 +28,14 @@ class FileItemStream(ABC):
     def openStream(self) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:
         pass
 
+    # Class Methods End
+
+
+class ItemSkippedException(IOException):
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    # Class Fields End
+
+    # Class Methods Begin
     # Class Methods End
