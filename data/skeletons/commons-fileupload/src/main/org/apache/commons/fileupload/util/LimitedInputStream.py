@@ -1,13 +1,17 @@
 # Imports Begin
 from src.main.org.apache.commons.fileupload.util.Closeable import *
+import os
 import typing
+from typing import *
+from io import BytesIO
 import io
+from io import StringIO
 from abc import ABC
 
 # Imports End
 
 
-class LimitedInputStream(Closeable, FilterInputStream, ABC):
+class LimitedInputStream(Closeable, ABC):
 
     # Class Fields Begin
     __sizeMax: int = None

@@ -1,19 +1,9 @@
 # Imports Begin
 from src.main.org.apache.commons.fileupload.ProgressListener import *
 import typing
+from typing import *
 
 # Imports End
-
-
-class ProgressListenerTest:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
 
 
 class ProgressListenerImpl(ProgressListener):
@@ -36,3 +26,14 @@ class ProgressListenerImpl(ProgressListener):
         pass
 
     # Class Methods End
+
+
+class ProgressListenerTest:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass

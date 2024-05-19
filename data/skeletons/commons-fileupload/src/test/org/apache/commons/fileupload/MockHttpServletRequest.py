@@ -1,10 +1,38 @@
 # Imports Begin
 from src.main.org.apache.commons.fileupload.FileUploadBase import *
+import os
 import typing
+from typing import *
+from io import BytesIO
 import io
+from io import StringIO
 import pathlib
 
 # Imports End
+
+
+class MyServletInputStream:
+
+    # Class Fields Begin
+    __in: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None
+    __readLimit: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def read1(self, b: typing.List[int], off: int, len: int) -> int:
+        pass
+
+    def read0(self) -> int:
+        pass
+
+    def __init__(
+        self,
+        pStream: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        readLimit: int,
+    ) -> None:
+        pass
+
+    # Class Methods End
 
 
 class MockHttpServletRequest:
@@ -198,30 +226,6 @@ class MockHttpServletRequest:
         requestData: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         strContentType: str,
         requestLength: int,
-    ) -> None:
-        pass
-
-    # Class Methods End
-
-
-class MyServletInputStream:
-
-    # Class Fields Begin
-    __in: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None
-    __readLimit: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def read1(self, b: typing.List[int], off: int, len: int) -> int:
-        pass
-
-    def read0(self) -> int:
-        pass
-
-    def __init__(
-        self,
-        pStream: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
-        readLimit: int,
     ) -> None:
         pass
 
