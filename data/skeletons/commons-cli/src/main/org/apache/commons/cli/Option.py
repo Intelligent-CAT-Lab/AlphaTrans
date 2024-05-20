@@ -1,11 +1,81 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.OptionValidator import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class Option(Serializable, Cloneable):
+class Builder:
+
+    # Class Fields Begin
+    __option: str = None
+    __description: str = None
+    __longOption: str = None
+    __argName: str = None
+    __required: bool = None
+    __optionalArg: bool = None
+    __argCount: int = None
+    __type: typing.Type[typing.Any] = None
+    __valueSeparator: str = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def valueSeparator1(self, sep: str) -> Builder:
+        pass
+
+    def valueSeparator0(self) -> Builder:
+        pass
+
+    def type(self, type: typing.Type[typing.Any]) -> Builder:
+        pass
+
+    def required1(self, required: bool) -> Builder:
+        pass
+
+    def required0(self) -> Builder:
+        pass
+
+    def optionalArg(self, isOptional: bool) -> Builder:
+        pass
+
+    def option(self, option: str) -> Builder:
+        pass
+
+    def numberOfArgs(self, numberOfArgs: int) -> Builder:
+        pass
+
+    def longOpt(self, longOpt: str) -> Builder:
+        pass
+
+    def hasArgs(self) -> Builder:
+        pass
+
+    def hasArg1(self, hasArg: bool) -> Builder:
+        pass
+
+    def hasArg0(self) -> Builder:
+        pass
+
+    def desc(self, description: str) -> Builder:
+        pass
+
+    def build(self) -> Option:
+        pass
+
+    def argName(self, argName: str) -> Builder:
+        pass
+
+    def __init__(self, option: str) -> None:
+        pass
+
+    # Class Methods End
+
+
+class Option:
 
     # Class Fields Begin
     UNINITIALIZED: int = None
@@ -127,11 +197,11 @@ class Option(Serializable, Cloneable):
         pass
 
     @staticmethod
-    def Option2(option: str, hasArg: bool, description: str) -> "Option":
+    def Option2(option: str, hasArg: bool, description: str) -> Option:
         pass
 
     @staticmethod
-    def Option1(option: str, description: str) -> "Option":
+    def Option1(option: str, description: str) -> Option:
         pass
 
     def __init__(
@@ -175,72 +245,6 @@ class Option(Serializable, Cloneable):
         pass
 
     def acceptsArg(self) -> bool:
-        pass
-
-    # Class Methods End
-
-
-class Builder:
-
-    # Class Fields Begin
-    __option: str = None
-    __description: str = None
-    __longOption: str = None
-    __argName: str = None
-    __required: bool = None
-    __optionalArg: bool = None
-    __argCount: int = None
-    __type: typing.Type[typing.Any] = None
-    __valueSeparator: str = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def valueSeparator1(self, sep: str) -> "Builder":
-        pass
-
-    def valueSeparator0(self) -> "Builder":
-        pass
-
-    def type(self, type: typing.Type[typing.Any]) -> "Builder":
-        pass
-
-    def required1(self, required: bool) -> "Builder":
-        pass
-
-    def required0(self) -> "Builder":
-        pass
-
-    def optionalArg(self, isOptional: bool) -> "Builder":
-        pass
-
-    def option(self, option: str) -> "Builder":
-        pass
-
-    def numberOfArgs(self, numberOfArgs: int) -> "Builder":
-        pass
-
-    def longOpt(self, longOpt: str) -> "Builder":
-        pass
-
-    def hasArgs(self) -> "Builder":
-        pass
-
-    def hasArg1(self, hasArg: bool) -> "Builder":
-        pass
-
-    def hasArg0(self) -> "Builder":
-        pass
-
-    def desc(self, description: str) -> "Builder":
-        pass
-
-    def build(self) -> Option:
-        pass
-
-    def argName(self, argName: str) -> "Builder":
-        pass
-
-    def __init__(self, option: str) -> None:
         pass
 
     # Class Methods End

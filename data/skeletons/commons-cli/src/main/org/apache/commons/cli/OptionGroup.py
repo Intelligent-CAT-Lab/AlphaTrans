@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.AlreadySelectedException import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class OptionGroup(Serializable):
+class OptionGroup:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -37,7 +41,7 @@ class OptionGroup(Serializable):
     def getNames(self) -> typing.Collection[str]:
         pass
 
-    def addOption(self, option: Option) -> "OptionGroup":
+    def addOption(self, option: Option) -> OptionGroup:
         pass
 
     # Class Methods End

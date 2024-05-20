@@ -1,12 +1,15 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.ParseException import *
 from src.main.org.apache.commons.cli.OptionGroup import *
 from src.main.org.apache.commons.cli.Option import *
+import io
 
 # Imports End
 
 
-class AlreadySelectedException(ParseException):
+class AlreadySelectedException:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -24,11 +27,11 @@ class AlreadySelectedException(ParseException):
     @staticmethod
     def AlreadySelectedException1(
         group: OptionGroup, option: Option
-    ) -> "AlreadySelectedException":
+    ) -> AlreadySelectedException:
         pass
 
     @staticmethod
-    def AlreadySelectedException0(message: str) -> "AlreadySelectedException":
+    def AlreadySelectedException0(message: str) -> AlreadySelectedException:
         pass
 
     def __init__(self, message: str, group: OptionGroup, option: Option) -> None:

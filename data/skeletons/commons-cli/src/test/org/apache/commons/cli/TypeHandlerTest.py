@@ -1,10 +1,37 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.TypeHandler import *
 from src.main.org.apache.commons.cli.PatternOptionBuilder import *
 import typing
+from typing import *
 import numbers
+import io
 
 # Imports End
+
+
+class Instantiable:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class NotInstantiable:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def __init__(self) -> None:
+        pass
+
+    # Class Methods End
 
 
 class TypeHandlerTest:
@@ -62,29 +89,6 @@ class TypeHandlerTest:
         pass
 
     def testCreateValueClass(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class Instantiable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class NotInstantiable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def __init__(self) -> None:
         pass
 
     # Class Methods End

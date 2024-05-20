@@ -1,10 +1,13 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.ParseException import *
+import io
 
 # Imports End
 
 
-class UnrecognizedOptionException(ParseException):
+class UnrecognizedOptionException:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -16,7 +19,7 @@ class UnrecognizedOptionException(ParseException):
         pass
 
     @staticmethod
-    def UnrecognizedOptionException1(message: str) -> "UnrecognizedOptionException":
+    def UnrecognizedOptionException1(message: str) -> UnrecognizedOptionException:
         pass
 
     def __init__(self, message: str, option: str) -> None:

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Parser import *
@@ -7,6 +9,7 @@ from src.main.org.apache.commons.cli.OptionBuilder import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.CommandLine import *
 from src.main.org.apache.commons.cli.AlreadySelectedException import *
+import io
 
 # Imports End
 

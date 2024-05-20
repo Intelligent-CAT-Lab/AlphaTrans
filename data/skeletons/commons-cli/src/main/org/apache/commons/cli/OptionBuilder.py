@@ -1,6 +1,10 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Option import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -21,67 +25,67 @@ class OptionBuilder:
 
     # Class Methods Begin
     @staticmethod
-    def withType1(newType: typing.Any) -> "OptionBuilder":
+    def withType1(newType: typing.Any) -> OptionBuilder:
         pass
 
     @staticmethod
-    def withValueSeparator1(sep: str) -> "OptionBuilder":
+    def withValueSeparator1(sep: str) -> OptionBuilder:
         pass
 
     @staticmethod
-    def withValueSeparator0() -> "OptionBuilder":
+    def withValueSeparator0() -> OptionBuilder:
         pass
 
     @staticmethod
-    def withType0(newType: typing.Type[typing.Any]) -> "OptionBuilder":
+    def withType0(newType: typing.Type[typing.Any]) -> OptionBuilder:
         pass
 
     @staticmethod
-    def withLongOpt(newLongopt: str) -> "OptionBuilder":
+    def withLongOpt(newLongopt: str) -> OptionBuilder:
         pass
 
     @staticmethod
-    def withDescription(newDescription: str) -> "OptionBuilder":
+    def withDescription(newDescription: str) -> OptionBuilder:
         pass
 
     @staticmethod
-    def withArgName(name: str) -> "OptionBuilder":
+    def withArgName(name: str) -> OptionBuilder:
         pass
 
     @staticmethod
-    def isRequired1(newRequired: bool) -> "OptionBuilder":
+    def isRequired1(newRequired: bool) -> OptionBuilder:
         pass
 
     @staticmethod
-    def isRequired0() -> "OptionBuilder":
+    def isRequired0() -> OptionBuilder:
         pass
 
     @staticmethod
-    def hasOptionalArgs1(numArgs: int) -> "OptionBuilder":
+    def hasOptionalArgs1(numArgs: int) -> OptionBuilder:
         pass
 
     @staticmethod
-    def hasOptionalArgs0() -> "OptionBuilder":
+    def hasOptionalArgs0() -> OptionBuilder:
         pass
 
     @staticmethod
-    def hasOptionalArg() -> "OptionBuilder":
+    def hasOptionalArg() -> OptionBuilder:
         pass
 
     @staticmethod
-    def hasArgs1(num: int) -> "OptionBuilder":
+    def hasArgs1(num: int) -> OptionBuilder:
         pass
 
     @staticmethod
-    def hasArgs0() -> "OptionBuilder":
+    def hasArgs0() -> OptionBuilder:
         pass
 
     @staticmethod
-    def hasArg1(hasArg: bool) -> "OptionBuilder":
+    def hasArg1(hasArg: bool) -> OptionBuilder:
         pass
 
     @staticmethod
-    def hasArg0() -> "OptionBuilder":
+    def hasArg0() -> OptionBuilder:
         pass
 
     @staticmethod

@@ -1,15 +1,38 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Util import *
 from src.main.org.apache.commons.cli.TypeHandler import *
 from src.main.org.apache.commons.cli.ParseException import *
 from src.main.org.apache.commons.cli.Option import *
-import typing
 import configparser
+import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class CommandLine(Serializable):
+class Builder:
+
+    # Class Fields Begin
+    __commandLine: CommandLine = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def build(self) -> CommandLine:
+        pass
+
+    def addOption(self, opt: Option) -> Builder:
+        pass
+
+    def addArg(self, arg: str) -> Builder:
+        pass
+
+    # Class Methods End
+
+
+class CommandLine:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -105,25 +128,6 @@ class CommandLine(Serializable):
         pass
 
     def __resolveOption(self, opt: str) -> Option:
-        pass
-
-    # Class Methods End
-
-
-class Builder:
-
-    # Class Fields Begin
-    __commandLine: CommandLine = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def build(self) -> CommandLine:
-        pass
-
-    def addOption(self, opt: Option) -> "Builder":
-        pass
-
-    def addArg(self, arg: str) -> "Builder":
         pass
 
     # Class Methods End

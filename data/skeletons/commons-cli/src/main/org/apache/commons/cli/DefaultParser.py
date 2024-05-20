@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Util import *
 from src.main.org.apache.commons.cli.UnrecognizedOptionException import *
@@ -11,11 +13,38 @@ from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.CommandLine import *
 from src.main.org.apache.commons.cli.AmbiguousOptionException import *
 from src.main.org.apache.commons.cli.AlreadySelectedException import *
-import typing
-import numbers
 import configparser
+import typing
+from typing import *
+import numbers
+import io
 
 # Imports End
+
+
+class Builder:
+
+    # Class Fields Begin
+    __allowPartialMatching: bool = None
+    __stripLeadingAndTrailingQuotes: bool = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def setStripLeadingAndTrailingQuotes(
+        self, stripLeadingAndTrailingQuotes: bool
+    ) -> Builder:
+        pass
+
+    def setAllowPartialMatching(self, allowPartialMatching: bool) -> Builder:
+        pass
+
+    def build(self) -> DefaultParser:
+        pass
+
+    def __init__(self) -> None:
+        pass
+
+    # Class Methods End
 
 
 class DefaultParser(CommandLineParser):
@@ -143,31 +172,6 @@ class DefaultParser(CommandLineParser):
         pass
 
     def __checkRequiredArgs(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class Builder:
-
-    # Class Fields Begin
-    __allowPartialMatching: bool = None
-    __stripLeadingAndTrailingQuotes: bool = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def setStripLeadingAndTrailingQuotes(
-        self, stripLeadingAndTrailingQuotes: bool
-    ) -> "Builder":
-        pass
-
-    def setAllowPartialMatching(self, allowPartialMatching: bool) -> "Builder":
-        pass
-
-    def build(self) -> DefaultParser:
-        pass
-
-    def __init__(self) -> None:
         pass
 
     # Class Methods End

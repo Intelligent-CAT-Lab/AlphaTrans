@@ -1,13 +1,17 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Util import *
 from src.main.org.apache.commons.cli.OptionGroup import *
 from src.main.org.apache.commons.cli.Option import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class Options(Serializable):
+class Options:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -47,24 +51,24 @@ class Options(Serializable):
 
     def addRequiredOption(
         self, opt: str, longOpt: str, hasArg: bool, description: str
-    ) -> "Options":
+    ) -> Options:
         pass
 
-    def addOptionGroup(self, group: OptionGroup) -> "Options":
+    def addOptionGroup(self, group: OptionGroup) -> Options:
         pass
 
     def addOption3(
         self, opt: str, longOpt: str, hasArg: bool, description: str
-    ) -> "Options":
+    ) -> Options:
         pass
 
-    def addOption2(self, opt: str, description: str) -> "Options":
+    def addOption2(self, opt: str, description: str) -> Options:
         pass
 
-    def addOption1(self, opt: str, hasArg: bool, description: str) -> "Options":
+    def addOption1(self, opt: str, hasArg: bool, description: str) -> Options:
         pass
 
-    def addOption0(self, opt: Option) -> "Options":
+    def addOption0(self, opt: Option) -> Options:
         pass
 
     def helpOptions(self) -> typing.List[Option]:

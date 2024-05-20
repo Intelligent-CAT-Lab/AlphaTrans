@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.ParseException import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class MissingOptionException(ParseException):
+class MissingOptionException:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -19,7 +23,7 @@ class MissingOptionException(ParseException):
     @staticmethod
     def MissingOptionException1(
         constructorId: int, missingOptions: typing.List[typing.Any], message: str
-    ) -> "MissingOptionException":
+    ) -> MissingOptionException:
         pass
 
     def __init__(

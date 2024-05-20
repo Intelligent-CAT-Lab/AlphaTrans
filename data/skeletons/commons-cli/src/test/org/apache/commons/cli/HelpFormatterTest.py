@@ -1,10 +1,26 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.OptionGroup import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
+import os
+import io
 
 # Imports End
+
+
+class Comparator:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def compare(self, opt1: Option, opt2: Option) -> int:
+        pass
+
+    # Class Methods End
 
 
 class HelpFormatterTest:
@@ -93,18 +109,6 @@ class HelpFormatterTest:
         pass
 
     def testAccessors(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class Comparator:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def compare(self, opt1: Option, opt2: Option) -> int:
         pass
 
     # Class Methods End

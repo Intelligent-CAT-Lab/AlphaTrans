@@ -1,11 +1,30 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.OptionGroup import *
 from src.main.org.apache.commons.cli.Option import *
+import os
 import typing
+from typing import *
 import io
+from io import StringIO
+from io import IOBase
 
 # Imports End
+
+
+class OptionComparator:
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def compare(self, opt1: Option, opt2: Option) -> int:
+        pass
+
+    # Class Methods End
 
 
 class HelpFormatter:
@@ -227,19 +246,6 @@ class HelpFormatter:
         pass
 
     def __appendOption(self, buff: str, option: Option, required: bool) -> None:
-        pass
-
-    # Class Methods End
-
-
-class OptionComparator(Serializable, Comparator):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def compare(self, opt1: Option, opt2: Option) -> int:
         pass
 
     # Class Methods End
