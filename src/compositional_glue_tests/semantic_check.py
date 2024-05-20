@@ -87,6 +87,18 @@ def main(args):
 
         # iterate over all classes in the file
         for _class in data['classes']:
+            class_name = _class
+            is_anonymous = False
+            
+            # check if the class is anonymous
+            if _class.startswith('new ') and _class.endswith('(...) { ... }'): # for now we stick to this pattern
+                is_anonymous = True
+                
+                # extract the class name
+                i = 4
+                while _class[i].isalnum() or _class[i] == '_':
+                    i += 1
+                class_name = _class[4:i]
             
             # iterate over all methods in the class
             methods = data['classes'][_class]['methods'].keys()
@@ -102,7 +114,7 @@ def main(args):
                 # if method is private, take mangling into account
                 # except for constructors
                 if 'private' in data['classes'][_class]['methods'][_method]['modifiers'] and not is_constructor:
-                    method_name = f"_{_class}__{method_name}"
+                    method_name = f"_{class_name}__{method_name}"
                 elif 'protected' in data['classes'][_class]['methods'][_method]['modifiers'] and not is_constructor:
                     method_name = f"_{method_name}"
                     
@@ -111,12 +123,23 @@ def main(args):
                         return f"\"{msg}\", {condition}"
                     elif test_package == 'junit-jupiter':
                         return f"{condition}, \"{msg}\""
+                    
+                # get the class from the python file
+                if data['classes'][_class]['nested_inside'] and not is_anonymous: # if the class is nested, get the outer class first
+                    # Assuming that only one level of nesting is possible
+                    # Assuming that anonymous classes are never nested in Python files 
+                    class_import = (
+                        f"ContextInitializer.getPythonClass({python_file}, \"{data['classes'][_class]['nested_inside']}\")"
+                        f".getMember(\"{class_name}\")"
+                    )
+                else:
+                    class_import = f"ContextInitializer.getPythonClass({python_file}, \"{class_name}\")"                
 
                 test_body = "\n".join([
                     "@Test",
-                    f"public void test_{schema_name}_{_class}_{method_name}() {{",
+                    f"public void test_{schema_name}_{class_name}_{method_name}() {{",
                     "   try{",
-                    f"      Value clz = ContextInitializer.getPythonClass({python_file}, \"{_class}\");",
+                    f"      Value clz = {class_import};",
                     f"      Value member = clz.getMember(\"{method_name}\");",
                     f"      assertTrue({create_assert_args('Member is not executable.', 'member != null && member.canExecute()')});",
                     "   } catch (Exception e) {",
@@ -126,12 +149,6 @@ def main(args):
                 ])
                 
                 semantic_check_test_body += test_body
-                    
-            # TODO: handle nested classes
-            # if not data['classes'][_class]["nests"]:
-            #     pass
-            # else:
-            #     pass
     
     # write the SemanticCheckTest.java file
     output_file = get_destination_path(
