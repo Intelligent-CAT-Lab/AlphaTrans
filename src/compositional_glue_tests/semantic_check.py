@@ -30,6 +30,19 @@ def main(args):
     if pom_contents:
         with open(f"{OUTPUT_DIR}/{args.project_name}/pom.xml", "w") as f:
             f.write(pom_contents)
+    else:
+        raise Exception('Please fix the pom.xml file and run again! (Check Java version and Graal dependency.)')
+            
+    # check whether the tests use junit-jupiter
+    test_package = 'junit'
+    if 'org.junit.jupiter' in pom_contents:
+        test_package = 'junit-jupiter'
+        
+    # decide which imports to make for 'assertTrue' and 'Test'
+    if test_package == 'junit':
+        test_imports = "import static org.junit.Assert.assertTrue;\nimport org.junit.Test;"
+    elif test_package == 'junit-jupiter':
+        test_imports = "import static org.junit.jupiter.api.Assertions.assertTrue;\nimport org.junit.jupiter.api.Test;"
     
     # Add ContextInitializer.java
     with open("src/compositional_glue_tests/misc/ContextInitializer.java") as f:
@@ -92,6 +105,12 @@ def main(args):
                     method_name = f"_{_class}__{method_name}"
                 elif 'protected' in data['classes'][_class]['methods'][_method]['modifiers'] and not is_constructor:
                     method_name = f"_{method_name}"
+                    
+                def create_assert_args(msg: str, condition: str):
+                    if test_package == 'junit':
+                        return f"\"{msg}\", {condition}"
+                    elif test_package == 'junit-jupiter':
+                        return f"{condition}, \"{msg}\""
 
                 test_body = "\n".join([
                     "@Test",
@@ -99,11 +118,11 @@ def main(args):
                     "   try{",
                     f"      Value clz = ContextInitializer.getPythonClass({python_file}, \"{_class}\");",
                     f"      Value member = clz.getMember(\"{method_name}\");",
-                    f"      assertTrue(\"Member is not executable.\", member != null && member.canExecute());",
+                    f"      assertTrue({create_assert_args('Member is not executable.', 'member != null && member.canExecute()')});",
                     "   } catch (Exception e) {",
-                    "       assertTrue(\"Error while loading class.\", false);",
+                    f"       assertTrue({create_assert_args('Error while loading class.', 'false')});",
                     "   }",
-                    "}"                    
+                    "}"
                 ])
                 
                 semantic_check_test_body += test_body
@@ -113,17 +132,18 @@ def main(args):
             #     pass
             # else:
             #     pass
-
+    
     # write the SemanticCheckTest.java file
     output_file = get_destination_path(
         f"{OUTPUT_DIR}/{args.project_name}/src/{test_paths[args.project_name]}/SemanticCheckTest.java",
         "SemanticCheckTest",
         OUTPUT_DIR,
         is_full_path=True
-    )
+    )    
     with open("src/compositional_glue_tests/misc/SemanticCheckTest.java") as f:
         write_to_file(output_file, f.read().format(
-            project = f"org.apache.{formatted_proj_name}",
+            project=f"org.apache.{formatted_proj_name}",
+            imports=test_imports,
             test_body=semantic_check_test_body
         ))
         

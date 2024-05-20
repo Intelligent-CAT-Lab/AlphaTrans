@@ -1,8 +1,6 @@
 package {project};
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
+{imports}
 
 import {project}.ContextInitializer;
 import org.graalvm.polyglot.Value;
