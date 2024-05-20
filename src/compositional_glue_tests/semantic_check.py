@@ -90,6 +90,8 @@ def main(args):
                 # except for constructors
                 if 'private' in data['classes'][_class]['methods'][_method]['modifiers'] and not is_constructor:
                     method_name = f"_{_class}__{method_name}"
+                elif 'protected' in data['classes'][_class]['methods'][_method]['modifiers'] and not is_constructor:
+                    method_name = f"_{method_name}"
 
                 test_body = "\n".join([
                     "@Test",
