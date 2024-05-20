@@ -1,10 +1,10 @@
-package org.apache.commons.fileupload;
+package {project};
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import org.apache.commons.fileupload.ContextInitializer;
+import {project}.ContextInitializer;
 import org.graalvm.polyglot.Value;
 
 public class SemanticCheckTest {{

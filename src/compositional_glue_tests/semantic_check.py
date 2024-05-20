@@ -121,6 +121,7 @@ def main(args):
     )
     with open("src/compositional_glue_tests/misc/SemanticCheckTest.java") as f:
         write_to_file(output_file, f.read().format(
+            project = f"org.apache.{formatted_proj_name}",
             test_body=semantic_check_test_body
         ))
         
