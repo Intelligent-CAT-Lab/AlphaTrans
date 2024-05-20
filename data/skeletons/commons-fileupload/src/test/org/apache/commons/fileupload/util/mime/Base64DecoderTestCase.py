@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.fileupload.util.mime.Base64Decoder import *
 import io

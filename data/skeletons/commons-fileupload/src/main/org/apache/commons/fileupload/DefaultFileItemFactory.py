@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.fileupload.disk.DiskFileItemFactory import *
 import os
+import io
 import pathlib
 
 # Imports End
@@ -16,7 +19,7 @@ class DefaultFileItemFactory(DiskFileItemFactory):
         pass
 
     @staticmethod
-    def DefaultFileItemFactory1() -> "DefaultFileItemFactory":
+    def DefaultFileItemFactory1() -> DefaultFileItemFactory:
         pass
 
     # Class Methods End

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.fileupload.util.FileItemHeadersImpl import *
 from src.main.org.apache.commons.fileupload.RequestContext import *
@@ -139,11 +141,11 @@ class SizeLimitExceededException(SizeException):
 
     # Class Methods Begin
     @staticmethod
-    def SizeLimitExceededException1(message: str) -> "SizeLimitExceededException":
+    def SizeLimitExceededException1(message: str) -> SizeLimitExceededException:
         pass
 
     @staticmethod
-    def SizeLimitExceededException0() -> "SizeLimitExceededException":
+    def SizeLimitExceededException0() -> SizeLimitExceededException:
         pass
 
     def __init__(self, message: str, actual: int, permitted: int) -> None:

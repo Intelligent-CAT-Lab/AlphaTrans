@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.fileupload.FileUploadBase import *
 import os
@@ -217,7 +219,7 @@ class MockHttpServletRequest:
     @staticmethod
     def MockHttpServletRequest1(
         requestData: typing.List[int], strContentType: str
-    ) -> "MockHttpServletRequest":
+    ) -> MockHttpServletRequest:
         pass
 
     def __init__(

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 import typing
 from typing import *
@@ -30,11 +32,11 @@ class FileUploadException(Exception):
         pass
 
     @staticmethod
-    def FileUploadException1(msg: str) -> "FileUploadException":
+    def FileUploadException1(msg: str) -> FileUploadException:
         pass
 
     @staticmethod
-    def FileUploadException0() -> "FileUploadException":
+    def FileUploadException0() -> FileUploadException:
         pass
 
     # Class Methods End

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.fileupload.FileUploadBase import *
 import typing
@@ -148,7 +150,7 @@ class MockPortletActionRequest:
     @staticmethod
     def MockPortletActionRequest1(
         requestData: typing.List[int], contentType: str
-    ) -> "MockPortletActionRequest":
+    ) -> MockPortletActionRequest:
         pass
 
     def __init__(

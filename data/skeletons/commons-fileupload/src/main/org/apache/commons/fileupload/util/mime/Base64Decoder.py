@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 import typing
 from typing import *

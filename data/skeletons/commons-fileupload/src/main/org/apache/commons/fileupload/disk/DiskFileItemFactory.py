@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.fileupload.disk.DiskFileItem import *
 import os
+import io
 import pathlib
 
 # Imports End
@@ -35,7 +38,7 @@ class DiskFileItemFactory:
         pass
 
     @staticmethod
-    def DiskFileItemFactory1() -> "DiskFileItemFactory":
+    def DiskFileItemFactory1() -> DiskFileItemFactory:
         pass
 
     def __init__(self, sizeThreshold: int, repository: pathlib.Path) -> None:

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.fileupload.ProgressListener import *
 from src.main.org.apache.commons.fileupload.util.Closeable import *
@@ -144,7 +146,7 @@ class MultipartStream:
     def MultipartStream3(
         input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         boundary: typing.List[int],
-    ) -> "MultipartStream":
+    ) -> MultipartStream:
         pass
 
     @staticmethod
@@ -152,11 +154,11 @@ class MultipartStream:
         input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         boundary: typing.List[int],
         bufSize: int,
-    ) -> "MultipartStream":
+    ) -> MultipartStream:
         pass
 
     @staticmethod
-    def MultipartStream0() -> "MultipartStream":
+    def MultipartStream0() -> MultipartStream:
         pass
 
     def _findSeparator(self) -> int:
@@ -192,7 +194,7 @@ class MultipartStream:
         input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         boundary: typing.List[int],
         pNotifier: ProgressNotifier,
-    ) -> "MultipartStream":
+    ) -> MultipartStream:
         pass
 
     def __init__(
