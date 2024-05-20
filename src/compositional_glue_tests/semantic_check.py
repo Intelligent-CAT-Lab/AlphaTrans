@@ -123,23 +123,12 @@ def main(args):
                         return f"\"{msg}\", {condition}"
                     elif test_package == 'junit-jupiter':
                         return f"{condition}, \"{msg}\""
-                    
-                # get the class from the python file
-                if data['classes'][_class]['nested_inside'] and not is_anonymous: # if the class is nested, get the outer class first
-                    # Assuming that only one level of nesting is possible
-                    # Assuming that anonymous classes are never nested in Python files 
-                    class_import = (
-                        f"ContextInitializer.getPythonClass({python_file}, \"{data['classes'][_class]['nested_inside']}\")"
-                        f".getMember(\"{class_name}\")"
-                    )
-                else:
-                    class_import = f"ContextInitializer.getPythonClass({python_file}, \"{class_name}\")"                
 
                 test_body = "\n".join([
                     "@Test",
                     f"public void test_{schema_name}_{class_name}_{method_name}() {{",
                     "   try{",
-                    f"      Value clz = {class_import};",
+                    f"      Value clz = ContextInitializer.getPythonClass({python_file}, \"{class_name}\");", # there is no nesting in the python code!
                     f"      Value member = clz.getMember(\"{method_name}\");",
                     f"      assertTrue({create_assert_args('Member is not executable.', 'member != null && member.canExecute()')});",
                     "   } catch (Exception e) {",
