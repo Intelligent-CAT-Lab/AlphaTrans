@@ -2,6 +2,7 @@ ORIGINAL_DIR = "java_projects/cleaned_final_projects"
 OUTPUT_DIR = "java_projects/compositional_glue_tests"
 TRANSLATION_DIR = "data/verified_projects"
 SKELETON_DIR = "data/skeletons"
+SCHEMAS_DIR = "data/schemas"
 DIR_DEPTH = "../../../"
 
 main_paths = {

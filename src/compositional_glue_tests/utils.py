@@ -13,6 +13,29 @@ default_type_value.update({
     "long": "0",
 })
 
+def fetch_class_schemas(schema_directory, project_name, class_lst):
+    project_schemas = os.listdir(f'{schema_directory}/{project_name}')
+    schemas = []
+    
+    # return all schemas if class_lst is empty
+    if class_lst is None or len(class_lst) == 0:
+        schemas = [file for file in project_schemas if 'Test' not in file and not file.endswith('_python_partial.json')]
+        return schemas
+
+    for class_name in class_lst:
+        schemas = ([s for s in project_schemas if s.endswith(f'.{class_name}.json')])
+    return schemas
+
+def fetch_all_class_names(schema_directory, project_name):
+    project_schemas = os.listdir(f'{schema_directory}/{project_name}')
+    class_names = []
+    for schema in project_schemas:
+        if schema.endswith('.json'):
+            with open(f'{schema_directory}/{project_name}/{schema}') as f:
+                data = json.load(f)
+            class_names += data['classes'].keys()
+    return class_names
+
 def get_destination_path(path, file_name, output_dir, is_full_path=False, path_to_main=None):
     _path = [output_dir]
     
