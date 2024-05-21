@@ -4,7 +4,7 @@ import subprocess
 import json
 import xml.etree.ElementTree as ET
  
-from utils import default_type_value, make_mappings, make_exception_mappings, \
+from utils import init_project, default_type_value, make_mappings, make_exception_mappings, \
     write_to_file, get_destination_path, fetch_class_schemas, fetch_all_class_names
 from constants import *
 
@@ -23,54 +23,7 @@ def main(args):
     if schemas is None or len(schemas) == 0:
         raise Exception(f"Schemas for {args.class_name} not found!")
    
-    """
-        Copy original project to glue_code directory
-        but first check if pom.xml exists in the output directory and
-        and if it does, store its contents
-        """
-            
-    pom_contents = None
-    if os.path.exists(f"{OUTPUT_DIR}/{args.project_name}/pom.xml"):
-        with open(f"{OUTPUT_DIR}/{args.project_name}/pom.xml") as f:
-            pom_contents = f.read()
-    
-    if not os.path.exists(f"{OUTPUT_DIR}/{args.project_name}/"):
-        os.makedirs(f"{OUTPUT_DIR}/{args.project_name}/")
-    subprocess.run(['cp', '-r', f"{ORIGINAL_DIR}/{args.project_name}/.", f"{OUTPUT_DIR}/{args.project_name}/"], check=True)
-    
-    # if pom.xml existed, write it back
-    if pom_contents:
-        with open(f"{OUTPUT_DIR}/{args.project_name}/pom.xml", "w") as f:
-            f.write(pom_contents)
-    
-    # Add ContextInitializer.java
-    ctx_mappings, ctx_imports = make_mappings(args, schemas)
-    with open("src/compositional_glue_tests/misc/ContextInitializer.java") as f:
-        write_to_file(get_destination_path(args.project_name, "ContextInitializer", OUTPUT_DIR, path_to_main=main_paths[args.project_name]), f.read().format(
-                project = f"org.apache.{formatted_proj_name}",
-                imports = ctx_imports,
-                code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name].replace('/java/', '/')}",
-                package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{args.project_name}/",
-                mappings = ctx_mappings
-            ))
-
-    # Add ExceptionHandler.java
-    exp_mappings, exp_imports = make_exception_mappings(args, schemas)
-    with open("src/compositional_glue_tests/misc/ExceptionHandler.java") as f:
-        write_to_file(get_destination_path(args.project_name, "ExceptionHandler", OUTPUT_DIR, path_to_main=main_paths[args.project_name]), f.read().format(
-                project = f"org.apache.{formatted_proj_name}",
-                imports = exp_imports,
-                mappings = exp_mappings
-            ))
-    
-    # IntegrationUtils.java
-    with open("src/compositional_glue_tests/misc/IntegrationUtils.java") as f:
-        write_to_file(get_destination_path(args.project_name, "IntegrationUtils", OUTPUT_DIR, path_to_main=main_paths[args.project_name]), f.read().format(
-                project = f"org.apache.{formatted_proj_name}"
-            ))
-        
-    # copy java_handler.py to the translated project
-    subprocess.run(['cp', 'src/compositional_glue_tests/misc/java_handler.py', f"{TRANSLATION_DIR}/{args.project_name}/src/{main_paths[args.project_name].replace('/java/', '/')}/"], check=True)
+    init_project(args, formatted_proj_name, schemas)
 
     for schema in schemas:
         with open(f'data/schemas/{args.project_name}/{schema}') as f:
@@ -387,6 +340,7 @@ def main(args):
                     print(*failed_tests, sep='\n')
                 else:
                     print("All tests passed!")
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate glue code for Compositional Testing.')
