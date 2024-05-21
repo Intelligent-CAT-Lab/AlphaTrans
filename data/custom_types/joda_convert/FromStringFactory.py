@@ -1,0 +1,2 @@
+class FromStringFactory:
+    pass

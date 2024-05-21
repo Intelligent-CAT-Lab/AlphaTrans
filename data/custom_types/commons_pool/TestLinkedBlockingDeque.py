@@ -1,0 +1,2 @@
+class TestLinkedBlockingDeque:
+    pass

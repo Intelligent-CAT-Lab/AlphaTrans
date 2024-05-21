@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.visit.VisitSourceSelector import *
 from src.main.org.apache.commons.graph.visit.DefaultVisitSourceSelector import *
@@ -33,6 +35,8 @@ from src.main.org.apache.commons.graph.MutableGraph import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 import typing
+from typing import *
+import io
 import pathlib
 
 # Imports End

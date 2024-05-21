@@ -1,15 +1,19 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.export.AbstractExporter import *
 from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 import typing
+from typing import *
 import io
+from io import StringIO
 
 # Imports End
 
 
-class DotExporter(DotExporter, AbstractExporter):
+class DotExporter(AbstractExporter):
 
     # Class Fields Begin
     __GRAPH: str = None
@@ -61,15 +65,15 @@ class DotExporter(DotExporter, AbstractExporter):
 
     def withVertexLabels(
         self, vertexLabels: typing.Dict[typing.Any, str]
-    ) -> "DotExporter":
+    ) -> DotExporter:
         pass
 
     def withEdgeWeights(
         self, edgeWeights: Mapper[typing.Any, typing.Any]
-    ) -> "DotExporter":
+    ) -> DotExporter:
         pass
 
-    def withEdgeLabels(self, edgeLabels: Mapper[typing.Any, str]) -> "DotExporter":
+    def withEdgeLabels(self, edgeLabels: Mapper[typing.Any, str]) -> DotExporter:
         pass
 
     def __printVertexOrEdgeProperties(

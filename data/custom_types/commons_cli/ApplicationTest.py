@@ -1,0 +1,2 @@
+class ApplicationTest:
+    pass

@@ -1,0 +1,2 @@
+class VertexLabelMapper:
+    pass

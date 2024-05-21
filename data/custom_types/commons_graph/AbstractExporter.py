@@ -1,0 +1,2 @@
+class AbstractExporter:
+    pass

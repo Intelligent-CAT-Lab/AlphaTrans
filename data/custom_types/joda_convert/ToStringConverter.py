@@ -1,0 +1,2 @@
+class ToStringConverter:
+    pass

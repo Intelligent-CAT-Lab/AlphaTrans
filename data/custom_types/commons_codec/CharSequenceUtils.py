@@ -1,0 +1,2 @@
+class CharSequenceUtils:
+    pass

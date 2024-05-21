@@ -1,0 +1,2 @@
+class NativeTypeVariableEquals:
+    pass

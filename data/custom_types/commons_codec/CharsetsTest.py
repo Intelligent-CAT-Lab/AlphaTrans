@@ -1,0 +1,2 @@
+class CharsetsTest:
+    pass

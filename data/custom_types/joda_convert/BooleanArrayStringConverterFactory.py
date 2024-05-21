@@ -1,0 +1,2 @@
+class BooleanArrayStringConverterFactory:
+    pass

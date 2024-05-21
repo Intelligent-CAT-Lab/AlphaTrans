@@ -1,0 +1,2 @@
+class EdmondsKarpTestCase:
+    pass

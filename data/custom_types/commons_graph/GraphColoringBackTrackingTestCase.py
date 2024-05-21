@@ -1,0 +1,2 @@
+class GraphColoringBackTrackingTestCase:
+    pass

@@ -1,0 +1,2 @@
+class Resources:
+    pass

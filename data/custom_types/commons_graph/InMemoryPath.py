@@ -1,0 +1,2 @@
+class InMemoryPath:
+    pass

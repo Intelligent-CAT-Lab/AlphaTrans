@@ -1,0 +1,2 @@
+class AbandonedConfig:
+    pass

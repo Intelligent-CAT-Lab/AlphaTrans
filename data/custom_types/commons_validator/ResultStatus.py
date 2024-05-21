@@ -1,0 +1,2 @@
+class ResultStatus:
+    pass

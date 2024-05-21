@@ -1,0 +1,2 @@
+class PooledSoftReference:
+    pass

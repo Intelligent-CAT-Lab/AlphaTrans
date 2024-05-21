@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
 from src.main.org.apache.commons.graph.weight.Monoid import *
@@ -8,11 +10,13 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.GraphException import *
 from src.main.org.apache.commons.graph.Graph import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class ShortestEdges(Comparator):
+class ShortestEdges:
 
     # Class Fields Begin
     __predecessors: typing.Dict[typing.Any, typing.Any] = None

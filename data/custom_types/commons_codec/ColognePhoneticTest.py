@@ -1,0 +1,2 @@
+class ColognePhoneticTest:
+    pass

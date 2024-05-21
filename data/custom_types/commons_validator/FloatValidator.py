@@ -1,0 +1,2 @@
+class FloatValidator:
+    pass

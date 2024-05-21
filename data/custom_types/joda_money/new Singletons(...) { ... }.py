@@ -1,0 +1,2 @@
+class new Singletons(...) { ... }:
+    pass

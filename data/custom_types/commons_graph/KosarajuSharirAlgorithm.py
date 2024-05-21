@@ -1,0 +1,2 @@
+class KosarajuSharirAlgorithm:
+    pass

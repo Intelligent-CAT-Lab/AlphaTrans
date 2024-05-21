@@ -1,0 +1,2 @@
+class EdgeWrapper:
+    pass

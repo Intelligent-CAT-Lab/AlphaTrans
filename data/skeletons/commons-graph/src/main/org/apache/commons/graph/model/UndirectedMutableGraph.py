@@ -1,13 +1,17 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.model.BaseMutableGraph import *
 from src.main.org.apache.commons.graph.VertexPair import *
 from src.main.org.apache.commons.graph.UndirectedGraph import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class UndirectedMutableGraph(UndirectedGraph, UndirectedMutableGraph, BaseMutableGraph):
+class UndirectedMutableGraph(UndirectedGraph, BaseMutableGraph):
 
     # Class Fields Begin
     __serialVersionUID: int = None

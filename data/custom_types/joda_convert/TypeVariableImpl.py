@@ -1,0 +1,2 @@
+class TypeVariableImpl:
+    pass

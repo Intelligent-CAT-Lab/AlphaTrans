@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -17,8 +19,63 @@ from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class AbstractGraphConnection:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def connect0(self) -> None:
+        pass
+
+    # Class Methods End
+
+
+class EdgeWrapper:
+
+    # Class Fields Begin
+    __wrapped: typing.Any = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def getWrapped(self) -> typing.Any:
+        pass
+
+    @staticmethod
+    def EdgeWrapper1() -> EdgeWrapper[typing.Any]:
+        pass
+
+    def __init__(self, wrapped: typing.Any) -> None:
+        pass
+
+    # Class Methods End
+
+
+class MapperWrapper(Mapper):
+
+    # Class Fields Begin
+    __weightOperations: typing.Any = None
+    __weightedEdges: Mapper[typing.Any, typing.Any] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def map(self, input: EdgeWrapper[typing.Any]) -> typing.Any:
+        pass
+
+    def __init__(
+        self,
+        weightOperations: typing.Any,
+        weightedEdges: Mapper[typing.Any, typing.Any],
+    ) -> None:
+        pass
+
+    # Class Methods End
 
 
 class DefaultMaxFlowAlgorithmSelector:
@@ -49,59 +106,6 @@ class DefaultMaxFlowAlgorithmSelector:
     def __newFlowNetwok(
         self, graph: DirectedGraph[typing.Any, typing.Any], weightOperations: typing.Any
     ) -> DirectedGraph[typing.Any, EdgeWrapper[typing.Any]]:
-        pass
-
-    # Class Methods End
-
-
-class MapperWrapper(Mapper):
-
-    # Class Fields Begin
-    __weightOperations: typing.Any = None
-    __weightedEdges: Mapper[typing.Any, typing.Any] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def map(self, input: EdgeWrapper[typing.Any]) -> typing.Any:
-        pass
-
-    def __init__(
-        self,
-        weightOperations: typing.Any,
-        weightedEdges: Mapper[typing.Any, typing.Any],
-    ) -> None:
-        pass
-
-    # Class Methods End
-
-
-class AbstractGraphConnection:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def connect0(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class EdgeWrapper:
-
-    # Class Fields Begin
-    __wrapped: typing.Any = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def getWrapped(self) -> typing.Any:
-        pass
-
-    @staticmethod
-    def EdgeWrapper1() -> EdgeWrapper[typing.Any]:
-        pass
-
-    def __init__(self, wrapped: typing.Any) -> None:
         pass
 
     # Class Methods End

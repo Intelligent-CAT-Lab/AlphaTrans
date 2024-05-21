@@ -1,0 +1,2 @@
+class VisitTracker:
+    pass

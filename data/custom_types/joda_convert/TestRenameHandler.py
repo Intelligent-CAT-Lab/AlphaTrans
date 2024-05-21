@@ -1,0 +1,2 @@
+class TestRenameHandler:
+    pass

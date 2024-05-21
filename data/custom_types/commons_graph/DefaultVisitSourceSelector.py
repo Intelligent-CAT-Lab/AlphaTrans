@@ -1,0 +1,2 @@
+class DefaultVisitSourceSelector:
+    pass

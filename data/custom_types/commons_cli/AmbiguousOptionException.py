@@ -1,0 +1,2 @@
+class AmbiguousOptionException:
+    pass

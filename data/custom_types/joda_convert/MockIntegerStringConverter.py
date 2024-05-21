@@ -1,0 +1,2 @@
+class MockIntegerStringConverter:
+    pass

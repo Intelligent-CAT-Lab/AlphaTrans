@@ -1,0 +1,2 @@
+class QuoteMode:
+    pass

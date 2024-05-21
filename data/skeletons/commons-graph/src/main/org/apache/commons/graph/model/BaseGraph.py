@@ -1,15 +1,19 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.utils.Objects import *
 from src.main.org.apache.commons.graph.VertexPair import *
 from src.main.org.apache.commons.graph.GraphException import *
 from src.main.org.apache.commons.graph.Graph import *
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
 
 
-class BaseGraph(Graph, BaseGraph, ABC):
+class BaseGraph(Graph, ABC):
 
     # Class Fields Begin
     __serialVersionUID: int = None

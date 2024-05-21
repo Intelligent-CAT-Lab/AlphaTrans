@@ -1,0 +1,2 @@
+class TypeBean:
+    pass

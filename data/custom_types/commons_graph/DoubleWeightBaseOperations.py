@@ -1,0 +1,2 @@
+class DoubleWeightBaseOperations:
+    pass

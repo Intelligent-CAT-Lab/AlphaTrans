@@ -1,0 +1,2 @@
+class CurrencyUnit:
+    pass

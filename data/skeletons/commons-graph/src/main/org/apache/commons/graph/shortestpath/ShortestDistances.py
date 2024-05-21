@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class ShortestDistances(Comparator):
+class ShortestDistances:
 
     # Class Fields Begin
     __distances: typing.Dict[typing.Any, typing.Any] = None

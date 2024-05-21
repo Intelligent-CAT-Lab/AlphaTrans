@@ -1,0 +1,2 @@
+class ISINCheckDigit:
+    pass

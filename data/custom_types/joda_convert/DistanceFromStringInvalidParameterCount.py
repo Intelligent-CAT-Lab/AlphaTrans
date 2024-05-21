@@ -1,0 +1,2 @@
+class DistanceFromStringInvalidParameterCount:
+    pass

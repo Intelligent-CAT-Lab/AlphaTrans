@@ -1,0 +1,2 @@
+class KeyedObjectPool:
+    pass

@@ -1,0 +1,2 @@
+class MockDistanceStringConverter:
+    pass

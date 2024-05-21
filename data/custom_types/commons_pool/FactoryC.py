@@ -1,0 +1,2 @@
+class FactoryC:
+    pass

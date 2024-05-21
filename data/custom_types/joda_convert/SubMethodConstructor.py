@@ -1,0 +1,2 @@
+class SubMethodConstructor:
+    pass

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.visit.VisitSourceSelector import *
 from src.main.org.apache.commons.graph.visit.VisitAlgorithmsSelector import *
@@ -8,6 +10,8 @@ from src.main.org.apache.commons.graph.connectivity.ConnectedComponentHandler im
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import typing
+from typing import *
+import io
 
 # Imports End
 

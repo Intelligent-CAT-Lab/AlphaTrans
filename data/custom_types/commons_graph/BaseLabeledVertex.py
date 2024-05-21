@@ -1,0 +1,2 @@
+class BaseLabeledVertex:
+    pass

@@ -1,0 +1,2 @@
+class RulesApplication:
+    pass

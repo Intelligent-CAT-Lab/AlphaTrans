@@ -1,0 +1,2 @@
+class BasicParser:
+    pass

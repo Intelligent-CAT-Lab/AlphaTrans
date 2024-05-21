@@ -1,0 +1,2 @@
+class DefaultVisitAlgorithmsSelector:
+    pass

@@ -1,0 +1,2 @@
+class LanguageSet:
+    pass

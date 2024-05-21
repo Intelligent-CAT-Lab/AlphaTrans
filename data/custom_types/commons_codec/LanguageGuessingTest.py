@@ -1,0 +1,2 @@
+class LanguageGuessingTest:
+    pass

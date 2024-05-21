@@ -1,0 +1,975 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-graph/src/test/java/org/apache/commons/graph/visit/VisitTestCase.java",
+    "imports": {
+        "34-34:import List": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "33-33:import ArrayList": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "26-26:import Graph": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "30-30:import UndirectedMutableGraph": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.graph.model.UndirectedMutableGraph;\n"
+            ]
+        },
+        "27-27:import AbstractGraphConnection": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.builder.AbstractGraphConnection;\n"
+            ]
+        },
+        "31-31:import Test": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "28-28:import BaseLabeledEdge": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledEdge;\n"
+            ]
+        },
+        "29-29:import BaseLabeledVertex": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledVertex;\n"
+            ]
+        },
+        "24-24:import static Assert.assertEquals": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "22-22:import static CommonsGraph.newUndirectedMutableGraph": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.newUndirectedMutableGraph;\n"
+            ]
+        },
+        "23-23:import static CommonsGraph.visit": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.visit;\n"
+            ]
+        }
+    },
+    "classes": {
+        "VisitTestCase": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "126-174:testVerifyDepthFirstSearch": {
+                    "start": 126,
+                    "end": 174,
+                    "body": [
+                        "    public void testVerifyDepthFirstSearch() {\n",
+                        "        final List<BaseLabeledVertex> expected = new ArrayList<BaseLabeledVertex>();\n",
+                        "\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> input =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex a = addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                BaseLabeledVertex b = addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                BaseLabeledVertex c = addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                BaseLabeledVertex d = addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                BaseLabeledVertex e = addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                BaseLabeledVertex f = addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                                BaseLabeledVertex g = addVertex(new BaseLabeledVertex(\"G\"));\n",
+                        "                                BaseLabeledVertex h = addVertex(new BaseLabeledVertex(\"H\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"S\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"S <-> A\")).from(s).to(a);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"S <-> B\")).from(s).to(b);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A <-> C\")).from(a).to(c);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A <-> D\")).from(a).to(d);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B <-> E\")).from(b).to(e);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B <-> F\")).from(b).to(f);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E <-> H\")).from(e).to(h);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E <-> G\")).from(e).to(g);\n",
+                        "\n",
+                        "                                expected.add(s);\n",
+                        "                                expected.add(b);\n",
+                        "                                expected.add(f);\n",
+                        "                                expected.add(e);\n",
+                        "                                expected.add(g);\n",
+                        "                                expected.add(h);\n",
+                        "                                expected.add(a);\n",
+                        "                                expected.add(d);\n",
+                        "                                expected.add(c);\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "\n",
+                        "        final List<BaseLabeledVertex> actual =\n",
+                        "                visit(input)\n",
+                        "                        .from(new BaseLabeledVertex(\"S\"))\n",
+                        "                        .applyingDepthFirstSearch1(new NodeSequenceVisitor());\n",
+                        "\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyDepthFirstSearch()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "201-204:newUndirectedMutableGraph"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.visit.NodeSequenceVisitor",
+                            "NodeSequenceVisitor",
+                            "NodeSequenceVisitor"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "354-357:visit"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testVerifyDepthFirstSearch(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation_1": null,
+                    "translation_2": null,
+                    "translation_3": null
+                },
+                "55-119:testVerifyBreadthFirstSearch": {
+                    "start": 55,
+                    "end": 119,
+                    "body": [
+                        "    public void testVerifyBreadthFirstSearch() {\n",
+                        "\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> input =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex r = addVertex(new BaseLabeledVertex(\"r\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"s\"));\n",
+                        "                                BaseLabeledVertex t = addVertex(new BaseLabeledVertex(\"t\"));\n",
+                        "                                BaseLabeledVertex u = addVertex(new BaseLabeledVertex(\"u\"));\n",
+                        "                                BaseLabeledVertex v = addVertex(new BaseLabeledVertex(\"v\"));\n",
+                        "                                BaseLabeledVertex w = addVertex(new BaseLabeledVertex(\"w\"));\n",
+                        "                                BaseLabeledVertex x = addVertex(new BaseLabeledVertex(\"x\"));\n",
+                        "                                BaseLabeledVertex y = addVertex(new BaseLabeledVertex(\"y\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> r\")).from(s).to(r);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> w\")).from(s).to(w);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"r <-> v\")).from(r).to(v);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> t\")).from(w).to(t);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> x\")).from(w).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> u\")).from(t).to(u);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> x\")).from(t).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"y <-> u\")).from(y).to(u);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"x <-> y\")).from(x).to(y);\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> expected =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex r = addVertex(new BaseLabeledVertex(\"r\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"s\"));\n",
+                        "                                BaseLabeledVertex t = addVertex(new BaseLabeledVertex(\"t\"));\n",
+                        "                                BaseLabeledVertex u = addVertex(new BaseLabeledVertex(\"u\"));\n",
+                        "                                BaseLabeledVertex v = addVertex(new BaseLabeledVertex(\"v\"));\n",
+                        "                                BaseLabeledVertex w = addVertex(new BaseLabeledVertex(\"w\"));\n",
+                        "                                BaseLabeledVertex x = addVertex(new BaseLabeledVertex(\"x\"));\n",
+                        "                                BaseLabeledVertex y = addVertex(new BaseLabeledVertex(\"y\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> r\")).from(s).to(r);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> w\")).from(s).to(w);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"r <-> v\")).from(r).to(v);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> t\")).from(w).to(t);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> x\")).from(w).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> u\")).from(t).to(u);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"x <-> y\")).from(x).to(y);\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "\n",
+                        "        Graph<BaseLabeledVertex, BaseLabeledEdge> actual =\n",
+                        "                visit(input).from(new BaseLabeledVertex(\"s\")).applyingBreadthFirstSearch0();\n",
+                        "\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyBreadthFirstSearch()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "201-204:newUndirectedMutableGraph"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "354-357:visit"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testVerifyBreadthFirstSearch(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation_1": null,
+                    "translation_2": null,
+                    "translation_3": null
+                },
+                "39-48:testNotExistVertex": {
+                    "start": 39,
+                    "end": 48,
+                    "body": [
+                        "    public void testNotExistVertex() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> input =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {}\n",
+                        "                        });\n",
+                        "\n",
+                        "        visit(input).from(new BaseLabeledVertex(\"NOT EXIST\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNotExistVertex()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "201-204:newUndirectedMutableGraph"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "354-357:visit"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testNotExistVertex(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation_1": null,
+                    "translation_2": null,
+                    "translation_3": null
+                }
+            },
+            "fields": {}
+        },
+        "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }": {
+            "start": 42,
+            "end": 42,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "VisitTestCase",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "44-44:connect0": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "                            public void connect0() {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def connect0(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation_1": [
+                        "",
+                        "    def connect0(self) -> None:",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_2": [
+                        "",
+                        "    def connect0(self) -> None:",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_3": [
+                        "",
+                        "    def connect0(self) -> None:",
+                        "        pass",
+                        ""
+                    ]
+                },
+                "61-84:connect0": {
+                    "start": 61,
+                    "end": 84,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex r = addVertex(new BaseLabeledVertex(\"r\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"s\"));\n",
+                        "                                BaseLabeledVertex t = addVertex(new BaseLabeledVertex(\"t\"));\n",
+                        "                                BaseLabeledVertex u = addVertex(new BaseLabeledVertex(\"u\"));\n",
+                        "                                BaseLabeledVertex v = addVertex(new BaseLabeledVertex(\"v\"));\n",
+                        "                                BaseLabeledVertex w = addVertex(new BaseLabeledVertex(\"w\"));\n",
+                        "                                BaseLabeledVertex x = addVertex(new BaseLabeledVertex(\"x\"));\n",
+                        "                                BaseLabeledVertex y = addVertex(new BaseLabeledVertex(\"y\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> r\")).from(s).to(r);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> w\")).from(s).to(w);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"r <-> v\")).from(r).to(v);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> t\")).from(w).to(t);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> x\")).from(w).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> u\")).from(t).to(u);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> x\")).from(t).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"y <-> u\")).from(y).to(u);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"x <-> y\")).from(x).to(y);\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledEdge",
+                            "BaseLabeledEdge",
+                            "35-37:BaseLabeledEdge"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def connect0(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation_1": [
+                        "",
+                        "def connect0(self) -> None:",
+                        "    r = self.addVertex(BaseLabeledVertex(\"r\"))",
+                        "    s = self.addVertex(BaseLabeledVertex(\"s\"))",
+                        "    t = self.addVertex(BaseLabeledVertex(\"t\"))",
+                        "    u = self.addVertex(BaseLabeledVertex(\"u\"))",
+                        "    v = self.addVertex(BaseLabeledVertex(\"v\"))",
+                        "    w = self.addVertex(BaseLabeledVertex(\"w\"))",
+                        "    x = self.addVertex(BaseLabeledVertex(\"x\"))",
+                        "    y = self.addVertex(BaseLabeledVertex(\"y\"))",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"s <-> r\")).from_(s).to(r)",
+                        "    self.addEdge(BaseLabeledEdge(\"s <-> w\")).from_(s).to(w)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"r <-> v\")).from_(r).to(v)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"w <-> t\")).from_(w).to(t)",
+                        "    self.addEdge(BaseLabeledEdge(\"w <-> x\")).from_(w).to(x)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"t <-> u\")).from_(t).to(u)",
+                        "    self.addEdge(BaseLabeledEdge(\"t <-> x\")).from_(t).to(x)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"y <-> u\")).from_(y).to(u)",
+                        "    self.addEdge(BaseLabeledEdge(\"x <-> y\")).from_(x).to(y)",
+                        ""
+                    ],
+                    "translation_2": [
+                        "",
+                        "    def connect0(self) -> None:",
+                        "        r = self.add_vertex(BaseLabeledVertex(\"r\"))",
+                        "        s = self.add_vertex(BaseLabeledVertex(\"s\"))",
+                        "        t = self.add_vertex(BaseLabeledVertex(\"t\"))",
+                        "        u = self.add_vertex(BaseLabeledVertex(\"u\"))",
+                        "        v = self.add_vertex(BaseLabeledVertex(\"v\"))",
+                        "        w = self.add_vertex(BaseLabeledVertex(\"w\"))",
+                        "        x = self.add_vertex(BaseLabeledVertex(\"x\"))",
+                        "        y = self.add_vertex(BaseLabeledVertex(\"y\"))",
+                        "",
+                        "        self.add_edge(BaseLabeledEdge(\"s <-> r\")).from_(s).to(r)",
+                        "        self.add_edge(BaseLabeledEdge(\"s <-> w\")).from_(s).to(w)",
+                        "",
+                        "        self.add_edge(BaseLabeledEdge(\"r <-> v\")).from_(r).to(v)",
+                        "",
+                        "        self.add_edge(BaseLabeledEdge(\"w <-> t\")).from_(w).to(t)",
+                        "        self.add_edge(BaseLabeledEdge(\"w <-> x\")).from_(w).to(x)",
+                        "",
+                        "        self.add_edge(BaseLabeledEdge(\"t <-> u\")).from_(t).to(u)",
+                        "        self.add_edge(BaseLabeledEdge(\"t <-> x\")).from_(t).to(x)",
+                        "",
+                        "        self.add_edge(BaseLabeledEdge(\"y <-> u\")).from_(y).to(u)",
+                        "        self.add_edge(BaseLabeledEdge(\"x <-> y\")).from_(x).to(y)",
+                        ""
+                    ],
+                    "translation_3": [
+                        "",
+                        "    def connect0(self) -> None:",
+                        "        r = self.add_vertex(BaseLabeledVertex(\"r\"))",
+                        "        s = self.add_vertex(BaseLabeledVertex(\"s\"))",
+                        "        t = self.add_vertex(BaseLabeledVertex(\"t\"))",
+                        "        u = self.add_vertex(BaseLabeledVertex(\"u\"))",
+                        "        v = self.add_vertex(BaseLabeledVertex(\"v\"))",
+                        "        w = self.add_vertex(BaseLabeledVertex(\"w\"))",
+                        "        x = self.add_vertex(BaseLabeledVertex(\"x\"))",
+                        "        y = self.add_vertex(BaseLabeledVertex(\"y\"))",
+                        "",
+                        "        self.add_edge(BaseLabeledEdge(\"s <-> r\")).from_(s).to(r)",
+                        "        self.add_edge(BaseLabeledEdge(\"s <-> w\")).from_(s).to(w)",
+                        "",
+                        "        self.add_edge(BaseLabeledEdge(\"r <-> v\")).from_(r).to(v)",
+                        "",
+                        "        self.add_edge(BaseLabeledEdge(\"w <-> t\")).from_(w).to(t)",
+                        "        self.add_edge(BaseLabeledEdge(\"w <-> x\")).from_(w).to(x)",
+                        "",
+                        "        self.add_edge(BaseLabeledEdge(\"t <-> u\")).from_(t).to(u)",
+                        "        self.add_edge(BaseLabeledEdge(\"t <-> x\")).from_(t).to(x)",
+                        "",
+                        "        self.add_edge(BaseLabeledEdge(\"y <-> u\")).from_(y).to(u)",
+                        "        self.add_edge(BaseLabeledEdge(\"x <-> y\")).from_(x).to(y)",
+                        ""
+                    ]
+                },
+                "91-112:connect0": {
+                    "start": 91,
+                    "end": 112,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex r = addVertex(new BaseLabeledVertex(\"r\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"s\"));\n",
+                        "                                BaseLabeledVertex t = addVertex(new BaseLabeledVertex(\"t\"));\n",
+                        "                                BaseLabeledVertex u = addVertex(new BaseLabeledVertex(\"u\"));\n",
+                        "                                BaseLabeledVertex v = addVertex(new BaseLabeledVertex(\"v\"));\n",
+                        "                                BaseLabeledVertex w = addVertex(new BaseLabeledVertex(\"w\"));\n",
+                        "                                BaseLabeledVertex x = addVertex(new BaseLabeledVertex(\"x\"));\n",
+                        "                                BaseLabeledVertex y = addVertex(new BaseLabeledVertex(\"y\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> r\")).from(s).to(r);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> w\")).from(s).to(w);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"r <-> v\")).from(r).to(v);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> t\")).from(w).to(t);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> x\")).from(w).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> u\")).from(t).to(u);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"x <-> y\")).from(x).to(y);\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledEdge",
+                            "BaseLabeledEdge",
+                            "35-37:BaseLabeledEdge"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def connect0(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation_1": [
+                        "",
+                        "def connect0(self) -> None:",
+                        "    r = self.addVertex(BaseLabeledVertex(\"r\"))",
+                        "    s = self.addVertex(BaseLabeledVertex(\"s\"))",
+                        "    t = self.addVertex(BaseLabeledVertex(\"t\"))",
+                        "    u = self.addVertex(BaseLabeledVertex(\"u\"))",
+                        "    v = self.addVertex(BaseLabeledVertex(\"v\"))",
+                        "    w = self.addVertex(BaseLabeledVertex(\"w\"))",
+                        "    x = self.addVertex(BaseLabeledVertex(\"x\"))",
+                        "    y = self.addVertex(BaseLabeledVertex(\"y\"))",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"s <-> r\")).from_(s).to(r)",
+                        "    self.addEdge(BaseLabeledEdge(\"s <-> w\")).from_(s).to(w)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"r <-> v\")).from_(r).to(v)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"w <-> t\")).from_(w).to(t)",
+                        "    self.addEdge(BaseLabeledEdge(\"w <-> x\")).from_(w).to(x)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"t <-> u\")).from_(t).to(u)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"x <-> y\")).from_(x).to(y)",
+                        ""
+                    ],
+                    "translation_2": [
+                        "",
+                        "    def connect0(self) -> None:",
+                        "        r = self.addVertex(BaseLabeledVertex(\"r\"))",
+                        "        s = self.addVertex(BaseLabeledVertex(\"s\"))",
+                        "        t = self.addVertex(BaseLabeledVertex(\"t\"))",
+                        "        u = self.addVertex(BaseLabeledVertex(\"u\"))",
+                        "        v = self.addVertex(BaseLabeledVertex(\"v\"))",
+                        "        w = self.addVertex(BaseLabeledVertex(\"w\"))",
+                        "        x = self.addVertex(BaseLabeledVertex(\"x\"))",
+                        "        y = self.addVertex(BaseLabeledVertex(\"y\"))",
+                        "",
+                        "        self.addEdge(BaseLabeledEdge(\"s <-> r\")).from_(s).to(r)",
+                        "        self.addEdge(BaseLabeledEdge(\"s <-> w\")).from_(s).to(w)",
+                        "",
+                        "        self.addEdge(BaseLabeledEdge(\"r <-> v\")).from_(r).to(v)",
+                        "",
+                        "        self.addEdge(BaseLabeledEdge(\"w <-> t\")).from_(w).to(t)",
+                        "        self.addEdge(BaseLabeledEdge(\"w <-> x\")).from_(w).to(x)",
+                        "",
+                        "        self.addEdge(BaseLabeledEdge(\"t <-> u\")).from_(t).to(u)",
+                        "",
+                        "        self.addEdge(BaseLabeledEdge(\"x <-> y\")).from_(x).to(y)",
+                        ""
+                    ],
+                    "translation_3": [
+                        "",
+                        "    def connect0(self) -> None:",
+                        "        r = self.addVertex(BaseLabeledVertex(\"r\"))",
+                        "        s = self.addVertex(BaseLabeledVertex(\"s\"))",
+                        "        t = self.addVertex(BaseLabeledVertex(\"t\"))",
+                        "        u = self.addVertex(BaseLabeledVertex(\"u\"))",
+                        "        v = self.addVertex(BaseLabeledVertex(\"v\"))",
+                        "        w = self.addVertex(BaseLabeledVertex(\"w\"))",
+                        "        x = self.addVertex(BaseLabeledVertex(\"x\"))",
+                        "        y = self.addVertex(BaseLabeledVertex(\"y\"))",
+                        "",
+                        "        self.addEdge(BaseLabeledEdge(\"s <-> r\")).from_(s).to(r)",
+                        "        self.addEdge(BaseLabeledEdge(\"s <-> w\")).from_(s).to(w)",
+                        "",
+                        "        self.addEdge(BaseLabeledEdge(\"r <-> v\")).from_(r).to(v)",
+                        "",
+                        "        self.addEdge(BaseLabeledEdge(\"w <-> t\")).from_(w).to(t)",
+                        "        self.addEdge(BaseLabeledEdge(\"w <-> x\")).from_(w).to(x)",
+                        "",
+                        "        self.addEdge(BaseLabeledEdge(\"t <-> u\")).from_(t).to(u)",
+                        "",
+                        "        self.addEdge(BaseLabeledEdge(\"x <-> y\")).from_(x).to(y)",
+                        ""
+                    ]
+                },
+                "133-165:connect0": {
+                    "start": 133,
+                    "end": 165,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex a = addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                BaseLabeledVertex b = addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                BaseLabeledVertex c = addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                BaseLabeledVertex d = addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                BaseLabeledVertex e = addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                BaseLabeledVertex f = addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                                BaseLabeledVertex g = addVertex(new BaseLabeledVertex(\"G\"));\n",
+                        "                                BaseLabeledVertex h = addVertex(new BaseLabeledVertex(\"H\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"S\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"S <-> A\")).from(s).to(a);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"S <-> B\")).from(s).to(b);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A <-> C\")).from(a).to(c);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A <-> D\")).from(a).to(d);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B <-> E\")).from(b).to(e);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B <-> F\")).from(b).to(f);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E <-> H\")).from(e).to(h);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E <-> G\")).from(e).to(g);\n",
+                        "\n",
+                        "                                expected.add(s);\n",
+                        "                                expected.add(b);\n",
+                        "                                expected.add(f);\n",
+                        "                                expected.add(e);\n",
+                        "                                expected.add(g);\n",
+                        "                                expected.add(h);\n",
+                        "                                expected.add(a);\n",
+                        "                                expected.add(d);\n",
+                        "                                expected.add(c);\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledEdge",
+                            "BaseLabeledEdge",
+                            "35-37:BaseLabeledEdge"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def connect0(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation_1": [
+                        "",
+                        "def connect0(self) -> None:",
+                        "    a = self.addVertex(BaseLabeledVertex(\"A\"))",
+                        "    b = self.addVertex(BaseLabeledVertex(\"B\"))",
+                        "    c = self.addVertex(BaseLabeledVertex(\"C\"))",
+                        "    d = self.addVertex(BaseLabeledVertex(\"D\"))",
+                        "    e = self.addVertex(BaseLabeledVertex(\"E\"))",
+                        "    f = self.addVertex(BaseLabeledVertex(\"F\"))",
+                        "    g = self.addVertex(BaseLabeledVertex(\"G\"))",
+                        "    h = self.addVertex(BaseLabeledVertex(\"H\"))",
+                        "    s = self.addVertex(BaseLabeledVertex(\"S\"))",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"S <-> A\")).from_(s).to(a)",
+                        "    self.addEdge(BaseLabeledEdge(\"S <-> B\")).from_(s).to(b)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"A <-> C\")).from_(a).to(c)",
+                        "    self.addEdge(BaseLabeledEdge(\"A <-> D\")).from_(a).to(d)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"B <-> E\")).from_(b).to(e)",
+                        "    self.addEdge(BaseLabeledEdge(\"B <-> F\")).from_(b).to(f)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"E <-> H\")).from_(e).to(h)",
+                        "    self.addEdge(BaseLabeledEdge(\"E <-> G\")).from_(e).to(g)",
+                        "",
+                        "    self.expected.add(s)",
+                        "    self.expected.add(b)",
+                        "    self.expected.add(f)",
+                        "    self.expected.add(e)",
+                        "    self.expected.add(g)",
+                        "    self.expected.add(h)",
+                        "    self.expected.add(a)",
+                        "    self.expected.add(d)",
+                        "    self.expected.add(c)",
+                        ""
+                    ],
+                    "translation_2": [
+                        "",
+                        "def connect0(self) -> None:",
+                        "    a = self.addVertex(BaseLabeledVertex(\"A\"))",
+                        "    b = self.addVertex(BaseLabeledVertex(\"B\"))",
+                        "    c = self.addVertex(BaseLabeledVertex(\"C\"))",
+                        "    d = self.addVertex(BaseLabeledVertex(\"D\"))",
+                        "    e = self.addVertex(BaseLabeledVertex(\"E\"))",
+                        "    f = self.addVertex(BaseLabeledVertex(\"F\"))",
+                        "    g = self.addVertex(BaseLabeledVertex(\"G\"))",
+                        "    h = self.addVertex(BaseLabeledVertex(\"H\"))",
+                        "    s = self.addVertex(BaseLabeledVertex(\"S\"))",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"S <-> A\")).from_(s).to(a)",
+                        "    self.addEdge(BaseLabeledEdge(\"S <-> B\")).from_(s).to(b)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"A <-> C\")).from_(a).to(c)",
+                        "    self.addEdge(BaseLabeledEdge(\"A <-> D\")).from_(a).to(d)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"B <-> E\")).from_(b).to(e)",
+                        "    self.addEdge(BaseLabeledEdge(\"B <-> F\")).from_(b).to(f)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"E <-> H\")).from_(e).to(h)",
+                        "    self.addEdge(BaseLabeledEdge(\"E <-> G\")).from_(e).to(g)",
+                        "",
+                        "    self.expected.add(s)",
+                        "    self.expected.add(b)",
+                        "    self.expected.add(f)",
+                        "    self.expected.add(e)",
+                        "    self.expected.add(g)",
+                        "    self.expected.add(h)",
+                        "    self.expected.add(a)",
+                        "    self.expected.add(d)",
+                        "    self.expected.add(c)",
+                        ""
+                    ],
+                    "translation_3": [
+                        "",
+                        "def connect0(self) -> None:",
+                        "    a = self.addVertex(BaseLabeledVertex(\"A\"))",
+                        "    b = self.addVertex(BaseLabeledVertex(\"B\"))",
+                        "    c = self.addVertex(BaseLabeledVertex(\"C\"))",
+                        "    d = self.addVertex(BaseLabeledVertex(\"D\"))",
+                        "    e = self.addVertex(BaseLabeledVertex(\"E\"))",
+                        "    f = self.addVertex(BaseLabeledVertex(\"F\"))",
+                        "    g = self.addVertex(BaseLabeledVertex(\"G\"))",
+                        "    h = self.addVertex(BaseLabeledVertex(\"H\"))",
+                        "    s = self.addVertex(BaseLabeledVertex(\"S\"))",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"S <-> A\")).from_(s).to(a)",
+                        "    self.addEdge(BaseLabeledEdge(\"S <-> B\")).from_(s).to(b)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"A <-> C\")).from_(a).to(c)",
+                        "    self.addEdge(BaseLabeledEdge(\"A <-> D\")).from_(a).to(d)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"B <-> E\")).from_(b).to(e)",
+                        "    self.addEdge(BaseLabeledEdge(\"B <-> F\")).from_(b).to(f)",
+                        "",
+                        "    self.addEdge(BaseLabeledEdge(\"E <-> H\")).from_(e).to(h)",
+                        "    self.addEdge(BaseLabeledEdge(\"E <-> G\")).from_(e).to(g)",
+                        "",
+                        "    self.expected.add(s)",
+                        "    self.expected.add(b)",
+                        "    self.expected.add(f)",
+                        "    self.expected.add(e)",
+                        "    self.expected.add(g)",
+                        "    self.expected.add(h)",
+                        "    self.expected.add(a)",
+                        "    self.expected.add(d)",
+                        "    self.expected.add(c)",
+                        ""
+                    ]
+                },
+                "42-42:": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def (self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation_1": null,
+                    "translation_2": null,
+                    "translation_3": null
+                },
+                "59-59:": {
+                    "start": 59,
+                    "end": 59,
+                    "body": [
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def (self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation_1": null,
+                    "translation_2": null,
+                    "translation_3": null
+                },
+                "89-89:": {
+                    "start": 89,
+                    "end": 89,
+                    "body": [
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def (self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation_1": null,
+                    "translation_2": null,
+                    "translation_3": null
+                },
+                "131-131:": {
+                    "start": 131,
+                    "end": 131,
+                    "body": [
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def (self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation_1": null,
+                    "translation_2": null,
+                    "translation_3": null
+                }
+            },
+            "fields": {}
+        }
+    },
+    "python_imports": []
+}

@@ -1,0 +1,2 @@
+class BoruvkaTestCase:
+    pass

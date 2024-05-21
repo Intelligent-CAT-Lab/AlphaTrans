@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.utils.Objects import *
 from src.main.org.apache.commons.graph.utils.Assertions import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class BaseLabeledVertex(Serializable):
+class BaseLabeledVertex:
 
     # Class Fields Begin
     __serialVersionUID: int = None

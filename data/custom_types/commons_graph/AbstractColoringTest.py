@@ -1,0 +1,2 @@
+class AbstractColoringTest:
+    pass

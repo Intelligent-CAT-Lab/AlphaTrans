@@ -1,0 +1,2 @@
+class UnknownSizeException:
+    pass

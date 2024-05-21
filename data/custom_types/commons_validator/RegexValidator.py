@@ -1,0 +1,2 @@
+class RegexValidator:
+    pass

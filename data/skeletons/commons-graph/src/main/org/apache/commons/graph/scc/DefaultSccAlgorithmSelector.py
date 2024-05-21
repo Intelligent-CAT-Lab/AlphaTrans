@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.scc.TarjanAlgorithm import *
 from src.main.org.apache.commons.graph.scc.SccAlgorithmSelector import *
@@ -5,7 +7,10 @@ from src.main.org.apache.commons.graph.scc.SccAlgorithm import *
 from src.main.org.apache.commons.graph.scc.KosarajuSharirAlgorithm import *
 from src.main.org.apache.commons.graph.scc.CheriyanMehlhornGabowAlgorithm import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
+import os
 import typing
+from typing import *
+import io
 
 # Imports End
 

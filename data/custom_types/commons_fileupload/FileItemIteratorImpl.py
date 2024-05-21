@@ -1,0 +1,2 @@
+class FileItemIteratorImpl:
+    pass

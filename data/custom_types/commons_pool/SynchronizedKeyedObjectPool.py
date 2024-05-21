@@ -1,0 +1,2 @@
+class SynchronizedKeyedObjectPool:
+    pass

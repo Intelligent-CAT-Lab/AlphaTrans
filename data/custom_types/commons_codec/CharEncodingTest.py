@@ -1,0 +1,2 @@
+class CharEncodingTest:
+    pass

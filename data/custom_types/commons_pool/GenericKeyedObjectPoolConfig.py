@@ -1,0 +1,2 @@
+class GenericKeyedObjectPoolConfig:
+    pass

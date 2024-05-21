@@ -1,0 +1,2 @@
+class ABANumberCheckDigit:
+    pass

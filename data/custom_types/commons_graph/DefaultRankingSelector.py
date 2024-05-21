@@ -1,0 +1,2 @@
+class DefaultRankingSelector:
+    pass

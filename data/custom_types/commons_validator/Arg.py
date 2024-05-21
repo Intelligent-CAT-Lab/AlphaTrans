@@ -1,0 +1,2 @@
+class Arg:
+    pass

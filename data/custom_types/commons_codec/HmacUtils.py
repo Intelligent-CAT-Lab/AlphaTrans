@@ -1,0 +1,2 @@
+class HmacUtils:
+    pass

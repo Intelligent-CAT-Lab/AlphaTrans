@@ -1,0 +1,2 @@
+class EloTestCase:
+    pass

@@ -1,0 +1,2 @@
+class IntArrayStringConverter:
+    pass

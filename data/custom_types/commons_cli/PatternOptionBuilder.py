@@ -1,0 +1,2 @@
+class PatternOptionBuilder:
+    pass

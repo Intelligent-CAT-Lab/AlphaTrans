@@ -1,14 +1,18 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.model.BaseGraph import *
 from src.main.org.apache.commons.graph.VertexPair import *
 from src.main.org.apache.commons.graph.MutableGraph import *
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
 
 
-class BaseMutableGraph(MutableGraph, BaseMutableGraph, BaseGraph, ABC):
+class BaseMutableGraph(MutableGraph, BaseGraph, ABC):
 
     # Class Fields Begin
     __serialVersionUID: int = None

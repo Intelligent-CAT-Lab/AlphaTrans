@@ -1,0 +1,2 @@
+class SizeException:
+    pass

@@ -1,0 +1,2 @@
+class URLCodecTest:
+    pass

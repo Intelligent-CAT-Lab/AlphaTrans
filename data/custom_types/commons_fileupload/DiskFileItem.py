@@ -1,0 +1,2 @@
+class DiskFileItem:
+    pass

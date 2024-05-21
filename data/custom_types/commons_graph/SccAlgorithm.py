@@ -1,0 +1,2 @@
+class SccAlgorithm:
+    pass

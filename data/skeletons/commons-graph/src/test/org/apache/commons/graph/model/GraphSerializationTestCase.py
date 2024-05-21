@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -8,10 +10,10 @@ from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *
 from src.main.org.apache.commons.graph.model.MutableSpanningTree import *
 from src.main.org.apache.commons.graph.model.InMemoryWeightedPath import *
 from src.main.org.apache.commons.graph.model.DirectedMutableGraph import *
-from src.main.org.apache.commons.graph.model.BaseWeightedEdge import *
-from src.main.org.apache.commons.graph.model.BaseLabeledWeightedEdge import *
-from src.main.org.apache.commons.graph.model.BaseLabeledVertex import *
-from src.main.org.apache.commons.graph.model.BaseLabeledEdge import *
+from src.test.org.apache.commons.graph.model.BaseWeightedEdge import *
+from src.test.org.apache.commons.graph.model.BaseLabeledWeightedEdge import *
+from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *
+from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
 from src.main.org.apache.commons.graph.builder.LinkedConnectionBuilder import *
 from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.MutableGraph import *
@@ -19,9 +21,35 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import typing
+from typing import *
+import io
 import pathlib
 
 # Imports End
+
+
+class AbstractGraphConnection:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def connect0(self) -> None:
+        pass
+
+    # Class Methods End
+
+
+class AbstractGraphConnection:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def connect0(self) -> None:
+        pass
+
+    # Class Methods End
 
 
 class GraphSerializationTestCase:
@@ -69,30 +97,6 @@ class GraphSerializationTestCase:
     def __buildGraphConnections() -> (
         GraphConnection[BaseLabeledVertex, BaseLabeledEdge]
     ):
-        pass
-
-    # Class Methods End
-
-
-class AbstractGraphConnection:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def connect0(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class AbstractGraphConnection:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def connect0(self) -> None:
         pass
 
     # Class Methods End

@@ -1,0 +1,2 @@
+class ConnectedComponentHandler:
+    pass

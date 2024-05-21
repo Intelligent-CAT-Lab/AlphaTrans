@@ -1,0 +1,2 @@
+class CreditCardType:
+    pass

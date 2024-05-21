@@ -1,0 +1,2 @@
+class AmountPrinterParser:
+    pass

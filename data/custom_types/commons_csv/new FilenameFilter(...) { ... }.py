@@ -1,0 +1,2 @@
+class new FilenameFilter(...) { ... }:
+    pass

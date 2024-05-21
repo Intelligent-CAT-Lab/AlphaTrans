@@ -1,0 +1,2 @@
+class Hex:
+    pass

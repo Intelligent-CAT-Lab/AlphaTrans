@@ -1,0 +1,2 @@
+class ProgressNotifier:
+    pass

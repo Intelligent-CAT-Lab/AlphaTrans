@@ -1,0 +1,2 @@
+class SingletonPrinters:
+    pass

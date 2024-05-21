@@ -1,0 +1,2 @@
+class BaseProxyHandler:
+    pass

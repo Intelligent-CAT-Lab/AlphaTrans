@@ -1,0 +1,2 @@
+class Constants:
+    pass

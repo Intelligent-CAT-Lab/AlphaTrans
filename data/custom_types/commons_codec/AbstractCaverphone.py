@@ -1,0 +1,2 @@
+class AbstractCaverphone:
+    pass

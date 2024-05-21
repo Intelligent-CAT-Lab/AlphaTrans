@@ -1,0 +1,2 @@
+class QuotedPrintableDecoder:
+    pass

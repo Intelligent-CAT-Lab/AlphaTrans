@@ -1,0 +1,2 @@
+class StringEncoderAbstractTest:
+    pass

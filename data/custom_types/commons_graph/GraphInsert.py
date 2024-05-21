@@ -1,0 +1,2 @@
+class GraphInsert:
+    pass

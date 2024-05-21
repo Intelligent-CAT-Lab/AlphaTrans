@@ -1,0 +1,2 @@
+class SignedPrinterParser:
+    pass

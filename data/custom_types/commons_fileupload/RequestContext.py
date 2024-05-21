@@ -1,0 +1,2 @@
+class RequestContext:
+    pass

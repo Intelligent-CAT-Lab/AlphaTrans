@@ -1,0 +1,2 @@
+class CSVPrinter:
+    pass

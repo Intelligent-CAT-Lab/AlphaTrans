@@ -1,0 +1,2 @@
+class ProgressListenerTest:
+    pass

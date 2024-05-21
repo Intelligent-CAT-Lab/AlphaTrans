@@ -1,0 +1,2 @@
+class ColognePhonetic:
+    pass

@@ -1,0 +1,2 @@
+class EnumStringConverter:
+    pass

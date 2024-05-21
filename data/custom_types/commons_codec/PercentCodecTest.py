@@ -1,0 +1,2 @@
+class PercentCodecTest:
+    pass

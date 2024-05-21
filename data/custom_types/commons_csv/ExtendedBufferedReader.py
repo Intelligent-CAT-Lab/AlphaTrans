@@ -1,0 +1,2 @@
+class ExtendedBufferedReader:
+    pass

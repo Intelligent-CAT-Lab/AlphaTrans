@@ -1,0 +1,2 @@
+class CSVFormat:
+    pass

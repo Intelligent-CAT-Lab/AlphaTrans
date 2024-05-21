@@ -1,0 +1,2 @@
+class ExtendedBufferedReaderTest:
+    pass

@@ -1,0 +1,2 @@
+class StringDecoder:
+    pass

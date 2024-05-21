@@ -1,0 +1,2 @@
+class TestMoneyFormatterException:
+    pass

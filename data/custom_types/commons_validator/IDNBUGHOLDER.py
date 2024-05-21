@@ -1,0 +1,2 @@
+class IDNBUGHOLDER:
+    pass

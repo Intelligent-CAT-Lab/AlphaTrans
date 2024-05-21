@@ -1,9 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.utils.Assertions import *
 from src.main.org.apache.commons.graph.scc.SccAlgorithm import *
 from src.main.org.apache.commons.graph.model.RevertedGraph import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
+import os
 import typing
+from typing import *
+import io
 
 # Imports End
 

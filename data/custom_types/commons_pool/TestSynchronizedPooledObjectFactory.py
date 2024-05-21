@@ -1,0 +1,2 @@
+class TestSynchronizedPooledObjectFactory:
+    pass

@@ -1,0 +1,2 @@
+class EmailValidator:
+    pass

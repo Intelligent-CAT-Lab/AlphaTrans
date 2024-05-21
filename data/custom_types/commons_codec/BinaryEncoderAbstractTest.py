@@ -1,0 +1,2 @@
+class BinaryEncoderAbstractTest:
+    pass

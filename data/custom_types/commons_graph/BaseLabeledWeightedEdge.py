@@ -1,0 +1,2 @@
+class BaseLabeledWeightedEdge:
+    pass

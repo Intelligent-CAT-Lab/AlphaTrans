@@ -1,0 +1,2 @@
+class TestData:
+    pass

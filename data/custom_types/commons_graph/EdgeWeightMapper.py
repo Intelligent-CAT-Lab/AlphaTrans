@@ -1,0 +1,2 @@
+class EdgeWeightMapper:
+    pass

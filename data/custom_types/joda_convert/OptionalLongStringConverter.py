@@ -1,0 +1,2 @@
+class OptionalLongStringConverter:
+    pass

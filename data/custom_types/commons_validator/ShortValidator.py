@@ -1,0 +1,2 @@
+class ShortValidator:
+    pass

@@ -1,0 +1,2 @@
+class AllVertexPairsShortestPath:
+    pass

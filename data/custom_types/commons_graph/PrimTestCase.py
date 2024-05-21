@@ -1,0 +1,2 @@
+class PrimTestCase:
+    pass

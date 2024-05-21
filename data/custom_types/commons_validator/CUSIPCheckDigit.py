@@ -1,0 +1,2 @@
+class CUSIPCheckDigit:
+    pass

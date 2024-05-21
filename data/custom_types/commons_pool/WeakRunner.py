@@ -1,0 +1,2 @@
+class WeakRunner:
+    pass

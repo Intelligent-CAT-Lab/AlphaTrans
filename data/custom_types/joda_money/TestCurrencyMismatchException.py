@@ -1,0 +1,2 @@
+class TestCurrencyMismatchException:
+    pass

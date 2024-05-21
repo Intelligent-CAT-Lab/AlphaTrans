@@ -1,0 +1,2 @@
+class DestroyMode:
+    pass

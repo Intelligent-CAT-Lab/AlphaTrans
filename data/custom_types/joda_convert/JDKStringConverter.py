@@ -1,0 +1,2 @@
+class JDKStringConverter:
+    pass

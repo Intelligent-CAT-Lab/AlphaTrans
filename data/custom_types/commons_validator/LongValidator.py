@@ -1,0 +1,2 @@
+class LongValidator:
+    pass

@@ -1,0 +1,2 @@
+class FileSizeLimitExceededException:
+    pass

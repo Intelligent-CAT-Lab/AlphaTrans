@@ -1,0 +1,2 @@
+class ModulusTenABACheckDigitTest:
+    pass

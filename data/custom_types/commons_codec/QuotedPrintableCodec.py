@@ -1,0 +1,2 @@
+class QuotedPrintableCodec:
+    pass

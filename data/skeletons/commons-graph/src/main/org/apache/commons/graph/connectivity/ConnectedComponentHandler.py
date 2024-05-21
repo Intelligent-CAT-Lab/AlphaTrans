@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.visit.VisitState import *
 from src.main.org.apache.commons.graph.visit.BaseGraphVisitHandler import *
 from src.main.org.apache.commons.graph.Graph import *
 import typing
+from typing import *
+import io
 
 # Imports End
 

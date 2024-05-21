@@ -1,0 +1,2 @@
+class GenericObjectPoolConfig:
+    pass

@@ -1,0 +1,2 @@
+class RunTest:
+    pass

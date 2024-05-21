@@ -1,0 +1,2 @@
+class TypeVisitor:
+    pass

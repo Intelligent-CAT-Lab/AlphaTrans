@@ -1,0 +1,2 @@
+class MessageDigestAlgorithms:
+    pass

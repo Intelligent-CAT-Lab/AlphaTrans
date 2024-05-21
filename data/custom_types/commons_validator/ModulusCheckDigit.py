@@ -1,0 +1,2 @@
+class ModulusCheckDigit:
+    pass

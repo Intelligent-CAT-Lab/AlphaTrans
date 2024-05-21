@@ -1,0 +1,2 @@
+class new Thread(...) { ... }:
+    pass

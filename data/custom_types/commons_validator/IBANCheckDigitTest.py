@@ -1,0 +1,2 @@
+class IBANCheckDigitTest:
+    pass

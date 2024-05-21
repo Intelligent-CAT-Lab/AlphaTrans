@@ -1,0 +1,2 @@
+class Streams:
+    pass

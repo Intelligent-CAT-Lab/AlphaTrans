@@ -1,0 +1,2 @@
+class TypeCapture:
+    pass

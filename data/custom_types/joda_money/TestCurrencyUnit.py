@@ -1,0 +1,2 @@
+class TestCurrencyUnit:
+    pass

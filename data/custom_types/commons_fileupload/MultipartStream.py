@@ -1,0 +1,2 @@
+class MultipartStream:
+    pass

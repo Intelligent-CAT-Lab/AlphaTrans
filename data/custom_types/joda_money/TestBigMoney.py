@@ -1,0 +1,2 @@
+class TestBigMoney:
+    pass

@@ -1,0 +1,2 @@
+class TypeStringConverterFactory:
+    pass

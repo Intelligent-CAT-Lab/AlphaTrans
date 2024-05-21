@@ -1,0 +1,2 @@
+class new RPattern(...) { ... }:
+    pass

@@ -1,0 +1,2 @@
+class DoubleMetaphoneResult:
+    pass

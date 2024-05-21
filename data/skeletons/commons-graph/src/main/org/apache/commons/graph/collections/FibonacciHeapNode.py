@@ -1,5 +1,9 @@
+from __future__ import annotations
+
 # Imports Begin
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -41,13 +45,13 @@ class FibonacciHeapNode:
     def incraeseDegree(self) -> None:
         pass
 
-    def getRight(self) -> "FibonacciHeapNode":
+    def getRight(self) -> FibonacciHeapNode:
         pass
 
-    def getParent(self) -> "FibonacciHeapNode":
+    def getParent(self) -> FibonacciHeapNode:
         pass
 
-    def getLeft(self) -> "FibonacciHeapNode":
+    def getLeft(self) -> FibonacciHeapNode:
         pass
 
     def getElement(self) -> typing.Any:
@@ -56,7 +60,7 @@ class FibonacciHeapNode:
     def getDegree(self) -> int:
         pass
 
-    def getChild(self) -> "FibonacciHeapNode":
+    def getChild(self) -> FibonacciHeapNode:
         pass
 
     def decraeseDegree(self) -> None:

@@ -1,0 +1,2 @@
+class FromHeadBuilder:
+    pass

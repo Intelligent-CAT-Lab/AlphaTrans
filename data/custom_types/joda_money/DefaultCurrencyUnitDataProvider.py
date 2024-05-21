@@ -1,0 +1,2 @@
+class DefaultCurrencyUnitDataProvider:
+    pass

@@ -1,0 +1,2 @@
+class ShortestDistances:
+    pass

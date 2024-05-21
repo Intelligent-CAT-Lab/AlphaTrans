@@ -1,0 +1,2 @@
+class ISINValidatorTest:
+    pass

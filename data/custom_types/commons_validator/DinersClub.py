@@ -1,0 +1,2 @@
+class DinersClub:
+    pass

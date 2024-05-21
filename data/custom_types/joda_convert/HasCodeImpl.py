@@ -1,0 +1,2 @@
+class HasCodeImpl:
+    pass

@@ -1,0 +1,2 @@
+class BinaryCodecTest:
+    pass

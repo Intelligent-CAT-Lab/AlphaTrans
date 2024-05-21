@@ -1,0 +1,2 @@
+class DefaultPooledObjectInfoMBean:
+    pass

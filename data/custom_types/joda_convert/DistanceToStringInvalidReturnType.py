@@ -1,0 +1,2 @@
+class DistanceToStringInvalidReturnType:
+    pass

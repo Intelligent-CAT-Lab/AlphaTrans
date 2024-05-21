@@ -1,0 +1,2 @@
+class NysiisTest:
+    pass

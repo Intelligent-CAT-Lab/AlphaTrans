@@ -1,0 +1,2 @@
+class HmacAlgorithms:
+    pass

@@ -1,0 +1,2 @@
+class TestDefaultPooledObject:
+    pass

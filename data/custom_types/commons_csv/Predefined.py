@@ -1,0 +1,2 @@
+class Predefined:
+    pass

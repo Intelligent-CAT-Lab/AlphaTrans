@@ -1,0 +1,2 @@
+class DefaultSpanningTreeSourceSelector:
+    pass

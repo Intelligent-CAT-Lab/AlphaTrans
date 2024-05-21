@@ -1,0 +1,2 @@
+class MinimumSpanningTreeBenchmarkTestCase:
+    pass

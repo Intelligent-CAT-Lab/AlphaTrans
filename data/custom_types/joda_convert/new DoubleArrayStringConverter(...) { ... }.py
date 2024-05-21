@@ -1,0 +1,2 @@
+class new DoubleArrayStringConverter(...) { ... }:
+    pass

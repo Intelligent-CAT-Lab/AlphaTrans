@@ -1,0 +1,2 @@
+class DoubleValidator:
+    pass

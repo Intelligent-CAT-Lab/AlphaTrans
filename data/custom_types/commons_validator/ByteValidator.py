@@ -1,0 +1,2 @@
+class ByteValidator:
+    pass

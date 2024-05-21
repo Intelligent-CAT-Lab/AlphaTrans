@@ -1,0 +1,2 @@
+class ValueBean:
+    pass

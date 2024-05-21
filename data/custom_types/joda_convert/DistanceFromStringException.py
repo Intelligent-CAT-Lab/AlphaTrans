@@ -1,0 +1,2 @@
+class DistanceFromStringException:
+    pass

@@ -1,0 +1,2 @@
+class SubMethodMethod:
+    pass

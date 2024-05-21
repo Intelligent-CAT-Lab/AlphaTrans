@@ -1,0 +1,2 @@
+class JdkProxySource:
+    pass

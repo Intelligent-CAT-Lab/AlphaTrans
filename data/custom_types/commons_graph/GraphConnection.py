@@ -1,0 +1,2 @@
+class GraphConnection:
+    pass

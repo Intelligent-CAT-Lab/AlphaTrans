@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.weight.Monoid import *
 from src.main.org.apache.commons.graph.shortestpath.PathNotFoundException import *
@@ -6,6 +8,8 @@ from src.main.org.apache.commons.graph.WeightedPath import *
 from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 import typing
+from typing import *
+import io
 import pathlib
 
 # Imports End

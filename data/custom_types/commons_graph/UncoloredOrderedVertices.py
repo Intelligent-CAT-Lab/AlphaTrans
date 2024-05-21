@@ -1,0 +1,2 @@
+class UncoloredOrderedVertices:
+    pass

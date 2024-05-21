@@ -1,0 +1,2 @@
+class Crypt:
+    pass

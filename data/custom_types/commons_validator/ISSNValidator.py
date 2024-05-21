@@ -1,0 +1,2 @@
+class ISSNValidator:
+    pass

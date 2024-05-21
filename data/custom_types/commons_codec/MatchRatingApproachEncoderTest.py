@@ -1,0 +1,2 @@
+class MatchRatingApproachEncoderTest:
+    pass

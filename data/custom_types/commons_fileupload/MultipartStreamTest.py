@@ -1,0 +1,2 @@
+class MultipartStreamTest:
+    pass

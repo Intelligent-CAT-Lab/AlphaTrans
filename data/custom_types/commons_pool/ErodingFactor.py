@@ -1,0 +1,2 @@
+class ErodingFactor:
+    pass

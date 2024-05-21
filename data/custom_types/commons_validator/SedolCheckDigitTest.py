@@ -1,0 +1,2 @@
+class SedolCheckDigitTest:
+    pass

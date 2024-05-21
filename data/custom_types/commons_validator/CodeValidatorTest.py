@@ -1,0 +1,2 @@
+class CodeValidatorTest:
+    pass

@@ -1,0 +1,2 @@
+class WildcardTypeImpl:
+    pass

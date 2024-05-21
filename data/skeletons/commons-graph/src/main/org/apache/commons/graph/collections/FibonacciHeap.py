@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.graph.utils.Assertions import *
 from src.main.org.apache.commons.graph.collections.FibonacciHeapNode import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class FibonacciHeap(Queue, FibonacciHeap):
+class FibonacciHeap:
 
     # Class Fields Begin
     __LOG_PHI: float = None

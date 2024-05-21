@@ -1,0 +1,2 @@
+class MalformedStreamException:
+    pass

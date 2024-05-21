@@ -1,0 +1,2 @@
+class BaseNCodecOutputStream:
+    pass

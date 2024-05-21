@@ -1,0 +1,2 @@
+class DefaultColoringAlgorithmsSelector:
+    pass

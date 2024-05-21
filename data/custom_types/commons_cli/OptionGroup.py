@@ -1,0 +1,2 @@
+class OptionGroup:
+    pass

@@ -1,0 +1,2 @@
+class DefaultTrackedUse:
+    pass

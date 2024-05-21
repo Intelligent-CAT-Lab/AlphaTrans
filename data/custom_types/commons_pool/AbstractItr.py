@@ -1,0 +1,2 @@
+class AbstractItr:
+    pass

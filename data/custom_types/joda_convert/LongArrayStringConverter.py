@@ -1,0 +1,2 @@
+class LongArrayStringConverter:
+    pass

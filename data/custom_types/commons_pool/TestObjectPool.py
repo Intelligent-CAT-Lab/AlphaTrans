@@ -1,0 +1,2 @@
+class TestObjectPool:
+    pass

@@ -1,0 +1,2 @@
+class ResourceConstants:
+    pass

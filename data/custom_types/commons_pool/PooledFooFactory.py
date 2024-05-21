@@ -1,0 +1,2 @@
+class PooledFooFactory:
+    pass

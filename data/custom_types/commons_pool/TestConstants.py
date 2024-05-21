@@ -1,0 +1,2 @@
+class TestConstants:
+    pass

@@ -1,0 +1,2 @@
+class RankingSelector:
+    pass

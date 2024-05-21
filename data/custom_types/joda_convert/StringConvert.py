@@ -1,0 +1,2 @@
+class StringConvert:
+    pass

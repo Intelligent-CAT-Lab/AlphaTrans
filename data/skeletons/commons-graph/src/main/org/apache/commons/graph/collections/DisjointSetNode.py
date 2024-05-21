@@ -1,10 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class DisjointSetNode(Comparable, DisjointSetNode):
+class DisjointSetNode:
 
     # Class Fields Begin
     __element: typing.Any = None
@@ -25,7 +29,7 @@ class DisjointSetNode(Comparable, DisjointSetNode):
     def getRank(self) -> int:
         pass
 
-    def getParent(self) -> "DisjointSetNode":
+    def getParent(self) -> DisjointSetNode:
         pass
 
     def getElement(self) -> typing.Any:

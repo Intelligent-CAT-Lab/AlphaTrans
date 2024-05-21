@@ -1,0 +1,2 @@
+class ClassOwnership:
+    pass

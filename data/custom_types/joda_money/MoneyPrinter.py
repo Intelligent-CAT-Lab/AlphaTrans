@@ -1,0 +1,2 @@
+class MoneyPrinter:
+    pass

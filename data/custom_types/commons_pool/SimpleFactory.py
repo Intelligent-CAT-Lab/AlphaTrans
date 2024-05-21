@@ -1,0 +1,2 @@
+class SimpleFactory:
+    pass

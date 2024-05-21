@@ -1,0 +1,2 @@
+class FlowWeightedEdgesBuilder:
+    pass

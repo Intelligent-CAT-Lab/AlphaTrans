@@ -1,0 +1,2 @@
+class BidirDijkstraTestCase:
+    pass
