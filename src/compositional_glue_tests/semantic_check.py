@@ -61,8 +61,8 @@ def main(args):
         if not schema.endswith('.json') or schema.endswith('_python_partial.json'):
             continue # skip non-schema files and python partial schemas
 
-        if 'src.test.' in schema:
-            continue # skip files in test directory
+        if 'src.main.' not in schema:
+            continue # skip files that are not in the main directory
         
         schema_name = schema.split('.')[-2]
         
@@ -113,6 +113,9 @@ def main(args):
                 is_constructor = data['classes'][_class]['methods'][_method]['is_constructor']
                 method_name = _method.split(':', 1)[1].strip() if not is_constructor else "__init__"
                 
+                if not method_name:
+                    continue # skip empty method names. This may happen for anonymous classes.
+                
                 # if method is private, take mangling into account
                 # except for constructors
                 if 'private' in data['classes'][_class]['methods'][_method]['modifiers'] and not is_constructor:
@@ -121,7 +124,7 @@ def main(args):
                     method_name = f"_{method_name}"
                 
                 # if method is 'from' or 'to', add an underscore at the end
-                if method_name in ['from', 'to']:
+                if method_name in ['from']:
                     method_name += "_"
                     
                 methods_to_test.append(method_name)
