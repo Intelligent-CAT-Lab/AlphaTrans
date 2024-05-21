@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 # Imports Begin
-from src.main.org.apache.commons.io.IOUtils import *
+# from src.main.org.apache.commons.io.IOUtils import *
 from src.main.org.apache.commons.csv.Token import *
 from src.main.org.apache.commons.csv.Lexer import *
 from src.main.org.apache.commons.csv.ExtendedBufferedReader import *
@@ -7,10 +9,59 @@ from src.main.org.apache.commons.csv.CSVRecord import *
 from src.main.org.apache.commons.csv.CSVParser import *
 from src.main.org.apache.commons.csv.CSVFormat import *
 import typing
+from typing import *
+import io
 import pathlib
 from abc import ABC
 
 # Imports End
+
+
+class Stats:
+
+    # Class Fields Begin
+    count: int = None
+    fields: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def __init__(self, c: int, f: int) -> None:
+        pass
+
+    # Class Methods End
+
+
+class CSVParserFactory:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def createParser(self) -> CSVParser:
+        pass
+
+    def createParser(self) -> CSVParser:
+        pass
+
+    def createParser(self) -> CSVParser:
+        pass
+
+    def createParser(self) -> CSVParser:
+        pass
+
+    # Class Methods End
+
+
+class CSVParserFactory(ABC):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def createParser(self) -> CSVParser:
+        pass
+
+    # Class Methods End
 
 
 class PerformanceTest:
@@ -88,53 +139,6 @@ class PerformanceTest:
 
     @staticmethod
     def __createReader() -> typing.Union[io.TextIOWrapper, io.BufferedReader]:
-        pass
-
-    # Class Methods End
-
-
-class Stats:
-
-    # Class Fields Begin
-    count: int = None
-    fields: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def __init__(self, c: int, f: int) -> None:
-        pass
-
-    # Class Methods End
-
-
-class CSVParserFactory:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def createParser(self) -> CSVParser:
-        pass
-
-    def createParser(self) -> CSVParser:
-        pass
-
-    def createParser(self) -> CSVParser:
-        pass
-
-    def createParser(self) -> CSVParser:
-        pass
-
-    # Class Methods End
-
-
-class CSVParserFactory(ABC):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def createParser(self) -> CSVParser:
         pass
 
     # Class Methods End

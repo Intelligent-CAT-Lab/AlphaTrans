@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.csv.QuoteMode import *
 from src.main.org.apache.commons.csv.IOUtils import *
@@ -6,14 +8,173 @@ from src.main.org.apache.commons.csv.DuplicateHeaderMode import *
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVPrinter import *
 from src.main.org.apache.commons.csv.CSVParser import *
+import os
 import typing
+from typing import *
 import io
+from io import IOBase
 import pathlib
 
 # Imports End
 
 
-class CSVFormat(Serializable):
+class Builder:
+
+    # Class Fields Begin
+    __allowMissingColumnNames: bool = None
+    __autoFlush: bool = None
+    __commentMarker: str = None
+    __delimiter: str = None
+    __duplicateHeaderMode: DuplicateHeaderMode = None
+    __escapeCharacter: str = None
+    __headerComments: typing.List[str] = None
+    __headers: typing.List[str] = None
+    __ignoreEmptyLines: bool = None
+    __ignoreHeaderCase: bool = None
+    __ignoreSurroundingSpaces: bool = None
+    __nullString: str = None
+    __quoteCharacter: str = None
+    __quotedNullString: str = None
+    __quoteMode: QuoteMode = None
+    __recordSeparator: str = None
+    __skipHeaderRecord: bool = None
+    __trailingDelimiter: bool = None
+    __trim: bool = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def setAllowDuplicateHeaderNames(self, allowDuplicateHeaderNames: bool) -> Builder:
+        pass
+
+    def setTrim(self, trim: bool) -> Builder:
+        pass
+
+    def setTrailingDelimiter(self, trailingDelimiter: bool) -> Builder:
+        pass
+
+    def setSkipHeaderRecord(self, skipHeaderRecord: bool) -> Builder:
+        pass
+
+    def setRecordSeparator1(self, recordSeparator: str) -> Builder:
+        pass
+
+    def setRecordSeparator0(self, recordSeparator: str) -> Builder:
+        pass
+
+    def setQuoteMode(self, quoteMode: QuoteMode) -> Builder:
+        pass
+
+    def setQuote1(self, quoteCharacter: str) -> Builder:
+        pass
+
+    def setQuote0(self, quoteCharacter: str) -> Builder:
+        pass
+
+    def setNullString(self, nullString: str) -> Builder:
+        pass
+
+    def setIgnoreSurroundingSpaces(self, ignoreSurroundingSpaces: bool) -> Builder:
+        pass
+
+    def setIgnoreHeaderCase(self, ignoreHeaderCase: bool) -> Builder:
+        pass
+
+    def setIgnoreEmptyLines(self, ignoreEmptyLines: bool) -> Builder:
+        pass
+
+    def setHeaderComments1(self, headerComments: typing.List[str]) -> Builder:
+        pass
+
+    def setHeaderComments0(self, headerComments: typing.List[typing.Any]) -> Builder:
+        pass
+
+    def setEscape1(self, escapeCharacter: str) -> Builder:
+        pass
+
+    def setEscape0(self, escapeCharacter: str) -> Builder:
+        pass
+
+    def setDuplicateHeaderMode(
+        self, duplicateHeaderMode: DuplicateHeaderMode
+    ) -> Builder:
+        pass
+
+    def setDelimiter1(self, delimiter: str) -> Builder:
+        pass
+
+    def setDelimiter0(self, delimiter: str) -> Builder:
+        pass
+
+    def setCommentMarker1(self, commentMarker: str) -> Builder:
+        pass
+
+    def setCommentMarker0(self, commentMarker: str) -> Builder:
+        pass
+
+    def setAutoFlush(self, autoFlush: bool) -> Builder:
+        pass
+
+    def setAllowMissingColumnNames(self, allowMissingColumnNames: bool) -> Builder:
+        pass
+
+    def build(self) -> CSVFormat:
+        pass
+
+    @staticmethod
+    def create1(csvFormat: CSVFormat) -> Builder:
+        pass
+
+    @staticmethod
+    def create0() -> Builder:
+        pass
+
+    def __init__(self, csvFormat: CSVFormat) -> None:
+        pass
+
+    # Class Methods End
+
+
+class Predefined:
+
+    # Class Fields Begin
+    Default: Predefined = None
+    Excel: Predefined = None
+    InformixUnload: Predefined = None
+    InformixUnloadCsv: Predefined = None
+    MongoDBCsv: Predefined = None
+    MongoDBTsv: Predefined = None
+    MySQL: Predefined = None
+    Oracle: Predefined = None
+    PostgreSQLCsv: Predefined = None
+    PostgreSQLText: Predefined = None
+    RFC4180: Predefined = None
+    TDF: Predefined = None
+    __format: CSVFormat = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def getFormat(self) -> CSVFormat:
+        pass
+
+    def __init__(self, format: CSVFormat) -> None:
+        pass
+
+    # Class Methods End
+
+
+class IntFunction:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def apply(self, i: int) -> str:
+        pass
+
+    # Class Methods End
+
+
+class CSVFormat:
 
     # Class Fields Begin
     ORACLE: CSVFormat = None
@@ -51,102 +212,96 @@ class CSVFormat(Serializable):
     # Class Fields End
 
     # Class Methods Begin
-    def withTrim1(self, trim: bool) -> "CSVFormat":
+    def withTrim1(self, trim: bool) -> CSVFormat:
         pass
 
-    def withTrim0(self) -> "CSVFormat":
+    def withTrim0(self) -> CSVFormat:
         pass
 
-    def withTrailingDelimiter1(self, trailingDelimiter: bool) -> "CSVFormat":
+    def withTrailingDelimiter1(self, trailingDelimiter: bool) -> CSVFormat:
         pass
 
-    def withTrailingDelimiter0(self) -> "CSVFormat":
+    def withTrailingDelimiter0(self) -> CSVFormat:
         pass
 
-    def withSystemRecordSeparator(self) -> "CSVFormat":
+    def withSystemRecordSeparator(self) -> CSVFormat:
         pass
 
-    def withSkipHeaderRecord1(self, skipHeaderRecord: bool) -> "CSVFormat":
+    def withSkipHeaderRecord1(self, skipHeaderRecord: bool) -> CSVFormat:
         pass
 
-    def withSkipHeaderRecord0(self) -> "CSVFormat":
+    def withSkipHeaderRecord0(self) -> CSVFormat:
         pass
 
-    def withRecordSeparator1(self, recordSeparator: str) -> "CSVFormat":
+    def withRecordSeparator1(self, recordSeparator: str) -> CSVFormat:
         pass
 
-    def withRecordSeparator0(self, recordSeparator: str) -> "CSVFormat":
+    def withRecordSeparator0(self, recordSeparator: str) -> CSVFormat:
         pass
 
-    def withQuoteMode(self, quoteMode: QuoteMode) -> "CSVFormat":
+    def withQuoteMode(self, quoteMode: QuoteMode) -> CSVFormat:
         pass
 
-    def withQuote1(self, quoteChar: str) -> "CSVFormat":
+    def withQuote1(self, quoteChar: str) -> CSVFormat:
         pass
 
-    def withQuote0(self, quoteChar: str) -> "CSVFormat":
+    def withQuote0(self, quoteChar: str) -> CSVFormat:
         pass
 
-    def withNullString(self, nullString: str) -> "CSVFormat":
+    def withNullString(self, nullString: str) -> CSVFormat:
         pass
 
-    def withIgnoreSurroundingSpaces1(
-        self, ignoreSurroundingSpaces: bool
-    ) -> "CSVFormat":
+    def withIgnoreSurroundingSpaces1(self, ignoreSurroundingSpaces: bool) -> CSVFormat:
         pass
 
-    def withIgnoreSurroundingSpaces0(self) -> "CSVFormat":
+    def withIgnoreSurroundingSpaces0(self) -> CSVFormat:
         pass
 
-    def withIgnoreHeaderCase1(self, ignoreHeaderCase: bool) -> "CSVFormat":
+    def withIgnoreHeaderCase1(self, ignoreHeaderCase: bool) -> CSVFormat:
         pass
 
-    def withIgnoreHeaderCase0(self) -> "CSVFormat":
+    def withIgnoreHeaderCase0(self) -> CSVFormat:
         pass
 
-    def withIgnoreEmptyLines1(self, ignoreEmptyLines: bool) -> "CSVFormat":
+    def withIgnoreEmptyLines1(self, ignoreEmptyLines: bool) -> CSVFormat:
         pass
 
-    def withIgnoreEmptyLines0(self) -> "CSVFormat":
+    def withIgnoreEmptyLines0(self) -> CSVFormat:
         pass
 
-    def withHeaderComments(
-        self, headerComments: typing.List[typing.Any]
-    ) -> "CSVFormat":
+    def withHeaderComments(self, headerComments: typing.List[typing.Any]) -> CSVFormat:
         pass
 
-    def withEscape1(self, escape: str) -> "CSVFormat":
+    def withEscape1(self, escape: str) -> CSVFormat:
         pass
 
-    def withEscape0(self, escape: str) -> "CSVFormat":
+    def withEscape0(self, escape: str) -> CSVFormat:
         pass
 
-    def withDelimiter(self, delimiter: str) -> "CSVFormat":
+    def withDelimiter(self, delimiter: str) -> CSVFormat:
         pass
 
-    def withCommentMarker1(self, commentMarker: str) -> "CSVFormat":
+    def withCommentMarker1(self, commentMarker: str) -> CSVFormat:
         pass
 
-    def withCommentMarker0(self, commentMarker: str) -> "CSVFormat":
+    def withCommentMarker0(self, commentMarker: str) -> CSVFormat:
         pass
 
-    def withAutoFlush(self, autoFlush: bool) -> "CSVFormat":
+    def withAutoFlush(self, autoFlush: bool) -> CSVFormat:
         pass
 
-    def withAllowMissingColumnNames1(
-        self, allowMissingColumnNames: bool
-    ) -> "CSVFormat":
+    def withAllowMissingColumnNames1(self, allowMissingColumnNames: bool) -> CSVFormat:
         pass
 
-    def withAllowMissingColumnNames0(self) -> "CSVFormat":
+    def withAllowMissingColumnNames0(self) -> CSVFormat:
         pass
 
     def withAllowDuplicateHeaderNames1(
         self, allowDuplicateHeaderNames: bool
-    ) -> "CSVFormat":
+    ) -> CSVFormat:
         pass
 
-    def withAllowDuplicateHeaderNames0(self) -> "CSVFormat":
+    def withAllowDuplicateHeaderNames0(self) -> CSVFormat:
         pass
 
     def toString(self) -> str:
@@ -294,7 +449,7 @@ class CSVFormat(Serializable):
         pass
 
     @staticmethod
-    def valueOf(format: str) -> "CSVFormat":
+    def valueOf(format: str) -> CSVFormat:
         pass
 
     @staticmethod
@@ -306,7 +461,7 @@ class CSVFormat(Serializable):
         pass
 
     @staticmethod
-    def newFormat(delimiter: str) -> "CSVFormat":
+    def newFormat(delimiter: str) -> CSVFormat:
         pass
 
     @staticmethod
@@ -394,165 +549,7 @@ class CSVFormat(Serializable):
     def trim1(self, value: str) -> str:
         pass
 
-    def copy(self) -> "CSVFormat":
-        pass
-
-    # Class Methods End
-
-
-class Predefined:
-
-    # Class Fields Begin
-    Default: Predefined = None
-    Excel: Predefined = None
-    InformixUnload: Predefined = None
-    InformixUnloadCsv: Predefined = None
-    MongoDBCsv: Predefined = None
-    MongoDBTsv: Predefined = None
-    MySQL: Predefined = None
-    Oracle: Predefined = None
-    PostgreSQLCsv: Predefined = None
-    PostgreSQLText: Predefined = None
-    RFC4180: Predefined = None
-    TDF: Predefined = None
-    __format: CSVFormat = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def getFormat(self) -> CSVFormat:
-        pass
-
-    def __init__(self, format: CSVFormat) -> None:
-        pass
-
-    # Class Methods End
-
-
-class IntFunction:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def apply(self, i: int) -> str:
-        pass
-
-    # Class Methods End
-
-
-class Builder:
-
-    # Class Fields Begin
-    __allowMissingColumnNames: bool = None
-    __autoFlush: bool = None
-    __commentMarker: str = None
-    __delimiter: str = None
-    __duplicateHeaderMode: DuplicateHeaderMode = None
-    __escapeCharacter: str = None
-    __headerComments: typing.List[str] = None
-    __headers: typing.List[str] = None
-    __ignoreEmptyLines: bool = None
-    __ignoreHeaderCase: bool = None
-    __ignoreSurroundingSpaces: bool = None
-    __nullString: str = None
-    __quoteCharacter: str = None
-    __quotedNullString: str = None
-    __quoteMode: QuoteMode = None
-    __recordSeparator: str = None
-    __skipHeaderRecord: bool = None
-    __trailingDelimiter: bool = None
-    __trim: bool = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def setAllowDuplicateHeaderNames(
-        self, allowDuplicateHeaderNames: bool
-    ) -> "Builder":
-        pass
-
-    def setTrim(self, trim: bool) -> "Builder":
-        pass
-
-    def setTrailingDelimiter(self, trailingDelimiter: bool) -> "Builder":
-        pass
-
-    def setSkipHeaderRecord(self, skipHeaderRecord: bool) -> "Builder":
-        pass
-
-    def setRecordSeparator1(self, recordSeparator: str) -> "Builder":
-        pass
-
-    def setRecordSeparator0(self, recordSeparator: str) -> "Builder":
-        pass
-
-    def setQuoteMode(self, quoteMode: QuoteMode) -> "Builder":
-        pass
-
-    def setQuote1(self, quoteCharacter: str) -> "Builder":
-        pass
-
-    def setQuote0(self, quoteCharacter: str) -> "Builder":
-        pass
-
-    def setNullString(self, nullString: str) -> "Builder":
-        pass
-
-    def setIgnoreSurroundingSpaces(self, ignoreSurroundingSpaces: bool) -> "Builder":
-        pass
-
-    def setIgnoreHeaderCase(self, ignoreHeaderCase: bool) -> "Builder":
-        pass
-
-    def setIgnoreEmptyLines(self, ignoreEmptyLines: bool) -> "Builder":
-        pass
-
-    def setHeaderComments1(self, headerComments: typing.List[str]) -> "Builder":
-        pass
-
-    def setHeaderComments0(self, headerComments: typing.List[typing.Any]) -> "Builder":
-        pass
-
-    def setEscape1(self, escapeCharacter: str) -> "Builder":
-        pass
-
-    def setEscape0(self, escapeCharacter: str) -> "Builder":
-        pass
-
-    def setDuplicateHeaderMode(
-        self, duplicateHeaderMode: DuplicateHeaderMode
-    ) -> "Builder":
-        pass
-
-    def setDelimiter1(self, delimiter: str) -> "Builder":
-        pass
-
-    def setDelimiter0(self, delimiter: str) -> "Builder":
-        pass
-
-    def setCommentMarker1(self, commentMarker: str) -> "Builder":
-        pass
-
-    def setCommentMarker0(self, commentMarker: str) -> "Builder":
-        pass
-
-    def setAutoFlush(self, autoFlush: bool) -> "Builder":
-        pass
-
-    def setAllowMissingColumnNames(self, allowMissingColumnNames: bool) -> "Builder":
-        pass
-
-    def build(self) -> CSVFormat:
-        pass
-
-    @staticmethod
-    def create1(csvFormat: CSVFormat) -> "Builder":
-        pass
-
-    @staticmethod
-    def create0() -> "Builder":
-        pass
-
-    def __init__(self, csvFormat: CSVFormat) -> None:
+    def copy(self) -> CSVFormat:
         pass
 
     # Class Methods End

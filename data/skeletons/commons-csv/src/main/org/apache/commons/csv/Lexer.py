@@ -1,15 +1,20 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.csv.Token import *
 from src.main.org.apache.commons.csv.ExtendedBufferedReader import *
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import os
 import typing
+from typing import *
 import numbers
+import io
 
 # Imports End
 
 
-class Lexer(Closeable):
+class Lexer:
 
     # Class Fields Begin
     __CR_STRING: str = None

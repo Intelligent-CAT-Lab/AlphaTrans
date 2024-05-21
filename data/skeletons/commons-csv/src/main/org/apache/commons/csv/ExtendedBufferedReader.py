@@ -1,12 +1,17 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.csv.Constants import *
+import os
 import typing
+from typing import *
 import numbers
+import io
 
 # Imports End
 
 
-class ExtendedBufferedReader(BufferedReader):
+class ExtendedBufferedReader(io.BufferedReader):
 
     # Class Fields Begin
     __lastChar: int = None

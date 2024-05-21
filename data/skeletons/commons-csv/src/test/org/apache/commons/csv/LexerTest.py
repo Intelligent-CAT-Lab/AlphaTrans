@@ -1,11 +1,26 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.csv.Token import *
 from src.main.org.apache.commons.csv.Lexer import *
 from src.main.org.apache.commons.csv.ExtendedBufferedReader import *
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import io
 
 # Imports End
+
+
+class Executable:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def execute(self) -> None:
+        pass
+
+    # Class Methods End
 
 
 class LexerTest:
@@ -31,18 +46,6 @@ class LexerTest:
         pass
 
     def __createLexer(self, input: str, format: CSVFormat) -> Lexer:
-        pass
-
-    # Class Methods End
-
-
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def execute(self) -> None:
         pass
 
     # Class Methods End

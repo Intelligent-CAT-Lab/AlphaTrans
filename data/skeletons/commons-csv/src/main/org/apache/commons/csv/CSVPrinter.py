@@ -1,14 +1,31 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.csv.IOUtils import *
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import os
 import typing
+from typing import *
 import io
+from io import IOBase
 
 # Imports End
 
 
-class CSVPrinter(Closeable, Flushable):
+class Consumer:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def accept(self, t: typing.Any) -> None:
+        pass
+
+    # Class Methods End
+
+
+class CSVPrinter(io.BufferedIOBase):
 
     # Class Fields Begin
     __appendable: io.TextIOBase = None
@@ -60,18 +77,6 @@ class CSVPrinter(Closeable, Flushable):
         pass
 
     def __printRecordObject(self, value: typing.Any) -> None:
-        pass
-
-    # Class Methods End
-
-
-class Consumer:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, t: typing.Any) -> None:
         pass
 
     # Class Methods End

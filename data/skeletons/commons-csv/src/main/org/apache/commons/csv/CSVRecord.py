@@ -1,13 +1,30 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVParser import *
+import os
 import typing
+from typing import *
 import numbers
+import io
 
 # Imports End
 
 
-class CSVRecord(Serializable, Iterable):
+class BiConsumer:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def accept(self, key: str, value: int) -> None:
+        pass
+
+    # Class Methods End
+
+
+class CSVRecord(Iterable):
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -90,18 +107,6 @@ class CSVRecord(Serializable, Iterable):
         recordNumber: int,
         characterPosition: int,
     ) -> None:
-        pass
-
-    # Class Methods End
-
-
-class BiConsumer:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, key: str, value: int) -> None:
         pass
 
     # Class Methods End
