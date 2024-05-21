@@ -106,7 +106,9 @@ def main(args):
             # if method name was provided, filter out the methods
             if args.method_name:
                 methods = [m for m in methods if args.method_name in m]
-            
+                
+            # collect methods to be tested
+            methods_to_test = []            
             for _method in methods:
                 is_constructor = data['classes'][_class]['methods'][_method]['is_constructor']
                 method_name = _method.split(':', 1)[1].strip() if not is_constructor else "__init__"
@@ -117,7 +119,18 @@ def main(args):
                     method_name = f"_{class_name}__{method_name}"
                 elif 'protected' in data['classes'][_class]['methods'][_method]['modifiers'] and not is_constructor:
                     method_name = f"_{method_name}"
+                
+                # if method is 'from' or 'to', add an underscore at the end
+                if method_name in ['from', 'to']:
+                    method_name += "_"
                     
+                methods_to_test.append(method_name)
+                
+            # remove all instances of duplicate methods
+            methods_to_test = [m for m in methods_to_test if methods_to_test.count(m) == 1]
+            
+            # now create the test bodies
+            for method_name in methods_to_test:                    
                 def create_assert_args(msg: str, condition: str):
                     if test_package == 'junit':
                         return f"\"{msg}\", {condition}"
