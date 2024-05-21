@@ -1,8 +1,66 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.StringUtils import *
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class IncrementalHash32x86:
+
+    # Class Fields Begin
+    __unprocessedLength: int = None
+    __totalLen: int = None
+    __hash: int = None
+    __BLOCK_SIZE: int = None
+    __unprocessed: typing.List[int] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def end(self) -> int:
+        pass
+
+    def add(self, data: typing.List[int], offset: int, length: int) -> None:
+        pass
+
+    def start(self, seed: int) -> None:
+        pass
+
+    @staticmethod
+    def __orBytes(b1: int, b2: int, b3: int, b4: int) -> int:
+        pass
+
+    def finalise(
+        self,
+        hash: int,
+        unprocessedLength: int,
+        unprocessed: typing.List[int],
+        totalLen: int,
+    ) -> int:
+        pass
+
+    # Class Methods End
+
+
+class IncrementalHash32(IncrementalHash32x86):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def finalise(
+        self,
+        hash: int,
+        unprocessedLength: int,
+        unprocessed: typing.List[int],
+        totalLen: int,
+    ) -> int:
+        pass
+
+    # Class Methods End
 
 
 class MurmurHash3:
@@ -149,60 +207,6 @@ class MurmurHash3:
         pass
 
     def __init__(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class IncrementalHash32(IncrementalHash32x86):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def finalise(
-        self,
-        hash: int,
-        unprocessedLength: int,
-        unprocessed: typing.List[int],
-        totalLen: int,
-    ) -> int:
-        pass
-
-    # Class Methods End
-
-
-class IncrementalHash32x86:
-
-    # Class Fields Begin
-    __unprocessedLength: int = None
-    __totalLen: int = None
-    __hash: int = None
-    __BLOCK_SIZE: int = None
-    __unprocessed: typing.List[int] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def end(self) -> int:
-        pass
-
-    def add(self, data: typing.List[int], offset: int, length: int) -> None:
-        pass
-
-    def start(self, seed: int) -> None:
-        pass
-
-    @staticmethod
-    def __orBytes(b1: int, b2: int, b3: int, b4: int) -> int:
-        pass
-
-    def finalise(
-        self,
-        hash: int,
-        unprocessedLength: int,
-        unprocessed: typing.List[int],
-        totalLen: int,
-    ) -> int:
         pass
 
     # Class Methods End

@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.digest.XXHash32 import *
+import io
 
 # Imports End
 

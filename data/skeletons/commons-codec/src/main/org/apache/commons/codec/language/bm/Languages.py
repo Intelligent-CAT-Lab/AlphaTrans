@@ -1,38 +1,43 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.language.bm.ResourceConstants import *
 from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.Resources import *
 import typing
+from typing import *
+import io
 from abc import ABC
+
 # Imports End
 
-class Languages:
+
+class LanguageSet(ABC):
 
     # Class Fields Begin
-    ANY: str = None
-    __LANGUAGES: typing.Dict[NameType, Languages] = None
-    __languages: typing.Set[str] = None
-    NO_LANGUAGES: LanguageSet = None
-    ANY_LANGUAGE: LanguageSet = None
     # Class Fields End
 
     # Class Methods Begin
-    def getLanguages(self) -> typing.Set[str]:
-        pass
-
     @staticmethod
-    def getInstance1(languagesResourceName: str) -> "Languages":
+    def from_(langs: typing.Set[str]) -> LanguageSet:
         pass
 
-    @staticmethod
-    def getInstance0(nameType: NameType) -> "Languages":
+    def merge(self, other: LanguageSet) -> LanguageSet:
         pass
 
-    def __init__(self, languages: typing.Set[str]) -> None:
+    def restrictTo(self, other: LanguageSet) -> LanguageSet:
         pass
 
-    @staticmethod
-    def __langResourceName(nameType: NameType) -> str:
+    def isSingleton(self) -> bool:
+        pass
+
+    def isEmpty(self) -> bool:
+        pass
+
+    def getAny(self) -> str:
+        pass
+
+    def contains(self, language: str) -> bool:
         pass
 
     # Class Methods End
@@ -126,34 +131,33 @@ class SomeLanguages(LanguageSet):
     # Class Methods End
 
 
-class LanguageSet(ABC):
+class Languages:
 
     # Class Fields Begin
+    ANY: str = None
+    __LANGUAGES: typing.Dict[NameType, Languages] = None
+    __languages: typing.Set[str] = None
+    NO_LANGUAGES: LanguageSet = None
+    ANY_LANGUAGE: LanguageSet = None
     # Class Fields End
 
     # Class Methods Begin
+    def getLanguages(self) -> typing.Set[str]:
+        pass
+
     @staticmethod
-    def from_(langs: typing.Set[str]) -> "LanguageSet":
+    def getInstance1(languagesResourceName: str) -> Languages:
         pass
 
-    def merge(self, other: LanguageSet) -> "LanguageSet":
+    @staticmethod
+    def getInstance0(nameType: NameType) -> Languages:
         pass
 
-    def restrictTo(self, other: LanguageSet) -> "LanguageSet":
+    def __init__(self, languages: typing.Set[str]) -> None:
         pass
 
-    def isSingleton(self) -> bool:
-        pass
-
-    def isEmpty(self) -> bool:
-        pass
-
-    def getAny(self) -> str:
-        pass
-
-    def contains(self, language: str) -> bool:
+    @staticmethod
+    def __langResourceName(nameType: NameType) -> str:
         pass
 
     # Class Methods End
-
-

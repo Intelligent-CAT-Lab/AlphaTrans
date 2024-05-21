@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.net.Utils import *
 from src.main.org.apache.commons.codec.binary.StringUtils import *
@@ -9,6 +11,8 @@ from src.main.org.apache.commons.codec.CharEncoding import *
 from src.main.org.apache.commons.codec.BinaryEncoder import *
 from src.main.org.apache.commons.codec.BinaryDecoder import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -88,7 +92,7 @@ class URLCodec(BinaryDecoder, BinaryEncoder, StringDecoder, StringEncoder):
         pass
 
     @staticmethod
-    def URLCodec1() -> "URLCodec":
+    def URLCodec1() -> URLCodec:
         pass
 
     def __init__(self, charset: str) -> None:

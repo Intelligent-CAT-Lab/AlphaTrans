@@ -1,7 +1,11 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.BaseNCodec import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -26,11 +30,11 @@ class Base16(BaseNCodec):
         pass
 
     @staticmethod
-    def Base162() -> "Base16":
+    def Base162() -> Base16:
         pass
 
     @staticmethod
-    def Base161(lowerCase: bool) -> "Base16":
+    def Base161(lowerCase: bool) -> Base16:
         pass
 
     def __init__(self, lowerCase: bool, decodingPolicy: CodecPolicy) -> None:

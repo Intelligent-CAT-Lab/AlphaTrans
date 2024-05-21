@@ -1,10 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class PureJavaCrc32(Checksum):
+class PureJavaCrc32:
 
     # Class Fields Begin
     __T: typing.List[int] = None

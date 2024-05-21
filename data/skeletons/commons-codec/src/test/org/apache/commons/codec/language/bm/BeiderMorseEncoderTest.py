@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.language.bm.RuleType import *
 from src.main.org.apache.commons.codec.language.bm.Rule import *
@@ -5,10 +7,12 @@ from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.language.bm.Languages import *
 from src.main.org.apache.commons.codec.language.bm.Lang import *
 from src.main.org.apache.commons.codec.language.bm.BeiderMorseEncoder import *
-from src.main.org.apache.commons.codec.StringEncoderAbstractTest import *
+from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 import typing
+from typing import *
+import io
 
 # Imports End
 

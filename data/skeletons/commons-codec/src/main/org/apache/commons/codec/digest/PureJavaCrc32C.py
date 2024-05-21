@@ -1,10 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class PureJavaCrc32C(Checksum):
+class PureJavaCrc32C:
 
     # Class Fields Begin
     __T8_0_start: int = None

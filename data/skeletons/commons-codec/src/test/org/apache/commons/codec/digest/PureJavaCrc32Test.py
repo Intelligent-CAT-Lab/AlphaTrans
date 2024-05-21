@@ -1,28 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.digest.PureJavaCrc32 import *
 import typing
+from typing import *
+import io
 
 # Imports End
-
-
-class PureJavaCrc32Test:
-
-    # Class Fields Begin
-    __theirs: typing.Any = None
-    __ours: PureJavaCrc32 = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def testCorrectness(self) -> None:
-        pass
-
-    def __checkSame(self) -> None:
-        pass
-
-    def __checkOnBytes(self, bytes: typing.List[int], print: bool) -> None:
-        pass
-
-    # Class Methods End
 
 
 class Table:
@@ -43,6 +27,33 @@ class Table:
         pass
 
     def toStrings(self, nameformat: str) -> typing.List[str]:
+        pass
+
+    # Class Methods End
+
+
+class Thread:
+
+    # Class Fields Begin
+    crc: typing.Any = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def run(self) -> None:
+        pass
+
+    # Class Methods End
+
+
+class BenchResult:
+
+    # Class Fields Begin
+    value: int = None
+    mbps: float = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def __init__(self, value: int, mbps: float) -> None:
         pass
 
     # Class Methods End
@@ -95,28 +106,21 @@ class PerformanceTest:
     # Class Methods End
 
 
-class BenchResult:
+class PureJavaCrc32Test:
 
     # Class Fields Begin
-    value: int = None
-    mbps: float = None
+    __theirs: typing.Any = None
+    __ours: PureJavaCrc32 = None
     # Class Fields End
 
     # Class Methods Begin
-    def __init__(self, value: int, mbps: float) -> None:
+    def testCorrectness(self) -> None:
         pass
 
-    # Class Methods End
+    def __checkSame(self) -> None:
+        pass
 
-
-class Thread:
-
-    # Class Fields Begin
-    crc: typing.Any = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def run(self) -> None:
+    def __checkOnBytes(self, bytes: typing.List[int], print: bool) -> None:
         pass
 
     # Class Methods End

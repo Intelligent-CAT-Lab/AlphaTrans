@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.StringUtils import *
-from src.main.org.apache.commons.codec.binary.BaseNTestData import *
+from src.test.org.apache.commons.codec.binary.BaseNTestData import *
 from src.main.org.apache.commons.codec.binary.Base16InputStream import *
 import typing
+from typing import *
+import io
 
 # Imports End
 

@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 # Imports Begin
+import os
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class XXHash32(Checksum):
+class XXHash32:
 
     # Class Fields Begin
     __BUF_SIZE: int = None
@@ -43,7 +48,7 @@ class XXHash32(Checksum):
         pass
 
     @staticmethod
-    def XXHash321() -> "XXHash32":
+    def XXHash321() -> XXHash32:
         pass
 
     def __init__(self, seed: int) -> None:

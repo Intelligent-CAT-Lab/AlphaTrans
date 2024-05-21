@@ -1,28 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.net.RFC1522Codec import *
 from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.CharEncoding import *
 import typing
+from typing import *
+import io
 
 # Imports End
-
-
-class RFC1522CodecTest:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def testDecodeInvalid(self) -> None:
-        pass
-
-    def testNullInput(self) -> None:
-        pass
-
-    def __assertExpectedDecoderException(self, s: str) -> None:
-        pass
-
-    # Class Methods End
 
 
 class RFC1522TestCodec(RFC1522Codec):
@@ -38,6 +24,24 @@ class RFC1522TestCodec(RFC1522Codec):
         pass
 
     def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:
+        pass
+
+    # Class Methods End
+
+
+class RFC1522CodecTest:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def testDecodeInvalid(self) -> None:
+        pass
+
+    def testNullInput(self) -> None:
+        pass
+
+    def __assertExpectedDecoderException(self, s: str) -> None:
         pass
 
     # Class Methods End

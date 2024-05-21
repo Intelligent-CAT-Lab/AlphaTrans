@@ -1,8 +1,13 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.StringUtils import *
 from src.main.org.apache.commons.codec.binary.BaseNCodec import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
+import os
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -46,37 +51,37 @@ class Base32(BaseNCodec):
     @staticmethod
     def Base327(
         lineLength: int, lineSeparator: typing.List[int], useHex: bool, padding: int
-    ) -> "Base32":
+    ) -> Base32:
         pass
 
     @staticmethod
     def Base326(
         lineLength: int, lineSeparator: typing.List[int], useHex: bool
-    ) -> "Base32":
+    ) -> Base32:
         pass
 
     @staticmethod
-    def Base325(lineLength: int, lineSeparator: typing.List[int]) -> "Base32":
+    def Base325(lineLength: int, lineSeparator: typing.List[int]) -> Base32:
         pass
 
     @staticmethod
-    def Base324(lineLength: int) -> "Base32":
+    def Base324(lineLength: int) -> Base32:
         pass
 
     @staticmethod
-    def Base323(pad: int) -> "Base32":
+    def Base323(pad: int) -> Base32:
         pass
 
     @staticmethod
-    def Base322(useHex: bool, padding: int) -> "Base32":
+    def Base322(useHex: bool, padding: int) -> Base32:
         pass
 
     @staticmethod
-    def Base321(useHex: bool) -> "Base32":
+    def Base321(useHex: bool) -> Base32:
         pass
 
     @staticmethod
-    def Base320() -> "Base32":
+    def Base320() -> Base32:
         pass
 
     def __validateTrailingCharacters(self) -> None:

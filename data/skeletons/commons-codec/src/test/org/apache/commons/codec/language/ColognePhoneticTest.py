@@ -1,9 +1,13 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.language.ColognePhonetic import *
-from src.main.org.apache.commons.codec.StringEncoderAbstractTest import *
+from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 import typing
+from typing import *
+import io
 
 # Imports End
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.language.bm.RuleType import *
 from src.main.org.apache.commons.codec.language.bm.Rule import *
@@ -5,8 +7,78 @@ from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.language.bm.Languages import *
 from src.main.org.apache.commons.codec.language.bm.Lang import *
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class PhonemeBuilder:
+
+    # Class Fields Begin
+    __phonemes: typing.Set[Phoneme] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def makeString(self) -> str:
+        pass
+
+    def getPhonemes(self) -> typing.Set[Phoneme]:
+        pass
+
+    def apply(self, phonemeExpr: PhonemeExpr, maxPhonemes: int) -> None:
+        pass
+
+    def append(self, str: str) -> None:
+        pass
+
+    def __init__(
+        self, constructorId: int, phonemes: typing.Set[Phoneme], phoneme: Phoneme
+    ) -> None:
+        pass
+
+    @staticmethod
+    def empty(languages: LanguageSet) -> PhonemeBuilder:
+        pass
+
+    # Class Methods End
+
+
+class RulesApplication:
+
+    # Class Fields Begin
+    __finalRules: typing.Dict[str, typing.List[Rule]] = None
+    __input: str = None
+    __phonemeBuilder: PhonemeBuilder = None
+    __i: int = None
+    __maxPhonemes: int = None
+    __found: bool = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def isFound(self) -> bool:
+        pass
+
+    def invoke(self) -> RulesApplication:
+        pass
+
+    def getPhonemeBuilder(self) -> PhonemeBuilder:
+        pass
+
+    def getI(self) -> int:
+        pass
+
+    def __init__(
+        self,
+        finalRules: typing.Dict[str, typing.List[Rule]],
+        input: str,
+        phonemeBuilder: PhonemeBuilder,
+        i: int,
+        maxPhonemes: int,
+    ) -> None:
+        pass
+
+    # Class Methods End
 
 
 class PhoneticEngine:
@@ -51,7 +123,7 @@ class PhoneticEngine:
     @staticmethod
     def PhoneticEngine0(
         nameType: NameType, ruleType: RuleType, concat: bool
-    ) -> "PhoneticEngine":
+    ) -> PhoneticEngine:
         pass
 
     def __applyFinalRules(
@@ -63,74 +135,6 @@ class PhoneticEngine:
 
     @staticmethod
     def __join(strings: typing.Iterable[str], sep: str) -> str:
-        pass
-
-    # Class Methods End
-
-
-class RulesApplication:
-
-    # Class Fields Begin
-    __finalRules: typing.Dict[str, typing.List[Rule]] = None
-    __input: str = None
-    __phonemeBuilder: PhonemeBuilder = None
-    __i: int = None
-    __maxPhonemes: int = None
-    __found: bool = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def isFound(self) -> bool:
-        pass
-
-    def invoke(self) -> "RulesApplication":
-        pass
-
-    def getPhonemeBuilder(self) -> PhonemeBuilder:
-        pass
-
-    def getI(self) -> int:
-        pass
-
-    def __init__(
-        self,
-        finalRules: typing.Dict[str, typing.List[Rule]],
-        input: str,
-        phonemeBuilder: PhonemeBuilder,
-        i: int,
-        maxPhonemes: int,
-    ) -> None:
-        pass
-
-    # Class Methods End
-
-
-class PhonemeBuilder:
-
-    # Class Fields Begin
-    __phonemes: typing.Set[Phoneme] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def makeString(self) -> str:
-        pass
-
-    def getPhonemes(self) -> typing.Set[Phoneme]:
-        pass
-
-    def apply(self, phonemeExpr: PhonemeExpr, maxPhonemes: int) -> None:
-        pass
-
-    def append(self, str: str) -> None:
-        pass
-
-    def __init__(
-        self, constructorId: int, phonemes: typing.Set[Phoneme], phoneme: Phoneme
-    ) -> None:
-        pass
-
-    @staticmethod
-    def empty(languages: LanguageSet) -> "PhonemeBuilder":
         pass
 
     # Class Methods End

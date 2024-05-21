@@ -1,25 +1,13 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.CharSequenceUtils import *
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
-
-
-class CharSequenceUtilsTest:
-
-    # Class Fields Begin
-    __TEST_DATA: typing.List[TestData] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def testConstructor(self) -> None:
-        pass
-
-    def testRegionMatches(self) -> None:
-        pass
-
-    # Class Methods End
 
 
 class TestData:
@@ -84,6 +72,22 @@ class RunTest:
         pass
 
     def invoke(self) -> bool:
+        pass
+
+    # Class Methods End
+
+
+class CharSequenceUtilsTest:
+
+    # Class Fields Begin
+    __TEST_DATA: typing.List[TestData] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def testConstructor(self) -> None:
+        pass
+
+    def testRegionMatches(self) -> None:
         pass
 
     # Class Methods End

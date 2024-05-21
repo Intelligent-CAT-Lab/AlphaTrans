@@ -1,71 +1,49 @@
+from __future__ import annotations
+
 # Imports Begin
+from src.main.org.apache.commons.codec.StringEncoder import *
+from src.main.org.apache.commons.codec.EncoderException import *
+from src.main.org.apache.commons.codec.CharEncoding import *
 from src.main.org.apache.commons.codec.language.bm.RuleType import *
 from src.main.org.apache.commons.codec.language.bm.ResourceConstants import *
 from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.language.bm.Languages import *
-from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.Resources import *
-from src.main.org.apache.commons.codec.EncoderException import *
-from src.main.org.apache.commons.codec.CharEncoding import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class DaitchMokotoffSoundex(StringEncoder):
+class Branch:
 
     # Class Fields Begin
-    __COMMENT: str = None
-    __DOUBLE_QUOTE: str = None
-    __MULTILINE_COMMENT_END: str = None
-    __MULTILINE_COMMENT_START: str = None
-    __RESOURCE_FILE: str = None
-    __MAX_LENGTH: int = None
-    __RULES: typing.Dict[str, typing.List[Rule]] = None
-    __FOLDINGS: typing.Dict[str, str] = None
-    __folding: bool = None
+    __builder: str = None
+    __cachedString: str = None
+    __lastReplacement: str = None
     # Class Fields End
 
     # Class Methods Begin
-    def encode(self, source: str) -> str:
+    def toString(self) -> str:
         pass
 
-    def encode(self, obj: typing.Any) -> typing.Any:
+    def hashCode(self) -> int:
         pass
 
-    def soundex0(self, source: str) -> str:
+    def equals(self, other: typing.Any) -> bool:
         pass
 
-    def encode1(self, source: str) -> str:
+    def processNextReplacement(self, replacement: str, forceAppend: bool) -> None:
         pass
 
-    def encode0(self, obj: typing.Any) -> typing.Any:
+    def finish(self) -> None:
         pass
 
-    @staticmethod
-    def DaitchMokotoffSoundex1() -> "DaitchMokotoffSoundex":
+    def createBranch(self) -> Branch:
         pass
 
-    def __init__(self, folding: bool) -> None:
-        pass
-
-    def __soundex1(self, source: str, branching: bool) -> typing.List[str]:
-        pass
-
-    def __cleanup(self, input: str) -> str:
-        pass
-
-    @staticmethod
-    def __stripQuotes(str: str) -> str:
-        pass
-
-    @staticmethod
-    def __parseRules(
-        scanner: typing.Any,
-        location: str,
-        ruleMapping: typing.Dict[str, typing.List[Rule]],
-        asciiFoldings: typing.Dict[str, str],
-    ) -> None:
+    def __init__(self) -> None:
         pass
 
     # Class Methods End
@@ -120,34 +98,60 @@ class Comparator:
     # Class Methods End
 
 
-class Branch:
+class DaitchMokotoffSoundex(StringEncoder):
 
     # Class Fields Begin
-    __builder: str = None
-    __cachedString: str = None
-    __lastReplacement: str = None
+    __COMMENT: str = None
+    __DOUBLE_QUOTE: str = None
+    __MULTILINE_COMMENT_END: str = None
+    __MULTILINE_COMMENT_START: str = None
+    __RESOURCE_FILE: str = None
+    __MAX_LENGTH: int = None
+    __RULES: typing.Dict[str, typing.List[Rule]] = None
+    __FOLDINGS: typing.Dict[str, str] = None
+    __folding: bool = None
     # Class Fields End
 
     # Class Methods Begin
-    def toString(self) -> str:
+    def encode(self, source: str) -> str:
         pass
 
-    def hashCode(self) -> int:
+    def encode(self, obj: typing.Any) -> typing.Any:
         pass
 
-    def equals(self, other: typing.Any) -> bool:
+    def soundex0(self, source: str) -> str:
         pass
 
-    def processNextReplacement(self, replacement: str, forceAppend: bool) -> None:
+    def encode1(self, source: str) -> str:
         pass
 
-    def finish(self) -> None:
+    def encode0(self, obj: typing.Any) -> typing.Any:
         pass
 
-    def createBranch(self) -> "Branch":
+    @staticmethod
+    def DaitchMokotoffSoundex1() -> DaitchMokotoffSoundex:
         pass
 
-    def __init__(self) -> None:
+    def __init__(self, folding: bool) -> None:
+        pass
+
+    def __soundex1(self, source: str, branching: bool) -> typing.List[str]:
+        pass
+
+    def __cleanup(self, input: str) -> str:
+        pass
+
+    @staticmethod
+    def __stripQuotes(str: str) -> str:
+        pass
+
+    @staticmethod
+    def __parseRules(
+        scanner: typing.Any,
+        location: str,
+        ruleMapping: typing.Dict[str, typing.List[Rule]],
+        asciiFoldings: typing.Dict[str, str],
+    ) -> None:
         pass
 
     # Class Methods End

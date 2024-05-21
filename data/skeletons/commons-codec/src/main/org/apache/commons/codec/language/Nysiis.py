@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.language.SoundexUtils import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -51,7 +55,7 @@ class Nysiis(StringEncoder):
         pass
 
     @staticmethod
-    def Nysiis1() -> "Nysiis":
+    def Nysiis1() -> Nysiis:
         pass
 
     def __init__(self, strict: bool) -> None:

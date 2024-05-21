@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.net.RFC1522Codec import *
 from src.main.org.apache.commons.codec.binary.BaseNCodec import *
@@ -8,6 +10,8 @@ from src.main.org.apache.commons.codec.EncoderException import *
 from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -73,18 +77,18 @@ class BCodec(StringDecoder, StringEncoder, RFC1522Codec):
         pass
 
     @staticmethod
-    def BCodec2(charsetName: str) -> "BCodec":
+    def BCodec2(charsetName: str) -> BCodec:
         pass
 
     def __init__(self, charset: str, decodingPolicy: CodecPolicy) -> None:
         pass
 
     @staticmethod
-    def BCodec1(charset: str) -> "BCodec":
+    def BCodec1(charset: str) -> BCodec:
         pass
 
     @staticmethod
-    def BCodec0() -> "BCodec":
+    def BCodec0() -> BCodec:
         pass
 
     # Class Methods End

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.net.Utils import *
 from src.main.org.apache.commons.codec.EncoderException import *
@@ -5,6 +7,8 @@ from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.BinaryEncoder import *
 from src.main.org.apache.commons.codec.BinaryDecoder import *
 import typing
+from typing import *
+import io
 
 # Imports End
 

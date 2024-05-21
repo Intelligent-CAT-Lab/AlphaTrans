@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.language.bm.RuleType import *
 from src.main.org.apache.commons.codec.language.bm.ResourceConstants import *
@@ -5,9 +7,166 @@ from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.language.bm.Languages import *
 from src.main.org.apache.commons.codec.Resources import *
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
+
+
+class Comparator:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def compare(self, o1: Phoneme, o2: Phoneme) -> int:
+        pass
+
+    # Class Methods End
+
+
+class Rule:
+
+    # Class Fields Begin
+    __myLine: int = None
+    __loc: str = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def toString(self) -> str:
+        pass
+
+    # Class Methods End
+
+
+class RPattern:
+
+    # Class Fields Begin
+    pattern: re.Pattern = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def isMatch(self, input: str) -> bool:
+        pass
+
+    def isMatch(self, input: str) -> bool:
+        pass
+
+    def isMatch(self, input: str) -> bool:
+        pass
+
+    def isMatch(self, input: str) -> bool:
+        pass
+
+    def isMatch(self, input: str) -> bool:
+        pass
+
+    def isMatch(self, input: str) -> bool:
+        pass
+
+    def isMatch(self, input: str) -> bool:
+        pass
+
+    def isMatch(self, input: str) -> bool:
+        pass
+
+    def isMatch(self, input: str) -> bool:
+        pass
+
+    # Class Methods End
+
+
+class PhonemeExpr(ABC):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def getPhonemes(self) -> typing.Iterable[Phoneme]:
+        pass
+
+    # Class Methods End
+
+
+class RPattern(ABC):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def isMatch(self, input: str) -> bool:
+        pass
+
+    # Class Methods End
+
+
+class Phoneme(PhonemeExpr):
+
+    # Class Fields Begin
+    __phonemeText: str = None
+    __languages: LanguageSet = None
+    COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def toString(self) -> str:
+        pass
+
+    def join(self, right: Phoneme) -> Phoneme:
+        pass
+
+    def getPhonemes(self) -> typing.Iterable[Phoneme]:
+        pass
+
+    def mergeWithLanguage(self, lang: LanguageSet) -> Phoneme:
+        pass
+
+    def getPhonemeText(self) -> str:
+        pass
+
+    def getLanguages(self) -> LanguageSet:
+        pass
+
+    def append(self, str: str) -> Phoneme:
+        pass
+
+    @staticmethod
+    def Phoneme1(
+        phonemeLeft: Phoneme, phonemeRight: Phoneme, languages: LanguageSet
+    ) -> Phoneme:
+        pass
+
+    @staticmethod
+    def Phoneme0(phonemeLeft: Phoneme, phonemeRight: Phoneme) -> Phoneme:
+        pass
+
+    def __init__(
+        self,
+        constructorId: int,
+        phonemeText: str,
+        languages: LanguageSet,
+        phonemeRight: Phoneme,
+    ) -> None:
+        pass
+
+    # Class Methods End
+
+
+class PhonemeList(PhonemeExpr):
+
+    # Class Fields Begin
+    __phonemes: typing.List[Phoneme] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def getPhonemes(self) -> typing.List[Phoneme]:
+        pass
+
+    def __init__(self, phonemes: typing.List[Phoneme]) -> None:
+        pass
+
+    # Class Methods End
 
 
 class Rule:
@@ -115,161 +274,6 @@ class Rule:
 
     @staticmethod
     def __contains(chars: str, input: str) -> bool:
-        pass
-
-    # Class Methods End
-
-
-class RPattern:
-
-    # Class Fields Begin
-    pattern: re.Pattern = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    # Class Methods End
-
-
-class PhonemeExpr(ABC):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def getPhonemes(self) -> typing.Iterable[Phoneme]:
-        pass
-
-    # Class Methods End
-
-
-class RPattern(ABC):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    # Class Methods End
-
-
-class Phoneme(PhonemeExpr):
-
-    # Class Fields Begin
-    __phonemeText: str = None
-    __languages: LanguageSet = None
-    COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def toString(self) -> str:
-        pass
-
-    def join(self, right: Phoneme) -> "Phoneme":
-        pass
-
-    def getPhonemes(self) -> typing.Iterable[Phoneme]:
-        pass
-
-    def mergeWithLanguage(self, lang: LanguageSet) -> "Phoneme":
-        pass
-
-    def getPhonemeText(self) -> str:
-        pass
-
-    def getLanguages(self) -> LanguageSet:
-        pass
-
-    def append(self, str: str) -> "Phoneme":
-        pass
-
-    @staticmethod
-    def Phoneme1(
-        phonemeLeft: Phoneme, phonemeRight: Phoneme, languages: LanguageSet
-    ) -> "Phoneme":
-        pass
-
-    @staticmethod
-    def Phoneme0(phonemeLeft: Phoneme, phonemeRight: Phoneme) -> "Phoneme":
-        pass
-
-    def __init__(
-        self,
-        constructorId: int,
-        phonemeText: str,
-        languages: LanguageSet,
-        phonemeRight: Phoneme,
-    ) -> None:
-        pass
-
-    # Class Methods End
-
-
-class PhonemeList(PhonemeExpr):
-
-    # Class Fields Begin
-    __phonemes: typing.List[Phoneme] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def getPhonemes(self) -> typing.List[Phoneme]:
-        pass
-
-    def __init__(self, phonemes: typing.List[Phoneme]) -> None:
-        pass
-
-    # Class Methods End
-
-
-class Comparator:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def compare(self, o1: Phoneme, o2: Phoneme) -> int:
-        pass
-
-    # Class Methods End
-
-
-class Rule:
-
-    # Class Fields Begin
-    __myLine: int = None
-    __loc: str = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def toString(self) -> str:
         pass
 
     # Class Methods End

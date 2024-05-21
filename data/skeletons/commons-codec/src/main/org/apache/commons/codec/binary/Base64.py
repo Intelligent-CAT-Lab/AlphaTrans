@@ -1,8 +1,13 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.StringUtils import *
 from src.main.org.apache.commons.codec.binary.BaseNCodec import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
+import os
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -38,25 +43,25 @@ class Base64(BaseNCodec):
         pass
 
     @staticmethod
-    def Base645() -> "Base64":
+    def Base645() -> Base64:
         pass
 
     @staticmethod
-    def Base644(urlSafe: bool) -> "Base64":
+    def Base644(urlSafe: bool) -> Base64:
         pass
 
     @staticmethod
-    def Base643(lineLength: int) -> "Base64":
+    def Base643(lineLength: int) -> Base64:
         pass
 
     @staticmethod
-    def Base642(lineLength: int, lineSeparator: typing.List[int]) -> "Base64":
+    def Base642(lineLength: int, lineSeparator: typing.List[int]) -> Base64:
         pass
 
     @staticmethod
     def Base641(
         lineLength: int, lineSeparator: typing.List[int], urlSafe: bool
-    ) -> "Base64":
+    ) -> Base64:
         pass
 
     def __init__(

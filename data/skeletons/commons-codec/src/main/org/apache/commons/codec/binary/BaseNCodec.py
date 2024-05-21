@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.StringUtils import *
 from src.main.org.apache.commons.codec.EncoderException import *
@@ -5,10 +7,28 @@ from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
 from src.main.org.apache.commons.codec.BinaryEncoder import *
 from src.main.org.apache.commons.codec.BinaryDecoder import *
+import os
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
+
+
+class Context:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def toString(self) -> str:
+        pass
+
+    def __init__(self) -> None:
+        pass
+
+    # Class Methods End
 
 
 class BaseNCodec(BinaryDecoder, BinaryEncoder, ABC):
@@ -168,21 +188,6 @@ class BaseNCodec(BinaryDecoder, BinaryEncoder, ABC):
     def decode1(
         self, pArray: typing.List[int], i: int, length: int, context: Context
     ) -> None:
-        pass
-
-    # Class Methods End
-
-
-class Context:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def toString(self) -> str:
-        pass
-
-    def __init__(self) -> None:
         pass
 
     # Class Methods End

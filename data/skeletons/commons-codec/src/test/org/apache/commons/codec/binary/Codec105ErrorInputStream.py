@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 # Imports Begin
+import os
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class Codec105ErrorInputStream(InputStream):
+class Codec105ErrorInputStream:
 
     # Class Fields Begin
     __EOF: int = None

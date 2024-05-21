@@ -1,12 +1,18 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.BaseNCodec import *
+import os
 import typing
+from typing import *
+from io import BytesIO
 import io
+from io import StringIO
 
 # Imports End
 
 
-class BaseNCodecOutputStream(FilterOutputStream):
+class BaseNCodecOutputStream:
 
     # Class Fields Begin
     __doEncode: bool = None

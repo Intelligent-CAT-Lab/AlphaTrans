@@ -1,9 +1,13 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.net.QuotedPrintableCodec import *
 from src.main.org.apache.commons.codec.EncoderException import *
 from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.CharEncoding import *
 import typing
+from typing import *
+import io
 
 # Imports End
 

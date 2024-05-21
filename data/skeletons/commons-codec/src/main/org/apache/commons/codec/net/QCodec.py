@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.net.RFC1522Codec import *
 from src.main.org.apache.commons.codec.net.QuotedPrintableCodec import *
@@ -6,6 +8,8 @@ from src.main.org.apache.commons.codec.StringDecoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 from src.main.org.apache.commons.codec.DecoderException import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -73,11 +77,11 @@ class QCodec(StringDecoder, StringEncoder, RFC1522Codec):
         pass
 
     @staticmethod
-    def QCodec2() -> "QCodec":
+    def QCodec2() -> QCodec:
         pass
 
     @staticmethod
-    def QCodec0(charsetName: str) -> "QCodec":
+    def QCodec0(charsetName: str) -> QCodec:
         pass
 
     def __init__(self, constructorId: int, charsetName: str, charset: str) -> None:

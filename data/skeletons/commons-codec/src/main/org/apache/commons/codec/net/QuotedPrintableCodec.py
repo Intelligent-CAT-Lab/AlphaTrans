@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.codec.net.Utils import *
 from src.main.org.apache.commons.codec.binary.StringUtils import *
@@ -8,6 +10,9 @@ from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.BinaryEncoder import *
 from src.main.org.apache.commons.codec.BinaryDecoder import *
 import typing
+from typing import *
+from io import BytesIO
+import io
 
 # Imports End
 
@@ -98,19 +103,19 @@ class QuotedPrintableCodec:
         pass
 
     @staticmethod
-    def QuotedPrintableCodec4() -> "QuotedPrintableCodec":
+    def QuotedPrintableCodec4() -> QuotedPrintableCodec:
         pass
 
     @staticmethod
-    def QuotedPrintableCodec3(strict: bool) -> "QuotedPrintableCodec":
+    def QuotedPrintableCodec3(strict: bool) -> QuotedPrintableCodec:
         pass
 
     @staticmethod
-    def QuotedPrintableCodec2(charset: str) -> "QuotedPrintableCodec":
+    def QuotedPrintableCodec2(charset: str) -> QuotedPrintableCodec:
         pass
 
     @staticmethod
-    def QuotedPrintableCodec0(charsetName: str) -> "QuotedPrintableCodec":
+    def QuotedPrintableCodec0(charsetName: str) -> QuotedPrintableCodec:
         pass
 
     def __init__(
