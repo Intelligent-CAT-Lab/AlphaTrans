@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
 import datetime
 import typing
+from typing import *
 import numbers
+import io
 
 # Imports End
 
@@ -44,18 +48,18 @@ class BigDecimalValidator(AbstractNumberValidator):
         pass
 
     @staticmethod
-    def BigDecimalValidator2() -> "BigDecimalValidator":
+    def BigDecimalValidator2() -> BigDecimalValidator:
         pass
 
     @staticmethod
-    def BigDecimalValidator1(strict: bool) -> "BigDecimalValidator":
+    def BigDecimalValidator1(strict: bool) -> BigDecimalValidator:
         pass
 
     def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:
         pass
 
     @staticmethod
-    def getInstance() -> "BigDecimalValidator":
+    def getInstance() -> BigDecimalValidator:
         pass
 
     # Class Methods End

@@ -1,11 +1,54 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.Field import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class ValidatorResult(Serializable):
+class ResultStatus:
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    __valid: bool = None
+    __result: typing.Any = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def isValid(self) -> bool:
+        pass
+
+    def setResult(self, result: typing.Any) -> None:
+        pass
+
+    def getResult(self) -> typing.Any:
+        pass
+
+    def setValid(self, valid: bool) -> None:
+        pass
+
+    @staticmethod
+    def ResultStatus0(
+        ignored: ValidatorResult, valid: bool, result: typing.Any
+    ) -> ResultStatus:
+        pass
+
+    def __init__(
+        self,
+        constructorId: int,
+        result: typing.Any,
+        ignored: ValidatorResult,
+        valid: bool,
+    ) -> None:
+        pass
+
+    # Class Methods End
+
+
+class ValidatorResult:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -39,45 +82,6 @@ class ValidatorResult(Serializable):
         pass
 
     def __init__(self, field: typing.Any) -> None:
-        pass
-
-    # Class Methods End
-
-
-class ResultStatus(Serializable):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    __valid: bool = None
-    __result: typing.Any = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def isValid(self) -> bool:
-        pass
-
-    def setResult(self, result: typing.Any) -> None:
-        pass
-
-    def getResult(self) -> typing.Any:
-        pass
-
-    def setValid(self, valid: bool) -> None:
-        pass
-
-    @staticmethod
-    def ResultStatus0(
-        ignored: ValidatorResult, valid: bool, result: typing.Any
-    ) -> "ResultStatus":
-        pass
-
-    def __init__(
-        self,
-        constructorId: int,
-        result: typing.Any,
-        ignored: ValidatorResult,
-        valid: bool,
-    ) -> None:
         pass
 
     # Class Methods End

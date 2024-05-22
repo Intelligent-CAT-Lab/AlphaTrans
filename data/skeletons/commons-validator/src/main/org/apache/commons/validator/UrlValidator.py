@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
@@ -5,12 +7,14 @@ from src.main.org.apache.commons.validator.util.Flags import *
 from src.main.org.apache.commons.validator.routines.InetAddressValidator import *
 from src.main.org.apache.commons.validator.GenericValidator import *
 import typing
+from typing import *
+import io
 import pathlib
 
 # Imports End
 
 
-class UrlValidator(Serializable):
+class UrlValidator:
 
     # Class Fields Begin
     __ATOM: str = None
@@ -70,15 +74,15 @@ class UrlValidator(Serializable):
         pass
 
     @staticmethod
-    def UrlValidator3() -> "UrlValidator":
+    def UrlValidator3() -> UrlValidator:
         pass
 
     @staticmethod
-    def UrlValidator2(schemes: typing.List[str]) -> "UrlValidator":
+    def UrlValidator2(schemes: typing.List[str]) -> UrlValidator:
         pass
 
     @staticmethod
-    def UrlValidator1(options: int) -> "UrlValidator":
+    def UrlValidator1(options: int) -> UrlValidator:
         pass
 
     def __init__(self, schemes: typing.List[str], options: int) -> None:

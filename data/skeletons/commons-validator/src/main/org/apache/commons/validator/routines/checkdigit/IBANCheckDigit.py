@@ -1,11 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
+import io
 
 # Imports End
 
 
-class IBANCheckDigit(Serializable, CheckDigit):
+class IBANCheckDigit(CheckDigit):
 
     # Class Fields Begin
     __MIN_CODE_LEN: int = None

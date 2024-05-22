@@ -1,7 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *
+import os
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -31,13 +36,13 @@ class ModulusTenCheckDigit(ModulusCheckDigit):
     @staticmethod
     def ModulusTenCheckDigit2(
         postitionWeight: typing.List[int],
-    ) -> "ModulusTenCheckDigit":
+    ) -> ModulusTenCheckDigit:
         pass
 
     @staticmethod
     def ModulusTenCheckDigit1(
         postitionWeight: typing.List[int], useRightPos: bool
-    ) -> "ModulusTenCheckDigit":
+    ) -> ModulusTenCheckDigit:
         pass
 
     def __init__(

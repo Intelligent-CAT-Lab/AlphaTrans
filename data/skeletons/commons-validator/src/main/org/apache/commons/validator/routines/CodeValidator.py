@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class CodeValidator(Serializable):
+class CodeValidator:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -36,25 +40,25 @@ class CodeValidator(Serializable):
         pass
 
     @staticmethod
-    def CodeValidator5(regex: str, checkdigit: CheckDigit) -> "CodeValidator":
+    def CodeValidator5(regex: str, checkdigit: CheckDigit) -> CodeValidator:
         pass
 
     @staticmethod
     def CodeValidator4(
         regex: str, length: int, checkdigit: CheckDigit
-    ) -> "CodeValidator":
+    ) -> CodeValidator:
         pass
 
     @staticmethod
     def CodeValidator2(
         regexValidator: RegexValidator, checkdigit: CheckDigit
-    ) -> "CodeValidator":
+    ) -> CodeValidator:
         pass
 
     @staticmethod
     def CodeValidator1(
         regexValidator: RegexValidator, length: int, checkdigit: CheckDigit
-    ) -> "CodeValidator":
+    ) -> CodeValidator:
         pass
 
     def __init__(

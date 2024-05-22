@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class VerhoeffCheckDigit(Serializable, CheckDigit):
+class VerhoeffCheckDigit(CheckDigit):
 
     # Class Fields Begin
     __serialVersionUID: int = None

@@ -1,10 +1,13 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
+import io
 
 # Imports End
 
 
-class InetAddressValidator(Serializable):
+class InetAddressValidator:
 
     # Class Fields Begin
     __IPV4_MAX_OCTET_VALUE: int = None
@@ -29,7 +32,7 @@ class InetAddressValidator(Serializable):
         pass
 
     @staticmethod
-    def getInstance() -> "InetAddressValidator":
+    def getInstance() -> InetAddressValidator:
         pass
 
     # Class Methods End

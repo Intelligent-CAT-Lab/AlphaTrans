@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
 import datetime
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -23,7 +27,7 @@ class PercentValidator(BigDecimalValidator):
         pass
 
     @staticmethod
-    def PercentValidator1() -> "PercentValidator":
+    def PercentValidator1() -> PercentValidator:
         pass
 
     def __init__(self, strict: bool) -> None:

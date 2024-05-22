@@ -1,11 +1,32 @@
+from __future__ import annotations
+
 # Imports Begin
-from src.main.org.apache.commons.validator.ValidatorResources import *
 from src.main.org.apache.commons.validator.routines.checkdigit.IBANCheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
+from src.main.org.apache.commons.validator.ValidatorResources import *
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class Validator:
+
+    # Class Fields Begin
+    __MIN_LEN: int = None
+    __MAX_LEN: int = None
+    countryCode: str = None
+    validator: RegexValidator = None
+    lengthOfIBAN: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def __init__(self, cc: str, len: int, format: str) -> None:
+        pass
+
+    # Class Methods End
 
 
 class IBANValidator:
@@ -36,36 +57,19 @@ class IBANValidator:
         pass
 
     @staticmethod
-    def IBANValidator1() -> "IBANValidator":
+    def IBANValidator1() -> IBANValidator:
         pass
 
     def __init__(self, formatMap: typing.List[Validator]) -> None:
         pass
 
     @staticmethod
-    def getInstance() -> "IBANValidator":
+    def getInstance() -> IBANValidator:
         pass
 
     def __createValidators(
         self, formatMap: typing.List[Validator]
     ) -> typing.Dict[str, Validator]:
-        pass
-
-    # Class Methods End
-
-
-class Validator:
-
-    # Class Fields Begin
-    __MIN_LEN: int = None
-    __MAX_LEN: int = None
-    countryCode: str = None
-    validator: RegexValidator = None
-    lengthOfIBAN: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def __init__(self, cc: str, len: int, format: str) -> None:
         pass
 
     # Class Methods End

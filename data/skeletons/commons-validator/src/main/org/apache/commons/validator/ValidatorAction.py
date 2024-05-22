@@ -1,14 +1,19 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.ValidatorException import *
 from src.main.org.apache.commons.validator.Validator import *
-from src.main.org.apache.commons.logging.LogFactory import *
-from src.main.org.apache.commons.logging.Log import *
+
+# from src.main.org.apache.commons.logging.LogFactory import *
+# from src.main.org.apache.commons.logging.Log import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class ValidatorAction(Serializable):
+class ValidatorAction:
 
     # Class Fields Begin
     __jsFunction: str = None

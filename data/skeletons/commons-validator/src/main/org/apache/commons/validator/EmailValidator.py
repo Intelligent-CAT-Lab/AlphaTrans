@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
 from src.main.org.apache.commons.validator.routines.InetAddressValidator import *
+import io
 
 # Imports End
 
@@ -44,7 +47,7 @@ class EmailValidator:
         pass
 
     @staticmethod
-    def getInstance() -> "EmailValidator":
+    def getInstance() -> EmailValidator:
         pass
 
     # Class Methods End

@@ -1,4 +1,8 @@
+from __future__ import annotations
+
 # Imports Begin
+import io
+
 # Imports End
 
 
@@ -10,7 +14,7 @@ class ValidatorException(Exception):
 
     # Class Methods Begin
     @staticmethod
-    def ValidatorException1() -> "ValidatorException":
+    def ValidatorException1() -> ValidatorException:
         pass
 
     def __init__(self, message: str) -> None:

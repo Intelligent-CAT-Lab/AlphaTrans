@@ -1,13 +1,18 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.PercentValidator import *
 from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
+import unittest
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class PercentValidatorTest(TestCase):
+class PercentValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     _validator: PercentValidator = None

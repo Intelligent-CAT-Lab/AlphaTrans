@@ -1,13 +1,18 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.CurrencyValidator import *
 from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
+import unittest
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class CurrencyValidatorTest(TestCase):
+class CurrencyValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     __CURRENCY_SYMBOL: str = None

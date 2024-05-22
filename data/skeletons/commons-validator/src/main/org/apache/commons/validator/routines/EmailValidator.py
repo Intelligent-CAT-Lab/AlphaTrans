@@ -1,11 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
 from src.main.org.apache.commons.validator.routines.InetAddressValidator import *
+import io
 
 # Imports End
 
 
-class EmailValidator(Serializable):
+class EmailValidator:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -39,7 +42,7 @@ class EmailValidator(Serializable):
         pass
 
     @staticmethod
-    def EmailValidator0(allowLocal: bool) -> "EmailValidator":
+    def EmailValidator0(allowLocal: bool) -> EmailValidator:
         pass
 
     def __init__(
@@ -52,15 +55,15 @@ class EmailValidator(Serializable):
         pass
 
     @staticmethod
-    def getInstance2(allowLocal: bool) -> "EmailValidator":
+    def getInstance2(allowLocal: bool) -> EmailValidator:
         pass
 
     @staticmethod
-    def getInstance1(allowLocal: bool, allowTld: bool) -> "EmailValidator":
+    def getInstance1(allowLocal: bool, allowTld: bool) -> EmailValidator:
         pass
 
     @staticmethod
-    def getInstance0() -> "EmailValidator":
+    def getInstance0() -> EmailValidator:
         pass
 
     # Class Methods End

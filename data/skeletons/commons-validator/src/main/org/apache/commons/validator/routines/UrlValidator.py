@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
@@ -5,12 +7,14 @@ from src.main.org.apache.commons.validator.util.Flags import *
 from src.main.org.apache.commons.validator.routines.InetAddressValidator import *
 from src.main.org.apache.commons.validator.GenericValidator import *
 import typing
+from typing import *
+import io
 import pathlib
 
 # Imports End
 
 
-class UrlValidator(Serializable):
+class UrlValidator:
 
     # Class Fields Begin
     __SCHEME_REGEX: str = None
@@ -66,31 +70,29 @@ class UrlValidator(Serializable):
         pass
 
     @staticmethod
-    def UrlValidator6() -> "UrlValidator":
+    def UrlValidator6() -> UrlValidator:
         pass
 
     @staticmethod
-    def UrlValidator5(schemes: typing.List[str]) -> "UrlValidator":
+    def UrlValidator5(schemes: typing.List[str]) -> UrlValidator:
         pass
 
     @staticmethod
-    def UrlValidator4(options: int) -> "UrlValidator":
+    def UrlValidator4(options: int) -> UrlValidator:
         pass
 
     @staticmethod
-    def UrlValidator3(schemes: typing.List[str], options: int) -> "UrlValidator":
+    def UrlValidator3(schemes: typing.List[str], options: int) -> UrlValidator:
         pass
 
     @staticmethod
-    def UrlValidator2(
-        authorityValidator: RegexValidator, options: int
-    ) -> "UrlValidator":
+    def UrlValidator2(authorityValidator: RegexValidator, options: int) -> UrlValidator:
         pass
 
     @staticmethod
     def UrlValidator1(
         schemes: typing.List[str], authorityValidator: RegexValidator, options: int
-    ) -> "UrlValidator":
+    ) -> UrlValidator:
         pass
 
     def __init__(
@@ -103,7 +105,7 @@ class UrlValidator(Serializable):
         pass
 
     @staticmethod
-    def getInstance() -> "UrlValidator":
+    def getInstance() -> UrlValidator:
         pass
 
     def __isOff(self, flag: int) -> bool:

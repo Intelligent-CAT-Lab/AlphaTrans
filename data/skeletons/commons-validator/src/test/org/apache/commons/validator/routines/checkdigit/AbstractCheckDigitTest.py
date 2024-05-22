@@ -1,15 +1,21 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
-from src.main.org.apache.commons.logging.LogFactory import *
-from src.main.org.apache.commons.logging.Log import *
+
+# from src.main.org.apache.commons.logging.LogFactory import *
+# from src.main.org.apache.commons.logging.Log import *
+import unittest
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
 
 
-class AbstractCheckDigitTest(TestCase, ABC):
+class AbstractCheckDigitTest(unittest.TestCase, ABC):
 
     # Class Fields Begin
     __POSSIBLE_CHECK_DIGITS: str = None

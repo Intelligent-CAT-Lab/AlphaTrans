@@ -1,10 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.InetAddressValidator import *
+import unittest
+import io
 
 # Imports End
 
 
-class InetAddressValidatorTest(TestCase):
+class InetAddressValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     __validator: InetAddressValidator = None
