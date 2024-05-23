@@ -66,6 +66,6 @@ class MimeUtilityTestCase(unittest.TestCase):
 
     @staticmethod
     def __assertEncoded(expected: str, encoded: str) -> None:
-        unittest.TestCase().assertEqual(expected, MimeUtility.decodeText(encoded))
+        MimeUtilityTestCase.assertEqual(expected, MimeUtility.decodeText(encoded))
 
     # Class Methods End
