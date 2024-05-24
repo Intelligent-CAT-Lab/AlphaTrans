@@ -2,6 +2,7 @@ import os
 import re
 import json
 import argparse
+from dotenv import load_dotenv
 
 
 def split_with_nested_commas(s):
@@ -31,6 +32,24 @@ def get_dependency_path(dependent_class, project_name):
         return f'src.main.{dependent_class}'
 
 
+def remove_duplicate_methods(schema):
+    duplicate_methods = {}
+    for class_ in schema['classes']:
+        duplicate_methods.setdefault(class_, {})
+        for method in schema['classes'][class_]['methods']:
+            method_name = method.split(':')[1].strip()
+            duplicate_methods[class_].setdefault(method_name, [])
+            duplicate_methods[class_][method_name].append(method)
+
+    for class_ in duplicate_methods:
+        for method_name in duplicate_methods[class_]:
+            if len(duplicate_methods[class_][method_name]) > 1:
+                for k in duplicate_methods[class_][method_name]:
+                    schema['classes'][class_]['methods'].pop(k)
+    
+    return schema
+
+
 def main(args):
 
     with open(f'data/type_resolution/universal_type_map_final.json', 'r') as f:
@@ -45,6 +64,10 @@ def main(args):
         if 'python_partial' in schema_fname:
             continue
 
+        # if 'impl.TestPoolImplUtils.json' not in schema_fname:
+        #     continue
+        # print(schema_fname)
+
         schema_path = f'data/schemas/{args.project_name}/{schema_fname}'
 
         dependencies = {}
@@ -54,6 +77,8 @@ def main(args):
         schema = {}
         with open(schema_path, 'r') as f:
             schema = json.load(f)
+        
+        schema = remove_duplicate_methods(schema)
 
         skeleton = 'from __future__ import annotations\n'
         skeleton += '# Imports Begin\n'
@@ -299,6 +324,7 @@ def main(args):
         with open(f'data/schemas/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
             json.dump(target_schema, f, indent=4)
 
+    # return
     # find all .py files in a given directory
     def find_files(directory):
         for root, dirs, files in os.walk(directory):
@@ -317,4 +343,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a class skeleton')
     parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project')
     args = parser.parse_args()
+
+    with open(f'.env', 'w') as f:
+        f.write(f'PYTHONPATH=/home/ali/Documents/AlphaTrans/data/skeletons/{args.project_name}')
+    
+    load_dotenv()
     main(args)
