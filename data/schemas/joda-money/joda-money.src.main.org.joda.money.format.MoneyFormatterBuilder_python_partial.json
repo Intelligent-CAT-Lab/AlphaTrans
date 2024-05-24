@@ -60,7 +60,6 @@
             "nested_inside": "MoneyFormatterBuilder",
             "nests": [],
             "implements": [
-                "Enum",
                 "MoneyPrinter"
             ],
             "extends": [],
@@ -308,7 +307,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def appendSigned1(self, whenPositive: MoneyFormatter, whenZero: MoneyFormatter, whenNegative: MoneyFormatter) -> \"MoneyFormatterBuilder\":\n",
+                        "    def appendSigned1(self, whenPositive: MoneyFormatter, whenZero: MoneyFormatter, whenNegative: MoneyFormatter) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -345,7 +344,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def appendSigned0(self, whenPositiveOrZero: MoneyFormatter, whenNegative: MoneyFormatter) -> \"MoneyFormatterBuilder\":\n",
+                        "    def appendSigned0(self, whenPositiveOrZero: MoneyFormatter, whenNegative: MoneyFormatter) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -381,7 +380,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def append1(self, printer: MoneyPrinter, parser: MoneyParser) -> \"MoneyFormatterBuilder\":\n",
+                        "    def append1(self, printer: MoneyPrinter, parser: MoneyParser) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -428,7 +427,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def append0(self, formatter: MoneyFormatter) -> \"MoneyFormatterBuilder\":\n",
+                        "    def append0(self, formatter: MoneyFormatter) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -472,7 +471,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def appendLiteral(self, literal: str) -> \"MoneyFormatterBuilder\":\n",
+                        "    def appendLiteral(self, literal: str) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -505,7 +504,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def appendCurrencySymbolLocalized(self) -> \"MoneyFormatterBuilder\":\n",
+                        "    def appendCurrencySymbolLocalized(self) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -538,7 +537,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def appendCurrencyNumericCode(self) -> \"MoneyFormatterBuilder\":\n",
+                        "    def appendCurrencyNumericCode(self) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -571,7 +570,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def appendCurrencyNumeric3Code(self) -> \"MoneyFormatterBuilder\":\n",
+                        "    def appendCurrencyNumeric3Code(self) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -604,7 +603,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def appendCurrencyCode(self) -> \"MoneyFormatterBuilder\":\n",
+                        "    def appendCurrencyCode(self) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -651,7 +650,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def appendAmount1(self, style: MoneyAmountStyle) -> \"MoneyFormatterBuilder\":\n",
+                        "    def appendAmount1(self, style: MoneyAmountStyle) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -690,7 +689,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def appendAmountLocalized(self) -> \"MoneyFormatterBuilder\":\n",
+                        "    def appendAmountLocalized(self) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -730,7 +729,7 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def appendAmount0(self) -> \"MoneyFormatterBuilder\":\n",
+                        "    def appendAmount0(self) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 },
@@ -787,7 +786,7 @@
                     ],
                     "calls": [],
                     "partial_translation": [
-                        "    def __appendInternal(self, printer: MoneyPrinter, parser: MoneyParser) -> \"MoneyFormatterBuilder\":\n",
+                        "    def __appendInternal(self, printer: MoneyPrinter, parser: MoneyParser) -> MoneyFormatterBuilder:\n",
                         "        pass\n\n"
                     ]
                 }
@@ -843,7 +842,6 @@
                 "new Singletons(...) { ... }"
             ],
             "implements": [
-                "Enum",
                 "MoneyParser",
                 "MoneyPrinter"
             ],
@@ -1064,460 +1062,15 @@
             "nests": [],
             "implements": [],
             "extends": [],
-            "methods": {
-                "303-316:parse": {
-                    "start": 303,
-                    "end": 316,
-                    "body": [
-                        "            public void parse(MoneyParseContext context) {\n",
-                        "                int endPos = context.getIndex() + 3;\n",
-                        "                if (endPos > context.getTextLength()) {\n",
-                        "                    context.setError();\n",
-                        "                } else {\n",
-                        "                    String code = context.getTextSubstring(context.getIndex(), endPos);\n",
-                        "                    try {\n",
-                        "                        context.setCurrency(CurrencyUnit.of1(code));\n",
-                        "                        context.setIndex(endPos);\n",
-                        "                    } catch (IllegalCurrencyException ex) {\n",
-                        "                        context.setError();\n",
-                        "                    }\n",
-                        "                }\n",
-                        "            }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [
-                        "Override"
-                    ],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "parse(MoneyParseContext)",
-                    "parameters": [
-                        "context"
-                    ],
-                    "calls": [
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "156-158:getIndex"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "136-138:getTextLength"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "188-190:setError"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "147-149:getTextSubstring"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "206-208:setCurrency"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.CurrencyUnit",
-                            "CurrencyUnit",
-                            "345-352:of1"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "165-167:setIndex"
-                        ]
-                    ],
-                    "partial_translation": [
-                        "    def parse(self, context: MoneyParseContext) -> None:\n",
-                        "        pass\n\n"
-                    ]
-                },
-                "297-300:print": {
-                    "start": 297,
-                    "end": 300,
-                    "body": [
-                        "            public void print(MoneyPrintContext context, Appendable appendable, BigMoney money)\n",
-                        "                    throws IOException {\n",
-                        "                appendable.append(money.getCurrencyUnit().getCode());\n",
-                        "            }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [
-                        "Override"
-                    ],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "print(MoneyPrintContext, Appendable, BigMoney)",
-                    "parameters": [
-                        "context",
-                        "appendable",
-                        "money"
-                    ],
-                    "calls": [
-                        [
-                            "joda-money.src.main.org.joda.money.CurrencyUnit",
-                            "CurrencyUnit",
-                            "480-482:getCode"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.BigMoney",
-                            "BigMoney",
-                            "429-431:getCurrencyUnit"
-                        ]
-                    ],
-                    "partial_translation": [
-                        "    def print(self, context: MoneyPrintContext, appendable: io.TextIOBase, money: BigMoney) -> None:\n",
-                        "        pass\n\n"
-                    ]
-                },
-                "326-339:parse": {
-                    "start": 326,
-                    "end": 339,
-                    "body": [
-                        "            public void parse(MoneyParseContext context) {\n",
-                        "                int endPos = context.getIndex() + 3;\n",
-                        "                if (endPos > context.getTextLength()) {\n",
-                        "                    context.setError();\n",
-                        "                } else {\n",
-                        "                    String code = context.getTextSubstring(context.getIndex(), endPos);\n",
-                        "                    try {\n",
-                        "                        context.setCurrency(CurrencyUnit.ofNumericCode0(code));\n",
-                        "                        context.setIndex(endPos);\n",
-                        "                    } catch (IllegalCurrencyException ex) {\n",
-                        "                        context.setError();\n",
-                        "                    }\n",
-                        "                }\n",
-                        "            }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [
-                        "Override"
-                    ],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "parse(MoneyParseContext)",
-                    "parameters": [
-                        "context"
-                    ],
-                    "calls": [
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "156-158:getIndex"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "136-138:getTextLength"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "188-190:setError"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "147-149:getTextSubstring"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "206-208:setCurrency"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.CurrencyUnit",
-                            "CurrencyUnit",
-                            "364-384:ofNumericCode0"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "165-167:setIndex"
-                        ]
-                    ],
-                    "partial_translation": [
-                        "    def parse(self, context: MoneyParseContext) -> None:\n",
-                        "        pass\n\n"
-                    ]
-                },
-                "320-323:print": {
-                    "start": 320,
-                    "end": 323,
-                    "body": [
-                        "            public void print(MoneyPrintContext context, Appendable appendable, BigMoney money)\n",
-                        "                    throws IOException {\n",
-                        "                appendable.append(money.getCurrencyUnit().getNumeric3Code());\n",
-                        "            }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [
-                        "Override"
-                    ],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "print(MoneyPrintContext, Appendable, BigMoney)",
-                    "parameters": [
-                        "context",
-                        "appendable",
-                        "money"
-                    ],
-                    "calls": [
-                        [
-                            "joda-money.src.main.org.joda.money.CurrencyUnit",
-                            "CurrencyUnit",
-                            "503-515:getNumeric3Code"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.BigMoney",
-                            "BigMoney",
-                            "429-431:getCurrencyUnit"
-                        ]
-                    ],
-                    "partial_translation": [
-                        "    def print(self, context: MoneyPrintContext, appendable: io.TextIOBase, money: BigMoney) -> None:\n",
-                        "        pass\n\n"
-                    ]
-                },
-                "349-365:parse": {
-                    "start": 349,
-                    "end": 365,
-                    "body": [
-                        "            public void parse(MoneyParseContext context) {\n",
-                        "                int count = 0;\n",
-                        "                for (; count < 3 && context.getIndex() + count < context.getTextLength(); count++) {\n",
-                        "                    char ch = context.getText().charAt(context.getIndex() + count);\n",
-                        "                    if (ch < '0' || ch > '9') {\n",
-                        "                        break;\n",
-                        "                    }\n",
-                        "                }\n",
-                        "                int endPos = context.getIndex() + count;\n",
-                        "                String code = context.getTextSubstring(context.getIndex(), endPos);\n",
-                        "                try {\n",
-                        "                    context.setCurrency(CurrencyUnit.ofNumericCode0(code));\n",
-                        "                    context.setIndex(endPos);\n",
-                        "                } catch (IllegalCurrencyException ex) {\n",
-                        "                    context.setError();\n",
-                        "                }\n",
-                        "            }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [
-                        "Override"
-                    ],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "parse(MoneyParseContext)",
-                    "parameters": [
-                        "context"
-                    ],
-                    "calls": [
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "156-158:getIndex"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "147-149:getTextSubstring"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "136-138:getTextLength"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "117-119:getText"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "206-208:setCurrency"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.CurrencyUnit",
-                            "CurrencyUnit",
-                            "364-384:ofNumericCode0"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "165-167:setIndex"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
-                            "MoneyParseContext",
-                            "188-190:setError"
-                        ]
-                    ],
-                    "partial_translation": [
-                        "    def parse(self, context: MoneyParseContext) -> None:\n",
-                        "        pass\n\n"
-                    ]
-                },
-                "343-346:print": {
-                    "start": 343,
-                    "end": 346,
-                    "body": [
-                        "            public void print(MoneyPrintContext context, Appendable appendable, BigMoney money)\n",
-                        "                    throws IOException {\n",
-                        "                appendable.append(Integer.toString(money.getCurrencyUnit().getNumericCode()));\n",
-                        "            }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [
-                        "Override"
-                    ],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "print(MoneyPrintContext, Appendable, BigMoney)",
-                    "parameters": [
-                        "context",
-                        "appendable",
-                        "money"
-                    ],
-                    "calls": [
-                        [
-                            "joda-money.src.main.org.joda.money.CurrencyUnit",
-                            "CurrencyUnit",
-                            "491-493:getNumericCode"
-                        ],
-                        [
-                            "joda-money.src.main.org.joda.money.BigMoney",
-                            "BigMoney",
-                            "429-431:getCurrencyUnit"
-                        ]
-                    ],
-                    "partial_translation": [
-                        "    def print(self, context: MoneyPrintContext, appendable: io.TextIOBase, money: BigMoney) -> None:\n",
-                        "        pass\n\n"
-                    ]
-                },
-                "295-295:": {
-                    "start": 295,
-                    "end": 295,
-                    "body": [
-                        "        CODE(\"${code}\") {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "(String)",
-                    "parameters": [
-                        "toString"
-                    ],
-                    "calls": []
-                },
-                "318-318:": {
-                    "start": 318,
-                    "end": 318,
-                    "body": [
-                        "        NUMERIC_3_CODE(\"${numeric3Code}\") {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "(String)",
-                    "parameters": [
-                        "toString"
-                    ],
-                    "calls": []
-                },
-                "341-341:": {
-                    "start": 341,
-                    "end": 341,
-                    "body": [
-                        "        NUMERIC_CODE(\"${numericCode}\") {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "(String)",
-                    "parameters": [
-                        "toString"
-                    ],
-                    "calls": []
-                }
-            },
+            "methods": {},
             "fields": {}
         }
     },
     "python_imports": [
         "from abc import ABC",
+        "from io import IOBase",
         "import io",
-        "import typing"
+        "import typing\nfrom typing import *",
+        "import os"
     ]
 }
