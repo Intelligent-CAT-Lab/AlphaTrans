@@ -71,12 +71,6 @@ class DoubleMetaphone(StringEncoder):
     # Class Fields End
 
     # Class Methods Begin
-    def encode(self, value: str) -> str:
-        pass
-
-    def encode(self, obj: typing.Any) -> typing.Any:
-        pass
-
     @staticmethod
     def _contains(
         value: str, start: int, length: int, criteria: typing.List[str]

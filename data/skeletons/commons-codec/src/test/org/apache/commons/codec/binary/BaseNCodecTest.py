@@ -40,33 +40,9 @@ class BaseNCodec:
     # Class Fields End
 
     # Class Methods Begin
-    def _isInAlphabet0(self, b: int) -> bool:
-        pass
-
-    def _isInAlphabet0(self, b: int) -> bool:
-        pass
-
-    def decode1(
-        self, pArray: typing.List[int], i: int, length: int, context: Context
-    ) -> None:
-        pass
-
-    def encode2(
-        self, pArray: typing.List[int], i: int, length: int, context: Context
-    ) -> None:
-        pass
-
-    def decode1(
-        self, pArray: typing.List[int], i: int, length: int, context: Context
-    ) -> None:
-        pass
-
-    def encode2(
-        self, pArray: typing.List[int], i: int, length: int, context: Context
-    ) -> None:
-        pass
-
     # Class Methods End
+
+    pass
 
 
 class BaseNCodecTest:

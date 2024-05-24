@@ -1,55 +1,85 @@
+from __future__ import annotations
+
 # Imports Begin
-from src.main.org.joda.convert.test4.Test4Interface import *
-from src.main.org.joda.convert.test4.Test4Class import *
-from src.main.org.joda.convert.test3.Test3SuperClass import *
-from src.main.org.joda.convert.test3.Test3Class import *
-from src.main.org.joda.convert.test2.Test2Interface import *
-from src.main.org.joda.convert.test2.Test2Class import *
-from src.main.org.joda.convert.test1.Test1Class import *
-from src.main.org.joda.convert.ValidityStringConverter import *
-from src.main.org.joda.convert.ValidityCheck import *
-from src.main.org.joda.convert.Validity import *
+from src.test.org.joda.convert.test4.Test4Interface import *
+from src.test.org.joda.convert.test4.Test4Class import *
+from src.test.org.joda.convert.test3.Test3SuperClass import *
+from src.test.org.joda.convert.test3.Test3Class import *
+from src.test.org.joda.convert.test2.Test2Interface import *
+from src.test.org.joda.convert.test2.Test2Class import *
+from src.test.org.joda.convert.test1.Test1Class import *
+from src.test.org.joda.convert.ValidityStringConverter import *
+from src.test.org.joda.convert.ValidityCheck import *
+from src.test.org.joda.convert.Validity import *
 from src.main.org.joda.convert.TypedStringConverter import *
 from src.main.org.joda.convert.TypedFromStringConverter import *
 from src.main.org.joda.convert.ToStringConverter import *
-from src.main.org.joda.convert.SuperFactorySuper import *
-from src.main.org.joda.convert.SuperFactorySub import *
-from src.main.org.joda.convert.SubMethodMethod import *
-from src.main.org.joda.convert.SubMethodConstructor import *
+from src.test.org.joda.convert.SuperFactorySuper import *
+from src.test.org.joda.convert.SuperFactorySub import *
+from src.test.org.joda.convert.SubMethodMethod import *
+from src.test.org.joda.convert.SubMethodConstructor import *
 from src.main.org.joda.convert.StringConverterFactory import *
 from src.main.org.joda.convert.StringConverter import *
 from src.main.org.joda.convert.StringConvert import *
 from src.main.org.joda.convert.ReflectionStringConverter import *
-from src.main.org.joda.convert.MockIntegerStringConverter import *
-from src.main.org.joda.convert.MockDistanceStringConverter import *
+from src.test.org.joda.convert.MockIntegerStringConverter import *
+from src.test.org.joda.convert.MockDistanceStringConverter import *
 from src.main.org.joda.convert.MethodFromStringConverter import *
 from src.main.org.joda.convert.JDKStringConverter import *
-from src.main.org.joda.convert.HasCodeImpl import *
+from src.test.org.joda.convert.HasCodeImpl import *
 from src.main.org.joda.convert.FromStringConverter import *
-from src.main.org.joda.convert.DistanceWithFactory import *
-from src.main.org.joda.convert.DistanceTwoToStringAnnotations import *
-from src.main.org.joda.convert.DistanceTwoFromStringMethodAnnotations import *
-from src.main.org.joda.convert.DistanceToStringNoFromString import *
-from src.main.org.joda.convert.DistanceToStringInvalidReturnType import *
-from src.main.org.joda.convert.DistanceToStringInvalidParameters import *
-from src.main.org.joda.convert.DistanceToStringException import *
-from src.main.org.joda.convert.DistanceNoAnnotationsCharSequence import *
-from src.main.org.joda.convert.DistanceNoAnnotations import *
-from src.main.org.joda.convert.DistanceMethodMethodCharSequence import *
-from src.main.org.joda.convert.DistanceMethodMethod import *
-from src.main.org.joda.convert.DistanceMethodAndConstructorAnnotations import *
-from src.main.org.joda.convert.DistanceFromStringNoToString import *
-from src.main.org.joda.convert.DistanceFromStringInvalidReturnType import *
-from src.main.org.joda.convert.DistanceFromStringInvalidParameterCount import *
-from src.main.org.joda.convert.DistanceFromStringInvalidParameter import *
-from src.main.org.joda.convert.DistanceFromStringException import *
-from src.main.org.joda.convert.DistanceFromStringConstructorInvalidParameterCount import *
-from src.main.org.joda.convert.DistanceFromStringConstructorInvalidParameter import *
+from src.test.org.joda.convert.DistanceWithFactory import *
+from src.test.org.joda.convert.DistanceTwoToStringAnnotations import *
+from src.test.org.joda.convert.DistanceTwoFromStringMethodAnnotations import *
+from src.test.org.joda.convert.DistanceToStringNoFromString import *
+from src.test.org.joda.convert.DistanceToStringInvalidReturnType import *
+from src.test.org.joda.convert.DistanceToStringInvalidParameters import *
+from src.test.org.joda.convert.DistanceToStringException import *
+from src.test.org.joda.convert.DistanceNoAnnotationsCharSequence import *
+from src.test.org.joda.convert.DistanceNoAnnotations import *
+from src.test.org.joda.convert.DistanceMethodMethodCharSequence import *
+from src.test.org.joda.convert.DistanceMethodMethod import *
+from src.test.org.joda.convert.DistanceMethodAndConstructorAnnotations import *
+from src.test.org.joda.convert.DistanceFromStringNoToString import *
+from src.test.org.joda.convert.DistanceFromStringInvalidReturnType import *
+from src.test.org.joda.convert.DistanceFromStringInvalidParameterCount import *
+from src.test.org.joda.convert.DistanceFromStringInvalidParameter import *
+from src.test.org.joda.convert.DistanceFromStringException import *
+from src.test.org.joda.convert.DistanceFromStringConstructorInvalidParameterCount import *
+from src.test.org.joda.convert.DistanceFromStringConstructorInvalidParameter import *
 from src.main.org.joda.convert.ConstructorFromStringConverter import *
-from src.main.org.joda.convert.AltCharSequence import *
+from src.test.org.joda.convert.AltCharSequence import *
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class ToStringConverter:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def convertToString(self, object: DistanceNoAnnotations) -> str:
+        pass
+
+    # Class Methods End
+
+
+class FromStringConverter:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def convertFromString(
+        self, cls: typing.Type[DistanceNoAnnotations], str: str
+    ) -> DistanceNoAnnotations:
+        pass
+
+    # Class Methods End
 
 
 class TestStringConvert:
@@ -327,32 +357,6 @@ class TestStringConvert:
     def __assertFromStringConverter(
         self, conv: StringConverter[typing.Any], expectedType: typing.Type[typing.Any]
     ) -> None:
-        pass
-
-    # Class Methods End
-
-
-class ToStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def convertToString(self, object: DistanceNoAnnotations) -> str:
-        pass
-
-    # Class Methods End
-
-
-class FromStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def convertFromString(
-        self, cls: typing.Type[DistanceNoAnnotations], str: str
-    ) -> DistanceNoAnnotations:
         pass
 
     # Class Methods End

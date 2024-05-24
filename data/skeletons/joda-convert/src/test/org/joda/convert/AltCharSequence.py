@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
+import io
+
 # Imports End
 
 
-class AltCharSequence(CharSequence):
+class AltCharSequence(str):
 
     # Class Fields Begin
     # Class Fields End

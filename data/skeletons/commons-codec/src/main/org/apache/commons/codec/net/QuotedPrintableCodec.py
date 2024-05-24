@@ -32,24 +32,6 @@ class QuotedPrintableCodec:
     # Class Fields End
 
     # Class Methods Begin
-    def decode(self, obj: typing.Any) -> typing.Any:
-        pass
-
-    def encode(self, obj: typing.Any) -> typing.Any:
-        pass
-
-    def decode(self, sourceStr: str) -> str:
-        pass
-
-    def encode(self, sourceStr: str) -> str:
-        pass
-
-    def decode(self, bytes: typing.List[int]) -> typing.List[int]:
-        pass
-
-    def encode(self, bytes: typing.List[int]) -> typing.List[int]:
-        pass
-
     def encode4(self, sourceStr: str, sourceCharset: str) -> str:
         pass
 

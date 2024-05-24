@@ -1,12 +1,28 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.PooledObjectFactory import *
 from src.main.org.apache.commons.pool2.ObjectPool import *
-from src.main.org.apache.commons.pool2.MethodCallPoolableObjectFactory import *
-from src.main.org.apache.commons.pool2.MethodCall import *
+from src.test.org.apache.commons.pool2.MethodCallPoolableObjectFactory import *
+from src.test.org.apache.commons.pool2.MethodCall import *
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
+
+
+class Predicate:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def test(self, call: MethodCall) -> bool:
+        pass
+
+    # Class Methods End
 
 
 class TestObjectPool(ABC):
@@ -39,18 +55,6 @@ class TestObjectPool(ABC):
     def _makeEmptyPool(
         self, factory: PooledObjectFactory[typing.Any]
     ) -> ObjectPool[object]:
-        pass
-
-    # Class Methods End
-
-
-class Predicate:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def test(self, call: MethodCall) -> bool:
         pass
 
     # Class Methods End

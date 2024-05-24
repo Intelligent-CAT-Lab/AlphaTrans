@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.money.Ser import *
 from src.main.org.joda.money.MoneyUtils import *
@@ -6,12 +8,16 @@ from src.main.org.joda.money.BigMoneyProvider import *
 from src.main.org.joda.money.BigMoney import *
 from src.main.org.joda.convert.ToString import *
 from src.main.org.joda.convert.FromString import *
+import pickle
+import os
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class Money(Serializable, Comparable, BigMoneyProvider):
+class Money(BigMoneyProvider):
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -38,7 +44,7 @@ class Money(Serializable, Comparable, BigMoneyProvider):
         pass
 
     @staticmethod
-    def parse(moneyStr: str) -> "Money":
+    def parse(moneyStr: str) -> Money:
         pass
 
     def isLessThanOrEqual(self, other: BigMoneyProvider) -> bool:
@@ -64,102 +70,102 @@ class Money(Serializable, Comparable, BigMoneyProvider):
         currency: CurrencyUnit,
         conversionMultipler: decimal.Decimal,
         roundingMode: typing.Any,
-    ) -> "Money":
+    ) -> Money:
         pass
 
-    def rounded(self, scale: int, roundingMode: typing.Any) -> "Money":
+    def rounded(self, scale: int, roundingMode: typing.Any) -> Money:
         pass
 
-    def abs(self) -> "Money":
+    def abs(self) -> Money:
         pass
 
-    def negated(self) -> "Money":
+    def negated(self) -> Money:
         pass
 
-    def dividedBy2(self, valueToDivideBy: int, roundingMode: typing.Any) -> "Money":
+    def dividedBy2(self, valueToDivideBy: int, roundingMode: typing.Any) -> Money:
         pass
 
-    def dividedBy1(self, valueToDivideBy: float, roundingMode: typing.Any) -> "Money":
+    def dividedBy1(self, valueToDivideBy: float, roundingMode: typing.Any) -> Money:
         pass
 
     def dividedBy0(
         self, valueToDivideBy: decimal.Decimal, roundingMode: typing.Any
-    ) -> "Money":
+    ) -> Money:
         pass
 
-    def multipliedBy2(self, valueToMultiplyBy: int) -> "Money":
+    def multipliedBy2(self, valueToMultiplyBy: int) -> Money:
         pass
 
     def multipliedBy1(
         self, valueToMultiplyBy: float, roundingMode: typing.Any
-    ) -> "Money":
+    ) -> Money:
         pass
 
     def multipliedBy0(
         self, valueToMultiplyBy: decimal.Decimal, roundingMode: typing.Any
-    ) -> "Money":
+    ) -> Money:
         pass
 
-    def minusMinor(self, amountToSubtract: int) -> "Money":
+    def minusMinor(self, amountToSubtract: int) -> Money:
         pass
 
-    def minusMajor(self, amountToSubtract: int) -> "Money":
+    def minusMajor(self, amountToSubtract: int) -> Money:
         pass
 
-    def minus5(self, amountToSubtract: float, roundingMode: typing.Any) -> "Money":
+    def minus5(self, amountToSubtract: float, roundingMode: typing.Any) -> Money:
         pass
 
-    def minus4(self, amountToSubtract: float) -> "Money":
+    def minus4(self, amountToSubtract: float) -> Money:
         pass
 
     def minus3(
         self, amountToSubtract: decimal.Decimal, roundingMode: typing.Any
-    ) -> "Money":
+    ) -> Money:
         pass
 
-    def minus2(self, amountToSubtract: decimal.Decimal) -> "Money":
+    def minus2(self, amountToSubtract: decimal.Decimal) -> Money:
         pass
 
-    def minus1(self, moneyToSubtract: Money) -> "Money":
+    def minus1(self, moneyToSubtract: Money) -> Money:
         pass
 
-    def minus0(self, moniesToSubtract: typing.Iterable[Money]) -> "Money":
+    def minus0(self, moniesToSubtract: typing.Iterable[Money]) -> Money:
         pass
 
-    def plusMinor(self, amountToAdd: int) -> "Money":
+    def plusMinor(self, amountToAdd: int) -> Money:
         pass
 
-    def plusMajor(self, amountToAdd: int) -> "Money":
+    def plusMajor(self, amountToAdd: int) -> Money:
         pass
 
-    def plus5(self, amountToAdd: float, roundingMode: typing.Any) -> "Money":
+    def plus5(self, amountToAdd: float, roundingMode: typing.Any) -> Money:
         pass
 
-    def plus4(self, amountToAdd: float) -> "Money":
+    def plus4(self, amountToAdd: float) -> Money:
         pass
 
-    def plus3(self, amountToAdd: decimal.Decimal, roundingMode: typing.Any) -> "Money":
+    def plus3(self, amountToAdd: decimal.Decimal, roundingMode: typing.Any) -> Money:
         pass
 
-    def plus2(self, amountToAdd: decimal.Decimal) -> "Money":
+    def plus2(self, amountToAdd: decimal.Decimal) -> Money:
         pass
 
-    def plus1(self, moneyToAdd: Money) -> "Money":
+    def plus1(self, moneyToAdd: Money) -> Money:
         pass
 
-    def plus0(self, moniesToAdd: typing.Iterable[Money]) -> "Money":
+    def plus0(self, moniesToAdd: typing.Iterable[Money]) -> Money:
         pass
 
-    def withAmount3(self, amount: float, roundingMode: typing.Any) -> "Money":
+    def withAmount3(self, amount: float, roundingMode: typing.Any) -> Money:
         pass
 
-    def withAmount2(self, amount: float) -> "Money":
+    def withAmount2(self, amount: float) -> Money:
         pass
 
-    def withAmount1(self, amount: decimal.Decimal, roundingMode: typing.Any) -> "Money":
+    def withAmount1(self, amount: decimal.Decimal, roundingMode: typing.Any) -> Money:
         pass
 
-    def withAmount0(self, amount: decimal.Decimal) -> "Money":
+    def withAmount0(self, amount: decimal.Decimal) -> Money:
         pass
 
     def isNegativeOrZero(self) -> bool:
@@ -206,70 +212,70 @@ class Money(Serializable, Comparable, BigMoneyProvider):
 
     def withCurrencyUnit1(
         self, currency: CurrencyUnit, roundingMode: typing.Any
-    ) -> "Money":
+    ) -> Money:
         pass
 
-    def withCurrencyUnit0(self, currency: CurrencyUnit) -> "Money":
+    def withCurrencyUnit0(self, currency: CurrencyUnit) -> Money:
         pass
 
     def getCurrencyUnit(self) -> CurrencyUnit:
         pass
 
     @staticmethod
-    def total3(currency: CurrencyUnit, monies: typing.Iterable[Money]) -> "Money":
+    def total3(currency: CurrencyUnit, monies: typing.Iterable[Money]) -> Money:
         pass
 
     @staticmethod
-    def total2(currency: CurrencyUnit, monies: typing.List[Money]) -> "Money":
+    def total2(currency: CurrencyUnit, monies: typing.List[Money]) -> Money:
         pass
 
     @staticmethod
-    def total1(monies: typing.Iterable[Money]) -> "Money":
+    def total1(monies: typing.Iterable[Money]) -> Money:
         pass
 
     @staticmethod
-    def total0(monies: typing.List[Money]) -> "Money":
+    def total0(monies: typing.List[Money]) -> Money:
         pass
 
     @staticmethod
-    def of5(moneyProvider: BigMoneyProvider, roundingMode: typing.Any) -> "Money":
+    def of5(moneyProvider: BigMoneyProvider, roundingMode: typing.Any) -> Money:
         pass
 
     @staticmethod
-    def of4(moneyProvider: BigMoneyProvider) -> "Money":
+    def of4(moneyProvider: BigMoneyProvider) -> Money:
         pass
 
     @staticmethod
-    def zero(currency: CurrencyUnit) -> "Money":
+    def zero(currency: CurrencyUnit) -> Money:
         pass
 
     @staticmethod
-    def ofMinor(currency: CurrencyUnit, amountMinor: int) -> "Money":
+    def ofMinor(currency: CurrencyUnit, amountMinor: int) -> Money:
         pass
 
     @staticmethod
-    def ofMajor(currency: CurrencyUnit, amountMajor: int) -> "Money":
+    def ofMajor(currency: CurrencyUnit, amountMajor: int) -> Money:
         pass
 
     @staticmethod
-    def of3(currency: CurrencyUnit, amount: float, roundingMode: typing.Any) -> "Money":
+    def of3(currency: CurrencyUnit, amount: float, roundingMode: typing.Any) -> Money:
         pass
 
     @staticmethod
-    def of2(currency: CurrencyUnit, amount: float) -> "Money":
+    def of2(currency: CurrencyUnit, amount: float) -> Money:
         pass
 
     @staticmethod
     def of1(
         currency: CurrencyUnit, amount: decimal.Decimal, roundingMode: typing.Any
-    ) -> "Money":
+    ) -> Money:
         pass
 
     @staticmethod
-    def of0(currency: CurrencyUnit, amount: decimal.Decimal) -> "Money":
+    def of0(currency: CurrencyUnit, amount: decimal.Decimal) -> Money:
         pass
 
-    def __with(self, newInstance: BigMoney) -> "Money":
+    def __with(self, newInstance: BigMoney) -> Money:
         pass
 
     def __writeReplace(self) -> typing.Any:

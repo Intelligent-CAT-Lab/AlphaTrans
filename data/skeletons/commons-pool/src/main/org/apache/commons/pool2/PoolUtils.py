@@ -1,133 +1,45 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.PooledObject import *
 from src.main.org.apache.commons.pool2.PooledObjectFactory import *
 from src.main.org.apache.commons.pool2.ObjectPool import *
 from src.main.org.apache.commons.pool2.KeyedPooledObjectFactory import *
 from src.main.org.apache.commons.pool2.KeyedObjectPool import *
+import os
 import typing
+from typing import *
+import threading
+import io
 
 # Imports End
 
 
-class PoolUtils:
+class ErodingFactor:
 
     # Class Fields Begin
-    __MSG_FACTOR_NEGATIVE: str = None
-    __MSG_MIN_IDLE: str = None
-    MSG_NULL_KEY: str = None
-    __MSG_NULL_KEYED_POOL: str = None
-    MSG_NULL_KEYS: str = None
-    __MSG_NULL_POOL: str = None
+    __factor: float = None
+    __nextShrinkMillis: int = None
+    __idleHighWaterMark: int = None
     # Class Fields End
 
     # Class Methods Begin
-    @staticmethod
-    def prefill2(pool: ObjectPool[typing.Any], count: int) -> None:
+    def toString(self) -> str:
         pass
 
-    @staticmethod
-    def prefill1(
-        keyedPool: KeyedObjectPool[typing.Any, typing.Any], key: typing.Any, count: int
-    ) -> None:
+    def update(self, nowMillis: int, numIdle: int) -> None:
         pass
 
-    @staticmethod
-    def prefill0(
-        keyedPool: KeyedObjectPool[typing.Any, typing.Any],
-        keys: typing.Collection[typing.Any],
-        count: int,
-    ) -> None:
+    def getNextShrink(self) -> int:
         pass
 
-    def __init__(self) -> None:
-        pass
-
-    @staticmethod
-    def synchronizedPooledFactory(
-        factory: PooledObjectFactory[typing.Any],
-    ) -> PooledObjectFactory[typing.Any]:
-        pass
-
-    @staticmethod
-    def synchronizedPool1(pool: ObjectPool[typing.Any]) -> ObjectPool[typing.Any]:
-        pass
-
-    @staticmethod
-    def synchronizedPool0(
-        keyedPool: KeyedObjectPool[typing.Any, typing.Any]
-    ) -> KeyedObjectPool[typing.Any, typing.Any]:
-        pass
-
-    @staticmethod
-    def synchronizedKeyedPooledFactory(
-        keyedFactory: KeyedPooledObjectFactory[typing.Any, typing.Any]
-    ) -> KeyedPooledObjectFactory[typing.Any, typing.Any]:
-        pass
-
-    @staticmethod
-    def erodingPool4(
-        pool: ObjectPool[typing.Any], factor: float
-    ) -> ObjectPool[typing.Any]:
-        pass
-
-    @staticmethod
-    def erodingPool3(pool: ObjectPool[typing.Any]) -> ObjectPool[typing.Any]:
-        pass
-
-    @staticmethod
-    def erodingPool2(
-        keyedPool: KeyedObjectPool[typing.Any, typing.Any], factor: float, perKey: bool
-    ) -> KeyedObjectPool[typing.Any, typing.Any]:
-        pass
-
-    @staticmethod
-    def erodingPool1(
-        keyedPool: KeyedObjectPool[typing.Any, typing.Any], factor: float
-    ) -> KeyedObjectPool[typing.Any, typing.Any]:
-        pass
-
-    @staticmethod
-    def erodingPool0(
-        keyedPool: KeyedObjectPool[typing.Any, typing.Any]
-    ) -> KeyedObjectPool[typing.Any, typing.Any]:
-        pass
-
-    @staticmethod
-    def checkRethrow(t: BaseException) -> None:
-        pass
-
-    @staticmethod
-    def checkMinIdle2(
-        pool: ObjectPool[typing.Any], minIdle: int, periodMillis: int
-    ) -> typing.Union[sched.scheduler, threading.Timer]:
-        pass
-
-    @staticmethod
-    def checkMinIdle1(
-        keyedPool: KeyedObjectPool[typing.Any, typing.Any],
-        key: typing.Any,
-        minIdle: int,
-        periodMillis: int,
-    ) -> typing.Union[sched.scheduler, threading.Timer]:
-        pass
-
-    @staticmethod
-    def checkMinIdle0(
-        keyedPool: KeyedObjectPool[typing.Any, typing.Any],
-        keys: typing.Collection[typing.Any],
-        minIdle: int,
-        periodMillis: int,
-    ) -> typing.Dict[typing.Any, typing.Union[sched.scheduler, threading.Timer]]:
-        pass
-
-    @staticmethod
-    def __getMinIdleTimer() -> threading.Timer:
+    def __init__(self, factor: float) -> None:
         pass
 
     # Class Methods End
 
 
-class ErodingKeyedObjectPool(KeyedObjectPool, ErodingKeyedObjectPool):
+class ErodingKeyedObjectPool(KeyedObjectPool):
 
     # Class Fields Begin
     __keyedPool: KeyedObjectPool[typing.Any, typing.Any] = None
@@ -256,7 +168,7 @@ class ErodingPerKeyKeyedObjectPool:
     # Class Methods End
 
 
-class KeyedObjectPoolMinIdleTimerTask(TimerTask):
+class KeyedObjectPoolMinIdleTimerTask:
 
     # Class Fields Begin
     __minIdle: int = None
@@ -282,7 +194,7 @@ class KeyedObjectPoolMinIdleTimerTask(TimerTask):
     # Class Methods End
 
 
-class ObjectPoolMinIdleTimerTask(TimerTask):
+class ObjectPoolMinIdleTimerTask:
 
     # Class Fields Begin
     __minIdle: int = None
@@ -469,25 +381,119 @@ class TimerHolder:
     # Class Methods End
 
 
-class ErodingFactor:
+class PoolUtils:
 
     # Class Fields Begin
-    __factor: float = None
-    __nextShrinkMillis: int = None
-    __idleHighWaterMark: int = None
+    __MSG_FACTOR_NEGATIVE: str = None
+    __MSG_MIN_IDLE: str = None
+    MSG_NULL_KEY: str = None
+    __MSG_NULL_KEYED_POOL: str = None
+    MSG_NULL_KEYS: str = None
+    __MSG_NULL_POOL: str = None
     # Class Fields End
 
     # Class Methods Begin
-    def toString(self) -> str:
+    @staticmethod
+    def prefill2(pool: ObjectPool[typing.Any], count: int) -> None:
         pass
 
-    def update(self, nowMillis: int, numIdle: int) -> None:
+    @staticmethod
+    def prefill1(
+        keyedPool: KeyedObjectPool[typing.Any, typing.Any], key: typing.Any, count: int
+    ) -> None:
         pass
 
-    def getNextShrink(self) -> int:
+    @staticmethod
+    def prefill0(
+        keyedPool: KeyedObjectPool[typing.Any, typing.Any],
+        keys: typing.Collection[typing.Any],
+        count: int,
+    ) -> None:
         pass
 
-    def __init__(self, factor: float) -> None:
+    def __init__(self) -> None:
+        pass
+
+    @staticmethod
+    def synchronizedPooledFactory(
+        factory: PooledObjectFactory[typing.Any],
+    ) -> PooledObjectFactory[typing.Any]:
+        pass
+
+    @staticmethod
+    def synchronizedPool1(pool: ObjectPool[typing.Any]) -> ObjectPool[typing.Any]:
+        pass
+
+    @staticmethod
+    def synchronizedPool0(
+        keyedPool: KeyedObjectPool[typing.Any, typing.Any]
+    ) -> KeyedObjectPool[typing.Any, typing.Any]:
+        pass
+
+    @staticmethod
+    def synchronizedKeyedPooledFactory(
+        keyedFactory: KeyedPooledObjectFactory[typing.Any, typing.Any]
+    ) -> KeyedPooledObjectFactory[typing.Any, typing.Any]:
+        pass
+
+    @staticmethod
+    def erodingPool4(
+        pool: ObjectPool[typing.Any], factor: float
+    ) -> ObjectPool[typing.Any]:
+        pass
+
+    @staticmethod
+    def erodingPool3(pool: ObjectPool[typing.Any]) -> ObjectPool[typing.Any]:
+        pass
+
+    @staticmethod
+    def erodingPool2(
+        keyedPool: KeyedObjectPool[typing.Any, typing.Any], factor: float, perKey: bool
+    ) -> KeyedObjectPool[typing.Any, typing.Any]:
+        pass
+
+    @staticmethod
+    def erodingPool1(
+        keyedPool: KeyedObjectPool[typing.Any, typing.Any], factor: float
+    ) -> KeyedObjectPool[typing.Any, typing.Any]:
+        pass
+
+    @staticmethod
+    def erodingPool0(
+        keyedPool: KeyedObjectPool[typing.Any, typing.Any]
+    ) -> KeyedObjectPool[typing.Any, typing.Any]:
+        pass
+
+    @staticmethod
+    def checkRethrow(t: BaseException) -> None:
+        pass
+
+    @staticmethod
+    def checkMinIdle2(
+        pool: ObjectPool[typing.Any], minIdle: int, periodMillis: int
+    ) -> typing.Union[sched.scheduler, threading.Timer]:
+        pass
+
+    @staticmethod
+    def checkMinIdle1(
+        keyedPool: KeyedObjectPool[typing.Any, typing.Any],
+        key: typing.Any,
+        minIdle: int,
+        periodMillis: int,
+    ) -> typing.Union[sched.scheduler, threading.Timer]:
+        pass
+
+    @staticmethod
+    def checkMinIdle0(
+        keyedPool: KeyedObjectPool[typing.Any, typing.Any],
+        keys: typing.Collection[typing.Any],
+        minIdle: int,
+        periodMillis: int,
+    ) -> typing.Dict[typing.Any, typing.Union[sched.scheduler, threading.Timer]]:
+        pass
+
+    @staticmethod
+    def __getMinIdleTimer() -> threading.Timer:
         pass
 
     # Class Methods End

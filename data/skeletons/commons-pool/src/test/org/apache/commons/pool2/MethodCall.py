@@ -1,5 +1,9 @@
+from __future__ import annotations
+
 # Imports Begin
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -25,7 +29,7 @@ class MethodCall:
     def setReturned(self, returned: typing.Any) -> None:
         pass
 
-    def returned(self, obj: typing.Any) -> "MethodCall":
+    def returned(self, obj: typing.Any) -> MethodCall:
         pass
 
     def getReturned(self) -> typing.Any:
@@ -38,15 +42,15 @@ class MethodCall:
         pass
 
     @staticmethod
-    def MethodCall3(name: str) -> "MethodCall":
+    def MethodCall3(name: str) -> MethodCall:
         pass
 
     @staticmethod
-    def MethodCall1(name: str, param: typing.Any) -> "MethodCall":
+    def MethodCall1(name: str, param: typing.Any) -> MethodCall:
         pass
 
     @staticmethod
-    def MethodCall0(name: str, param1: typing.Any, param2: typing.Any) -> "MethodCall":
+    def MethodCall0(name: str, param1: typing.Any, param2: typing.Any) -> MethodCall:
         pass
 
     def __init__(

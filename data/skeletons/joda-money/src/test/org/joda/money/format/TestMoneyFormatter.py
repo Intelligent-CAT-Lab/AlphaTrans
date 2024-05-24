@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.money.format.MoneyPrintContext import *
 from src.main.org.joda.money.format.MoneyPrinter import *
@@ -12,9 +14,53 @@ from src.main.org.joda.money.CurrencyUnit import *
 from src.main.org.joda.money.BigMoneyProvider import *
 from src.main.org.joda.money.BigMoney import *
 import typing
+from typing import *
 import io
+from io import IOBase
 
 # Imports End
+
+
+class IOAppendable(io.TextIOBase):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def append2(self, csq: str) -> io.TextIOBase:
+        pass
+
+    def append1(self, c: str) -> io.TextIOBase:
+        pass
+
+    def append0(self, csq: str, start: int, end: int) -> io.TextIOBase:
+        pass
+
+    # Class Methods End
+
+
+class MoneyParser:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def toString(self) -> str:
+        pass
+
+    # Class Methods End
+
+
+class MoneyPrinter:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def toString(self) -> str:
+        pass
+
+    # Class Methods End
 
 
 class TestMoneyFormatter:
@@ -196,73 +242,6 @@ class TestMoneyFormatter:
         pass
 
     def beforeMethod(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class MoneyParser:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def parse(self, context: MoneyParseContext) -> None:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def parse(self, context: MoneyParseContext) -> None:
-        pass
-
-    # Class Methods End
-
-
-class MoneyPrinter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def print(
-        self, context: MoneyPrintContext, appendable: io.TextIOBase, money: BigMoney
-    ) -> None:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def print(
-        self, context: MoneyPrintContext, appendable: io.TextIOBase, money: BigMoney
-    ) -> None:
-        pass
-
-    # Class Methods End
-
-
-class IOAppendable(Appendable):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def append(self, csq: str) -> io.TextIOBase:
-        pass
-
-    def append(self, c: str) -> io.TextIOBase:
-        pass
-
-    def append(self, csq: str, start: int, end: int) -> io.TextIOBase:
-        pass
-
-    def append2(self, csq: str) -> io.TextIOBase:
-        pass
-
-    def append1(self, c: str) -> io.TextIOBase:
-        pass
-
-    def append0(self, csq: str, start: int, end: int) -> io.TextIOBase:
         pass
 
     # Class Methods End

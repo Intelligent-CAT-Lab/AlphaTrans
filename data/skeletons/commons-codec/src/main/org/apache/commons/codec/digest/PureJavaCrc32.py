@@ -16,12 +16,6 @@ class PureJavaCrc32:
     # Class Fields End
 
     # Class Methods Begin
-    def update(self, b: int) -> None:
-        pass
-
-    def update(self, b: typing.List[int], offset: int, len: int) -> None:
-        pass
-
     def reset(self) -> None:
         pass
 

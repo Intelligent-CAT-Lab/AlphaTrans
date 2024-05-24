@@ -41,76 +41,9 @@ class Executable:
     # Class Fields End
 
     # Class Methods Begin
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
     # Class Methods End
+
+    pass
 
 
 class CSVFormatTest:

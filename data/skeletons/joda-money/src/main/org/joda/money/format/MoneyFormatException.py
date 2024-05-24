@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
+import io
+
 # Imports End
 
 
-class MoneyFormatException(RuntimeException):
+class MoneyFormatException(RuntimeError):
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -13,7 +17,7 @@ class MoneyFormatException(RuntimeException):
         pass
 
     @staticmethod
-    def MoneyFormatException1(message: str) -> "MoneyFormatException":
+    def MoneyFormatException1(message: str) -> MoneyFormatException:
         pass
 
     def __init__(self, message: str, cause: BaseException) -> None:

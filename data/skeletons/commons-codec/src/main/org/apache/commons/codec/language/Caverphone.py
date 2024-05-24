@@ -18,12 +18,6 @@ class Caverphone(StringEncoder):
     # Class Fields End
 
     # Class Methods Begin
-    def encode(self, str: str) -> str:
-        pass
-
-    def encode(self, obj: typing.Any) -> typing.Any:
-        pass
-
     def isCaverphoneEqual(self, str1: str, str2: str) -> bool:
         pass
 

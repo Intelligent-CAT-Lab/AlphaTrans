@@ -36,12 +36,6 @@ class Nysiis(StringEncoder):
     # Class Fields End
 
     # Class Methods Begin
-    def encode(self, str: str) -> str:
-        pass
-
-    def encode(self, obj: typing.Any) -> typing.Any:
-        pass
-
     def nysiis(self, str: str) -> str:
         pass
 

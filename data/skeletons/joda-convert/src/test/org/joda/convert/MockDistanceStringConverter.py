@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.StringConverter import *
-from src.main.org.joda.convert.DistanceMethodMethod import *
+from src.test.org.joda.convert.DistanceMethodMethod import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class MockDistanceStringConverter(Enum, StringConverter):
+class MockDistanceStringConverter(StringConverter):
 
     # Class Fields Begin
     INSTANCE: MockDistanceStringConverter = None

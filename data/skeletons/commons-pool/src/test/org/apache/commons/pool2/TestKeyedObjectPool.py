@@ -1,85 +1,17 @@
+from __future__ import annotations
+
 # Imports Begin
-from src.main.org.apache.commons.pool2.PrivateException import *
+from src.test.org.apache.commons.pool2.PrivateException import *
 from src.main.org.apache.commons.pool2.PooledObject import *
-from src.main.org.apache.commons.pool2.MethodCall import *
+from src.test.org.apache.commons.pool2.MethodCall import *
 from src.main.org.apache.commons.pool2.KeyedPooledObjectFactory import *
 from src.main.org.apache.commons.pool2.KeyedObjectPool import *
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
-
-
-class TestKeyedObjectPool(ABC):
-
-    # Class Fields Begin
-    _KEY: str = None
-    __pool: KeyedObjectPool[object, typing.Any] = None
-    __ZERO: int = None
-    __ONE: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def testBaseNumActiveNumIdle2(self) -> None:
-        pass
-
-    def testBaseNumActiveNumIdle(self) -> None:
-        pass
-
-    def testBaseInvalidateObject(self) -> None:
-        pass
-
-    def testBaseClear(self) -> None:
-        pass
-
-    def testBaseBorrowReturn(self) -> None:
-        pass
-
-    def testBaseBorrow(self) -> None:
-        pass
-
-    def testBaseAddObject(self) -> None:
-        pass
-
-    def tearDown(self) -> None:
-        pass
-
-    def __reset(
-        self,
-        pool: KeyedObjectPool[object, typing.Any],
-        factory: FailingKeyedPooledObjectFactory,
-        expectedMethods: typing.List[MethodCall],
-    ) -> None:
-        pass
-
-    def __clear(
-        self,
-        factory: FailingKeyedPooledObjectFactory,
-        expectedMethods: typing.List[MethodCall],
-    ) -> None:
-        pass
-
-    def _makeKey(self, n: int) -> typing.Any:
-        pass
-
-    def _makeEmptyPool1(
-        self, factory: KeyedPooledObjectFactory[typing.Any, typing.Any]
-    ) -> KeyedObjectPool[object, typing.Any]:
-        pass
-
-    def _makeEmptyPool0(self, minCapacity: int) -> KeyedObjectPool[object, typing.Any]:
-        pass
-
-    def _isLifo(self) -> bool:
-        pass
-
-    def _isFifo(self) -> bool:
-        pass
-
-    def _getNthObject(self, key: typing.Any, n: int) -> typing.Any:
-        pass
-
-    # Class Methods End
 
 
 class FailingKeyedPooledObjectFactory:
@@ -150,6 +82,78 @@ class FailingKeyedPooledObjectFactory:
         pass
 
     def __init__(self) -> None:
+        pass
+
+    # Class Methods End
+
+
+class TestKeyedObjectPool(ABC):
+
+    # Class Fields Begin
+    _KEY: str = None
+    __pool: KeyedObjectPool[object, typing.Any] = None
+    __ZERO: int = None
+    __ONE: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def testBaseNumActiveNumIdle2(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle(self) -> None:
+        pass
+
+    def testBaseInvalidateObject(self) -> None:
+        pass
+
+    def testBaseClear(self) -> None:
+        pass
+
+    def testBaseBorrowReturn(self) -> None:
+        pass
+
+    def testBaseBorrow(self) -> None:
+        pass
+
+    def testBaseAddObject(self) -> None:
+        pass
+
+    def tearDown(self) -> None:
+        pass
+
+    def __reset(
+        self,
+        pool: KeyedObjectPool[object, typing.Any],
+        factory: FailingKeyedPooledObjectFactory,
+        expectedMethods: typing.List[MethodCall],
+    ) -> None:
+        pass
+
+    def __clear(
+        self,
+        factory: FailingKeyedPooledObjectFactory,
+        expectedMethods: typing.List[MethodCall],
+    ) -> None:
+        pass
+
+    def _makeKey(self, n: int) -> typing.Any:
+        pass
+
+    def _makeEmptyPool1(
+        self, factory: KeyedPooledObjectFactory[typing.Any, typing.Any]
+    ) -> KeyedObjectPool[object, typing.Any]:
+        pass
+
+    def _makeEmptyPool0(self, minCapacity: int) -> KeyedObjectPool[object, typing.Any]:
+        pass
+
+    def _isLifo(self) -> bool:
+        pass
+
+    def _isFifo(self) -> bool:
+        pass
+
+    def _getNthObject(self, key: typing.Any, n: int) -> typing.Any:
         pass
 
     # Class Methods End

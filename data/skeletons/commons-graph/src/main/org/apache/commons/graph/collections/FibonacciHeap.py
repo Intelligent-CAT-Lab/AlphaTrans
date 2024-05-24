@@ -29,13 +29,7 @@ class FibonacciHeap:
     def toArray1(self, a: typing.List[typing.Any]) -> typing.List[typing.Any]:
         pass
 
-    def toArray(self, a: typing.List[typing.Any]) -> typing.List[typing.Any]:
-        pass
-
     def toArray0(self) -> typing.List[typing.Any]:
-        pass
-
-    def toArray(self) -> typing.List[typing.Any]:
         pass
 
     def size(self) -> int:
@@ -50,13 +44,7 @@ class FibonacciHeap:
     def remove1(self, o: typing.Any) -> bool:
         pass
 
-    def remove(self, o: typing.Any) -> bool:
-        pass
-
     def remove0(self) -> typing.Any:
-        pass
-
-    def remove(self) -> typing.Any:
         pass
 
     def potential(self) -> int:

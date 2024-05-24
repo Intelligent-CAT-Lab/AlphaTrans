@@ -43,7 +43,7 @@ class LanguageSet(ABC):
     # Class Methods End
 
 
-class LanguageSet:
+class AnyLanguage(LanguageSet):
 
     # Class Fields Begin
     # Class Fields End
@@ -70,6 +70,18 @@ class LanguageSet:
     def contains(self, language: str) -> bool:
         pass
 
+    def __init__(self) -> None:
+        pass
+
+    # Class Methods End
+
+
+class NoLanguage(LanguageSet):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
     def toString(self) -> str:
         pass
 
@@ -89,6 +101,9 @@ class LanguageSet:
         pass
 
     def contains(self, language: str) -> bool:
+        pass
+
+    def __init__(self) -> None:
         pass
 
     # Class Methods End

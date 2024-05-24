@@ -1,14 +1,96 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *
 from src.main.org.apache.commons.pool2.impl.InterruptibleReentrantLock import *
+import pickle
 import datetime
 import typing
+from typing import *
+import threading
+import io
 from abc import ABC
 
 # Imports End
 
 
-class LinkedBlockingDeque(Serializable, AbstractQueue, Deque, LinkedBlockingDeque):
+class AbstractItr(Iterator, ABC):
+
+    # Class Fields Begin
+    __lastRet: Node[typing.Any] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def remove(self) -> None:
+        pass
+
+    def next(self) -> typing.Any:
+        pass
+
+    def hasNext(self) -> bool:
+        pass
+
+    def __succ(self, n: Node[typing.Any]) -> Node[typing.Any]:
+        pass
+
+    def advance(self) -> None:
+        pass
+
+    def __init__(self) -> None:
+        pass
+
+    def nextNode(self, n: Node[typing.Any]) -> Node[typing.Any]:
+        pass
+
+    def firstNode(self) -> Node[typing.Any]:
+        pass
+
+    # Class Methods End
+
+
+class DescendingItr(AbstractItr):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def nextNode(self, n: Node[typing.Any]) -> Node[typing.Any]:
+        pass
+
+    def firstNode(self) -> Node[typing.Any]:
+        pass
+
+    # Class Methods End
+
+
+class Itr(AbstractItr):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def nextNode(self, n: Node[typing.Any]) -> Node[typing.Any]:
+        pass
+
+    def firstNode(self) -> Node[typing.Any]:
+        pass
+
+    # Class Methods End
+
+
+class Node:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def __init__(self, x: typing.Any, p: Node, n: Node) -> None:
+        pass
+
+    # Class Methods End
+
+
+class LinkedBlockingDeque(Deque):
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -253,82 +335,6 @@ class LinkedBlockingDeque(Serializable, AbstractQueue, Deque, LinkedBlockingDequ
         pass
 
     def offer1(self, e: typing.Any, timeout: datetime.timedelta) -> bool:
-        pass
-
-    # Class Methods End
-
-
-class DescendingItr(AbstractItr):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def nextNode(self, n: Node[typing.Any]) -> Node[typing.Any]:
-        pass
-
-    def firstNode(self) -> Node[typing.Any]:
-        pass
-
-    # Class Methods End
-
-
-class Itr(AbstractItr):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def nextNode(self, n: Node[typing.Any]) -> Node[typing.Any]:
-        pass
-
-    def firstNode(self) -> Node[typing.Any]:
-        pass
-
-    # Class Methods End
-
-
-class Node:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def __init__(self, x: typing.Any, p: Node, n: Node) -> None:
-        pass
-
-    # Class Methods End
-
-
-class AbstractItr(Iterator, ABC):
-
-    # Class Fields Begin
-    __lastRet: Node[typing.Any] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def remove(self) -> None:
-        pass
-
-    def next(self) -> typing.Any:
-        pass
-
-    def hasNext(self) -> bool:
-        pass
-
-    def __succ(self, n: Node[typing.Any]) -> Node[typing.Any]:
-        pass
-
-    def advance(self) -> None:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
-    def nextNode(self, n: Node[typing.Any]) -> Node[typing.Any]:
-        pass
-
-    def firstNode(self) -> Node[typing.Any]:
         pass
 
     # Class Methods End

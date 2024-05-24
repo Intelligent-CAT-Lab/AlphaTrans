@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 # Imports Begin
-from src.main.org.joda.convert.Validity import *
+from src.test.org.joda.convert.Validity import *
 from src.main.org.joda.convert.StringConverter import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class ValidityStringConverter(Enum, StringConverter):
+class ValidityStringConverter(StringConverter):
 
     # Class Fields Begin
     INSTANCE: ValidityStringConverter = None

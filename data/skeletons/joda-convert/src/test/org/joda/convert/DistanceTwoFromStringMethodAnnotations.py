@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.ToString import *
 from src.main.org.joda.convert.FromString import *
+import io
 
 # Imports End
 
@@ -19,11 +22,11 @@ class DistanceTwoFromStringMethodAnnotations:
         pass
 
     @staticmethod
-    def parse2(amount: str) -> "DistanceTwoFromStringMethodAnnotations":
+    def parse2(amount: str) -> DistanceTwoFromStringMethodAnnotations:
         pass
 
     @staticmethod
-    def parse(amount: str) -> "DistanceTwoFromStringMethodAnnotations":
+    def parse(amount: str) -> DistanceTwoFromStringMethodAnnotations:
         pass
 
     def __init__(self, constructorId: int, amount1: str, amount: int) -> None:

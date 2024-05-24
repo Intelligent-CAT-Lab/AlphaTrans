@@ -1,7 +1,11 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.ToString import *
 from src.main.org.joda.convert.FromString import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -20,7 +24,7 @@ class DistanceFromStringInvalidParameter:
         pass
 
     @staticmethod
-    def parse(amount: typing.Any) -> "DistanceFromStringInvalidParameter":
+    def parse(amount: typing.Any) -> DistanceFromStringInvalidParameter:
         pass
 
     def __init__(self, amount: int) -> None:

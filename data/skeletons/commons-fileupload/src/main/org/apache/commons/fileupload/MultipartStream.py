@@ -15,7 +15,7 @@ from io import StringIO
 # Imports End
 
 
-class ItemInputStream(Closeable):
+class ItemInputStream:
 
     # Class Fields Begin
     __total: int = None

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.language.bm.RuleType import *
+from src.main.org.apache.commons.codec.language.bm.Rule1 import *
 from src.main.org.apache.commons.codec.language.bm.ResourceConstants import *
 from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.language.bm.Languages import *
@@ -26,20 +27,6 @@ class Comparator:
     # Class Methods End
 
 
-class Rule:
-
-    # Class Fields Begin
-    __myLine: int = None
-    __loc: str = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def toString(self) -> str:
-        pass
-
-    # Class Methods End
-
-
 class RPattern:
 
     # Class Fields Begin
@@ -47,33 +34,6 @@ class RPattern:
     # Class Fields End
 
     # Class Methods Begin
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
     # Class Methods End
 
 

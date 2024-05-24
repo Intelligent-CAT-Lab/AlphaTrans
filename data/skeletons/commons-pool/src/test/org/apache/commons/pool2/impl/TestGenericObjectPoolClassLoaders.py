@@ -1,23 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
+import typing
+from typing import *
+import io
+
 # Imports End
 
 
-class TestGenericObjectPoolClassLoaders:
-
-    # Class Fields Begin
-    __BASE_URL: typing.Union[
-        urllib.parse.ParseResult,
-        urllib.parse.SplitResult,
-        urllib.parse.DefragResult,
-        str,
-    ] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-
-class CustomClassLoader(URLClassLoader):
+class CustomClassLoader:
 
     # Class Fields Begin
     __n: int = None
@@ -35,4 +26,19 @@ class CustomClassLoader(URLClassLoader):
     def __init__(self, n: int) -> None:
         pass
 
+    # Class Methods End
+
+
+class TestGenericObjectPoolClassLoaders:
+
+    # Class Fields Begin
+    __BASE_URL: typing.Union[
+        urllib.parse.ParseResult,
+        urllib.parse.SplitResult,
+        urllib.parse.DefragResult,
+        str,
+    ] = None
+    # Class Fields End
+
+    # Class Methods Begin
     # Class Methods End

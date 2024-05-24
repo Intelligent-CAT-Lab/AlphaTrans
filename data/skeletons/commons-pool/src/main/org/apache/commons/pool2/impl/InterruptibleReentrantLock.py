@@ -1,8 +1,25 @@
+from __future__ import annotations
+
 # Imports Begin
+import threading
+import io
+
 # Imports End
 
 
-class InterruptibleReentrantLock(ReentrantLock):
+class Consumer:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def accept(self, p0: threading.Thread) -> None:
+        pass
+
+    # Class Methods End
+
+
+class InterruptibleReentrantLock:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -13,18 +30,6 @@ class InterruptibleReentrantLock(ReentrantLock):
         pass
 
     def __init__(self, fairness: bool) -> None:
-        pass
-
-    # Class Methods End
-
-
-class Consumer:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, p0: threading.Thread) -> None:
         pass
 
     # Class Methods End

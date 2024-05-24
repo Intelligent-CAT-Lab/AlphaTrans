@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.money.Ser import *
 from src.main.org.joda.money.MoneyUtils import *
@@ -6,12 +8,15 @@ from src.main.org.joda.money.DefaultCurrencyUnitDataProvider import *
 from src.main.org.joda.money.CurrencyUnitDataProvider import *
 from src.main.org.joda.convert.ToString import *
 from src.main.org.joda.convert.FromString import *
+import pickle
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class CurrencyUnit(Serializable, Comparable):
+class CurrencyUnit:
 
     # Class Fields Begin
     EUR: CurrencyUnit = None
@@ -45,7 +50,7 @@ class CurrencyUnit(Serializable, Comparable):
         pass
 
     @staticmethod
-    def of1(currencyCode: str) -> "CurrencyUnit":
+    def of1(currencyCode: str) -> CurrencyUnit:
         pass
 
     def toCurrency(self) -> typing.Any:
@@ -76,23 +81,23 @@ class CurrencyUnit(Serializable, Comparable):
         pass
 
     @staticmethod
-    def ofCountry(countryCode: str) -> "CurrencyUnit":
+    def ofCountry(countryCode: str) -> CurrencyUnit:
         pass
 
     @staticmethod
-    def of2(locale: typing.Any) -> "CurrencyUnit":
+    def of2(locale: typing.Any) -> CurrencyUnit:
         pass
 
     @staticmethod
-    def ofNumericCode1(numericCurrencyCode: int) -> "CurrencyUnit":
+    def ofNumericCode1(numericCurrencyCode: int) -> CurrencyUnit:
         pass
 
     @staticmethod
-    def ofNumericCode0(numericCurrencyCode: str) -> "CurrencyUnit":
+    def ofNumericCode0(numericCurrencyCode: str) -> CurrencyUnit:
         pass
 
     @staticmethod
-    def of0(currency: typing.Any) -> "CurrencyUnit":
+    def of0(currency: typing.Any) -> CurrencyUnit:
         pass
 
     @staticmethod
@@ -110,7 +115,7 @@ class CurrencyUnit(Serializable, Comparable):
     @staticmethod
     def registerCurrency2(
         currencyCode: str, numericCurrencyCode: int, decimalPlaces: int, force: bool
-    ) -> "CurrencyUnit":
+    ) -> CurrencyUnit:
         pass
 
     @staticmethod
@@ -120,7 +125,7 @@ class CurrencyUnit(Serializable, Comparable):
         decimalPlaces: int,
         countryCodes: typing.List[str],
         force: bool,
-    ) -> "CurrencyUnit":
+    ) -> CurrencyUnit:
         pass
 
     @staticmethod
@@ -129,7 +134,7 @@ class CurrencyUnit(Serializable, Comparable):
         numericCurrencyCode: int,
         decimalPlaces: int,
         countryCodes: typing.List[str],
-    ) -> "CurrencyUnit":
+    ) -> CurrencyUnit:
         pass
 
     def __writeReplace(self) -> typing.Any:

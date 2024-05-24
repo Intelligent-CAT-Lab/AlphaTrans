@@ -37,19 +37,9 @@ class CSVParserFactory:
     # Class Fields End
 
     # Class Methods Begin
-    def createParser(self) -> CSVParser:
-        pass
-
-    def createParser(self) -> CSVParser:
-        pass
-
-    def createParser(self) -> CSVParser:
-        pass
-
-    def createParser(self) -> CSVParser:
-        pass
-
     # Class Methods End
+
+    pass
 
 
 class CSVParserFactory(ABC):

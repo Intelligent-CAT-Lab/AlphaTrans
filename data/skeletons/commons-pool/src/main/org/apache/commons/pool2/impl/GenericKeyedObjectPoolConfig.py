@@ -1,10 +1,13 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.BaseObjectPoolConfig import *
+import io
 
 # Imports End
 
 
-class GenericKeyedObjectPoolConfig(BaseObjectPoolConfig, GenericKeyedObjectPoolConfig):
+class GenericKeyedObjectPoolConfig(BaseObjectPoolConfig):
 
     # Class Fields Begin
     DEFAULT_MAX_TOTAL_PER_KEY: int = None
@@ -21,7 +24,7 @@ class GenericKeyedObjectPoolConfig(BaseObjectPoolConfig, GenericKeyedObjectPoolC
     def _toStringAppendFields(self, builder: str) -> None:
         pass
 
-    def clone(self) -> "GenericKeyedObjectPoolConfig":
+    def clone(self) -> GenericKeyedObjectPoolConfig:
         pass
 
     def setMinIdlePerKey(self, minIdlePerKey: int) -> None:

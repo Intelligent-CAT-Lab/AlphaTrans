@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
+import io
+
 # Imports End
 
 
-class IllegalCurrencyException(IllegalArgumentException):
+class IllegalCurrencyException(ValueError):
 
     # Class Fields Begin
     __serialVersionUID: int = None

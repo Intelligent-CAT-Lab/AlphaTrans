@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.TypedStringConverter import *
 from src.main.org.joda.convert.StringConverter import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class TypedAdapter(TypedStringConverter, TypedAdapter):
+class TypedAdapter(TypedStringConverter):
 
     # Class Fields Begin
     __conv: StringConverter[typing.Any] = None

@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.TypedFromStringConverter import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class MethodFromStringConverter(TypedFromStringConverter, MethodFromStringConverter):
+class MethodFromStringConverter(TypedFromStringConverter):
 
     # Class Fields Begin
     __fromString: typing.Union[inspect.Signature, typing.Callable] = None
