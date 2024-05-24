@@ -1,6 +1,15 @@
 # AlphaTrans
 This repository contains artifacts of the project
 
+## Skeleton Generation
+Execute the following from the root directory of the repository to generate skeletons of projects and check their syntactical correctness
+
+```bash
+bash scripts/create_skeleton.sh
+```
+
+This command should create proper skeletons in target language under `data/skeletons/<project_name>`.
+
 ## Graal-based Semantic Check
 Execute the following from the root directory of the project to run the Graal-based semantic check.
 ```bash
