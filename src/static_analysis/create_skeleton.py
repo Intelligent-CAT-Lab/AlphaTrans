@@ -2,6 +2,7 @@ import os
 import re
 import json
 import argparse
+from collections import defaultdict
 from dotenv import load_dotenv
 
 
@@ -50,6 +51,60 @@ def remove_duplicate_methods(schema):
     return schema
 
 
+def get_dependency_cycle(dependencies):
+    adjacency_list = defaultdict(list)
+    class_path = {}
+    for key, value in dependencies.items():
+        for pair in value:
+            adjacency_list[key].append(pair[0])
+            class_path[pair[0]] = pair[1]
+
+    cycles = []
+    for k,v in adjacency_list.copy().items():
+        for dependency in v:
+            if k in adjacency_list[dependency] and (dependency, k) not in cycles:
+                cycles.append((k, dependency))
+
+    return cycles, class_path
+
+
+def has_child_parent_dept(dependent_files, class_path, project_name):
+    verified_dependent_files = []
+    for class_1, class_2 in dependent_files:
+        class_1_path = get_dependency_path(class_path[class_1], project_name)
+        class_2_path = get_dependency_path(class_path[class_2], project_name)
+
+        class_1_schema_name = f'data/schemas/{project_name}/{project_name}.{class_1_path}.json'
+        class_2_schema_name = f'data/schemas/{project_name}/{project_name}.{class_2_path}.json'
+
+        class_1_schema = {}
+        with open(class_1_schema_name, 'r') as f:
+            class_1_schema = json.load(f)
+        
+        class_2_schema = {}
+        with open(class_2_schema_name, 'r') as f:
+            class_2_schema = json.load(f)
+        
+        for schema_class in class_2_schema['classes']:
+            if class_1 in [class_.split('<')[0].replace('new ', '').strip() for class_ in class_2_schema['classes'][schema_class]['extends']]:
+                verified_dependent_files.append((class_1, class_1_schema_name, class_2, class_2_schema_name, 0)) if (class_1, class_1_schema_name, class_2, class_2_schema_name, 0) not in verified_dependent_files else None
+                continue
+            if class_1 in [class_.split('<')[0].replace('new ', '').strip() for class_ in class_2_schema['classes'][schema_class]['implements']]:
+                verified_dependent_files.append((class_1, class_1_schema_name, class_2, class_2_schema_name, 0)) if (class_1, class_1_schema_name, class_2, class_2_schema_name, 0) not in verified_dependent_files else None
+                continue
+        
+        for schema_class in class_1_schema['classes']:
+            if class_2 in [class_.split('<')[0].replace('new ', '').strip() for class_ in class_1_schema['classes'][schema_class]['extends']]:
+                verified_dependent_files.append((class_1, class_1_schema_name, class_2, class_2_schema_name, 1)) if (class_1, class_1_schema_name, class_2, class_2_schema_name, 1) not in verified_dependent_files else None
+                continue
+
+            if class_2 in [class_.split('<')[0].replace('new ', '').strip() for class_ in class_1_schema['classes'][schema_class]['implements']]:
+                verified_dependent_files.append((class_1, class_1_schema_name, class_2, class_2_schema_name, 1)) if (class_1, class_1_schema_name, class_2, class_2_schema_name, 1) not in verified_dependent_files else None
+                continue
+
+    return verified_dependent_files
+
+
 def main(args):
 
     with open(f'data/type_resolution/universal_type_map_final.json', 'r') as f:
@@ -59,20 +114,19 @@ def main(args):
 
     schemas = os.listdir(f'data/schemas/{args.project_name}')
 
+    dependencies = {}
+    with open(f'data/dependencies/{args.project_name}/dependencies.json', 'r') as f:
+        dependencies = json.load(f)
+
+    dependent_files, class_path = get_dependency_cycle(dependencies)
+    verified_dependent_files = has_child_parent_dept(dependent_files, class_path, args.project_name)
+
     for schema_fname in schemas:
 
         if 'python_partial' in schema_fname:
             continue
 
-        # if 'impl.TestPoolImplUtils.json' not in schema_fname:
-        #     continue
-        # print(schema_fname)
-
         schema_path = f'data/schemas/{args.project_name}/{schema_fname}'
-
-        dependencies = {}
-        with open(f'data/dependencies/{args.project_name}/dependencies.json', 'r') as f:
-            dependencies = json.load(f)
         
         schema = {}
         with open(schema_path, 'r') as f:
@@ -263,7 +317,7 @@ def main(args):
 
         import_map = {'ABC': 'from abc import ABC\n', 'Path': 'import pathlib\n', 'IOBase': 'import io\n', 'StringIO': 'import io\n', 'io': 'import io\n', 'threading': 'import threading\n',
                       'BytesIO': 'import io\n', 'TextIOWrapper': 'import io\n', 'Number': 'import numbers\n', 'Callable': 'import typing\nfrom typing import *\n', 'shed': 'import shed\n',
-                      'Type': 'import typing\nfrom typing import *\n', 'Any': 'import typing\nfrom typing import *\n', 'Iterator': 'import typing\nfrom typing import *\n', 
+                      'Type': 'import typing\nfrom typing import *\n', 'Any': 'import typing\nfrom typing import *\n', 'Iterator': 'import typing\nfrom typing import *\n', 'decimal': 'import decimal\n',
                       'Dict': 'import typing\nfrom typing import *\n', 'List': 'import typing\nfrom typing import *\n', 'Union': 'import typing\nfrom typing import *\n', 'datetime': 'import datetime\n', 
                       'os': 'import os\n', 'pickle': 'import pickle\n', 'itertools': 'import itertools\n', 'sys': 'import sys\n', 'collections': 'import collections\n', 
                       'unittest.TestCase': 'import unittest\n', 'uuid': 'import uuid\n', 'tempfile': 'import tempfile\n', 'typing': 'import typing\n', 'BytesIO': 'from io import BytesIO\n',
@@ -281,6 +335,18 @@ def main(args):
                     continue
 
                 path = get_dependency_path(dependent_class[1], args.project_name)
+                skip = False
+                for class_1, class_1_schema_name, class_2, class_2_schema_name, is_child in verified_dependent_files:
+                    if is_child == 1 and schema_fname == class_2_schema_name.split('/')[-1] and class_1 in path:
+                        skip = True
+                        break
+                    if is_child == 0 and schema_fname == class_1_schema_name.split('/')[-1] and class_2 in path:
+                        skip = True
+                        break
+                
+                if skip:
+                    continue
+
                 if f'from {path} import *' in skeleton:
                     continue
                 skeleton = skeleton.replace('# Imports Begin\n', f'# Imports Begin\nfrom {path} import *\n')
@@ -292,8 +358,10 @@ def main(args):
         skeleton_lines = skeleton.split('\n')
         for i in range(len(skeleton_lines)):
             current_line = skeleton_lines[i]
-            for exceptional_import in ['commons.io', 'commons.logging', 'opentest4j']:
+            for exceptional_import in ['commons.io', 'commons.logging', 'opentest4j', 'com.google']:
                 if exceptional_import in current_line:
+                    skeleton_lines[i] = f'# {current_line}'
+                if 'joda.convert' in current_line and args.project_name == 'joda-money': # resolving these dependencies later
                     skeleton_lines[i] = f'# {current_line}'
 
         skeleton = '\n'.join(skeleton_lines)
@@ -324,7 +392,6 @@ def main(args):
         with open(f'data/schemas/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
             json.dump(target_schema, f, indent=4)
 
-    # return
     # find all .py files in a given directory
     def find_files(directory):
         for root, dirs, files in os.walk(directory):
