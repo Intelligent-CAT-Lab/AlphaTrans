@@ -43,7 +43,7 @@ public abstract class ContextInitializer {{
             }}
             return result;
         }} catch (Exception e) {{
-            System.out.println("[-] " + e);
+            System.out.println("[-] In File " + fileName + ": " + e);
             return null; // ??
         }}
     }}
