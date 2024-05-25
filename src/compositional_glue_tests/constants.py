@@ -15,7 +15,7 @@ main_paths = {
     "joda-convert": "main/java/org/joda/convert/",
     "joda-money": "main/java/org/joda/money/",
 }
-test_paths = {    
+test_paths = {
     "commons-fileupload": "test/java/org/apache/commons/fileupload/",
     "commons-cli": "test/java/org/apache/commons/cli/",
     "commons-codec": "test/java/org/apache/commons/codec/",
