@@ -2,7 +2,6 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.language.bm.RuleType import *
-from src.main.org.apache.commons.codec.language.bm.Rule1 import *
 from src.main.org.apache.commons.codec.language.bm.ResourceConstants import *
 from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.language.bm.Languages import *
