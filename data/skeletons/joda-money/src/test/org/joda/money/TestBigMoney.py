@@ -6,6 +6,7 @@ from src.main.org.joda.money.CurrencyUnit import *
 from src.main.org.joda.money.BigMoneyProvider import *
 from src.main.org.joda.money.BigMoney import *
 import os
+import decimal
 import typing
 from typing import *
 import io
@@ -24,7 +25,7 @@ class BigMoneyProvider:
     pass
 
 
-class BadDecimal(decimal.Decimal, decimal.Decimal):
+class BadDecimal(decimal.Decimal):
 
     # Class Fields Begin
     __serialVersionUID: int = None

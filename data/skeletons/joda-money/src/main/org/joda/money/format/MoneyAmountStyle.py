@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.joda.money.format.MoneyFormatter import *
 from src.main.org.joda.money.format.GroupingStyle import *
 import os
+import decimal
 import typing
 from typing import *
 import io
