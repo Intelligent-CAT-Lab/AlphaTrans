@@ -1,6 +1,15 @@
 # AlphaTrans
 This repository contains artifacts of the project
 
+## Pre-requisites
+<!-- Python Pre-requisites TBA (if any) -->
+For running graal-based scripts, both GraalVM and its python component must be installed on the system. The recommended version of the GraalVM JDK is 17.0.8, and can be installed through the `install_graal.sh` script found in the `scripts/` directory. To execute the script, run:
+```bash
+bash scripts/install_graal.sh
+```
+> [!NOTE]
+> The script uses SDKMAN! to install GraalVM and set the $JAVA_HOME variable. If $JAVA_HOME variable is still not set, restart the terminal or switch to the GraalVM JDK by running `sdk use java 17.0.8-graal` after installation.
+
 ## Skeleton Generation
 Execute the following from the root directory of the repository to generate skeletons of projects and check their syntactical correctness
 
