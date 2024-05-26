@@ -28,6 +28,8 @@
  * </pre>
  */
 module org.joda.convert {
+    requires static org.graalvm.sdk;
+
     exports org.joda.convert;
     exports org.joda.convert.factory;
 }
