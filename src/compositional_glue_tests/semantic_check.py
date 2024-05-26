@@ -81,7 +81,8 @@ def main(args, test_classes=False):
         if schema_substring not in schema:
             continue # skip files that are not in the main directory
         
-        schema_name = schema.split('.')[-2]
+        # split on '.' and get second last and third last elements
+        schema_name = schema.split('.')[-3] + '_' + schema.split('.')[-2]
         
         with open(f'data/schemas/{args.project_name}/{schema}') as f:
             data = json.load(f)
