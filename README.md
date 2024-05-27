@@ -8,7 +8,18 @@ For running graal-based scripts, both GraalVM and its python component must be i
 bash scripts/install_graal.sh
 ```
 > [!NOTE]
-> The script uses SDKMAN! to install GraalVM and set the $JAVA_HOME variable. If $JAVA_HOME variable is still not set, restart the terminal or switch to the GraalVM JDK by running `sdk use java 17.0.8-graal` after installation.
+> The script uses SDKMAN! to install GraalVM and set the $JAVA_HOME variable automatically. If $JAVA_HOME is still not set, restart the terminal or switch to the GraalVM JDK by running `sdk use java 17.0.8-graal` after installation.
+
+To verify that GraalVM is installed correctly, run:
+```bash
+java --version
+```
+The output should be similar to:
+```bash
+java 17.0.8 2023-07-18 LTS
+Java(TM) SE Runtime Environment Oracle GraalVM 17.0.8+9.1 (build 17.0.8+9-LTS-jvmci-23.0-b14)
+Java HotSpot(TM) 64-Bit Server VM Oracle GraalVM 17.0.8+9.1 (build 17.0.8+9-LTS-jvmci-23.0-b14, mixed mode, sharing)
+```
 
 ## Skeleton Generation
 Execute the following from the root directory of the repository to generate skeletons of projects and check their syntactical correctness
