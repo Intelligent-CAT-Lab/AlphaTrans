@@ -2,28 +2,10 @@ import argparse
 import json
 from dotenv import load_dotenv
 import torch
-import re
 import tqdm
-import ast
 import os
 from transformers import AutoTokenizer, AutoModelForCausalLM
-
-
-def l0_validation(generation):
-    pattern = r'```([^`]+)```'
-    match = re.search(pattern, generation, re.DOTALL)
-
-    if match:
-        try:
-            ast.parse('class dummy:\n' + match.group(1))
-            print(f'=======================PARSED=======================\n{match.group(1)}\n' + '---' * 50, flush=True)
-            return True, match.group(1).split('\n'), None
-        except (SyntaxError, MemoryError) as e:
-            print(f'=======================PARSE ERROR=======================\n{e}\n' + '---' * 50, flush=True)
-            feedback = e
-            return False, None, feedback
-    else:
-        return False, None, 'the model did not generate any code'
+from syntactic_validation import l0_validation
 
 
 def translate(model, tokenizer, prompt, device, fragment):
