@@ -23,25 +23,9 @@ class AbstractGraphConnection:
     # Class Fields End
 
     # Class Methods Begin
-    def connect0(self) -> None:
-        pass
-
-    def connect0(self) -> None:
-        pass
-
-    def connect0(self) -> None:
-        pass
-
-    def connect0(self) -> None:
-        pass
-
-    def connect0(self) -> None:
-        pass
-
-    def connect0(self) -> None:
-        pass
-
     # Class Methods End
+
+    pass
 
 
 class FindConnectedComponetTestCase:

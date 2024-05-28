@@ -1,10 +1,13 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.BaseObjectPoolConfig import *
+import io
 
 # Imports End
 
 
-class GenericObjectPoolConfig(BaseObjectPoolConfig, GenericObjectPoolConfig):
+class GenericObjectPoolConfig(BaseObjectPoolConfig):
 
     # Class Fields Begin
     DEFAULT_MAX_TOTAL: int = None
@@ -19,7 +22,7 @@ class GenericObjectPoolConfig(BaseObjectPoolConfig, GenericObjectPoolConfig):
     def _toStringAppendFields(self, builder: str) -> None:
         pass
 
-    def clone(self) -> "GenericObjectPoolConfig":
+    def clone(self) -> GenericObjectPoolConfig:
         pass
 
     def setMinIdle(self, minIdle: int) -> None:

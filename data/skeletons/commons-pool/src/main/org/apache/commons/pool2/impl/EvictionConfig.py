@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *
 import datetime
+import io
 
 # Imports End
 
@@ -33,7 +36,7 @@ class EvictionConfig:
     @staticmethod
     def EvictionConfig0(
         poolIdleEvictMillis: int, poolIdleSoftEvictMillis: int, minIdle: int
-    ) -> "EvictionConfig":
+    ) -> EvictionConfig:
         pass
 
     def getMinIdle(self) -> int:

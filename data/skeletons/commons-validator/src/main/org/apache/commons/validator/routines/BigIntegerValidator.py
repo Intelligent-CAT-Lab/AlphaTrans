@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
 import datetime
 import typing
+from typing import *
 import numbers
+import io
 
 # Imports End
 
@@ -42,14 +46,14 @@ class BigIntegerValidator(AbstractNumberValidator):
         pass
 
     @staticmethod
-    def BigIntegerValidator1() -> "BigIntegerValidator":
+    def BigIntegerValidator1() -> BigIntegerValidator:
         pass
 
     def __init__(self, strict: bool, formatType: int) -> None:
         pass
 
     @staticmethod
-    def getInstance() -> "BigIntegerValidator":
+    def getInstance() -> BigIntegerValidator:
         pass
 
     # Class Methods End

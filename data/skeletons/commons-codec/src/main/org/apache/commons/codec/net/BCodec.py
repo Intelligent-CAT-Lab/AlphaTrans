@@ -25,18 +25,6 @@ class BCodec(StringDecoder, StringEncoder, RFC1522Codec):
     # Class Fields End
 
     # Class Methods Begin
-    def decode(self, value: typing.Any) -> typing.Any:
-        pass
-
-    def encode(self, value: typing.Any) -> typing.Any:
-        pass
-
-    def decode(self, value: str) -> str:
-        pass
-
-    def encode(self, strSource: str) -> str:
-        pass
-
     def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:
         pass
 
@@ -68,9 +56,6 @@ class BCodec(StringDecoder, StringEncoder, RFC1522Codec):
         pass
 
     def encode0(self, strSource: str, sourceCharset: str) -> str:
-        pass
-
-    def encode(self, strSource: str, sourceCharset: str) -> str:
         pass
 
     def isStrictDecoding(self) -> bool:

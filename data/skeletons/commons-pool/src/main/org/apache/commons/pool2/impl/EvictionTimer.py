@@ -1,9 +1,41 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.BaseGenericObjectPool import *
 import datetime
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class Reaper(typing.Callable):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def run(self) -> None:
+        pass
+
+    # Class Methods End
+
+
+class WeakRunner(typing.Callable):
+
+    # Class Fields Begin
+    __ref: weakref.ref = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def run(self) -> None:
+        pass
+
+    def __init__(self, ref: weakref.ref) -> None:
+        pass
+
+    # Class Methods End
 
 
 class EvictionTimer:
@@ -34,34 +66,6 @@ class EvictionTimer:
 
     @staticmethod
     def __remove(evictor: Evictor[typing.Any]) -> None:
-        pass
-
-    # Class Methods End
-
-
-class WeakRunner(Runnable):
-
-    # Class Fields Begin
-    __ref: weakref.ref = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def run(self) -> None:
-        pass
-
-    def __init__(self, ref: weakref.ref) -> None:
-        pass
-
-    # Class Methods End
-
-
-class Reaper(Runnable):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def run(self) -> None:
         pass
 
     # Class Methods End

@@ -65,16 +65,9 @@ class RunTest:
     # Class Fields End
 
     # Class Methods Begin
-    def invoke(self) -> bool:
-        pass
-
-    def invoke(self) -> bool:
-        pass
-
-    def invoke(self) -> bool:
-        pass
-
     # Class Methods End
+
+    pass
 
 
 class CharSequenceUtilsTest:

@@ -1,7 +1,11 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.Types import *
 from src.main.org.joda.convert.StringConvert import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -22,7 +26,7 @@ class TypeUtils:
     @staticmethod
     def __newParameterizedType(
         base: typing.Type[typing.Any], args: typing.List[typing.Type]
-    ) -> typing.Generic:
+    ) -> typing.Generic[typing.TypeVar("T")]:
         pass
 
     @staticmethod

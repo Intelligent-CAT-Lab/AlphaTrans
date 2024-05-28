@@ -1,19 +1,10 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.TrackedUse import *
+import io
 
 # Imports End
-
-
-class TestTrackedUse:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def testDefaultGetLastUsedInstant(self) -> None:
-        pass
-
-    # Class Methods End
 
 
 class DefaultTrackedUse(TrackedUse):
@@ -23,6 +14,18 @@ class DefaultTrackedUse(TrackedUse):
 
     # Class Methods Begin
     def getLastUsed(self) -> int:
+        pass
+
+    # Class Methods End
+
+
+class TestTrackedUse:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def testDefaultGetLastUsedInstant(self) -> None:
         pass
 
     # Class Methods End

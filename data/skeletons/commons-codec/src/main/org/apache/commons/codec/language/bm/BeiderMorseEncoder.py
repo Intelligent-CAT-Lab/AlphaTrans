@@ -20,12 +20,6 @@ class BeiderMorseEncoder(StringEncoder):
     # Class Fields End
 
     # Class Methods Begin
-    def encode(self, source: str) -> str:
-        pass
-
-    def encode(self, source: typing.Any) -> typing.Any:
-        pass
-
     def setMaxPhonemes(self, maxPhonemes: int) -> None:
         pass
 

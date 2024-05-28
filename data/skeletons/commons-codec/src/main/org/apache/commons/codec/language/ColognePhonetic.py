@@ -99,12 +99,6 @@ class ColognePhonetic(StringEncoder):
     # Class Fields End
 
     # Class Methods Begin
-    def encode(self, text: str) -> str:
-        pass
-
-    def encode(self, object: typing.Any) -> typing.Any:
-        pass
-
     def isEncodeEqual(self, text1: str, text2: str) -> bool:
         pass
 

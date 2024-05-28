@@ -13,7 +13,7 @@ from abc import ABC
 # Imports End
 
 
-class LimitedInputStream(Closeable, ABC):
+class LimitedInputStream(ABC):
 
     # Class Fields Begin
     __sizeMax: int = None

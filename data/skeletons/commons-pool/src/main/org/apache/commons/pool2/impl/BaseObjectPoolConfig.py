@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *
 from src.main.org.apache.commons.pool2.impl.EvictionPolicy import *
@@ -5,12 +7,14 @@ from src.main.org.apache.commons.pool2.impl.DefaultEvictionPolicy import *
 from src.main.org.apache.commons.pool2.BaseObject import *
 import datetime
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
 
 
-class BaseObjectPoolConfig(Cloneable, BaseObject, BaseObjectPoolConfig, ABC):
+class BaseObjectPoolConfig(BaseObject, ABC):
 
     # Class Fields Begin
     DEFAULT_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS: int = None

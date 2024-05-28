@@ -1,7 +1,11 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.AbstractCalendarValidator import *
 import datetime
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -174,14 +178,14 @@ class TimeValidator(AbstractCalendarValidator):
         pass
 
     @staticmethod
-    def TimeValidator1() -> "TimeValidator":
+    def TimeValidator1() -> TimeValidator:
         pass
 
     def __init__(self, strict: bool, timeStyle: int) -> None:
         pass
 
     @staticmethod
-    def getInstance() -> "TimeValidator":
+    def getInstance() -> TimeValidator:
         pass
 
     # Class Methods End

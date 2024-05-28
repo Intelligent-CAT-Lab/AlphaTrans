@@ -78,6 +78,76 @@ public class Languages {
         abstract LanguageSet merge(LanguageSet other);
     }
 
+    public static class AnyLanguage extends LanguageSet {
+        public AnyLanguage() {
+            super();
+        }
+    
+        public boolean contains(final String language) {
+            return true;
+        }
+
+        public String getAny() {
+            throw new NoSuchElementException(
+                    "Can't fetch any language from the any language set.");
+        }
+
+        public boolean isEmpty() {
+            return false;
+        }
+
+        public boolean isSingleton() {
+            return false;
+        }
+
+        public LanguageSet restrictTo(final LanguageSet other) {
+            return other;
+        }
+
+        public LanguageSet merge(final LanguageSet other) {
+            return other;
+        }
+
+        public String toString() {
+            return "ANY_LANGUAGE";
+        }
+    }
+
+    public static class NoLanguage extends LanguageSet {
+        public NoLanguage() {
+            super();
+        }
+        
+        public boolean contains(final String language) {
+            return false;
+        }
+
+        public String getAny() {
+            throw new NoSuchElementException(
+                    "Can't fetch any language from the empty language set.");
+        }
+
+        public boolean isEmpty() {
+            return true;
+        }
+
+        public boolean isSingleton() {
+            return false;
+        }
+
+        public LanguageSet restrictTo(final LanguageSet other) {
+            return this;
+        }
+
+        public LanguageSet merge(final LanguageSet other) {
+            return other;
+        }
+
+        public String toString() {
+            return "NO_LANGUAGES";
+        }
+    }
+
     /** Some languages, explicitly enumerated. */
     public static final class SomeLanguages extends LanguageSet {
         private final Set<String> languages;
@@ -194,70 +264,10 @@ public class Languages {
     private final Set<String> languages;
 
     /** No languages at all. */
-    public static final LanguageSet NO_LANGUAGES =
-            new LanguageSet() {
-                public boolean contains(final String language) {
-                    return false;
-                }
-
-                public String getAny() {
-                    throw new NoSuchElementException(
-                            "Can't fetch any language from the empty language set.");
-                }
-
-                public boolean isEmpty() {
-                    return true;
-                }
-
-                public boolean isSingleton() {
-                    return false;
-                }
-
-                public LanguageSet restrictTo(final LanguageSet other) {
-                    return this;
-                }
-
-                public LanguageSet merge(final LanguageSet other) {
-                    return other;
-                }
-
-                public String toString() {
-                    return "NO_LANGUAGES";
-                }
-            };
+    public static final LanguageSet NO_LANGUAGES = new NoLanguage();
 
     /** Any/all languages. */
-    public static final LanguageSet ANY_LANGUAGE =
-            new LanguageSet() {
-                public boolean contains(final String language) {
-                    return true;
-                }
-
-                public String getAny() {
-                    throw new NoSuchElementException(
-                            "Can't fetch any language from the any language set.");
-                }
-
-                public boolean isEmpty() {
-                    return false;
-                }
-
-                public boolean isSingleton() {
-                    return false;
-                }
-
-                public LanguageSet restrictTo(final LanguageSet other) {
-                    return other;
-                }
-
-                public LanguageSet merge(final LanguageSet other) {
-                    return other;
-                }
-
-                public String toString() {
-                    return "ANY_LANGUAGE";
-                }
-            };
+    public static final LanguageSet ANY_LANGUAGE = new AnyLanguage();
 
     private Languages(final Set<String> languages) {
         this.languages = languages;

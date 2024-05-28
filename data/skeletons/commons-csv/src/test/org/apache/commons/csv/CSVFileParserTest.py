@@ -1,10 +1,26 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.csv.CSVRecord import *
 from src.main.org.apache.commons.csv.CSVParser import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import typing
+import io
 import pathlib
 
 # Imports End
+
+
+class FilenameFilter:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def accept(self, dir: pathlib.Path, name: str) -> bool:
+        pass
+
+    # Class Methods End
 
 
 class CSVFileParserTest:
@@ -25,18 +41,6 @@ class CSVFileParserTest:
         pass
 
     def __readTestData(self, reader: io.BufferedReader) -> str:
-        pass
-
-    # Class Methods End
-
-
-class FilenameFilter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, dir: pathlib.Path, name: str) -> bool:
         pass
 
     # Class Methods End

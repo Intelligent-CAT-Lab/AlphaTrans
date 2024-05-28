@@ -1,10 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class RegexValidator(Serializable):
+class RegexValidator:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -25,15 +29,15 @@ class RegexValidator(Serializable):
         pass
 
     @staticmethod
-    def RegexValidator3(regex: str) -> "RegexValidator":
+    def RegexValidator3(regex: str) -> RegexValidator:
         pass
 
     @staticmethod
-    def RegexValidator2(regex: str, caseSensitive: bool) -> "RegexValidator":
+    def RegexValidator2(regex: str, caseSensitive: bool) -> RegexValidator:
         pass
 
     @staticmethod
-    def RegexValidator1(regexs: typing.List[str]) -> "RegexValidator":
+    def RegexValidator1(regexs: typing.List[str]) -> RegexValidator:
         pass
 
     def __init__(self, regexs: typing.List[str], caseSensitive: bool) -> None:

@@ -26,20 +26,6 @@ class Comparator:
     # Class Methods End
 
 
-class Rule:
-
-    # Class Fields Begin
-    __myLine: int = None
-    __loc: str = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def toString(self) -> str:
-        pass
-
-    # Class Methods End
-
-
 class RPattern:
 
     # Class Fields Begin
@@ -47,33 +33,6 @@ class RPattern:
     # Class Fields End
 
     # Class Methods Begin
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
-    def isMatch(self, input: str) -> bool:
-        pass
-
     # Class Methods End
 
 

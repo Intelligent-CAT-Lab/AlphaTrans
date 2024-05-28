@@ -1,7 +1,7 @@
 import os
-import re
 import json
 import argparse
+from collections import defaultdict
 
 
 def split_with_nested_commas(s):
@@ -22,6 +22,87 @@ def split_with_nested_commas(s):
     return result
 
 
+def get_dependency_path(dependent_class, project_name):
+    if os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'):
+        return f'src.main.{dependent_class}'
+    elif os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'):
+        return f'src.test.{dependent_class}'
+    else:
+        return f'src.main.{dependent_class}'
+
+
+def remove_duplicate_methods(schema):
+    duplicate_methods = {}
+    for class_ in schema['classes']:
+        duplicate_methods.setdefault(class_, {})
+        for method in schema['classes'][class_]['methods']:
+            method_name = method.split(':')[1].strip()
+            duplicate_methods[class_].setdefault(method_name, [])
+            duplicate_methods[class_][method_name].append(method)
+
+    for class_ in duplicate_methods:
+        for method_name in duplicate_methods[class_]:
+            if len(duplicate_methods[class_][method_name]) > 1:
+                for k in duplicate_methods[class_][method_name]:
+                    schema['classes'][class_]['methods'].pop(k)
+    
+    return schema
+
+
+def get_dependency_cycle(dependencies):
+    adjacency_list = defaultdict(list)
+    class_path = {}
+    for key, value in dependencies.items():
+        for pair in value:
+            adjacency_list[key].append(pair[0])
+            class_path[pair[0]] = pair[1]
+
+    cycles = []
+    for k,v in adjacency_list.copy().items():
+        for dependency in v:
+            if k in adjacency_list[dependency] and (dependency, k) not in cycles:
+                cycles.append((k, dependency))
+
+    return cycles, class_path
+
+
+def has_child_parent_dept(dependent_files, class_path, project_name):
+    verified_dependent_files = []
+    for class_1, class_2 in dependent_files:
+        class_1_path = get_dependency_path(class_path[class_1], project_name)
+        class_2_path = get_dependency_path(class_path[class_2], project_name)
+
+        class_1_schema_name = f'data/schemas/{project_name}/{project_name}.{class_1_path}.json'
+        class_2_schema_name = f'data/schemas/{project_name}/{project_name}.{class_2_path}.json'
+
+        class_1_schema = {}
+        with open(class_1_schema_name, 'r') as f:
+            class_1_schema = json.load(f)
+        
+        class_2_schema = {}
+        with open(class_2_schema_name, 'r') as f:
+            class_2_schema = json.load(f)
+        
+        for schema_class in class_2_schema['classes']:
+            if class_1 in [class_.split('<')[0].replace('new ', '').strip() for class_ in class_2_schema['classes'][schema_class]['extends']]:
+                verified_dependent_files.append((class_1, class_1_schema_name, class_2, class_2_schema_name, 0)) if (class_1, class_1_schema_name, class_2, class_2_schema_name, 0) not in verified_dependent_files else None
+                continue
+            if class_1 in [class_.split('<')[0].replace('new ', '').strip() for class_ in class_2_schema['classes'][schema_class]['implements']]:
+                verified_dependent_files.append((class_1, class_1_schema_name, class_2, class_2_schema_name, 0)) if (class_1, class_1_schema_name, class_2, class_2_schema_name, 0) not in verified_dependent_files else None
+                continue
+        
+        for schema_class in class_1_schema['classes']:
+            if class_2 in [class_.split('<')[0].replace('new ', '').strip() for class_ in class_1_schema['classes'][schema_class]['extends']]:
+                verified_dependent_files.append((class_1, class_1_schema_name, class_2, class_2_schema_name, 1)) if (class_1, class_1_schema_name, class_2, class_2_schema_name, 1) not in verified_dependent_files else None
+                continue
+
+            if class_2 in [class_.split('<')[0].replace('new ', '').strip() for class_ in class_1_schema['classes'][schema_class]['implements']]:
+                verified_dependent_files.append((class_1, class_1_schema_name, class_2, class_2_schema_name, 1)) if (class_1, class_1_schema_name, class_2, class_2_schema_name, 1) not in verified_dependent_files else None
+                continue
+
+    return verified_dependent_files
+
+
 def main(args):
 
     with open(f'data/type_resolution/universal_type_map_final.json', 'r') as f:
@@ -31,22 +112,27 @@ def main(args):
 
     schemas = os.listdir(f'data/schemas/{args.project_name}')
 
+    dependencies = {}
+    with open(f'data/dependencies/{args.project_name}/dependencies.json', 'r') as f:
+        dependencies = json.load(f)
+
+    dependent_files, class_path = get_dependency_cycle(dependencies)
+    verified_dependent_files = has_child_parent_dept(dependent_files, class_path, args.project_name)
+
     for schema_fname in schemas:
 
         if 'python_partial' in schema_fname:
             continue
 
         schema_path = f'data/schemas/{args.project_name}/{schema_fname}'
-
-        dependencies = {}
-        with open(f'data/dependencies/{args.project_name}/dependencies.json', 'r') as f:
-            dependencies = json.load(f)
         
         schema = {}
         with open(schema_path, 'r') as f:
             schema = json.load(f)
+        
+        schema = remove_duplicate_methods(schema)
 
-        skeleton = ''
+        skeleton = 'from __future__ import annotations\n'
         skeleton += '# Imports Begin\n'
         skeleton += '# Imports End\n\n'
 
@@ -90,29 +176,39 @@ def main(args):
             elif '(' in class_:
                 class_name = class_.split('(')[0].replace('new ', '').strip()
 
+            class_declaration = ''
+            exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum'}
             if schema['classes'][class_]['extends'] != []:
                 schema['classes'][class_]['extends'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [extracted_types[cls_name] if cls_name in extracted_types else cls_name for cls_name in schema['classes'][class_]['extends']]
-                schema['classes'][class_]['extends'] = [cls_name for cls_name in schema['classes'][class_]['extends'] if 'typing.Any' not in cls_name and 'typing.Union' not in cls_name]
+                schema['classes'][class_]['extends'] = [cls_name for cls_name in schema['classes'][class_]['extends'] if not any(substring in cls_name for substring in exceptional_superclasses) and cls_name != class_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
+                    class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
                 else:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends']) + '):\n\n'
+                    class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends']) + '):\n\n'
             elif schema['classes'][class_]['implements'] != []:
                 schema['classes'][class_]['implements'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
                 schema['classes'][class_]['implements'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
                 schema['classes'][class_]['implements'] = [extracted_types[cls_name] if cls_name in extracted_types else cls_name for cls_name in schema['classes'][class_]['implements']]
-                schema['classes'][class_]['implements'] = [cls_name for cls_name in schema['classes'][class_]['implements'] if 'typing.Any' not in cls_name and 'typing.Union' not in cls_name]
+                schema['classes'][class_]['implements'] = [cls_name for cls_name in schema['classes'][class_]['implements'] if not any(substring in cls_name for substring in exceptional_superclasses) and cls_name != class_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
+                    class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
                 else:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements']) + '):\n\n'
+                    class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements']) + '):\n\n'
             else:
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
                     skeleton += 'class ' + class_name + '(ABC):\n\n'
+                    class_declaration = 'class ' + class_name + '(ABC):\n\n'
                 else:
                     skeleton += 'class ' + class_name + ':\n\n'
+                    class_declaration = 'class ' + class_name + ':\n\n'
+            
+            target_schema['classes'][class_]['python_class_declaration'] = class_declaration
 
             is_empty_class = True
             skeleton += '\t# Class Fields Begin\n'
@@ -207,8 +303,10 @@ def main(args):
                 return_type = '<placeholder>'
                 if len(schema['classes'][class_]['methods'][method]['return_types']) == 1 and schema['classes'][class_]['methods'][method]['return_types'][0][0] in extracted_types:
                     return_type = extracted_types[schema['classes'][class_]['methods'][method]['return_types'][0][0]]
-                    if return_type == class_:
-                        return_type = f'"{class_}"'
+                    # if return_type == class_:
+                    #     return_type = f'"{class_}"'
+                    # elif return_type in class_order:
+                    #     return_type = f'"{return_type}"'
 
                 skeleton += f'{return_type}:\n\t\tpass\n\n'
                 current_method[-1] = current_method[-1] + f'{return_type}:\n'
@@ -224,15 +322,16 @@ def main(args):
             if is_empty_class:
                 skeleton += '\tpass\n\n'
 
-        import_map = {'ABC': 'from abc import ABC\n', 'Path': 'import pathlib\n', 'IOBase': 'import io\n', 'StringIO': 'import io\n', 'io': 'import io\n', 
-                      'BytesIO': 'import io\n', 'TextIOWrapper': 'import io\n', 'Number': 'import numbers\n', 'Callable': 'import typing\nfrom typing import *\n', 
-                      'Type': 'import typing\nfrom typing import *\n', 'Any': 'import typing\nfrom typing import *\n', 'Iterator': 'import typing\nfrom typing import *\n', 
+        import_map = {'ABC': 'from abc import ABC\n', 'Path': 'import pathlib\n', 'IOBase': 'import io\n', 'StringIO': 'import io\n', 'io': 'import io\n', 'threading': 'import threading\n',
+                      'BytesIO': 'import io\n', 'TextIOWrapper': 'import io\n', 'Number': 'import numbers\n', 'Callable': 'import typing\nfrom typing import *\n', 'shed': 'import shed\n',
+                      'Type': 'import typing\nfrom typing import *\n', 'Any': 'import typing\nfrom typing import *\n', 'Iterator': 'import typing\nfrom typing import *\n', 'decimal': 'import decimal\n',
                       'Dict': 'import typing\nfrom typing import *\n', 'List': 'import typing\nfrom typing import *\n', 'Union': 'import typing\nfrom typing import *\n', 'datetime': 'import datetime\n', 
                       'os': 'import os\n', 'pickle': 'import pickle\n', 'itertools': 'import itertools\n', 'sys': 'import sys\n', 'collections': 'import collections\n', 
                       'unittest.TestCase': 'import unittest\n', 'uuid': 'import uuid\n', 'tempfile': 'import tempfile\n', 'typing': 'import typing\n', 'BytesIO': 'from io import BytesIO\n',
                       'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n'}
 
         python_imports = []
+        python_imports.append('from __future__ import annotations')
         for key in import_map:
             if key in skeleton and import_map[key] not in skeleton:
                 skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\n' + import_map[key])
@@ -243,20 +342,46 @@ def main(args):
                 if len(dependent_class) != 2:
                     continue
 
-                path = f'src.main.{dependent_class[1]}'
+                path = get_dependency_path(dependent_class[1], args.project_name)
+                skip = False
+                for class_1, class_1_schema_name, class_2, class_2_schema_name, is_child in verified_dependent_files:
+                    if is_child == 1 and schema_fname == class_2_schema_name.split('/')[-1] and class_1 in path:
+                        skip = True
+                        break
+                    if is_child == 0 and schema_fname == class_1_schema_name.split('/')[-1] and class_2 in path:
+                        skip = True
+                        break
+                
+                if skip:
+                    continue
+
                 if f'from {path} import *' in skeleton:
                     continue
+                python_imports.append(f'from {path} import *')
                 skeleton = skeleton.replace('# Imports Begin\n', f'# Imports Begin\nfrom {path} import *\n')
 
         target_schema.setdefault('python_imports', [])
-        target_schema['python_imports'] = python_imports
 
         skeleton = skeleton.replace('\t', '    ')
+        skeleton_lines = skeleton.split('\n')
+        for i in range(len(skeleton_lines)):
+            current_line = skeleton_lines[i]
+            for exceptional_import in ['commons.io', 'commons.logging', 'opentest4j', 'com.google']:
+                if exceptional_import in current_line:
+                    skeleton_lines[i] = f'# {current_line}'
+                    if f'from {exceptional_import} import *' in python_imports:
+                        python_imports[python_imports.index(f'from {path} import *')] = f'# {path}'
+                if 'joda.convert' in current_line and args.project_name == 'joda-money': # resolving these dependencies later
+                    skeleton_lines[i] = f'# {current_line}'
+                    if f'from {path} import *' in python_imports:
+                        python_imports[python_imports.index(f'from {path} import *')] = f'# {path}'
+
+        target_schema['python_imports'] = python_imports
+
+        skeleton = '\n'.join(skeleton_lines)
         formatted_schema_fname = '.'.join(schema_fname.split('.')[:-1])
 
         os.makedirs(f'data/skeletons/{args.project_name}', exist_ok=True)
-
-        skeleton = skeleton.replace('\t', '    ')
 
         formatted_schema_fname = '.'.join(schema_fname.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
@@ -292,10 +417,12 @@ def main(args):
     for file in find_files(f'data/skeletons/{args.project_name}'):
         print(f'checking {file} for runtime errors...')
         os.system(f'python3 {file}')
+    os.system(f'find ./data/skeletons -name "__pycache__" -type d -exec rm -rf {{}} +')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a class skeleton')
     parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project')
     args = parser.parse_args()
+    
     main(args)

@@ -1,12 +1,18 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.money.format.MoneyFormatter import *
 from src.main.org.joda.money.format.GroupingStyle import *
+import os
+import decimal
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class MoneyAmountStyle(Serializable):
+class MoneyAmountStyle:
 
     # Class Fields Begin
     LOCALIZED_GROUPING: MoneyAmountStyle = None
@@ -41,77 +47,75 @@ class MoneyAmountStyle(Serializable):
     def equals(self, other: typing.Any) -> bool:
         pass
 
-    def withAbsValue(self, absValue: bool) -> "MoneyAmountStyle":
+    def withAbsValue(self, absValue: bool) -> MoneyAmountStyle:
         pass
 
     def isAbsValue(self) -> bool:
         pass
 
-    def withForcedDecimalPoint(self, forceDecimalPoint: bool) -> "MoneyAmountStyle":
+    def withForcedDecimalPoint(self, forceDecimalPoint: bool) -> MoneyAmountStyle:
         pass
 
     def isForcedDecimalPoint(self) -> bool:
         pass
 
-    def withGroupingStyle(self, groupingStyle: GroupingStyle) -> "MoneyAmountStyle":
+    def withGroupingStyle(self, groupingStyle: GroupingStyle) -> MoneyAmountStyle:
         pass
 
     def getGroupingStyle(self) -> GroupingStyle:
         pass
 
-    def withExtendedGroupingSize(self, extendedGroupingSize: int) -> "MoneyAmountStyle":
+    def withExtendedGroupingSize(self, extendedGroupingSize: int) -> MoneyAmountStyle:
         pass
 
     def getExtendedGroupingSize(self) -> int:
         pass
 
-    def withGroupingSize(self, groupingSize: int) -> "MoneyAmountStyle":
+    def withGroupingSize(self, groupingSize: int) -> MoneyAmountStyle:
         pass
 
     def getGroupingSize(self) -> int:
         pass
 
-    def withGroupingCharacter(self, groupingCharacter: str) -> "MoneyAmountStyle":
+    def withGroupingCharacter(self, groupingCharacter: str) -> MoneyAmountStyle:
         pass
 
     def getGroupingCharacter(self) -> str:
         pass
 
-    def withDecimalPointCharacter(
-        self, decimalPointCharacter: str
-    ) -> "MoneyAmountStyle":
+    def withDecimalPointCharacter(self, decimalPointCharacter: str) -> MoneyAmountStyle:
         pass
 
     def getDecimalPointCharacter(self) -> str:
         pass
 
-    def withNegativeSignCharacter(self, negativeCharacter: str) -> "MoneyAmountStyle":
+    def withNegativeSignCharacter(self, negativeCharacter: str) -> MoneyAmountStyle:
         pass
 
     def getNegativeSignCharacter(self) -> str:
         pass
 
-    def withPositiveSignCharacter(self, positiveCharacter: str) -> "MoneyAmountStyle":
+    def withPositiveSignCharacter(self, positiveCharacter: str) -> MoneyAmountStyle:
         pass
 
     def getPositiveSignCharacter(self) -> str:
         pass
 
-    def withZeroCharacter(self, zeroCharacter: str) -> "MoneyAmountStyle":
+    def withZeroCharacter(self, zeroCharacter: str) -> MoneyAmountStyle:
         pass
 
     def getZeroCharacter(self) -> str:
         pass
 
-    def localize(self, locale: typing.Any) -> "MoneyAmountStyle":
+    def localize(self, locale: typing.Any) -> MoneyAmountStyle:
         pass
 
     @staticmethod
-    def of(locale: typing.Any) -> "MoneyAmountStyle":
+    def of(locale: typing.Any) -> MoneyAmountStyle:
         pass
 
     @staticmethod
-    def __getLocalizedStyle(locale: typing.Any) -> "MoneyAmountStyle":
+    def __getLocalizedStyle(locale: typing.Any) -> MoneyAmountStyle:
         pass
 
     def __init__(

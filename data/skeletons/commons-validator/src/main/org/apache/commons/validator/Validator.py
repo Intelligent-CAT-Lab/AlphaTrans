@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.ValidatorResources import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class Validator(Serializable):
+class Validator:
 
     # Class Fields Begin
     _classLoader: typing.Any = None
@@ -70,7 +74,7 @@ class Validator(Serializable):
         pass
 
     @staticmethod
-    def Validator2(resources: ValidatorResources) -> "Validator":
+    def Validator2(resources: ValidatorResources) -> Validator:
         pass
 
     def __init__(

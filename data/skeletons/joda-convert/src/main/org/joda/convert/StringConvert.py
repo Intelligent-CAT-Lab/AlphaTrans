@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.factory.NumericObjectArrayStringConverterFactory import *
 from src.main.org.joda.convert.factory.NumericArrayStringConverterFactory import *
@@ -20,8 +22,46 @@ from src.main.org.joda.convert.EnumStringConverterFactory import *
 from src.main.org.joda.convert.ConstructorFromStringConverter import *
 from src.main.org.joda.convert.AnnotationStringConverterFactory import *
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class TypedStringConverter:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def getEffectiveType(self) -> typing.Type[typing.Any]:
+        pass
+
+    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
+        pass
+
+    def convertToString(self, object: typing.Any) -> str:
+        pass
+
+    # Class Methods End
+
+
+class TypedStringConverter:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def getEffectiveType(self) -> typing.Type[typing.Any]:
+        pass
+
+    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
+        pass
+
+    def convertToString(self, object: typing.Any) -> str:
+        pass
+
+    # Class Methods End
 
 
 class StringConvert:
@@ -124,7 +164,7 @@ class StringConvert:
         pass
 
     @staticmethod
-    def StringConvert1() -> "StringConvert":
+    def StringConvert1() -> StringConvert:
         pass
 
     def __init__(
@@ -133,7 +173,7 @@ class StringConvert:
         pass
 
     @staticmethod
-    def create() -> "StringConvert":
+    def create() -> StringConvert:
         pass
 
     @staticmethod
@@ -176,42 +216,6 @@ class StringConvert:
         pass
 
     def __tryRegisterGuava(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class TypedStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def getEffectiveType(self) -> typing.Type[typing.Any]:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
-        pass
-
-    # Class Methods End
-
-
-class TypedStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def getEffectiveType(self) -> typing.Type[typing.Any]:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
         pass
 
     # Class Methods End

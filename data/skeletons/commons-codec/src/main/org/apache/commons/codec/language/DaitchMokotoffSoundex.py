@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 from src.main.org.apache.commons.codec.CharEncoding import *
 from src.main.org.apache.commons.codec.language.bm.RuleType import *
+from src.main.org.apache.commons.codec.language.bm.Rule1 import *
 from src.main.org.apache.commons.codec.language.bm.ResourceConstants import *
 from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.language.bm.Languages import *
@@ -113,12 +114,6 @@ class DaitchMokotoffSoundex(StringEncoder):
     # Class Fields End
 
     # Class Methods Begin
-    def encode(self, source: str) -> str:
-        pass
-
-    def encode(self, obj: typing.Any) -> typing.Any:
-        pass
-
     def soundex0(self, source: str) -> str:
         pass
 

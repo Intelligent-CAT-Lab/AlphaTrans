@@ -1,12 +1,27 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.RenameHandler import *
 from src.main.org.joda.convert.TypedStringConverter import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class JDKStringConverter(Enum, TypedStringConverter):
+class JDKStringConverter:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class JDKStringConverter(TypedStringConverter):
 
     # Class Fields Begin
     BYTE_ARRAY: JDKStringConverter = None
@@ -66,132 +81,6 @@ class JDKStringConverter(Enum, TypedStringConverter):
         pass
 
     def getType(self) -> typing.Type[typing.Any]:
-        pass
-
-    # Class Methods End
-
-
-class JDKStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
         pass
 
     # Class Methods End

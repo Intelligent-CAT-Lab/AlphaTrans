@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.csv.Token import *
 from src.main.org.apache.commons.csv.QuoteMode import *
@@ -7,15 +9,57 @@ from src.main.org.apache.commons.csv.DuplicateHeaderMode import *
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVRecord import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import os
 import typing
+from typing import *
 import numbers
+from io import BytesIO
 import io
+from io import StringIO
 import pathlib
 
 # Imports End
 
 
-class CSVParser(Closeable, Iterable):
+class CSVRecordIterator(Iterator):
+
+    # Class Fields Begin
+    __current: CSVRecord = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def remove(self) -> None:
+        pass
+
+    def next(self) -> CSVRecord:
+        pass
+
+    def hasNext(self) -> bool:
+        pass
+
+    def __getNextRecord(self) -> CSVRecord:
+        pass
+
+    # Class Methods End
+
+
+class Headers:
+
+    # Class Fields Begin
+    headerMap: typing.Dict[str, int] = None
+    headerNames: typing.List[str] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def __init__(
+        self, headerMap: typing.Dict[str, int], headerNames: typing.List[str]
+    ) -> None:
+        pass
+
+    # Class Methods End
+
+
+class CSVParser(Iterable):
 
     # Class Fields Begin
     __headerComment: str = None
@@ -47,11 +91,11 @@ class CSVParser(Closeable, Iterable):
         ],
         charset: str,
         format: CSVFormat,
-    ) -> "CSVParser":
+    ) -> CSVParser:
         pass
 
     @staticmethod
-    def parse2(path: Path, charset: str, format: CSVFormat) -> "CSVParser":
+    def parse2(path: Path, charset: str, format: CSVFormat) -> CSVParser:
         pass
 
     @staticmethod
@@ -59,7 +103,7 @@ class CSVParser(Closeable, Iterable):
         inputStream: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         charset: str,
         format: CSVFormat,
-    ) -> "CSVParser":
+    ) -> CSVParser:
         pass
 
     def __addRecordValue(self, lastRecord: bool) -> None:
@@ -104,7 +148,7 @@ class CSVParser(Closeable, Iterable):
     @staticmethod
     def CSVParser1(
         reader: typing.Union[io.TextIOWrapper, io.BufferedReader], format: CSVFormat
-    ) -> "CSVParser":
+    ) -> CSVParser:
         pass
 
     def __init__(
@@ -117,17 +161,17 @@ class CSVParser(Closeable, Iterable):
         pass
 
     @staticmethod
-    def parse4(string: str, format: CSVFormat) -> "CSVParser":
+    def parse4(string: str, format: CSVFormat) -> CSVParser:
         pass
 
     @staticmethod
     def parse3(
         reader: typing.Union[io.TextIOWrapper, io.BufferedReader], format: CSVFormat
-    ) -> "CSVParser":
+    ) -> CSVParser:
         pass
 
     @staticmethod
-    def parse0(file: pathlib.Path, charset: str, format: CSVFormat) -> "CSVParser":
+    def parse0(file: pathlib.Path, charset: str, format: CSVFormat) -> CSVParser:
         pass
 
     def __isStrictQuoteMode(self) -> bool:
@@ -146,44 +190,6 @@ class CSVParser(Closeable, Iterable):
         pass
 
     def getHeaderMapRaw(self) -> typing.Dict[str, int]:
-        pass
-
-    # Class Methods End
-
-
-class CSVRecordIterator(Iterator):
-
-    # Class Fields Begin
-    __current: CSVRecord = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def remove(self) -> None:
-        pass
-
-    def next(self) -> CSVRecord:
-        pass
-
-    def hasNext(self) -> bool:
-        pass
-
-    def __getNextRecord(self) -> CSVRecord:
-        pass
-
-    # Class Methods End
-
-
-class Headers:
-
-    # Class Fields Begin
-    headerMap: typing.Dict[str, int] = None
-    headerNames: typing.List[str] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def __init__(
-        self, headerMap: typing.Dict[str, int], headerNames: typing.List[str]
-    ) -> None:
         pass
 
     # Class Methods End

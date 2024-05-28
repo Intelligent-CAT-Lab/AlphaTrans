@@ -1,14 +1,19 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.GenericValidator import *
-from src.main.org.apache.commons.logging.LogFactory import *
-from src.main.org.apache.commons.logging.Log import *
+
+# from src.main.org.apache.commons.logging.LogFactory import *
+# from src.main.org.apache.commons.logging.Log import *
 import datetime
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class GenericTypeValidator(Serializable):
+class GenericTypeValidator:
 
     # Class Fields Begin
     __serialVersionUID: int = None

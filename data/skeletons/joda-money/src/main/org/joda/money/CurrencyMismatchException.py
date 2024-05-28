@@ -1,10 +1,13 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.money.CurrencyUnit import *
+import io
 
 # Imports End
 
 
-class CurrencyMismatchException(IllegalArgumentException):
+class CurrencyMismatchException(ValueError):
 
     # Class Fields Begin
     __serialVersionUID: int = None

@@ -1,7 +1,21 @@
+from __future__ import annotations
+
 # Imports Begin
+import io
 from abc import ABC
 
 # Imports End
+
+
+class ValidityCheck:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
 
 
 class ValidityCheck(ABC):
@@ -12,21 +26,6 @@ class ValidityCheck(ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def count(self) -> int:
-        pass
-
-    # Class Methods End
-
-
-class ValidityCheck:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def count(self) -> int:
-        pass
-
     def count(self) -> int:
         pass
 

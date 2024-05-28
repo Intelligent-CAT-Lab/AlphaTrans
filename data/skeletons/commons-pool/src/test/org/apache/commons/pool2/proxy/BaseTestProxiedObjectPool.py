@@ -1,12 +1,58 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.proxy.ProxySource import *
 from src.main.org.apache.commons.pool2.ObjectPool import *
 import datetime
 import typing
+from typing import *
 import io
+from io import StringIO
 from abc import ABC
 
 # Imports End
+
+
+class Executable:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TestObject(ABC):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def setData(self, data: str) -> None:
+        pass
+
+    def getData(self) -> str:
+        pass
+
+    # Class Methods End
+
+
+class TestObjectImpl(TestObject):
+
+    # Class Fields Begin
+    __data: str = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def setData(self, data: str) -> None:
+        pass
+
+    def getData(self) -> str:
+        pass
+
+    # Class Methods End
 
 
 class BaseTestProxiedObjectPool(ABC):
@@ -38,55 +84,6 @@ class BaseTestProxiedObjectPool(ABC):
         pass
 
     def _getproxySource(self) -> ProxySource[TestObject]:
-        pass
-
-    # Class Methods End
-
-
-class TestObjectImpl(TestObject):
-
-    # Class Fields Begin
-    __data: str = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def setData(self, data: str) -> None:
-        pass
-
-    def getData(self) -> str:
-        pass
-
-    # Class Methods End
-
-
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def execute(self) -> str:
-        pass
-
-    def execute(self) -> str:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class TestObject(ABC):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def setData(self, data: str) -> None:
-        pass
-
-    def getData(self) -> str:
         pass
 
     # Class Methods End

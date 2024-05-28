@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.LuhnCheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
@@ -5,12 +7,28 @@ from src.main.org.apache.commons.validator.routines.RegexValidator import *
 from src.main.org.apache.commons.validator.routines.CreditCardValidator import *
 from src.main.org.apache.commons.validator.routines.CodeValidator import *
 from src.main.org.apache.commons.validator.CreditCardValidator import *
+import unittest
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class CreditCardValidatorTest(TestCase):
+class DinersClub(CreditCardType):
+
+    # Class Fields Begin
+    __PREFIX: str = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def matches(self, card: str) -> bool:
+        pass
+
+    # Class Methods End
+
+
+class CreditCardValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     __VALID_VISA: str = None
@@ -29,19 +47,6 @@ class CreditCardValidatorTest(TestCase):
         pass
 
     def __init__(self, name: str) -> None:
-        pass
-
-    # Class Methods End
-
-
-class DinersClub(CreditCardType):
-
-    # Class Fields Begin
-    __PREFIX: str = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def matches(self, card: str) -> bool:
         pass
 
     # Class Methods End

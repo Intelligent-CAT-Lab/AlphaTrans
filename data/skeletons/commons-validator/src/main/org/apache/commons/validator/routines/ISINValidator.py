@@ -1,13 +1,17 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
 from src.main.org.apache.commons.validator.routines.CodeValidator import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class ISINValidator(Serializable):
+class ISINValidator:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -28,7 +32,7 @@ class ISINValidator(Serializable):
         pass
 
     @staticmethod
-    def getInstance(checkCountryCode: bool) -> "ISINValidator":
+    def getInstance(checkCountryCode: bool) -> ISINValidator:
         pass
 
     def __checkCode(self, code: str) -> bool:

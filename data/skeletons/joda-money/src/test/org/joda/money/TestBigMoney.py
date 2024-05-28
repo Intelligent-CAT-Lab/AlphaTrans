@@ -1,11 +1,52 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.money.Money import *
 from src.main.org.joda.money.CurrencyUnit import *
 from src.main.org.joda.money.BigMoneyProvider import *
 from src.main.org.joda.money.BigMoney import *
+import os
+import decimal
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class BigMoneyProvider:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class BadDecimal(decimal.Decimal):
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    __serialVersionUID: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+
+class BadInteger(int):
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def __init__(self) -> None:
+        pass
+
+    # Class Methods End
 
 
 class TestBigMoney:
@@ -1140,78 +1181,6 @@ class TestBigMoney:
 
     @staticmethod
     def __bd(str: str) -> decimal.Decimal:
-        pass
-
-    # Class Methods End
-
-
-class BigMoneyProvider:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def toBigMoney(self) -> BigMoney:
-        pass
-
-    def toBigMoney(self) -> BigMoney:
-        pass
-
-    def toBigMoney(self) -> BigMoney:
-        pass
-
-    def toBigMoney(self) -> BigMoney:
-        pass
-
-    def toBigMoney(self) -> BigMoney:
-        pass
-
-    def toBigMoney(self) -> BigMoney:
-        pass
-
-    def toBigMoney(self) -> BigMoney:
-        pass
-
-    # Class Methods End
-
-
-class BadDecimal(BigDecimal, BigDecimal):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    __serialVersionUID: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def scale(self) -> int:
-        pass
-
-    def unscaledValue(self) -> int:
-        pass
-
-    def scale(self) -> int:
-        pass
-
-    def unscaledValue(self) -> int:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class BadInteger(BigInteger):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def __init__(self) -> None:
         pass
 
     # Class Methods End

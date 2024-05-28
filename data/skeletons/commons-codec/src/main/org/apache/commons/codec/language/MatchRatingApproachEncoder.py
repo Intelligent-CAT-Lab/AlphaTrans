@@ -21,12 +21,6 @@ class MatchRatingApproachEncoder(StringEncoder):
     # Class Fields End
 
     # Class Methods Begin
-    def encode(self, name: str) -> str:
-        pass
-
-    def encode(self, pObject: typing.Any) -> typing.Any:
-        pass
-
     def isEncodeEquals(self, name1: str, name2: str) -> bool:
         pass
 

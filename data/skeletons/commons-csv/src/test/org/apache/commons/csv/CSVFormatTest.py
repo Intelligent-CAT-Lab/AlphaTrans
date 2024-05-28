@@ -1,11 +1,49 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.csv.QuoteMode import *
 from src.main.org.apache.commons.csv.DuplicateHeaderMode import *
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVFormat import *
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class EmptyEnum:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class Header:
+
+    # Class Fields Begin
+    Name: Header = None
+    Email: Header = None
+    Phone: Header = None
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+
+class Executable:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
 
 
 class CSVFormatTest:
@@ -272,107 +310,6 @@ class CSVFormatTest:
 
     @staticmethod
     def __assertNotEquals0(right: typing.Any, left: typing.Any) -> None:
-        pass
-
-    # Class Methods End
-
-
-class EmptyEnum:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class Header:
-
-    # Class Fields Begin
-    Name: Header = None
-    Email: Header = None
-    Phone: Header = None
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
         pass
 
     # Class Methods End

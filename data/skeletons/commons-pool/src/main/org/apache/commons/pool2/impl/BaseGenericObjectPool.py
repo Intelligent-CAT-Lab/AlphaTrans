@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *
 from src.main.org.apache.commons.pool2.impl.GenericKeyedObjectPoolConfig import *
@@ -8,14 +10,129 @@ from src.main.org.apache.commons.pool2.SwallowedExceptionListener import *
 from src.main.org.apache.commons.pool2.PooledObjectState import *
 from src.main.org.apache.commons.pool2.PooledObject import *
 from src.main.org.apache.commons.pool2.BaseObject import *
+import os
 import datetime
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
 
 
-class BaseGenericObjectPool(BaseObject, BaseGenericObjectPool, ABC):
+class EvictionIterator(Iterator):
+
+    # Class Fields Begin
+    __idleObjects: typing.Deque[PooledObject[typing.Any]] = None
+    __idleObjectIterator: typing.Iterator[PooledObject[typing.Any]] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def remove(self) -> None:
+        pass
+
+    def next(self) -> PooledObject[typing.Any]:
+        pass
+
+    def hasNext(self) -> bool:
+        pass
+
+    def getIdleObjects(self) -> typing.Deque[PooledObject[typing.Any]]:
+        pass
+
+    def __init__(self, idleObjects: typing.Deque[PooledObject[typing.Any]]) -> None:
+        pass
+
+    # Class Methods End
+
+
+class IdentityWrapper:
+
+    # Class Fields Begin
+    __instance: typing.Any = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def toString(self) -> str:
+        pass
+
+    def hashCode(self) -> int:
+        pass
+
+    def equals(self, other: typing.Any) -> bool:
+        pass
+
+    def getObject(self) -> typing.Any:
+        pass
+
+    def __init__(self, instance: typing.Any) -> None:
+        pass
+
+    # Class Methods End
+
+
+class StatsStore:
+
+    # Class Fields Begin
+    __NULL: int = None
+    __values: typing.List[int] = None
+    __size: int = None
+    __index: int = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def toString(self) -> str:
+        pass
+
+    def getMean(self) -> int:
+        pass
+
+    def getCurrentValues(self) -> typing.List[int]:
+        pass
+
+    def add1(self, value: int) -> None:
+        pass
+
+    def add0(self, value: datetime.timedelta) -> None:
+        pass
+
+    def __init__(self, size: int) -> None:
+        pass
+
+    # Class Methods End
+
+
+class Evictor:
+
+    # Class Fields Begin
+    __scheduledFuture: concurrent.futures.Future[typing.Any] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def setScheduledFuture(
+        self, scheduledFuture: concurrent.futures.Future[typing.Any]
+    ) -> None:
+        pass
+
+    def cancel(self) -> None:
+        pass
+
+    # Class Methods End
+
+
+class Consumer:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def accept(self, pooledObject: PooledObject[typing.Any]) -> None:
+        pass
+
+    # Class Methods End
+
+
+class BaseGenericObjectPool(BaseObject, ABC):
 
     # Class Fields Begin
     MEAN_TIMING_STATS_CACHE_SIZE: int = None
@@ -315,118 +432,6 @@ class BaseGenericObjectPool(BaseObject, BaseGenericObjectPool, ABC):
         pass
 
     def close(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class IdentityWrapper:
-
-    # Class Fields Begin
-    __instance: typing.Any = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def toString(self) -> str:
-        pass
-
-    def hashCode(self) -> int:
-        pass
-
-    def equals(self, other: typing.Any) -> bool:
-        pass
-
-    def getObject(self) -> typing.Any:
-        pass
-
-    def __init__(self, instance: typing.Any) -> None:
-        pass
-
-    # Class Methods End
-
-
-class StatsStore:
-
-    # Class Fields Begin
-    __NULL: int = None
-    __values: typing.List[int] = None
-    __size: int = None
-    __index: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def toString(self) -> str:
-        pass
-
-    def getMean(self) -> int:
-        pass
-
-    def getCurrentValues(self) -> typing.List[int]:
-        pass
-
-    def add1(self, value: int) -> None:
-        pass
-
-    def add0(self, value: datetime.timedelta) -> None:
-        pass
-
-    def __init__(self, size: int) -> None:
-        pass
-
-    # Class Methods End
-
-
-class Evictor:
-
-    # Class Fields Begin
-    __scheduledFuture: concurrent.futures.Future[typing.Any] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def setScheduledFuture(
-        self, scheduledFuture: concurrent.futures.Future[typing.Any]
-    ) -> None:
-        pass
-
-    def cancel(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class Consumer:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, pooledObject: PooledObject[typing.Any]) -> None:
-        pass
-
-    # Class Methods End
-
-
-class EvictionIterator(Iterator):
-
-    # Class Fields Begin
-    __idleObjects: typing.Deque[PooledObject[typing.Any]] = None
-    __idleObjectIterator: typing.Iterator[PooledObject[typing.Any]] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def remove(self) -> None:
-        pass
-
-    def next(self) -> PooledObject[typing.Any]:
-        pass
-
-    def hasNext(self) -> bool:
-        pass
-
-    def getIdleObjects(self) -> typing.Deque[PooledObject[typing.Any]]:
-        pass
-
-    def __init__(self, idleObjects: typing.Deque[PooledObject[typing.Any]]) -> None:
         pass
 
     # Class Methods End

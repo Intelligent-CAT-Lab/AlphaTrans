@@ -1,10 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class Msg(Serializable, Cloneable):
+class Msg:
 
     # Class Fields Begin
     __serialVersionUID: int = None

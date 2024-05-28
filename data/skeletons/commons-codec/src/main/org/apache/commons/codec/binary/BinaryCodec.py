@@ -29,18 +29,6 @@ class BinaryCodec(BinaryDecoder, BinaryEncoder):
     # Class Fields End
 
     # Class Methods Begin
-    def encode(self, raw: typing.Any) -> typing.Any:
-        pass
-
-    def encode(self, raw: typing.List[int]) -> typing.List[int]:
-        pass
-
-    def decode(self, ascii: typing.Any) -> typing.Any:
-        pass
-
-    def decode(self, ascii: typing.List[int]) -> typing.List[int]:
-        pass
-
     def toByteArray(self, ascii: str) -> typing.List[int]:
         pass
 

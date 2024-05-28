@@ -1,10 +1,14 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.util.Flags import *
+import unittest
+import io
 
 # Imports End
 
 
-class FlagsTest(TestCase):
+class FlagsTest(unittest.TestCase):
 
     # Class Fields Begin
     __LONG_FLAG: int = None

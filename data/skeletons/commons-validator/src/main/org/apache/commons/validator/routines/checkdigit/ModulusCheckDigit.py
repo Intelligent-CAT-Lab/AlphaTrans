@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
+import os
+import io
 from abc import ABC
 
 # Imports End
 
 
-class ModulusCheckDigit(Serializable, CheckDigit, ABC):
+class ModulusCheckDigit(CheckDigit, ABC):
 
     # Class Fields Begin
     __serialVersionUID: int = None

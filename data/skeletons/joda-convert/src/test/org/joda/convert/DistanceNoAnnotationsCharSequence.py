@@ -1,4 +1,8 @@
+from __future__ import annotations
+
 # Imports Begin
+import io
+
 # Imports End
 
 
@@ -19,7 +23,7 @@ class DistanceNoAnnotationsCharSequence:
         pass
 
     @staticmethod
-    def parse(amount: str) -> "DistanceNoAnnotationsCharSequence":
+    def parse(amount: str) -> DistanceNoAnnotationsCharSequence:
         pass
 
     # Class Methods End

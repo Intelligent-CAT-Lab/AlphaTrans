@@ -1,11 +1,74 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
+import os
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class DomainValidator(Serializable):
+class ArrayType:
+
+    # Class Fields Begin
+    GENERIC_PLUS: ArrayType = None
+    GENERIC_MINUS: ArrayType = None
+    COUNTRY_CODE_PLUS: ArrayType = None
+    COUNTRY_CODE_MINUS: ArrayType = None
+    GENERIC_RO: ArrayType = None
+    COUNTRY_CODE_RO: ArrayType = None
+    INFRASTRUCTURE_RO: ArrayType = None
+    LOCAL_RO: ArrayType = None
+    LOCAL_PLUS: ArrayType = None
+    LOCAL_MINUS: ArrayType = None
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+
+class IDNBUGHOLDER:
+
+    # Class Fields Begin
+    __IDN_TOASCII_PRESERVES_TRAILING_DOTS: bool = None
+    # Class Fields End
+
+    # Class Methods Begin
+    @staticmethod
+    def __keepsTrailingDot() -> bool:
+        pass
+
+    # Class Methods End
+
+
+class Item:
+
+    # Class Fields Begin
+    type: ArrayType = None
+    values: typing.List[str] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def __init__(self, type: ArrayType, values: typing.List[str]) -> None:
+        pass
+
+    # Class Methods End
+
+
+class LazyHolder:
+
+    # Class Fields Begin
+    __DOMAIN_VALIDATOR: DomainValidator = None
+    __DOMAIN_VALIDATOR_WITH_LOCAL: DomainValidator = None
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+
+class DomainValidator:
 
     # Class Fields Begin
     mycountryCodeTLDsMinus: typing.List[str] = None
@@ -83,15 +146,15 @@ class DomainValidator(Serializable):
         pass
 
     @staticmethod
-    def getInstance2(allowLocal: bool, items: typing.List[Item]) -> "DomainValidator":
+    def getInstance2(allowLocal: bool, items: typing.List[Item]) -> DomainValidator:
         pass
 
     @staticmethod
-    def getInstance1(allowLocal: bool) -> "DomainValidator":
+    def getInstance1(allowLocal: bool) -> DomainValidator:
         pass
 
     @staticmethod
-    def getInstance0() -> "DomainValidator":
+    def getInstance0() -> DomainValidator:
         pass
 
     @staticmethod
@@ -105,62 +168,4 @@ class DomainValidator(Serializable):
     def __chompLeadingDot(self, str: str) -> str:
         pass
 
-    # Class Methods End
-
-
-class IDNBUGHOLDER:
-
-    # Class Fields Begin
-    __IDN_TOASCII_PRESERVES_TRAILING_DOTS: bool = None
-    # Class Fields End
-
-    # Class Methods Begin
-    @staticmethod
-    def __keepsTrailingDot() -> bool:
-        pass
-
-    # Class Methods End
-
-
-class Item:
-
-    # Class Fields Begin
-    type: ArrayType = None
-    values: typing.List[str] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def __init__(self, type: ArrayType, values: typing.List[str]) -> None:
-        pass
-
-    # Class Methods End
-
-
-class LazyHolder:
-
-    # Class Fields Begin
-    __DOMAIN_VALIDATOR: DomainValidator = None
-    __DOMAIN_VALIDATOR_WITH_LOCAL: DomainValidator = None
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-
-class ArrayType:
-
-    # Class Fields Begin
-    GENERIC_PLUS: ArrayType = None
-    GENERIC_MINUS: ArrayType = None
-    COUNTRY_CODE_PLUS: ArrayType = None
-    COUNTRY_CODE_MINUS: ArrayType = None
-    GENERIC_RO: ArrayType = None
-    COUNTRY_CODE_RO: ArrayType = None
-    INFRASTRUCTURE_RO: ArrayType = None
-    LOCAL_RO: ArrayType = None
-    LOCAL_PLUS: ArrayType = None
-    LOCAL_MINUS: ArrayType = None
-    # Class Fields End
-
-    # Class Methods Begin
     # Class Methods End

@@ -1,56 +1,16 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.PooledObject import *
 from src.main.org.apache.commons.pool2.BasePooledObjectFactory import *
 from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *
 import datetime
 import typing
+from typing import *
+import io
 from abc import ABC
 
 # Imports End
-
-
-class TestPoolImplUtils:
-
-    # Class Fields Begin
-    __INSTANT_1: datetime.datetime = None
-    __INSTANT_0: datetime.datetime = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def testToDuration(self) -> None:
-        pass
-
-    def testToChronoUnit(self) -> None:
-        pass
-
-    def testMinInstants(self) -> None:
-        pass
-
-    def testMaxInstants(self) -> None:
-        pass
-
-    def testFactoryTypeSimple(self) -> None:
-        pass
-
-    def testFactoryTypeNotSimple(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class NotSimpleFactory(FactoryF):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def wrap(self, obj: int) -> PooledObject[int]:
-        pass
-
-    def create(self) -> int:
-        pass
-
-    # Class Methods End
 
 
 class SimpleFactory(BasePooledObjectFactory):
@@ -121,3 +81,47 @@ class FactoryF(FactoryDE, ABC):
     # Class Methods End
 
     pass
+
+
+class NotSimpleFactory(FactoryF):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def wrap(self, obj: int) -> PooledObject[int]:
+        pass
+
+    def create(self) -> int:
+        pass
+
+    # Class Methods End
+
+
+class TestPoolImplUtils:
+
+    # Class Fields Begin
+    __INSTANT_1: datetime.datetime = None
+    __INSTANT_0: datetime.datetime = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def testToDuration(self) -> None:
+        pass
+
+    def testToChronoUnit(self) -> None:
+        pass
+
+    def testMinInstants(self) -> None:
+        pass
+
+    def testMaxInstants(self) -> None:
+        pass
+
+    def testFactoryTypeSimple(self) -> None:
+        pass
+
+    def testFactoryTypeNotSimple(self) -> None:
+        pass
+
+    # Class Methods End

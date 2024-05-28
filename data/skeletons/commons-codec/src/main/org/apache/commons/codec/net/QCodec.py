@@ -25,18 +25,6 @@ class QCodec(StringDecoder, StringEncoder, RFC1522Codec):
     # Class Fields End
 
     # Class Methods Begin
-    def decode(self, obj: typing.Any) -> typing.Any:
-        pass
-
-    def encode(self, obj: typing.Any) -> typing.Any:
-        pass
-
-    def decode(self, str: str) -> str:
-        pass
-
-    def encode(self, sourceStr: str) -> str:
-        pass
-
     def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:
         pass
 

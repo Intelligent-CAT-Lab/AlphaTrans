@@ -1,12 +1,18 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.Field import *
 from src.main.org.apache.commons.validator.Arg import *
+import unittest
+import os
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class FieldTest(TestCase):
+class FieldTest(unittest.TestCase):
 
     # Class Fields Begin
     _field: typing.Any = None
@@ -47,7 +53,7 @@ class FieldTest(TestCase):
         pass
 
     @staticmethod
-    def FieldTest1() -> "FieldTest":
+    def FieldTest1() -> FieldTest:
         pass
 
     def __init__(self, name: str) -> None:

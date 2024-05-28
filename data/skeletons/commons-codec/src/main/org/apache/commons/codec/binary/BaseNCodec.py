@@ -54,18 +54,6 @@ class BaseNCodec(BinaryDecoder, BinaryEncoder, ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def encode(self, obj: typing.Any) -> typing.Any:
-        pass
-
-    def encode(self, pArray: typing.List[int]) -> typing.List[int]:
-        pass
-
-    def decode(self, obj: typing.Any) -> typing.Any:
-        pass
-
-    def decode(self, pArray: typing.List[int]) -> typing.List[int]:
-        pass
-
     def isStrictDecoding(self) -> bool:
         pass
 
@@ -114,36 +102,6 @@ class BaseNCodec(BinaryDecoder, BinaryEncoder, ABC):
         pass
 
     def _containsAlphabetOrPad(self, arrayOctet: typing.List[int]) -> bool:
-        pass
-
-    def __init__(
-        self,
-        unencodedBlockSize: int,
-        encodedBlockSize: int,
-        lineLength: int,
-        chunkSeparatorLength: int,
-        pad: int,
-        decodingPolicy: CodecPolicy,
-    ) -> None:
-        pass
-
-    def __init__(
-        self,
-        unencodedBlockSize: int,
-        encodedBlockSize: int,
-        lineLength: int,
-        chunkSeparatorLength: int,
-        pad: int,
-    ) -> None:
-        pass
-
-    def __init__(
-        self,
-        unencodedBlockSize: int,
-        encodedBlockSize: int,
-        lineLength: int,
-        chunkSeparatorLength: int,
-    ) -> None:
         pass
 
     @staticmethod

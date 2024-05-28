@@ -1,7 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.PooledObjectFactory import *
+import os
 import datetime
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -53,7 +58,7 @@ class PoolImplUtils:
     @staticmethod
     def __getParameterizedType(
         type: typing.Type[typing.Any], clazz: typing.Type[typing.Any]
-    ) -> typing.Generic:
+    ) -> typing.Generic[typing.TypeVar("T")]:
         pass
 
     @staticmethod

@@ -1,7 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *
 import datetime
+import typing
+from typing import *
 import io
+from io import StringIO
 
 # Imports End
 
@@ -81,7 +86,7 @@ class AbandonedConfig:
         pass
 
     @staticmethod
-    def copy(abandonedConfig: AbandonedConfig) -> "AbandonedConfig":
+    def copy(abandonedConfig: AbandonedConfig) -> AbandonedConfig:
         pass
 
     # Class Methods End

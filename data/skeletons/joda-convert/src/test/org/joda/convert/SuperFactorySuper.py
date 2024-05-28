@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.ToString import *
-from src.main.org.joda.convert.SuperFactorySub import *
 from src.main.org.joda.convert.FromString import *
+import io
 
 # Imports End
 
@@ -20,7 +22,7 @@ class SuperFactorySuper:
         pass
 
     @staticmethod
-    def parse(amount: str) -> "SuperFactorySuper":
+    def parse(amount: str) -> SuperFactorySuper:
         pass
 
     def __init__(self, amount: int) -> None:

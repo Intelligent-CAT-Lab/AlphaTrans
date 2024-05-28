@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.LuhnCheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
@@ -5,11 +7,58 @@ from src.main.org.apache.commons.validator.routines.RegexValidator import *
 from src.main.org.apache.commons.validator.routines.CodeValidator import *
 from src.main.org.apache.commons.validator.util.Flags import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class CreditCardValidator(Serializable):
+class RegexValidator:
+
+    # Class Fields Begin
+    __serialVersionUID: int = None
+    __ccr: typing.List[CreditCardRange] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def match(self, value: str) -> typing.List[str]:
+        pass
+
+    def isValid(self, value: str) -> bool:
+        pass
+
+    def validate(self, value: str) -> str:
+        pass
+
+    # Class Methods End
+
+
+class CreditCardRange:
+
+    # Class Fields Begin
+    low: str = None
+    high: str = None
+    minLen: int = None
+    maxLen: int = None
+    lengths: typing.List[int] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def __init__(
+        self,
+        constructorId: int,
+        low: str,
+        high: str,
+        minLen: int,
+        maxLen: int,
+        lengths: typing.List[int],
+    ) -> None:
+        pass
+
+    # Class Methods End
+
+
+class CreditCardValidator:
 
     # Class Fields Begin
     NONE: int = None
@@ -54,15 +103,15 @@ class CreditCardValidator(Serializable):
         pass
 
     @staticmethod
-    def genericCreditCardValidator2() -> "CreditCardValidator":
+    def genericCreditCardValidator2() -> CreditCardValidator:
         pass
 
     @staticmethod
-    def genericCreditCardValidator1(length: int) -> "CreditCardValidator":
+    def genericCreditCardValidator1(length: int) -> CreditCardValidator:
         pass
 
     @staticmethod
-    def genericCreditCardValidator0(minLen: int, maxLen: int) -> "CreditCardValidator":
+    def genericCreditCardValidator0(minLen: int, maxLen: int) -> CreditCardValidator:
         pass
 
     def __init__(
@@ -75,55 +124,10 @@ class CreditCardValidator(Serializable):
         pass
 
     @staticmethod
-    def CreditCardValidator0() -> "CreditCardValidator":
+    def CreditCardValidator0() -> CreditCardValidator:
         pass
 
     def __isOn(self, options: int, flag: int) -> bool:
-        pass
-
-    # Class Methods End
-
-
-class RegexValidator:
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    __ccr: typing.List[CreditCardRange] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def match(self, value: str) -> typing.List[str]:
-        pass
-
-    def isValid(self, value: str) -> bool:
-        pass
-
-    def validate(self, value: str) -> str:
-        pass
-
-    # Class Methods End
-
-
-class CreditCardRange:
-
-    # Class Fields Begin
-    low: str = None
-    high: str = None
-    minLen: int = None
-    maxLen: int = None
-    lengths: typing.List[int] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def __init__(
-        self,
-        constructorId: int,
-        low: str,
-        high: str,
-        minLen: int,
-        maxLen: int,
-        lengths: typing.List[int],
-    ) -> None:
         pass
 
     # Class Methods End

@@ -473,24 +473,7 @@ public class Rule {
                         final String rCon = stripQuotes(parts[2]);
                         final PhonemeExpr ph = parsePhonemeExpr(stripQuotes(parts[3]));
                         final int cLine = currentLine;
-                        final Rule r =
-                                new Rule(pat, lCon, rCon, ph) {
-                                    private final int myLine = cLine;
-                                    private final String loc = location;
-
-                                    @Override
-                                    public String toString() {
-                                        final StringBuilder sb = new StringBuilder();
-                                        sb.append("Rule");
-                                        sb.append("{line=").append(myLine);
-                                        sb.append(", loc='").append(loc).append('\'');
-                                        sb.append(", pat='").append(pat).append('\'');
-                                        sb.append(", lcon='").append(lCon).append('\'');
-                                        sb.append(", rcon='").append(rCon).append('\'');
-                                        sb.append('}');
-                                        return sb.toString();
-                                    }
-                                };
+                        final Rule r = new Rule1(pat, lCon, rCon, ph, cLine, location);
                         final String patternKey = r.pattern.substring(0, 1);
                         List<Rule> rules = lines.get(patternKey);
                         if (rules == null) {

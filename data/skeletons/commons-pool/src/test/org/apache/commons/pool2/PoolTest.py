@@ -1,18 +1,21 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.PooledObject import *
+import io
 
 # Imports End
 
 
-class PoolTest:
+class Foo:
 
     # Class Fields Begin
-    __COMMONS_POOL_EVICTIONS_TIMER_THREAD_NAME: str = None
-    __EVICTION_PERIOD_IN_MILLIS: int = None
     # Class Fields End
 
     # Class Methods Begin
     # Class Methods End
+
+    pass
 
 
 class PooledFooFactory:
@@ -37,12 +40,12 @@ class PooledFooFactory:
     # Class Methods End
 
 
-class Foo:
+class PoolTest:
 
     # Class Fields Begin
+    __COMMONS_POOL_EVICTIONS_TIMER_THREAD_NAME: str = None
+    __EVICTION_PERIOD_IN_MILLIS: int = None
     # Class Fields End
 
     # Class Methods Begin
     # Class Methods End
-
-    pass

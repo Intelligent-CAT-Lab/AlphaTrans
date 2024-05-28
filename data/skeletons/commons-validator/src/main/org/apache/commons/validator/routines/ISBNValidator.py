@@ -1,14 +1,17 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.ISBN10CheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
 from src.main.org.apache.commons.validator.routines.CodeValidator import *
+import io
 
 # Imports End
 
 
-class ISBNValidator(Serializable):
+class ISBNValidator:
 
     # Class Fields Begin
     __ISBN_VALIDATOR: ISBNValidator = None
@@ -49,18 +52,18 @@ class ISBNValidator(Serializable):
         pass
 
     @staticmethod
-    def ISBNValidator1() -> "ISBNValidator":
+    def ISBNValidator1() -> ISBNValidator:
         pass
 
     def __init__(self, convert: bool) -> None:
         pass
 
     @staticmethod
-    def getInstance1(convert: bool) -> "ISBNValidator":
+    def getInstance1(convert: bool) -> ISBNValidator:
         pass
 
     @staticmethod
-    def getInstance0() -> "ISBNValidator":
+    def getInstance0() -> ISBNValidator:
         pass
 
     # Class Methods End

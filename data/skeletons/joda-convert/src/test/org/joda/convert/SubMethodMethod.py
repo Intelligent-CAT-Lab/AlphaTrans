@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.FromString import *
-from src.main.org.joda.convert.DistanceMethodMethod import *
+from src.test.org.joda.convert.DistanceMethodMethod import *
+import io
 
 # Imports End
 
@@ -12,7 +15,7 @@ class SubMethodMethod(DistanceMethodMethod):
 
     # Class Methods Begin
     @staticmethod
-    def parse(amount: str) -> "SubMethodMethod":
+    def parse(amount: str) -> SubMethodMethod:
         pass
 
     def __init__(self, amount: int) -> None:

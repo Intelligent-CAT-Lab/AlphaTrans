@@ -1,13 +1,18 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.Form import *
-from src.main.org.apache.commons.logging.LogFactory import *
-from src.main.org.apache.commons.logging.Log import *
+
+# from src.main.org.apache.commons.logging.LogFactory import *
+# from src.main.org.apache.commons.logging.Log import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class FormSet(Serializable):
+class FormSet:
 
     # Class Fields Begin
     __serialVersionUID: int = None

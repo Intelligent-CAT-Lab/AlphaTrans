@@ -30,24 +30,6 @@ class URLCodec(BinaryDecoder, BinaryEncoder, StringDecoder, StringEncoder):
     def getEncoding(self) -> str:
         pass
 
-    def decode(self, obj: typing.Any) -> typing.Any:
-        pass
-
-    def encode(self, obj: typing.Any) -> typing.Any:
-        pass
-
-    def decode(self, str: str) -> str:
-        pass
-
-    def encode(self, str: str) -> str:
-        pass
-
-    def decode(self, bytes: typing.List[int]) -> typing.List[int]:
-        pass
-
-    def encode(self, bytes: typing.List[int]) -> typing.List[int]:
-        pass
-
     def getDefaultCharset(self) -> str:
         pass
 
@@ -63,16 +45,10 @@ class URLCodec(BinaryDecoder, BinaryEncoder, StringDecoder, StringEncoder):
     def decode1(self, str: str, charsetName: str) -> str:
         pass
 
-    def decode(self, str: str, charsetName: str) -> str:
-        pass
-
     def encode2(self, str: str) -> str:
         pass
 
     def encode1(self, str: str, charsetName: str) -> str:
-        pass
-
-    def encode(self, str: str, charsetName: str) -> str:
         pass
 
     def decode0(self, bytes: typing.List[int]) -> typing.List[int]:

@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
+import io
+
 # Imports End
 
 
-class PrivateException(RuntimeException):
+class PrivateException(RuntimeError):
 
     # Class Fields Begin
     __serialVersionUID: int = None

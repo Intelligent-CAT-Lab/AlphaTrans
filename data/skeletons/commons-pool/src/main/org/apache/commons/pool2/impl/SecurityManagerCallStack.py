@@ -1,20 +1,11 @@
+from __future__ import annotations
+
 # Imports Begin
 import typing
+from typing import *
+import io
 
 # Imports End
-
-
-class SecurityManagerCallStack:
-
-    # Class Fields Begin
-    __snapshot: Snapshot = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def clear(self) -> None:
-        pass
-
-    # Class Methods End
 
 
 class Snapshot:
@@ -31,7 +22,19 @@ class Snapshot:
     # Class Methods End
 
 
-class PrivateSecurityManager(SecurityManager):
+class Function:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def apply(self, referent: typing.Any) -> weakref.ref:
+        pass
+
+    # Class Methods End
+
+
+class PrivateSecurityManager:
 
     # Class Fields Begin
     # Class Fields End
@@ -43,13 +46,14 @@ class PrivateSecurityManager(SecurityManager):
     # Class Methods End
 
 
-class Function:
+class SecurityManagerCallStack:
 
     # Class Fields Begin
+    __snapshot: Snapshot = None
     # Class Fields End
 
     # Class Methods Begin
-    def apply(self, referent: typing.Any) -> weakref.ref:
+    def clear(self) -> None:
         pass
 
     # Class Methods End

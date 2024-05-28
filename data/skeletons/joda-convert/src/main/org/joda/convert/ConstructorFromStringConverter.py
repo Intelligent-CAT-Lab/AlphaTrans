@@ -1,13 +1,15 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.TypedFromStringConverter import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class ConstructorFromStringConverter(
-    TypedFromStringConverter, ConstructorFromStringConverter
-):
+class ConstructorFromStringConverter(TypedFromStringConverter):
 
     # Class Fields Begin
     __fromString: typing.Callable[..., typing.Any] = None

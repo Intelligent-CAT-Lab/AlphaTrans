@@ -1,7 +1,25 @@
+from __future__ import annotations
+
 # Imports Begin
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class Type:
+
+    # Class Fields Begin
+    INVALID: typing.Type = None
+    TOKEN: typing.Type = None
+    EOF: typing.Type = None
+    EORECORD: typing.Type = None
+    COMMENT: typing.Type = None
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
 
 
 class Token:
@@ -18,18 +36,4 @@ class Token:
     def reset(self) -> None:
         pass
 
-    # Class Methods End
-
-
-class Type:
-
-    # Class Fields Begin
-    INVALID: typing.Type = None
-    TOKEN: typing.Type = None
-    EOF: typing.Type = None
-    EORECORD: typing.Type = None
-    COMMENT: typing.Type = None
-    # Class Fields End
-
-    # Class Methods Begin
     # Class Methods End

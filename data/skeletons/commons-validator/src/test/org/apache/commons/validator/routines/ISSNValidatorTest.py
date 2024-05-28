@@ -1,13 +1,18 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
 from src.main.org.apache.commons.validator.routines.ISSNValidator import *
+import unittest
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class ISSNValidatorTest(TestCase):
+class ISSNValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     __VALIDATOR: ISSNValidator = None

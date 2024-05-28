@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.Field import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class Form(Serializable):
+class Form:
 
     # Class Fields Begin
     __serialVersionUID: int = None

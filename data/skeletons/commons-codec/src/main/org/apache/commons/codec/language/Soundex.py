@@ -32,12 +32,6 @@ class Soundex(StringEncoder):
     def getMaxLength(self) -> int:
         pass
 
-    def encode(self, str: str) -> str:
-        pass
-
-    def encode(self, obj: typing.Any) -> typing.Any:
-        pass
-
     def soundex(self, str: str) -> str:
         pass
 

@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.DefaultPooledObject import *
-from src.main.org.opentest4j.AssertionFailedError import *
+
+# from src.main.org.opentest4j.AssertionFailedError import *
 from src.main.org.apache.commons.pool2.PooledObjectFactory import *
 from src.main.org.apache.commons.pool2.PooledObject import *
 from src.main.org.apache.commons.pool2.PoolUtils import *
@@ -8,8 +11,53 @@ from src.main.org.apache.commons.pool2.ObjectPool import *
 from src.main.org.apache.commons.pool2.KeyedPooledObjectFactory import *
 from src.main.org.apache.commons.pool2.KeyedObjectPool import *
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class MethodCallLogger(typing.Callable):
+
+    # Class Fields Begin
+    __calledMethods: typing.List[str] = None
+    # Class Fields End
+
+    # Class Methods Begin
+    def invoke(
+        self,
+        proxy: typing.Any,
+        method: typing.Union[inspect.Signature, typing.Callable],
+        args: typing.List[typing.Any],
+    ) -> typing.Any:
+        pass
+
+    def __init__(self, calledMethods: typing.List[str]) -> None:
+        pass
+
+    # Class Methods End
+
+
+class Executable:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class InvocationHandler:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
 
 
 class TestPoolUtils:
@@ -84,76 +132,6 @@ class TestPoolUtils:
     def __createProxy1(
         clazz: typing.Type[typing.Any], logger: typing.List[str]
     ) -> typing.Any:
-        pass
-
-    # Class Methods End
-
-
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    def execute(self) -> None:
-        pass
-
-    # Class Methods End
-
-
-class InvocationHandler:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def invoke(
-        self,
-        arg0: typing.Any,
-        arg1: typing.Union[inspect.Signature, typing.Callable],
-        arg2: typing.List[typing.Any],
-    ) -> typing.Any:
-        pass
-
-    def invoke(
-        self,
-        arg0: typing.Any,
-        arg1: typing.Union[inspect.Signature, typing.Callable],
-        arg2: typing.List[typing.Any],
-    ) -> typing.Any:
-        pass
-
-    # Class Methods End
-
-
-class MethodCallLogger(InvocationHandler):
-
-    # Class Fields Begin
-    __calledMethods: typing.List[str] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def invoke(
-        self,
-        proxy: typing.Any,
-        method: typing.Union[inspect.Signature, typing.Callable],
-        args: typing.List[typing.Any],
-    ) -> typing.Any:
-        pass
-
-    def __init__(self, calledMethods: typing.List[str]) -> None:
         pass
 
     # Class Methods End

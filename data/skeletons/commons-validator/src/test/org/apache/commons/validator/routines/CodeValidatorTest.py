@@ -1,13 +1,17 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
 from src.main.org.apache.commons.validator.routines.CodeValidator import *
+import unittest
+import io
 
 # Imports End
 
 
-class CodeValidatorTest(TestCase):
+class CodeValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

@@ -1,13 +1,150 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.TypedStringConverter import *
 from src.main.org.joda.convert.TypeTokenStringConverter import *
 from src.main.org.joda.convert.TypeStringConverterFactory import *
 from src.main.org.joda.convert.StringConverter import *
 from src.main.org.joda.convert.StringConvert import *
-from src.main.com.google.common.reflect.TypeToken import *
+
+# from src.main.com.google.common.reflect.TypeToken import *
 import typing
+from typing import *
+import io
 
 # Imports End
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
+
+
+class TypeToken:
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    # Class Methods End
+
+    pass
 
 
 class TestGuavaTypeTokenStringConverter:
@@ -71,135 +208,3 @@ class TestGuavaTypeTokenStringConverter:
         pass
 
     # Class Methods End
-
-
-class TypeToken:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeToken:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeToken:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeToken(TypeToken):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeToken:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeToken:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeToken(TypeToken):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeToken:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeToken:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeToken(TypeToken):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeToken:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeToken:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass

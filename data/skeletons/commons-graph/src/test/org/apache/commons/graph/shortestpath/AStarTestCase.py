@@ -31,22 +31,9 @@ class Heuristic:
     # Class Fields End
 
     # Class Methods Begin
-    def applyHeuristic(
-        self, current: BaseLabeledVertex, goal: BaseLabeledVertex
-    ) -> float:
-        pass
-
-    def applyHeuristic(
-        self, current: BaseLabeledVertex, goal: BaseLabeledVertex
-    ) -> float:
-        pass
-
-    def applyHeuristic(
-        self, current: BaseLabeledVertex, goal: BaseLabeledVertex
-    ) -> float:
-        pass
-
     # Class Methods End
+
+    pass
 
 
 class AStarTestCase:

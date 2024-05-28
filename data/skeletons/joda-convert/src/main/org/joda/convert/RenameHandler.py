@@ -1,6 +1,10 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.convert.StringConvert import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
@@ -48,11 +52,11 @@ class RenameHandler:
         pass
 
     @staticmethod
-    def create1(loadFromClasspath: bool) -> "RenameHandler":
+    def create1(loadFromClasspath: bool) -> RenameHandler:
         pass
 
     @staticmethod
-    def create0() -> "RenameHandler":
+    def create0() -> RenameHandler:
         pass
 
     def __parseRenameFile(
@@ -88,7 +92,7 @@ class RenameHandler:
         pass
 
     @staticmethod
-    def __createInstance() -> "RenameHandler":
+    def __createInstance() -> RenameHandler:
         pass
 
     # Class Methods End

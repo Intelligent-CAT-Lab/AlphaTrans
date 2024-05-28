@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
 import datetime
 import typing
+from typing import *
 import numbers
+import io
 
 # Imports End
 
@@ -51,14 +55,14 @@ class FloatValidator(AbstractNumberValidator):
         pass
 
     @staticmethod
-    def FloatValidator1() -> "FloatValidator":
+    def FloatValidator1() -> FloatValidator:
         pass
 
     def __init__(self, strict: bool, formatType: int) -> None:
         pass
 
     @staticmethod
-    def getInstance() -> "FloatValidator":
+    def getInstance() -> FloatValidator:
         pass
 
     # Class Methods End

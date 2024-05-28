@@ -108,10 +108,10 @@ class Base64DecoderTestCase(unittest.TestCase):
         encoded_data = encoded.encode(Base64DecoderTestCase.__US_ASCII_CHARSET)
         try:
             Base64Decoder.decode(encoded_data, out)
-            unittest.TestCase().fail("Expected IO-related Exception")
+            Base64DecoderTestCase.fail("Expected IO-related Exception")
         except (IOError, OSError) as e:
             em = str(e)
-            unittest.TestCase().assertIn(messageText, em, f"Expected to find {messageText} in '{em}'") 
+            Base64DecoderTestCase.assertIn(messageText, em, f"Expected to find {messageText} in '{em}'") 
         # LLM could not translate method body
 
     @staticmethod
@@ -121,7 +121,7 @@ class Base64DecoderTestCase(unittest.TestCase):
         encoded_data = encoded.encode(Base64DecoderTestCase.__US_ASCII_CHARSET)
         Base64Decoder.decode(encoded_data, out)
         actual = out.getvalue()
-        unittest.TestCase().assertEqual(expected, actual)
+        Base64DecoderTestCase.assertEqual(expected, actual)
         # LLM could not translate method body
 
     # Class Methods End

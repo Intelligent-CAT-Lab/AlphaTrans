@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.joda.money.format.MultiPrinterParser import *
 from src.main.org.joda.money.format.MoneyPrinter import *
@@ -10,12 +12,14 @@ from src.main.org.joda.money.CurrencyUnit import *
 from src.main.org.joda.money.BigMoneyProvider import *
 from src.main.org.joda.money.BigMoney import *
 import typing
+from typing import *
 import io
+from io import IOBase
 
 # Imports End
 
 
-class MoneyFormatter(Serializable):
+class MoneyFormatter:
 
     # Class Fields Begin
     __serialVersionUID: int = None
@@ -55,7 +59,7 @@ class MoneyFormatter(Serializable):
     def isPrinter(self) -> bool:
         pass
 
-    def withLocale(self, locale: typing.Any) -> "MoneyFormatter":
+    def withLocale(self, locale: typing.Any) -> MoneyFormatter:
         pass
 
     def getLocale(self) -> typing.Any:

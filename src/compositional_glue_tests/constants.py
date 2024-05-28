@@ -11,18 +11,18 @@ main_paths = {
     "commons-codec": "main/java/org/apache/commons/codec/",
     "commons-csv": "main/java/org/apache/commons/csv/",
     "commons-graph": "main/java/org/apache/commons/graph/",
-    "commons-pool": "main/java/org/apache/commons/pool/",
+    "commons-pool": "main/java/org/apache/commons/pool2/",
     "commons-validator": "main/java/org/apache/commons/validator/",
     "joda-convert": "main/java/org/joda/convert/",
     "joda-money": "main/java/org/joda/money/",
 }
-test_paths = {    
+test_paths = {
     "commons-fileupload": "test/java/org/apache/commons/fileupload/",
     "commons-cli": "test/java/org/apache/commons/cli/",
     "commons-codec": "test/java/org/apache/commons/codec/",
     "commons-csv": "test/java/org/apache/commons/csv/",
     "commons-graph": "test/java/org/apache/commons/graph/",
-    "commons-pool": "test/java/org/apache/commons/pool/",
+    "commons-pool": "test/java/org/apache/commons/pool2/",
     "commons-validator": "test/java/org/apache/commons/validator/",
     "joda-convert": "test/java/org/joda/convert/",
     "joda-money": "test/java/org/joda/money/",

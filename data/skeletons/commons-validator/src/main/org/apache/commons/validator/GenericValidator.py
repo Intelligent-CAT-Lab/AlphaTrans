@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.UrlValidator import *
 from src.main.org.apache.commons.validator.routines.EmailValidator import *
@@ -6,11 +8,13 @@ from src.main.org.apache.commons.validator.routines.CreditCardValidator import *
 from src.main.org.apache.commons.validator.GenericTypeValidator import *
 from src.main.org.apache.commons.validator.DateValidator import *
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class GenericValidator(Serializable):
+class GenericValidator:
 
     # Class Fields Begin
     __serialVersionUID: int = None

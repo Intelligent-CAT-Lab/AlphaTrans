@@ -34,6 +34,7 @@
  */
 module org.joda.money {
     requires static org.joda.convert;
+    requires static org.graalvm.sdk;
 
     exports org.joda.money;
     exports org.joda.money.format;

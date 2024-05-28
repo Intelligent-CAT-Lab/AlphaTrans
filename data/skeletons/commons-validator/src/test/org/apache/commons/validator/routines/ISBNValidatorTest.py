@@ -1,12 +1,17 @@
+from __future__ import annotations
+
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.ISBNValidator import *
 from src.main.org.apache.commons.validator.ISBNValidator import *
+import unittest
 import typing
+from typing import *
+import io
 
 # Imports End
 
 
-class ISBNValidatorTest(TestCase):
+class ISBNValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     __validISBN10Format: typing.List[str] = None
