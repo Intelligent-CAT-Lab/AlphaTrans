@@ -1,12 +1,13 @@
 
 function setup_env() {
-    conda create -n alphatrans python=3.9.12;       # miniconda 23.5.2 download from https://docs.conda.io/en/latest/miniconda_hashes.html
+    conda create -n alphatrans python=3.10.8;       # miniconda 23.5.2 download from https://docs.conda.io/en/latest/miniconda_hashes.html
     conda activate alphatrans;
     conda install maven-3.9.4-hce30654_0.conda;     # download from https://anaconda.org/conda-forge/maven/files
     conda install openjdk-17.0.3-hbe7ddab_8.conda;  # download from https://anaconda.org/conda-forge/openjdk/files
 }
 
 function install_requirements() {
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118;
     pip3 install tqdm==4.66.1;
     pip3 install graphviz==0.20.1;
     pip3 install python-dotenv==1.0.0;
@@ -14,6 +15,9 @@ function install_requirements() {
     pip3 install tiktoken==0.3.2;
     pip3 install python-dotenv==1.0.0;
     pip3 install accelerate==0.24.1;
+    pip3 install black==24.4.2;
+    pip3 install transformers==4.34.1;
+    pip3 install pynguin==0.36.0;
 }
 
 function download_java_projects() {
