@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
 import datetime
+import decimal
 import typing
 from typing import *
 import io
