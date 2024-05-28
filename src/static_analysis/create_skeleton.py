@@ -178,6 +178,7 @@ def main(args):
             elif '(' in class_:
                 class_name = class_.split('(')[0].replace('new ', '').strip()
 
+            class_declaration = ''
             exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum'}
             if schema['classes'][class_]['extends'] != []:
                 schema['classes'][class_]['extends'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
@@ -186,8 +187,10 @@ def main(args):
                 schema['classes'][class_]['extends'] = [cls_name for cls_name in schema['classes'][class_]['extends'] if not any(substring in cls_name for substring in exceptional_superclasses) and cls_name != class_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
+                    class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
                 else:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends']) + '):\n\n'
+                    class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends']) + '):\n\n'
             elif schema['classes'][class_]['implements'] != []:
                 schema['classes'][class_]['implements'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
                 schema['classes'][class_]['implements'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
@@ -195,13 +198,19 @@ def main(args):
                 schema['classes'][class_]['implements'] = [cls_name for cls_name in schema['classes'][class_]['implements'] if not any(substring in cls_name for substring in exceptional_superclasses) and cls_name != class_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
+                    class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
                 else:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements']) + '):\n\n'
+                    class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements']) + '):\n\n'
             else:
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
                     skeleton += 'class ' + class_name + '(ABC):\n\n'
+                    class_declaration = 'class ' + class_name + '(ABC):\n\n'
                 else:
                     skeleton += 'class ' + class_name + ':\n\n'
+                    class_declaration = 'class ' + class_name + ':\n\n'
+            
+            target_schema['classes'][class_]['python_class_declaration'] = class_declaration
 
             is_empty_class = True
             skeleton += '\t# Class Fields Begin\n'
@@ -324,6 +333,7 @@ def main(args):
                       'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n'}
 
         python_imports = []
+        python_imports.append('from __future__ import annotations')
         for key in import_map:
             if key in skeleton and import_map[key] not in skeleton:
                 skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\n' + import_map[key])
@@ -349,6 +359,7 @@ def main(args):
 
                 if f'from {path} import *' in skeleton:
                     continue
+                python_imports.append(f'from {path} import *')
                 skeleton = skeleton.replace('# Imports Begin\n', f'# Imports Begin\nfrom {path} import *\n')
 
         target_schema.setdefault('python_imports', [])
