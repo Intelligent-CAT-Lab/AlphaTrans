@@ -9,9 +9,27 @@ import os
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 
+def l0_validation(generation):
+    pattern = r'```([^`]+)```'
+    match = re.search(pattern, generation, re.DOTALL)
+
+    if match:
+        try:
+            ast.parse('class dummy:\n' + match.group(1))
+            print(f'=======================PARSED=======================\n{match.group(1)}\n' + '---' * 50, flush=True)
+            return True, match.group(1).split('\n'), None
+        except (SyntaxError, MemoryError) as e:
+            print(f'=======================PARSE ERROR=======================\n{e}\n' + '---' * 50, flush=True)
+            feedback = e
+            return False, None, feedback
+    else:
+        return False, None, 'the model did not generate any code'
+
+
 def translate(model, tokenizer, prompt, device, fragment):
     max_attempts = 0
-    extracted_string = None
+    parsed_fragment = None
+    feedback = ''
     while max_attempts < 5:
 
         input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
@@ -38,23 +56,39 @@ def translate(model, tokenizer, prompt, device, fragment):
         print(generation, flush=True)
         print('---' * 50, flush=True)
 
-        pattern = r'```([^`]+)```'
-        match = re.search(pattern, generation, re.DOTALL)
+        status, parsed_fragment, feedback = l0_validation(generation)
 
-        if match:
-            try:
-                ast.parse('class dummy:\n' + match.group(1))
-                print(f'=======================PARSED=======================\n{match.group(1)}\n' + '---' * 50, flush=True)
-            except (SyntaxError, MemoryError) as e:
-                print(f'=======================PARSE ERROR=======================\n{e}\n' + '---' * 50, flush=True)
-                max_attempts += 1
-                continue
-            extracted_string = match.group(1).split('\n')
-            max_attempts = 5
-        else:
+        if not status:
             max_attempts += 1
+            ### TODO: create new prompt with feedback
+            # prompt = ...
+            continue
 
-    return extracted_string
+        """
+        TODO: check for dynamic validation (L1)
+        status, dynamically_validated_fragment, feedback = l1_validation(parsed_fragment)
+
+        if not status:
+            max_attempts += 1
+            TODO: create new prompt with feedback
+            prompt = ...
+            continue
+        """
+
+        """
+        TODO: check for functional validation (L2)
+        status, functionally_validated_fragment, feedback = l2_validation(dynamically_validated_fragment)
+
+        if not status:
+            max_attempts += 1
+            TODO: create new prompt with feedback
+            prompt = ...
+            continue
+        """
+
+        max_attempts = 5
+
+    return parsed_fragment
 
 
 def generate_prompt(data, schema, class_, fragment_, args, fragment_type):
@@ -163,7 +197,9 @@ def main(args):
         # if 'AlreadySelectedException' not in schema:
         #     continue
 
-        metrics.setdefault(schema, {'syntactic': {'total': 0, 'correct': 0}, 'dynamic': {'total': 0, 'correct': 0}, 'functional': {'total': 0, 'correct': 0}})
+        metrics.setdefault(schema, {'syntactic': {'total': 0, 'correct': 0}, 
+                                    'dynamic': {'total': 0, 'correct': 0}, 
+                                    'functional': {'total': 0, 'correct': 0}})
 
         path_ = f'data/schemas/{args.project_name}/{schema}'
         with open(path_, 'r') as f:
