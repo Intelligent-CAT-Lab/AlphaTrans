@@ -361,7 +361,6 @@ def main(args):
                 skeleton = skeleton.replace('# Imports Begin\n', f'# Imports Begin\nfrom {path} import *\n')
 
         target_schema.setdefault('python_imports', [])
-        target_schema['python_imports'] = python_imports
 
         skeleton = skeleton.replace('\t', '    ')
         skeleton_lines = skeleton.split('\n')
@@ -370,8 +369,14 @@ def main(args):
             for exceptional_import in ['commons.io', 'commons.logging', 'opentest4j', 'com.google']:
                 if exceptional_import in current_line:
                     skeleton_lines[i] = f'# {current_line}'
+                    if f'from {exceptional_import} import *' in python_imports:
+                        python_imports[python_imports.index(f'from {path} import *')] = f'# {path}'
                 if 'joda.convert' in current_line and args.project_name == 'joda-money': # resolving these dependencies later
                     skeleton_lines[i] = f'# {current_line}'
+                    if f'from {path} import *' in python_imports:
+                        python_imports[python_imports.index(f'from {path} import *')] = f'# {path}'
+
+        target_schema['python_imports'] = python_imports
 
         skeleton = '\n'.join(skeleton_lines)
         formatted_schema_fname = '.'.join(schema_fname.split('.')[:-1])
