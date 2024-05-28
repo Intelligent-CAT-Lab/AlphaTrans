@@ -1,9 +1,7 @@
 import os
-import re
 import json
 import argparse
 from collections import defaultdict
-from dotenv import load_dotenv
 
 
 def split_with_nested_commas(s):
@@ -421,9 +419,5 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a class skeleton')
     parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project')
     args = parser.parse_args()
-
-    with open(f'.env', 'w') as f:
-        f.write(f'PYTHONPATH=/home/ali/Documents/AlphaTrans/data/skeletons/{args.project_name}')
     
-    load_dotenv()
     main(args)
