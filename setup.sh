@@ -2,8 +2,8 @@
 function setup_env() {
     conda create -n alphatrans python=3.10.8;       # miniconda 23.5.2 download from https://docs.conda.io/en/latest/miniconda_hashes.html
     conda activate alphatrans;
-    conda install maven-3.9.4-hce30654_0.conda;     # download from https://anaconda.org/conda-forge/maven/files
-    conda install openjdk-17.0.3-hbe7ddab_8.conda;  # download from https://anaconda.org/conda-forge/openjdk/files
+    # conda install maven-3.9.4-hce30654_0.conda;     # download from https://anaconda.org/conda-forge/maven/files
+    # conda install openjdk-17.0.3-hbe7ddab_8.conda;  # download from https://anaconda.org/conda-forge/openjdk/files
 }
 
 function install_requirements() {
@@ -163,8 +163,39 @@ function create_database_java() {
     cd $main;
 }
 
-# setup_env;
-# install_requirements;
-# download_java_projects;
-# build_java_projects;
-# create_database_java;
+function install_graal() {
+    curl -s https://get.sdkman.io | bash
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+    sdk install java 17.0.8-graal
+
+    if [ $? -eq 0 ]; then
+        echo -e "\e[32mJava installation successful!\e[0m"
+    else
+        echo "Java installation failed"
+        exit 1
+    fi
+
+    gu install python
+    if [ $? -eq 0 ]; then
+        echo -e "\e[32mPython component for GraalVM installed successfully!\e[0m"
+    else
+        echo "Python component for GraalVM failed to install"
+        exit 1
+    fi
+}
+
+if [ "$1" == "setup_env" ]; then
+    setup_env;
+elif [ "$1" == "install_requirements" ]; then
+    install_requirements;
+elif [ "$1" == "download_java_projects" ]; then
+    download_java_projects;
+elif [ "$1" == "build_java_projects" ]; then
+    build_java_projects;
+elif [ "$1" == "create_database_java" ]; then
+    create_database_java;
+elif [ "$1" == "install_graal" ]; then
+    install_graal;
+else
+    echo "Invalid argument";
+fi

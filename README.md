@@ -3,9 +3,35 @@ This repository contains artifacts of the project
 
 ## Pre-requisites
 <!-- Python Pre-requisites TBA (if any) -->
-For running graal-based scripts, both GraalVM and its python component must be installed on the system. The recommended version of the GraalVM JDK is 17.0.8, and can be installed through the `install_graal.sh` script found in the `scripts/` directory. To execute the script, run:
-```bash
-bash scripts/install_graal.sh
+The `setup.sh` files contains multiple scripts to setup the proper conda environment and install all dependencies. Please execute the following in order to successfully install all pre-requisites:
+
+### Setting up conda environment:
+```
+bash setup.sh setup_env
+```
+
+You may need to execute `conda deactivate` and `conda activate alphatrans` to properly activate the installed conda environment.
+
+### Installing python dependencies:
+```
+bash setup.sh install_requirements
+```
+
+This command will install the proper versions of all python dependencies using python-pip.
+
+### Downloading java subjects:
+```
+bash setup.sh download_java_projects
+bash setup.sh build_java_projects
+bash setup.sh create_database_java
+```
+
+This command will download the original snapshots of all java subjects we used in this work from GitHub. It then builds these projects to make sure we can successfully build these projects and finally create their CodeQL databases. Please make sure [CodeQL](https://codeql.github.com/) is installed on your machine.
+
+### Installing Graal
+For running graal-based scripts, both GraalVM and its python component must be installed on the system. The recommended version of the GraalVM JDK is 17.0.8. Please run the following command to install graal.
+```
+bash setup.sh install_graal
 ```
 > [!NOTE]
 > The script uses SDKMAN! to install GraalVM and set the $JAVA_HOME variable automatically. If $JAVA_HOME is still not set, restart the terminal or switch to the GraalVM JDK by running `sdk use java 17.0.8-graal` after installation.
