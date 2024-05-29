@@ -47,17 +47,6 @@ def translate(model, tokenizer, prompt, device, fragment):
             continue
 
         """
-        TODO: check for dynamic validation (L1)
-        status, dynamically_validated_fragment, feedback = l1_validation(parsed_fragment)
-
-        if not status:
-            max_attempts += 1
-            TODO: create new prompt with feedback
-            prompt = ...
-            continue
-        """
-
-        """
         TODO: check for functional validation (L2)
         status, functionally_validated_fragment, feedback = l2_validation(dynamically_validated_fragment)
 
@@ -132,12 +121,13 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type):
                 callee_partial_translation = ''.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['partial_translation'])
                 instruction += f"\n{callee_partial_translation}"
             
-            # if len(out_of_file_dependencies) != 0:
-            #     instruction += '\n\nThe following methods are called from other classes:\n'
-            #     for callee_schema, callee_class, callee_method in out_of_file_dependencies:
-            #         instruction += f"\nClass: {callee_class}, Method: {callee_method.split(':')[1]}"
+            instruction += '\n```'
+            if len(out_of_file_dependencies) != 0:
+                instruction += '\n\nThe following methods are called from other classes:\n'
+                for callee_schema, callee_class, callee_method in out_of_file_dependencies:
+                    instruction += f"\nClass: {callee_class}, Method: {callee_method.split(':')[1]}"
         
-        instruction += '\n```\n\n### Response:\n'
+        instruction += '\n\n### Response:\n'
         instruction += f'Python method translation:\n'
         instruction += '```\n'
         instruction += ''.join(data['classes'][class_]['methods'][fragment_]['partial_translation']).replace('pass', '')
@@ -176,11 +166,7 @@ def main(args):
         if 'src.main' not in schema and args.translate_main:
             continue
 
-        # if 'AlreadySelectedException' not in schema:
-        #     continue
-
-        metrics.setdefault(schema, {'syntactic': {'total': 0, 'correct': 0}, 
-                                    'dynamic': {'total': 0, 'correct': 0}, 
+        metrics.setdefault(schema, {'syntactic': {'total': 0, 'correct': 0},
                                     'functional': {'total': 0, 'correct': 0}})
 
         path_ = f'data/schemas/{args.project_name}/{schema}'
