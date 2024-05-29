@@ -170,6 +170,17 @@ def main(args):
                 is_constructor = data['classes'][_class]['methods'][_method]['is_constructor']
                 method_body = "".join(data['classes'][_class]['methods'][_method]['body'])
                 method_name = _method.split(':', 1)[1].strip() if not is_constructor else "__init__"
+                
+                # if method is private, take mangling into account
+                # except for constructors
+                if 'private' in data['classes'][_class]['methods'][_method]['modifiers'] and not is_constructor:
+                    method_name = f"_{class_name}__{method_name}"
+                elif 'protected' in data['classes'][_class]['methods'][_method]['modifiers'] and not is_constructor:
+                    method_name = f"_{method_name}"
+                
+                # if method is 'from' or 'to', add an underscore at the end
+                if method_name in ['from']:
+                    method_name += "_"
                             
                 if method_body.strip()[-1] != '}':
                     # method is not implemented
