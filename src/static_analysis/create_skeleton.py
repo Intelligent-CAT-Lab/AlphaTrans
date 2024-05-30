@@ -159,6 +159,10 @@ def main(args):
 
         class_dependencies = []
         for class_ in class_order:
+
+            if 'new' in class_ or '{' in class_: # skip nested and nameless classes
+                continue
+
             main_class = class_
             if schema['classes'][class_]['nested_inside'] != []:
                 main_class = schema['classes'][class_]['nested_inside']
@@ -323,7 +327,7 @@ def main(args):
                 skeleton += '\tpass\n\n'
 
         import_map = {'ABC': 'from abc import ABC\n', 'Path': 'import pathlib\n', 'IOBase': 'import io\n', 'StringIO': 'import io\n', 'io': 'import io\n', 'threading': 'import threading\n',
-                      'BytesIO': 'import io\n', 'TextIOWrapper': 'import io\n', 'Number': 'import numbers\n', 'Callable': 'import typing\nfrom typing import *\n',
+                      'BytesIO': 'import io\n', 'TextIOWrapper': 'import io\n', 'Number': 'import numbers\n', 'Callable': 'import typing\nfrom typing import *\n', 'enum': 'import enum\n',
                       'Type': 'import typing\nfrom typing import *\n', 'Any': 'import typing\nfrom typing import *\n', 'Iterator': 'import typing\nfrom typing import *\n', 'decimal': 'import decimal\n',
                       'Dict': 'import typing\nfrom typing import *\n', 'List': 'import typing\nfrom typing import *\n', 'Union': 'import typing\nfrom typing import *\n', 'datetime': 'import datetime\n', 
                       'os': 'import os\n', 'pickle': 'import pickle\n', 'itertools': 'import itertools\n', 'sys': 'import sys\n', 'collections': 'import collections\n', 
