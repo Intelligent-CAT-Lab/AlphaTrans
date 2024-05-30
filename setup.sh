@@ -18,7 +18,6 @@ function install_requirements() {
     pip3 install black==24.4.2;
     pip3 install transformers==4.34.1;
     pip3 install pynguin==0.36.0;
-    pip3 install shed==2024.3.1;
 }
 
 function download_java_projects() {
