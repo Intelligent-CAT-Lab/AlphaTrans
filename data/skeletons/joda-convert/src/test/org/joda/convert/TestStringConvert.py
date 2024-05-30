@@ -51,35 +51,10 @@ from src.main.org.joda.convert.ConstructorFromStringConverter import *
 from src.test.org.joda.convert.AltCharSequence import *
 import typing
 from typing import *
+import enum
 import io
 
 # Imports End
-
-
-class ToStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def convertToString(self, object: DistanceNoAnnotations) -> str:
-        pass
-
-    # Class Methods End
-
-
-class FromStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def convertFromString(
-        self, cls: typing.Type[DistanceNoAnnotations], str: str
-    ) -> DistanceNoAnnotations:
-        pass
-
-    # Class Methods End
 
 
 class TestStringConvert:

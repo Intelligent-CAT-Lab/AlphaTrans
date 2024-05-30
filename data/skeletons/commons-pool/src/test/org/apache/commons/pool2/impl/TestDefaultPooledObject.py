@@ -7,17 +7,6 @@ import io
 # Imports End
 
 
-class Runnable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class TestDefaultPooledObject:
 
     # Class Fields Begin

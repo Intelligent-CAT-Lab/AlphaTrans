@@ -23,17 +23,6 @@ import io
 # Imports End
 
 
-class AbstractGraphConnection:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class EdmondsKarpTestCase:
 
     # Class Fields Begin

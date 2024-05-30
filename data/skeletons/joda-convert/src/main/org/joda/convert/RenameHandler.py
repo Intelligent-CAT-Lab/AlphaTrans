@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.joda.convert.StringConvert import *
 import typing
 from typing import *
+import enum
 import io
 
 # Imports End

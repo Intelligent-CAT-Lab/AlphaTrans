@@ -13,17 +13,6 @@ from abc import ABC
 # Imports End
 
 
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class TestObject(ABC):
 
     # Class Fields Begin

@@ -201,29 +201,6 @@ class TypeVisitor(ABC):
     # Class Methods End
 
 
-class ClassOwnership:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class JavaVersion:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def jdkTypeDuplicatesOwnerName(self) -> bool:
-        pass
-
-    # Class Methods End
-
-
 class NativeTypeVariableEquals:
 
     # Class Fields Begin
@@ -235,65 +212,6 @@ class NativeTypeVariableEquals:
 
 
 class LocalClass:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class LocalClass:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeVisitor:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def visitClass(self, t: typing.Type[typing.Any]) -> None:
-        pass
-
-    def visitGenericArrayType(
-        self,
-        t: typing.Union[
-            typing.List[typing.TypeVar("T", bound=typing.Any)], array.array
-        ],
-    ) -> None:
-        pass
-
-    def visitWildcardType(self, t: typing.Any) -> None:
-        pass
-
-    def visitTypeVariable(self, t: typing.TypeVar("T", bound=typing.Any)) -> None:
-        pass
-
-    # Class Methods End
-
-
-class TypeCapture:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class TypeCapture:
 
     # Class Fields Begin
     # Class Fields End

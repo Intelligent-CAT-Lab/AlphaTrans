@@ -13,18 +13,6 @@ from io import IOBase
 # Imports End
 
 
-class Consumer:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, t: typing.Any) -> None:
-        pass
-
-    # Class Methods End
-
-
 class CSVPrinter(io.BufferedIOBase):
 
     # Class Fields Begin

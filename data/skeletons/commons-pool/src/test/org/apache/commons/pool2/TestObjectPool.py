@@ -13,18 +13,6 @@ from abc import ABC
 # Imports End
 
 
-class Predicate:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def test(self, call: MethodCall) -> bool:
-        pass
-
-    # Class Methods End
-
-
 class TestObjectPool(ABC):
 
     # Class Fields Begin

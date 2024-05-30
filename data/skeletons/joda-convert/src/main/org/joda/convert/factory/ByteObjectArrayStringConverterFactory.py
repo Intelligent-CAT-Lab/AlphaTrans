@@ -12,24 +12,6 @@ from abc import ABC
 # Imports End
 
 
-class ByteArrayStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def getEffectiveType(self) -> typing.Type[typing.Any]:
-        pass
-
-    def convertFromString(self, cls: typing.Type[bytes], str: str) -> typing.List[int]:
-        pass
-
-    def convertToString(self, array: typing.List[int]) -> str:
-        pass
-
-    # Class Methods End
-
-
 class ByteArrayStringConverter(TypedStringConverter, ABC):
 
     # Class Fields Begin

@@ -6,24 +6,6 @@ import io
 # Imports End
 
 
-class CharSequence:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def subSequence(self, start: int, end: int) -> str:
-        pass
-
-    def length(self) -> int:
-        pass
-
-    def charAt(self, index: int) -> str:
-        pass
-
-    # Class Methods End
-
-
 class CacheSubSequencePerformanceTest:
 
     # Class Fields Begin

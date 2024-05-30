@@ -12,26 +12,6 @@ from abc import ABC
 # Imports End
 
 
-class BooleanArrayStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def getEffectiveType(self) -> typing.Type[typing.Any]:
-        pass
-
-    def convertFromString(
-        self, cls: typing.Type[typing.List[bool]], str: str
-    ) -> typing.List[bool]:
-        pass
-
-    def convertToString(self, array: typing.List[bool]) -> str:
-        pass
-
-    # Class Methods End
-
-
 class BooleanArrayStringConverter(TypedStringConverter, ABC):
 
     # Class Fields Begin

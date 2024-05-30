@@ -22,18 +22,6 @@ class Snapshot:
     # Class Methods End
 
 
-class Function:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def apply(self, referent: typing.Any) -> weakref.ref:
-        pass
-
-    # Class Methods End
-
-
 class PrivateSecurityManager:
 
     # Class Fields Begin

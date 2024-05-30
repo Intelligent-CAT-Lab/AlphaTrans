@@ -17,17 +17,6 @@ import pathlib
 # Imports End
 
 
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class CSVPrinterTest:
 
     # Class Fields Begin

@@ -9,42 +9,6 @@ import io
 # Imports End
 
 
-class Predicate:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def test(self, arg: typing.List) -> bool:
-        pass
-
-    # Class Methods End
-
-
-class Function:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def apply(self, arg: typing.List) -> typing.Iterable[typing.List]:
-        pass
-
-    # Class Methods End
-
-
-class Function:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def apply(self, arguments: typing.List[typing.Any]) -> typing.List:
-        pass
-
-    # Class Methods End
-
-
 class CSVDuplicateHeaderTest:
 
     # Class Fields Begin

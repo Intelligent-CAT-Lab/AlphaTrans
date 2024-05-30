@@ -13,26 +13,6 @@ import io
 # Imports End
 
 
-class RegexValidator:
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    __ccr: typing.List[CreditCardRange] = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def match(self, value: str) -> typing.List[str]:
-        pass
-
-    def isValid(self, value: str) -> bool:
-        pass
-
-    def validate(self, value: str) -> str:
-        pass
-
-    # Class Methods End
-
-
 class CreditCardRange:
 
     # Class Fields Begin

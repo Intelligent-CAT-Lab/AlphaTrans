@@ -31,17 +31,6 @@ class Stats:
     # Class Methods End
 
 
-class CSVParserFactory:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class CSVParserFactory(ABC):
 
     # Class Fields Begin

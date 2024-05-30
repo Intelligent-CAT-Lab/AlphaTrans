@@ -162,18 +162,6 @@ class Predefined:
     # Class Methods End
 
 
-class IntFunction:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def apply(self, i: int) -> str:
-        pass
-
-    # Class Methods End
-
-
 class CSVFormat:
 
     # Class Fields Begin

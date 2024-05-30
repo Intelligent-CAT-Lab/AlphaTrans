@@ -59,17 +59,6 @@ class RunTest(ABC):
     # Class Methods End
 
 
-class RunTest:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class CharSequenceUtilsTest:
 
     # Class Fields Begin

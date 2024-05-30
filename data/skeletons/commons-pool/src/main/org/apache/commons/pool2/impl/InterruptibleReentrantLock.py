@@ -7,18 +7,6 @@ import io
 # Imports End
 
 
-class Consumer:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, p0: threading.Thread) -> None:
-        pass
-
-    # Class Methods End
-
-
 class InterruptibleReentrantLock:
 
     # Class Fields Begin

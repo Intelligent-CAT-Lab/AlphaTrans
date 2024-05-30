@@ -87,18 +87,6 @@ class Rule:
     # Class Methods End
 
 
-class Comparator:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def compare(self, rule1: Rule, rule2: Rule) -> int:
-        pass
-
-    # Class Methods End
-
-
 class DaitchMokotoffSoundex(StringEncoder):
 
     # Class Fields Begin

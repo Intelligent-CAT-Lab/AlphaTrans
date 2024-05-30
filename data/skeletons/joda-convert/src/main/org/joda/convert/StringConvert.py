@@ -28,42 +28,6 @@ import io
 # Imports End
 
 
-class TypedStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def getEffectiveType(self) -> typing.Type[typing.Any]:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
-        pass
-
-    # Class Methods End
-
-
-class TypedStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def getEffectiveType(self) -> typing.Type[typing.Any]:
-        pass
-
-    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:
-        pass
-
-    def convertToString(self, object: typing.Any) -> str:
-        pass
-
-    # Class Methods End
-
-
 class StringConvert:
 
     # Class Fields Begin

@@ -10,17 +10,6 @@ import io
 # Imports End
 
 
-class JDKStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class JDKStringConverter(TypedStringConverter):
 
     # Class Fields Begin

@@ -6,22 +6,11 @@ from src.main.org.apache.commons.csv.CSVParser import *
 import os
 import typing
 from typing import *
+import enum
 import numbers
 import io
 
 # Imports End
-
-
-class BiConsumer:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, key: str, value: int) -> None:
-        pass
-
-    # Class Methods End
 
 
 class CSVRecord(Iterable):

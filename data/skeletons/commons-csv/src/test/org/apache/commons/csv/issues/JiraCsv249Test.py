@@ -10,18 +10,6 @@ import io
 # Imports End
 
 
-class Consumer:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, record: CSVRecord) -> None:
-        pass
-
-    # Class Methods End
-
-
 class JiraCsv249Test:
 
     # Class Fields Begin

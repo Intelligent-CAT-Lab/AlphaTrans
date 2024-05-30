@@ -120,18 +120,6 @@ class Evictor:
     # Class Methods End
 
 
-class Consumer:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, pooledObject: PooledObject[typing.Any]) -> None:
-        pass
-
-    # Class Methods End
-
-
 class BaseGenericObjectPool(BaseObject, ABC):
 
     # Class Fields Begin

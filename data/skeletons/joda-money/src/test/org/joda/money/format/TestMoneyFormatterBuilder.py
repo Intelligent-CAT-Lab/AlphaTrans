@@ -17,35 +17,8 @@ import decimal
 import typing
 from typing import *
 import io
-from io import IOBase
 
 # Imports End
-
-
-class MoneyPrinter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def print(
-        self, context: MoneyPrintContext, appendable: io.TextIOBase, money: BigMoney
-    ) -> None:
-        pass
-
-    # Class Methods End
-
-
-class MoneyParser:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def parse(self, context: MoneyParseContext) -> None:
-        pass
-
-    # Class Methods End
 
 
 class TestMoneyFormatterBuilder:

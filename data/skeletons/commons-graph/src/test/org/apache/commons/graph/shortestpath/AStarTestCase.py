@@ -25,17 +25,6 @@ import pathlib
 # Imports End
 
 
-class Heuristic:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class AStarTestCase:
 
     # Class Fields Begin

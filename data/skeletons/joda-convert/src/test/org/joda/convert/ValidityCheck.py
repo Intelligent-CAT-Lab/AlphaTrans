@@ -7,17 +7,6 @@ from abc import ABC
 # Imports End
 
 
-class ValidityCheck:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class ValidityCheck(ABC):
 
     # Class Fields Begin

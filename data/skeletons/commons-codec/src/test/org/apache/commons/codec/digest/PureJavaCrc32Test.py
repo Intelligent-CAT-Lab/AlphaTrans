@@ -32,19 +32,6 @@ class Table:
     # Class Methods End
 
 
-class Thread:
-
-    # Class Fields Begin
-    crc: typing.Any = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def run(self) -> None:
-        pass
-
-    # Class Methods End
-
-
 class BenchResult:
 
     # Class Fields Begin

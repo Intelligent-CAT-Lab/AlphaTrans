@@ -11,18 +11,6 @@ import io
 # Imports End
 
 
-class Comparator:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def compare(self, opt1: Option, opt2: Option) -> int:
-        pass
-
-    # Class Methods End
-
-
 class HelpFormatterTest:
 
     # Class Fields Begin

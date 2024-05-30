@@ -34,17 +34,6 @@ class NoOpBaseNCodec(BaseNCodec):
     # Class Methods End
 
 
-class BaseNCodec:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class BaseNCodecTest:
 
     # Class Fields Begin

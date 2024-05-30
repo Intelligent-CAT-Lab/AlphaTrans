@@ -31,21 +31,6 @@ import pathlib
 # Imports End
 
 
-class AbstractGraphConnection:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def connect0(self) -> None:
-        pass
-
-    def __addEdge(self, src: BaseLabeledVertex, dst: BaseLabeledVertex) -> bool:
-        pass
-
-    # Class Methods End
-
-
 class BidirDijkstraTestCase:
 
     # Class Fields Begin

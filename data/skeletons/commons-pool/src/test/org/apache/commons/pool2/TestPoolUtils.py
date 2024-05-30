@@ -38,28 +38,6 @@ class MethodCallLogger(typing.Callable):
     # Class Methods End
 
 
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class InvocationHandler:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class TestPoolUtils:
 
     # Class Fields Begin

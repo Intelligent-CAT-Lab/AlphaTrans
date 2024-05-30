@@ -42,17 +42,6 @@ class SingletonPrinters(MoneyPrinter):
     # Class Methods End
 
 
-class Singletons:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class Singletons(MoneyParser, MoneyPrinter, ABC):
 
     # Class Fields Begin

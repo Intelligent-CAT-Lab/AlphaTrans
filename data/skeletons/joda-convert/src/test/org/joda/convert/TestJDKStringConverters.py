@@ -14,40 +14,6 @@ import io
 # Imports End
 
 
-class Calendar:
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def add(self, field: int, amount: int) -> None:
-        pass
-
-    def _computeFields(self) -> None:
-        pass
-
-    def _computeTime(self) -> None:
-        pass
-
-    def getGreatestMinimum(self, field: int) -> int:
-        pass
-
-    def getLeastMaximum(self, field: int) -> int:
-        pass
-
-    def getMaximum(self, field: int) -> int:
-        pass
-
-    def getMinimum(self, field: int) -> int:
-        pass
-
-    def roll(self, field: int, up: bool) -> None:
-        pass
-
-    # Class Methods End
-
-
 class TestJDKStringConverters:
 
     # Class Fields Begin

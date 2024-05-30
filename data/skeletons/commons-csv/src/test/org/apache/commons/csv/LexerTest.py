@@ -11,18 +11,6 @@ import io
 # Imports End
 
 
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def execute(self) -> None:
-        pass
-
-    # Class Methods End
-
-
 class LexerTest:
 
     # Class Fields Begin

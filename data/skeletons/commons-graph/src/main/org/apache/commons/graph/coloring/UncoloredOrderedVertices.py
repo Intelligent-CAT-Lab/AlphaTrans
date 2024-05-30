@@ -8,27 +8,6 @@ import io
 # Imports End
 
 
-class Iterator:
-
-    # Class Fields Begin
-    __keys: typing.Iterator[int] = None
-    __pending: typing.Iterator[typing.Any] = None
-    __next: typing.Any = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def remove(self) -> None:
-        pass
-
-    def next(self) -> typing.Any:
-        pass
-
-    def hasNext(self) -> bool:
-        pass
-
-    # Class Methods End
-
-
 class UncoloredOrderedVertices(Iterable):
 
     # Class Fields Begin

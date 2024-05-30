@@ -12,26 +12,6 @@ from abc import ABC
 # Imports End
 
 
-class CharecterArrayStringConverter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def getEffectiveType(self) -> typing.Type[typing.Any]:
-        pass
-
-    def convertFromString(
-        self, cls: typing.Type[typing.List[str]], str: str
-    ) -> typing.List[str]:
-        pass
-
-    def convertToString(self, array: typing.List[str]) -> str:
-        pass
-
-    # Class Methods End
-
-
 class CharecterArrayStringConverter(TypedStringConverter, ABC):
 
     # Class Fields Begin

@@ -14,28 +14,6 @@ from abc import ABC
 # Imports End
 
 
-class Comparator:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def compare(self, o1: Phoneme, o2: Phoneme) -> int:
-        pass
-
-    # Class Methods End
-
-
-class RPattern:
-
-    # Class Fields Begin
-    pattern: re.Pattern = None
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-
 class PhonemeExpr(ABC):
 
     # Class Fields Begin

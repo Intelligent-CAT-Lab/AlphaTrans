@@ -40,30 +40,6 @@ class IOAppendable(io.TextIOBase):
     # Class Methods End
 
 
-class MoneyParser:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def toString(self) -> str:
-        pass
-
-    # Class Methods End
-
-
-class MoneyPrinter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def toString(self) -> str:
-        pass
-
-    # Class Methods End
-
-
 class TestMoneyFormatter:
 
     # Class Fields Begin

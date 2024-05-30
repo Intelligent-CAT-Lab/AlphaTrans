@@ -11,18 +11,6 @@ import pathlib
 # Imports End
 
 
-class FilenameFilter:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, dir: pathlib.Path, name: str) -> bool:
-        pass
-
-    # Class Methods End
-
-
 class CSVFileParserTest:
 
     # Class Fields Begin

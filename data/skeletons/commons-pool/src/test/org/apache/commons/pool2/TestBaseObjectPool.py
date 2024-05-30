@@ -33,17 +33,6 @@ class TestObjectPool(BaseObjectPool):
     # Class Methods End
 
 
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class TestBaseObjectPool(TestObjectPool):
 
     # Class Fields Begin

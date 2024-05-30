@@ -11,17 +11,6 @@ import io
 # Imports End
 
 
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class TestLinkedBlockingDeque:
 
     # Class Fields Begin

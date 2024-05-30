@@ -14,17 +14,6 @@ import io
 # Imports End
 
 
-class BigMoneyProvider:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class BadDecimal(decimal.Decimal):
 
     # Class Fields Begin

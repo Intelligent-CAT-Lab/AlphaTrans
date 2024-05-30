@@ -17,29 +17,6 @@ import pathlib
 # Imports End
 
 
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
-class Consumer:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def accept(self, actual: typing.Any) -> None:
-        pass
-
-    # Class Methods End
-
-
 class CSVParserTest:
 
     # Class Fields Begin

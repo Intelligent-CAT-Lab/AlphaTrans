@@ -35,17 +35,6 @@ class Header:
     # Class Methods End
 
 
-class Executable:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-    pass
-
-
 class CSVFormatTest:
 
     # Class Fields Begin

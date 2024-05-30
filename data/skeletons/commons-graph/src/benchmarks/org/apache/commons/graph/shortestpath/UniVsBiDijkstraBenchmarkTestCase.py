@@ -27,33 +27,6 @@ import io
 # Imports End
 
 
-class Mapper:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def map(self, input: BaseLabeledWeightedEdge[float]) -> float:
-        pass
-
-    # Class Methods End
-
-
-class AbstractGraphConnection:
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def connect0(self) -> None:
-        pass
-
-    def __addEdge(self, src: BaseLabeledVertex, dst: BaseLabeledVertex) -> bool:
-        pass
-
-    # Class Methods End
-
-
 class UniVsBiDijkstraBenchmarkTestCase:
 
     # Class Fields Begin
