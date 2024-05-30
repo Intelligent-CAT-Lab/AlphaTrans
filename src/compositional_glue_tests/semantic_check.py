@@ -195,8 +195,14 @@ if __name__ == '__main__':
     parser.add_argument('--project', type=str, dest='project_name', help='name of the project', required=True)
     parser.add_argument('--class', type=str, dest='class_name', help='name of the class', required=False)
     parser.add_argument('--method', type=str, dest='method_name', help='name of the method', required=False)
+    parser.add_argument('--test', action='store_true', help='run for test classes only')
     parser.add_argument('--all', action='store_true', help='run for all classes and methods (including test classes)')
     args = parser.parse_args()
-    main(args)
+    
     if args.all:
+        main(args)
         main(args, test_classes=True)
+    elif args.test:
+        main(args, test_classes=True)
+    else:
+        main(args)
