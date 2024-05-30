@@ -46,3 +46,28 @@ def write_to_file(file, content):
     except Exception as e:
         print(f"Error formatting {file}: {e}")
     return
+
+def pre_order_traversal(relation: list[tuple[str, str | None]]) -> list[str]:
+    """
+    Performs a pre-order traversal of the tree represented by the parent list
+
+    Args:
+        parent_list: A list of tuples representing parent relations (child, parent).
+        The parent of the root node should be None. There should be only one root node.
+
+    Returns:
+        A list containing the nodes visited in pre-order.
+    """
+    visited = []
+    
+    root = [child for child, parent in relation if parent is None][0]
+    stack = [root]
+
+    while stack:
+        current_node = stack.pop()
+        visited.append(current_node)
+
+        children = [child for child, parent in relation if parent == current_node]
+        stack.extend(children[::-1])  # Add children in reverse order for pre-order
+
+    return visited

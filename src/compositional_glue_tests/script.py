@@ -5,7 +5,7 @@ import json
 import keyword
 import xml.etree.ElementTree as ET
  
-from utils import default_type_value, write_to_file, get_destination_path, type_handling
+from utils import default_type_value, write_to_file, type_handling, pre_order_traversal
 from constants import *
 
 
@@ -59,12 +59,7 @@ class Project:
         # IntegrationUtils.java
         with open(f"{self.script_dir}/misc/IntegrationUtils.java") as f:
             write_to_file(
-                get_destination_path(
-                    self.name, 
-                    "IntegrationUtils", 
-                    self.glue_dir, 
-                    path_to_main=paths[self.name]['main']
-                ), 
+                f"{self.glue_dir}/src/{paths[self.name]['main']}IntegrationUtils.java",
                 f.read().format(
                     project = f"org.apache.{self.formatted_name}"
                 )
@@ -116,31 +111,34 @@ class CompositionalTest:
         self.__set_schemas_to_process(list(components.keys()))
         
         for schema in self.schemas_to_process:
-            with open(f'{self.schema_dir}/{self.name}/{schema}') as f:
+            with open(f'{self.project.schema_dir}/{self.project.name}/{schema}') as f:
                 schema_data = json.load(f)
                 
             schema_object = Schema(schema, self.project, schema_data)
+            schema_name = schema.split('.')[-2]
             
             # get the classes to process
-            if schema not in components or not components[schema]:
+            if schema_name not in components or not components[schema_name]:
                 # Process all classes if no classes are provided
                 # or no schema was provided to begin with
                 classes_to_process = list(schema_data['classes'].keys())
             else:
                 classes_to_process = []
-                for _class in components[schema]:
+                for _class in components[schema_name]:
                     if _class not in schema_data['classes']:
                         raise ValueError(f"Class {_class} not found in schema {schema}!")
                     classes_to_process.append(_class)
                     
-            for _class in schema_data['classes']:
+            class_list = self.__resolve_class_order(schema_data)
+                                
+            for _class in class_list:
                 if _class not in classes_to_process or schema_data['classes'][_class]['is_interface']:
                     # don't process this class if it's not in the list
                     # or if it's an interface
-                    schema_object.add_class_body("".join(schema_data['classes'][_class]['body']))
+                    schema_object.add_class("".join(schema_data['classes'][_class]['body']), dont_process=True)
                 
                 # get the methods to process
-                if schema not in components or _class not in components[schema] or not components[schema][_class]:
+                if schema_name not in components or _class not in components[schema_name] or not components[schema_name][_class]:
                     # Process all methods if no methods are provided
                     # or no class or schema was provided to begin with
                     methods_to_process = list(schema_data['classes'][_class]['methods'].keys())
@@ -154,7 +152,7 @@ class CompositionalTest:
                         
                         _available_methods.append((_method, _method_name))
                     
-                    for _method in components[schema][_class]:
+                    for _method in components[schema_name][_class]:
                         for m in _available_methods:
                             if m[1] == _method:
                                 methods_to_process.append(m[0])
@@ -165,16 +163,27 @@ class CompositionalTest:
                 schema_object.add_class(_class, schema_data['classes'][_class], methods_to_process)
                 
                 # write the schema back
+                local_path = schema_data['path'].split('/src/')[-1]
                 self.__log_write(
-                    get_destination_path(
-                        schema_data['path'],
-                        schema.split('.')[-2],
-                        self.project.glue_dir,
-                        is_full_path=True
-                    ),
+                    f"{self.project.glue_dir}/src/{local_path}",
                     schema_object.get_body()
                 )
         
+    def __resolve_class_order(self, schema_data: dict):
+        """
+        Resolve the order in which classes should be processed.
+        This is a pre-order traversal of the class hierarchy (in terms of nesting).
+        """
+        nested_inside_relations = []
+        for _class in schema_data['classes']:
+            if schema_data['classes'][_class]['nested_inside']:
+                nested_inside_relations.append((_class, schema_data['classes'][_class]['nested_inside']))
+            else:
+                nested_inside_relations.append((_class, None))
+                
+        # sort the classes based on the nesting
+        return pre_order_traversal(nested_inside_relations)      
+    
     def __log_write(self, file_name: str, content: str):
         """
         Log the write operation for the given file.
@@ -192,7 +201,7 @@ class CompositionalTest:
         Execute the write operations.
         """
         for file_name in self.scheduled_writes:
-            if not self.scheduled_writes[file_name]["original_content"]:
+            if os.path.exists(file_name):
                 with open(file_name) as f:
                     self.scheduled_writes[file_name]["original_content"] = f.read()
                     
@@ -217,6 +226,8 @@ class CompositionalTest:
             if self.scheduled_writes[file_name]["original_content"]:
                 with open(file_name, "w") as f:
                     f.write(self.scheduled_writes[file_name]["original_content"])
+            else:
+                os.remove(file_name)
         
     def __set_schemas_to_process(self, schemas_to_process: list[str] = None):
         """
@@ -243,35 +254,25 @@ class CompositionalTest:
     def __add_schema_dependent_files(self):
         # Add ContextInitializer.java
         ctx_mappings, ctx_imports = self.__make_ctx_mappings()
-        with open(f"{self.script_dir}/misc/ContextInitializer.java") as f:
+        with open(f"{self.project.script_dir}/misc/ContextInitializer.java") as f:
             self.__log_write(
-                get_destination_path(
-                    self.name, 
-                    "ContextInitializer", 
-                    self.glue_dir,
-                    path_to_main=paths[self.name]['main']
-                ), 
+                f"{self.project.glue_dir}/src/{paths[self.project.name]['main']}ContextInitializer.java",
                 f.read().format(
-                    project = f"org.apache.{self.formatted_name}",
+                    project = f"org.apache.{self.project.formatted_name}",
                     imports = ctx_imports,
-                    code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.name}/src/{paths[self.name]['main'].replace('/java/', '/')}",
-                    package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.name}/",
+                    code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/src/{paths[self.project.name]['main'].replace('/java/', '/')}",
+                    package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/",
                     mappings = ctx_mappings                
                 )
             )
             
         # Add ExceptionHandler.java
         exp_mappings, exp_imports = self.__make_exp_mappings()
-        with open(f"{self.script_dir}/misc/ExceptionHandler.java") as f:
+        with open(f"{self.project.script_dir}/misc/ExceptionHandler.java") as f:
             self.__log_write(
-                get_destination_path(
-                    self.name, 
-                    "ExceptionHandler", 
-                    self.glue_dir, 
-                    path_to_main=paths[self.name]['main']
-                ), 
+                f"{self.project.glue_dir}/src/{paths[self.project.name]['main']}ExceptionHandler.java",
                 f.read().format(
-                    project = f"org.apache.{self.formatted_name}",
+                    project = f"org.apache.{self.project.formatted_name}",
                     imports = exp_imports,
                     mappings = exp_mappings
                 )
@@ -351,8 +352,8 @@ class CompositionalTest:
         
         # link subpackages (no need to import otherwise)
         import_to_make = None
-        if paths[self.name]['main'] in schema_data['path']:
-            path_tail = schema_data['path'].split(paths[self.name]['main'])[-1]
+        if paths[self.project.name]['main'] in schema_data['path']:
+            path_tail = schema_data['path'].split(paths[self.project.name]['main'])[-1]
             if "/" in path_tail:
                 # remove the last segment
                 path_tail = path_tail[:path_tail.rfind('/')]
@@ -370,12 +371,41 @@ class CompositionalTest:
             subprocess.run(
                 ['mvn', 'clean', 'test', '-Drat.skip', '-q'],
                 cwd=self.project.glue_dir,
-                # stderr=subprocess.DEVNULL,
-                # stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
                 check=True
             )
         except Exception:
             raise RuntimeError(f"Error running compositional test.")
+        
+        # self.__revert_writes()
+        
+        # collect the results
+        failed_tests = self.__get_failed_tests_from_surefire()
+        
+        return {
+            "success": True if not failed_tests else False,
+            "failed_tests": failed_tests
+        }
+    
+    def __get_failed_tests_from_surefire(self):
+        """
+        Get the failed tests from the surefire reports.
+        """
+        surefire_dir = f"{self.project.glue_dir}/target/surefire-reports"
+        if not os.path.exists(surefire_dir):
+            return []
+        
+        failed_tests = []
+        for file_name in os.listdir(surefire_dir):
+            if file_name.startswith('TEST-') and file_name.endswith('.xml'):
+                tree = ET.parse(f"{surefire_dir}/{file_name}")
+                root = tree.getroot()
+                for test_case in root.findall('testcase'):
+                    if test_case.find('error') is not None:
+                        failed_tests.append(test_case.attrib['classname'] + '.' + test_case.attrib['name'])
+                        
+        return failed_tests
 
 class SyncMethod:
     """
@@ -388,7 +418,6 @@ class SyncMethod:
         self.fields = []
         
     def add_field(self, field_name: str, field_schema_data: dict):
-        field_name = field_name.split(':')[1].strip()
         field_type = field_schema_data['types'][0][0]
         
         # compose name of field in Python
@@ -417,7 +446,7 @@ class SyncMethod:
                 {body}
             }}
         """
-        
+
 class Schema:
     """
     A class to manage the contents of a schema.
@@ -436,10 +465,7 @@ class Schema:
         # or a dictionary with different parts of the class
         self.__classes = []
         
-        # count of unclosed brackets due to class definitions
-        self.__unclosed_brackets = 0
-        
-    def add_class(self, class_name: str, class_schema_data: dict, methods_to_process: list[str]):
+    def add_class(self, class_name: str, class_schema_data: dict, methods_to_process: list[str], dont_process: bool = False):
         # create the class declaration
         with open(self.schema_data['path'], 'r') as f:
             lst = f.readlines()
@@ -447,75 +473,70 @@ class Schema:
         
         class_obj = {
             "name": class_name,
-            "declaration": class_declaration,
+            "declaration": "".join(class_declaration),
             "fields": [],
             "unitialized_fields": [],
             "methods": [],
-            "sync": SyncMethod(class_name),
-            "revsync": SyncMethod(class_name, reverse=True)
+            "sync": SyncMethod(class_name) if not dont_process else None,
+            "revsync": SyncMethod(class_name, reverse=True) if not dont_process else None,
+            "nests": []
         }
         
         for _field in class_schema_data['fields']:
-            self.__add_field_to_class(class_obj, _field, class_schema_data['fields'][_field])
-            
-        for _method in class_schema_data['methods']:
-            if _method in methods_to_process:
-                self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method])
+            if dont_process:
+                class_obj["fields"].append("".join(class_schema_data['fields'][_field]['body']))
             else:
-                self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)     
-        
-        # add graal attributes
-        python_file_dir = self.subpackage.replace('.', '/')
-        python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
-        current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
-        python_file = f'{python_file_dir}/{current_file_name}.py'
-        
-        class_obj["fields"].extend([
-            f"private static Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");",
-            "private Value obj;"
-        ])
-
-        # add Value constructor
-        class_obj["methods"].append(f"""
-            public {class_name}(Value obj) {{
-                this.obj = obj;
-            }}                            
-        """)
-
-        # add getPythonObject()
-        class_obj["methods"].append(f"""
-            public Value getPythonObject() {{
-                return obj;
-            }}
-        """)
-
-        # add a Default constructor
-        class_obj["methods"].append(f"public {class_name}() {{this.obj = clz.newInstance();}}")
-        
-    def add_class_body(self, class_name: str, class_schema_data: dict):
-        """
-        Directly add the body of a class to the schema
-        without any processing.
-        """
-        class_body = []
-        
-        # create the class declaration
-        with open(self.schema_data['path'], 'r') as f:
-            lst = f.readlines()
-        class_declaration = lst[class_schema_data['start']-1:class_schema_data['end']]
-        class_body.append(class_declaration)
-    
-        for _field in class_schema_data['fields']:
-            field_body = "".join(class_schema_data['fields'][_field]['body'])
-            class_body.append(field_body)            
+                self.__add_field_to_class(class_obj, _field, class_schema_data['fields'][_field])
             
         for _method in class_schema_data['methods']:
-            method_body = "".join(class_schema_data['methods'][_method]['body'])
-            class_body.append(method_body)
-            
-        self.__classes.append("".join(class_body))
+            if dont_process:
+                class_obj["methods"].append("".join(class_schema_data['methods'][_method]['body']))
+            else:
+                if _method in methods_to_process:
+                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method])
+                else:
+                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)     
         
-    def __add_field_to_class(self, class_obj: dict, field_name: str, field_schema_data: dict):
+        # add graal-related members if the class is being processed
+        if not dont_process:
+            python_file_dir = self.subpackage.replace('.', '/')
+            python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
+            current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
+            python_file = f'{python_file_dir}/{current_file_name}.py'
+            
+            class_obj["fields"].extend([
+                f"private static Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");",
+                "private Value obj;"
+            ])
+
+            # add Value constructor
+            class_obj["methods"].append(f"""
+                public {class_name}(Value obj) {{
+                    this.obj = obj;
+                }}                            
+            """)
+
+            # add getPythonObject()
+            class_obj["methods"].append(f"""
+                public Value getPythonObject() {{
+                    return obj;
+                }}
+            """)
+
+            # add a Default constructor
+            class_obj["methods"].append(f"public {class_name}() {{this.obj = clz.newInstance();}}")
+        
+        # check if this class is nested inside another class
+        if class_schema_data['nested_inside']:
+            parent_class = class_schema_data['nested_inside']
+            for _class in self.__classes:
+                if _class['name'] == parent_class:
+                    _class["nests"].append(class_obj)
+                    break 
+        else:
+            self.__classes.append(class_obj)
+        
+    def __add_field_to_class(self, class_obj: dict, field_name: str, field_schema_data: dict, dont_process: bool = False):
         field_name = field_name.split(':')[1].strip()
         field_type = field_schema_data['types'][0][0]
         field_body = "".join(field_schema_data['body'])
@@ -656,7 +677,11 @@ class Schema:
             "".join(_class['fields']),
             "".join(_class['methods']),
             _class['sync'].get_body(),
-            _class['revsync'].get_body()    
+            _class['revsync'].get_body(),
+            "".join([
+                self.__get_class_body(nested_class) for nested_class in _class['nests']
+            ]),
+            "}"
         ])
         
     def get_body(self):
@@ -673,15 +698,7 @@ class Schema:
         {class_bodies}
         """
 
-# def main(args):
-   
-#     for schema in schemas:
-#         with open(f'data/schemas/{args.project_name}/{schema}') as f:
-#             data = json.load(f)
-        
-#         # dict with the mapping { class: <method>}
-#         methods_under_test = {}
-        
+
 #         for _class in data['classes']:
 #             if _class in data['classes'][_class]['extends']:
 #                 # This will take care of the super class constructor when
@@ -764,45 +781,6 @@ class Schema:
 #             class_name = schema.split('.')[-2] # get the class name preceding '.json'
 #             output_file = get_destination_path(data["path"], class_name, OUTPUT_DIR, is_full_path=True)
 #             write_to_file(output_file, final_glue_code)
-            
-#             # run the test
-#             for mut in methods_under_test[_class]:
-#                 class_name = schema.split('.')[-2]
-#                 print("Method currently under test:", f"{class_name}#{mut}")
-#                 try:
-#                     subprocess.run(['mvn', 'clean', 'test', '-Drat.skip', '-q'], cwd=f"{OUTPUT_DIR}/{args.project_name}/", stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, check=True)
-#                 except Exception as e:
-#                     print(f"Error running test for {args.project_name}.")
-#                     continue
-
-#                 # get the test results
-#                 failed_tests = []
-                
-#                 # first get all XML files in the target/surefire-reports directory
-#                 for report_file in [f for f in os.listdir(f"{OUTPUT_DIR}/{args.project_name}/target/surefire-reports/") if f.endswith('.xml')]:
-#                     test_class_name = report_file.split('.')[0]
-#                     root = ET.parse(f"{OUTPUT_DIR}/{args.project_name}/target/surefire-reports/{report_file}").getroot()
-                    
-#                     # get the <testsuite> element
-#                     if not  root.find('testsuite'):
-#                         continue
-
-#                     testsuite = root.find('testsuite')
-                    
-#                     # iterate over all testcase elements
-#                     for testcase in testsuite.findall('testcase'):
-#                         # does the testcase have an error element?
-#                         error = testcase.find('error')
-                        
-#                         if error is not None:
-#                             failed_tests.append(f"{test_class_name}#{testcase.get('name')}")
-                            
-#                 if failed_tests:
-#                     print("Test failures were found.")
-#                     print(*failed_tests, sep='\n')
-#                 else:
-#                     print("All tests passed!")
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate glue code for Compositional Testing.')
@@ -817,4 +795,4 @@ if __name__ == '__main__':
             args.class_name[0]: [args.method_name]
         }
     })
-    test.run()
+    print(test.run())
