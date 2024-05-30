@@ -127,7 +127,7 @@ def parse_dependencies(project_name):
             adjacency_list[key].append(pair[0])
 
     topological_order = detect_and_remove_cycles(adjacency_list)
-    traversal = {i: topological_order[i] for i in range(len(topological_order)) if topological_order[i] != 'package-info'}
+    traversal = {i: topological_order[i] for i in range(len(topological_order)) if topological_order[i] not in ['package-info', 'module-info'] and topological_order[i] in class_dependencies}
 
     with open(os.path.join(dependencies_dir, 'traversal.json'), 'w') as f:
         json.dump(traversal, f, indent=4)
