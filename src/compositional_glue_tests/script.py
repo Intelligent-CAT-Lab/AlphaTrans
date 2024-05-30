@@ -85,6 +85,13 @@ class Project:
                 "class_name": ["method_name"]
             }
         }
+        If no schemas are provided, all schemas in the project will be processed.
+        
+        For a given schema, if an empty dictionary is provided, all classes will be processed.
+        If None is provided, no classes will be processed.
+        
+        For a given class, if an empty list is provided, all methods will be processed.
+        If None is provided, no methods will be processed.
         """
         return CompositionalTest(self, components)
             
@@ -122,16 +129,37 @@ class CompositionalTest:
             schema_name = schema.split('.')[-2]
             
             # get the classes to process
-            if schema_name not in components or not components[schema_name]:
+            if schema_name not in components or components[schema_name] == {}:
                 # Process all classes if no classes are provided
                 # or no schema was provided to begin with
                 classes_to_process = list(schema_data['classes'].keys())
+            elif components[schema_name] is None:
+                classes_to_process = []            
             else:
                 classes_to_process = []
                 for _class in components[schema_name]:
                     if _class not in schema_data['classes']:
                         raise ValueError(f"Class {_class} not found in schema {schema}!")
                     classes_to_process.append(_class)
+                    
+                    # check if this class extends another class
+                    if schema_data['classes'][_class]['extends']:
+                        parent_class = schema_data['classes'][_class]['extends']
+                                                
+                        # check if this class is being processed
+                        if parent_class not in [
+                            c for s in components for c in components[s] if components[s][c] is not None
+                        ]:
+                            # find the schema for the parent class
+                            # (assuming the parent class has its own schema)
+                            for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}'):
+                                if file_name.endswith(f'.{parent_class}.json'):
+                                    # add the parent class to the components
+                                    _schema = file_name[:file_name.rfind('.')]
+                                    if _schema in components:
+                                        components[_schema][parent_class] = None
+                                    else:
+                                        components[_schema] = {parent_class: None}
                     
             class_list = self.__resolve_class_order(schema_data)
                                 
@@ -142,10 +170,12 @@ class CompositionalTest:
                     schema_object.add_class("".join(schema_data['classes'][_class]['body']), dont_process=True)
                 
                 # get the methods to process
-                if schema_name not in components or _class not in components[schema_name] or not components[schema_name][_class]:
+                if schema_name not in components or _class not in components[schema_name] or components[schema_name][_class] == []:
                     # Process all methods if no methods are provided
                     # or no class or schema was provided to begin with
                     methods_to_process = list(schema_data['classes'][_class]['methods'].keys())
+                elif components[schema_name][_class] is None:
+                    methods_to_process = []
                 else:
                     methods_to_process = []
                     
@@ -508,6 +538,7 @@ class Schema:
                     self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)     
         
         # add graal-related members if the class is being processed
+        # otherwise just add a default constructor
         if not dont_process:
             python_file_dir = self.subpackage.replace('.', '/')
             python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
@@ -534,7 +565,21 @@ class Schema:
             """)
 
             # add a Default constructor
-            class_obj["methods"].append(f"public {class_name}() {{this.obj = clz.newInstance();}}")
+            unititialized_fields_body = "".join(class_obj["unitialized_fields"])
+            class_obj["methods"].append(f"""
+                public {class_name}() {{
+                    {unititialized_fields_body}
+                    this.obj = clz.newInstance();
+                }}
+            """)
+        else:
+            # add a Default constructor
+            unititialized_fields_body = "".join(class_obj["unitialized_fields"])
+            class_obj["methods"].append(f"""
+                public {class_name}() {{
+                    {unititialized_fields_body}
+                }}
+            """)
         
         # check if this class is nested inside another class
         if class_schema_data['nested_inside']:
@@ -707,90 +752,6 @@ class Schema:
         {"".join(self.imports)}
         {class_bodies}
         """
-
-
-#         for _class in data['classes']:
-#             if _class in data['classes'][_class]['extends']:
-#                 # This will take care of the super class constructor when
-#                 # the super class is defined in the same file
-                
-#                 # add empty constructor for super class
-#                 final_glue_code += f"    public {_class}() {{\n"
-                
-#                 # initialize all uninitialized fields inside the constructor
-#                 for _field in unitialized_fields:
-#                     field_name = _field.split(':')[1].strip()
-#                     field_type = data['classes'][_class]['fields'][_field]['types'][0][0]
-                    
-#                     final_glue_code += f"        {field_name} = {default_type_value[field_type]};\n"
-                    
-#                 final_glue_code += "    }\n"                
-            
-
-
-#             for _method in data['classes'][_class]['methods']:
-#                 ...
-                    
-#             # add nested classes
-#             if not data['classes'][_class]["nests"]:
-#                 final_glue_code += "}\n"
-#             else:
-#                 unclosed_brace_count += 1
-                    
-#             final_glue_code += "}\n" * unclosed_brace_count
-            
-#             # If the super class is not defined in the same file, we handle it separately
-#             # note that a class can only extend at most one class
-            
-#             # We have assumed (for now) that the parent class will have a file of its own
-#             if data['classes'][_class]['extends']:
-#                 super_class = data['classes'][_class]['extends'][0]
-#                 if super_class not in data['classes']:
-#                     # find the schema where the super class is defined
-#                     super_schema = [s for s in schemas if s.endswith(f'.{super_class}.json')][0]
-                    
-#                     # get the path to the super class
-#                     with open(f'data/schemas/{args.project_name}/{super_schema}') as f:
-#                         super_data = json.load(f)
-                        
-#                     super_file_path = get_destination_path(super_data["path"], super_class, OUTPUT_DIR, is_full_path=True)
-                    
-#                     # read the super class file
-#                     with open(super_file_path) as f:
-#                         super_class_file = f.read()
-                        
-#                     # add the empty constructor for the super class
-#                     unitialized_fields = []
-#                     for _field in super_data['classes'][super_class]['fields']:
-#                         line = "".join(super_data['classes'][super_class]['fields'][_field]['body'])
-                        
-#                         if '=' not in line:
-#                             unitialized_fields.append(_field)
-                            
-#                     new_constructor_code = f"    public {super_class}() {{\n"
-                    
-#                     # initialize all uninitialized fields inside the constructor
-#                     for _field in unitialized_fields:
-#                         field_name = _field.split(':')[1].strip()
-#                         field_type = super_data['classes'][super_class]['fields'][_field]['types'][0][0]
-                        
-#                         new_constructor_code += f"        {field_name} = {default_type_value[field_type]};\n"
-                        
-#                     new_constructor_code += "    }\n"
-                    
-#                     # note: parent class has a file of its own
-                    
-#                     # add the new constructor to the super class file
-#                     super_class_file = super_class_file[:super_class_file.rfind('}')]
-#                     super_class_file += new_constructor_code
-#                     super_class_file += "}\n"
-                    
-#                     # write the super class file back
-#                     write_to_file(super_file_path, super_class_file)
-
-#             class_name = schema.split('.')[-2] # get the class name preceding '.json'
-#             output_file = get_destination_path(data["path"], class_name, OUTPUT_DIR, is_full_path=True)
-#             write_to_file(output_file, final_glue_code)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate glue code for Compositional Testing.')
