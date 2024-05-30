@@ -3,6 +3,42 @@ import argparse
 import re
 import json
 import graphviz
+from collections import defaultdict, deque
+
+
+def detect_and_remove_cycles(graph):
+    # Calculate in-degrees of all nodes
+    in_degree = defaultdict(int)
+    for node in graph:
+        for neighbor in graph[node]:
+            in_degree[neighbor] += 1
+    
+    # Initialize a queue with nodes having zero in-degree
+    queue = deque([node for node in graph if in_degree[node] == 0])
+    
+    topological_order = []
+    while queue:
+        current = queue.popleft()
+        topological_order.append(current)
+        
+        for neighbor in graph[current]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+    
+    # Check for cycles
+    if len(topological_order) != len(graph):
+        # There is a cycle; remove one edge from each cycle
+        remaining_nodes = set(graph.keys()) - set(topological_order)
+        for node in remaining_nodes:
+            for neighbor in graph[node]:
+                if neighbor in remaining_nodes:
+                    # print(f"Removing edge {node} -> {neighbor} to break the cycle")
+                    graph[node].remove(neighbor)
+                    return detect_and_remove_cycles(graph)
+    
+    topological_order.reverse()
+    return topological_order
 
 
 def parse_dependencies(project_name):
@@ -84,31 +120,17 @@ def parse_dependencies(project_name):
     #         g.edge(class_name, dependency)
     # g.render(os.path.join(dependencies_dir, 'dependency_graph'), format='png', cleanup=True)
 
-    # # remove cycles
-    # removed_cycles = []
-    # for k,v in class_dependencies.items():
-    #     for dependency in v:
-    #         if k in class_dependencies[dependency]:
-    #             class_dependencies[dependency].remove(k)
-    #             removed_cycles.append((dependency, k))
+    adjacency_list = defaultdict(list)
+    for key, value in class_dependencies.items():
+        adjacency_list[key] = []
+        for pair in value:
+            adjacency_list[key].append(pair[0])
 
-    # # create traversal based on dependencies (pure to impure)
-    # traversal = {}
-    # while len(class_dependencies) != len(traversal):
-    #     for k,v in class_dependencies.items():
-    #         if k not in traversal:
-    #             if len(v) == 0:
-    #                 traversal[k] = []
-    #             else:
-    #                 if all([x in traversal for x in v]):
-    #                     traversal[k] = v
+    topological_order = detect_and_remove_cycles(adjacency_list)
+    traversal = {i: topological_order[i] for i in range(len(topological_order)) if topological_order[i] != 'package-info'}
 
-    # # add back cycles after creating traversal
-    # for i,j in removed_cycles:
-    #     traversal[i].append(j)
-
-    # with open(os.path.join(dependencies_dir, 'traversal.json'), 'w') as f:
-    #     json.dump(traversal, f, indent=4)
+    with open(os.path.join(dependencies_dir, 'traversal.json'), 'w') as f:
+        json.dump(traversal, f, indent=4)
 
 
 def main(args):
