@@ -106,6 +106,11 @@ def main(args, test_classes=False):
         # iterate over all classes in the file
         for _class in data['classes']:
             class_name = _class
+            
+            # skip nested and nameless classes
+            if 'new' in class_name or '{' in class_name: 
+                continue
+            
             is_anonymous = False
             
             # check if the class is anonymous
