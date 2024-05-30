@@ -1,6 +1,5 @@
 from collections import defaultdict
 import subprocess
-import os
 import json
 from constants import *
 
@@ -17,24 +16,6 @@ default_type_value.update({
 with open('src/compositional_glue_tests/type_handling.json') as f:
     type_handling = json.load(f) 
 
-def get_destination_path(path, file_name, output_dir, is_full_path=False, path_to_main=None):
-    _path = [output_dir]
-    
-    # fully qualified path from schema. remove the first 2 directories
-    if is_full_path:
-        _path += path.split('/')[2:]
-        _directories = "/".join(_path[:-1])
-    else:
-        _path += [path, "src"]
-        if path_to_main:
-            _path += [path_to_main]
-        # print(_path, "/".join(_path))
-        _directories = "/".join(_path)
-    
-    # create the final path if it doesn't exist
-    os.makedirs(_directories, exist_ok=True)
-
-    return f"{_directories}/{file_name}.java"
 
 def write_to_file(file, content):
     with open(file, "w") as f:

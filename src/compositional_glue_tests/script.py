@@ -50,6 +50,10 @@ class Project:
             
         # copy the project
         subprocess.run(['cp', '-r', f"{self.project_dir}/.", f"{self.glue_dir}/"], check=True)
+        
+        # if the 'target' directory has also been copied, remove it
+        if os.path.exists(f"{self.glue_dir}/target"):
+            subprocess.run(['rm', '-r', f"{self.glue_dir}/target"], check=True)
 
         # if pom.xml existed, write it back
         if pom_contents:
@@ -204,7 +208,9 @@ class CompositionalTest:
             if os.path.exists(file_name):
                 with open(file_name) as f:
                     self.scheduled_writes[file_name]["original_content"] = f.read()
-                    
+            
+            # make the directories if they don't exist
+            os.makedirs(os.path.dirname(file_name), exist_ok=True)        
             with open(file_name, "w") as f:
                 f.write(self.scheduled_writes[file_name]["new_content"])
                 
@@ -367,6 +373,7 @@ class CompositionalTest:
         Run the compositional tests.
         """
         self.__execute_writes()
+        failure_flag = False
         try:
             subprocess.run(
                 ['mvn', 'clean', 'test', '-Drat.skip', '-q'],
@@ -376,12 +383,15 @@ class CompositionalTest:
                 check=True
             )
         except Exception:
-            raise RuntimeError(f"Error running compositional test.")
+            failure_flag = True # check if the failure is due to the tests or something else
         
-        # self.__revert_writes()
+        self.__revert_writes()
         
         # collect the results
         failed_tests = self.__get_failed_tests_from_surefire()
+        
+        if failure_flag and not failed_tests:
+            raise Exception("An error occurred while running the tests!")
         
         return {
             "success": True if not failed_tests else False,
@@ -402,7 +412,7 @@ class CompositionalTest:
                 tree = ET.parse(f"{surefire_dir}/{file_name}")
                 root = tree.getroot()
                 for test_case in root.findall('testcase'):
-                    if test_case.find('error') is not None:
+                    if test_case.find('error') is not None or test_case.find('failure') is not None:
                         failed_tests.append(test_case.attrib['classname'] + '.' + test_case.attrib['name'])
                         
         return failed_tests
