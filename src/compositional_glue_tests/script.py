@@ -756,7 +756,7 @@ class Schema:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate glue code for Compositional Testing.')
     parser.add_argument('--project', type=str, dest='project_name', help='<Required> name of the project', required=True)
-    parser.add_argument('--class', type=str, dest='class_name', nargs="+", help='list of class name(s)', required=False)
+    parser.add_argument('--class', type=str, dest='class_name', help='list of class name(s)', required=False)
     parser.add_argument('--method', type=str, dest='method_name', help='name of the method', required=False)
     args = parser.parse_args()
     
