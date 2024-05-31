@@ -9,7 +9,7 @@ import io
 # Imports End
 
 
-class MissingOptionException:
+class MissingOptionException(ParseException):
 
     # Class Fields Begin
     __serialVersionUID: int = None

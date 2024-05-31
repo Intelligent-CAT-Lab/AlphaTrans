@@ -7,7 +7,7 @@ import io
 # Imports End
 
 
-class UnrecognizedOptionException:
+class UnrecognizedOptionException(ParseException):
 
     # Class Fields Begin
     __serialVersionUID: int = None

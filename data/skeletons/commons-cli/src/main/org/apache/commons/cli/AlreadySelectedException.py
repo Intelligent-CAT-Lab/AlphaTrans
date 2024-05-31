@@ -9,7 +9,7 @@ import io
 # Imports End
 
 
-class AlreadySelectedException:
+class AlreadySelectedException(ParseException):
 
     # Class Fields Begin
     __serialVersionUID: int = None

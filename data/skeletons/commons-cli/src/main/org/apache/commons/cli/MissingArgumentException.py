@@ -8,7 +8,7 @@ import io
 # Imports End
 
 
-class MissingArgumentException:
+class MissingArgumentException(ParseException):
 
     # Class Fields Begin
     __serialVersionUID: int = None
