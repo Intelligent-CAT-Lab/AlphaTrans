@@ -243,6 +243,9 @@ def main(args):
 
         for class_ in data['classes']:
 
+            if 'new' in class_ or '{' in class_: # skip nested and nameless classes
+                continue
+
             print(f'Translating class {class_} @ schema {schema}...', flush=True)
             
             pbar = tqdm.tqdm(data['classes'][class_]['fields'])
