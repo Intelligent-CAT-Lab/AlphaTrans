@@ -1,6 +1,5 @@
 from collections import defaultdict
 import subprocess
-import os
 import json
 from constants import *
 
@@ -13,24 +12,10 @@ default_type_value.update({
     "long": "0",
 })
 
-def get_destination_path(path, file_name, output_dir, is_full_path=False, path_to_main=None):
-    _path = [output_dir]
-    
-    # fully qualified path from schema. remove the first 2 directories
-    if is_full_path:
-        _path += path.split('/')[2:]
-        _directories = "/".join(_path[:-1])
-    else:
-        _path += [path, "src"]
-        if path_to_main:
-            _path += [path_to_main]
-        # print(_path, "/".join(_path))
-        _directories = "/".join(_path)
-    
-    # create the final path if it doesn't exist
-    os.makedirs(_directories, exist_ok=True)
+# load type handling information
+with open('src/compositional_glue_tests/type_handling.json') as f:
+    type_handling = json.load(f) 
 
-    return f"{_directories}/{file_name}.java"
 
 def write_to_file(file, content):
     with open(file, "w") as f:
@@ -43,86 +28,27 @@ def write_to_file(file, content):
         print(f"Error formatting {file}: {e}")
     return
 
-def make_mappings(args, schemas):
+def pre_order_traversal(relation: list[tuple[str, str | None]]) -> list[str]:
     """
-    Create mappings for package classes.
+    Performs a pre-order traversal of the tree represented by the parent list
+
+    Args:
+        parent_list: A list of tuples representing parent relations (child, parent).
+        The parent of the root node should be None. There should be only one root node.
+
+    Returns:
+        A list containing the nodes visited in pre-order.
     """
-    classes_to_map = []
-    imports = []
+    visited = []
     
-    formatted_project_name = args.project_name.replace('-', '.')
-    for schema in schemas:
-        if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
-            continue
-        with open(f'data/schemas/{args.project_name}/{schema}') as f:
-            data = json.load(f)
+    root = [child for child, parent in relation if parent is None][0]
+    stack = [root]
 
-        for _class in data['classes']:
-            if (
-                    not data['classes'][_class]['is_interface'] 
-                    and not '/test/' in data['path'] 
-                    and not _class.endswith('Exception')
-                ):
-                if data['classes'][_class]["nested_inside"]:
-                    classes_to_map.append(f"{data['classes'][_class]['nested_inside']}.{_class}")
-                else:
-                    classes_to_map.append(_class)
-                
-                # link subpackages
-                if main_paths[args.project_name] in data['path']:
-                    path_tail = data['path'].split(main_paths[args.project_name])[-1]
-                    if "/" in path_tail:
-                        # remove the last segment
-                        path_tail = path_tail[:path_tail.rfind('/')]
-                        subproj_name = "." + path_tail.replace('/', '.')
-                        imports.append(f"{subproj_name}.{_class}")
-                    
-    return_string = ""
-    for _class in classes_to_map:
-        return_string += f".targetTypeMapping(Value.class, {_class}.class, null, (v) -> new {_class}(v))\n"
-        
-    imports_string = ""
-    for _import in imports:
-        imports_string += f"import org.apache.{formatted_project_name}{_import};"
+    while stack:
+        current_node = stack.pop()
+        visited.append(current_node)
 
-    return return_string + "// TODO: Add other mappings", imports_string
+        children = [child for child, parent in relation if parent == current_node]
+        stack.extend(children[::-1])  # Add children in reverse order for pre-order
 
-def make_exception_mappings(args, schemas):
-    """
-    Create mappings for package exception classes.
-    """
-    package_exception_classes = []
-    imports = []
-
-    formatted_project_name = args.project_name.replace('-', '.')
-    for schema in schemas:
-        if args.class_name is not None and not schema.endswith(f'.{args.class_name}.json'):
-            continue
-        with open(f'data/schemas/{args.project_name}/{schema}') as f:
-            data = json.load(f)
-            
-        for _class in data['classes']:
-            if _class.endswith('Exception'):
-                if data['classes'][_class]["nested_inside"]:
-                    package_exception_classes.append(f"{data['classes'][_class]['nested_inside']}.{_class}")
-                else:
-                    package_exception_classes.append(_class)
-                
-                # link subpackages
-                if main_paths[args.project_name] in data['path']:
-                    path_tail = data['path'].split(main_paths[args.project_name])[-1]
-                    if "/" in path_tail:
-                        # remove the last segment
-                        path_tail = path_tail[:path_tail.rfind('/')]
-                        subproj_name = "." + path_tail.replace('/', '.')
-                        imports.append(f"{subproj_name}.{_class}")
-                
-    return_string = ""
-    for _class in package_exception_classes:
-        return_string += f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(exceptionObj);}}\n"
-    
-    imports_string = ""
-    for _import in imports:
-        imports_string += f"import org.apache.{formatted_project_name}{_import};"
-        
-    return return_string + "// TODO: Add other mappings", imports_string
+    return visited
