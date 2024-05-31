@@ -185,7 +185,7 @@ def main(args):
             if schema['classes'][class_]['extends'] != []:
                 schema['classes'][class_]['extends'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
-                schema['classes'][class_]['extends'] = [extracted_types[cls_name] if cls_name in extracted_types else cls_name for cls_name in schema['classes'][class_]['extends']]
+                schema['classes'][class_]['extends'] = [extracted_types[cls_name] if cls_name in extracted_types and cls_name not in class_path else cls_name for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [cls_name for cls_name in schema['classes'][class_]['extends'] if not any(substring in cls_name for substring in exceptional_superclasses) and cls_name != class_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
@@ -196,7 +196,7 @@ def main(args):
             elif schema['classes'][class_]['implements'] != []:
                 schema['classes'][class_]['implements'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
                 schema['classes'][class_]['implements'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
-                schema['classes'][class_]['implements'] = [extracted_types[cls_name] if cls_name in extracted_types else cls_name for cls_name in schema['classes'][class_]['implements']]
+                schema['classes'][class_]['implements'] = [extracted_types[cls_name] if cls_name in extracted_types and cls_name not in class_path else cls_name for cls_name in schema['classes'][class_]['implements']]
                 schema['classes'][class_]['implements'] = [cls_name for cls_name in schema['classes'][class_]['implements'] if not any(substring in cls_name for substring in exceptional_superclasses) and cls_name != class_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
                     skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
