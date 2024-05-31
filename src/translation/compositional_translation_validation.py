@@ -4,35 +4,67 @@ from dotenv import load_dotenv
 import torch
 import tqdm
 import os
+import time
+import datetime
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from syntactic_validation import l0_validation
 
+from genai.client import Client
+from genai.credentials import Credentials
+from genai.schema import (
+    DecodingMethod,
+    TextGenerationParameters,
+    TextGenerationReturnOptions,
+)
 
-def translate(model, tokenizer, prompt, device, fragment):
+
+def translate(model, tokenizer, prompt, device, fragment, args):
     max_attempts = 0
     parsed_fragment = None
     feedback = ''
+    start_time = time.time()
     while max_attempts < 5:
-
-        input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
-        max_new_tokens = 2000 - input_tokens.shape[1]
-        if fragment == 'field':
-            max_new_tokens = min(max_new_tokens, 512)
 
         print(prompt, flush=True)
         print('=======================GENERATING=======================', flush=True)
 
-        raw_output = model.generate(
-            input_tokens,
-            max_new_tokens=max_new_tokens,
-            do_sample=True,
-            output_scores=True,
-            return_dict_in_generate=True,
-            pad_token_id=tokenizer.eos_token_id,
-            temperature=0.2,
-        )
+        if args.use_bam:
+            parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
+                                                    min_new_tokens=1,
+                                                    max_new_tokens=1024 if fragment == 'field' else 4096,
+                                                    return_options=TextGenerationReturnOptions(
+                                                        input_text=True,
+                                                    )
+                                                )
 
-        generation = tokenizer.decode(raw_output.sequences[0], skip_special_tokens=True)
+            client = Client(credentials=Credentials.from_env())
+            model_id = "deepseek-ai/deepseek-coder-33b-instruct"
+
+            for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
+                generation = response.results[0].input_text + response.results[0].generated_text
+        
+        else:
+
+            input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
+            # max_new_tokens = 16384 - input_tokens.shape[1]
+            if fragment == 'field':
+                # max_new_tokens = min(max_new_tokens, 1024)
+                max_new_tokens = 1024
+            elif fragment == 'method':
+                # max_new_tokens = min(max_new_tokens, 4096)
+                max_new_tokens = 4096
+
+            raw_output = model.generate(
+                input_tokens,
+                max_new_tokens=max_new_tokens,
+                do_sample=False,
+                output_scores=True,
+                return_dict_in_generate=True,
+                pad_token_id=tokenizer.eos_token_id,
+            )
+
+            generation = tokenizer.decode(raw_output.sequences[0], skip_special_tokens=True)
+
         generation = generation[generation.find('### Response:')+13:]
 
         print(generation, flush=True)
@@ -59,7 +91,8 @@ def translate(model, tokenizer, prompt, device, fragment):
 
         max_attempts = 5
 
-    return parsed_fragment
+    elapsed_time = time.time() - start_time
+    return parsed_fragment, elapsed_time
 
 
 def generate_prompt(data, schema, class_, fragment_, args, fragment_type):
@@ -137,19 +170,54 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type):
     return prompt
 
 
+def align_schema_order(schemas, traversal_order):
+    print(traversal_order)
+    aligned_schemas = []
+    for fname in traversal_order:
+        found_schema = []
+        for schema in schemas:
+            print(schema)
+
+            if not schema.endswith('_python_partial.json'):
+                schemas.remove(schema)
+                continue
+
+            if f'.{fname}_python_partial.json' in schema:
+                found_schema.append(schema)
+        exit()
+        
+        # assert len(found_schema) == 1, f"Found more than one schema for {fname}: {found_schema}"
+        aligned_schemas += found_schema
+    
+    print(len(aligned_schemas), len(schemas))
+    for k in schemas:
+        if k not in aligned_schemas:
+            print(k)
+    # assert len(aligned_schemas) == len(schemas), f"Found less schemas than expected: {aligned_schemas}"
+
+    return aligned_schemas
+
+
 def main(args):
+    device = 'cuda' if torch.cuda.is_available() and args.use_cuda else 'cpu'
+    tokenizer, model = None, None
 
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
-    if args.model_name == 'deepseek-coder-33b-instruct':
+    if args.model_name == 'deepseek-coder-33b-instruct' and not args.use_bam:
         kwargs = {}
         kwargs["torch_dtype"] = torch.float16
-        tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir='/home/shared/huggingface')
-        model = AutoModelForCausalLM.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir='/home/shared/huggingface', device_map='auto', **kwargs)
-    else:
-        raise ValueError(f"Model name {args.model_name} not supported")
+        tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir)
+        model = AutoModelForCausalLM.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir, device_map='auto', **kwargs)
 
     schemas = os.listdir(f'data/schemas/{args.project_name}')
+
+    # traversal = {}
+    # with open(f'data/dependencies/{args.project_name}/traversal.json', 'r') as f:
+    #     traversal = json.load(f)
+    
+    # traversal_order = list(traversal.values())
+
+    # schemas = align_schema_order(schemas, traversal_order)
+    # return
 
     metrics = {}
     for schema in schemas:
@@ -185,14 +253,18 @@ def main(args):
                 prompt = generate_prompt(data, schema, class_, field_, args, 'field')
                 if prompt is None:
                     data['classes'][class_]['fields'][field_]['translation'] = data['classes'][class_]['fields'][field_]['partial_translation']
+                    data['classes'][class_]['fields'][field_]['elapsed_time'] = 0
+                    data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                     continue
 
                 metrics[schema]['syntactic']['total'] += 1
-                translation = translate(model, tokenizer, prompt, device, 'field')
+                translation, elapsed_time = translate(model, tokenizer, prompt, device, 'field', args)
                 if translation is not None:
                     metrics[schema]['syntactic']['correct'] += 1
                 
                 data['classes'][class_]['fields'][field_]['translation'] = translation
+                data['classes'][class_]['fields'][field_]['elapsed_time'] = elapsed_time
+                data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
 
             pbar = tqdm.tqdm(data['classes'][class_]['methods'])
             for method_ in pbar:
@@ -202,11 +274,13 @@ def main(args):
                 prompt = generate_prompt(data, schema, class_, method_, args, 'method')
 
                 metrics[schema]['syntactic']['total'] += 1
-                translation = translate(model, tokenizer, prompt, device, 'method')
+                translation, elapsed_time = translate(model, tokenizer, prompt, device, 'method', args)
                 if translation is not None:
                     metrics[schema]['syntactic']['correct'] += 1
                 
                 data['classes'][class_]['methods'][method_]['translation'] = translation
+                data['classes'][class_]['methods'][method_]['elapsed_time'] = elapsed_time
+                data['classes'][class_]['methods'][method_]['generation_timestamp'] = datetime.datetime.now().isoformat()
     
         os.makedirs(f'data/translations/{args.model_name}/{args.project_name}', exist_ok=True)
         with open(f'data/translations/{args.model_name}/{args.project_name}/{schema.replace("python_partial", "translation")}', 'w') as f:
@@ -227,5 +301,7 @@ if __name__ == '__main__':
     parser_.add_argument('--translate_test', action='store_true', help='translate test files')
     parser_.add_argument('--translate_main', action='store_true', help='translate main files')
     parser_.add_argument('--cache_dir', type=str, dest='cache_dir', help='cache directory')
+    parser_.add_argument('--use_bam', action='store_true', help='translate main files')
+    parser_.add_argument('--use_cuda', action='store_true', help='use cuda for translation')
     args = parser_.parse_args()
     main(args)
