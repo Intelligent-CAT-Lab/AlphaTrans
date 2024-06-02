@@ -29,16 +29,32 @@ def translate(model, tokenizer, prompt, device, fragment, args):
         print('=======================GENERATING=======================', flush=True)
 
         if args.use_bam:
+            client = Client(credentials=Credentials.from_env())
+            model_id = "deepseek-ai/deepseek-coder-33b-instruct"
+
+            total_tokens = 0
+            for response in client.text.tokenization.create(model_id=model_id, input=prompt):
+                total_tokens = response.results[0].token_count
+            
+            if total_tokens > 16384:
+                return None, -1
+
+            max_new_tokens = 16384 - total_tokens
+
+            if fragment == 'field':
+                max_new_tokens = min(max_new_tokens, 1024)
+                # max_new_tokens = 1024
+            elif fragment == 'method':
+                max_new_tokens = min(max_new_tokens, 4096)
+                # max_new_tokens = 4096
+
             parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
                                                     min_new_tokens=1,
-                                                    max_new_tokens=1024 if fragment == 'field' else 4096,
+                                                    max_new_tokens=max_new_tokens,
                                                     return_options=TextGenerationReturnOptions(
                                                         input_text=True,
                                                     )
                                                 )
-
-            client = Client(credentials=Credentials.from_env())
-            model_id = "deepseek-ai/deepseek-coder-33b-instruct"
 
             for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
                 generation = response.results[0].input_text + response.results[0].generated_text
@@ -46,13 +62,17 @@ def translate(model, tokenizer, prompt, device, fragment, args):
         else:
 
             input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
-            # max_new_tokens = 16384 - input_tokens.shape[1]
+
+            if input_tokens.shape[1] > 16384:
+                return None, -1
+
+            max_new_tokens = 16384 - input_tokens.shape[1]
             if fragment == 'field':
-                # max_new_tokens = min(max_new_tokens, 1024)
-                max_new_tokens = 1024
+                max_new_tokens = min(max_new_tokens, 1024)
+                # max_new_tokens = 1024
             elif fragment == 'method':
-                # max_new_tokens = min(max_new_tokens, 4096)
-                max_new_tokens = 4096
+                max_new_tokens = min(max_new_tokens, 4096)
+                # max_new_tokens = 4096
 
             raw_output = model.generate(
                 input_tokens,
@@ -219,7 +239,6 @@ def main(args):
     # schemas = align_schema_order(schemas, traversal_order)
     # return
 
-    metrics = {}
     for schema in schemas:
 
         if not schema.endswith('_python_partial.json'):
@@ -234,6 +253,7 @@ def main(args):
         if 'src.main' not in schema and args.translate_main:
             continue
 
+        metrics = {}
         metrics.setdefault(schema, {'syntactic': {'total': 0, 'correct': 0},
                                     'functional': {'total': 0, 'correct': 0}})
 
@@ -288,9 +308,11 @@ def main(args):
         os.makedirs(f'data/translations/{args.model_name}/{args.project_name}', exist_ok=True)
         with open(f'data/translations/{args.model_name}/{args.project_name}/{schema.replace("python_partial", "translation")}', 'w') as f:
             json.dump(data, f, indent=4)
+
+        os.makedirs(f'data/translations/{args.model_name}/{args.project_name}/metrics', exist_ok=True)
     
-    with open(f'data/translations/{args.model_name}/{args.project_name}/metrics.json', 'w') as f:
-        json.dump(metrics, f, indent=4)
+        with open(f'data/translations/{args.model_name}/{args.project_name}/metrics/{schema.replace("python_partial", "translation")}', 'w') as f:
+            json.dump(metrics, f, indent=4)
 
 
 if __name__ == '__main__':

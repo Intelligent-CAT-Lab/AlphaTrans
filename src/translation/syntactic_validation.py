@@ -3,6 +3,7 @@ import ast
 
 
 def l0_validation(generation):
+    generation = generation.replace('```python', '```')
     pattern = r'```([^`]+)```'
     match = re.search(pattern, generation, re.DOTALL)
 
