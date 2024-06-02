@@ -246,7 +246,26 @@ def main(args):
         with open(path_, 'r') as f:
             data = json.load(f)
 
-        for class_ in data['classes']:
+        class_order = []
+        while len(class_order) != len(data['classes']):
+            for class_ in data['classes']:
+                if class_ in class_order:
+                    continue
+
+                if not set(data['classes'][class_]['extends']).issubset(set(class_order)) and all([x in data['classes'].keys() for x in data['classes'][class_]['extends']]):
+                    continue
+                
+                if not set(data['classes'][class_]['implements']).issubset(set(class_order)) and all([x in data['classes'].keys() for x in data['classes'][class_]['implements']]):
+                    continue                                                                                                                       
+                
+                if data['classes'][class_]['nests'] == []:
+                    class_order.append(class_)
+                    continue
+
+                if all([x in class_order for x in data['classes'][class_]['nests']]):
+                    class_order.append(class_)
+        
+        for class_ in class_order:
 
             if 'new' in class_ or '{' in class_: # skip nested and nameless classes
                 continue
