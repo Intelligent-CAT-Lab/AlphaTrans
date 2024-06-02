@@ -191,29 +191,18 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type):
 
 
 def align_schema_order(schemas, traversal_order):
-    print(traversal_order)
     aligned_schemas = []
     for fname in traversal_order:
         found_schema = []
         for schema in schemas:
-            print(schema)
-
-            if not schema.endswith('_python_partial.json'):
-                schemas.remove(schema)
-                continue
-
             if f'.{fname}_python_partial.json' in schema:
                 found_schema.append(schema)
-        exit()
         
         # assert len(found_schema) == 1, f"Found more than one schema for {fname}: {found_schema}"
         aligned_schemas += found_schema
     
-    print(len(aligned_schemas), len(schemas))
-    for k in schemas:
-        if k not in aligned_schemas:
-            print(k)
-    # assert len(aligned_schemas) == len(schemas), f"Found less schemas than expected: {aligned_schemas}"
+    schemas = [fname for fname in schemas if fname.endswith('_python_partial.json')]
+    assert len(aligned_schemas) == len(schemas), f"Found less schemas than expected: {aligned_schemas}"
 
     return aligned_schemas
 
@@ -230,19 +219,15 @@ def main(args):
 
     schemas = os.listdir(f'data/schemas/{args.project_name}')
 
-    # traversal = {}
-    # with open(f'data/dependencies/{args.project_name}/traversal.json', 'r') as f:
-    #     traversal = json.load(f)
+    traversal = {}
+    with open(f'data/dependencies/{args.project_name}/traversal.json', 'r') as f:
+        traversal = json.load(f)
     
-    # traversal_order = list(traversal.values())
+    traversal_order = list(traversal.values())
 
-    # schemas = align_schema_order(schemas, traversal_order)
-    # return
+    schemas = align_schema_order(schemas, traversal_order)
 
     for schema in schemas:
-
-        if not schema.endswith('_python_partial.json'):
-            continue
 
         if os.path.exists(f'data/translations/{args.model_name}/{args.project_name}/{schema.replace("python_partial", "translation")}'):
             continue
