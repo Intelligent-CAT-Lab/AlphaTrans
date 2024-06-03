@@ -293,7 +293,21 @@ def main(args):
                 data['classes'][class_]['fields'][field_]['elapsed_time'] = elapsed_time
                 data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
 
-            pbar = tqdm.tqdm(data['classes'][class_]['methods'])
+            method_order = []
+            while len(method_order) != len(data['classes'][class_]['methods']):
+                
+                for method_ in data['classes'][class_]['methods']:
+                    if method_ in method_order:
+                        continue
+
+                    if data['classes'][class_]['methods'][method_]['calls'] == []:
+                        method_order.append(method_)
+                        continue
+
+                    if all([x[2] in method_order for x in data['classes'][class_]['methods'][method_]['calls'] if x[0] == schema.replace('_python_partial.json', '') and x[1] == class_]):
+                        method_order.append(method_)
+
+            pbar = tqdm.tqdm(method_order)
             for method_ in pbar:
                 pbar.update()
                 pbar.set_description(f"Translating method {method_} in class {class_} @ schema {schema}...")
