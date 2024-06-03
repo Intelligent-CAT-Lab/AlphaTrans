@@ -5,8 +5,8 @@ import json
 import keyword
 import xml.etree.ElementTree as ET
  
-from utils import default_type_value, write_to_file, type_handling, pre_order_traversal
-from constants import *
+from src.compositional_glue_tests.utils import default_type_value, write_to_file, type_handling, pre_order_traversal
+from src.compositional_glue_tests.constants import *
 
 
 class Project:
@@ -32,11 +32,12 @@ class Project:
         self.project_dir = os.path.join(self.root_dir, ORIGINAL_DIR, self.name)
         self.glue_dir = os.path.join(self.root_dir, OUTPUT_DIR, self.name)
 
-        self.__initialize_project()
+        self.__initialize_python_project()
+        self.__initialize_java_project()
                 
-    def __initialize_project(self):
+    def __initialize_java_project(self):
         """       
-        Copy original project to glue_code directory
+        Copy original java project to glue_code directory
         but first check if pom.xml exists in the output directory and
         and if it does, store its contents      
         """        
@@ -76,6 +77,80 @@ class Project:
             f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/{paths[self.name]['main'].replace('/java/', '/')}/"
         ], check=True)
         
+    def __initialize_python_project(self):
+        """
+        Copy the skeleton to the translation directory.
+        """
+        if not os.path.exists(f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/"):
+            os.makedirs(f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/")
+            
+        # copy the skeleton
+        subprocess.run([
+            'cp', '-r', 
+            f"{self.root_dir}/{SKELETON_DIR}/{self.name}/.", 
+            f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/"
+        ], check=True)
+    
+    def inject_translated_method(self, translated_method: str, schema_file_name: str, class_name: str, method_name: str):
+        """
+        Inject the translated method into the schema by
+        recomposing the file from the schema.
+        """
+        new_file_contents = []
+        
+        python_partial_schema_name = schema_file_name[:schema_file_name.rfind('.')] + '_python_partial.json'
+        # find the schema file
+        for file_name in os.listdir(f"{self.schema_dir}/{self.name}"):
+            if file_name.endswith(python_partial_schema_name):
+                schema_full_file_name = file_name
+                break
+        else:
+            raise ValueError(f"Schema {schema_full_file_name} not found!")
+        
+        with open(f"{self.schema_dir}/{self.name}/{schema_full_file_name}") as f:
+            schema_data = json.load(f)
+            
+        # add the translation to the schema
+        if method_name not in schema_data['classes'][class_name]['methods']:
+            raise ValueError(f"Method {method_name} not found in class {class_name} of schema {python_partial_schema_name}!")        
+        schema_data['classes'][class_name]['methods'][method_name]['translation'] = translated_method 
+            
+        # add imports
+        new_file_contents.extend(schema_data['python_imports'])
+        
+        # add classes
+        for _class in schema_data['classes']:
+            # add declaration
+            new_file_contents.append(schema_data['classes'][_class]['python_class_declaration'])
+            
+            # add fields
+            for _field in schema_data['classes'][_class]['fields']:
+                if 'translation' in schema_data['classes'][_class]['fields'][_field]:
+                    new_file_contents.append(schema_data['classes'][_class]['fields'][_field]['translation'])
+                else:
+                    new_file_contents.append(schema_data['classes'][_class]['fields'][_field]['partial_translation'][0])
+                    
+            # add methods
+            for _method in schema_data['classes'][_class]['methods']:
+                if 'translation' in schema_data['classes'][_class]['methods'][_method]:
+                    new_file_contents.append(schema_data['classes'][_class]['methods'][_method]['translation'])
+                else:
+                    new_file_contents.append(schema_data['classes'][_class]['methods'][_method]['partial_translation'][0])
+                    
+        # write back the schema
+        with open(f"{self.schema_dir}/{self.name}/{schema_full_file_name}", "w") as f:
+            f.write(json.dumps(schema_data, indent=4))
+            
+        # write the new contents to the python file
+        with open("".join([
+            f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/",
+            schema_data['path'].split('/src/')[1].replace('.java', '.py').replace('/java/', '/')
+        ]), "w") as f:
+            f.write("".join(new_file_contents))        
+            
+    def reset_partial_translation_schemas(self):
+        pass # TODO: Implement this
+    
     def derive_compositional_tests(self, components: dict[str, dict[str, list[str]]]):
         """
         Derive compositional tests for the given components.
@@ -94,7 +169,7 @@ class Project:
         If None is provided, no methods will be processed.
         """
         return CompositionalTest(self, components)
-            
+
         
 class CompositionalTest:
     """
@@ -144,7 +219,7 @@ class CompositionalTest:
                     
                     # check if this class extends another class
                     if schema_data['classes'][_class]['extends']:
-                        parent_class = schema_data['classes'][_class]['extends']
+                        parent_class = schema_data['classes'][_class]['extends'][0]
                                                 
                         # check if this class is being processed
                         if parent_class not in [
@@ -155,10 +230,11 @@ class CompositionalTest:
                             for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}'):
                                 if file_name.endswith(f'.{parent_class}.json'):
                                     # add the parent class to the components
-                                    _schema = file_name[:file_name.rfind('.')]
+                                    _schema = file_name[:file_name.rfind('.')].split('.')[-1]
                                     if _schema in components:
                                         components[_schema][parent_class] = None
                                     else:
+                                        self.schemas_to_process.append(file_name)
                                         components[_schema] = {parent_class: None}
                     
             class_list = self.__resolve_class_order(schema_data)
@@ -416,6 +492,7 @@ class CompositionalTest:
             failure_flag = True # check if the failure is due to the tests or something else
         
         self.__revert_writes()
+        self.project.reset_partial_translation_schemas()
         
         # collect the results
         failed_tests = self.__get_failed_tests_from_surefire()
@@ -762,8 +839,8 @@ if __name__ == '__main__':
     
     project = Project(args.project_name)
     test = project.derive_compositional_tests({
-        args.class_name[0]: {
-            args.class_name[0]: [args.method_name]
+        args.class_name: {
+            args.class_name: [args.method_name]
         }
     })
     print(test.run())

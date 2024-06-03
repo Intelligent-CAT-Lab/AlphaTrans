@@ -1,7 +1,7 @@
 from collections import defaultdict
 import subprocess
 import json
-from constants import *
+from src.compositional_glue_tests.constants import *
 
 default_type_value = defaultdict(lambda: "null")
 default_type_value.update({
