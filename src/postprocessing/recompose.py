@@ -72,6 +72,14 @@ def main(args):
                 recomposed_file += '\n'.join(data['classes'][class_]['methods'][method]['translation'])
                 total_fragments += 1
 
+        import_map = {'urllib': 'import urllib\n', 'sys': 'import sys\n'}
+
+        python_imports = data['python_imports']
+        for key in import_map:
+            if key in recomposed_file and import_map[key] not in recomposed_file:
+                recomposed_file = recomposed_file.replace('from __future__ import annotations\n', 'from __future__ import annotations\n' + import_map[key])
+                python_imports.append(import_map[key].strip())
+
         formatted_schema_fname = '.'.join(translation_file.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
         os.makedirs(f'data/recomposed_projects/{args.model_name}/{args.project_name}/{sub_dir}', exist_ok=True)
