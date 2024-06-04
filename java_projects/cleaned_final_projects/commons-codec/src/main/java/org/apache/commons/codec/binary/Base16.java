@@ -263,7 +263,7 @@ public class Base16 extends BaseNCodec {
 
     /** Creates a Base16 codec used for decoding and encoding. */
     public Base16(final boolean lowerCase, final CodecPolicy decodingPolicy) {
-        super(
+        super(  2,
                 BYTES_PER_UNENCODED_BLOCK,
                 BYTES_PER_ENCODED_BLOCK,
                 0,

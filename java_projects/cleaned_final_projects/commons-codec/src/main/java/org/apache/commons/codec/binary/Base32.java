@@ -403,7 +403,7 @@ public class Base32 extends BaseNCodec {
             final boolean useHex,
             final byte padding,
             final CodecPolicy decodingPolicy) {
-        super(
+        super(  2,
                 BYTES_PER_UNENCODED_BLOCK,
                 BYTES_PER_ENCODED_BLOCK,
                 lineLength,

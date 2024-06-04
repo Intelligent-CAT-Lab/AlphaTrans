@@ -35,7 +35,7 @@ public class BaseNCodecTest {
     @Before
     public void setUp() {
         codec =
-                new BaseNCodec(0, 0, 0, 0) {
+                new BaseNCodec(0, 0, 0, 0, 0, (byte) 0, null) {
                     @Override
                     protected boolean isInAlphabet0(final byte b) {
                         return b == 'O' || b == 'K'; // allow OK
@@ -135,7 +135,7 @@ public class BaseNCodecTest {
     @Test
     public void testProvidePaddingByte() {
         codec =
-                new BaseNCodec(0, 0, 0, 0, (byte) 0x25) {
+                new BaseNCodec(1, 0, 0, 0, 0, (byte) 0x25, null) {
                     @Override
                     protected boolean isInAlphabet0(final byte b) {
                         return b == 'O' || b == 'K'; // allow OK
@@ -299,7 +299,7 @@ public class BaseNCodecTest {
      */
     private static class NoOpBaseNCodec extends BaseNCodec {
         NoOpBaseNCodec() {
-            super(0, 0, 0, 0);
+            super(0, 0, 0, 0, 0, (byte) 0, null);
         }
 
         @Override
