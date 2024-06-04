@@ -104,6 +104,18 @@ class BaseNCodec(BinaryDecoder, BinaryEncoder, ABC):
     def _containsAlphabetOrPad(self, arrayOctet: typing.List[int]) -> bool:
         pass
 
+    def __init__(
+        self,
+        constructorId: int,
+        unencodedBlockSize: int,
+        encodedBlockSize: int,
+        lineLength: int,
+        chunkSeparatorLength: int,
+        pad: int,
+        decodingPolicy: CodecPolicy,
+    ) -> None:
+        pass
+
     @staticmethod
     def _isWhiteSpace(byteToCheck: int) -> bool:
         pass
