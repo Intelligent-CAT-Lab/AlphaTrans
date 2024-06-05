@@ -11,7 +11,7 @@ def l2_validation(members_to_validate: list[list]):
     ]
     """    
     global project    
-    project_name = members_to_validate[0][4].project_name
+    project_name = members_to_validate[0][4]
     
     if not project:
         project = Project(project_name)
