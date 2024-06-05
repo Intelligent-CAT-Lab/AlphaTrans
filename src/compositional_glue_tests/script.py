@@ -808,8 +808,8 @@ class Schema:
             _class['declaration'],
             "".join(_class['fields']),
             "".join(_class['methods']),
-            _class['sync'].get_body(),
-            _class['revsync'].get_body(),
+            _class['sync'].get_body() if _class['sync'] else "",
+            _class['revsync'].get_body() if _class['revsync'] else "",
             "".join([
                 self.__get_class_body(nested_class) for nested_class in _class['nests']
             ]),
