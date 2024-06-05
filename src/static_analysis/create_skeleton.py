@@ -237,6 +237,11 @@ def main(args):
                     field_body += '<placeholder>\n'
 
                 target_schema['classes'][class_]['fields'][field]['partial_translation'] = f'    {field_body}'
+                target_schema['classes'][class_]['fields'][field]['translation'] = []
+                target_schema['classes'][class_]['fields'][field]['translation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['elapsed_time'] = 0
+                target_schema['classes'][class_]['fields'][field]['generation_timestamp'] = 0
+                target_schema['classes'][class_]['fields'][field]['model_name'] = 'deepseek-coder-33b-instruct'
 
                 skeleton += f'\t{field_name}: {field_type} = None\n'
             skeleton += '\t# Class Fields End\n\n'
@@ -318,6 +323,11 @@ def main(args):
                 current_method = [x.replace('\t', '    ') for x in current_method]
 
                 target_schema['classes'][class_]['methods'][method]['partial_translation'] = current_method
+                target_schema['classes'][class_]['methods'][method]['translation'] = []
+                target_schema['classes'][class_]['methods'][method]['translation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['elapsed_time'] = 0
+                target_schema['classes'][class_]['methods'][method]['generation_timestamp'] = 0
+                target_schema['classes'][class_]['methods'][method]['model_name'] = 'deepseek-coder-33b-instruct'
 
                 assert '<placeholder>' not in ''.join(current_method)
 
