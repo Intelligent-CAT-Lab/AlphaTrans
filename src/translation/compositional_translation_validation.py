@@ -67,7 +67,8 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
                                                         max_new_tokens=max_new_tokens,
                                                         return_options=TextGenerationReturnOptions(
                                                             input_text=True,
-                                                        )
+                                                        ),
+                                                        time_limit=60000,
                                                     )
 
                 for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
@@ -115,6 +116,10 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
             syntactically_validated_members.append([parsed_fragment, schema, class_, fragment_, project_name])
             
             max_attempts = 5
+    
+    if syntactically_validated_members == []:
+        elapsed_time = time.time() - start_time
+        return None, elapsed_time
 
     if members_to_translate[0]['fragment_type'] == 'field':
         elapsed_time = time.time() - start_time
@@ -146,7 +151,7 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type):
 
     original_fragment = ''.join(data['classes'][class_][f'{fragment_type}s'][fragment_]['body'])
 
-    instruction = f'### Instruction:\nTranslate the following {args.from_lang} {fragment_type} to {args.to_lang} like the example above. You only need to translate the \"{fragment_.split(":")[1]}\" {fragment_type}. All necessary dependencies are available in partial {args.to_lang} translation.\n\n'
+    instruction = f'### Instruction:\nTranslate the following {args.from_lang} {fragment_type} to {args.to_lang} 3.10 like the example above. You only need to translate the \"{fragment_.split(":")[1]}\" {fragment_type}. All necessary dependencies are available in partial {args.to_lang} translation.\n\n'
     instruction += f"{args.from_lang} code:\n```\nclass {class_} {{\n" + original_fragment + f"\n}}\n```"
 
     instruction += f'\n\nPartial {args.to_lang} translation:\n```\n'
@@ -286,7 +291,10 @@ def main(args):
                 pbar.update()
                 pbar.set_description(f"Translating field {field_} in class {class_} @ schema {schema}...")
 
-                if data['classes'][class_]['fields'][field_]['translation_status'] == 'success':
+                if data['classes'][class_]['fields'][field_]['translation_status'] == 'success' and not args.dump_syntactically_validated_fragments:
+                    continue
+
+                if data['classes'][class_]['fields'][field_]['translation_status'] == 'syntactical_success' and args.dump_syntactically_validated_fragments:
                     continue
 
                 prompt = generate_prompt(data, schema, class_, field_, args, 'field')
@@ -304,11 +312,13 @@ def main(args):
 
                 translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'field', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': schema, 'class': class_, 'fragment': field_}], args.dump_syntactically_validated_fragments)
                 if translation is not None and args.dump_syntactically_validated_fragments:
+                    data['classes'][class_]['fields'][field_]['translation_status'] = 'syntactical_success'
+                elif translation is not None and not args.dump_syntactically_validated_fragments:
                     data['classes'][class_]['fields'][field_]['translation_status'] = 'success'
                 else:
                     data['classes'][class_]['fields'][field_]['translation_status'] = 'failed'
                 
-                data['classes'][class_]['fields'][field_]['translation'] = translation[0][0]
+                data['classes'][class_]['fields'][field_]['translation'] = translation[0][0] if translation is not None else None
                 data['classes'][class_]['fields'][field_]['elapsed_time'] = elapsed_time
                 data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 data['classes'][class_]['fields'][field_]['model_name'] = args.model_name
@@ -324,7 +334,11 @@ def main(args):
                 full_fragment_name = f'{schema.replace("_python_partial.json", "")}|{class_}|{method_}'
                 dependent_fragments = [f'{x[0]}|{x[1]}|{x[2]}' for x in data['classes'][class_]['methods'][method_]['calls'] if ':' in x[2] and full_fragment_name != f'{x[0]}|{x[1]}|{x[2]}']
 
-                if data['classes'][class_]['methods'][method_]['translation_status'] == 'success':
+                if data['classes'][class_]['methods'][method_]['translation_status'] == 'success' and not args.dump_syntactically_validated_fragments:
+                    processed_fragments.append(full_fragment_name)
+                    continue
+
+                if data['classes'][class_]['methods'][method_]['translation_status'] == 'syntactical_success' and args.dump_syntactically_validated_fragments:
                     processed_fragments.append(full_fragment_name)
                     continue
 
@@ -335,14 +349,16 @@ def main(args):
                 prompt = generate_prompt(data, schema, class_, method_, args, 'method')
 
                 translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'method', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': schema, 'class': class_, 'fragment': method_}], args.dump_syntactically_validated_fragments)
-                if translation is not None:
+                if translation is not None and args.dump_syntactically_validated_fragments:
+                    data['classes'][class_]['methods'][method_]['translation_status'] = 'syntactical_success'
+                elif translation is not None and not args.dump_syntactically_validated_fragments:
                     data['classes'][class_]['methods'][method_]['translation_status'] = 'success'
                 else:
                     data['classes'][class_]['methods'][method_]['translation_status'] = 'failed'
                 
                 processed_fragments.append(full_fragment_name)
                 
-                data['classes'][class_]['methods'][method_]['translation'] = translation[0][0]
+                data['classes'][class_]['methods'][method_]['translation'] = translation[0][0] if translation is not None else None
                 data['classes'][class_]['methods'][method_]['elapsed_time'] = elapsed_time
                 data['classes'][class_]['methods'][method_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 data['classes'][class_]['methods'][method_]['model_name'] = args.model_name
@@ -363,12 +379,14 @@ def main(args):
                         with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
                             waiting_data = json.load(f)
 
-                        if translation is not None:
+                        if translation is not None and args.dump_syntactically_validated_fragments:
+                            waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'syntactical_success'
+                        elif translation is not None and not args.dump_syntactically_validated_fragments:
                             waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'success'
                         else:
                             waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'failed'
                         
-                        waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation[0][0]
+                        waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation[0][0] if translation is not None else None
                         waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                         waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
                         waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
@@ -380,7 +398,7 @@ def main(args):
                             json.dump(waiting_data, f, indent=4)
 
     # further checking the waiting queue to see if any fragment can be processed
-    threshold = 3
+    threshold = 10
     while True:
         if len(waiting_queue) == 0:
             break
@@ -400,19 +418,21 @@ def main(args):
                 with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
                     waiting_data = json.load(f)
 
-                if translation is not None:
+                if translation is not None and args.dump_syntactically_validated_fragments:
+                    waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'syntactical_success'
+                elif translation is not None and not args.dump_syntactically_validated_fragments:
                     waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'success'
                 else:
                     waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'failed'
                 
-                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation[0][0]
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation[0][0] if translation is not None else None
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
 
                 del waiting_queue[waiting_fragment]
                 processed_fragments.append(waiting_fragment)
-                threshold = 3
+                threshold = 10
 
                 with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'w') as f:
                     json.dump(waiting_data, f, indent=4)
@@ -454,8 +474,12 @@ def main(args):
                 waiting_data = {}
                 with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
                     waiting_data = json.load(f)
+                
+                if args.dump_syntactically_validated_fragments:
+                    waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'syntactical_success'
+                else:
+                    waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'success'
 
-                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'success'
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation[i][0]
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
@@ -487,7 +511,7 @@ def main(args):
                     json.dump(waiting_data, f, indent=4)
 
     # further checking the waiting queue to see if any fragment can be processed
-    threshold = 3
+    threshold = 10
     while True:
         if len(waiting_queue) == 0:
             break
@@ -507,19 +531,21 @@ def main(args):
                 with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
                     waiting_data = json.load(f)
                 
-                if translation is not None:
+                if translation is not None and args.dump_syntactically_validated_fragments:
+                    waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'syntactical_success'
+                elif translation is not None and not args.dump_syntactically_validated_fragments:
                     waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'success'
                 else:
                     waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'failed'
                 
-                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation[0][0]
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation[0][0] if translation is not None else None
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
 
                 del waiting_queue[waiting_fragment]
                 processed_fragments.append(waiting_fragment)
-                threshold = 3
+                threshold = 10
 
                 with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'w') as f:
                     json.dump(waiting_data, f, indent=4)
