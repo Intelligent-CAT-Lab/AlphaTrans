@@ -232,12 +232,6 @@ def main(args):
 
     for schema in schemas:
 
-        if 'src.test' not in schema and args.translate_test:
-            continue
-
-        if 'src.main' not in schema and args.translate_main:
-            continue
-
         path_ = f'data/schemas/{args.project_name}/{schema}'
         with open(path_, 'r') as f:
             data = json.load(f)
@@ -501,8 +495,6 @@ if __name__ == '__main__':
     parser_.add_argument('--from_lang', type=str, dest='from_lang', help='language to translate from')
     parser_.add_argument('--to_lang', type=str, dest='to_lang', help='language to translate to')
     parser_.add_argument('--include_call_graph', action='store_true', help='include call graph in translation')
-    parser_.add_argument('--translate_test', action='store_true', help='translate test files')
-    parser_.add_argument('--translate_main', action='store_true', help='translate main files')
     parser_.add_argument('--cache_dir', type=str, dest='cache_dir', help='cache directory')
     parser_.add_argument('--use_bam', action='store_true', help='translate main files')
     parser_.add_argument('--use_cuda', action='store_true', help='use cuda for translation')
