@@ -243,7 +243,7 @@ class CompositionalTest:
                 if _class not in classes_to_process or schema_data['classes'][_class]['is_interface']:
                     # don't process this class if it's not in the list
                     # or if it's an interface
-                    schema_object.add_class("".join(schema_data['classes'][_class]['body']), dont_process=True)
+                    schema_object.add_class(_class, schema_data['classes'][_class], dont_process=True)
                 
                 # get the methods to process
                 if schema_name not in components or _class not in components[schema_name] or components[schema_name][_class] == []:
@@ -582,7 +582,10 @@ class Schema:
         # or a dictionary with different parts of the class
         self.__classes = []
         
-    def add_class(self, class_name: str, class_schema_data: dict, methods_to_process: list[str], dont_process: bool = False):
+    def add_class(self, class_name: str, class_schema_data: dict, methods_to_process: list[str] = None, dont_process: bool = False):
+        if not methods_to_process:
+            methods_to_process = []
+        
         # create the class declaration
         with open(self.schema_data['path'], 'r') as f:
             lst = f.readlines()
