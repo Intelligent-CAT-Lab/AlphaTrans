@@ -113,7 +113,8 @@ class Project:
         # add the translation to the schema
         if method_name not in schema_data['classes'][class_name]['methods']:
             raise ValueError(f"Method {method_name} not found in class {class_name} of schema {python_partial_schema_name}!")        
-        schema_data['classes'][class_name]['methods'][method_name]['translation'] = translated_method 
+        schema_data['classes'][class_name]['methods'][method_name]['translation_status'] = "success"
+        schema_data['classes'][class_name]['methods'][method_name]['translation'] = translated_method
             
         # add imports
         new_file_contents.extend(schema_data['python_imports'])
@@ -125,28 +126,24 @@ class Project:
             
             # add fields
             for _field in schema_data['classes'][_class]['fields']:
-                if 'translation' in schema_data['classes'][_class]['fields'][_field]:
-                    new_file_contents.append(schema_data['classes'][_class]['fields'][_field]['translation'])
+                if schema_data['classes'][_class]['fields'][_field]['translation_status'] == "success":                
+                    new_file_contents.append("\n".join(schema_data['classes'][_class]['fields'][_field]['translation']))
                 else:
-                    new_file_contents.append(schema_data['classes'][_class]['fields'][_field]['partial_translation'][0])
+                    pass # TODO: What do we do when the field was not translated successfully?
                     
             # add methods
             for _method in schema_data['classes'][_class]['methods']:
-                if 'translation' in schema_data['classes'][_class]['methods'][_method]:
-                    new_file_contents.append(schema_data['classes'][_class]['methods'][_method]['translation'])
+                if schema_data['classes'][_class]['methods'][_method]['translation_status'] == "success":
+                    new_file_contents.append("\n".join(schema_data['classes'][_class]['methods'][_method]['translation']))
                 else:
-                    new_file_contents.append(schema_data['classes'][_class]['methods'][_method]['partial_translation'][0])
-                    
-        # write back the schema
-        with open(f"{self.schema_dir}/{self.name}/{schema_full_file_name}", "w") as f:
-            f.write(json.dumps(schema_data, indent=4))
+                    new_file_contents.append("\n".join(schema_data['classes'][_class]['methods'][_method]['partial_translation']))
             
         # write the new contents to the python file
         with open("".join([
             f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/",
             schema_data['path'].split('/src/')[1].replace('.java', '.py').replace('/java/', '/')
         ]), "w") as f:
-            f.write("".join(new_file_contents))        
+            f.write("\n".join(new_file_contents))        
             
     def reset_partial_translation_schemas(self):
         pass # TODO: Implement this
