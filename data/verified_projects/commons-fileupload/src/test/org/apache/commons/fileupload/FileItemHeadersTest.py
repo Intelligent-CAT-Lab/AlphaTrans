@@ -1,18 +1,6 @@
-# Imports Begin
 import unittest
-# Unused: import typing
 from typing import *
-from itertools import chain
-
-import sys
 from src.main.org.apache.commons.fileupload.util.FileItemHeadersImpl import FileItemHeadersImpl
-# sys.path.append('/Users/kekaiyao/Desktop/AlphaTrans/data/recomposed_projects/commons-fileupload/src/main/org/apache/commons/fileupload/util')
-# from FileItemHeadersImpl import FileItemHeadersImpl
-#from fileupload.util import FileItemHeadersImpl  # LLM missed this import
-
-# Imports End
-
-from itertools import tee
 
 class PeekableIterator:
     def __init__(self, iterable):
@@ -40,10 +28,6 @@ class PeekableIterator:
 
 class FileItemHeadersTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
     def test_FileItemHeaders(self) -> None:
 
         aMutableFileItemHeaders = FileItemHeadersImpl()
@@ -104,5 +88,3 @@ class FileItemHeadersTest(unittest.TestCase):
 
         headerValueEnumeration = PeekableIterator(aMutableFileItemHeaders.getHeaders("DummyHeader"))
         self.assertFalse(headerValueEnumeration.hasNext())
-
-    # Class Methods End

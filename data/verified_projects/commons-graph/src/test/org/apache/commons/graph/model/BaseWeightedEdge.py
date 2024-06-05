@@ -1,7 +1,6 @@
 # Imports Begin
-from BaseLabeledWeightedEdge import BaseLabeledWeightedEdge
+from src.test.org.apache.commons.graph.model.BaseLabeledWeightedEdge import BaseLabeledWeightedEdge
 from src.main.org.apache.commons.graph.Mapper import *
-import unittest
 import typing
 from typing import *
 

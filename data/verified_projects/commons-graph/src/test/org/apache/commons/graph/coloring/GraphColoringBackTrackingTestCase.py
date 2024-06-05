@@ -14,7 +14,7 @@ from src.main.org.apache.commons.graph.coloring.ColoredVertices import *
 from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.UndirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
-from AbstractColoringTest import AbstractColoringTest
+from src.test.org.apache.commons.graph.coloring.AbstractColoringTest import AbstractColoringTest
 import logging
 from typing import *
 from io import StringIO

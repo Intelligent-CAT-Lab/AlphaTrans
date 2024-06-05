@@ -1,5 +1,4 @@
-# Imports Begin
-from MultiThreadedTestRunner import MultiThreadedTestRunner
+from src.test.org.apache.commons.graph.utils.MultiThreadedTestRunner import MultiThreadedTestRunner
 from abc import ABC, abstractmethod
 
 class TestRunner(ABC):

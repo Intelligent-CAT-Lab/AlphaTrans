@@ -4,7 +4,6 @@ from src.main.org.apache.commons.graph.visit.BaseGraphVisitHandler import *
 from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *
 from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
-import unittest
 import typing
 from typing import *
 

@@ -1,8 +1,7 @@
 # Imports Begin
 from src.main.org.apache.commons.graph.utils.Objects import *
 from src.main.org.apache.commons.graph.utils.Assertions import *
-from BaseLabeledEdge import BaseLabeledEdge
-import unittest
+from src.test.org.apache.commons.graph.model.BaseLabeledEdge import BaseLabeledEdge
 import typing
 from typing import *
 # Imports End

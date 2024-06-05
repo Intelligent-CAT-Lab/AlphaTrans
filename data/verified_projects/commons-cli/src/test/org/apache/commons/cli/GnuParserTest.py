@@ -2,7 +2,7 @@
 from src.main.org.apache.commons.cli.GnuParser import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 import unittest
-from ParserTestCase import ParserTestCase
+from src.test.org.apache.commons.cli.ParserTestCase import ParserTestCase
 
 # Imports End
 

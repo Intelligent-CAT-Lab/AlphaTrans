@@ -1,4 +1,3 @@
-# Imports Begin
 from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *
 from src.main.org.apache.commons.graph.model.BaseMutableGraph import *
 from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *
@@ -8,7 +7,6 @@ import unittest
 import typing
 from typing import *
 
-# Imports End
 
 
 class GraphUtils(unittest.TestCase):
