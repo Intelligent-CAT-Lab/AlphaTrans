@@ -8,6 +8,7 @@ import time
 import datetime
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from syntactic_validation import l0_validation
+from functional_validation import l2_validation
 
 from genai.client import Client
 from genai.credentials import Credentials
@@ -18,101 +19,105 @@ from genai.schema import (
 )
 
 
-def translate(model, tokenizer, prompt, device, fragment, args):
-    max_attempts = 0
-    parsed_fragment = None
-    feedback = ''
-    start_time = time.time()
-    while max_attempts < 5:
+def translate(model, tokenizer, device, members_to_translate: list[list], in_cycle=False):
+    """
+    members_to_translate: [prompt, fragment, args, schema, class_, fragment_]
+    """
+    syntactically_validated_members = []    
+    for member in members_to_translate:
+        prompt, fragment, args, schema, class_, fragment_ = member    
+    
+        max_attempts = 0
+        parsed_fragment = None
+        feedback = ''
+        start_time = time.time()
+        while max_attempts < 5:
 
-        print(prompt, flush=True)
-        print('=======================GENERATING=======================', flush=True)
+            print(prompt, flush=True)
+            print('=======================GENERATING=======================', flush=True)
 
-        if args.use_bam:
-            client = Client(credentials=Credentials.from_env())
-            model_id = "deepseek-ai/deepseek-coder-33b-instruct"
+            if args.use_bam:
+                client = Client(credentials=Credentials.from_env())
+                model_id = "deepseek-ai/deepseek-coder-33b-instruct"
 
-            total_tokens = 0
-            for response in client.text.tokenization.create(model_id=model_id, input=prompt):
-                total_tokens = response.results[0].token_count
-            
-            if total_tokens > 16384:
-                return None, -1
+                total_tokens = 0
+                for response in client.text.tokenization.create(model_id=model_id, input=prompt):
+                    total_tokens = response.results[0].token_count
+                
+                if total_tokens > 16384:
+                    return None, -1
 
-            max_new_tokens = 16384 - total_tokens
+                max_new_tokens = 16384 - total_tokens
 
-            if fragment == 'field':
-                max_new_tokens = min(max_new_tokens, 1024)
-                # max_new_tokens = 1024
-            elif fragment == 'method':
-                max_new_tokens = min(max_new_tokens, 4096)
-                # max_new_tokens = 4096
+                if fragment == 'field':
+                    max_new_tokens = min(max_new_tokens, 1024)
+                    # max_new_tokens = 1024
+                elif fragment == 'method':
+                    max_new_tokens = min(max_new_tokens, 4096)
+                    # max_new_tokens = 4096
 
-            parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
-                                                    min_new_tokens=1,
-                                                    max_new_tokens=max_new_tokens,
-                                                    return_options=TextGenerationReturnOptions(
-                                                        input_text=True,
+                parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
+                                                        min_new_tokens=1,
+                                                        max_new_tokens=max_new_tokens,
+                                                        return_options=TextGenerationReturnOptions(
+                                                            input_text=True,
+                                                        )
                                                     )
-                                                )
 
-            for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
-                generation = response.results[0].input_text + response.results[0].generated_text
-        
-        else:
+                for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
+                    generation = response.results[0].input_text + response.results[0].generated_text
+            
+            else:
 
-            input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
+                input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
 
-            if input_tokens.shape[1] > 16384:
-                return None, -1
+                if input_tokens.shape[1] > 16384:
+                    return None, -1
 
-            max_new_tokens = 16384 - input_tokens.shape[1]
-            if fragment == 'field':
-                max_new_tokens = min(max_new_tokens, 1024)
-                # max_new_tokens = 1024
-            elif fragment == 'method':
-                max_new_tokens = min(max_new_tokens, 4096)
-                # max_new_tokens = 4096
+                max_new_tokens = 16384 - input_tokens.shape[1]
+                if fragment == 'field':
+                    max_new_tokens = min(max_new_tokens, 1024)
+                    # max_new_tokens = 1024
+                elif fragment == 'method':
+                    max_new_tokens = min(max_new_tokens, 4096)
+                    # max_new_tokens = 4096
 
-            raw_output = model.generate(
-                input_tokens,
-                max_new_tokens=max_new_tokens,
-                do_sample=False,
-                output_scores=True,
-                return_dict_in_generate=True,
-                pad_token_id=tokenizer.eos_token_id,
-            )
+                raw_output = model.generate(
+                    input_tokens,
+                    max_new_tokens=max_new_tokens,
+                    do_sample=False,
+                    output_scores=True,
+                    return_dict_in_generate=True,
+                    pad_token_id=tokenizer.eos_token_id,
+                )
 
-            generation = tokenizer.decode(raw_output.sequences[0], skip_special_tokens=True)
+                generation = tokenizer.decode(raw_output.sequences[0], skip_special_tokens=True)
 
-        generation = generation[generation.find('### Response:')+13:]
+            generation = generation[generation.find('### Response:')+13:]
 
-        print(generation, flush=True)
-        print('---' * 50, flush=True)
+            print(generation, flush=True)
+            print('---' * 50, flush=True)
 
-        status, parsed_fragment, feedback = l0_validation(generation)
+            status, parsed_fragment, feedback = l0_validation(generation)
 
-        if not status:
-            max_attempts += 1
-            ### TODO: create new prompt with feedback
-            # prompt = ...
-            continue
-
-        """
-        TODO: check for functional validation (L2)
-        status, functionally_validated_fragment, feedback = l2_validation(dynamically_validated_fragment)
-
-        if not status:
-            max_attempts += 1
-            TODO: create new prompt with feedback
-            prompt = ...
-            continue
-        """
-
-        max_attempts = 5
+            if not status:
+                max_attempts += 1
+                ### TODO: create new prompt with feedback
+                # prompt = ...
+                continue
+            
+            syntactically_validated_members.append([parsed_fragment, schema, class_, fragment_, args])                
+            
+            max_attempts = 5
+            
+    status, functionally_validated_members, feedback = l2_validation(syntactically_validated_members)
+    
+    if not status:
+        # TODO: handle feedback
+        return None, 0
 
     elapsed_time = time.time() - start_time
-    return parsed_fragment, elapsed_time
+    return functionally_validated_members, elapsed_time
 
 
 def generate_prompt(data, schema, class_, fragment_, args, fragment_type):
@@ -283,13 +288,13 @@ def main(args):
                         json.dump(data, f, indent=4)
                     continue
 
-                translation, elapsed_time = translate(model, tokenizer, prompt, device, 'field', args)
+                translation, elapsed_time = translate(model, tokenizer, device, [prompt, 'field', args, schema, class_, field_])
                 if translation is not None:
                     data['classes'][class_]['fields'][field_]['translation_status'] = 'success'
                 else:
                     data['classes'][class_]['fields'][field_]['translation_status'] = 'failed'
                 
-                data['classes'][class_]['fields'][field_]['translation'] = translation
+                data['classes'][class_]['fields'][field_]['translation'] = translation[0][0]
                 data['classes'][class_]['fields'][field_]['elapsed_time'] = elapsed_time
                 data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 data['classes'][class_]['fields'][field_]['model_name'] = args.model_name
@@ -315,7 +320,7 @@ def main(args):
 
                 prompt = generate_prompt(data, schema, class_, method_, args, 'method')
 
-                translation, elapsed_time = translate(model, tokenizer, prompt, device, 'method', args)
+                translation, elapsed_time = translate(model, tokenizer, device, [prompt, 'method', args, schema, class_, method_])
                 if translation is not None:
                     data['classes'][class_]['methods'][method_]['translation_status'] = 'success'
                 else:
@@ -323,7 +328,7 @@ def main(args):
                 
                 processed_fragments.append(full_fragment_name)
                 
-                data['classes'][class_]['methods'][method_]['translation'] = translation
+                data['classes'][class_]['methods'][method_]['translation'] = translation[0][0]
                 data['classes'][class_]['methods'][method_]['elapsed_time'] = elapsed_time
                 data['classes'][class_]['methods'][method_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 data['classes'][class_]['methods'][method_]['model_name'] = args.model_name
@@ -338,7 +343,7 @@ def main(args):
                         _, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[waiting_fragment]
                         prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
 
-                        translation, elapsed_time = translate(model, tokenizer, prompt, device, 'method', args)
+                        translation, elapsed_time = translate(model, tokenizer, device, [prompt, 'method', args, waiting_schema, waiting_class, waiting_method])
 
                         waiting_data = {}
                         with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
@@ -349,7 +354,7 @@ def main(args):
                         else:
                             waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'failed'
                         
-                        waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation
+                        waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation[0][0]
                         waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                         waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
                         waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
@@ -375,7 +380,7 @@ def main(args):
                 _, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[waiting_fragment]
                 prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
 
-                translation, elapsed_time = translate(model, tokenizer, prompt, device, 'method', args)
+                translation, elapsed_time = translate(model, tokenizer, device, [prompt, 'method', args, waiting_schema, waiting_class, waiting_method])
 
                 waiting_data = {}
                 with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
@@ -386,7 +391,7 @@ def main(args):
                 else:
                     waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'failed'
                 
-                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation[0][0]
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
@@ -418,31 +423,54 @@ def main(args):
 
     # translating all cycles at once
     for cycle in cycles:
+        methods_to_be_translated = []
         for cycle_fragment in cycle:
             waiting_dependent_fragments, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[cycle_fragment]
             prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
 
-            translation, elapsed_time = translate(model, tokenizer, prompt, device, 'method', args)
+            methods_to_be_translated.append([prompt, 'method', waiting_args, waiting_schema, waiting_class, waiting_method])
 
-            waiting_data = {}
-            with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
-                waiting_data = json.load(f)
+        
+        translation, elapsed_time = translate(model, tokenizer, device, methods_to_be_translated, in_cycle=True)
 
-            if translation is not None:
+        if translation is not None:
+            for i, cycle_fragment in enumerate(cycle):
+                _, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[cycle_fragment]
+
+                waiting_data = {}
+                with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
+                    waiting_data = json.load(f)
+
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'success'
-            else:
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation[i][0]
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
+
+                processed_fragments.append(cycle_fragment)
+                del waiting_queue[cycle_fragment]
+
+                with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'w') as f:
+                    json.dump(waiting_data, f, indent=4)
+
+        else:
+            for cycle_fragment in cycle:
+                _, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[cycle_fragment]
+
+                waiting_data = {}
+                with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
+                    waiting_data = json.load(f)
+
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'failed'
-            
-            waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation
-            waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
-            waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
-            waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
 
-            processed_fragments.append(cycle_fragment)
-            del waiting_queue[cycle_fragment]
+                processed_fragments.append(cycle_fragment)
+                del waiting_queue[cycle_fragment]
 
-            with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'w') as f:
-                json.dump(waiting_data, f, indent=4)
+                with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'w') as f:
+                    json.dump(waiting_data, f, indent=4)
 
     # further checking the waiting queue to see if any fragment can be processed
     threshold = 3
@@ -459,7 +487,7 @@ def main(args):
                 _, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[waiting_fragment]
                 prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
 
-                translation, elapsed_time = translate(model, tokenizer, prompt, device, 'method', args)
+                translation, elapsed_time = translate(model, tokenizer, device, [prompt, 'method', args, waiting_schema, waiting_class, waiting_method])
 
                 waiting_data = {}
                 with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
@@ -470,7 +498,7 @@ def main(args):
                 else:
                     waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'failed'
                 
-                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation[0][0]
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
