@@ -227,20 +227,16 @@ def main(args):
 
     schemas = align_schema_order(schemas, traversal_order)
 
-    for schema in schemas:
+    waiting_queue = {}
+    processed_fragments = []
 
-        if os.path.exists(f'data/translations/{args.model_name}/{args.project_name}/{schema.replace("python_partial", "translation")}'):
-            continue
+    for schema in schemas:
 
         if 'src.test' not in schema and args.translate_test:
             continue
 
         if 'src.main' not in schema and args.translate_main:
             continue
-
-        metrics = {}
-        metrics.setdefault(schema, {'syntactic': {'total': 0, 'correct': 0},
-                                    'functional': {'total': 0, 'correct': 0}})
 
         path_ = f'data/schemas/{args.project_name}/{schema}'
         with open(path_, 'r') as f:
@@ -277,60 +273,224 @@ def main(args):
                 pbar.update()
                 pbar.set_description(f"Translating field {field_} in class {class_} @ schema {schema}...")
 
-                prompt = generate_prompt(data, schema, class_, field_, args, 'field')
-                if prompt is None:
-                    data['classes'][class_]['fields'][field_]['translation'] = data['classes'][class_]['fields'][field_]['partial_translation']
-                    data['classes'][class_]['fields'][field_]['elapsed_time'] = 0
-                    data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
+                if data['classes'][class_]['fields'][field_]['translation_status'] == 'success':
                     continue
 
-                metrics[schema]['syntactic']['total'] += 1
+                prompt = generate_prompt(data, schema, class_, field_, args, 'field')
+
+                if prompt is None:
+                    data['classes'][class_]['fields'][field_]['translation'] = data['classes'][class_]['fields'][field_]['partial_translation'].split('\n')
+                    data['classes'][class_]['fields'][field_]['elapsed_time'] = 0
+                    data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
+                    data['classes'][class_]['fields'][field_]['translation_status'] = 'success'
+                    data['classes'][class_]['fields'][field_]['model_name'] = args.model_name
+
+                    with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
+                        json.dump(data, f, indent=4)
+                    continue
+
                 translation, elapsed_time = translate(model, tokenizer, prompt, device, 'field', args)
                 if translation is not None:
-                    metrics[schema]['syntactic']['correct'] += 1
+                    data['classes'][class_]['fields'][field_]['translation_status'] = 'success'
+                else:
+                    data['classes'][class_]['fields'][field_]['translation_status'] = 'failed'
                 
                 data['classes'][class_]['fields'][field_]['translation'] = translation
                 data['classes'][class_]['fields'][field_]['elapsed_time'] = elapsed_time
                 data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
+                data['classes'][class_]['fields'][field_]['model_name'] = args.model_name
 
-            method_order = []
-            while len(method_order) != len(data['classes'][class_]['methods']):
-                
-                for method_ in data['classes'][class_]['methods']:
-                    if method_ in method_order:
-                        continue
+                with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
+                    json.dump(data, f, indent=4)
 
-                    if data['classes'][class_]['methods'][method_]['calls'] == []:
-                        method_order.append(method_)
-                        continue
-
-                    if all([x[2] in method_order for x in data['classes'][class_]['methods'][method_]['calls'] if x[0] == schema.replace('_python_partial.json', '') and x[1] == class_]):
-                        method_order.append(method_)
-
-            pbar = tqdm.tqdm(method_order)
+            pbar = tqdm.tqdm(data['classes'][class_]['methods'])
             for method_ in pbar:
                 pbar.update()
                 pbar.set_description(f"Translating method {method_} in class {class_} @ schema {schema}...")
 
+                full_fragment_name = f'{schema.replace("_python_partial.json", "")}|{class_}|{method_}'
+                dependent_fragments = [f'{x[0]}|{x[1]}|{x[2]}' for x in data['classes'][class_]['methods'][method_]['calls'] if ':' in x[2] and full_fragment_name != f'{x[0]}|{x[1]}|{x[2]}']
+
+                if data['classes'][class_]['methods'][method_]['translation_status'] == 'success':
+                    processed_fragments.append(full_fragment_name)
+                    continue
+
+                if any([x not in processed_fragments for x in dependent_fragments]):
+                    waiting_queue[full_fragment_name] = [dependent_fragments, data.copy(), schema, class_, method_, 'method', args]
+                    continue
+
                 prompt = generate_prompt(data, schema, class_, method_, args, 'method')
 
-                metrics[schema]['syntactic']['total'] += 1
                 translation, elapsed_time = translate(model, tokenizer, prompt, device, 'method', args)
                 if translation is not None:
-                    metrics[schema]['syntactic']['correct'] += 1
+                    data['classes'][class_]['methods'][method_]['translation_status'] = 'success'
+                else:
+                    data['classes'][class_]['methods'][method_]['translation_status'] = 'failed'
+                
+                processed_fragments.append(full_fragment_name)
                 
                 data['classes'][class_]['methods'][method_]['translation'] = translation
                 data['classes'][class_]['methods'][method_]['elapsed_time'] = elapsed_time
                 data['classes'][class_]['methods'][method_]['generation_timestamp'] = datetime.datetime.now().isoformat()
-    
-        os.makedirs(f'data/translations/{args.model_name}/{args.project_name}', exist_ok=True)
-        with open(f'data/translations/{args.model_name}/{args.project_name}/{schema.replace("python_partial", "translation")}', 'w') as f:
-            json.dump(data, f, indent=4)
+                data['classes'][class_]['methods'][method_]['model_name'] = args.model_name
 
-        os.makedirs(f'data/translations/{args.model_name}/{args.project_name}/metrics', exist_ok=True)
+                with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
+                    json.dump(data, f, indent=4)
+
+                # check if a waiting fragment is now ready to be processed
+                for waiting_fragment in list(waiting_queue.keys()):
+                    waiting_dependent_fragments = [x for x in waiting_queue[waiting_fragment][0]]
+                    if all([x in processed_fragments for x in waiting_dependent_fragments]):
+                        _, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[waiting_fragment]
+                        prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
+
+                        translation, elapsed_time = translate(model, tokenizer, prompt, device, 'method', args)
+
+                        waiting_data = {}
+                        with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
+                            waiting_data = json.load(f)
+
+                        if translation is not None:
+                            waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'success'
+                        else:
+                            waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'failed'
+                        
+                        waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation
+                        waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
+                        waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
+                        waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
+
+                        processed_fragments.append(waiting_fragment)
+                        del waiting_queue[waiting_fragment]
+
+                        with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'w') as f:
+                            json.dump(waiting_data, f, indent=4)
+
+    # further checking the waiting queue to see if any fragment can be processed
+    threshold = 3
+    while True:
+        if len(waiting_queue) == 0:
+            break
+
+        if threshold == 0:
+            break
+
+        for waiting_fragment in list(waiting_queue.keys()):
+            waiting_dependent_fragments = [x for x in waiting_queue[waiting_fragment][0]]
+            if all([x in processed_fragments for x in waiting_dependent_fragments]):
+                _, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[waiting_fragment]
+                prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
+
+                translation, elapsed_time = translate(model, tokenizer, prompt, device, 'method', args)
+
+                waiting_data = {}
+                with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
+                    waiting_data = json.load(f)
+
+                if translation is not None:
+                    waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'success'
+                else:
+                    waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'failed'
+                
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
+
+                del waiting_queue[waiting_fragment]
+                processed_fragments.append(waiting_fragment)
+                threshold = 3
+
+                with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'w') as f:
+                    json.dump(waiting_data, f, indent=4)
+        
+        threshold -= 1
     
-        with open(f'data/translations/{args.model_name}/{args.project_name}/metrics/{schema.replace("python_partial", "translation")}', 'w') as f:
-            json.dump(metrics, f, indent=4)
+    if len(waiting_queue) == 0:
+        print(f'no cycles found for project: {args.project_name}')
+        return
+
+    # finding cycles
+    cycles = []
+    for k in waiting_queue:
+        waiting_dependent_fragments, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[k]
+
+        for df in waiting_dependent_fragments:
+            if df not in waiting_queue:
+                continue
+
+            if k in waiting_queue[df][0] and df in waiting_queue[k][0] and [df, k] not in cycles:
+                cycles.append([k, df])
+
+    # translating all cycles at once
+    for cycle in cycles:
+        for cycle_fragment in cycle:
+            waiting_dependent_fragments, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[cycle_fragment]
+            prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
+
+            translation, elapsed_time = translate(model, tokenizer, prompt, device, 'method', args)
+
+            waiting_data = {}
+            with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
+                waiting_data = json.load(f)
+
+            if translation is not None:
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'success'
+            else:
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'failed'
+            
+            waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation
+            waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
+            waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
+            waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
+
+            processed_fragments.append(cycle_fragment)
+            del waiting_queue[cycle_fragment]
+
+            with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'w') as f:
+                json.dump(waiting_data, f, indent=4)
+
+    # further checking the waiting queue to see if any fragment can be processed
+    threshold = 3
+    while True:
+        if len(waiting_queue) == 0:
+            break
+
+        if threshold == 0:
+            break
+
+        for waiting_fragment in list(waiting_queue.keys()):
+            waiting_dependent_fragments = [x for x in waiting_queue[waiting_fragment][0]]
+            if all([x in processed_fragments for x in waiting_dependent_fragments]):
+                _, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[waiting_fragment]
+                prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
+
+                translation, elapsed_time = translate(model, tokenizer, prompt, device, 'method', args)
+
+                waiting_data = {}
+                with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
+                    waiting_data = json.load(f)
+                
+                if translation is not None:
+                    waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'success'
+                else:
+                    waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation_status'] = 'failed'
+                
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['translation'] = translation
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
+
+                del waiting_queue[waiting_fragment]
+                processed_fragments.append(waiting_fragment)
+                threshold = 3
+
+                with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'w') as f:
+                    json.dump(waiting_data, f, indent=4)
+        
+        threshold -= 1
+
+    assert len(waiting_queue) == 0, f"Found cycles in the waiting queue"
 
 
 if __name__ == '__main__':
