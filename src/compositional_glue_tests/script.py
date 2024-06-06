@@ -241,7 +241,8 @@ class CompositionalTest:
                     # don't process this class if it's not in the list
                     # or if it's an interface
                     schema_object.add_class(_class, schema_data['classes'][_class], dont_process=True)
-                
+                    continue
+
                 # get the methods to process
                 if schema_name not in components or _class not in components[schema_name] or components[schema_name][_class] == []:
                     # Process all methods if no methods are provided
@@ -616,7 +617,7 @@ class Schema:
         
         # add graal-related members if the class is being processed
         # otherwise just add a default constructor
-        if not dont_process:
+        if True:
             python_file_dir = self.subpackage.replace('.', '/')
             python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
             current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
@@ -626,10 +627,12 @@ class Schema:
                 f"private static Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");",
                 "private Value obj;"
             ])
+            unititialized_fields_body = "".join(class_obj["unitialized_fields"])
 
             # add Value constructor
             class_obj["methods"].append(f"""
                 public {class_name}(Value obj) {{
+                    {unititialized_fields_body}
                     this.obj = obj;
                 }}                            
             """)
