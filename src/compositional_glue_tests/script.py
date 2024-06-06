@@ -235,7 +235,7 @@ class CompositionalTest:
                                         components[_schema] = {parent_class: None}
                     
             class_list = self.__resolve_class_order(schema_data)
-                                
+            
             for _class in class_list:
                 if _class not in classes_to_process or schema_data['classes'][_class]['is_interface']:
                     # don't process this class if it's not in the list
@@ -601,10 +601,7 @@ class Schema:
         }
         
         for _field in class_schema_data['fields']:
-            if dont_process:
-                class_obj["fields"].append("".join(class_schema_data['fields'][_field]['body']))
-            else:
-                self.__add_field_to_class(class_obj, _field, class_schema_data['fields'][_field])
+            self.__add_field_to_class(class_obj, _field, class_schema_data['fields'][_field], dont_process=dont_process)
             
         for _method in class_schema_data['methods']:
             if dont_process:
@@ -628,7 +625,7 @@ class Schema:
                 "private Value obj;"
             ])
             unititialized_fields_body = "".join(class_obj["unitialized_fields"])
-
+            
             # add Value constructor
             class_obj["methods"].append(f"""
                 public {class_name}(Value obj) {{
@@ -674,14 +671,15 @@ class Schema:
         field_name = field_name.split(':')[1].strip()
         field_type = field_schema_data['types'][0][0]
         field_body = "".join(field_schema_data['body'])
-        
-        # if field is 'final', remove the 'final' keyword
-        if 'final' in field_schema_data['modifiers']:
-            field_body = field_body.replace(' final', '', 1)
-        
-        # add field to sync() and revsync() methods
-        class_obj["sync"].add_field(field_name, field_schema_data)
-        class_obj["revsync"].add_field(field_name, field_schema_data)      
+
+        if not dont_process:
+            # if field is 'final', remove the 'final' keyword
+            if 'final' in field_schema_data['modifiers']:
+                field_body = field_body.replace(' final', '', 1)
+            
+            # add field to sync() and revsync() methods
+            class_obj["sync"].add_field(field_name, field_schema_data)
+            class_obj["revsync"].add_field(field_name, field_schema_data)      
         
         class_obj["fields"].append(field_body)
         

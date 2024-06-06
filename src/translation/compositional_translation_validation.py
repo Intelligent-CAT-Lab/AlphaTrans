@@ -1,22 +1,22 @@
 import argparse
 import json
 from dotenv import load_dotenv
-import torch
+# import torch
 import tqdm
 import os
 import time
 import datetime
-from transformers import AutoTokenizer, AutoModelForCausalLM
+# from transformers import AutoTokenizer, AutoModelForCausalLM
 from syntactic_validation import l0_validation
 from functional_validation import l2_validation
 
-from genai.client import Client
-from genai.credentials import Credentials
-from genai.schema import (
-    DecodingMethod,
-    TextGenerationParameters,
-    TextGenerationReturnOptions,
-)
+# from genai.client import Client
+# from genai.credentials import Credentials
+# from genai.schema import (
+#     DecodingMethod,
+#     TextGenerationParameters,
+#     TextGenerationReturnOptions,
+# )
 
 
 def translate(model, tokenizer, device, members_to_translate: list[list], dump_syntactically_validated_fragments, in_cycle=False):
@@ -37,85 +37,91 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
         parsed_fragment = None
         feedback = ''
         start_time = time.time()
-        while max_attempts < 5:
+        # while max_attempts < 5:
 
-            print(prompt, flush=True)
-            print('=======================GENERATING=======================', flush=True)
+            # print(prompt, flush=True)
+            # print('=======================GENERATING=======================', flush=True)
 
-            if use_bam:
-                client = Client(credentials=Credentials.from_env())
-                model_id = "deepseek-ai/deepseek-coder-33b-instruct"
+            # if use_bam:
+            #     client = Client(credentials=Credentials.from_env())
+            #     model_id = "deepseek-ai/deepseek-coder-33b-instruct"
 
-                total_tokens = 0
-                for response in client.text.tokenization.create(model_id=model_id, input=prompt):
-                    total_tokens = response.results[0].token_count
+            #     total_tokens = 0
+            #     for response in client.text.tokenization.create(model_id=model_id, input=prompt):
+            #         total_tokens = response.results[0].token_count
                 
-                if total_tokens > 16384:
-                    return None, -1
+            #     if total_tokens > 16384:
+            #         return None, -1
 
-                max_new_tokens = 16384 - total_tokens
+            #     max_new_tokens = 16384 - total_tokens
 
-                if fragment == 'field':
-                    max_new_tokens = min(max_new_tokens, 1024)
-                    # max_new_tokens = 1024
-                elif fragment == 'method':
-                    max_new_tokens = min(max_new_tokens, 4096)
-                    # max_new_tokens = 4096
+            #     if fragment == 'field':
+            #         max_new_tokens = min(max_new_tokens, 1024)
+            #         # max_new_tokens = 1024
+            #     elif fragment == 'method':
+            #         max_new_tokens = min(max_new_tokens, 4096)
+            #         # max_new_tokens = 4096
 
-                parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
-                                                        min_new_tokens=1,
-                                                        max_new_tokens=max_new_tokens,
-                                                        return_options=TextGenerationReturnOptions(
-                                                            input_text=True,
-                                                        ),
-                                                        time_limit=60000,
-                                                    )
+            #     parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
+            #                                             min_new_tokens=1,
+            #                                             max_new_tokens=max_new_tokens,
+            #                                             return_options=TextGenerationReturnOptions(
+            #                                                 input_text=True,
+            #                                             ),
+            #                                             time_limit=60000,
+            #                                         )
 
-                for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
-                    generation = response.results[0].input_text + response.results[0].generated_text
+            #     for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
+            #         generation = response.results[0].input_text + response.results[0].generated_text
             
-            else:
+            # else:
 
-                input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
+            # input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
 
-                if input_tokens.shape[1] > 16384:
-                    return None, -1
+            # if input_tokens.shape[1] > 16384:
+            #     return None, -1
 
-                max_new_tokens = 16384 - input_tokens.shape[1]
-                if fragment == 'field':
-                    max_new_tokens = min(max_new_tokens, 1024)
-                    # max_new_tokens = 1024
-                elif fragment == 'method':
-                    max_new_tokens = min(max_new_tokens, 4096)
-                    # max_new_tokens = 4096
+            # max_new_tokens = 16384 - input_tokens.shape[1]
+            # if fragment == 'field':
+            #     max_new_tokens = min(max_new_tokens, 1024)
+            #     # max_new_tokens = 1024
+            # elif fragment == 'method':
+            #     max_new_tokens = min(max_new_tokens, 4096)
+            #     # max_new_tokens = 4096
 
-                raw_output = model.generate(
-                    input_tokens,
-                    max_new_tokens=max_new_tokens,
-                    do_sample=False,
-                    output_scores=True,
-                    return_dict_in_generate=True,
-                    pad_token_id=tokenizer.eos_token_id,
-                )
+            # raw_output = model.generate(
+            #     input_tokens,
+            #     max_new_tokens=max_new_tokens,
+            #     do_sample=False,
+            #     output_scores=True,
+            #     return_dict_in_generate=True,
+            #     pad_token_id=tokenizer.eos_token_id,
+            # )
 
-                generation = tokenizer.decode(raw_output.sequences[0], skip_special_tokens=True)
+            # generation = tokenizer.decode(raw_output.sequences[0], skip_special_tokens=True)
 
-            generation = generation[generation.find('### Response:')+13:]
-
-            print(generation, flush=True)
-            print('---' * 50, flush=True)
-
-            status, parsed_fragment, feedback = l0_validation(generation)
-
-            if not status:
-                max_attempts += 1
-                ### TODO: create new prompt with feedback
-                # prompt = ...
-                continue
+        # generation = generation[generation.find('### Response:')+13:]
+        
+        # load the translation from the schema
+        with open(f'data/schemas/{project_name}/{schema}', 'r') as f:
+            data = json.load(f)
             
-            syntactically_validated_members.append([parsed_fragment, schema, class_, fragment_, project_name])
-            
-            max_attempts = 5
+        generation = ''.join(data['classes'][class_][f'{fragment}s'][fragment_]['translation'])
+
+        print(generation, flush=True)
+        print('---' * 50, flush=True)
+
+        status, parsed_fragment, feedback = True, generation, ''
+
+        if not status:
+            max_attempts += 1
+            ### TODO: create new prompt with feedback
+            # prompt = ...
+            continue
+        
+        syntactically_validated_members.append([parsed_fragment, schema, class_, fragment_, project_name])
+        
+        max_attempts = 5
     
     if syntactically_validated_members == []:
         elapsed_time = time.time() - start_time
@@ -232,14 +238,15 @@ def align_schema_order(schemas, traversal_order):
 
 
 def main(args):
-    device = 'cuda' if torch.cuda.is_available() and args.use_cuda else 'cpu'
+    # device = 'cuda' if torch.cuda.is_available() and args.use_cuda else 'cpu'
+    device =  'cpu'
     tokenizer, model = None, None
 
-    if args.model_name == 'deepseek-coder-33b-instruct' and not args.use_bam:
-        kwargs = {}
-        kwargs["torch_dtype"] = torch.float16
-        tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir)
-        model = AutoModelForCausalLM.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir, device_map='auto', **kwargs)
+    # if args.model_name == 'deepseek-coder-33b-instruct' and not args.use_bam:
+    #     kwargs = {}
+    #     kwargs["torch_dtype"] = torch.float16
+    #     tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir)
+    #     model = AutoModelForCausalLM.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir, device_map='auto', **kwargs)
 
     schemas = os.listdir(f'data/schemas/{args.project_name}')
 
