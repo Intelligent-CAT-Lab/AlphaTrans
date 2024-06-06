@@ -481,8 +481,8 @@ class CompositionalTest:
             subprocess.run(
                 ['mvn', 'clean', 'test', '-Drat.skip', '-q'],
                 cwd=self.project.glue_dir,
-                stderr=subprocess.DEVNULL,
-                stdout=subprocess.DEVNULL,
+                stderr=f"{self.project.root_dir}/glue.log", # was: subprocess.DEVNULL
+                stdout=f"{self.project.root_dir}/glue.log", # was: subprocess.DEVNULL
                 check=True
             )
         except Exception:
