@@ -645,7 +645,6 @@ class Schema:
             """)
 
             # add a Default constructor
-            unititialized_fields_body = "".join(class_obj["unitialized_fields"])
             class_obj["methods"].append(f"""
                 public {class_name}() {{
                     {unititialized_fields_body}
