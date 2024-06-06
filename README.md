@@ -56,6 +56,22 @@ bash scripts/create_skeleton.sh
 
 This command should create proper skeletons in target language under `data/skeletons/<project_name>`.
 
+---
+
+### Generate Skeleton for a New Project
+
+1. Install the [CodeQL CLI](https://docs.github.com/en/code-security/codeql-cli/getting-started-with-the-codeql-cli/setting-up-the-codeql-cli).
+2. Clone the [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter) repository into the root directory of this repository. Pull the `ql` submodule of this repository as directed in the README of the repository.
+3. Place the project in `java_projects/cleaned_final_projects`.
+4. Execute `codeql database create ../../../databases/joda-convert --language=java --overwrite` from the project directory. This will create the database for the project.
+5. Copy all the contents of the `queries` directory into the `vscode-codeql-starter/codeql-custom-queries-java` directory. `cd` into this directory and execute `run.sh`.
+6. From the root directory, now execute the following.
+```bash
+python src/static_analysis/extract_call_graph.py --project_name <NameOfProject>
+python src/static_analysis/create_schema.py --project_name <NameOfProject>
+python utils.py --project_name <NameOfProject> --function parse_dependencies
+```
+
 ## Graal-based Semantic Check
 Execute the following from the root directory of the project to run the Graal-based semantic check.
 ```bash
