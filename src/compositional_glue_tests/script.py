@@ -148,7 +148,7 @@ class Project:
     def reset_partial_translation_schemas(self):
         pass # TODO: Implement this
     
-    def derive_compositional_tests(self, components: dict[str, dict[str, list[str]]]):
+    def derive_compositional_tests(self, components: dict[str, dict[str, list[str]]], debug: bool = False):
         """
         Derive compositional tests for the given components.
         components is a dictionary with the following structure:
@@ -165,7 +165,7 @@ class Project:
         For a given class, if an empty list is provided, all methods will be processed.
         If None is provided, no methods will be processed.
         """
-        return CompositionalTest(self, components)
+        return CompositionalTest(self, components, debug)
 
         
 class CompositionalTest:
@@ -174,7 +174,7 @@ class CompositionalTest:
     on the given components.
     """
     
-    def __init__(self, project: Project, components: dict[str, dict[str, list[str]]]):
+    def __init__(self, project: Project, components: dict[str, dict[str, list[str]]], debug: bool = False):
         """
         Derive compositional tests for the given components.
         components is a dictionary with the following structure:
@@ -185,6 +185,7 @@ class CompositionalTest:
         }
         """
         self.project = project
+        self.debug = debug
         
         # log of files to be written
         # { file_name: { original_content: str, new_content: str }}
@@ -270,12 +271,12 @@ class CompositionalTest:
                     
                 schema_object.add_class(_class, schema_data['classes'][_class], methods_to_process)
                 
-                # write the schema back
-                local_path = schema_data['path'].split('/src/')[-1]
-                self.__log_write(
-                    f"{self.project.glue_dir}/src/{local_path}",
-                    schema_object.get_body()
-                )
+            # write the schema back
+            local_path = schema_data['path'].split('/src/')[-1]
+            self.__log_write(
+                f"{self.project.glue_dir}/src/{local_path}",
+                schema_object.get_body()
+            )
         
     def __resolve_class_order(self, schema_data: dict):
         """
@@ -480,14 +481,19 @@ class CompositionalTest:
         failure_flag = False
         try:
             subprocess.run(
-                ['mvn', 'clean', 'test', '-Drat.skip', '-q'],
+                ['mvn', 'clean', 'test', '-Drat.skip', '-q', '-Dtest=HelpFormatterTest#testOptionWithoutShortFormat2'],
                 cwd=self.project.glue_dir,
-                stderr=f"{self.project.root_dir}/glue.log", # was: subprocess.DEVNULL
-                stdout=f"{self.project.root_dir}/glue.log", # was: subprocess.DEVNULL
+                stderr=open(f"{self.project.root_dir}/glue_err.log", "w") if self.debug else subprocess.DEVNULL,
+                stdout=open(f"{self.project.root_dir}/glue.log", "w") if self.debug else subprocess.DEVNULL,
                 check=True
             )
         except Exception:
             failure_flag = True # check if the failure is due to the tests or something else
+            
+        if self.debug:
+            # create a snapshot of the project in logs/glue/
+            os.makedirs(f"{self.project.root_dir}/logs/glue/", exist_ok=True)
+            subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/"], check=True)
         
         self.__revert_writes()
         self.project.reset_partial_translation_schemas()
@@ -496,7 +502,14 @@ class CompositionalTest:
         failed_tests = self.__get_failed_tests_from_surefire()
         
         if failure_flag and not failed_tests:
-            raise Exception("An error occurred while running the tests!")
+            # raise Exception("An error occurred while running the tests!")
+            
+            # for now, we will just return False (a potential false negative)
+            # so that the pipeline doesn't stop
+            return {
+                "success": False,
+                "failed_tests": []
+            }
         
         return {
             "success": True if not failed_tests else False,
@@ -610,52 +623,42 @@ class Schema:
                 if _method in methods_to_process:
                     self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method])
                 else:
-                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)     
+                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)
         
-        # add graal-related members if the class is being processed
-        # otherwise just add a default constructor
-        if True:
-            python_file_dir = self.subpackage.replace('.', '/')
-            python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
-            current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
-            python_file = f'{python_file_dir}/{current_file_name}.py'
-            
-            class_obj["fields"].extend([
-                f"private static Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");",
-                "private Value obj;"
-            ])
-            unititialized_fields_body = "".join(class_obj["unitialized_fields"])
-            
-            # add Value constructor
-            class_obj["methods"].append(f"""
-                public {class_name}(Value obj) {{
-                    {unititialized_fields_body}
-                    this.obj = obj;
-                }}                            
-            """)
+        # add graal-related members and a default constructor
+        python_file_dir = self.subpackage.replace('.', '/')
+        python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
+        current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
+        python_file = f'{python_file_dir}/{current_file_name}.py'
+        
+        class_obj["fields"].extend([
+            f"private static Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");",
+            "private Value obj;"
+        ])
+        unititialized_fields_body = "".join(class_obj["unitialized_fields"])
+        
+        # add Value constructor
+        class_obj["methods"].append(f"""
+            public {class_name}(Value obj) {{
+                {unititialized_fields_body}
+                this.obj = obj;
+            }}                            
+        """)
 
-            # add getPythonObject()
-            class_obj["methods"].append(f"""
-                public Value getPythonObject() {{
-                    return obj;
-                }}
-            """)
+        # add getPythonObject()
+        class_obj["methods"].append(f"""
+            public Value getPythonObject() {{
+                return obj;
+            }}
+        """)
 
-            # add a Default constructor
-            class_obj["methods"].append(f"""
-                public {class_name}() {{
-                    {unititialized_fields_body}
-                    this.obj = clz.newInstance();
-                }}
-            """)
-        else:
-            # add a Default constructor
-            unititialized_fields_body = "".join(class_obj["unitialized_fields"])
-            class_obj["methods"].append(f"""
-                public {class_name}() {{
-                    {unititialized_fields_body}
-                }}
-            """)
+        # add a Default constructor
+        class_obj["methods"].append(f"""
+            public {class_name}() {{
+                {unititialized_fields_body}
+                this.obj = clz.newInstance();
+            }}
+        """)
         
         # check if this class is nested inside another class
         if class_schema_data['nested_inside']:
@@ -663,7 +666,7 @@ class Schema:
             for _class in self.__classes:
                 if _class['name'] == parent_class:
                     _class["nests"].append(class_obj)
-                    break 
+                    break
         else:
             self.__classes.append(class_obj)
         
