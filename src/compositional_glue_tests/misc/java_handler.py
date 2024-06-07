@@ -10,7 +10,14 @@ class JavaHandler:
         
         # get underlying python objects from java objects
         if hasattr(x, 'getPythonObject'):
-            return x.getPythonObject()
+            obj = x.getPythonObject()
+            
+            # recursively map all fields of the object
+            if hasattr(obj, '__dict__'):
+                for key in obj.__dict__:
+                    obj.__dict__[key] = JavaHandler.mapping(obj.__dict__[key])
+                    
+            return obj
         
         # Properties
         if hasattr(x, 'getProperty'):
