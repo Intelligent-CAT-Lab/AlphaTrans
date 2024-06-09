@@ -101,7 +101,7 @@ class Project:
         python_partial_schema_name = schema_file_name[:schema_file_name.rfind('.')] + '_python_partial.json'
         # find the schema file
         for file_name in os.listdir(f"{self.schema_dir}/{self.name}"):
-            if file_name.endswith(python_partial_schema_name):
+            if file_name.endswith("." + python_partial_schema_name):
                 schema_full_file_name = file_name
                 break
         else:
