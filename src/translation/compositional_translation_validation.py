@@ -291,6 +291,9 @@ def main(args):
                 pbar.update()
                 pbar.set_description(f"Translating field {field_} in class {class_} @ schema {schema}...")
 
+                if data['classes'][class_]['fields'][field_]['translation_status'] == 'failed':
+                    continue
+
                 if data['classes'][class_]['fields'][field_]['translation_status'] == 'success' and not args.dump_syntactically_validated_fragments:
                     continue
 
@@ -333,6 +336,10 @@ def main(args):
 
                 full_fragment_name = f'{schema.replace("_python_partial.json", "")}|{class_}|{method_}'
                 dependent_fragments = [f'{x[0]}|{x[1]}|{x[2]}' for x in data['classes'][class_]['methods'][method_]['calls'] if ':' in x[2] and full_fragment_name != f'{x[0]}|{x[1]}|{x[2]}']
+
+                if data['classes'][class_]['methods'][method_]['translation_status'] == 'failed':
+                    processed_fragments.append(full_fragment_name)
+                    continue
 
                 if data['classes'][class_]['methods'][method_]['translation_status'] == 'success' and not args.dump_syntactically_validated_fragments:
                     processed_fragments.append(full_fragment_name)
