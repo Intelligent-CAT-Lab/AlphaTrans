@@ -19,7 +19,7 @@ from genai.schema import (
 )
 
 
-def translate(model, tokenizer, device, members_to_translate: list[list], dump_syntactically_validated_fragments, in_cycle=False):
+def translate(model, tokenizer, device, members_to_translate: list[list], dump_syntactically_validated_fragments, is_test):
     """
     members_to_translate: [prompt, fragment, use_bam, project_name, schema, class_, fragment_]
     """
@@ -126,6 +126,10 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
         return syntactically_validated_members, elapsed_time
 
     if dump_syntactically_validated_fragments:
+        elapsed_time = time.time() - start_time
+        return syntactically_validated_members, elapsed_time
+    
+    if is_test:
         elapsed_time = time.time() - start_time
         return syntactically_validated_members, elapsed_time
 
@@ -313,7 +317,7 @@ def main(args):
                         json.dump(data, f, indent=4)
                     continue
 
-                translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'field', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': schema, 'class': class_, 'fragment': field_}], args.dump_syntactically_validated_fragments)
+                translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'field', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': schema, 'class': class_, 'fragment': field_}], args.dump_syntactically_validated_fragments, 'src.test' in schema)
                 if translation is not None and args.dump_syntactically_validated_fragments:
                     data['classes'][class_]['fields'][field_]['translation_status'] = 'syntactical_success'
                 elif translation is not None and not args.dump_syntactically_validated_fragments:
@@ -355,7 +359,7 @@ def main(args):
 
                 prompt = generate_prompt(data, schema, class_, method_, args, 'method')
 
-                translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'method', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': schema, 'class': class_, 'fragment': method_}], args.dump_syntactically_validated_fragments)
+                translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'method', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': schema, 'class': class_, 'fragment': method_}], args.dump_syntactically_validated_fragments, 'src.test' in schema)
                 if translation is not None and args.dump_syntactically_validated_fragments:
                     data['classes'][class_]['methods'][method_]['translation_status'] = 'syntactical_success'
                 elif translation is not None and not args.dump_syntactically_validated_fragments:
@@ -380,7 +384,7 @@ def main(args):
                         _, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[waiting_fragment]
                         prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
 
-                        translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'method', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': waiting_schema, 'class': waiting_class, 'fragment': waiting_method}], args.dump_syntactically_validated_fragments)
+                        translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'method', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': waiting_schema, 'class': waiting_class, 'fragment': waiting_method}], args.dump_syntactically_validated_fragments, 'src.test' in waiting_schema)
 
                         waiting_data = {}
                         with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
@@ -419,7 +423,7 @@ def main(args):
                 _, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[waiting_fragment]
                 prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
 
-                translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'method', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': waiting_schema, 'class': waiting_class, 'fragment': waiting_method}], args.dump_syntactically_validated_fragments)
+                translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'method', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': waiting_schema, 'class': waiting_class, 'fragment': waiting_method}], args.dump_syntactically_validated_fragments, 'src.test' in waiting_schema)
 
                 waiting_data = {}
                 with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
@@ -465,6 +469,7 @@ def main(args):
     # translating all cycles at once
     for cycle in cycles:
         methods_to_be_translated = []
+        waiting_schema = ''
         for cycle_fragment in cycle:
             waiting_dependent_fragments, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[cycle_fragment]
             prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
@@ -472,7 +477,7 @@ def main(args):
             methods_to_be_translated.append({'prompt': prompt, 'fragment_type': 'method', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': waiting_schema, 'class': waiting_class, 'fragment': waiting_method})
 
         
-        translation, elapsed_time = translate(model, tokenizer, device, methods_to_be_translated, args.dump_syntactically_validated_fragments, in_cycle=True)
+        translation, elapsed_time = translate(model, tokenizer, device, methods_to_be_translated, args.dump_syntactically_validated_fragments, 'src.test' in waiting_schema)
 
         if translation is not None:
             for i, cycle_fragment in enumerate(cycle):
@@ -532,7 +537,7 @@ def main(args):
                 _, waiting_data, waiting_schema, waiting_class, waiting_method, waiting_fragment_type, waiting_args = waiting_queue[waiting_fragment]
                 prompt = generate_prompt(waiting_data, waiting_schema, waiting_class, waiting_method, waiting_args, waiting_fragment_type)
 
-                translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'method', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': waiting_schema, 'class': waiting_class, 'fragment': waiting_method}], args.dump_syntactically_validated_fragments)
+                translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'method', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': waiting_schema, 'class': waiting_class, 'fragment': waiting_method}], args.dump_syntactically_validated_fragments, 'src.test' in waiting_schema)
 
                 waiting_data = {}
                 with open(f'data/schemas/{args.project_name}/{waiting_schema}', 'r') as f:
