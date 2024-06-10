@@ -44,6 +44,8 @@ def l2_validation(members_to_validate: list[list]):
             components[schema_name] = {class_: [fragment_name]}
             
     test = project.derive_compositional_tests(components)
-    status, feedback = test.run()
-    
+    output = test.run()
+    status = output['status']
+    feedback = output['failed_tests']
+
     return status, members_to_validate, feedback

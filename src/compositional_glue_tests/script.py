@@ -96,6 +96,7 @@ class Project:
         Inject the translated method into the schema by
         recomposing the file from the schema.
         """
+        print(f"Injecting method {method_name} into class {class_name} of schema {schema_file_name}...", flush=True)
         new_file_contents = []
         
         python_partial_schema_name = schema_file_name[:schema_file_name.rfind('.')] + '_python_partial.json'
@@ -477,6 +478,7 @@ class CompositionalTest:
         """
         Run the compositional tests.
         """
+        print("Running the compositional tests...", flush=True)
         self.__execute_writes()
         failure_flag = False
         try:
@@ -507,12 +509,12 @@ class CompositionalTest:
             # for now, we will just return False (a potential false negative)
             # so that the pipeline doesn't stop
             return {
-                "success": False,
+                "status": False,
                 "failed_tests": []
             }
         
         return {
-            "success": True if not failed_tests else False,
+            "status": True if not failed_tests else False,
             "failed_tests": failed_tests
         }
     
