@@ -127,10 +127,31 @@
                         "    def testMistakenArgument(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "translation": [
+                        "",
+                        "    def testMistakenArgument(self) -> None:",
+                        "        ",
+                        "",
+                        "        # Initialize the parser and options",
+                        "        self.__parser = PosixParser()",
+                        "        self.__options = Options()",
+                        "",
+                        "        # Define the options",
+                        "        self.__options.addOption(\"a\", True, \"Caesar\")",
+                        "        self.__options.addOption(\"k\", True, \"A\")",
+                        "",
+                        "        # Parse the arguments",
+                        "        args = [\"-a\", \"Caesar\", \"-k\", \"a\"]",
+                        "        line = self.__parser.parse0(self.__options, args)",
+                        "",
+                        "        # Check the parsed values",
+                        "        assert \"Caesar\" == line.getOptionValue4(\"a\")",
+                        "        assert \"a\" == line.getOptionValue4(\"k\")",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 9.719880104064941,
+                    "generation_timestamp": "2024-06-09T20:12:24.336945",
                     "model_name": "deepseek-coder-33b-instruct"
                 },
                 "75-83:testLackOfError": {
@@ -183,10 +204,22 @@
                         "    def testLackOfError(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "translation": [
+                        "",
+                        "    def testLackOfError(self) -> None:",
+                        "        ",
+                        "",
+                        "        args = [\"-k\", \"-a\", \"Caesar\"]",
+                        "        try:",
+                        "            self.__parser.parse0(self.__options, args)",
+                        "            self.fail(\"MissingArgumentException expected\")",
+                        "        except MissingArgumentException as e:",
+                        "            self.assertEquals(\"option missing an argument\", \"k\", e.getOption().getOpt())",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 4.925456762313843,
+                    "generation_timestamp": "2024-06-09T20:12:29.267181",
                     "model_name": "deepseek-coder-33b-instruct"
                 },
                 "65-72:testGetsDefaultIfOptional": {
@@ -248,10 +281,22 @@
                         "    def testGetsDefaultIfOptional(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "translation": [
+                        "",
+                        "    def testGetsDefaultIfOptional(self) -> None:",
+                        "        ",
+                        "",
+                        "        args = [\"-k\", \"-a\", \"Caesar\"]",
+                        "        self.__options.getOption(\"k\").setOptionalArg(True)",
+                        "        line = self.__parser.parse0(self.__options, args)",
+                        "",
+                        "        assert \"Caesar\" == line.getOptionValue4(\"a\")",
+                        "        assert \"a\" == line.getOptionValue1('k', \"a\")",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 4.738584756851196,
+                    "generation_timestamp": "2024-06-09T20:12:34.011972",
                     "model_name": "deepseek-coder-33b-instruct"
                 },
                 "57-62:testBasic": {
@@ -296,10 +341,20 @@
                         "    def testBasic(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "translation": [
+                        "",
+                        "    def testBasic(self) -> None:",
+                        "        ",
+                        "",
+                        "        args = [\"-a\", \"Caesar\", \"-k\", \"A\"]",
+                        "        line = self.__parser.parse0(self.__options, args)",
+                        "        assert \"Caesar\" == line.getOptionValue4(\"a\")",
+                        "        assert \"A\" == line.getOptionValue4(\"k\")",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 6.140850067138672,
+                    "generation_timestamp": "2024-06-09T20:12:40.155217",
                     "model_name": "deepseek-coder-33b-instruct"
                 },
                 "38-54:setUp": {
@@ -370,10 +425,27 @@
                         "    def setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "translation": [
+                        "",
+                        "    def setUp(self) -> None:",
+                        "        ",
+                        "",
+                        "        self.__options = Options()",
+                        "",
+                        "        algorithm = Option(0, \"a\", \"algo\", \"the algorithm which it to perform executing\", True, None)",
+                        "        algorithm.setArgName(\"algorithm name\")",
+                        "        self.__options.addOption0(algorithm)",
+                        "",
+                        "        key = Option(0, \"k\", \"key\", \"the key the setted algorithm uses to process\", True, None)",
+                        "        key.setArgName(\"value\")",
+                        "        self.__options.addOption0(key)",
+                        "",
+                        "        self.__parser = PosixParser()",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 5.463330030441284,
+                    "generation_timestamp": "2024-06-09T20:12:45.625232",
                     "model_name": "deepseek-coder-33b-instruct"
                 }
             },
@@ -394,10 +466,13 @@
                         ]
                     ],
                     "partial_translation": "    __parser: CommandLineParser = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    __parser: CommandLineParser = None",
+                        ""
+                    ],
+                    "translation_status": "success",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-05T15:34:12.648632",
                     "model_name": "deepseek-coder-33b-instruct"
                 },
                 "34-34:options": {
@@ -416,10 +491,13 @@
                         ]
                     ],
                     "partial_translation": "    __options: Options = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    __options: Options = None",
+                        ""
+                    ],
+                    "translation_status": "success",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-05T15:34:12.652236",
                     "model_name": "deepseek-coder-33b-instruct"
                 }
             },
