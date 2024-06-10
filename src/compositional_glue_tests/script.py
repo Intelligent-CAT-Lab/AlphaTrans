@@ -481,7 +481,7 @@ class CompositionalTest:
         failure_flag = False
         try:
             subprocess.run(
-                ['mvn', 'clean', 'test', '-Drat.skip', '-q', '-Dtest=HelpFormatterTest#testOptionWithoutShortFormat2'],
+                ['mvn', 'clean', 'test', '-Drat.skip', '-q'],
                 cwd=self.project.glue_dir,
                 stderr=open(f"{self.project.root_dir}/glue_err.log", "w") if self.debug else subprocess.DEVNULL,
                 stdout=open(f"{self.project.root_dir}/glue.log", "w") if self.debug else subprocess.DEVNULL,
