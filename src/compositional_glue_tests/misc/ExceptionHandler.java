@@ -17,7 +17,9 @@ final public class ExceptionHandler {{
         Value exceptionObj = e.getGuestObject();
 
         {mappings}
-
+        
+        System.out.println("Unhandled exception type: " + exceptionType);
+        // System.out.println("The exception had the following message: " + exceptionMessage);
         return new RuntimeException(exceptionMessage);
     }}
 }}

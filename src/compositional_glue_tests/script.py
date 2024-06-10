@@ -135,9 +135,14 @@ class Project:
             # add methods
             for _method in schema_data['classes'][_class]['methods']:
                 if schema_data['classes'][_class]['methods'][_method]['translation_status'] == "success":
-                    new_file_contents.append("\n".join(schema_data['classes'][_class]['methods'][_method]['translation']))
+                    method_body = schema_data['classes'][_class]['methods'][_method]['translation']
                 else:
-                    new_file_contents.append("\n".join(schema_data['classes'][_class]['methods'][_method]['partial_translation']))
+                    method_body = schema_data['classes'][_class]['methods'][_method]['partial_translation']
+                if type(method_body) == list:
+                    method_body = "\n".join(method_body)
+                    
+                print(method_body)
+                new_file_contents.append(method_body)
             
         # write the new contents to the python file
         with open("".join([
@@ -227,7 +232,7 @@ class CompositionalTest:
                             # find the schema for the parent class
                             # (assuming the parent class has its own schema)
                             for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}'):
-                                if file_name.endswith(f'.{parent_class}.json'):
+                                if file_name.endswith(f'.{parent_class}_python_partial.json'):
                                     # add the parent class to the components
                                     _schema = file_name[:file_name.rfind('.')].split('.')[-1]
                                     if _schema in components:
@@ -347,8 +352,8 @@ class CompositionalTest:
         If no schemas are provided, all schemas in the project will be processed.
         """   
         project_schemas = [file_name for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}') if (
-            'src.test' not in file_name and # ignore test schemas
-            not file_name.endswith('_python_partial.json') # ignore partial schemas
+            'src.test' not in file_name # ignore test schemas
+            # and not file_name.endswith('_python_partial.json') # ignore partial schemas
         )]
         
         if not schemas_to_process:
@@ -356,7 +361,7 @@ class CompositionalTest:
         else:
             self.schemas_to_process = []
             for schema in schemas_to_process:
-                mathing_schemas = [s for s in project_schemas if s.endswith(f'.{schema}.json')]
+                mathing_schemas = [s for s in project_schemas if s.endswith(f'.{schema}_python_partial.json')]
                 if not mathing_schemas:
                     raise ValueError(f"Schema for {schema} not found!")
                 self.schemas_to_process.extend(mathing_schemas)
@@ -494,8 +499,8 @@ class CompositionalTest:
             
         if self.debug:
             # create a snapshot of the project in logs/glue/
-            os.makedirs(f"{self.project.root_dir}/logs/glue/", exist_ok=True)
-            subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/"], check=True)
+            os.makedirs(f"{self.project.root_dir}/logs/glue/{self.project.name}/", exist_ok=True)
+            subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/{self.project.name}/"], check=True)
         
         self.__revert_writes()
         self.project.reset_partial_translation_schemas()
@@ -739,7 +744,9 @@ class Schema:
         else:
             caller = "this.obj"
             
-        args_buildup = ", ".join(method_schema_data['parameters'])
+        casted_parameters = [f"IntegrationUtils.mapToPython({param})" for param in method_schema_data['parameters']]
+            
+        args_buildup = ", ".join(casted_parameters)
         
         if is_constructor:
             python_call = f"clz.newInstance({args_buildup})"
