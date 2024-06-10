@@ -1,28 +1,35 @@
 import argparse
 import json
-from dotenv import load_dotenv
-import torch
+# from dotenv import load_dotenv
+# import torch
 import tqdm
 import os
+import subprocess
 import time
 import datetime
-from transformers import AutoTokenizer, AutoModelForCausalLM
+# from transformers import AutoTokenizer, AutoModelForCausalLM
 from syntactic_validation import l0_validation
 from functional_validation import l2_validation
 
-from genai.client import Client
-from genai.credentials import Credentials
-from genai.schema import (
-    DecodingMethod,
-    TextGenerationParameters,
-    TextGenerationReturnOptions,
-)
+# from genai.client import Client
+# from genai.credentials import Credentials
+# from genai.schema import (
+#     DecodingMethod,
+#     TextGenerationParameters,
+#     TextGenerationReturnOptions,
+# )
 
+subprocess.run(['git', 'checkout', 'data/schemas/'])
+i = 0
 
 def translate(model, tokenizer, device, members_to_translate: list[list], dump_syntactically_validated_fragments, is_test):
     """
     members_to_translate: [prompt, fragment, use_bam, project_name, schema, class_, fragment_]
     """
+    global i
+    i += 1
+    if i > 1:
+        quit()
     syntactically_validated_members = []    
     for member in members_to_translate:
         prompt = member['prompt']
@@ -42,66 +49,77 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
             print(prompt, flush=True)
             print('=======================GENERATING=======================', flush=True)
 
-            if use_bam:
-                client = Client(credentials=Credentials.from_env())
-                model_id = "deepseek-ai/deepseek-coder-33b-instruct"
+            # if use_bam:
+            #     client = Client(credentials=Credentials.from_env())
+            #     model_id = "deepseek-ai/deepseek-coder-33b-instruct"
 
-                total_tokens = 0
-                for response in client.text.tokenization.create(model_id=model_id, input=prompt):
-                    total_tokens = response.results[0].token_count
+            #     total_tokens = 0
+            #     for response in client.text.tokenization.create(model_id=model_id, input=prompt):
+            #         total_tokens = response.results[0].token_count
                 
-                if total_tokens > 16384:
-                    return None, -1
+            #     if total_tokens > 16384:
+            #         return None, -1
 
-                max_new_tokens = 16384 - total_tokens
+            #     max_new_tokens = 16384 - total_tokens
 
-                if fragment == 'field':
-                    max_new_tokens = min(max_new_tokens, 1024)
-                    # max_new_tokens = 1024
-                elif fragment == 'method':
-                    max_new_tokens = min(max_new_tokens, 4096)
-                    # max_new_tokens = 4096
+            #     if fragment == 'field':
+            #         max_new_tokens = min(max_new_tokens, 1024)
+            #         # max_new_tokens = 1024
+            #     elif fragment == 'method':
+            #         max_new_tokens = min(max_new_tokens, 4096)
+            #         # max_new_tokens = 4096
 
-                parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
-                                                        min_new_tokens=1,
-                                                        max_new_tokens=max_new_tokens,
-                                                        return_options=TextGenerationReturnOptions(
-                                                            input_text=True,
-                                                        ),
-                                                        time_limit=60000,
-                                                    )
+            #     parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
+            #                                             min_new_tokens=1,
+            #                                             max_new_tokens=max_new_tokens,
+            #                                             return_options=TextGenerationReturnOptions(
+            #                                                 input_text=True,
+            #                                             ),
+            #                                             time_limit=60000,
+            #                                         )
 
-                for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
-                    generation = response.results[0].input_text + response.results[0].generated_text
+            #     for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
+            #         generation = response.results[0].input_text + response.results[0].generated_text
             
+            # else:
+
+            #     input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
+
+            #     if input_tokens.shape[1] > 16384:
+            #         return None, -1
+
+            #     max_new_tokens = 16384 - input_tokens.shape[1]
+            #     if fragment == 'field':
+            #         max_new_tokens = min(max_new_tokens, 1024)
+            #         # max_new_tokens = 1024
+            #     elif fragment == 'method':
+            #         max_new_tokens = min(max_new_tokens, 4096)
+            #         # max_new_tokens = 4096
+
+            #     raw_output = model.generate(
+            #         input_tokens,
+            #         max_new_tokens=max_new_tokens,
+            #         do_sample=False,
+            #         output_scores=True,
+            #         return_dict_in_generate=True,
+            #         pad_token_id=tokenizer.eos_token_id,
+            #     )
+
+            #     generation = tokenizer.decode(raw_output.sequences[0], skip_special_tokens=True)
+
+            # generation = generation[generation.find('### Response:')+13:]
+            
+            # open the schema file
+            with open(f'data/schemas/{project_name}/{schema}', 'r') as f:
+                data = json.load(f)
+                
+            # get the precomputed translation
+            translation = data['classes'][class_][f'{fragment}s'][fragment_]['translation']
+            if type(translation) is str:
+                generation = translation
             else:
-
-                input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
-
-                if input_tokens.shape[1] > 16384:
-                    return None, -1
-
-                max_new_tokens = 16384 - input_tokens.shape[1]
-                if fragment == 'field':
-                    max_new_tokens = min(max_new_tokens, 1024)
-                    # max_new_tokens = 1024
-                elif fragment == 'method':
-                    max_new_tokens = min(max_new_tokens, 4096)
-                    # max_new_tokens = 4096
-
-                raw_output = model.generate(
-                    input_tokens,
-                    max_new_tokens=max_new_tokens,
-                    do_sample=False,
-                    output_scores=True,
-                    return_dict_in_generate=True,
-                    pad_token_id=tokenizer.eos_token_id,
-                )
-
-                generation = tokenizer.decode(raw_output.sequences[0], skip_special_tokens=True)
-
-            generation = generation[generation.find('### Response:')+13:]
-
+                generation = "\n".join(translation)
+            
             print(generation, flush=True)
             print('---' * 50, flush=True)
 
@@ -117,17 +135,17 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
             
             max_attempts = 5
     
-    if syntactically_validated_members == []:
-        elapsed_time = time.time() - start_time
-        return None, elapsed_time
+    # if syntactically_validated_members == []:
+    #     elapsed_time = time.time() - start_time
+    #     return None, elapsed_time
 
     if members_to_translate[0]['fragment_type'] == 'field':
         elapsed_time = time.time() - start_time
         return syntactically_validated_members, elapsed_time
 
-    if dump_syntactically_validated_fragments:
-        elapsed_time = time.time() - start_time
-        return syntactically_validated_members, elapsed_time
+    # if dump_syntactically_validated_fragments:
+    #     elapsed_time = time.time() - start_time
+    #     return syntactically_validated_members, elapsed_time
     
     if is_test:
         elapsed_time = time.time() - start_time
@@ -137,6 +155,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
     
     if not status:
         # TODO: handle feedback
+        print(feedback, flush=True)
         return None, 0
 
     elapsed_time = time.time() - start_time
@@ -236,14 +255,14 @@ def align_schema_order(schemas, traversal_order):
 
 
 def main(args):
-    device = 'cuda' if torch.cuda.is_available() and args.use_cuda else 'cpu'
+    device = 'cpu' # 'cuda' if torch.cuda.is_available() and args.use_cuda else 'cpu''
     tokenizer, model = None, None
 
-    if args.model_name == 'deepseek-coder-33b-instruct' and not args.use_bam:
-        kwargs = {}
-        kwargs["torch_dtype"] = torch.float16
-        tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir)
-        model = AutoModelForCausalLM.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir, device_map='auto', **kwargs)
+    # if args.model_name == 'deepseek-coder-33b-instruct' and not args.use_bam:
+    #     kwargs = {}
+    #     kwargs["torch_dtype"] = torch.float16
+    #     tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir)
+    #     model = AutoModelForCausalLM.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir, device_map='auto', **kwargs)
 
     schemas = os.listdir(f'data/schemas/{args.project_name}')
 
@@ -295,14 +314,14 @@ def main(args):
                 pbar.update()
                 pbar.set_description(f"Translating field {field_} in class {class_} @ schema {schema}...")
 
-                if data['classes'][class_]['fields'][field_]['translation_status'] == 'failed':
-                    continue
+                # if data['classes'][class_]['fields'][field_]['translation_status'] == 'failed':
+                #     continue
 
-                if data['classes'][class_]['fields'][field_]['translation_status'] == 'success' and not args.dump_syntactically_validated_fragments:
-                    continue
+                # if data['classes'][class_]['fields'][field_]['translation_status'] == 'success' and not args.dump_syntactically_validated_fragments:
+                #     continue
 
-                if data['classes'][class_]['fields'][field_]['translation_status'] == 'syntactical_success' and args.dump_syntactically_validated_fragments:
-                    continue
+                # if data['classes'][class_]['fields'][field_]['translation_status'] == 'syntactical_success' and args.dump_syntactically_validated_fragments:
+                #     continue
 
                 prompt = generate_prompt(data, schema, class_, field_, args, 'field')
 
@@ -341,17 +360,17 @@ def main(args):
                 full_fragment_name = f'{schema.replace("_python_partial.json", "")}|{class_}|{method_}'
                 dependent_fragments = [f'{x[0]}|{x[1]}|{x[2]}' for x in data['classes'][class_]['methods'][method_]['calls'] if ':' in x[2] and full_fragment_name != f'{x[0]}|{x[1]}|{x[2]}']
 
-                if data['classes'][class_]['methods'][method_]['translation_status'] == 'failed':
-                    processed_fragments.append(full_fragment_name)
-                    continue
+                # if data['classes'][class_]['methods'][method_]['translation_status'] == 'failed':
+                #     processed_fragments.append(full_fragment_name)
+                #     continue
 
-                if data['classes'][class_]['methods'][method_]['translation_status'] == 'success' and not args.dump_syntactically_validated_fragments:
-                    processed_fragments.append(full_fragment_name)
-                    continue
+                # if data['classes'][class_]['methods'][method_]['translation_status'] == 'success' and not args.dump_syntactically_validated_fragments:
+                #     processed_fragments.append(full_fragment_name)
+                #     continue
 
-                if data['classes'][class_]['methods'][method_]['translation_status'] == 'syntactical_success' and args.dump_syntactically_validated_fragments:
-                    processed_fragments.append(full_fragment_name)
-                    continue
+                # if data['classes'][class_]['methods'][method_]['translation_status'] == 'syntactical_success' and args.dump_syntactically_validated_fragments:
+                #     processed_fragments.append(full_fragment_name)
+                #     continue
 
                 if any([x not in processed_fragments for x in dependent_fragments]):
                     waiting_queue[full_fragment_name] = [dependent_fragments, data.copy(), schema, class_, method_, 'method', args]
@@ -568,16 +587,26 @@ def main(args):
 
 
 if __name__ == '__main__':
-    load_dotenv()
+    # load_dotenv()
     parser_ = argparse.ArgumentParser(description='Translate java types to python types')
-    parser_.add_argument('--model_name', type=str, dest='model_name', help='model name to use for translation')
+    # parser_.add_argument('--model_name', type=str, dest='model_name', help='model name to use for translation')
     parser_.add_argument('--project_name', type=str, dest='project_name', help='project name to translate')
-    parser_.add_argument('--from_lang', type=str, dest='from_lang', help='language to translate from')
-    parser_.add_argument('--to_lang', type=str, dest='to_lang', help='language to translate to')
-    parser_.add_argument('--include_call_graph', action='store_true', help='include call graph in translation')
-    parser_.add_argument('--cache_dir', type=str, dest='cache_dir', help='cache directory')
-    parser_.add_argument('--use_bam', action='store_true', help='translate main files')
-    parser_.add_argument('--use_cuda', action='store_true', help='use cuda for translation')
-    parser_.add_argument('--dump_syntactically_validated_fragments', action='store_true', help='dump syntactically validated fragments')
+    # parser_.add_argument('--from_lang', type=str, dest='from_lang', help='language to translate from')
+    # parser_.add_argument('--to_lang', type=str, dest='to_lang', help='language to translate to')
+    # parser_.add_argument('--include_call_graph', action='store_true', help='include call graph in translation')
+    # parser_.add_argument('--cache_dir', type=str, dest='cache_dir', help='cache directory')
+    # parser_.add_argument('--use_bam', action='store_true', help='translate main files')
+    # parser_.add_argument('--use_cuda', action='store_true', help='use cuda for translation')
+    # parser_.add_argument('--dump_syntactically_validated_fragments', action='store_true', help='dump syntactically validated fragments')
     args = parser_.parse_args()
+    
+    args.model_name = None
+    args.from_lang = 'java'
+    args.to_lang = 'python'
+    args.cache_dir = 'cache'
+    args.use_bam = False
+    args.use_cuda = False
+    args.include_call_graph = True
+    args.dump_syntactically_validated_fragments = False
+    
     main(args)
