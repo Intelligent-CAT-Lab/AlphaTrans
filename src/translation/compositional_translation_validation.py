@@ -168,6 +168,16 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type):
         if '<placeholder>' not in ''.join(data['classes'][class_]['fields'][fragment_]['partial_translation']):
             return None
 
+        related_fields = []
+        for field in data['classes'][class_]['fields']:
+            if field.split(':')[1] == fragment_.split(':')[1]:
+                continue
+            if field.split(':')[1] in original_fragment:
+                related_fields.append(field)
+        
+        for related_field in related_fields:
+            instruction += ''.join(data['classes'][class_]['fields'][related_field]['partial_translation'].replace('<placeholder>', 'None') + '\n')
+
         instruction += ''.join(data['classes'][class_]['fields'][fragment_]['partial_translation'].replace('<placeholder>', '') + '\n')
         instruction += '\n```\n\n### Response:\n'
         instruction += f'Python field translation:\n'
