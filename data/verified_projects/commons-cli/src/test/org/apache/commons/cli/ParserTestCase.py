@@ -38,7 +38,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         opts: Options,
         args: typing.List[str],
         properties: typing.Union[
-            configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
+            configparser.ConfigParser, typing.Dict
         ],
     ) -> CommandLine:
         
