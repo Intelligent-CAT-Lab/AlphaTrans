@@ -5,18 +5,18 @@ import os
 
 def main(args):
 
-    translation_files = os.listdir(f'data/translations/{args.model_name}/{args.project_name}')
+    schema_files = os.listdir(f'data/schemas/{args.project_name}')
 
     total_fragments = 0
     total_unsuccessful = 0
 
-    for translation_file in translation_files:
+    for schema in schema_files:
 
-        if not translation_file.endswith('.json'):
+        if not schema.endswith('_python_partial.json'):
             continue
 
         data = {}
-        with open(f'data/translations/{args.model_name}/{args.project_name}/{translation_file}') as f:
+        with open(f'data/schemas/{args.project_name}/{schema}') as f:
             data = json.load(f)
 
         recomposed_file = '\n'.join(data['python_imports'])
@@ -52,13 +52,39 @@ def main(args):
                 recomposed_file += '    pass\n\n'
                 continue
 
+            field_val = {}
             for field in data['classes'][class_]['fields']:
+                if data['classes'][class_]['fields'][field]['translation'] == None:
+                    data['classes'][class_]['fields'][field]['translation'] = data['classes'][class_]['fields'][field]['partial_translation'].replace('<placeholder>', 'None # LLM could not translate this field')
+                translation = '\n'.join(data['classes'][class_]['fields'][field]['translation']).strip()
+                field_name = translation[:translation.find(':')].strip()
+                field_value = ''.join(translation.split('=')[1:]).strip()
+                field_val[field_name] = {'value': field_value, 'key': field}
 
-                # if data['classes'][class_]['fields'][field]['translation'] == None:
-                #     recomposed_file += '\n'.join([''] + data['classes'][class_]['fields'][field]['partial_translation']).replace('pass', 'pass # LLM could not translate this field')
-                #     total_unsuccessful += 1
+            field_order = []
+            dependent_fields = []
+            for field in field_val:
+                found_dependency = False
+                for token in field_val[field]['value'].split():
+                    if token in field_val:
+                        dependent_fields.append(field_val[field]['key'])
+                        found_dependency = True
+                        break
+                
+                if found_dependency:
+                    continue
+                field_order.append(field_val[field]['key'])
+            
+            field_order += dependent_fields
+
+            for field in field_order:
 
                 total_fragments += 1
+                if data['classes'][class_]['fields'][field]['translation'] == None:
+                    recomposed_file += '\n'.join([''] + data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', 'None # LLM could not translate this field')
+                    total_unsuccessful += 1
+                    continue
+
                 if type(data['classes'][class_]['fields'][field]['translation']) == str:
                     recomposed_file += data['classes'][class_]['fields'][field]['translation']
                     continue
@@ -72,26 +98,33 @@ def main(args):
                 recomposed_file += '\n'.join(data['classes'][class_]['methods'][method]['translation'])
                 total_fragments += 1
 
-        import_map = {'urllib': 'import urllib\n', 'sys': 'import sys\n'}
+        import_map = {'urllib': 'import urllib\n', 'sys': 'import sys\n', 'mock': 'import mock\n', 'cmp_to_key': 'from functools import cmp_to_key\n', 'field': 'from dataclasses import field\n'}
 
         python_imports = data['python_imports']
         for key in import_map:
             if key in recomposed_file and import_map[key] not in recomposed_file:
                 recomposed_file = recomposed_file.replace('from __future__ import annotations\n', 'from __future__ import annotations\n' + import_map[key])
                 python_imports.append(import_map[key].strip())
+        
+        exception_map = {'IllegalArgumentException': 'ValueError', 'RuntimeException': 'RuntimeError', 'UnsupportedOperationException': 'NotImplementedError',
+                         'CloneNotSupportedError': 'NotImplementedError', 'IllegalStateException': 'RuntimeError'}
+        
+        for key in exception_map:
+            if key in recomposed_file:
+                recomposed_file = recomposed_file.replace(key, exception_map[key])
 
-        formatted_schema_fname = '.'.join(translation_file.split('.')[:-1])
+        formatted_schema_fname = '.'.join(schema.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
         os.makedirs(f'data/recomposed_projects/{args.model_name}/{args.project_name}/{sub_dir}', exist_ok=True)
-        file_path = f"data/recomposed_projects/{args.model_name}/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_translation', '')}.py"
+        file_path = f"data/recomposed_projects/{args.model_name}/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
         with open(file_path, 'w') as f:
             f.write(recomposed_file)
         
         os.system(f'python3 -m black {file_path}')
 
     # add __init__.py files for each subdirectory
-    for translation_file in translation_files:
-        formatted_schema_fname = '.'.join(translation_file.split('.')[:-1])
+    for schema in schema_files:
+        formatted_schema_fname = '.'.join(schema.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
         os.makedirs(f'data/recomposed_projects/{args.model_name}/{args.project_name}/{sub_dir}', exist_ok=True)
 
@@ -104,6 +137,9 @@ def main(args):
         file_path = f"data/recomposed_projects/{args.model_name}/{args.project_name}/{sub_dir}/__init__.py"
         with open(file_path, 'w') as f:
             f.write('')
+    
+    with open(f'data/recomposed_projects/{args.model_name}/{args.project_name}/pytest.ini', 'w') as f:
+        f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=no\n\n# Define directories to look for tests\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*')
 
     print(f'total fragments: {total_fragments}, total unsuccessful: {total_unsuccessful}')
     print(f'percentage unsuccessful: {total_unsuccessful / total_fragments * 100}%')
