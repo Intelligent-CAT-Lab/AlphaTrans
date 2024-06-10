@@ -5,6 +5,7 @@ from src.compositional_glue_tests.constants import *
 
 default_type_value = defaultdict(lambda: "null")
 default_type_value.update({
+    "char": "'\\0'",
     "int": "0",
     "boolean": "false",
     "float": "0",
