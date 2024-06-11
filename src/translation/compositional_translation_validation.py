@@ -28,7 +28,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
     """
     global i
     i += 1
-    if i > 1:
+    if i > 2:
         quit()
     syntactically_validated_members = []    
     for member in members_to_translate:
