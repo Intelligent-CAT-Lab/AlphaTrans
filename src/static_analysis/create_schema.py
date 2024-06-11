@@ -86,7 +86,7 @@ def create_schema(args):
                                                                             "end": end_line,
                                                                             "body": callable_body,
                                                                             "is_constructor": False,
-                                                                            "annotations": [] if annotation == 'null' else [annotation],
+                                                                            "annotations": [],
                                                                             "modifiers": [],
                                                                             "return_types": [],
                                                                             "signature": signature,
@@ -108,6 +108,9 @@ def create_schema(args):
 
         if callable_name == class_name:
             schemas[path]["classes"][class_name]["methods"][pos_callable_name]['is_constructor'] = True
+        
+        if annotation != 'null':
+            schemas[path]["classes"][class_name]["methods"][pos_callable_name]["annotations"].append(annotation)
 
     interfaces_query_out = f'data/query_outputs/{project}/{project}_interfaces.txt'
     lines = []
