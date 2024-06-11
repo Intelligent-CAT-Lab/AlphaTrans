@@ -73,8 +73,16 @@ def main(args):
             dependent_fields = []
             for field in field_val:
                 found_dependency = False
-                for token in field_val[field]['value'].split():
-                    if token in field_val:
+                # for token in field_val[field]['value'].split():
+                #     if token in field_val:
+                #         dependent_fields.append(field_val[field]['key'])
+                #         found_dependency = True
+                #         break
+                
+                for field_ in field_val:
+                    if field == field_:
+                        continue
+                    if field_ in field_val[field]['value']:
                         dependent_fields.append(field_val[field]['key'])
                         found_dependency = True
                         break
@@ -84,6 +92,8 @@ def main(args):
                 field_order.append(field_val[field]['key'])
             
             field_order += dependent_fields
+
+            assert len(field_order) == len(field_val)
 
             intialize_later_fields = []
             for field in field_order:
@@ -134,7 +144,8 @@ def main(args):
         for initialize_method in class_initialize_methods:
             recomposed_file += f'\n\n{initialize_method}'
 
-        import_map = {'urllib': 'import urllib\n', 'sys': 'import sys\n', 'mock': 'import mock\n', 'cmp_to_key': 'from functools import cmp_to_key\n', 'field': 'from dataclasses import field\n'}
+        import_map = {'urllib': 'import urllib\n', 'sys': 'import sys\n', 'mock': 'import mock\n', 'cmp_to_key': 'from functools import cmp_to_key\n', 'field': 'from dataclasses import field\n',
+                      'random': 'import random\n', 're': 'import re\n', 'locale': 'import locale\n'}
 
         python_imports = data['python_imports']
         for key in import_map:
@@ -175,14 +186,14 @@ def main(args):
             f.write('')
     
     with open(f'data/recomposed_projects/{args.model_name}/{args.project_name}/pytest.ini', 'w') as f:
-        f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=no --junitxml=pytest-report.xml\n\n# Define directories to look for tests\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*')
+        f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=short --junitxml=pytest-report.xml\n\n# Define directories to look for tests\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*')
     
     with open(f'data/recomposed_projects/{args.model_name}/{args.project_name}/run.sh', 'w') as f:
         f.write('python3 -m pytest\nxmllint --format pytest-report.xml -o pytest-report.xml')
 
-    print(f'total fragments: {total_fragments}, total unsuccessful: {total_unsuccessful}')
-    print(f'percentage unsuccessful: {total_unsuccessful / total_fragments * 100}%')
-    print(f'percentage successful: {100 - total_unsuccessful / total_fragments * 100}%')
+    # print(f'total fragments: {total_fragments}, total unsuccessful: {total_unsuccessful}')
+    # print(f'percentage unsuccessful: {total_unsuccessful / total_fragments * 100}%')
+    # print(f'percentage successful: {100 - total_unsuccessful / total_fragments * 100}%')
 
 
 if __name__ == '__main__':
