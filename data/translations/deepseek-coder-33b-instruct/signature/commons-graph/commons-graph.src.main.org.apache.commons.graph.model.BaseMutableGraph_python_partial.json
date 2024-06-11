@@ -1,0 +1,639 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-graph/src/main/java/org/apache/commons/graph/model/BaseMutableGraph.java",
+    "imports": {
+        "25-25:import LinkedHashSet": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.LinkedHashSet;\n"
+            ]
+        },
+        "22-22:import MutableGraph": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.graph.MutableGraph;\n"
+            ]
+        },
+        "23-23:import VertexPair": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.graph.VertexPair;\n"
+            ]
+        }
+    },
+    "classes": {
+        "BaseMutableGraph": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "MutableGraph",
+                "BaseGraph"
+            ],
+            "methods": {
+                "142-152:removeVertex": {
+                    "start": 142,
+                    "end": 152,
+                    "body": [
+                        "    public final void removeVertex(V v) {\n",
+                        "        checkGraphCondition(v != null, \"Impossible to remove a null Vertex from the Graph\");\n",
+                        "        checkGraphCondition(containsVertex(v), \"Vertex '%s' not present in the Graph\", v);\n",
+                        "\n",
+                        "        for (V tail : getAdjacencyList().get(v)) {\n",
+                        "            getIndexedEdges().remove(new VertexPair<V>(v, tail));\n",
+                        "        }\n",
+                        "        getAdjacencyList().remove(v);\n",
+                        "\n",
+                        "        decorateRemoveVertex(v);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "removeVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "97-97:decorateRemoveVertex"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def removeVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def removeVertex(self, v: typing.Any) -> None:",
+                        "        ",
+                        "",
+                        "        if v is None:",
+                        "            self.checkGraphCondition(False, \"Impossible to remove a null Vertex from the Graph\")",
+                        "        elif not self.containsVertex(v):",
+                        "            self.checkGraphCondition(False, f\"Vertex '{v}' not present in the Graph\")",
+                        "        else:",
+                        "            for tail in self.getAdjacencyList().get(v):",
+                        "                self.getIndexedEdges().remove(VertexPair(v, tail))",
+                        "            self.getAdjacencyList().remove(v)",
+                        "            self._decorateRemoveVertex(v)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.665190696716309,
+                    "generation_timestamp": "2024-06-06T04:03:07.987255",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "132-139:removeEdge": {
+                    "start": 132,
+                    "end": 139,
+                    "body": [
+                        "    public final void removeEdge(E e) {\n",
+                        "        checkGraphCondition(e != null, \"Impossible to remove a null Edge from the Graph\");\n",
+                        "        checkGraphCondition(containsEdge(e), \"Edge '%s' not present in the Graph\", e);\n",
+                        "        final VertexPair<V> vertexPair = getVertices1(e);\n",
+                        "        decorateRemoveEdge(e);\n",
+                        "        internalRemoveEdge(vertexPair.getHead(), e, vertexPair.getTail());\n",
+                        "        getAllEdges().remove(e);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "removeEdge(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "90-90:decorateRemoveEdge"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "124-129:internalRemoveEdge"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def removeEdge(self, e: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def removeEdge(self, e: typing.Any) -> None:",
+                        "        ",
+                        "",
+                        "        if e is None:",
+                        "            self.checkGraphCondition(False, \"Impossible to remove a null Edge from the Graph\")",
+                        "        elif not self.containsEdge(e):",
+                        "            self.checkGraphCondition(False, f\"Edge '{e}' not present in the Graph\")",
+                        "        else:",
+                        "            vertexPair = self.getVertices1(e)",
+                        "            self._decorateRemoveEdge(e)",
+                        "            self._internalRemoveEdge(vertexPair.getHead(), e, vertexPair.getTail())",
+                        "            self.getAllEdges().remove(e)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.674252986907959,
+                    "generation_timestamp": "2024-06-06T04:03:13.663840",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "124-129:internalRemoveEdge": {
+                    "start": 124,
+                    "end": 129,
+                    "body": [
+                        "    protected void internalRemoveEdge(V head, E e, V tail) {\n",
+                        "        final VertexPair<V> vertexPair = new VertexPair<V>(head, tail);\n",
+                        "        getIndexedVertices().remove(e);\n",
+                        "        getIndexedEdges().remove(vertexPair);\n",
+                        "        getAdjacencyList().get(vertexPair.getHead()).remove(vertexPair.getTail());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "internalRemoveEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _internalRemoveEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _internalRemoveEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        ",
+                        "",
+                        "        vertexPair = VertexPair(head, tail)",
+                        "        self.getIndexedVertices().remove(e)",
+                        "        self.getIndexedEdges().remove(vertexPair)",
+                        "        self.getAdjacencyList().get(vertexPair.getHead()).remove(vertexPair.getTail())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.591391324996948,
+                    "generation_timestamp": "2024-06-06T03:51:00.264506",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "106-115:internalAddEdge": {
+                    "start": 106,
+                    "end": 115,
+                    "body": [
+                        "    protected void internalAddEdge(V head, E e, V tail) {\n",
+                        "        getAdjacencyList().get(head).add(tail);\n",
+                        "\n",
+                        "        final VertexPair<V> vertexPair = new VertexPair<V>(head, tail);\n",
+                        "        getIndexedEdges().put(vertexPair, e);\n",
+                        "\n",
+                        "        if (!getIndexedVertices().containsKey(e)) {\n",
+                        "            getIndexedVertices().put(e, vertexPair);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "internalAddEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _internalAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _internalAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        ",
+                        "",
+                        "        self.getAdjacencyList()[head].add(tail)",
+                        "",
+                        "        vertexPair = VertexPair(head, tail)",
+                        "        self.getIndexedEdges()[vertexPair] = e",
+                        "",
+                        "        if e not in self.getIndexedVertices():",
+                        "            self.getIndexedVertices()[e] = vertexPair",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.280643701553345,
+                    "generation_timestamp": "2024-06-06T03:51:04.547080",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "60-67:addVertex": {
+                    "start": 60,
+                    "end": 67,
+                    "body": [
+                        "    public final void addVertex(V v) {\n",
+                        "        checkGraphCondition(v != null, \"Impossible to add a null Vertex to the Graph\");\n",
+                        "        checkGraphCondition(!containsVertex(v), \"Vertex '%s' already present in the Graph\", v);\n",
+                        "\n",
+                        "        getAdjacencyList().put(v, new LinkedHashSet<V>());\n",
+                        "\n",
+                        "        decorateAddVertex(v);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "83-83:decorateAddVertex"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def addVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def addVertex(self, v: typing.Any) -> None:",
+                        "        ",
+                        "",
+                        "        if v is None:",
+                        "            raise ValueError(\"Impossible to add a null Vertex to the Graph\")",
+                        "",
+                        "        if self.containsVertex(v):",
+                        "            raise ValueError(f\"Vertex '{v}' already present in the Graph\")",
+                        "",
+                        "        self.getAdjacencyList()[v] = set()",
+                        "",
+                        "        self._decorateAddVertex(v)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.574099779129028,
+                    "generation_timestamp": "2024-06-06T04:03:21.240303",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "41-57:addEdge": {
+                    "start": 41,
+                    "end": 57,
+                    "body": [
+                        "    public void addEdge(V head, E e, V tail) {\n",
+                        "        checkGraphCondition(head != null, \"Null head Vertex not admitted\");\n",
+                        "        checkGraphCondition(e != null, \"Impossible to add a null Edge in the Graph\");\n",
+                        "        checkGraphCondition(tail != null, \"Null tail Vertex not admitted\");\n",
+                        "        checkGraphCondition(\n",
+                        "                containsVertex(head), \"Head Vertex '%s' not present in the Graph\", head);\n",
+                        "        checkGraphCondition(\n",
+                        "                containsVertex(tail), \"Head Vertex '%s' not present in the Graph\", tail);\n",
+                        "        checkGraphCondition(\n",
+                        "                getEdge(head, tail) == null, \"Edge %s is already present in the Graph\", e);\n",
+                        "\n",
+                        "        getAllEdges().add(e);\n",
+                        "\n",
+                        "        internalAddEdge(head, e, tail);\n",
+                        "\n",
+                        "        decorateAddEdge(head, e, tail);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "106-115:internalAddEdge"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "76-76:decorateAddEdge"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def addEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def addEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        ",
+                        "",
+                        "        if head is None:",
+                        "            self.checkGraphCondition(False, \"Null head Vertex not admitted\")",
+                        "        if e is None:",
+                        "            self.checkGraphCondition(False, \"Impossible to add a null Edge in the Graph\")",
+                        "        if tail is None:",
+                        "            self.checkGraphCondition(False, \"Null tail Vertex not admitted\")",
+                        "        if not self.containsVertex(head):",
+                        "            self.checkGraphCondition(False, f\"Head Vertex '{head}' not present in the Graph\")",
+                        "        if not self.containsVertex(tail):",
+                        "            self.checkGraphCondition(False, f\"Head Vertex '{tail}' not present in the Graph\")",
+                        "        if self.getEdge(head, tail) is not None:",
+                        "            self.checkGraphCondition(False, f\"Edge {e} is already present in the Graph\")",
+                        "",
+                        "        self.getAllEdges().add(e)",
+                        "",
+                        "        self._internalAddEdge(head, e, tail)",
+                        "",
+                        "        self._decorateAddEdge(head, e, tail)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 11.189937114715576,
+                    "generation_timestamp": "2024-06-06T04:03:32.432780",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "97-97:decorateRemoveVertex": {
+                    "start": 97,
+                    "end": 97,
+                    "body": [
+                        "    protected abstract void decorateRemoveVertex(V v);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateRemoveVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _decorateRemoveVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _decorateRemoveVertex(self, v: typing.Any) -> None:",
+                        "        ",
+                        "",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.2587225437164307,
+                    "generation_timestamp": "2024-06-06T03:51:06.808447",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "90-90:decorateRemoveEdge": {
+                    "start": 90,
+                    "end": 90,
+                    "body": [
+                        "    protected abstract void decorateRemoveEdge(E e);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateRemoveEdge(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _decorateRemoveEdge(self, e: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _decorateRemoveEdge(self, e: typing.Any) -> None:",
+                        "        ",
+                        "",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.7481610774993896,
+                    "generation_timestamp": "2024-06-06T03:51:08.558324",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "83-83:decorateAddVertex": {
+                    "start": 83,
+                    "end": 83,
+                    "body": [
+                        "    protected abstract void decorateAddVertex(V v);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateAddVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _decorateAddVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 8.271043062210083,
+                    "generation_timestamp": "2024-06-06T03:51:16.831015",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "76-76:decorateAddEdge": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "    protected abstract void decorateAddEdge(V head, E e, V tail);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateAddEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _decorateAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _decorateAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        ",
+                        "",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.6536290645599365,
+                    "generation_timestamp": "2024-06-06T03:51:18.486208",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {
+                "38-38:serialVersionUID": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private static final long serialVersionUID = 1549113549446254183L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __serialVersionUID: int = 1549113549446254183",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.870068311691284,
+                    "generation_timestamp": "2024-06-06T03:50:55.670523",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "python_class_declaration": "class BaseMutableGraph(MutableGraph, BaseGraph, ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from abc import ABC",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.MutableGraph import *",
+        "from src.main.org.apache.commons.graph.VertexPair import *",
+        "from src.main.org.apache.commons.graph.model.BaseGraph import *"
+    ]
+}

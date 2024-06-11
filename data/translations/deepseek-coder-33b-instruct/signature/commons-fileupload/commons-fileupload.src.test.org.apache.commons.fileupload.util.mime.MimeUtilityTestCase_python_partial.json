@@ -1,0 +1,452 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-fileupload/src/test/java/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.java",
+    "imports": {
+        "23-23:import UnsupportedEncodingException": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.UnsupportedEncodingException;\n"
+            ]
+        },
+        "21-21:import Test": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "19-19:import static Assert.assertEquals": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MimeUtilityTestCase": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "71-73:decodeInvalidEncoding": {
+                    "start": 71,
+                    "end": 73,
+                    "body": [
+                        "    public void decodeInvalidEncoding() throws Exception {\n",
+                        "        MimeUtility.decodeText(\"=?invalid?B?xyz-?=\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decodeInvalidEncoding()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                            "MimeUtility",
+                            "79-145:decodeText"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def decodeInvalidEncoding(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def decodeInvalidEncoding(self) -> None:",
+                        "        ",
+                        "",
+                        "        # The MimeUtility.decodeText method is not available in the partial Python translation.",
+                        "        # However, we can use the email.header.decode_header method from the email module to decode the text.",
+                        "        # This method is available in Python 3.10.",
+                        "",
+                        "        from email.header import decode_header",
+                        "",
+                        "        # The decode_header method returns a list of tuples, where each tuple is a pair of the decoded string and the encoding used.",
+                        "        # We only need the decoded string, so we take the first element of the first tuple.",
+                        "",
+                        "        decoded_text = decode_header(\"=?invalid?B?xyz-?=\")[0][0]",
+                        "",
+                        "        # If the decoded text is a bytes object, we decode it to a string.",
+                        "        if isinstance(decoded_text, bytes):",
+                        "            decoded_text = decoded_text.decode()",
+                        "",
+                        "        print(decoded_text)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 10.784819602966309,
+                    "generation_timestamp": "2024-06-06T02:10:00.774283",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "59-64:decodeIso88591Base64EncodedWithWhiteSpace": {
+                    "start": 59,
+                    "end": 64,
+                    "body": [
+                        "    public void decodeIso88591Base64EncodedWithWhiteSpace() throws Exception {\n",
+                        "        assertEncoded(\n",
+                        "                \"If you can read this you understand the example.\",\n",
+                        "                \"=?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaXMgeW8=?=\\t  \\r\\n\"\n",
+                        "                        + \"   =?ISO-8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?=\\\"\\r\\n\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decodeIso88591Base64EncodedWithWhiteSpace()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                            "MimeUtilityTestCase",
+                            "66-68:assertEncoded"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def decodeIso88591Base64EncodedWithWhiteSpace(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def decodeIso88591Base64EncodedWithWhiteSpace(self) -> None:",
+                        "        ",
+                        "",
+                        "        expected = \"If you can read this you understand the example.\"",
+                        "        encoded = \"=?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaXMgeW8=?=\\t  \\r\\n\" + \\",
+                        "                  \"   =?ISO-8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?=\\\"\\r\\n\"",
+                        "",
+                        "        decoded = self.__decodeIso88591Base64EncodedWithWhiteSpace(encoded)",
+                        "",
+                        "        self.__assertEncoded(expected, decoded)",
+                        "",
+                        "",
+                        "    @staticmethod",
+                        "    def __decodeIso88591Base64EncodedWithWhiteSpace(encoded: str) -> str:",
+                        "        decoded = \"\"",
+                        "        for part in encoded.split():",
+                        "            if part.startswith(\"=?\") and part.endswith(\"?=\"):",
+                        "                charset, encoding, encoded_text = part[2:-1].split('?')",
+                        "                if encoding.upper() == 'B':",
+                        "                    decoded_part = base64.b64decode(encoded_text).decode(charset)",
+                        "                    decoded += decoded_part",
+                        "        return decoded",
+                        "",
+                        "",
+                        "    @staticmethod",
+                        "    def __assertEncoded(expected: str, decoded: str) -> None:",
+                        "        assert expected == decoded, f\"Expected: {expected}, but got: {decoded}\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 14.449155569076538,
+                    "generation_timestamp": "2024-06-06T02:10:20.780091",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "51-56:decodeIso88591Base64Encoded": {
+                    "start": 51,
+                    "end": 56,
+                    "body": [
+                        "    public void decodeIso88591Base64Encoded() throws Exception {\n",
+                        "        assertEncoded(\n",
+                        "                \"If you can read this you understand the example.\",\n",
+                        "                \"=?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaXMgeW8=?=\"\n",
+                        "                        + \" =?ISO-8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?=\\\"\\r\\n\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decodeIso88591Base64Encoded()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                            "MimeUtilityTestCase",
+                            "66-68:assertEncoded"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def decodeIso88591Base64Encoded(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def decodeIso88591Base64Encoded(self) -> None:",
+                        "        ",
+                        "",
+                        "        # The MimeUtility.decodeText method is used to decode the base64 encoded string.",
+                        "        # The decodeText method takes a string as input and returns a decoded string.",
+                        "        # The decoded string is then compared with the expected string.",
+                        "        # If they are not equal, an AssertionError is raised.",
+                        "",
+                        "        expected = \"If you can read this you understand the example.\"",
+                        "        encoded = \"=?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaXMgeW8=?=\" + \" =?ISO-8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?=\\\"\\r\\n\"",
+                        "",
+                        "        decoded = MimeUtility.decodeText(encoded)",
+                        "",
+                        "        if decoded != expected:",
+                        "            raise AssertionError(f\"Expected: {expected}, but got: {decoded}\")",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 12.969894647598267,
+                    "generation_timestamp": "2024-06-06T02:10:33.751570",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "46-48:decodeUtf8Base64Encoded": {
+                    "start": 46,
+                    "end": 48,
+                    "body": [
+                        "    public void decodeUtf8Base64Encoded() throws Exception {\n",
+                        "        assertEncoded(\" h\\u00e9! \\u00e0\\u00e8\\u00f4u !!!\", \"=?UTF-8?B?IGjDqSEgw6DDqMO0dSAhISE=?=\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decodeUtf8Base64Encoded()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                            "MimeUtilityTestCase",
+                            "66-68:assertEncoded"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def decodeUtf8Base64Encoded(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def decodeUtf8Base64Encoded(self) -> None:",
+                        "        ",
+                        "",
+                        "        def assertEncoded(expected: str, encoded: str) -> None:",
+                        "            decoded = MimeUtility.decodeText(encoded)",
+                        "            assert decoded == expected, f\"Expected: {expected}, but got: {decoded}\"",
+                        "",
+                        "        assertEncoded(\" h\u00e9 ! \u00e0\u00e8\u00f4u !!!\", \"=?UTF-8?B?IGjDqSEgw6DDqMO0dSAhISE=?=\")",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.6900413036346436,
+                    "generation_timestamp": "2024-06-06T02:10:39.443185",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "39-43:decodeUtf8QuotedPrintableEncoded": {
+                    "start": 39,
+                    "end": 43,
+                    "body": [
+                        "    public void decodeUtf8QuotedPrintableEncoded() throws Exception {\n",
+                        "        assertEncoded(\n",
+                        "                \" h\\u00e9! \\u00e0\\u00e8\\u00f4u !!!\",\n",
+                        "                \"=?UTF-8?Q?_h=C3=A9!_=C3=A0=C3=A8=C3=B4u_!!!?=\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decodeUtf8QuotedPrintableEncoded()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                            "MimeUtilityTestCase",
+                            "66-68:assertEncoded"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def decodeUtf8QuotedPrintableEncoded(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def decodeUtf8QuotedPrintableEncoded(self) -> None:",
+                        "        ",
+                        "",
+                        "        self.__assertEncoded(",
+                        "            \" h\u00e9!!! \u00e0\u00e8\u00f4u !!!\",",
+                        "            \"=?UTF-8?Q?_h=C3=A9=21_=C3=A0=C3=A8=C3=B4u_=21=21=21?=\"",
+                        "        )",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 9.223481893539429,
+                    "generation_timestamp": "2024-06-06T02:10:48.668541",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "34-36:noNeedToDecode": {
+                    "start": 34,
+                    "end": 36,
+                    "body": [
+                        "    public void noNeedToDecode() throws Exception {\n",
+                        "        assertEncoded(\"abc\", \"abc\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "noNeedToDecode()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                            "MimeUtilityTestCase",
+                            "66-68:assertEncoded"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def noNeedToDecode(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def noNeedToDecode(self) -> None:",
+                        "        ",
+                        "",
+                        "        self.__assertEncoded(\"abc\", \"abc\")",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.567840576171875,
+                    "generation_timestamp": "2024-06-06T02:10:51.238000",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "66-68:assertEncoded": {
+                    "start": 66,
+                    "end": 68,
+                    "body": [
+                        "    private static void assertEncoded(String expected, String encoded) throws Exception {\n",
+                        "        assertEquals(expected, MimeUtility.decodeText(encoded));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "assertEncoded(String, String)",
+                    "parameters": [
+                        "expected",
+                        "encoded"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                            "MimeUtility",
+                            "79-145:decodeText"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __assertEncoded(expected: str, encoded: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def __assertEncoded(expected: str, encoded: str) -> None:",
+                        "        ",
+                        "",
+                        "        # The MimeUtility.decodeText method is not available in the partial Python translation.",
+                        "        # You may need to import it from the correct module or provide its implementation.",
+                        "        # Here is a placeholder for the method call:",
+                        "        # decoded = MimeUtility.decodeText(encoded)",
+                        "",
+                        "        # For now, we'll just use a placeholder for the decoded value:",
+                        "        decoded = \"placeholder\"",
+                        "",
+                        "        assert expected == decoded, f\"Expected {expected}, but got {decoded}\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.552241325378418,
+                    "generation_timestamp": "2024-06-06T02:10:06.329321",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class MimeUtilityTestCase:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "from src.main.org.apache.commons.fileupload.util.mime.MimeUtility import *"
+    ]
+}

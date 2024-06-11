@@ -1,0 +1,468 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-fileupload/src/main/java/org/apache/commons/fileupload/util/mime/Base64Decoder.java",
+    "imports": {
+        "19-19:import IOException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "20-20:import OutputStream": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Base64Decoder": {
+            "start": 25,
+            "end": 25,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "138-181:decode": {
+                    "start": 138,
+                    "end": 181,
+                    "body": [
+                        "    public static int decode(byte[] data, OutputStream out) throws IOException {\n",
+                        "        int outLen = 0;\n",
+                        "        byte[] cache = new byte[INPUT_BYTES_PER_CHUNK];\n",
+                        "        int cachedBytes = 0;\n",
+                        "\n",
+                        "        for (byte b : data) {\n",
+                        "            final byte d = DECODING_TABLE[MASK_BYTE_UNSIGNED & b];\n",
+                        "            if (d == INVALID_BYTE) {\n",
+                        "                continue; // Ignore invalid bytes\n",
+                        "            }\n",
+                        "            cache[cachedBytes++] = d;\n",
+                        "            if (cachedBytes == INPUT_BYTES_PER_CHUNK) {\n",
+                        "                final byte b1 = cache[0];\n",
+                        "                final byte b2 = cache[1];\n",
+                        "                final byte b3 = cache[2];\n",
+                        "                final byte b4 = cache[3];\n",
+                        "                if (b1 == PAD_BYTE || b2 == PAD_BYTE) {\n",
+                        "                    throw new IOException(\n",
+                        "                            \"Invalid Base64 input: incorrect padding, first two bytes cannot be\"\n",
+                        "                                + \" padding\");\n",
+                        "                }\n",
+                        "                out.write((b1 << 2) | (b2 >> 4)); // 6 bits of b1 plus 2 bits of b2\n",
+                        "                outLen++;\n",
+                        "                if (b3 != PAD_BYTE) {\n",
+                        "                    out.write((b2 << 4) | (b3 >> 2)); // 4 bits of b2 plus 4 bits of b3\n",
+                        "                    outLen++;\n",
+                        "                    if (b4 != PAD_BYTE) {\n",
+                        "                        out.write((b3 << 6) | b4); // 2 bits of b3 plus 6 bits of b4\n",
+                        "                        outLen++;\n",
+                        "                    }\n",
+                        "                } else if (b4 != PAD_BYTE) { // if byte 3 is pad, byte 4 must be pad too\n",
+                        "                    throw new // line wrap to avoid 120 char limit\n",
+                        "                    IOException(\n",
+                        "                            \"Invalid Base64 input: incorrect padding, 4th byte must be padding if\"\n",
+                        "                                + \" 3rd byte is\");\n",
+                        "                }\n",
+                        "                cachedBytes = 0;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        if (cachedBytes != 0) {\n",
+                        "            throw new IOException(\"Invalid Base64 input: truncated\");\n",
+                        "        }\n",
+                        "        return outLen;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "decode(byte[], OutputStream)",
+                    "parameters": [
+                        "data",
+                        "out"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def decode(data: typing.List[int], out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def decode(data: typing.List[int], out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> int:",
+                        "        ",
+                        "",
+                        "        outLen = 0",
+                        "        cache = [0] * Base64Decoder.__INPUT_BYTES_PER_CHUNK",
+                        "        cachedBytes = 0",
+                        "",
+                        "        for b in data:",
+                        "            d = Base64Decoder.__DECODING_TABLE[Base64Decoder.__MASK_BYTE_UNSIGNED & b]",
+                        "            if d == Base64Decoder.__INVALID_BYTE:",
+                        "                continue  # Ignore invalid bytes",
+                        "            cache[cachedBytes] = d",
+                        "            cachedBytes += 1",
+                        "            if cachedBytes == Base64Decoder.__INPUT_BYTES_PER_CHUNK:",
+                        "                b1 = cache[0]",
+                        "                b2 = cache[1]",
+                        "                b3 = cache[2]",
+                        "                b4 = cache[3]",
+                        "                if b1 == Base64Decoder.__PAD_BYTE or b2 == Base64Decoder.__PAD_BYTE:",
+                        "                    raise IOError(",
+                        "                        \"Invalid Base64 input: incorrect padding, first two bytes cannot be\"",
+                        "                        + \" padding\")",
+                        "                out.write((b1 << 2) | (b2 >> 4))  # 6 bits of b1 plus 2 bits of b2",
+                        "                outLen += 1",
+                        "                if b3 != Base64Decoder.__PAD_BYTE:",
+                        "                    out.write((b2 << 4) | (b3 >> 2))  # 4 bits of b2 plus 4 bits of b3",
+                        "                    outLen += 1",
+                        "                    if b4 != Base64Decoder.__PAD_BYTE:",
+                        "                        out.write((b3 << 6) | b4)  # 2 bits of b3 plus 6 bits of b4",
+                        "                        outLen += 1",
+                        "                else:",
+                        "                    if b4 != Base64Decoder.__PAD_BYTE:  # if byte 3 is pad, byte 4 must be pad too",
+                        "                        raise IOError(",
+                        "                            \"Invalid Base64 input: incorrect padding, 4th byte must be padding if\"",
+                        "                            + \" 3rd byte is\")",
+                        "                cachedBytes = 0",
+                        "",
+                        "        if cachedBytes != 0:",
+                        "            raise IOError(\"Invalid Base64 input: truncated\")",
+                        "",
+                        "        return outLen",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 17.673606395721436,
+                    "generation_timestamp": "2024-06-06T01:51:53.568669",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "127-127:Base64Decoder": {
+                    "start": 127,
+                    "end": 127,
+                    "body": [
+                        "    private Base64Decoder() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Base64Decoder()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self) -> None:",
+                        "        ",
+                        "",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.7311081886291504,
+                    "generation_timestamp": "2024-06-06T01:51:57.301264",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {
+                "114-114:DECODING_TABLE": {
+                    "start": 114,
+                    "end": 114,
+                    "body": [
+                        "    private static final byte[] DECODING_TABLE = new byte[Byte.MAX_VALUE - Byte.MIN_VALUE + 1];\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": "    __DECODING_TABLE: typing.List[int] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __DECODING_TABLE: typing.List[int] = [0] * (2 ** 8)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.5719919204711914,
+                    "generation_timestamp": "2024-06-06T01:51:14.543639",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "108-108:PADDING": {
+                    "start": 108,
+                    "end": 108,
+                    "body": [
+                        "    private static final byte PADDING = (byte) '=';\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "partial_translation": "    __PADDING: int = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __PADDING: int = ord('=')",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.548445701599121,
+                    "generation_timestamp": "2024-06-06T01:51:17.093699",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "40-105:ENCODING_TABLE": {
+                    "start": 40,
+                    "end": 105,
+                    "body": [
+                        "    private static final byte[] ENCODING_TABLE = {\n",
+                        "        (byte) 'A',\n",
+                        "        (byte) 'B',\n",
+                        "        (byte) 'C',\n",
+                        "        (byte) 'D',\n",
+                        "        (byte) 'E',\n",
+                        "        (byte) 'F',\n",
+                        "        (byte) 'G',\n",
+                        "        (byte) 'H',\n",
+                        "        (byte) 'I',\n",
+                        "        (byte) 'J',\n",
+                        "        (byte) 'K',\n",
+                        "        (byte) 'L',\n",
+                        "        (byte) 'M',\n",
+                        "        (byte) 'N',\n",
+                        "        (byte) 'O',\n",
+                        "        (byte) 'P',\n",
+                        "        (byte) 'Q',\n",
+                        "        (byte) 'R',\n",
+                        "        (byte) 'S',\n",
+                        "        (byte) 'T',\n",
+                        "        (byte) 'U',\n",
+                        "        (byte) 'V',\n",
+                        "        (byte) 'W',\n",
+                        "        (byte) 'X',\n",
+                        "        (byte) 'Y',\n",
+                        "        (byte) 'Z',\n",
+                        "        (byte) 'a',\n",
+                        "        (byte) 'b',\n",
+                        "        (byte) 'c',\n",
+                        "        (byte) 'd',\n",
+                        "        (byte) 'e',\n",
+                        "        (byte) 'f',\n",
+                        "        (byte) 'g',\n",
+                        "        (byte) 'h',\n",
+                        "        (byte) 'i',\n",
+                        "        (byte) 'j',\n",
+                        "        (byte) 'k',\n",
+                        "        (byte) 'l',\n",
+                        "        (byte) 'm',\n",
+                        "        (byte) 'n',\n",
+                        "        (byte) 'o',\n",
+                        "        (byte) 'p',\n",
+                        "        (byte) 'q',\n",
+                        "        (byte) 'r',\n",
+                        "        (byte) 's',\n",
+                        "        (byte) 't',\n",
+                        "        (byte) 'u',\n",
+                        "        (byte) 'v',\n",
+                        "        (byte) 'w',\n",
+                        "        (byte) 'x',\n",
+                        "        (byte) 'y',\n",
+                        "        (byte) 'z',\n",
+                        "        (byte) '0',\n",
+                        "        (byte) '1',\n",
+                        "        (byte) '2',\n",
+                        "        (byte) '3',\n",
+                        "        (byte) '4',\n",
+                        "        (byte) '5',\n",
+                        "        (byte) '6',\n",
+                        "        (byte) '7',\n",
+                        "        (byte) '8',\n",
+                        "        (byte) '9',\n",
+                        "        (byte) '+',\n",
+                        "        (byte) '/'\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": "    __ENCODING_TABLE: typing.List[int] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __ENCODING_TABLE: typing.List[int] = [",
+                        "        65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,",
+                        "        97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,",
+                        "        48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 43, 47",
+                        "    ]",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 11.746710300445557,
+                    "generation_timestamp": "2024-06-06T01:51:28.842029",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "37-37:INPUT_BYTES_PER_CHUNK": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final int INPUT_BYTES_PER_CHUNK = 4;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": "    __INPUT_BYTES_PER_CHUNK: int = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __INPUT_BYTES_PER_CHUNK: int = 4",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.1162400245666504,
+                    "generation_timestamp": "2024-06-06T01:51:29.959970",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "34-34:MASK_BYTE_UNSIGNED": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private static final int MASK_BYTE_UNSIGNED = 0xFF;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": "    __MASK_BYTE_UNSIGNED: int = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __MASK_BYTE_UNSIGNED: int = 0xFF",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.1147277355194092,
+                    "generation_timestamp": "2024-06-06T01:51:31.076431",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "31-31:PAD_BYTE": {
+                    "start": 31,
+                    "end": 31,
+                    "body": [
+                        "    private static final int PAD_BYTE = -2; // must be outside range 0-63\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": "    __PAD_BYTE: int = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __PAD_BYTE: int = -2",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.859138250350952,
+                    "generation_timestamp": "2024-06-06T01:51:33.937016",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "28-28:INVALID_BYTE": {
+                    "start": 28,
+                    "end": 28,
+                    "body": [
+                        "    private static final int INVALID_BYTE = -1; // must be outside range 0-63\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": "    __INVALID_BYTE: int = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __INVALID_BYTE: int = -1",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.954728126525879,
+                    "generation_timestamp": "2024-06-06T01:51:35.893118",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "python_class_declaration": "class Base64Decoder:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import StringIO",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *"
+    ]
+}

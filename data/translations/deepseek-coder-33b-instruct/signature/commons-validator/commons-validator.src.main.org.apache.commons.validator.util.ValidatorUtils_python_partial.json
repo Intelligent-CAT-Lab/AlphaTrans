@@ -1,0 +1,314 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-validator/src/main/java/org/apache/commons/validator/util/ValidatorUtils.java",
+    "imports": {
+        "27-27:import Map": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "28-28:import Entry": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.Map.Entry;\n"
+            ]
+        },
+        "26-26:import Iterator": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "25-25:import HashMap": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "19-19:import Log": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.logging.Log;\n"
+            ]
+        },
+        "20-20:import LogFactory": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.logging.LogFactory;\n"
+            ]
+        },
+        "21-21:import Arg": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.validator.Arg;\n"
+            ]
+        },
+        "22-22:import Msg": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.validator.Msg;\n"
+            ]
+        },
+        "23-23:import Var": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.validator.Var;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ValidatorUtils": {
+            "start": 37,
+            "end": 37,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "109-129:copyMap": {
+                    "start": 109,
+                    "end": 129,
+                    "body": [
+                        "    public static Map<String, Object> copyMap(Map<String, Object> map) {\n",
+                        "        Map<String, Object> results = new HashMap<String, Object>();\n",
+                        "\n",
+                        "        Iterator<Entry<String, Object>> i = map.entrySet().iterator();\n",
+                        "        while (i.hasNext()) {\n",
+                        "            Entry<String, Object> entry = i.next();\n",
+                        "            String key = entry.getKey();\n",
+                        "            Object value = entry.getValue();\n",
+                        "\n",
+                        "            if (value instanceof Msg) {\n",
+                        "                results.put(key, ((Msg) value).clone());\n",
+                        "            } else if (value instanceof Arg) {\n",
+                        "                results.put(key, ((Arg) value).clone());\n",
+                        "            } else if (value instanceof Var) {\n",
+                        "                results.put(key, ((Var) value).clone());\n",
+                        "            } else {\n",
+                        "                results.put(key, value);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return results;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Map<String,Object>",
+                            "java.util.Map<String,Object>"
+                        ]
+                    ],
+                    "signature": "copyMap(Map<String,Object>)",
+                    "parameters": [
+                        "map"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.Msg",
+                            "Msg",
+                            "135-142:clone"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.Arg",
+                            "Arg",
+                            "70-77:clone"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.Var",
+                            "Var",
+                            "176-183:clone"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def copyMap(map: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def copyMap(map: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:",
+                        "        ",
+                        "",
+                        "        results = {}",
+                        "",
+                        "        for key, value in map.items():",
+                        "            if isinstance(value, Msg):",
+                        "                results[key] = value.clone()",
+                        "            elif isinstance(value, Arg):",
+                        "                results[key] = value.clone()",
+                        "            elif isinstance(value, Var):",
+                        "                results[key] = value.clone()",
+                        "            else:",
+                        "                results[key] = value",
+                        "",
+                        "        return results",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.994481325149536,
+                    "generation_timestamp": "2024-06-06T01:34:47.952434",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "49-79:replace": {
+                    "start": 49,
+                    "end": 79,
+                    "body": [
+                        "    public static String replace(String value, String key, String replaceValue) {\n",
+                        "\n",
+                        "        if (value == null || key == null || replaceValue == null) {\n",
+                        "            return value;\n",
+                        "        }\n",
+                        "\n",
+                        "        int pos = value.indexOf(key);\n",
+                        "\n",
+                        "        if (pos < 0) {\n",
+                        "            return value;\n",
+                        "        }\n",
+                        "\n",
+                        "        int length = value.length();\n",
+                        "        int start = pos;\n",
+                        "        int end = pos + key.length();\n",
+                        "\n",
+                        "        if (length == key.length()) {\n",
+                        "            value = replaceValue;\n",
+                        "\n",
+                        "        } else if (end == length) {\n",
+                        "            value = value.substring(0, start) + replaceValue;\n",
+                        "\n",
+                        "        } else {\n",
+                        "            value =\n",
+                        "                    value.substring(0, start)\n",
+                        "                            + replaceValue\n",
+                        "                            + replace(value.substring(end), key, replaceValue);\n",
+                        "        }\n",
+                        "\n",
+                        "        return value;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "replace(String, String, String)",
+                    "parameters": [
+                        "value",
+                        "key",
+                        "replaceValue"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.ValidatorUtils",
+                            "ValidatorUtils",
+                            "49-79:replace"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def replace(value: str, key: str, replaceValue: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def replace(value: str, key: str, replaceValue: str) -> str:",
+                        "        ",
+                        "",
+                        "        if value is None or key is None or replaceValue is None:",
+                        "            return value",
+                        "",
+                        "        pos = value.find(key)",
+                        "",
+                        "        if pos < 0:",
+                        "            return value",
+                        "",
+                        "        length = len(value)",
+                        "        start = pos",
+                        "        end = pos + len(key)",
+                        "",
+                        "        if length == len(key):",
+                        "            value = replaceValue",
+                        "",
+                        "        elif end == length:",
+                        "            value = value[:start] + replaceValue",
+                        "",
+                        "        else:",
+                        "            value = value[:start] + replaceValue + ValidatorUtils.replace(value[end:], key, replaceValue)",
+                        "",
+                        "        return value",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 8.37278127670288,
+                    "generation_timestamp": "2024-06-06T01:34:56.326606",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {
+                "39-39:LOG": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private static final Log LOG = LogFactory.getLog(ValidatorUtils.class);\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Log",
+                            "Log"
+                        ]
+                    ],
+                    "partial_translation": "    __LOG: logging.Logger = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __LOG: logging.Logger = LogFactory.getLog(ValidatorUtils.__class__)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.7868518829345703,
+                    "generation_timestamp": "2024-06-06T01:34:41.955365",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "python_class_declaration": "class ValidatorUtils:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.logging.Log import *",
+        "from src.main.org.apache.commons.logging.LogFactory import *",
+        "from src.main.org.apache.commons.validator.Arg import *",
+        "from src.main.org.apache.commons.validator.Msg import *",
+        "from src.main.org.apache.commons.validator.Var import *"
+    ]
+}

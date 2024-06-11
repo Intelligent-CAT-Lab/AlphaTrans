@@ -1,0 +1,889 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-pool/src/test/java/org/apache/commons/pool2/proxy/BaseTestProxiedKeyedObjectPool.java",
+    "imports": {
+        "27-27:import StringWriter": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.io.StringWriter;\n"
+            ]
+        },
+        "28-28:import Duration": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "24-24:import KeyedObjectPool": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.pool2.KeyedObjectPool;\n"
+            ]
+        },
+        "25-25:import Test": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "19-19:import static Assertions.assertEquals": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        },
+        "21-21:import static Assertions.assertThrows": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertThrows;\n"
+            ]
+        },
+        "22-22:import static Assertions.assertTrue": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertTrue;\n"
+            ]
+        },
+        "20-20:import static Assertions.assertNotNull": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertNotNull;\n"
+            ]
+        }
+    },
+    "classes": {
+        "BaseTestProxiedKeyedObjectPool": {
+            "start": 30,
+            "end": 30,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "TestObjectImpl",
+                "new Executable(...) { ... }",
+                "new Executable(...) { ... }",
+                "new Executable(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "128-142:testUsageTracking": {
+                    "start": 128,
+                    "end": 142,
+                    "body": [
+                        "    public void testUsageTracking() throws Exception {\n",
+                        "        final TestObject obj = pool.borrowObject(KEY1);\n",
+                        "        assertNotNull(obj);\n",
+                        "\n",
+                        "        obj.setData(DATA1);\n",
+                        "\n",
+                        "        Thread.sleep(ABANDONED_TIMEOUT_SECS.plusSeconds(2).toMillis());\n",
+                        "\n",
+                        "        pool.borrowObject(KEY1);\n",
+                        "\n",
+                        "        final String logOutput = log.getBuffer().toString();\n",
+                        "\n",
+                        "        assertTrue(logOutput.contains(\"Pooled object created\"));\n",
+                        "        assertTrue(logOutput.contains(\"The last code to use this object was\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUsageTracking()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedKeyedObjectPool",
+                            "TestObject",
+                            "35-35:setData"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testUsageTracking(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testUsageTracking(self) -> None:",
+                        "        ",
+                        "",
+                        "        obj = self.__pool.borrowObject(self.__KEY1)",
+                        "        assert obj is not None",
+                        "",
+                        "        obj.setData(self.__DATA1)",
+                        "",
+                        "        time.sleep((self.__ABANDONED_TIMEOUT_SECS + datetime.timedelta(seconds=2)).total_seconds())",
+                        "",
+                        "        self.__pool.borrowObject(self.__KEY1)",
+                        "",
+                        "        logOutput = self.__log.getvalue()",
+                        "",
+                        "        assert \"Pooled object created\" in logOutput",
+                        "        assert \"The last code to use this object was\" in logOutput",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.822330951690674,
+                    "generation_timestamp": "2024-06-06T03:14:44.447912",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "122-125:testPassThroughMethods02": {
+                    "start": 122,
+                    "end": 125,
+                    "body": [
+                        "    public void testPassThroughMethods02() {\n",
+                        "        pool.close();\n",
+                        "        assertThrows(IllegalStateException.class, () -> pool.addObject(KEY1));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPassThroughMethods02()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testPassThroughMethods02(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testPassThroughMethods02(self) -> None:",
+                        "        ",
+                        "",
+                        "        self.__pool.close()",
+                        "",
+                        "        with self.assertRaises(IllegalStateException):",
+                        "            self.__pool.addObject(self.__KEY1)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.275981426239014,
+                    "generation_timestamp": "2024-06-06T03:14:49.726264",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "106-119:testPassThroughMethods01": {
+                    "start": 106,
+                    "end": 119,
+                    "body": [
+                        "    public void testPassThroughMethods01() throws Exception {\n",
+                        "        assertEquals(0, pool.getNumActive0());\n",
+                        "        assertEquals(0, pool.getNumIdle0());\n",
+                        "\n",
+                        "        pool.addObject(KEY1);\n",
+                        "\n",
+                        "        assertEquals(0, pool.getNumActive0());\n",
+                        "        assertEquals(1, pool.getNumIdle0());\n",
+                        "\n",
+                        "        pool.clear0();\n",
+                        "\n",
+                        "        assertEquals(0, pool.getNumActive0());\n",
+                        "        assertEquals(0, pool.getNumIdle0());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPassThroughMethods01()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testPassThroughMethods01(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testPassThroughMethods01(self) -> None:",
+                        "        ",
+                        "",
+                        "        assert self.__pool.getNumActive0() == 0",
+                        "        assert self.__pool.getNumIdle0() == 0",
+                        "",
+                        "        self.__pool.addObject(self.__KEY1)",
+                        "",
+                        "        assert self.__pool.getNumActive0() == 0",
+                        "        assert self.__pool.getNumIdle0() == 1",
+                        "",
+                        "        self.__pool.clear0()",
+                        "",
+                        "        assert self.__pool.getNumActive0() == 0",
+                        "        assert self.__pool.getNumIdle0() == 0",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.887922286987305,
+                    "generation_timestamp": "2024-06-06T03:14:54.616410",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "95-103:testBorrowObject": {
+                    "start": 95,
+                    "end": 103,
+                    "body": [
+                        "    public void testBorrowObject() throws Exception {\n",
+                        "        final TestObject obj = pool.borrowObject(KEY1);\n",
+                        "        assertNotNull(obj);\n",
+                        "\n",
+                        "        obj.setData(DATA1);\n",
+                        "        assertEquals(DATA1, obj.getData());\n",
+                        "\n",
+                        "        pool.returnObject(KEY1, obj);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBorrowObject()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedKeyedObjectPool",
+                            "TestObject",
+                            "35-35:setData"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedKeyedObjectPool",
+                            "TestObject",
+                            "33-33:getData"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testBorrowObject(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testBorrowObject(self) -> None:",
+                        "        ",
+                        "",
+                        "        obj = self.__pool.borrowObject(self.__KEY1)",
+                        "        assert obj is not None",
+                        "",
+                        "        obj.setData(self.__DATA1)",
+                        "        assert self.__DATA1 == obj.getData()",
+                        "",
+                        "        self.__pool.returnObject(self.__KEY1, obj)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.4585325717926025,
+                    "generation_timestamp": "2024-06-06T03:14:59.078270",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "81-92:testAccessAfterReturn": {
+                    "start": 81,
+                    "end": 92,
+                    "body": [
+                        "    public void testAccessAfterReturn() throws Exception {\n",
+                        "        final TestObject obj = pool.borrowObject(KEY1);\n",
+                        "        assertNotNull(obj);\n",
+                        "\n",
+                        "        obj.setData(DATA1);\n",
+                        "        assertEquals(DATA1, obj.getData());\n",
+                        "\n",
+                        "        pool.returnObject(KEY1, obj);\n",
+                        "\n",
+                        "        assertNotNull(obj);\n",
+                        "        assertThrows(IllegalStateException.class, obj::getData);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testAccessAfterReturn()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedKeyedObjectPool",
+                            "TestObject",
+                            "35-35:setData"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedKeyedObjectPool",
+                            "TestObject",
+                            "33-33:getData"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testAccessAfterReturn(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testAccessAfterReturn(self) -> None:",
+                        "        ",
+                        "",
+                        "        obj = self.__pool.borrowObject(self.__KEY1)",
+                        "        assert obj is not None",
+                        "",
+                        "        obj.setData(self.__DATA1)",
+                        "        assert obj.getData() == self.__DATA1",
+                        "",
+                        "        self.__pool.returnObject(self.__KEY1, obj)",
+                        "",
+                        "        assert obj is not None",
+                        "        try:",
+                        "            obj.getData()",
+                        "            assert False",
+                        "        except IllegalStateException:",
+                        "            assert True",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.46172571182251,
+                    "generation_timestamp": "2024-06-06T03:15:03.543254",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "66-78:testAccessAfterInvalidate": {
+                    "start": 66,
+                    "end": 78,
+                    "body": [
+                        "    public void testAccessAfterInvalidate() throws Exception {\n",
+                        "        final TestObject obj = pool.borrowObject(KEY1);\n",
+                        "        assertNotNull(obj);\n",
+                        "\n",
+                        "        obj.setData(DATA1);\n",
+                        "        assertEquals(DATA1, obj.getData());\n",
+                        "\n",
+                        "        pool.invalidateObject0(KEY1, obj);\n",
+                        "\n",
+                        "        assertNotNull(obj);\n",
+                        "\n",
+                        "        assertThrows(IllegalStateException.class, obj::getData);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testAccessAfterInvalidate()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedKeyedObjectPool",
+                            "TestObject",
+                            "35-35:setData"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedKeyedObjectPool",
+                            "TestObject",
+                            "33-33:getData"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testAccessAfterInvalidate(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testAccessAfterInvalidate(self) -> None:",
+                        "        ",
+                        "",
+                        "        obj = self.__pool.borrowObject(self.__KEY1)",
+                        "        assert obj is not None",
+                        "",
+                        "        obj.setData(self.__DATA1)",
+                        "        assert obj.getData() == self.__DATA1",
+                        "",
+                        "        self.__pool.invalidateObject0(self.__KEY1, obj)",
+                        "",
+                        "        assert obj is not None",
+                        "",
+                        "        try:",
+                        "            obj.getData()",
+                        "            assert False, \"Expected IllegalStateException\"",
+                        "        except IllegalStateException:",
+                        "            pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.877882480621338,
+                    "generation_timestamp": "2024-06-06T03:15:09.424225",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "63-63:getproxySource": {
+                    "start": 63,
+                    "end": 63,
+                    "body": [
+                        "    protected abstract ProxySource<TestObject> getproxySource();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "ProxySource<TestObject>",
+                            "ProxySource<TestObject>"
+                        ]
+                    ],
+                    "signature": "getproxySource()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _getproxySource(self) -> ProxySource[TestObject]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _getproxySource(self) -> ProxySource[TestObject]:",
+                        "        ",
+                        "",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.1025164127349854,
+                    "generation_timestamp": "2024-06-06T03:15:11.529076",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {
+                "61-61:log": {
+                    "start": 61,
+                    "end": 61,
+                    "body": [
+                        "    private StringWriter log;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "StringWriter",
+                            "java.io.StringWriter"
+                        ]
+                    ],
+                    "partial_translation": "    __log: io.StringIO = None\n",
+                    "translation": [
+                        "    __log: io.StringIO = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T09:50:13.442565",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "59-59:pool": {
+                    "start": 59,
+                    "end": 59,
+                    "body": [
+                        "    private KeyedObjectPool<String, TestObject> pool;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "KeyedObjectPool<String,TestObject>",
+                            "KeyedObjectPool<String,TestObject>"
+                        ]
+                    ],
+                    "partial_translation": "    __pool: KeyedObjectPool[str, TestObject] = None\n",
+                    "translation": [
+                        "    __pool: KeyedObjectPool[str, TestObject] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T09:50:13.445944",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "57-57:ABANDONED_TIMEOUT_SECS": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    private static final Duration ABANDONED_TIMEOUT_SECS = Duration.ofSeconds(3);\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "partial_translation": "    __ABANDONED_TIMEOUT_SECS: datetime.timedelta = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __ABANDONED_TIMEOUT_SECS: datetime.timedelta = datetime.timedelta(seconds=3)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.4225518703460693,
+                    "generation_timestamp": "2024-06-06T03:14:32.439699",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "55-55:DATA1": {
+                    "start": 55,
+                    "end": 55,
+                    "body": [
+                        "    private static final String DATA1 = \"data1\";\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    __DATA1: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __DATA1: str = \"data1\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.5589277744293213,
+                    "generation_timestamp": "2024-06-06T03:14:35.000651",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "53-53:KEY1": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    private static final String KEY1 = \"key1\";\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    __KEY1: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __KEY1: str = \"key1\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.619612455368042,
+                    "generation_timestamp": "2024-06-06T03:14:37.622331",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "python_class_declaration": "class BaseTestProxiedKeyedObjectPool(ABC):\n\n"
+        },
+        "TestObjectImpl": {
+            "start": 38,
+            "end": 38,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "BaseTestProxiedKeyedObjectPool",
+            "nests": [],
+            "implements": [
+                "TestObject"
+            ],
+            "extends": [],
+            "methods": {
+                "48-50:setData": {
+                    "start": 48,
+                    "end": 50,
+                    "body": [
+                        "        public void setData(final String data) {\n",
+                        "            this.data = data;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setData(String)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def setData(self, data: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def setData(self, data: str) -> None:",
+                        "        ",
+                        "",
+                        "        self.__data = data",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.7428042888641357,
+                    "generation_timestamp": "2024-06-06T03:14:28.225301",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "43-45:getData": {
+                    "start": 43,
+                    "end": 45,
+                    "body": [
+                        "        public String getData() {\n",
+                        "            return data;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getData()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getData(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getData(self) -> str:",
+                        "        ",
+                        "",
+                        "        return self.__data",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.7832341194152832,
+                    "generation_timestamp": "2024-06-06T03:14:30.010965",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {
+                "40-40:data": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "        private String data;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    __data: str = None\n",
+                    "translation": [
+                        "    __data: str = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T09:50:13.437821",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "python_class_declaration": "class TestObjectImpl(TestObject):\n\n"
+        },
+        "new Executable(...) { ... }": {
+            "start": 77,
+            "end": 77,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "BaseTestProxiedKeyedObjectPool",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {},
+            "fields": {}
+        },
+        "TestObject": {
+            "start": 32,
+            "end": 32,
+            "is_abstract": false,
+            "is_interface": true,
+            "nested_inside": "BaseTestProxiedKeyedObjectPool",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "35-35:setData": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "        void setData(String data);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setData(String)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def setData(self, data: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def setData(self, data: str) -> None:",
+                        "        ",
+                        "",
+                        "        # Your code here",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.8099825382232666,
+                    "generation_timestamp": "2024-06-06T03:14:24.537167",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "33-33:getData": {
+                    "start": 33,
+                    "end": 33,
+                    "body": [
+                        "        String getData();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getData()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getData(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getData(self) -> str:",
+                        "        ",
+                        "",
+                        "        # Your code here",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.9380714893341064,
+                    "generation_timestamp": "2024-06-06T03:14:26.477472",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class TestObject(ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from abc import ABC",
+        "from io import StringIO",
+        "import io",
+        "import datetime",
+        "from src.main.org.apache.commons.pool2.KeyedObjectPool import *",
+        "from src.main.org.apache.commons.pool2.proxy.ProxySource import *"
+    ]
+}

@@ -1,0 +1,1933 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-codec/src/main/java/org/apache/commons/codec/binary/Hex.java",
+    "imports": {
+        "27-27:import Charset": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.nio.charset.Charset;\n"
+            ]
+        },
+        "26-26:import ByteBuffer": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.nio.ByteBuffer;\n"
+            ]
+        },
+        "28-28:import StandardCharsets": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.nio.charset.StandardCharsets;\n"
+            ]
+        },
+        "20-20:import BinaryDecoder": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.BinaryDecoder;\n"
+            ]
+        },
+        "23-23:import DecoderException": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.codec.DecoderException;\n"
+            ]
+        },
+        "21-21:import BinaryEncoder": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.codec.BinaryEncoder;\n"
+            ]
+        },
+        "24-24:import EncoderException": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.codec.EncoderException;\n"
+            ]
+        },
+        "22-22:import CharEncoding": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.codec.CharEncoding;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Hex": {
+            "start": 38,
+            "end": 38,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "BinaryDecoder",
+                "BinaryEncoder"
+            ],
+            "extends": [],
+            "methods": {
+                "622-624:toString": {
+                    "start": 622,
+                    "end": 624,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return super.toString() + \"[charsetName=\" + this.charset + \"]\";\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def toString(self) -> str:",
+                        "        ",
+                        "",
+                        "        return super().toString() + \"[charsetName=\" + self.__charset + \"]\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 12.236379146575928,
+                    "generation_timestamp": "2024-06-05T19:25:31.311261",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "612-614:getCharsetName": {
+                    "start": 612,
+                    "end": 614,
+                    "body": [
+                        "    public String getCharsetName() {\n",
+                        "        return this.charset.name();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getCharsetName()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getCharsetName(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getCharsetName(self) -> str:",
+                        "        ",
+                        "",
+                        "        return self.__charset",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.3453571796417236,
+                    "generation_timestamp": "2024-06-05T19:25:33.660767",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "602-604:getCharset": {
+                    "start": 602,
+                    "end": 604,
+                    "body": [
+                        "    public Charset getCharset() {\n",
+                        "        return this.charset;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Charset",
+                            "java.nio.charset.Charset"
+                        ]
+                    ],
+                    "signature": "getCharset()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getCharset(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getCharset(self) -> str:",
+                        "        ",
+                        "",
+                        "        return self.__charset",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.0754873752593994,
+                    "generation_timestamp": "2024-06-05T19:25:35.740434",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "580-594:encode2": {
+                    "start": 580,
+                    "end": 594,
+                    "body": [
+                        "    public Object encode2(final Object object) throws EncoderException {\n",
+                        "        final byte[] byteArray;\n",
+                        "        if (object instanceof String) {\n",
+                        "            byteArray = ((String) object).getBytes(this.getCharset());\n",
+                        "        } else if (object instanceof ByteBuffer) {\n",
+                        "            byteArray = toByteArray((ByteBuffer) object);\n",
+                        "        } else {\n",
+                        "            try {\n",
+                        "                byteArray = (byte[]) object;\n",
+                        "            } catch (final ClassCastException e) {\n",
+                        "                throw new EncoderException(e.getMessage(), e);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return encodeHex0(byteArray);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "encode2(Object)",
+                    "parameters": [
+                        "object"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "602-604:getCharset"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "371-383:toByteArray"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                            "EncoderException",
+                            "62-64:EncoderException"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "144-146:encodeHex0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def encode2(self, object: typing.Any) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def encode2(self, object: typing.Any) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        if isinstance(object, str):",
+                        "            byteArray = object.encode(self.getCharset())",
+                        "        elif isinstance(object, io.BytesIO):",
+                        "            byteArray = self.__toByteArray(object.getbuffer())",
+                        "        else:",
+                        "            try:",
+                        "                byteArray = typing.cast(bytearray, object)",
+                        "            except ValueError as e:",
+                        "                raise EncoderException(str(e))",
+                        "",
+                        "        return self.encodeHex0(byteArray)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 8.705516815185547,
+                    "generation_timestamp": "2024-06-05T19:29:37.135830",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "558-560:encode1": {
+                    "start": 558,
+                    "end": 560,
+                    "body": [
+                        "    public byte[] encode1(final ByteBuffer array) {\n",
+                        "        return encodeHexString2(array).getBytes(this.getCharset());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "encode1(ByteBuffer)",
+                    "parameters": [
+                        "array"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "343-345:encodeHexString2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "602-604:getCharset"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def encode1(self, array: typing.Union[bytearray, memoryview]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def encode1(self, array: typing.Union[bytearray, memoryview]) -> typing.List[int]:",
+                        "        ",
+                        "",
+                        "        # The encodeHexString2 method is not defined in the provided partial Python translation.",
+                        "        # Assuming it returns a string, we can convert it to bytes using the getCharset method.",
+                        "        # If the getCharset method is not defined, we can use a default encoding like 'utf-8'.",
+                        "",
+                        "        try:",
+                        "            return list(self.encodeHexString2(array).encode(self.getCharset()))",
+                        "        except UnicodeEncodeError:",
+                        "            return list(self.encodeHexString2(array).encode('utf-8'))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 8.596232175827026,
+                    "generation_timestamp": "2024-06-05T19:30:26.458366",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "534-536:encode0": {
+                    "start": 534,
+                    "end": 536,
+                    "body": [
+                        "    public byte[] encode0(final byte[] array) {\n",
+                        "        return encodeHexString0(array).getBytes(this.getCharset());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "encode0(byte[])",
+                    "parameters": [
+                        "array"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "313-315:encodeHexString0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "602-604:getCharset"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def encode0(self, array: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def encode0(self, array: typing.List[int]) -> typing.List[int]:",
+                        "        ",
+                        "",
+                        "        # Convert the byte array to a string using the charset",
+                        "        byte_string = self.encodeHexString0(array)",
+                        "        byte_array = byte_string.encode(self.getCharset())",
+                        "",
+                        "        # Convert the byte array to a list of integers",
+                        "        byte_list = list(byte_array)",
+                        "",
+                        "        return byte_list",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.354448556900024,
+                    "generation_timestamp": "2024-06-05T19:30:04.825410",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "499-514:decode2": {
+                    "start": 499,
+                    "end": 514,
+                    "body": [
+                        "    public Object decode2(final Object object) throws DecoderException {\n",
+                        "        if (object instanceof String) {\n",
+                        "            return decode2(((String) object).toCharArray());\n",
+                        "        }\n",
+                        "        if (object instanceof byte[]) {\n",
+                        "            return decode0((byte[]) object);\n",
+                        "        }\n",
+                        "        if (object instanceof ByteBuffer) {\n",
+                        "            return decode1((ByteBuffer) object);\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            return decodeHex0((char[]) object);\n",
+                        "        } catch (final ClassCastException e) {\n",
+                        "            throw new DecoderException(e.getMessage(), e);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "decode2(Object)",
+                    "parameters": [
+                        "object"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "499-514:decode2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "452-454:decode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "476-478:decode1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "75-79:decodeHex0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.DecoderException",
+                            "DecoderException",
+                            "63-65:DecoderException"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def decode2(self, object: typing.Any) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def decode2(self, object: typing.Any) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        if isinstance(object, str):",
+                        "            return self.decode2(list(object))",
+                        "        elif isinstance(object, bytearray):",
+                        "            return self.decode0(object)",
+                        "        elif isinstance(object, memoryview):",
+                        "            return self.decode1(object)",
+                        "        else:",
+                        "            try:",
+                        "                return self.decodeHex0(list(object))",
+                        "            except Exception as e:",
+                        "                raise DecoderException(str(e))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.879510879516602,
+                    "generation_timestamp": "2024-06-05T19:26:24.395152",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "476-478:decode1": {
+                    "start": 476,
+                    "end": 478,
+                    "body": [
+                        "    public byte[] decode1(final ByteBuffer buffer) throws DecoderException {\n",
+                        "        return decodeHex0(new String(toByteArray(buffer), getCharset()).toCharArray());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "decode1(ByteBuffer)",
+                    "parameters": [
+                        "buffer"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "75-79:decodeHex0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "371-383:toByteArray"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "602-604:getCharset"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def decode1(self, buffer: typing.Union[bytearray, memoryview]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def decode1(self, buffer: typing.Union[bytearray, memoryview]) -> typing.List[int]:",
+                        "        ",
+                        "",
+                        "        # Convert bytearray or memoryview to string using the charset",
+                        "        str_data = str(self.__toByteArray(buffer), self.getCharset())",
+                        "",
+                        "        # Convert string to list of characters",
+                        "        char_list = list(str_data)",
+                        "",
+                        "        # Use decodeHex0 method to decode the hexadecimal string",
+                        "        return self.decodeHex0(char_list)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.304530620574951,
+                    "generation_timestamp": "2024-06-06T10:55:54.716105",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "452-454:decode0": {
+                    "start": 452,
+                    "end": 454,
+                    "body": [
+                        "    public byte[] decode0(final byte[] array) throws DecoderException {\n",
+                        "        return decodeHex0(new String(array, getCharset()).toCharArray());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "decode0(byte[])",
+                    "parameters": [
+                        "array"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "75-79:decodeHex0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "602-604:getCharset"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def decode0(self, array: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def decode0(self, array: typing.List[int]) -> typing.List[int]:",
+                        "        ",
+                        "",
+                        "        # Convert byte array to string",
+                        "        str_array = ''.join(map(chr, array))",
+                        "",
+                        "        # Convert string to char array",
+                        "        char_array = list(str_array)",
+                        "",
+                        "        # Call decodeHex0 method",
+                        "        return self.decodeHex0(char_array)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.09475564956665,
+                    "generation_timestamp": "2024-06-06T10:55:58.816799",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "415-417:Hex0": {
+                    "start": 415,
+                    "end": 417,
+                    "body": [
+                        "    public static Hex Hex0(final String charsetName) {\n",
+                        "        return new Hex(1, null, Charset.forName(charsetName));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Hex",
+                            "Hex"
+                        ]
+                    ],
+                    "signature": "Hex0(String)",
+                    "parameters": [
+                        "charsetName"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "405-413:Hex"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def Hex0(charsetName: str) -> Hex:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def Hex0(charsetName: str) -> Hex:",
+                        "        ",
+                        "",
+                        "        return Hex(1, None, charsetName)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.757115602493286,
+                    "generation_timestamp": "2024-06-06T10:56:01.579434",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "405-413:Hex": {
+                    "start": 405,
+                    "end": 413,
+                    "body": [
+                        "    public Hex(int constructorId, final String charsetName, final Charset charset) {\n",
+                        "        if (constructorId == 1) {\n",
+                        "\n",
+                        "            this.charset = charset;\n",
+                        "        } else {\n",
+                        "\n",
+                        "            this.charset = DEFAULT_CHARSET;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Hex(int, String, Charset)",
+                    "parameters": [
+                        "constructorId",
+                        "charsetName",
+                        "charset"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, constructorId: int, charsetName: str, charset: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self, constructorId: int, charsetName: str, charset: str) -> None:",
+                        "        ",
+                        "",
+                        "        if constructorId == 1:",
+                        "            self.__charset = charset",
+                        "        else:",
+                        "            self.__charset = self.DEFAULT_CHARSET",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.3815648555755615,
+                    "generation_timestamp": "2024-06-05T19:25:38.127141",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "393-400:toDigit": {
+                    "start": 393,
+                    "end": 400,
+                    "body": [
+                        "    protected static int toDigit(final char ch, final int index) throws DecoderException {\n",
+                        "        final int digit = Character.digit(ch, 16);\n",
+                        "        if (digit == -1) {\n",
+                        "            throw new DecoderException(\n",
+                        "                    \"Illegal hexadecimal character \" + ch + \" at index \" + index, null);\n",
+                        "        }\n",
+                        "        return digit;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "toDigit(char, int)",
+                    "parameters": [
+                        "ch",
+                        "index"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.DecoderException",
+                            "DecoderException",
+                            "63-65:DecoderException"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _toDigit(ch: str, index: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def _toDigit(ch: str, index: int) -> int:",
+                        "        ",
+                        "",
+                        "        digit = int(ch, 16) if ch.isdigit() else ord(ch.lower()) - ord('a') + 10 if 'a' <= ch.lower() <= 'f' else -1",
+                        "",
+                        "        if digit == -1:",
+                        "            raise DecoderException(",
+                        "                    \"Illegal hexadecimal character \" + ch + \" at index \" + str(index), None)",
+                        "        return digit",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.662993431091309,
+                    "generation_timestamp": "2024-06-05T19:25:45.585035",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "360-362:encodeHexString3": {
+                    "start": 360,
+                    "end": 362,
+                    "body": [
+                        "    public static String encodeHexString3(final ByteBuffer data, final boolean toLowerCase) {\n",
+                        "        return new String(encodeHex7(data, toLowerCase));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encodeHexString3(ByteBuffer, boolean)",
+                    "parameters": [
+                        "data",
+                        "toLowerCase"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "282-284:encodeHex7"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def encodeHexString3(data: typing.Union[bytearray, memoryview], toLowerCase: bool) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def encodeHexString3(data: typing.Union[bytearray, memoryview], toLowerCase: bool) -> str:",
+                        "        ",
+                        "",
+                        "        # Call the encodeHex7 method to get the hexadecimal representation",
+                        "        hex_data = Hex.encodeHex7(data, toLowerCase)",
+                        "",
+                        "        # Convert the list of hexadecimal strings to a single string",
+                        "        hex_string = ''.join(hex_data)",
+                        "",
+                        "        return hex_string",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.914329767227173,
+                    "generation_timestamp": "2024-06-05T19:30:09.744906",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "343-345:encodeHexString2": {
+                    "start": 343,
+                    "end": 345,
+                    "body": [
+                        "    public static String encodeHexString2(final ByteBuffer data) {\n",
+                        "        return new String(encodeHex6(data));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encodeHexString2(ByteBuffer)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "265-267:encodeHex6"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def encodeHexString2(data: typing.Union[bytearray, memoryview]) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def encodeHexString2(data: typing.Union[bytearray, memoryview]) -> str:",
+                        "        ",
+                        "",
+                        "        # Call the encodeHex6 method to get the hexadecimal representation",
+                        "        hex_data = Hex.encodeHex6(data)",
+                        "",
+                        "        # Convert the list of hexadecimal strings to a single string",
+                        "        hex_string = ''.join(hex_data)",
+                        "",
+                        "        return hex_string",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.758394956588745,
+                    "generation_timestamp": "2024-06-05T19:30:14.508583",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "327-329:encodeHexString1": {
+                    "start": 327,
+                    "end": 329,
+                    "body": [
+                        "    public static String encodeHexString1(final byte[] data, final boolean toLowerCase) {\n",
+                        "        return new String(encodeHex1(data, toLowerCase));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encodeHexString1(byte[], boolean)",
+                    "parameters": [
+                        "data",
+                        "toLowerCase"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "158-160:encodeHex1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def encodeHexString1(data: typing.List[int], toLowerCase: bool) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def encodeHexString1(data: typing.List[int], toLowerCase: bool) -> str:",
+                        "        ",
+                        "",
+                        "        hex_string = Hex.encodeHex1(data, toLowerCase)",
+                        "        return ''.join(hex_string)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.6852471828460693,
+                    "generation_timestamp": "2024-06-05T19:29:40.826188",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "313-315:encodeHexString0": {
+                    "start": 313,
+                    "end": 315,
+                    "body": [
+                        "    public static String encodeHexString0(final byte[] data) {\n",
+                        "        return new String(encodeHex0(data));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encodeHexString0(byte[])",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "144-146:encodeHex0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def encodeHexString0(data: typing.List[int]) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def encodeHexString0(data: typing.List[int]) -> str:",
+                        "        ",
+                        "",
+                        "        # Call the encodeHex0 method to get the hexadecimal representation",
+                        "        hex_data = Hex.encodeHex0(data)",
+                        "",
+                        "        # Convert the list of hexadecimal characters to a string",
+                        "        hex_string = ''.join(hex_data)",
+                        "",
+                        "        return hex_string",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.7740843296051025,
+                    "generation_timestamp": "2024-06-05T19:29:45.604910",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "300-302:encodeHex8": {
+                    "start": 300,
+                    "end": 302,
+                    "body": [
+                        "    protected static char[] encodeHex8(final ByteBuffer byteBuffer, final char[] toDigits) {\n",
+                        "        return encodeHex2(toByteArray(byteBuffer), toDigits);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "signature": "encodeHex8(ByteBuffer, char[])",
+                    "parameters": [
+                        "byteBuffer",
+                        "toDigits"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "173-178:encodeHex2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "371-383:toByteArray"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _encodeHex8(byteBuffer: typing.Union[bytearray, memoryview], toDigits: typing.List[str]) -> typing.List[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def _encodeHex8(byteBuffer: typing.Union[bytearray, memoryview], toDigits: typing.List[str]) -> typing.List[str]:",
+                        "        ",
+                        "",
+                        "        # Convert byteBuffer to bytearray",
+                        "        byteArray = bytearray(byteBuffer)",
+                        "",
+                        "        # Call _encodeHex2 method",
+                        "        return Hex._encodeHex2(byteArray, toDigits)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.674205303192139,
+                    "generation_timestamp": "2024-06-05T19:29:50.284753",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "282-284:encodeHex7": {
+                    "start": 282,
+                    "end": 284,
+                    "body": [
+                        "    public static char[] encodeHex7(final ByteBuffer data, final boolean toLowerCase) {\n",
+                        "        return encodeHex8(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "signature": "encodeHex7(ByteBuffer, boolean)",
+                    "parameters": [
+                        "data",
+                        "toLowerCase"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "300-302:encodeHex8"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def encodeHex7(data: typing.Union[bytearray, memoryview], toLowerCase: bool) -> typing.List[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def encodeHex7(data: typing.Union[bytearray, memoryview], toLowerCase: bool) -> typing.List[str]:",
+                        "        ",
+                        "",
+                        "        if toLowerCase:",
+                        "            toDigits = Hex.__DIGITS_LOWER",
+                        "        else:",
+                        "            toDigits = Hex.__DIGITS_UPPER",
+                        "",
+                        "        return Hex._encodeHex8(data, toDigits)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.830195903778076,
+                    "generation_timestamp": "2024-06-05T19:29:54.120097",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "265-267:encodeHex6": {
+                    "start": 265,
+                    "end": 267,
+                    "body": [
+                        "    public static char[] encodeHex6(final ByteBuffer data) {\n",
+                        "        return encodeHex7(data, true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "signature": "encodeHex6(ByteBuffer)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "282-284:encodeHex7"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def encodeHex6(data: typing.Union[bytearray, memoryview]) -> typing.List[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def encodeHex6(data: typing.Union[bytearray, memoryview]) -> typing.List[str]:",
+                        "        ",
+                        "",
+                        "        return Hex.encodeHex7(data, True)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.0089380741119385,
+                    "generation_timestamp": "2024-06-05T19:29:57.134350",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "212-226:encodeHex4": {
+                    "start": 212,
+                    "end": 226,
+                    "body": [
+                        "    public static void encodeHex4(\n",
+                        "            final byte[] data,\n",
+                        "            final int dataOffset,\n",
+                        "            final int dataLen,\n",
+                        "            final boolean toLowerCase,\n",
+                        "            final char[] out,\n",
+                        "            final int outOffset) {\n",
+                        "        encodeHex5(\n",
+                        "                data,\n",
+                        "                dataOffset,\n",
+                        "                dataLen,\n",
+                        "                toLowerCase ? DIGITS_LOWER : DIGITS_UPPER,\n",
+                        "                out,\n",
+                        "                outOffset);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "encodeHex4(byte[], int, int, boolean, char[], int)",
+                    "parameters": [
+                        "data",
+                        "dataOffset",
+                        "dataLen",
+                        "toLowerCase",
+                        "out",
+                        "outOffset"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "240-251:encodeHex5"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def encodeHex4(data: typing.List[int], dataOffset: int, dataLen: int, toLowerCase: bool, out: typing.List[str], outOffset: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def encodeHex4(data: typing.List[int], dataOffset: int, dataLen: int, toLowerCase: bool, out: typing.List[str], outOffset: int) -> None:",
+                        "        ",
+                        "",
+                        "        Hex.__encodeHex5(data, dataOffset, dataLen, Hex.__DIGITS_LOWER if toLowerCase else Hex.__DIGITS_UPPER, out, outOffset)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.2949132919311523,
+                    "generation_timestamp": "2024-06-05T19:26:27.695238",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "192-197:encodeHex3": {
+                    "start": 192,
+                    "end": 197,
+                    "body": [
+                        "    public static char[] encodeHex3(\n",
+                        "            final byte[] data, final int dataOffset, final int dataLen, final boolean toLowerCase) {\n",
+                        "        final char[] out = new char[dataLen << 1];\n",
+                        "        encodeHex5(data, dataOffset, dataLen, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER, out, 0);\n",
+                        "        return out;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "signature": "encodeHex3(byte[], int, int, boolean)",
+                    "parameters": [
+                        "data",
+                        "dataOffset",
+                        "dataLen",
+                        "toLowerCase"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "240-251:encodeHex5"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def encodeHex3(data: typing.List[int], dataOffset: int, dataLen: int, toLowerCase: bool) -> typing.List[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def encodeHex3(data: typing.List[int], dataOffset: int, dataLen: int, toLowerCase: bool) -> typing.List[str]:",
+                        "        ",
+                        "",
+                        "        out = [''] * (dataLen << 1)",
+                        "        Hex.__encodeHex5(data, dataOffset, dataLen, Hex.__DIGITS_LOWER if toLowerCase else Hex.__DIGITS_UPPER, out, 0)",
+                        "        return out",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.8283474445343018,
+                    "generation_timestamp": "2024-06-05T19:26:31.528422",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "173-178:encodeHex2": {
+                    "start": 173,
+                    "end": 178,
+                    "body": [
+                        "    protected static char[] encodeHex2(final byte[] data, final char[] toDigits) {\n",
+                        "        final int dataLength = data.length;\n",
+                        "        final char[] out = new char[dataLength << 1];\n",
+                        "        encodeHex5(data, 0, dataLength, toDigits, out, 0);\n",
+                        "        return out;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "signature": "encodeHex2(byte[], char[])",
+                    "parameters": [
+                        "data",
+                        "toDigits"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "240-251:encodeHex5"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _encodeHex2(data: typing.List[int], toDigits: typing.List[str]) -> typing.List[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def _encodeHex2(data: typing.List[int], toDigits: typing.List[str]) -> typing.List[str]:",
+                        "        ",
+                        "",
+                        "        dataLength = len(data)",
+                        "        out = [''] * (dataLength << 1)",
+                        "        Hex.__encodeHex5(data, 0, dataLength, toDigits, out, 0)",
+                        "        return out",
+                        "",
+                        "    @staticmethod",
+                        "    def __encodeHex5(data: typing.List[int], dataOffset: int, dataLen: int, toDigits: typing.List[str], out: typing.List[str], outOffset: int) -> None:",
+                        "        for i in range(dataLen):",
+                        "            out[outOffset + (i << 1)] = toDigits[(0xF0 & data[dataOffset + i]) >> 4]",
+                        "            out[outOffset + (i << 1) + 1] = toDigits[0x0F & data[dataOffset + i]]",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.753832101821899,
+                    "generation_timestamp": "2024-06-05T19:26:39.287226",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "158-160:encodeHex1": {
+                    "start": 158,
+                    "end": 160,
+                    "body": [
+                        "    public static char[] encodeHex1(final byte[] data, final boolean toLowerCase) {\n",
+                        "        return encodeHex2(data, toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "signature": "encodeHex1(byte[], boolean)",
+                    "parameters": [
+                        "data",
+                        "toLowerCase"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "173-178:encodeHex2"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def encodeHex1(data: typing.List[int], toLowerCase: bool) -> typing.List[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def encodeHex1(data: typing.List[int], toLowerCase: bool) -> typing.List[str]:",
+                        "        ",
+                        "",
+                        "        if toLowerCase:",
+                        "            return Hex._encodeHex2(data, Hex.__DIGITS_LOWER)",
+                        "        else:",
+                        "            return Hex._encodeHex2(data, Hex.__DIGITS_UPPER)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.5220396518707275,
+                    "generation_timestamp": "2024-06-05T19:26:42.814144",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "144-146:encodeHex0": {
+                    "start": 144,
+                    "end": 146,
+                    "body": [
+                        "    public static char[] encodeHex0(final byte[] data) {\n",
+                        "        return encodeHex1(data, true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "signature": "encodeHex0(byte[])",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "158-160:encodeHex1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def encodeHex0(data: typing.List[int]) -> typing.List[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def encodeHex0(data: typing.List[int]) -> typing.List[str]:",
+                        "        ",
+                        "",
+                        "        return Hex.encodeHex1(data, True)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.8254008293151855,
+                    "generation_timestamp": "2024-06-05T19:26:45.644813",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "132-134:decodeHex2": {
+                    "start": 132,
+                    "end": 134,
+                    "body": [
+                        "    public static byte[] decodeHex2(final String data) throws DecoderException {\n",
+                        "        return decodeHex0(data.toCharArray());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "decodeHex2(String)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "75-79:decodeHex0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def decodeHex2(data: str) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def decodeHex2(data: str) -> typing.List[int]:",
+                        "        ",
+                        "",
+                        "        def decodeHex0(data: typing.List[str]) -> typing.List[int]:",
+                        "            pass",
+                        "",
+                        "        return decodeHex0(list(data))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.998804807662964,
+                    "generation_timestamp": "2024-06-06T10:56:04.583276",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "95-118:decodeHex1": {
+                    "start": 95,
+                    "end": 118,
+                    "body": [
+                        "    public static int decodeHex1(final char[] data, final byte[] out, final int outOffset)\n",
+                        "            throws DecoderException {\n",
+                        "        final int len = data.length;\n",
+                        "\n",
+                        "        if ((len & 0x01) != 0) {\n",
+                        "            throw new DecoderException(\"Odd number of characters.\", null);\n",
+                        "        }\n",
+                        "\n",
+                        "        final int outLen = len >> 1;\n",
+                        "        if (out.length - outOffset < outLen) {\n",
+                        "            throw new DecoderException(\n",
+                        "                    \"Output array is not large enough to accommodate decoded data.\", null);\n",
+                        "        }\n",
+                        "\n",
+                        "        for (int i = outOffset, j = 0; j < len; i++) {\n",
+                        "            int f = toDigit(data[j], j) << 4;\n",
+                        "            j++;\n",
+                        "            f = f | toDigit(data[j], j);\n",
+                        "            j++;\n",
+                        "            out[i] = (byte) (f & 0xFF);\n",
+                        "        }\n",
+                        "\n",
+                        "        return outLen;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "decodeHex1(char[], byte[], int)",
+                    "parameters": [
+                        "data",
+                        "out",
+                        "outOffset"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.DecoderException",
+                            "DecoderException",
+                            "63-65:DecoderException"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "393-400:toDigit"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def decodeHex1(data: typing.List[str], out: typing.List[int], outOffset: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def decodeHex1(data: typing.List[str], out: typing.List[int], outOffset: int) -> int:",
+                        "        ",
+                        "",
+                        "        len_data = len(data)",
+                        "",
+                        "        if ((len_data & 0x01) != 0):",
+                        "            raise DecoderException(\"Odd number of characters.\", None)",
+                        "",
+                        "        outLen = len_data >> 1",
+                        "        if (len(out) - outOffset < outLen):",
+                        "            raise DecoderException(",
+                        "                    \"Output array is not large enough to accommodate decoded data.\", None)",
+                        "",
+                        "        for i in range(outOffset, len(out)):",
+                        "            j = (i - outOffset) * 2",
+                        "            f = Hex._toDigit(data[j], j) << 4",
+                        "            f = f | Hex._toDigit(data[j+1], j+1)",
+                        "            out[i] = f & 0xFF",
+                        "",
+                        "        return outLen",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.24157452583313,
+                    "generation_timestamp": "2024-06-05T19:25:52.833092",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "75-79:decodeHex0": {
+                    "start": 75,
+                    "end": 79,
+                    "body": [
+                        "    public static byte[] decodeHex0(final char[] data) throws DecoderException {\n",
+                        "        final byte[] out = new byte[data.length >> 1];\n",
+                        "        decodeHex1(data, out, 0);\n",
+                        "        return out;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "decodeHex0(char[])",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "95-118:decodeHex1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def decodeHex0(data: typing.List[str]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def decodeHex0(data: typing.List[str]) -> typing.List[int]:",
+                        "        ",
+                        "",
+                        "        out = [0] * (len(data) >> 1)",
+                        "        Hex.decodeHex1(data, out, 0)",
+                        "        return out",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.5838193893432617,
+                    "generation_timestamp": "2024-06-05T19:25:55.421565",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "371-383:toByteArray": {
+                    "start": 371,
+                    "end": 383,
+                    "body": [
+                        "    private static byte[] toByteArray(final ByteBuffer byteBuffer) {\n",
+                        "        final int remaining = byteBuffer.remaining();\n",
+                        "        if (byteBuffer.hasArray()) {\n",
+                        "            final byte[] byteArray = byteBuffer.array();\n",
+                        "            if (remaining == byteArray.length) {\n",
+                        "                byteBuffer.position(remaining);\n",
+                        "                return byteArray;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        final byte[] byteArray = new byte[remaining];\n",
+                        "        byteBuffer.get(byteArray);\n",
+                        "        return byteArray;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "toByteArray(ByteBuffer)",
+                    "parameters": [
+                        "byteBuffer"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __toByteArray(byteBuffer: typing.Union[bytearray, memoryview]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def __toByteArray(byteBuffer: typing.Union[bytearray, memoryview]) -> typing.List[int]:",
+                        "        ",
+                        "",
+                        "        remaining = len(byteBuffer)",
+                        "        if isinstance(byteBuffer, memoryview):",
+                        "            byteArray = byteBuffer.tobytes()",
+                        "            if remaining == len(byteArray):",
+                        "                return byteArray",
+                        "",
+                        "        byteArray = byteBuffer[:remaining]",
+                        "        return byteArray",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.958287715911865,
+                    "generation_timestamp": "2024-06-05T19:26:07.511784",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "240-251:encodeHex5": {
+                    "start": 240,
+                    "end": 251,
+                    "body": [
+                        "    private static void encodeHex5(\n",
+                        "            final byte[] data,\n",
+                        "            final int dataOffset,\n",
+                        "            final int dataLen,\n",
+                        "            final char[] toDigits,\n",
+                        "            final char[] out,\n",
+                        "            final int outOffset) {\n",
+                        "        for (int i = dataOffset, j = outOffset; i < dataOffset + dataLen; i++) {\n",
+                        "            out[j++] = toDigits[(0xF0 & data[i]) >>> 4];\n",
+                        "            out[j++] = toDigits[0x0F & data[i]];\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "encodeHex5(byte[], int, int, char[], char[], int)",
+                    "parameters": [
+                        "data",
+                        "dataOffset",
+                        "dataLen",
+                        "toDigits",
+                        "out",
+                        "outOffset"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __encodeHex5(data: typing.List[int], dataOffset: int, dataLen: int, toDigits: typing.List[str], out: typing.List[str], outOffset: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def __encodeHex5(data: typing.List[int], dataOffset: int, dataLen: int, toDigits: typing.List[str], out: typing.List[str], outOffset: int) -> None:",
+                        "        ",
+                        "",
+                        "        for i in range(dataOffset, dataOffset + dataLen):",
+                        "            out[outOffset] = toDigits[(0xF0 & data[i]) >> 4]",
+                        "            outOffset += 1",
+                        "            out[outOffset] = toDigits[0x0F & data[i]]",
+                        "            outOffset += 1",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.62636399269104,
+                    "generation_timestamp": "2024-06-05T19:26:17.508645",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {
+                "52-52:DEFAULT_CHARSET_NAME": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    public static final String DEFAULT_CHARSET_NAME = CharEncoding.UTF_8;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    DEFAULT_CHARSET_NAME: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    DEFAULT_CHARSET_NAME: str = CharEncoding.UTF_8",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.9158110618591309,
+                    "generation_timestamp": "2024-06-05T19:25:11.996418",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "45-45:DEFAULT_CHARSET": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "Charset",
+                            "java.nio.charset.Charset"
+                        ]
+                    ],
+                    "partial_translation": "    DEFAULT_CHARSET: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    DEFAULT_CHARSET: str = \"UTF-8\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.1464123725891113,
+                    "generation_timestamp": "2024-06-05T19:25:14.146698",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "402-402:charset": {
+                    "start": 402,
+                    "end": 402,
+                    "body": [
+                        "    private final Charset charset;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Charset",
+                            "java.nio.charset.Charset"
+                        ]
+                    ],
+                    "partial_translation": "    __charset: str = None\n",
+                    "translation": [
+                        "    __charset: str = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-11T13:26:53.493664",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "60-62:DIGITS_UPPER": {
+                    "start": 60,
+                    "end": 62,
+                    "body": [
+                        "    private static final char[] DIGITS_UPPER = {\n",
+                        "        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": "    __DIGITS_UPPER: typing.List[str] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __DIGITS_UPPER: typing.List[str] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.476402997970581,
+                    "generation_timestamp": "2024-06-05T19:25:16.630186",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "55-57:DIGITS_LOWER": {
+                    "start": 55,
+                    "end": 57,
+                    "body": [
+                        "    private static final char[] DIGITS_LOWER = {\n",
+                        "        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": "    __DIGITS_LOWER: typing.List[str] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __DIGITS_LOWER: typing.List[str] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.4366698265075684,
+                    "generation_timestamp": "2024-06-05T19:25:19.070631",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "python_class_declaration": "class Hex(BinaryDecoder, BinaryEncoder):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.codec.BinaryDecoder import *",
+        "from src.main.org.apache.commons.codec.BinaryEncoder import *",
+        "from src.main.org.apache.commons.codec.CharEncoding import *",
+        "from src.main.org.apache.commons.codec.DecoderException import *",
+        "from src.main.org.apache.commons.codec.EncoderException import *"
+    ]
+}

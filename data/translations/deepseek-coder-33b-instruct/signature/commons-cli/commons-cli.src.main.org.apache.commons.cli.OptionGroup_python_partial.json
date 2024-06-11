@@ -1,0 +1,599 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-cli/src/main/java/org/apache/commons/cli/OptionGroup.java",
+    "imports": {
+        "20-20:import Serializable": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "24-24:import Map": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "21-21:import Collection": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Collection;\n"
+            ]
+        },
+        "22-22:import Iterator": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "23-23:import LinkedHashMap": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.LinkedHashMap;\n"
+            ]
+        }
+    },
+    "classes": {
+        "OptionGroup": {
+            "start": 27,
+            "end": 27,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "113-144:toString": {
+                    "start": 113,
+                    "end": 144,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        final StringBuilder buff = new StringBuilder();\n",
+                        "\n",
+                        "        final Iterator<Option> iter = getOptions().iterator();\n",
+                        "\n",
+                        "        buff.append(\"[\");\n",
+                        "\n",
+                        "        while (iter.hasNext()) {\n",
+                        "            final Option option = iter.next();\n",
+                        "\n",
+                        "            if (option.getOpt() != null) {\n",
+                        "                buff.append(\"-\");\n",
+                        "                buff.append(option.getOpt());\n",
+                        "            } else {\n",
+                        "                buff.append(\"--\");\n",
+                        "                buff.append(option.getLongOpt());\n",
+                        "            }\n",
+                        "\n",
+                        "            if (option.getDescription() != null) {\n",
+                        "                buff.append(\" \");\n",
+                        "                buff.append(option.getDescription());\n",
+                        "            }\n",
+                        "\n",
+                        "            if (iter.hasNext()) {\n",
+                        "                buff.append(\", \");\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        buff.append(\"]\");\n",
+                        "\n",
+                        "        return buff.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.OptionGroup",
+                            "OptionGroup",
+                            "62-64:getOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "583-585:getOpt"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "571-573:getLongOpt"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "543-545:getDescription"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def toString(self) -> str:",
+                        "        ",
+                        "",
+                        "        buff = io.StringIO()",
+                        "",
+                        "        iter = self.getOptions().__iter__()",
+                        "",
+                        "        buff.write(\"[\")",
+                        "",
+                        "        while iter.__next__():",
+                        "            option = iter.__next__()",
+                        "",
+                        "            if option.getOpt() != None:",
+                        "                buff.write(\"-\")",
+                        "                buff.write(option.getOpt())",
+                        "            else:",
+                        "                buff.write(\"--\")",
+                        "                buff.write(option.getLongOpt())",
+                        "",
+                        "            if option.getDescription() != None:",
+                        "                buff.write(\" \")",
+                        "                buff.write(option.getDescription())",
+                        "",
+                        "            if iter.__next__():",
+                        "                buff.write(\", \")",
+                        "",
+                        "        buff.write(\"]\")",
+                        "",
+                        "        return buff.getvalue()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 9.206448793411255,
+                    "generation_timestamp": "2024-06-05T13:18:28.324335",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "95-105:setSelected": {
+                    "start": 95,
+                    "end": 105,
+                    "body": [
+                        "    public void setSelected(final Option option) throws AlreadySelectedException {\n",
+                        "        if (option == null) {\n",
+                        "            selected = null;\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (selected != null && !selected.equals(option.getKey())) {\n",
+                        "            throw AlreadySelectedException.AlreadySelectedException1(this, option);\n",
+                        "        }\n",
+                        "        selected = option.getKey();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setSelected(Option)",
+                    "parameters": [
+                        "option"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "562-564:getKey"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.AlreadySelectedException",
+                            "AlreadySelectedException",
+                            "56-67:AlreadySelectedException1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def setSelected(self, option: Option) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def setSelected(self, option: Option) -> None:",
+                        "        ",
+                        "",
+                        "        if option is None:",
+                        "            self.__selected = None",
+                        "            return",
+                        "",
+                        "        if self.__selected is not None and self.__selected != option.getKey():",
+                        "            raise AlreadySelectedException.AlreadySelectedException1(self, option)",
+                        "        self.__selected = option.getKey()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.285121440887451,
+                    "generation_timestamp": "2024-06-05T12:49:32.479005",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "85-87:setRequired": {
+                    "start": 85,
+                    "end": 87,
+                    "body": [
+                        "    public void setRequired(final boolean required) {\n",
+                        "        this.required = required;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setRequired(boolean)",
+                    "parameters": [
+                        "required"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def setRequired(self, required: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def setRequired(self, required: bool) -> None:",
+                        "        ",
+                        "",
+                        "        self.__required = required",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.8254685401916504,
+                    "generation_timestamp": "2024-06-05T12:42:25.963264",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "78-80:isRequired": {
+                    "start": 78,
+                    "end": 80,
+                    "body": [
+                        "    public boolean isRequired() {\n",
+                        "        return required;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isRequired()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isRequired(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isRequired(self) -> bool:",
+                        "        ",
+                        "",
+                        "        return self.__required",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.456817388534546,
+                    "generation_timestamp": "2024-06-05T12:42:27.422068",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "69-71:getSelected": {
+                    "start": 69,
+                    "end": 71,
+                    "body": [
+                        "    public String getSelected() {\n",
+                        "        return selected;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getSelected()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getSelected(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getSelected(self) -> str:",
+                        "        ",
+                        "",
+                        "        return self.__selected",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.5458688735961914,
+                    "generation_timestamp": "2024-06-05T12:42:28.969953",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "62-64:getOptions": {
+                    "start": 62,
+                    "end": 64,
+                    "body": [
+                        "    public Collection<Option> getOptions() {\n",
+                        "        return optionMap.values();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Collection<Option>",
+                            "java.util.Collection<Option>"
+                        ]
+                    ],
+                    "signature": "getOptions()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getOptions(self) -> typing.Collection[Option]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getOptions(self) -> typing.Collection[Option]:",
+                        "        ",
+                        "",
+                        "        return self.__optionMap.values()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.851792335510254,
+                    "generation_timestamp": "2024-06-05T12:42:30.823474",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "55-57:getNames": {
+                    "start": 55,
+                    "end": 57,
+                    "body": [
+                        "    public Collection<String> getNames() {\n",
+                        "        return optionMap.keySet();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Collection<String>",
+                            "java.util.Collection<String>"
+                        ]
+                    ],
+                    "signature": "getNames()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getNames(self) -> typing.Collection[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getNames(self) -> typing.Collection[str]:",
+                        "        ",
+                        "",
+                        "        return self.__optionMap.keys()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.3569459915161133,
+                    "generation_timestamp": "2024-06-05T12:42:43.246130",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "46-50:addOption": {
+                    "start": 46,
+                    "end": 50,
+                    "body": [
+                        "    public OptionGroup addOption(final Option option) {\n",
+                        "        optionMap.put(option.getKey(), option);\n",
+                        "\n",
+                        "        return this;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "OptionGroup",
+                            "OptionGroup"
+                        ]
+                    ],
+                    "signature": "addOption(Option)",
+                    "parameters": [
+                        "option"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "562-564:getKey"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def addOption(self, option: Option) -> OptionGroup:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def addOption(self, option: Option) -> OptionGroup:",
+                        "        ",
+                        "",
+                        "        self.__optionMap[option.getKey()] = option",
+                        "",
+                        "        return self",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.5644545555114746,
+                    "generation_timestamp": "2024-06-05T12:42:46.814787",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {
+                "38-38:required": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private boolean required;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": "    __required: bool = None\n",
+                    "translation": [
+                        "    __required: bool = None",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-05T12:42:14.486761",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "35-35:selected": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private String selected;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    __selected: str = None\n",
+                    "translation": [
+                        "    __selected: str = None",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-05T12:42:14.488068",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "32-32:optionMap": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    private final Map<String, Option> optionMap = new LinkedHashMap<>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Map<String,Option>",
+                            "java.util.Map<String,Option>"
+                        ]
+                    ],
+                    "partial_translation": "    __optionMap: typing.Dict[str, Option] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __optionMap: Dict[str, Option] = {}",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.9605276584625244,
+                    "generation_timestamp": "2024-06-05T12:42:16.449839",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "29-29:serialVersionUID": {
+                    "start": 29,
+                    "end": 29,
+                    "body": [
+                        "    private static final long serialVersionUID = 1L;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __serialVersionUID: int = 1",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.682843923568726,
+                    "generation_timestamp": "2024-06-05T12:42:24.134227",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "python_class_declaration": "class OptionGroup():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.cli.AlreadySelectedException import *",
+        "from src.main.org.apache.commons.cli.Option import *"
+    ]
+}

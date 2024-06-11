@@ -1,0 +1,2684 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-codec/src/test/java/org/apache/commons/codec/binary/Base16Test.java",
+    "imports": {
+        "32-32:import Charset": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.nio.charset.Charset;\n"
+            ]
+        },
+        "34-34:import Random": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import java.util.Random;\n"
+            ]
+        },
+        "33-33:import StandardCharsets": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.nio.charset.StandardCharsets;\n"
+            ]
+        },
+        "28-28:import DecoderException": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.codec.DecoderException;\n"
+            ]
+        },
+        "29-29:import EncoderException": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.codec.EncoderException;\n"
+            ]
+        },
+        "30-30:import Test": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "27-27:import CodecPolicy": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.codec.CodecPolicy;\n"
+            ]
+        },
+        "25-25:import static Assert.fail": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import static org.junit.Assert.fail;\n"
+            ]
+        },
+        "21-21:import static Assert.assertEquals": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "23-23:import static Assert.assertNull": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.Assert.assertNull;\n"
+            ]
+        },
+        "20-20:import static Assert.assertArrayEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.Assert.assertArrayEquals;\n"
+            ]
+        },
+        "22-22:import static Assert.assertFalse": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.Assert.assertFalse;\n"
+            ]
+        },
+        "24-24:import static Assert.assertTrue": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.assertTrue;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Base16Test": {
+            "start": 41,
+            "end": 41,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "674-683:testLenientDecoding": {
+                    "start": 674,
+                    "end": 683,
+                    "body": [
+                        "    public void testLenientDecoding() {\n",
+                        "        final String encoded =\n",
+                        "                \"aabbccdde\"; // Note the trailing `e` which does not make up a hex-pair and so is\n",
+                        "\n",
+                        "        final Base16 b16 = new Base16(true, CodecPolicy.LENIENT);\n",
+                        "        assertEquals(CodecPolicy.LENIENT, b16.getCodecPolicy());\n",
+                        "\n",
+                        "        final byte[] decoded = b16.decode0(StringUtils.getBytesUtf8(encoded));\n",
+                        "        assertArrayEquals(new byte[] {(byte) 0xaa, (byte) 0xbb, (byte) 0xcc, (byte) 0xdd}, decoded);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testLenientDecoding()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "265-280:Base16"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "567-569:getCodecPolicy"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testLenientDecoding(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testLenientDecoding(self) -> None:",
+                        "        ",
+                        "",
+                        "        encoded = \"aabbccdde\"",
+                        "",
+                        "        b16 = Base16(True, CodecPolicy.LENIENT)",
+                        "        assert b16.getCodecPolicy() == CodecPolicy.LENIENT",
+                        "",
+                        "        decoded = b16.decode0(StringUtils.getBytesUtf8(encoded))",
+                        "        assert decoded == [0xaa, 0xbb, 0xcc, 0xdd]",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.9167091846466064,
+                    "generation_timestamp": "2024-06-05T23:56:25.293720",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "664-671:testStrictDecoding": {
+                    "start": 664,
+                    "end": 671,
+                    "body": [
+                        "    public void testStrictDecoding() {\n",
+                        "        final String encoded =\n",
+                        "                \"aabbccdde\"; // Note the trailing `e` which does not make up a hex-pair and so is\n",
+                        "\n",
+                        "        final Base16 b16 = new Base16(true, CodecPolicy.STRICT);\n",
+                        "        assertEquals(CodecPolicy.STRICT, b16.getCodecPolicy());\n",
+                        "        b16.decode0(StringUtils.getBytesUtf8(encoded));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testStrictDecoding()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "265-280:Base16"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "567-569:getCodecPolicy"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testStrictDecoding(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testStrictDecoding(self) -> None:",
+                        "        ",
+                        "",
+                        "        encoded = \"aabbccdde\"",
+                        "",
+                        "        b16 = Base16(True, CodecPolicy.STRICT)",
+                        "        assert CodecPolicy.STRICT == b16.getCodecPolicy()",
+                        "        b16.decode0(StringUtils.getBytesUtf8(encoded))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.996397972106934,
+                    "generation_timestamp": "2024-06-05T23:56:30.298588",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "642-661:testDecodeSingleBytesOptimisation": {
+                    "start": 642,
+                    "end": 661,
+                    "body": [
+                        "    public void testDecodeSingleBytesOptimisation() {\n",
+                        "        final BaseNCodec.Context context = new BaseNCodec.Context();\n",
+                        "        assertEquals(0, context.ibitWorkArea);\n",
+                        "        assertNull(context.buffer);\n",
+                        "\n",
+                        "        final byte[] data = new byte[1];\n",
+                        "\n",
+                        "        final Base16 b16 = Base16.Base162();\n",
+                        "\n",
+                        "        data[0] = (byte) 'E';\n",
+                        "        b16.decode1(data, 0, 1, context);\n",
+                        "        assertEquals(15, context.ibitWorkArea);\n",
+                        "        assertNull(context.buffer);\n",
+                        "\n",
+                        "        data[0] = (byte) 'F';\n",
+                        "        b16.decode1(data, 0, 1, context);\n",
+                        "        assertEquals(0, context.ibitWorkArea);\n",
+                        "\n",
+                        "        assertEquals((byte) 0xEF, context.buffer[0]);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDecodeSingleBytesOptimisation()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "Context",
+                            "99-99:Context"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "303-347:decode1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testDecodeSingleBytesOptimisation(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testDecodeSingleBytesOptimisation(self) -> None:",
+                        "        ",
+                        "",
+                        "        context = Context()",
+                        "        assert context.ibitWorkArea == 0",
+                        "        assert context.buffer is None",
+                        "",
+                        "        data = bytearray(1)",
+                        "",
+                        "        b16 = Base16.Base162()",
+                        "",
+                        "        data[0] = ord('E')",
+                        "        b16.decode1(data, 0, 1, context)",
+                        "        assert context.ibitWorkArea == 15",
+                        "        assert context.buffer is None",
+                        "",
+                        "        data[0] = ord('F')",
+                        "        b16.decode1(data, 0, 1, context)",
+                        "        assert context.ibitWorkArea == 0",
+                        "",
+                        "        assert context.buffer[0] == 0xEF",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.804943561553955,
+                    "generation_timestamp": "2024-06-05T23:56:38.111197",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "615-639:testDecodeSingleBytes": {
+                    "start": 615,
+                    "end": 639,
+                    "body": [
+                        "    public void testDecodeSingleBytes() {\n",
+                        "        final String encoded = \"556E74696C206E6578742074696D6521\";\n",
+                        "\n",
+                        "        final BaseNCodec.Context context = new BaseNCodec.Context();\n",
+                        "        final Base16 b16 = Base16.Base162();\n",
+                        "\n",
+                        "        final byte[] encocdedBytes = StringUtils.getBytesUtf8(encoded);\n",
+                        "\n",
+                        "        b16.decode1(encocdedBytes, 0, 1, context);\n",
+                        "        b16.decode1(encocdedBytes, 1, 1, context); // yields \"U\"\n",
+                        "        b16.decode1(encocdedBytes, 2, 1, context);\n",
+                        "        b16.decode1(encocdedBytes, 3, 1, context); // yields \"n\"\n",
+                        "\n",
+                        "        b16.decode1(encocdedBytes, 4, 3, context); // yields \"t\"\n",
+                        "        b16.decode1(encocdedBytes, 7, 3, context); // yields \"il\"\n",
+                        "        b16.decode1(encocdedBytes, 10, 3, context); // yields \" \"\n",
+                        "\n",
+                        "        b16.decode1(encocdedBytes, 13, 19, context); // yields \"next time!\"\n",
+                        "\n",
+                        "        final byte[] decodedBytes = new byte[context.pos];\n",
+                        "        System.arraycopy(context.buffer, context.readPos, decodedBytes, 0, decodedBytes.length);\n",
+                        "        final String decoded = StringUtils.newStringUtf8(decodedBytes);\n",
+                        "\n",
+                        "        assertEquals(\"Until next time!\", decoded);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDecodeSingleBytes()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "Context",
+                            "99-99:Context"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "396-398:newStringUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "303-347:decode1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testDecodeSingleBytes(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testDecodeSingleBytes(self) -> None:",
+                        "        ",
+                        "",
+                        "        encoded = \"556E74696C206E6578742074696D6521\"",
+                        "",
+                        "        context = Context()",
+                        "        b16 = Base16.Base162()",
+                        "",
+                        "        encoded_bytes = StringUtils.getBytesUtf8(encoded)",
+                        "",
+                        "        b16.decode1(encoded_bytes, 0, 1, context)",
+                        "        b16.decode1(encoded_bytes, 1, 1, context)  # yields \"U\"",
+                        "        b16.decode1(encoded_bytes, 2, 1, context)",
+                        "        b16.decode1(encoded_bytes, 3, 1, context)  # yields \"n\"",
+                        "",
+                        "        b16.decode1(encoded_bytes, 4, 3, context)  # yields \"t\"",
+                        "        b16.decode1(encoded_bytes, 7, 3, context)  # yields \"il\"",
+                        "        b16.decode1(encoded_bytes, 10, 3, context)  # yields \" \"",
+                        "",
+                        "        b16.decode1(encoded_bytes, 13, 19, context)  # yields \"next time!\"",
+                        "",
+                        "        decoded_bytes = bytearray(context.pos)",
+                        "        decoded_bytes[:] = context.buffer[context.readPos:context.readPos + context.pos]",
+                        "        decoded = StringUtils.newStringUtf8(decoded_bytes)",
+                        "",
+                        "        assert decoded == \"Until next time!\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 19.657323122024536,
+                    "generation_timestamp": "2024-06-05T23:56:57.776843",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "571-612:testIsInAlphabet": {
+                    "start": 571,
+                    "end": 612,
+                    "body": [
+                        "    public void testIsInAlphabet() {\n",
+                        "        Base16 b16 = Base16.Base161(true);\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) 0));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) 1));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) -1));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) -15));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) -16));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) 128));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) 255));\n",
+                        "\n",
+                        "        b16 = Base16.Base161(true);\n",
+                        "        for (char c = '0'; c <= '9'; c++) {\n",
+                        "            assertTrue(b16.isInAlphabet0((byte) c));\n",
+                        "        }\n",
+                        "        for (char c = 'a'; c <= 'f'; c++) {\n",
+                        "            assertTrue(b16.isInAlphabet0((byte) c));\n",
+                        "        }\n",
+                        "        for (char c = 'A'; c <= 'F'; c++) {\n",
+                        "            assertFalse(b16.isInAlphabet0((byte) c));\n",
+                        "        }\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) ('0' - 1)));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) ('9' + 1)));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) ('a' - 1)));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) ('f' + 1)));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) ('z' + 1)));\n",
+                        "\n",
+                        "        b16 = Base16.Base161(false);\n",
+                        "        for (char c = '0'; c <= '9'; c++) {\n",
+                        "            assertTrue(b16.isInAlphabet0((byte) c));\n",
+                        "        }\n",
+                        "        for (char c = 'a'; c <= 'f'; c++) {\n",
+                        "            assertFalse(b16.isInAlphabet0((byte) c));\n",
+                        "        }\n",
+                        "        for (char c = 'A'; c <= 'F'; c++) {\n",
+                        "            assertTrue(b16.isInAlphabet0((byte) c));\n",
+                        "        }\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) ('0' - 1)));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) ('9' + 1)));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) ('A' - 1)));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) ('F' + 1)));\n",
+                        "        assertFalse(b16.isInAlphabet0((byte) ('Z' + 1)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testIsInAlphabet()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "282-284:Base161"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "399-401:isInAlphabet0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testIsInAlphabet(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testIsInAlphabet(self) -> None:",
+                        "        ",
+                        "",
+                        "        b16 = Base16.Base161(True)",
+                        "        assert not b16.isInAlphabet0(0)",
+                        "        assert not b16.isInAlphabet0(1)",
+                        "        assert not b16.isInAlphabet0(-1)",
+                        "        assert not b16.isInAlphabet0(-15)",
+                        "        assert not b16.isInAlphabet0(-16)",
+                        "        assert not b16.isInAlphabet0(128)",
+                        "        assert not b16.isInAlphabet0(255)",
+                        "",
+                        "        b16 = Base16.Base161(True)",
+                        "        for c in range(ord('0'), ord('9')+1):",
+                        "            assert b16.isInAlphabet0(c)",
+                        "        for c in range(ord('a'), ord('f')+1):",
+                        "            assert b16.isInAlphabet0(c)",
+                        "        for c in range(ord('A'), ord('F')+1):",
+                        "            assert not b16.isInAlphabet0(c)",
+                        "        assert not b16.isInAlphabet0(ord('0') - 1)",
+                        "        assert not b16.isInAlphabet0(ord('9') + 1)",
+                        "        assert not b16.isInAlphabet0(ord('a') - 1)",
+                        "        assert not b16.isInAlphabet0(ord('f') + 1)",
+                        "        assert not b16.isInAlphabet0(ord('z') + 1)",
+                        "",
+                        "        b16 = Base16.Base161(False)",
+                        "        for c in range(ord('0'), ord('9')+1):",
+                        "            assert b16.isInAlphabet0(c)",
+                        "        for c in range(ord('a'), ord('f')+1):",
+                        "            assert not b16.isInAlphabet0(c)",
+                        "        for c in range(ord('A'), ord('F')+1):",
+                        "            assert b16.isInAlphabet0(c)",
+                        "        assert not b16.isInAlphabet0(ord('0') - 1)",
+                        "        assert not b16.isInAlphabet0(ord('9') + 1)",
+                        "        assert not b16.isInAlphabet0(ord('A') - 1)",
+                        "        assert not b16.isInAlphabet0(ord('F') + 1)",
+                        "        assert not b16.isInAlphabet0(ord('Z') + 1)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 27.449435234069824,
+                    "generation_timestamp": "2024-06-05T23:57:25.232487",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "565-568:checkEncodeLengthBounds": {
+                    "start": 565,
+                    "end": 568,
+                    "body": [
+                        "    public void checkEncodeLengthBounds() {\n",
+                        "        final Base16 base16 = Base16.Base162();\n",
+                        "        base16.encode1(new byte[10], 0, 1 << 30);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkEncodeLengthBounds()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "478-488:encode1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def checkEncodeLengthBounds(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def checkEncodeLengthBounds(self) -> None:",
+                        "        ",
+                        "",
+                        "        base16 = Base16.Base162()",
+                        "        base16.encode1(bytearray(10), 0, 1 << 30)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.945720911026001,
+                    "generation_timestamp": "2024-06-05T23:57:31.186195",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "523-551:testStringToByteVariations": {
+                    "start": 523,
+                    "end": 551,
+                    "body": [
+                        "    public void testStringToByteVariations() throws DecoderException {\n",
+                        "        final Base16 base16 = Base16.Base162();\n",
+                        "        final String s1 = \"48656C6C6F20576F726C64\";\n",
+                        "        final String s2 = \"\";\n",
+                        "        final String s3 = null;\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                \"StringToByte Hello World\",\n",
+                        "                \"Hello World\",\n",
+                        "                StringUtils.newStringUtf8(base16.decode3(s1)));\n",
+                        "        assertEquals(\n",
+                        "                \"StringToByte Hello World\",\n",
+                        "                \"Hello World\",\n",
+                        "                StringUtils.newStringUtf8((byte[]) Base16.Base162().decode2((Object) s1)));\n",
+                        "        assertEquals(\n",
+                        "                \"StringToByte static Hello World\",\n",
+                        "                \"Hello World\",\n",
+                        "                StringUtils.newStringUtf8(Base16.Base162().decode3(s1)));\n",
+                        "        assertEquals(\n",
+                        "                \"StringToByte \\\"\\\"\", \"\", StringUtils.newStringUtf8(Base16.Base162().decode3(s2)));\n",
+                        "        assertEquals(\n",
+                        "                \"StringToByte static \\\"\\\"\",\n",
+                        "                \"\",\n",
+                        "                StringUtils.newStringUtf8(Base16.Base162().decode3(s2)));\n",
+                        "        assertNull(\"StringToByte null\", StringUtils.newStringUtf8(Base16.Base162().decode3(s3)));\n",
+                        "        assertNull(\n",
+                        "                \"StringToByte static null\",\n",
+                        "                StringUtils.newStringUtf8(Base16.Base162().decode3(s3)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testStringToByteVariations()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "396-398:newStringUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "447-449:decode3"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "430-439:decode2"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testStringToByteVariations(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testStringToByteVariations(self) -> None:",
+                        "        ",
+                        "",
+                        "        base16 = Base16.Base162()",
+                        "        s1 = \"48656C6C6F20576F726C64\"",
+                        "        s2 = \"\"",
+                        "        s3 = None",
+                        "",
+                        "        assert StringUtils.newStringUtf8(base16.decode3(s1)) == \"Hello World\"",
+                        "        assert StringUtils.newStringUtf8(base16.decode2(s1)) == \"Hello World\"",
+                        "        assert StringUtils.newStringUtf8(base16.decode3(s1)) == \"Hello World\"",
+                        "        assert StringUtils.newStringUtf8(base16.decode3(s2)) == \"\"",
+                        "        assert StringUtils.newStringUtf8(base16.decode3(s2)) == \"\"",
+                        "        assert StringUtils.newStringUtf8(base16.decode3(s3)) == None",
+                        "        assert StringUtils.newStringUtf8(base16.decode3(s3)) == None",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 12.897524356842041,
+                    "generation_timestamp": "2024-06-05T23:57:44.092231",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "499-520:testByteToStringVariations": {
+                    "start": 499,
+                    "end": 520,
+                    "body": [
+                        "    public void testByteToStringVariations() throws DecoderException {\n",
+                        "        final Base16 base16 = Base16.Base162();\n",
+                        "        final byte[] b1 = StringUtils.getBytesUtf8(\"Hello World\");\n",
+                        "        final byte[] b2 = {};\n",
+                        "        final byte[] b3 = null;\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                \"byteToString Hello World\", \"48656C6C6F20576F726C64\", base16.encodeToString(b1));\n",
+                        "        assertEquals(\n",
+                        "                \"byteToString static Hello World\",\n",
+                        "                \"48656C6C6F20576F726C64\",\n",
+                        "                StringUtils.newStringUtf8(Base16.Base162().encode0(b1)));\n",
+                        "        assertEquals(\"byteToString \\\"\\\"\", \"\", base16.encodeToString(b2));\n",
+                        "        assertEquals(\n",
+                        "                \"byteToString static \\\"\\\"\",\n",
+                        "                \"\",\n",
+                        "                StringUtils.newStringUtf8(Base16.Base162().encode0(b2)));\n",
+                        "        assertNull(\"byteToString null\", base16.encodeToString(b3));\n",
+                        "        assertNull(\n",
+                        "                \"byteToString static null\",\n",
+                        "                StringUtils.newStringUtf8(Base16.Base162().encode0(b3)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testByteToStringVariations()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "534-536:encodeToString"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "396-398:newStringUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testByteToStringVariations(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testByteToStringVariations(self) -> None:",
+                        "        ",
+                        "",
+                        "        base16 = Base16.Base162()",
+                        "        b1 = StringUtils.getBytesUtf8(\"Hello World\")",
+                        "        b2 = bytearray()",
+                        "        b3 = None",
+                        "",
+                        "        assert base16.encodeToString(b1) == \"48656C6C6F20576F726C64\", \"byteToString Hello World\"",
+                        "        assert StringUtils.newStringUtf8(base16.encode0(b1)) == \"48656C6C6F20576F726C64\", \"byteToString static Hello World\"",
+                        "        assert base16.encodeToString(b2) == \"\", \"byteToString \\\"\\\"\"",
+                        "        assert StringUtils.newStringUtf8(base16.encode0(b2)) == \"\", \"byteToString static \\\"\\\"\"",
+                        "        assert base16.encodeToString(b3) is None, \"byteToString null\"",
+                        "        assert StringUtils.newStringUtf8(base16.encode0(b3)) is None, \"byteToString static null\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 11.529175758361816,
+                    "generation_timestamp": "2024-06-05T23:57:55.630435",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "447-496:testTriplets": {
+                    "start": 447,
+                    "end": 496,
+                    "body": [
+                        "    public void testTriplets() {\n",
+                        "        assertEquals(\n",
+                        "                \"000000\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 0})));\n",
+                        "        assertEquals(\n",
+                        "                \"000001\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 1})));\n",
+                        "        assertEquals(\n",
+                        "                \"000002\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 2})));\n",
+                        "        assertEquals(\n",
+                        "                \"000003\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 3})));\n",
+                        "        assertEquals(\n",
+                        "                \"000004\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 4})));\n",
+                        "        assertEquals(\n",
+                        "                \"000005\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 5})));\n",
+                        "        assertEquals(\n",
+                        "                \"000006\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 6})));\n",
+                        "        assertEquals(\n",
+                        "                \"000007\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 7})));\n",
+                        "        assertEquals(\n",
+                        "                \"000008\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 8})));\n",
+                        "        assertEquals(\n",
+                        "                \"000009\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 9})));\n",
+                        "        assertEquals(\n",
+                        "                \"00000A\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 10})));\n",
+                        "        assertEquals(\n",
+                        "                \"00000B\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 11})));\n",
+                        "        assertEquals(\n",
+                        "                \"00000C\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 12})));\n",
+                        "        assertEquals(\n",
+                        "                \"00000D\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 13})));\n",
+                        "        assertEquals(\n",
+                        "                \"00000E\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 14})));\n",
+                        "        assertEquals(\n",
+                        "                \"00000F\",\n",
+                        "                new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0, (byte) 15})));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testTriplets()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testTriplets(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testTriplets(self) -> None:",
+                        "        ",
+                        "",
+                        "        def check_equal(expected, actual):",
+                        "            assert expected == actual, f\"Expected {expected}, but got {actual}\"",
+                        "",
+                        "        check_equal(",
+                        "            \"000000\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 0])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"000001\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 1])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"000002\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 2])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"000003\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 3])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"000004\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 4])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"000005\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 5])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"000006\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 6])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"000007\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 7])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"000008\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 8])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"000009\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 9])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"00000A\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 10])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"00000B\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 11])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"00000C\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 12])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"00000D\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 13])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"00000E\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 14])).decode()",
+                        "        )",
+                        "        check_equal(",
+                        "            \"00000F\",",
+                        "            Base16.Base162().encode0(bytearray([0, 0, 15])).decode()",
+                        "        )",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 28.98473596572876,
+                    "generation_timestamp": "2024-06-05T23:58:24.623430",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "334-444:testSingletons": {
+                    "start": 334,
+                    "end": 444,
+                    "body": [
+                        "    public void testSingletons() {\n",
+                        "        assertEquals(\"00\", new String(Base16.Base162().encode0(new byte[] {(byte) 0})));\n",
+                        "        assertEquals(\"01\", new String(Base16.Base162().encode0(new byte[] {(byte) 1})));\n",
+                        "        assertEquals(\"02\", new String(Base16.Base162().encode0(new byte[] {(byte) 2})));\n",
+                        "        assertEquals(\"03\", new String(Base16.Base162().encode0(new byte[] {(byte) 3})));\n",
+                        "        assertEquals(\"04\", new String(Base16.Base162().encode0(new byte[] {(byte) 4})));\n",
+                        "        assertEquals(\"05\", new String(Base16.Base162().encode0(new byte[] {(byte) 5})));\n",
+                        "        assertEquals(\"06\", new String(Base16.Base162().encode0(new byte[] {(byte) 6})));\n",
+                        "        assertEquals(\"07\", new String(Base16.Base162().encode0(new byte[] {(byte) 7})));\n",
+                        "        assertEquals(\"08\", new String(Base16.Base162().encode0(new byte[] {(byte) 8})));\n",
+                        "        assertEquals(\"09\", new String(Base16.Base162().encode0(new byte[] {(byte) 9})));\n",
+                        "        assertEquals(\"0A\", new String(Base16.Base162().encode0(new byte[] {(byte) 10})));\n",
+                        "        assertEquals(\"0B\", new String(Base16.Base162().encode0(new byte[] {(byte) 11})));\n",
+                        "        assertEquals(\"0C\", new String(Base16.Base162().encode0(new byte[] {(byte) 12})));\n",
+                        "        assertEquals(\"0D\", new String(Base16.Base162().encode0(new byte[] {(byte) 13})));\n",
+                        "        assertEquals(\"0E\", new String(Base16.Base162().encode0(new byte[] {(byte) 14})));\n",
+                        "        assertEquals(\"0F\", new String(Base16.Base162().encode0(new byte[] {(byte) 15})));\n",
+                        "        assertEquals(\"10\", new String(Base16.Base162().encode0(new byte[] {(byte) 16})));\n",
+                        "        assertEquals(\"11\", new String(Base16.Base162().encode0(new byte[] {(byte) 17})));\n",
+                        "        assertEquals(\"12\", new String(Base16.Base162().encode0(new byte[] {(byte) 18})));\n",
+                        "        assertEquals(\"13\", new String(Base16.Base162().encode0(new byte[] {(byte) 19})));\n",
+                        "        assertEquals(\"14\", new String(Base16.Base162().encode0(new byte[] {(byte) 20})));\n",
+                        "        assertEquals(\"15\", new String(Base16.Base162().encode0(new byte[] {(byte) 21})));\n",
+                        "        assertEquals(\"16\", new String(Base16.Base162().encode0(new byte[] {(byte) 22})));\n",
+                        "        assertEquals(\"17\", new String(Base16.Base162().encode0(new byte[] {(byte) 23})));\n",
+                        "        assertEquals(\"18\", new String(Base16.Base162().encode0(new byte[] {(byte) 24})));\n",
+                        "        assertEquals(\"19\", new String(Base16.Base162().encode0(new byte[] {(byte) 25})));\n",
+                        "        assertEquals(\"1A\", new String(Base16.Base162().encode0(new byte[] {(byte) 26})));\n",
+                        "        assertEquals(\"1B\", new String(Base16.Base162().encode0(new byte[] {(byte) 27})));\n",
+                        "        assertEquals(\"1C\", new String(Base16.Base162().encode0(new byte[] {(byte) 28})));\n",
+                        "        assertEquals(\"1D\", new String(Base16.Base162().encode0(new byte[] {(byte) 29})));\n",
+                        "        assertEquals(\"1E\", new String(Base16.Base162().encode0(new byte[] {(byte) 30})));\n",
+                        "        assertEquals(\"1F\", new String(Base16.Base162().encode0(new byte[] {(byte) 31})));\n",
+                        "        assertEquals(\"20\", new String(Base16.Base162().encode0(new byte[] {(byte) 32})));\n",
+                        "        assertEquals(\"21\", new String(Base16.Base162().encode0(new byte[] {(byte) 33})));\n",
+                        "        assertEquals(\"22\", new String(Base16.Base162().encode0(new byte[] {(byte) 34})));\n",
+                        "        assertEquals(\"23\", new String(Base16.Base162().encode0(new byte[] {(byte) 35})));\n",
+                        "        assertEquals(\"24\", new String(Base16.Base162().encode0(new byte[] {(byte) 36})));\n",
+                        "        assertEquals(\"25\", new String(Base16.Base162().encode0(new byte[] {(byte) 37})));\n",
+                        "        assertEquals(\"26\", new String(Base16.Base162().encode0(new byte[] {(byte) 38})));\n",
+                        "        assertEquals(\"27\", new String(Base16.Base162().encode0(new byte[] {(byte) 39})));\n",
+                        "        assertEquals(\"28\", new String(Base16.Base162().encode0(new byte[] {(byte) 40})));\n",
+                        "        assertEquals(\"29\", new String(Base16.Base162().encode0(new byte[] {(byte) 41})));\n",
+                        "        assertEquals(\"2A\", new String(Base16.Base162().encode0(new byte[] {(byte) 42})));\n",
+                        "        assertEquals(\"2B\", new String(Base16.Base162().encode0(new byte[] {(byte) 43})));\n",
+                        "        assertEquals(\"2C\", new String(Base16.Base162().encode0(new byte[] {(byte) 44})));\n",
+                        "        assertEquals(\"2D\", new String(Base16.Base162().encode0(new byte[] {(byte) 45})));\n",
+                        "        assertEquals(\"2E\", new String(Base16.Base162().encode0(new byte[] {(byte) 46})));\n",
+                        "        assertEquals(\"2F\", new String(Base16.Base162().encode0(new byte[] {(byte) 47})));\n",
+                        "        assertEquals(\"30\", new String(Base16.Base162().encode0(new byte[] {(byte) 48})));\n",
+                        "        assertEquals(\"31\", new String(Base16.Base162().encode0(new byte[] {(byte) 49})));\n",
+                        "        assertEquals(\"32\", new String(Base16.Base162().encode0(new byte[] {(byte) 50})));\n",
+                        "        assertEquals(\"33\", new String(Base16.Base162().encode0(new byte[] {(byte) 51})));\n",
+                        "        assertEquals(\"34\", new String(Base16.Base162().encode0(new byte[] {(byte) 52})));\n",
+                        "        assertEquals(\"35\", new String(Base16.Base162().encode0(new byte[] {(byte) 53})));\n",
+                        "        assertEquals(\"36\", new String(Base16.Base162().encode0(new byte[] {(byte) 54})));\n",
+                        "        assertEquals(\"37\", new String(Base16.Base162().encode0(new byte[] {(byte) 55})));\n",
+                        "        assertEquals(\"38\", new String(Base16.Base162().encode0(new byte[] {(byte) 56})));\n",
+                        "        assertEquals(\"39\", new String(Base16.Base162().encode0(new byte[] {(byte) 57})));\n",
+                        "        assertEquals(\"3A\", new String(Base16.Base162().encode0(new byte[] {(byte) 58})));\n",
+                        "        assertEquals(\"3B\", new String(Base16.Base162().encode0(new byte[] {(byte) 59})));\n",
+                        "        assertEquals(\"3C\", new String(Base16.Base162().encode0(new byte[] {(byte) 60})));\n",
+                        "        assertEquals(\"3D\", new String(Base16.Base162().encode0(new byte[] {(byte) 61})));\n",
+                        "        assertEquals(\"3E\", new String(Base16.Base162().encode0(new byte[] {(byte) 62})));\n",
+                        "        assertEquals(\"3F\", new String(Base16.Base162().encode0(new byte[] {(byte) 63})));\n",
+                        "        assertEquals(\"40\", new String(Base16.Base162().encode0(new byte[] {(byte) 64})));\n",
+                        "        assertEquals(\"41\", new String(Base16.Base162().encode0(new byte[] {(byte) 65})));\n",
+                        "        assertEquals(\"42\", new String(Base16.Base162().encode0(new byte[] {(byte) 66})));\n",
+                        "        assertEquals(\"43\", new String(Base16.Base162().encode0(new byte[] {(byte) 67})));\n",
+                        "        assertEquals(\"44\", new String(Base16.Base162().encode0(new byte[] {(byte) 68})));\n",
+                        "        assertEquals(\"45\", new String(Base16.Base162().encode0(new byte[] {(byte) 69})));\n",
+                        "        assertEquals(\"46\", new String(Base16.Base162().encode0(new byte[] {(byte) 70})));\n",
+                        "        assertEquals(\"47\", new String(Base16.Base162().encode0(new byte[] {(byte) 71})));\n",
+                        "        assertEquals(\"48\", new String(Base16.Base162().encode0(new byte[] {(byte) 72})));\n",
+                        "        assertEquals(\"49\", new String(Base16.Base162().encode0(new byte[] {(byte) 73})));\n",
+                        "        assertEquals(\"4A\", new String(Base16.Base162().encode0(new byte[] {(byte) 74})));\n",
+                        "        assertEquals(\"4B\", new String(Base16.Base162().encode0(new byte[] {(byte) 75})));\n",
+                        "        assertEquals(\"4C\", new String(Base16.Base162().encode0(new byte[] {(byte) 76})));\n",
+                        "        assertEquals(\"4D\", new String(Base16.Base162().encode0(new byte[] {(byte) 77})));\n",
+                        "        assertEquals(\"4E\", new String(Base16.Base162().encode0(new byte[] {(byte) 78})));\n",
+                        "        assertEquals(\"4F\", new String(Base16.Base162().encode0(new byte[] {(byte) 79})));\n",
+                        "        assertEquals(\"50\", new String(Base16.Base162().encode0(new byte[] {(byte) 80})));\n",
+                        "        assertEquals(\"51\", new String(Base16.Base162().encode0(new byte[] {(byte) 81})));\n",
+                        "        assertEquals(\"52\", new String(Base16.Base162().encode0(new byte[] {(byte) 82})));\n",
+                        "        assertEquals(\"53\", new String(Base16.Base162().encode0(new byte[] {(byte) 83})));\n",
+                        "        assertEquals(\"54\", new String(Base16.Base162().encode0(new byte[] {(byte) 84})));\n",
+                        "        assertEquals(\"55\", new String(Base16.Base162().encode0(new byte[] {(byte) 85})));\n",
+                        "        assertEquals(\"56\", new String(Base16.Base162().encode0(new byte[] {(byte) 86})));\n",
+                        "        assertEquals(\"57\", new String(Base16.Base162().encode0(new byte[] {(byte) 87})));\n",
+                        "        assertEquals(\"58\", new String(Base16.Base162().encode0(new byte[] {(byte) 88})));\n",
+                        "        assertEquals(\"59\", new String(Base16.Base162().encode0(new byte[] {(byte) 89})));\n",
+                        "        assertEquals(\"5A\", new String(Base16.Base162().encode0(new byte[] {(byte) 90})));\n",
+                        "        assertEquals(\"5B\", new String(Base16.Base162().encode0(new byte[] {(byte) 91})));\n",
+                        "        assertEquals(\"5C\", new String(Base16.Base162().encode0(new byte[] {(byte) 92})));\n",
+                        "        assertEquals(\"5D\", new String(Base16.Base162().encode0(new byte[] {(byte) 93})));\n",
+                        "        assertEquals(\"5E\", new String(Base16.Base162().encode0(new byte[] {(byte) 94})));\n",
+                        "        assertEquals(\"5F\", new String(Base16.Base162().encode0(new byte[] {(byte) 95})));\n",
+                        "        assertEquals(\"60\", new String(Base16.Base162().encode0(new byte[] {(byte) 96})));\n",
+                        "        assertEquals(\"61\", new String(Base16.Base162().encode0(new byte[] {(byte) 97})));\n",
+                        "        assertEquals(\"62\", new String(Base16.Base162().encode0(new byte[] {(byte) 98})));\n",
+                        "        assertEquals(\"63\", new String(Base16.Base162().encode0(new byte[] {(byte) 99})));\n",
+                        "        assertEquals(\"64\", new String(Base16.Base162().encode0(new byte[] {(byte) 100})));\n",
+                        "        assertEquals(\"65\", new String(Base16.Base162().encode0(new byte[] {(byte) 101})));\n",
+                        "        assertEquals(\"66\", new String(Base16.Base162().encode0(new byte[] {(byte) 102})));\n",
+                        "        assertEquals(\"67\", new String(Base16.Base162().encode0(new byte[] {(byte) 103})));\n",
+                        "        assertEquals(\"68\", new String(Base16.Base162().encode0(new byte[] {(byte) 104})));\n",
+                        "        for (int i = -128; i <= 127; i++) {\n",
+                        "            final byte test[] = {(byte) i};\n",
+                        "            assertArrayEquals(test, Base16.Base162().decode0(Base16.Base162().encode0(test)));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSingletons()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testSingletons(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testSingletons(self) -> None:",
+                        "        ",
+                        "",
+                        "        def assert_equal(expected: str, actual: str) -> None:",
+                        "            assert expected == actual, f\"Expected: {expected}, Actual: {actual}\"",
+                        "",
+                        "        def assert_array_equal(expected: bytearray, actual: bytearray) -> None:",
+                        "            assert expected == actual, f\"Expected: {expected}, Actual: {actual}\"",
+                        "",
+                        "        for i in range(0, 10):",
+                        "            assert_equal(f\"0{i}\", Base16.Base162().encode0(bytearray([i])))",
+                        "",
+                        "        for i in range(10, 36):",
+                        "            assert_equal(f\"{hex(i)[2:].upper()}\", Base16.Base162().encode0(bytearray([i])))",
+                        "",
+                        "        for i in range(36, 62):",
+                        "            assert_equal(f\"{hex(i)[2:].upper()}\", Base16.Base162().encode0(bytearray([i])))",
+                        "",
+                        "        for i in range(-128, 128):",
+                        "            test = bytearray([i])",
+                        "            assert_array_equal(test, Base16.Base162().decode0(Base16.Base162().encode0(test)))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 13.126703262329102,
+                    "generation_timestamp": "2024-06-05T23:58:37.759601",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "300-331:testPairs": {
+                    "start": 300,
+                    "end": 331,
+                    "body": [
+                        "    public void testPairs() {\n",
+                        "        assertEquals(\"0000\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 0})));\n",
+                        "        assertEquals(\"0001\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 1})));\n",
+                        "        assertEquals(\"0002\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 2})));\n",
+                        "        assertEquals(\"0003\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 3})));\n",
+                        "        assertEquals(\"0004\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 4})));\n",
+                        "        assertEquals(\"0005\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 5})));\n",
+                        "        assertEquals(\"0006\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 6})));\n",
+                        "        assertEquals(\"0007\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 7})));\n",
+                        "        assertEquals(\"0008\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 8})));\n",
+                        "        assertEquals(\"0009\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 9})));\n",
+                        "        assertEquals(\n",
+                        "                \"000A\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 10})));\n",
+                        "        assertEquals(\n",
+                        "                \"000B\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 11})));\n",
+                        "        assertEquals(\n",
+                        "                \"000C\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 12})));\n",
+                        "        assertEquals(\n",
+                        "                \"000D\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 13})));\n",
+                        "        assertEquals(\n",
+                        "                \"000E\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 14})));\n",
+                        "        assertEquals(\n",
+                        "                \"000F\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 15})));\n",
+                        "        assertEquals(\n",
+                        "                \"0010\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 16})));\n",
+                        "        assertEquals(\n",
+                        "                \"0011\", new String(Base16.Base162().encode0(new byte[] {(byte) 0, (byte) 17})));\n",
+                        "        for (int i = -128; i <= 127; i++) {\n",
+                        "            final byte test[] = {(byte) i, (byte) i};\n",
+                        "            assertArrayEquals(test, Base16.Base162().decode0(Base16.Base162().encode0(test)));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPairs()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testPairs(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testPairs(self) -> None:",
+                        "        ",
+                        "",
+                        "        def assertEqual(expected, actual):",
+                        "            assert expected == actual, f\"Expected {expected}, but got {actual}\"",
+                        "",
+                        "        def assertArrayEquals(expected, actual):",
+                        "            assert expected == actual, f\"Expected {expected}, but got {actual}\"",
+                        "",
+                        "        assertEqual(\"0000\", str(Base16.Base162().encode0(bytes([0, 0])), 'utf-8'))",
+                        "        assertEqual(\"0001\", str(Base16.Base162().encode0(bytes([0, 1])), 'utf-8'))",
+                        "        assertEqual(\"0002\", str(Base16.Base162().encode0(bytes([0, 2])), 'utf-8'))",
+                        "        assertEqual(\"0003\", str(Base16.Base162().encode0(bytes([0, 3])), 'utf-8'))",
+                        "        assertEqual(\"0004\", str(Base16.Base162().encode0(bytes([0, 4])), 'utf-8'))",
+                        "        assertEqual(\"0005\", str(Base16.Base162().encode0(bytes([0, 5])), 'utf-8'))",
+                        "        assertEqual(\"0006\", str(Base16.Base162().encode0(bytes([0, 6])), 'utf-8'))",
+                        "        assertEqual(\"0007\", str(Base16.Base162().encode0(bytes([0, 7])), 'utf-8'))",
+                        "        assertEqual(\"0008\", str(Base16.Base162().encode0(bytes([0, 8])), 'utf-8'))",
+                        "        assertEqual(\"0009\", str(Base16.Base162().encode0(bytes([0, 9])), 'utf-8'))",
+                        "        assertEqual(\"000A\", str(Base16.Base162().encode0(bytes([0, 10])), 'utf-8'))",
+                        "        assertEqual(\"000B\", str(Base16.Base162().encode0(bytes([0, 11])), 'utf-8'))",
+                        "        assertEqual(\"000C\", str(Base16.Base162().encode0(bytes([0, 12])), 'utf-8'))",
+                        "        assertEqual(\"000D\", str(Base16.Base162().encode0(bytes([0, 13])), 'utf-8'))",
+                        "        assertEqual(\"000E\", str(Base16.Base162().encode0(bytes([0, 14])), 'utf-8'))",
+                        "        assertEqual(\"000F\", str(Base16.Base162().encode0(bytes([0, 15])), 'utf-8'))",
+                        "        assertEqual(\"0010\", str(Base16.Base162().encode0(bytes([0, 16])), 'utf-8'))",
+                        "        assertEqual(\"0011\", str(Base16.Base162().encode0(bytes([0, 17])), 'utf-8'))",
+                        "",
+                        "        for i in range(-128, 128):",
+                        "            test = bytes([i, i])",
+                        "            assertArrayEquals(test, Base16.Base162().decode0(Base16.Base162().encode0(test)))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 28.6686794757843,
+                    "generation_timestamp": "2024-06-05T23:59:06.435816",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "292-297:testObjectEncode": {
+                    "start": 292,
+                    "end": 297,
+                    "body": [
+                        "    public void testObjectEncode() {\n",
+                        "        final Base16 b16 = Base16.Base162();\n",
+                        "        assertEquals(\n",
+                        "                \"48656C6C6F20576F726C64\",\n",
+                        "                new String(b16.encode0(\"Hello World\".getBytes(CHARSET_UTF8))));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testObjectEncode()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testObjectEncode(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testObjectEncode(self) -> None:",
+                        "        ",
+                        "",
+                        "        b16 = Base16.Base162()",
+                        "        result = b16.encode0(\"Hello World\".encode(self.__CHARSET_UTF8))",
+                        "        assertEqual(",
+                        "            \"48656C6C6F20576F726C64\",",
+                        "            result.decode(self.__CHARSET_UTF8)",
+                        "        )",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.487275123596191,
+                    "generation_timestamp": "2024-06-05T23:59:11.931226",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "280-289:testObjectEncodeWithValidParameter": {
+                    "start": 280,
+                    "end": 289,
+                    "body": [
+                        "    public void testObjectEncodeWithValidParameter() throws Exception {\n",
+                        "        final String original = \"Hello World!\";\n",
+                        "        final Object origObj = original.getBytes(CHARSET_UTF8);\n",
+                        "\n",
+                        "        final Object oEncoded = Base16.Base162().encode3(origObj);\n",
+                        "        final byte[] bArray = Base16.Base162().decode0((byte[]) oEncoded);\n",
+                        "        final String dest = new String(bArray);\n",
+                        "\n",
+                        "        assertEquals(\"dest string does not equal original\", original, dest);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testObjectEncodeWithValidParameter()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "507-512:encode3"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testObjectEncodeWithValidParameter(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testObjectEncodeWithValidParameter(self) -> None:",
+                        "        ",
+                        "",
+                        "        original: str = \"Hello World!\"",
+                        "        origObj: bytes = original.encode(self.__CHARSET_UTF8)",
+                        "",
+                        "        oEncoded: bytes = Base16.Base162().encode3(origObj)",
+                        "        bArray: bytes = Base16.Base162().decode0(oEncoded)",
+                        "        dest: str = bArray.decode(self.__CHARSET_UTF8)",
+                        "",
+                        "        assert dest == original, \"dest string does not equal original\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 10.549978017807007,
+                    "generation_timestamp": "2024-06-05T23:59:22.488876",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "270-277:testObjectEncodeWithInvalidParameter": {
+                    "start": 270,
+                    "end": 277,
+                    "body": [
+                        "    public void testObjectEncodeWithInvalidParameter() {\n",
+                        "        final Base16 b16 = Base16.Base162();\n",
+                        "        try {\n",
+                        "            b16.encode3(\"Yadayadayada\");\n",
+                        "            fail(\"encode(Object) didn't throw an exception when passed a String object\");\n",
+                        "        } catch (final EncoderException e) {\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testObjectEncodeWithInvalidParameter()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "507-512:encode3"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testObjectEncodeWithInvalidParameter(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testObjectEncodeWithInvalidParameter(self) -> None:",
+                        "        ",
+                        "",
+                        "        b16 = Base16.Base162()",
+                        "        try:",
+                        "            b16.encode3(\"Yadayadayada\")",
+                        "            self.fail(\"encode(Object) didn't throw an exception when passed a String object\")",
+                        "        except EncoderException:",
+                        "            pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.442246913909912,
+                    "generation_timestamp": "2024-06-05T23:59:28.938181",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "257-267:testObjectDecodeWithValidParameter": {
+                    "start": 257,
+                    "end": 267,
+                    "body": [
+                        "    public void testObjectDecodeWithValidParameter() throws Exception {\n",
+                        "        final String original = \"Hello World!\";\n",
+                        "        final Object o = Base16.Base162().encode0(original.getBytes(CHARSET_UTF8));\n",
+                        "\n",
+                        "        final Base16 b16 = Base16.Base162();\n",
+                        "        final Object oDecoded = b16.decode2(o);\n",
+                        "        final byte[] baDecoded = (byte[]) oDecoded;\n",
+                        "        final String dest = new String(baDecoded);\n",
+                        "\n",
+                        "        assertEquals(\"dest string does not equal original\", original, dest);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testObjectDecodeWithValidParameter()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "430-439:decode2"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testObjectDecodeWithValidParameter(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testObjectDecodeWithValidParameter(self) -> None:",
+                        "        ",
+                        "",
+                        "        original: str = \"Hello World!\"",
+                        "        o: object = Base16.Base162().encode0(original.encode(self.__CHARSET_UTF8))",
+                        "",
+                        "        b16: Base16 = Base16.Base162()",
+                        "        oDecoded: object = b16.decode2(o)",
+                        "        baDecoded: bytearray = bytearray(oDecoded)",
+                        "        dest: str = baDecoded.decode(self.__CHARSET_UTF8)",
+                        "",
+                        "        assert dest == original, \"dest string does not equal original\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 9.898155927658081,
+                    "generation_timestamp": "2024-06-05T23:59:38.843986",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "246-254:testObjectDecodeWithInvalidParameter": {
+                    "start": 246,
+                    "end": 254,
+                    "body": [
+                        "    public void testObjectDecodeWithInvalidParameter() {\n",
+                        "        final Base16 b16 = Base16.Base162();\n",
+                        "\n",
+                        "        try {\n",
+                        "            b16.decode2(Integer.valueOf(5));\n",
+                        "            fail(\"decode(Object) didn't throw an exception when passed an Integer object\");\n",
+                        "        } catch (final DecoderException e) {\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testObjectDecodeWithInvalidParameter()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "430-439:decode2"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testObjectDecodeWithInvalidParameter(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testObjectDecodeWithInvalidParameter(self) -> None:",
+                        "        ",
+                        "",
+                        "        b16 = Base16.Base162()",
+                        "",
+                        "        try:",
+                        "            b16.decode2(5)",
+                        "            self.fail(\"decode(Object) didn't throw an exception when passed an Integer object\")",
+                        "        except DecoderException:",
+                        "            pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.533046722412109,
+                    "generation_timestamp": "2024-06-05T23:59:45.384358",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "227-243:testNonBase16Test": {
+                    "start": 227,
+                    "end": 243,
+                    "body": [
+                        "    public void testNonBase16Test() {\n",
+                        "        final byte[] invalidEncodedChars = {'/', ':', '@', 'G', '%', '`', 'g'};\n",
+                        "\n",
+                        "        final byte[] encoded = new byte[1];\n",
+                        "        for (final byte invalidEncodedChar : invalidEncodedChars) {\n",
+                        "            try {\n",
+                        "                encoded[0] = invalidEncodedChar;\n",
+                        "                Base16.Base162().decode0(encoded);\n",
+                        "                fail(\n",
+                        "                        \"IllegalArgumentException should have been thrown when trying to decode\"\n",
+                        "                                + \" invalid Base16 char: \"\n",
+                        "                                + (char) invalidEncodedChar);\n",
+                        "            } catch (final Exception e) {\n",
+                        "                assertTrue(e instanceof IllegalArgumentException);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNonBase16Test()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testNonBase16Test(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 51.64750599861145,
+                    "generation_timestamp": "2024-06-06T00:00:37.038942",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "185-224:testKnownEncodings": {
+                    "start": 185,
+                    "end": 224,
+                    "body": [
+                        "    public void testKnownEncodings() {\n",
+                        "        assertEquals(\n",
+                        "                \"54686520717569636b2062726f776e20666f78206a756d706564206f76657220746865206c617a7920646f67732e\",\n",
+                        "                new String(\n",
+                        "                        Base16.Base161(true)\n",
+                        "                                .encode0(\n",
+                        "                                        \"The quick brown fox jumped over the lazy dogs.\"\n",
+                        "                                                .getBytes(CHARSET_UTF8))));\n",
+                        "        assertEquals(\n",
+                        "                \"497420776173207468652062657374206f662074696d65732c206974207761732074686520776f727374206f662074696d65732e\",\n",
+                        "                new String(\n",
+                        "                        Base16.Base161(true)\n",
+                        "                                .encode0(\n",
+                        "                                        \"It was the best of times, it was the worst of times.\"\n",
+                        "                                                .getBytes(CHARSET_UTF8))));\n",
+                        "        assertEquals(\n",
+                        "                \"687474703a2f2f6a616b617274612e6170616368652e6f72672f636f6d6d6d6f6e73\",\n",
+                        "                new String(\n",
+                        "                        Base16.Base161(true)\n",
+                        "                                .encode0(\n",
+                        "                                        \"http://jakarta.apache.org/commmons\"\n",
+                        "                                                .getBytes(CHARSET_UTF8))));\n",
+                        "        assertEquals(\n",
+                        "                \"4161426243634464456546664767486849694a6a4b6b4c6c4d6d4e6e4f6f50705171527253735474557556765777587859795a7a\",\n",
+                        "                new String(\n",
+                        "                        Base16.Base161(true)\n",
+                        "                                .encode0(\n",
+                        "                                        \"AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz\"\n",
+                        "                                                .getBytes(CHARSET_UTF8))));\n",
+                        "        assertEquals(\n",
+                        "                \"7b20302c20312c20322c20332c20342c20352c20362c20372c20382c2039207d\",\n",
+                        "                new String(\n",
+                        "                        Base16.Base161(true)\n",
+                        "                                .encode0(\n",
+                        "                                        \"{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }\"\n",
+                        "                                                .getBytes(CHARSET_UTF8))));\n",
+                        "        assertEquals(\n",
+                        "                \"78797a7a7921\",\n",
+                        "                new String(Base16.Base161(true).encode0(\"xyzzy!\".getBytes(CHARSET_UTF8))));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testKnownEncodings()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "282-284:Base161"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testKnownEncodings(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testKnownEncodings(self) -> None:",
+                        "        ",
+                        "",
+                        "        self.assertEqual(",
+                        "            \"54686520717569636b2062726f776e20666f78206a756d706564206f76657220746865206c617a7920646f67732e\",",
+                        "            Base16.Base161(True).encode0(",
+                        "                \"The quick brown fox jumped over the lazy dogs.\".encode(self.__CHARSET_UTF8)",
+                        "            ).decode()",
+                        "        )",
+                        "        self.assertEqual(",
+                        "            \"497420776173207468652062657374206f662074696d65732c206974207761732074686520776f727374206f662074696d65732e\",",
+                        "            Base16.Base161(True).encode0(",
+                        "                \"It was the best of times, it was the worst of times.\".encode(self.__CHARSET_UTF8)",
+                        "            ).decode()",
+                        "        )",
+                        "        self.assertEqual(",
+                        "            \"687474703a2f2f6a616b617274612e6170616368652e6f72672f636f6d6d6f6e73\",",
+                        "            Base16.Base161(True).encode0(",
+                        "                \"http://jakarta.apache.org/commmons\".encode(self.__CHARSET_UTF8)",
+                        "            ).decode()",
+                        "        )",
+                        "        self.assertEqual(",
+                        "            \"4161426243634464456546664767486849694a6a4b6b4c6c4d6d4e6e4f6f50705171527253735474557556765777587859795a7a\",",
+                        "            Base16.Base161(True).encode0(",
+                        "                \"AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz\".encode(self.__CHARSET_UTF8)",
+                        "            ).decode()",
+                        "        )",
+                        "        self.assertEqual(",
+                        "            \"7b20302c20312c20322c20332c20342c20352c20362c20372c20382c2039207d\",",
+                        "            Base16.Base161(True).encode0(",
+                        "                \"{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }\".encode(self.__CHARSET_UTF8)",
+                        "            ).decode()",
+                        "        )",
+                        "        self.assertEqual(",
+                        "            \"78797a7a7921\",",
+                        "            Base16.Base161(True).encode0(",
+                        "                \"xyzzy!\".encode(self.__CHARSET_UTF8)",
+                        "            ).decode()",
+                        "        )",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 29.67100214958191,
+                    "generation_timestamp": "2024-06-06T00:01:06.717188",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "143-182:testKnownDecodings": {
+                    "start": 143,
+                    "end": 182,
+                    "body": [
+                        "    public void testKnownDecodings() {\n",
+                        "        assertEquals(\n",
+                        "                \"The quick brown fox jumped over the lazy dogs.\",\n",
+                        "                new String(\n",
+                        "                        Base16.Base161(true)\n",
+                        "                                .decode0(\n",
+                        "                                        \"54686520717569636b2062726f776e20666f78206a756d706564206f76657220746865206c617a7920646f67732e\"\n",
+                        "                                                .getBytes(CHARSET_UTF8))));\n",
+                        "        assertEquals(\n",
+                        "                \"It was the best of times, it was the worst of times.\",\n",
+                        "                new String(\n",
+                        "                        Base16.Base161(true)\n",
+                        "                                .decode0(\n",
+                        "                                        \"497420776173207468652062657374206f662074696d65732c206974207761732074686520776f727374206f662074696d65732e\"\n",
+                        "                                                .getBytes(CHARSET_UTF8))));\n",
+                        "        assertEquals(\n",
+                        "                \"http://jakarta.apache.org/commmons\",\n",
+                        "                new String(\n",
+                        "                        Base16.Base161(true)\n",
+                        "                                .decode0(\n",
+                        "                                        \"687474703a2f2f6a616b617274612e6170616368652e6f72672f636f6d6d6d6f6e73\"\n",
+                        "                                                .getBytes(CHARSET_UTF8))));\n",
+                        "        assertEquals(\n",
+                        "                \"AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz\",\n",
+                        "                new String(\n",
+                        "                        Base16.Base161(true)\n",
+                        "                                .decode0(\n",
+                        "                                        \"4161426243634464456546664767486849694a6a4b6b4c6c4d6d4e6e4f6f50705171527253735474557556765777587859795a7a\"\n",
+                        "                                                .getBytes(CHARSET_UTF8))));\n",
+                        "        assertEquals(\n",
+                        "                \"{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }\",\n",
+                        "                new String(\n",
+                        "                        Base16.Base161(true)\n",
+                        "                                .decode0(\n",
+                        "                                        \"7b20302c20312c20322c20332c20342c20352c20362c20372c20382c2039207d\"\n",
+                        "                                                .getBytes(CHARSET_UTF8))));\n",
+                        "        assertEquals(\n",
+                        "                \"xyzzy!\",\n",
+                        "                new String(Base16.Base161(true).decode0(\"78797a7a7921\".getBytes(CHARSET_UTF8))));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testKnownDecodings()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "282-284:Base161"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testKnownDecodings(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testKnownDecodings(self) -> None:",
+                        "        ",
+                        "",
+                        "        self.assertEqual(",
+                        "            \"The quick brown fox jumped over the lazy dogs.\",",
+                        "            Base16.Base161(True).decode0(",
+                        "                bytes.fromhex(",
+                        "                    \"54686520717569636b2062726f776e20666f78206a756d706564206f76657220746865206c617a7920646f67732e\"",
+                        "                )",
+                        "            ).decode(self.__CHARSET_UTF8)",
+                        "        )",
+                        "        self.assertEqual(",
+                        "            \"It was the best of times, it was the worst of times.\",",
+                        "            Base16.Base161(True).decode0(",
+                        "                bytes.fromhex(",
+                        "                    \"497420776173207468652062657374206f662074696d65732c206974207761732074686520776f727374206f662074696d65732e\"",
+                        "                )",
+                        "            ).decode(self.__CHARSET_UTF8)",
+                        "        )",
+                        "        self.assertEqual(",
+                        "            \"http://jakarta.apache.org/commmons\",",
+                        "            Base16.Base161(True).decode0(",
+                        "                bytes.fromhex(",
+                        "                    \"687474703a2f2f6a616b617274612e6170616368652e6f72672f636f6d6d6d6f6e73\"",
+                        "                )",
+                        "            ).decode(self.__CHARSET_UTF8)",
+                        "        )",
+                        "        self.assertEqual(",
+                        "            \"AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz\",",
+                        "            Base16.Base161(True).decode0(",
+                        "                bytes.fromhex(",
+                        "                    \"4161426243634464456546664767486849694a6a4b6b4c6c4d6d4e6e4f6f50705171527253735474557556765777587859795a7a\"",
+                        "                )",
+                        "            ).decode(self.__CHARSET_UTF8)",
+                        "        )",
+                        "        self.assertEqual(",
+                        "            \"{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }\",",
+                        "            Base16.Base161(True).decode0(",
+                        "                bytes.fromhex(",
+                        "                    \"7b20302c20312c20322c20332c20342c20352c20362c20372c20382c2039207d\"",
+                        "                )",
+                        "            ).decode(self.__CHARSET_UTF8)",
+                        "        )",
+                        "        self.assertEqual(",
+                        "            \"xyzzy1\",",
+                        "            Base16.Base161(True).decode0(",
+                        "                bytes.fromhex(",
+                        "                    \"78797a7a7921\"",
+                        "                )",
+                        "            ).decode(self.__CHARSET_UTF8)",
+                        "        )",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 31.562137603759766,
+                    "generation_timestamp": "2024-06-06T00:01:38.286760",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "132-140:testEncodeDecodeSmall": {
+                    "start": 132,
+                    "end": 140,
+                    "body": [
+                        "    public void testEncodeDecodeSmall() {\n",
+                        "        for (int i = 0; i < 12; i++) {\n",
+                        "            final byte[] data = new byte[i];\n",
+                        "            this.getRandom().nextBytes(data);\n",
+                        "            final byte[] enc = Base16.Base162().encode0(data);\n",
+                        "            final byte[] data2 = Base16.Base162().decode0(enc);\n",
+                        "            assertArrayEquals(toString(data) + \" equals \" + toString(data2), data, data2);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEncodeDecodeSmall()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base16Test",
+                            "Base16Test",
+                            "50-52:getRandom"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base16Test",
+                            "Base16Test",
+                            "553-562:toString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testEncodeDecodeSmall(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testEncodeDecodeSmall(self) -> None:",
+                        "        ",
+                        "",
+                        "        for i in range(12):",
+                        "            data = bytearray(i)",
+                        "            self.getRandom().randbytes(data)",
+                        "            enc = Base16.Base162().encode0(data)",
+                        "            data2 = Base16.Base162().decode0(enc)",
+                        "            assert data == data2, f\"{self.__toString(data)} equals {self.__toString(data2)}\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 10.72507619857788,
+                    "generation_timestamp": "2024-06-06T00:02:51.463180",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "120-129:testEncodeDecodeRandom": {
+                    "start": 120,
+                    "end": 129,
+                    "body": [
+                        "    public void testEncodeDecodeRandom() {\n",
+                        "        for (int i = 1; i < 5; i++) {\n",
+                        "            final int len = this.getRandom().nextInt(10000) + 1;\n",
+                        "            final byte[] data = new byte[len];\n",
+                        "            this.getRandom().nextBytes(data);\n",
+                        "            final byte[] enc = Base16.Base162().encode0(data);\n",
+                        "            final byte[] data2 = Base16.Base162().decode0(enc);\n",
+                        "            assertArrayEquals(data, data2);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEncodeDecodeRandom()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base16Test",
+                            "Base16Test",
+                            "50-52:getRandom"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testEncodeDecodeRandom(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testEncodeDecodeRandom(self) -> None:",
+                        "        ",
+                        "",
+                        "        for i in range(1, 5):",
+                        "            len = self.getRandom().randint(1, 10000)",
+                        "            data = bytearray(len)",
+                        "            for j in range(len):",
+                        "                data[j] = self.getRandom().randint(0, 255)",
+                        "            enc = Base16.Base162().encode0(data)",
+                        "            data2 = Base16.Base162().decode0(enc)",
+                        "            assert data == data2",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 10.613948345184326,
+                    "generation_timestamp": "2024-06-06T11:40:14.746872",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "104-117:testEmptyBase16": {
+                    "start": 104,
+                    "end": 117,
+                    "body": [
+                        "    public void testEmptyBase16() {\n",
+                        "        byte[] empty = {};\n",
+                        "        byte[] result = Base16.Base162().encode0(empty);\n",
+                        "        assertEquals(\"empty Base16 encode\", 0, result.length);\n",
+                        "        assertNull(\"empty Base16 encode\", Base16.Base162().encode0(null));\n",
+                        "        result = Base16.Base162().encode1(empty, 0, 1);\n",
+                        "        assertEquals(\"empty Base16 encode with offset\", 0, result.length);\n",
+                        "        assertNull(\"empty Base16 encode with offset\", Base16.Base162().encode0(null));\n",
+                        "\n",
+                        "        empty = new byte[0];\n",
+                        "        result = Base16.Base162().decode0(empty);\n",
+                        "        assertEquals(\"empty Base16 decode\", 0, result.length);\n",
+                        "        assertNull(\"empty Base16 encode\", Base16.Base162().decode0((byte[]) null));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyBase16()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "478-488:encode1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testEmptyBase16(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testEmptyBase16(self) -> None:",
+                        "        ",
+                        "",
+                        "        empty: bytearray = bytearray()",
+                        "        result: bytearray = Base16.Base162().encode0(empty)",
+                        "        assert len(result) == 0, \"empty Base16 encode\"",
+                        "        assert Base16.Base162().encode0(None) is None, \"empty Base16 encode\"",
+                        "        result = Base16.Base162().encode1(empty, 0, 1)",
+                        "        assert len(result) == 0, \"empty Base16 encode with offset\"",
+                        "        assert Base16.Base162().encode0(None) is None, \"empty Base16 encode with offset\"",
+                        "",
+                        "        empty = bytearray(0)",
+                        "        result = Base16.Base162().decode0(empty)",
+                        "        assert len(result) == 0, \"empty Base16 decode\"",
+                        "        assert Base16.Base162().decode0(None) is None, \"empty Base16 decode\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 9.920849323272705,
+                    "generation_timestamp": "2024-06-06T00:01:48.217400",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "94-100:testConstructor_LowerCase_DecodingPolicy": {
+                    "start": 94,
+                    "end": 100,
+                    "body": [
+                        "    public void testConstructor_LowerCase_DecodingPolicy() {\n",
+                        "        final Base16 base16 = new Base16(false, CodecPolicy.STRICT);\n",
+                        "        final byte[] encoded = base16.encode0(BaseNTestData.DECODED);\n",
+                        "        final String expectedResult = Base16TestData.ENCODED_UTF8_UPPERCASE;\n",
+                        "        final String result = StringUtils.newStringUtf8(encoded);\n",
+                        "        assertEquals(\"new base16(false, CodecPolicy.STRICT)\", result, expectedResult);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testConstructor_LowerCase_DecodingPolicy()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "265-280:Base16"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "396-398:newStringUtf8"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testConstructor_LowerCase_DecodingPolicy(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testConstructor_LowerCase_DecodingPolicy(self) -> None:",
+                        "        ",
+                        "",
+                        "        base16 = Base16(False, CodecPolicy.STRICT)",
+                        "        encoded = base16.encode0(BaseNTestData.DECODED)",
+                        "        expectedResult = Base16TestData.ENCODED_UTF8_UPPERCASE",
+                        "        result = StringUtils.newStringUtf8(encoded)",
+                        "",
+                        "        assert result == expectedResult, \"new base16(false, CodecPolicy.STRICT)\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 8.067444324493408,
+                    "generation_timestamp": "2024-06-06T00:01:56.293005",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "85-91:testConstructor_LowerCase": {
+                    "start": 85,
+                    "end": 91,
+                    "body": [
+                        "    public void testConstructor_LowerCase() {\n",
+                        "        final Base16 base16 = Base16.Base161(true);\n",
+                        "        final byte[] encoded = base16.encode0(BaseNTestData.DECODED);\n",
+                        "        final String expectedResult = Base16TestData.ENCODED_UTF8_LOWERCASE;\n",
+                        "        final String result = StringUtils.newStringUtf8(encoded);\n",
+                        "        assertEquals(\"new Base16(true)\", expectedResult, result);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testConstructor_LowerCase()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "282-284:Base161"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "396-398:newStringUtf8"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testConstructor_LowerCase(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testConstructor_LowerCase(self) -> None:",
+                        "        ",
+                        "",
+                        "        base16 = Base16.Base161(True)",
+                        "        encoded = base16.encode0(BaseNTestData.DECODED)",
+                        "        expectedResult = Base16TestData.ENCODED_UTF8_LOWERCASE",
+                        "        result = StringUtils.newStringUtf8(encoded)",
+                        "",
+                        "        assert expectedResult == result, \"new Base16(true)\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.934790849685669,
+                    "generation_timestamp": "2024-06-06T00:02:03.235389",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "76-82:testConstructors": {
+                    "start": 76,
+                    "end": 82,
+                    "body": [
+                        "    public void testConstructors() {\n",
+                        "        Base16.Base162();\n",
+                        "        Base16.Base161(false);\n",
+                        "        Base16.Base161(true);\n",
+                        "        new Base16(false, CodecPolicy.LENIENT);\n",
+                        "        new Base16(false, CodecPolicy.STRICT);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testConstructors()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "282-284:Base161"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "265-280:Base16"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testConstructors(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testConstructors(self) -> None:",
+                        "        ",
+                        "",
+                        "        # Calling Base16.Base162()",
+                        "        Base16.Base162()",
+                        "",
+                        "        # Calling Base16.Base161(false)",
+                        "        Base16.Base161(False)",
+                        "",
+                        "        # Calling Base16.Base161(true)",
+                        "        Base16.Base161(True)",
+                        "",
+                        "        # Calling new Base16(false, CodecPolicy.LENIENT)",
+                        "        Base16(False, CodecPolicy.LENIENT)",
+                        "",
+                        "        # Calling new Base16(false, CodecPolicy.STRICT)",
+                        "        Base16(False, CodecPolicy.STRICT)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.205722332000732,
+                    "generation_timestamp": "2024-06-06T00:02:10.448212",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "69-73:testCodec68": {
+                    "start": 69,
+                    "end": 73,
+                    "body": [
+                        "    public void testCodec68() {\n",
+                        "        final byte[] x = {'n', 'H', '=', '=', (byte) 0x9c};\n",
+                        "        final Base16 b16 = Base16.Base162();\n",
+                        "        b16.decode0(x);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec68()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testCodec68(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testCodec68(self) -> None:",
+                        "        ",
+                        "",
+                        "        x = bytearray(b'nH==\\x9c')",
+                        "        b16 = Base16.Base162()",
+                        "        b16.decode0(x)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.329771280288696,
+                    "generation_timestamp": "2024-06-06T00:02:15.785880",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "56-65:testBase16": {
+                    "start": 56,
+                    "end": 65,
+                    "body": [
+                        "    public void testBase16() {\n",
+                        "        final String content = \"Hello World\";\n",
+                        "        final byte[] encodedBytes = Base16.Base162().encode0(StringUtils.getBytesUtf8(content));\n",
+                        "        final String encodedContent = StringUtils.newStringUtf8(encodedBytes);\n",
+                        "        assertEquals(\"encoding hello world\", \"48656C6C6F20576F726C64\", encodedContent);\n",
+                        "\n",
+                        "        final byte[] decodedBytes = Base16.Base162().decode0(encodedBytes);\n",
+                        "        final String decodedContent = StringUtils.newStringUtf8(decodedBytes);\n",
+                        "        assertEquals(\"decoding hello world\", content, decodedContent);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase16()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "462-467:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "286-288:Base162"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "396-398:newStringUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "401-411:decode0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testBase16(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testBase16(self) -> None:",
+                        "        ",
+                        "",
+                        "        content = \"Hello World\"",
+                        "        encoded_bytes = Base16.Base162().encode0(StringUtils.getBytesUtf8(content))",
+                        "        encoded_content = StringUtils.newStringUtf8(encoded_bytes)",
+                        "        assert encoded_content == \"48656C6C6F20576F726C64\", \"encoding hello world\"",
+                        "",
+                        "        decoded_bytes = Base16.Base162().decode0(encoded_bytes)",
+                        "        decoded_content = StringUtils.newStringUtf8(decoded_bytes)",
+                        "        assert decoded_content == content, \"decoding hello world\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.660385608673096,
+                    "generation_timestamp": "2024-06-06T00:02:23.455156",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "50-52:getRandom": {
+                    "start": 50,
+                    "end": 52,
+                    "body": [
+                        "    public Random getRandom() {\n",
+                        "        return this.random;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Random",
+                            "java.util.Random"
+                        ]
+                    ],
+                    "signature": "getRandom()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getRandom(self) -> random.Random:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getRandom(self) -> random.Random:",
+                        "        ",
+                        "",
+                        "        return self.__random",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.8736729621887207,
+                    "generation_timestamp": "2024-06-06T00:02:26.335039",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "553-562:toString": {
+                    "start": 553,
+                    "end": 562,
+                    "body": [
+                        "    private String toString(final byte[] data) {\n",
+                        "        final StringBuilder buf = new StringBuilder();\n",
+                        "        for (int i = 0; i < data.length; i++) {\n",
+                        "            buf.append(data[i]);\n",
+                        "            if (i != data.length - 1) {\n",
+                        "                buf.append(\",\");\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return buf.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString(byte[])",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __toString(self, data: typing.List[int]) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __toString(self, data: typing.List[int]) -> str:",
+                        "        ",
+                        "",
+                        "        buf = io.StringIO()",
+                        "        for i in range(len(data)):",
+                        "            buf.write(str(data[i]))",
+                        "            if i != len(data) - 1:",
+                        "                buf.write(\",\")",
+                        "        return buf.getvalue()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.707610607147217,
+                    "generation_timestamp": "2024-06-06T00:02:40.726967",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {
+                "45-45:random": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private final Random random = new Random();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Random",
+                            "java.util.Random"
+                        ]
+                    ],
+                    "partial_translation": "    __random: random.Random = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __random: random.Random = random.Random()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.188171863555908,
+                    "generation_timestamp": "2024-06-05T23:56:16.418005",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "43-43:CHARSET_UTF8": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Charset",
+                            "java.nio.charset.Charset"
+                        ]
+                    ],
+                    "partial_translation": "    __CHARSET_UTF8: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __CHARSET_UTF8: str = \"UTF-8\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.9471039772033691,
+                    "generation_timestamp": "2024-06-05T23:56:18.369832",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "python_class_declaration": "class Base16Test:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.codec.CodecPolicy import *",
+        "from src.main.org.apache.commons.codec.DecoderException import *",
+        "from src.main.org.apache.commons.codec.EncoderException import *",
+        "from src.main.org.apache.commons.codec.binary.Base16 import *",
+        "from src.test.org.apache.commons.codec.binary.Base16TestData import *",
+        "from src.main.org.apache.commons.codec.binary.BaseNCodec import *",
+        "from src.test.org.apache.commons.codec.binary.BaseNTestData import *",
+        "from src.main.org.apache.commons.codec.binary.StringUtils import *"
+    ]
+}

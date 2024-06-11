@@ -1,0 +1,277 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-convert/src/main/java/org/joda/convert/MethodFromStringConverter.java",
+    "imports": {
+        "18-18:import InvocationTargetException": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.lang.reflect.InvocationTargetException;\n"
+            ]
+        },
+        "19-19:import Method": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.lang.reflect.Method;\n"
+            ]
+        },
+        "20-20:import Modifier": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.lang.reflect.Modifier;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MethodFromStringConverter": {
+            "start": 32,
+            "end": 32,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "TypedFromStringConverter"
+            ],
+            "extends": [],
+            "methods": {
+                "84-86:getEffectiveType": {
+                    "start": 84,
+                    "end": 86,
+                    "body": [
+                        "    public Class<?> getEffectiveType() {\n",
+                        "        return effectiveType;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Class<?>",
+                            "java.lang.Class<?>"
+                        ]
+                    ],
+                    "signature": "getEffectiveType()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getEffectiveType(self) -> typing.Type[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getEffectiveType(self) -> typing.Type[typing.Any]:",
+                        "        ",
+                        "",
+                        "        return self.__effectiveType",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.8760757446289062,
+                    "generation_timestamp": "2024-06-06T07:48:05.375822",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "70-81:convertFromString": {
+                    "start": 70,
+                    "end": 81,
+                    "body": [
+                        "    public T convertFromString(Class<? extends T> cls, String str) {\n",
+                        "        try {\n",
+                        "            return cls.cast(fromString.invoke(null, str));\n",
+                        "        } catch (IllegalAccessException ex) {\n",
+                        "            throw new IllegalStateException(\"Method is not accessible: \" + fromString);\n",
+                        "        } catch (InvocationTargetException ex) {\n",
+                        "            if (ex.getCause() instanceof RuntimeException) {\n",
+                        "                throw (RuntimeException) ex.getCause();\n",
+                        "            }\n",
+                        "            throw new RuntimeException(ex.getMessage(), ex.getCause());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "T",
+                            "T"
+                        ]
+                    ],
+                    "signature": "convertFromString(Class<? extends T>, String)",
+                    "parameters": [
+                        "cls",
+                        "str"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        try:",
+                        "            return cls.cast(self.__fromString.invoke(None, str))",
+                        "        except IllegalAccessException as ex:",
+                        "            raise IllegalStateException(\"Method is not accessible: \" + self.__fromString)",
+                        "        except InvocationTargetException as ex:",
+                        "            if isinstance(ex.getCause(), RuntimeException):",
+                        "                raise ex.getCause()",
+                        "            raise RuntimeException(ex.getMessage(), ex.getCause())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.565953731536865,
+                    "generation_timestamp": "2024-06-06T07:48:11.943146",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "47-67:MethodFromStringConverter": {
+                    "start": 47,
+                    "end": 67,
+                    "body": [
+                        "    MethodFromStringConverter(Class<T> cls, Method fromString, Class<?> effectiveType) {\n",
+                        "        if (Modifier.isStatic(fromString.getModifiers()) == false) {\n",
+                        "            throw new IllegalStateException(\"FromString method must be static: \" + fromString);\n",
+                        "        }\n",
+                        "        if (fromString.getParameterTypes().length != 1) {\n",
+                        "            throw new IllegalStateException(\n",
+                        "                    \"FromString method must have one parameter: \" + fromString);\n",
+                        "        }\n",
+                        "        Class<?> param = fromString.getParameterTypes()[0];\n",
+                        "        if (param != String.class && param != CharSequence.class) {\n",
+                        "            throw new IllegalStateException(\n",
+                        "                    \"FromString method must take a String or CharSequence: \" + fromString);\n",
+                        "        }\n",
+                        "        if (fromString.getReturnType().isAssignableFrom(cls) == false\n",
+                        "                && cls.isAssignableFrom(fromString.getReturnType()) == false) {\n",
+                        "            throw new IllegalStateException(\n",
+                        "                    \"FromString method must return specified class or a supertype: \" + fromString);\n",
+                        "        }\n",
+                        "        this.fromString = fromString;\n",
+                        "        this.effectiveType = effectiveType;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "MethodFromStringConverter(Class<T>, Method, Class<?>)",
+                    "parameters": [
+                        "cls",
+                        "fromString",
+                        "effectiveType"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, cls: typing.Type[typing.Any], fromString: typing.Union[inspect.Signature, typing.Callable], effectiveType: typing.Type[typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self, cls: typing.Type[typing.Any], fromString: typing.Union[inspect.Signature, typing.Callable], effectiveType: typing.Type[typing.Any]) -> None:",
+                        "        ",
+                        "",
+                        "        if not inspect.isfunction(fromString) or not inspect.ismethod(fromString) or not hasattr(fromString, '__self__'):",
+                        "            raise TypeError(\"FromString method must be a method: \" + str(fromString))",
+                        "",
+                        "        if not inspect.signature(fromString).parameters:",
+                        "            raise ValueError(\"FromString method must have one parameter: \" + str(fromString))",
+                        "",
+                        "        param = list(inspect.signature(fromString).parameters.values())[0]",
+                        "        if param.annotation != str and param.annotation != typing.AnyStr:",
+                        "            raise ValueError(\"FromString method must take a String or CharSequence: \" + str(fromString))",
+                        "",
+                        "        if not issubclass(cls, fromString.__self__.__class__) and not issubclass(fromString.__self__.__class__, cls):",
+                        "            raise ValueError(\"FromString method must return specified class or a supertype: \" + str(fromString))",
+                        "",
+                        "        self.__fromString = fromString",
+                        "        self.__effectiveType = effectiveType",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 13.355423212051392,
+                    "generation_timestamp": "2024-06-06T07:48:25.299701",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {
+                "38-38:effectiveType": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final Class<?> effectiveType;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Class<?>",
+                            "java.lang.Class<?>"
+                        ]
+                    ],
+                    "partial_translation": "    __effectiveType: typing.Type[typing.Any] = None\n",
+                    "translation": [
+                        "    __effectiveType: typing.Type[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T11:45:47.698042",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "35-35:fromString": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private final Method fromString;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Method",
+                            "java.lang.reflect.Method"
+                        ]
+                    ],
+                    "partial_translation": "    __fromString: typing.Union[inspect.Signature, typing.Callable] = None\n",
+                    "translation": [
+                        "    __fromString: typing.Union[inspect.Signature, typing.Callable] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T11:45:47.699797",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "python_class_declaration": "class MethodFromStringConverter(TypedFromStringConverter):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.joda.convert.TypedFromStringConverter import *"
+    ]
+}

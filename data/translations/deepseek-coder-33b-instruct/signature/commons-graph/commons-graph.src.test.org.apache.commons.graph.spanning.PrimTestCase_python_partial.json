@@ -1,0 +1,831 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-graph/src/test/java/org/apache/commons/graph/spanning/PrimTestCase.java",
+    "imports": {
+        "26-26:import Graph": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "32-32:import UndirectedMutableGraph": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.apache.commons.graph.model.UndirectedMutableGraph;\n"
+            ]
+        },
+        "27-27:import SpanningTree": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.SpanningTree;\n"
+            ]
+        },
+        "34-34:import Test": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "29-29:import BaseLabeledWeightedEdge": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledWeightedEdge;\n"
+            ]
+        },
+        "28-28:import BaseLabeledVertex": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledVertex;\n"
+            ]
+        },
+        "30-30:import BaseWeightedEdge": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.graph.model.BaseWeightedEdge;\n"
+            ]
+        },
+        "31-31:import MutableSpanningTree": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.apache.commons.graph.model.MutableSpanningTree;\n"
+            ]
+        },
+        "33-33:import DoubleWeightBaseOperations": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations;\n"
+            ]
+        },
+        "23-23:import static Assert.assertEquals": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "22-22:import static CommonsGraph.minimumSpanningTree": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.minimumSpanningTree;\n"
+            ]
+        },
+        "24-24:import static Assert.fail": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.fail;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PrimTestCase": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "177-230:testVerifyWikipediaMinimumSpanningTree": {
+                    "start": 177,
+                    "end": 230,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"E\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"F\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"G\");\n",
+                        "\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 5D), d);\n",
+                        "\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 8D), c);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> d\", 9D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> e\", 7D), e);\n",
+                        "\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 5D), e);\n",
+                        "\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> e\", 15D), e);\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> f\", 6D), f);\n",
+                        "\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 8D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "\n",
+                        "        input.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 11D), g);\n",
+                        "\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 5D), d);\n",
+                        "        expected.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> e\", 7D), e);\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 5D), e);\n",
+                        "        expected.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> f\", 6D), f);\n",
+                        "        expected.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "\n",
+                        "        internalPrimAssertion(input, d, expected);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.spanning.PrimTestCase",
+                            "PrimTestCase",
+                            "37-50:internalPrimAssertion"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testVerifyWikipediaMinimumSpanningTree(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]]()",
+                        "",
+                        "        a = BaseLabeledVertex(\"A\")",
+                        "        b = BaseLabeledVertex(\"B\")",
+                        "        c = BaseLabeledVertex(\"C\")",
+                        "        d = BaseLabeledVertex(\"D\")",
+                        "        e = BaseLabeledVertex(\"E\")",
+                        "        f = BaseLabeledVertex(\"F\")",
+                        "        g = BaseLabeledVertex(\"G\")",
+                        "",
+                        "        input.addVertex(a)",
+                        "        input.addVertex(b)",
+                        "        input.addVertex(c)",
+                        "        input.addVertex(d)",
+                        "        input.addVertex(e)",
+                        "        input.addVertex(f)",
+                        "        input.addVertex(g)",
+                        "",
+                        "        input.addEdge(a, BaseLabeledWeightedEdge[float](\"a <-> b\", 7.0), b)",
+                        "        input.addEdge(a, BaseLabeledWeightedEdge[float](\"a <-> d\", 5.0), d)",
+                        "",
+                        "        input.addEdge(b, BaseLabeledWeightedEdge[float](\"b <-> c\", 8.0), c)",
+                        "        input.addEdge(b, BaseLabeledWeightedEdge[float](\"b <-> d\", 9.0), d)",
+                        "        input.addEdge(b, BaseLabeledWeightedEdge[float](\"b <-> e\", 7.0), e)",
+                        "",
+                        "        input.addEdge(c, BaseLabeledWeightedEdge[float](\"c <-> e\", 5.0), e)",
+                        "",
+                        "        input.addEdge(d, BaseLabeledWeightedEdge[float](\"d <-> e\", 15.0), e)",
+                        "        input.addEdge(d, BaseLabeledWeightedEdge[float](\"d <-> f\", 6.0), f)",
+                        "",
+                        "        input.addEdge(e, BaseLabeledWeightedEdge[float](\"e <-> f\", 8.0), f)",
+                        "        input.addEdge(e, BaseLabeledWeightedEdge[float](\"e <-> g\", 9.0), g)",
+                        "",
+                        "        input.addEdge(f, BaseLabeledWeightedEdge[float](\"f <-> g\", 11.0), g)",
+                        "",
+                        "        expected = MutableSpanningTree[BaseLabeledVertex, BaseLabeledWeightedEdge[float], float](DoubleWeightBaseOperations(), BaseWeightedEdge[float]())",
+                        "",
+                        "        for vertex in input.getVertices0():",
+                        "            expected.addVertex(vertex)",
+                        "",
+                        "        expected.addEdge(a, BaseLabeledWeightedEdge[float](\"a <-> b\", 7.0), b)",
+                        "        expected.addEdge(a, BaseLabeledWeightedEdge[float](\"a <-> d\", 5.0), d)",
+                        "        expected.addEdge(b, BaseLabeledWeightedEdge[float](\"b <-> e\", 7.0), e)",
+                        "        expected.addEdge(c, BaseLabeledWeightedEdge[float](\"c <-> e\", 5.0), e)",
+                        "        expected.addEdge(d, BaseLabeledWeightedEdge[float](\"d <-> f\", 6.0), f)",
+                        "        expected.addEdge(e, BaseLabeledWeightedEdge[float](\"e <-> g\", 9.0), g)",
+                        "",
+                        "        self.__internalPrimAssertion(input, d, expected)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 25.305567979812622,
+                    "generation_timestamp": "2024-06-06T04:49:21.831847",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "117-170:testVerifyMinimumSpanningTree2": {
+                    "start": 117,
+                    "end": 170,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"e\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"f\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"g\");\n",
+                        "\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> c\", 14D), c);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 30D), d);\n",
+                        "\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 21D), c);\n",
+                        "\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> d\", 10D), d);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 1D), e);\n",
+                        "\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 6D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "\n",
+                        "        input.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 4D), g);\n",
+                        "\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> c\", 14D), c);\n",
+                        "\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> d\", 10D), d);\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 1D), e);\n",
+                        "\n",
+                        "        expected.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 6D), f);\n",
+                        "\n",
+                        "        expected.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 4D), g);\n",
+                        "\n",
+                        "        internalPrimAssertion(input, a, expected);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.spanning.PrimTestCase",
+                            "PrimTestCase",
+                            "37-50:internalPrimAssertion"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testVerifyMinimumSpanningTree2(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]]()",
+                        "",
+                        "        a = BaseLabeledVertex(\"a\")",
+                        "        b = BaseLabeledVertex(\"b\")",
+                        "        c = BaseLabeledVertex(\"c\")",
+                        "        d = BaseLabeledVertex(\"d\")",
+                        "        e = BaseLabeledVertex(\"e\")",
+                        "        f = BaseLabeledVertex(\"f\")",
+                        "        g = BaseLabeledVertex(\"g\")",
+                        "",
+                        "        input.addVertex(a)",
+                        "        input.addVertex(b)",
+                        "        input.addVertex(c)",
+                        "        input.addVertex(d)",
+                        "        input.addVertex(e)",
+                        "        input.addVertex(f)",
+                        "        input.addVertex(g)",
+                        "",
+                        "        input.addEdge(a, BaseLabeledWeightedEdge[float](\"a <-> b\", 7.0), b)",
+                        "        input.addEdge(a, BaseLabeledWeightedEdge[float](\"a <-> c\", 14.0), c)",
+                        "        input.addEdge(a, BaseLabeledWeightedEdge[float](\"a <-> d\", 30.0), d)",
+                        "",
+                        "        input.addEdge(b, BaseLabeledWeightedEdge[float](\"b <-> c\", 21.0), c)",
+                        "",
+                        "        input.addEdge(c, BaseLabeledWeightedEdge[float](\"c <-> d\", 10.0), d)",
+                        "        input.addEdge(c, BaseLabeledWeightedEdge[float](\"c <-> e\", 1.0), e)",
+                        "",
+                        "        input.addEdge(e, BaseLabeledWeightedEdge[float](\"e <-> f\", 6.0), f)",
+                        "        input.addEdge(e, BaseLabeledWeightedEdge[float](\"e <-> g\", 9.0), g)",
+                        "",
+                        "        input.addEdge(f, BaseLabeledWeightedEdge[float](\"f <-> g\", 4.0), g)",
+                        "",
+                        "        expected = MutableSpanningTree[BaseLabeledVertex, BaseLabeledWeightedEdge[float], float](DoubleWeightBaseOperations(), BaseWeightedEdge[float]())",
+                        "",
+                        "        for vertex in input.getVertices0():",
+                        "            expected.addVertex(vertex)",
+                        "",
+                        "        expected.addEdge(a, BaseLabeledWeightedEdge[float](\"a <-> b\", 7.0), b)",
+                        "        expected.addEdge(a, BaseLabeledWeightedEdge[float](\"a <-> c\", 14.0), c)",
+                        "",
+                        "        expected.addEdge(c, BaseLabeledWeightedEdge[float](\"c <-> d\", 10.0), d)",
+                        "        expected.addEdge(c, BaseLabeledWeightedEdge[float](\"c <-> e\", 1.0), e)",
+                        "",
+                        "        expected.addEdge(e, BaseLabeledWeightedEdge[float](\"e <-> f\", 6.0), f)",
+                        "",
+                        "        expected.addEdge(f, BaseLabeledWeightedEdge[float](\"f <-> g\", 4.0), g)",
+                        "",
+                        "        self.__internalPrimAssertion(input, a, expected)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 23.699805736541748,
+                    "generation_timestamp": "2024-06-06T04:49:45.534245",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "102-110:testNullVertex": {
+                    "start": 102,
+                    "end": 110,
+                    "body": [
+                        "    public void testNullVertex() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "\n",
+                        "        minimumSpanningTree(input)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .fromSource(null)\n",
+                        "                .applyingPrimAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullVertex()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testNullVertex(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testNullVertex(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = UndirectedMutableGraph()",
+                        "",
+                        "        minimumSpanningTree(input) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "            .fromSource(None) \\",
+                        "            .applyingPrimAlgorithm(DoubleWeightBaseOperations())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.412287473678589,
+                    "generation_timestamp": "2024-06-06T04:48:31.886622",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "82-99:testNullMonoid": {
+                    "start": 82,
+                    "end": 99,
+                    "body": [
+                        "    public void testNullMonoid() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input = null;\n",
+                        "        BaseLabeledVertex a = null;\n",
+                        "        try {\n",
+                        "            input =\n",
+                        "                    new UndirectedMutableGraph<\n",
+                        "                            BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "            a = new BaseLabeledVertex(\"A\");\n",
+                        "            input.addVertex(a);\n",
+                        "        } catch (NullPointerException e) {\n",
+                        "            fail(e.getMessage());\n",
+                        "        }\n",
+                        "\n",
+                        "        minimumSpanningTree(input)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .fromSource(a)\n",
+                        "                .applyingBoruvkaAlgorithm(null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullMonoid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testNullMonoid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testNullMonoid(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = None",
+                        "        a = None",
+                        "        try:",
+                        "            input = UndirectedMutableGraph()",
+                        "            a = BaseLabeledVertex(\"A\")",
+                        "            input.addVertex(a)",
+                        "        except Exception as e:",
+                        "            self.fail(str(e))",
+                        "",
+                        "        minimumSpanningTree(input) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "            .fromSource(a) \\",
+                        "            .applyingBoruvkaAlgorithm(None)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.038673400878906,
+                    "generation_timestamp": "2024-06-06T04:48:37.928134",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "74-79:testNullGraph": {
+                    "start": 74,
+                    "end": 79,
+                    "body": [
+                        "    public void testNullGraph() {\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .fromArbitrarySource()\n",
+                        "                .applyingPrimAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullGraph()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testNullGraph(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testNullGraph(self) -> None:",
+                        "        ",
+                        "",
+                        "        CommonsGraph.minimumSpanningTree(None) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "            .fromArbitrarySource() \\",
+                        "            .applyingPrimAlgorithm(DoubleWeightBaseOperations())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.126317262649536,
+                    "generation_timestamp": "2024-06-06T04:48:42.057042",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "64-71:testNotExistVertex": {
+                    "start": 64,
+                    "end": 71,
+                    "body": [
+                        "    public void testNotExistVertex() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "\n",
+                        "        minimumSpanningTree(input)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .fromSource(new BaseLabeledVertex(\"NOT EXIST\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNotExistVertex()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testNotExistVertex(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testNotExistVertex(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = UndirectedMutableGraph()",
+                        "",
+                        "        minimumSpanningTree(input) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "            .fromSource(BaseLabeledVertex(\"NOT EXIST\"))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.609707355499268,
+                    "generation_timestamp": "2024-06-06T04:48:46.669341",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "53-61:testEmptyGraph": {
+                    "start": 53,
+                    "end": 61,
+                    "body": [
+                        "    public void testEmptyGraph() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "\n",
+                        "        minimumSpanningTree(input)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .fromArbitrarySource()\n",
+                        "                .applyingPrimAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyGraph()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testEmptyGraph(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testEmptyGraph(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = UndirectedMutableGraph()",
+                        "",
+                        "        minimumSpanningTree(input) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "            .fromArbitrarySource() \\",
+                        "            .applyingPrimAlgorithm(DoubleWeightBaseOperations())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.5160112380981445,
+                    "generation_timestamp": "2024-06-06T04:48:51.188086",
+                    "model_name": "deepseek-coder-33b-instruct"
+                },
+                "37-50:internalPrimAssertion": {
+                    "start": 37,
+                    "end": 50,
+                    "body": [
+                        "    private static void internalPrimAssertion(\n",
+                        "            UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input,\n",
+                        "            BaseLabeledVertex source,\n",
+                        "            MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>\n",
+                        "                    expected) {\n",
+                        "\n",
+                        "        SpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> actual =\n",
+                        "                minimumSpanningTree(input)\n",
+                        "                        .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                        .fromSource(source)\n",
+                        "                        .applyingPrimAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "internalPrimAssertion(UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>, BaseLabeledVertex, MutableSpanningTree<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>,Double>)",
+                    "parameters": [
+                        "input",
+                        "source",
+                        "expected"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __internalPrimAssertion(input: UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]], source: BaseLabeledVertex, expected: MutableSpanningTree[BaseLabeledVertex, BaseLabeledWeightedEdge[float], float]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def __internalPrimAssertion(input: UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]], source: BaseLabeledVertex, expected: MutableSpanningTree[BaseLabeledVertex, BaseLabeledWeightedEdge[float], float]) -> None:",
+                        "        ",
+                        "",
+                        "        actual = CommonsGraph.minimumSpanningTree(input) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "            .fromSource(source) \\",
+                        "            .applyingPrimAlgorithm(DoubleWeightBaseOperations())",
+                        "",
+                        "        assert expected == actual",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.332580089569092,
+                    "generation_timestamp": "2024-06-06T04:48:56.523340",
+                    "model_name": "deepseek-coder-33b-instruct"
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class PrimTestCase:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "from src.main.org.apache.commons.graph.CommonsGraph import *",
+        "from src.main.org.apache.commons.graph.Graph import *",
+        "from src.main.org.apache.commons.graph.Mapper import *",
+        "from src.main.org.apache.commons.graph.SpanningTree import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledWeightedEdge import *",
+        "from src.test.org.apache.commons.graph.model.BaseWeightedEdge import *",
+        "from src.main.org.apache.commons.graph.model.MutableSpanningTree import *",
+        "from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *",
+        "from src.main.org.apache.commons.graph.spanning.SpanningTreeAlgorithmSelector import *",
+        "from src.main.org.apache.commons.graph.spanning.SpanningTreeSourceSelector import *",
+        "from src.main.org.apache.commons.graph.spanning.SpanningWeightedEdgeMapperBuilder import *",
+        "from src.main.org.apache.commons.graph.weight.Monoid import *",
+        "from src.main.org.apache.commons.graph.weight.OrderedMonoid import *",
+        "from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *"
+    ]
+}
