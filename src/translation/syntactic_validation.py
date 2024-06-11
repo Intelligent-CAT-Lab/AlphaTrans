@@ -9,9 +9,12 @@ def l0_validation(generation):
 
     if match:
         try:
-            ast.parse('class dummy:\n' + match.group(1))
-            print(f'=======================PARSED=======================\n{match.group(1)}\n' + '---' * 50, flush=True)
-            return True, match.group(1).split('\n'), None
+            output = match.group(1)
+            if not output.startswith('    '):
+                output = '    ' + output.strip()
+            ast.parse('class dummy:\n' + output)
+            print(f'=======================PARSED=======================\n{output}\n' + '---' * 50, flush=True)
+            return True, output.split('\n'), None
         except (SyntaxError, MemoryError) as e:
             print(f'=======================PARSE ERROR=======================\n{e}\n' + '---' * 50, flush=True)
             feedback = e
