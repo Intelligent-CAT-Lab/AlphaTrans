@@ -217,14 +217,24 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type):
                     out_of_file_dependencies.append((callee_schema, callee_class, callee_method))
                     continue
 
-                callee_partial_translation = ''.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['partial_translation'])
+                if args.include_implementation:
+                    callee_partial_translation = '\n'.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['translation']) if callee_schema_data['classes'][callee_class]['methods'][callee_method]['translation'] != None else ''.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['partial_translation'])
+                else:
+                    callee_partial_translation = ''.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['partial_translation'])
                 instruction += f"\n{callee_partial_translation}"
             
             instruction += '\n```'
             if len(out_of_file_dependencies) != 0:
                 instruction += '\n\nThe following methods are called from other classes:\n'
                 for callee_schema, callee_class, callee_method in out_of_file_dependencies:
-                    instruction += f"\nClass: {callee_class}, Method: {callee_method.split(':')[1]}"
+                    callee_schema_data = {}
+                    with open(f'data/schemas/{args.project_name}/{callee_schema}_python_partial.json', 'r') as f:
+                        callee_schema_data = json.load(f)
+                    
+                    if args.include_implementation:
+                        instruction += f"\n\nclass {callee_class}:\n" + '\n'.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['translation']) if callee_schema_data['classes'][callee_class]['methods'][callee_method]['translation'] != None else f"\nclass {callee_class}:\n" + ''.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['partial_translation'])
+                    else:
+                        instruction += f"\n\nclass {callee_class}:\n" + ''.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['partial_translation'])
         
         instruction += '\n\n### Response:\n'
         instruction += f'Python method translation:\n'
@@ -330,6 +340,7 @@ def main(args):
                     data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                     data['classes'][class_]['fields'][field_]['translation_status'] = 'success'
                     data['classes'][class_]['fields'][field_]['model_name'] = args.model_name
+                    data['classes'][class_]['fields'][field_]['include_implementation'] = args.include_implementation
 
                     with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
                         json.dump(data, f, indent=4)
@@ -347,6 +358,7 @@ def main(args):
                 data['classes'][class_]['fields'][field_]['elapsed_time'] = elapsed_time
                 data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 data['classes'][class_]['fields'][field_]['model_name'] = args.model_name
+                data['classes'][class_]['fields'][field_]['include_implementation'] = args.include_implementation
 
                 with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
                     json.dump(data, f, indent=4)
@@ -391,6 +403,7 @@ def main(args):
                 data['classes'][class_]['methods'][method_]['elapsed_time'] = elapsed_time
                 data['classes'][class_]['methods'][method_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 data['classes'][class_]['methods'][method_]['model_name'] = args.model_name
+                data['classes'][class_]['methods'][method_]['include_implementation'] = args.include_implementation
 
                 with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
                     json.dump(data, f, indent=4)
@@ -419,6 +432,7 @@ def main(args):
                         waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                         waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
                         waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
+                        waiting_data['classes'][waiting_class]['methods'][waiting_method]['include_implementation'] = args.include_implementation
 
                         processed_fragments.append(waiting_fragment)
                         del waiting_queue[waiting_fragment]
@@ -458,6 +472,7 @@ def main(args):
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['include_implementation'] = args.include_implementation
 
                 del waiting_queue[waiting_fragment]
                 processed_fragments.append(waiting_fragment)
@@ -514,6 +529,7 @@ def main(args):
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['include_implementation'] = args.include_implementation
 
                 processed_fragments.append(cycle_fragment)
                 del waiting_queue[cycle_fragment]
@@ -533,6 +549,7 @@ def main(args):
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['include_implementation'] = args.include_implementation
 
                 processed_fragments.append(cycle_fragment)
                 del waiting_queue[cycle_fragment]
@@ -572,6 +589,7 @@ def main(args):
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['elapsed_time'] = elapsed_time
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 waiting_data['classes'][waiting_class]['methods'][waiting_method]['model_name'] = args.model_name
+                waiting_data['classes'][waiting_class]['methods'][waiting_method]['include_implementation'] = args.include_implementation
 
                 del waiting_queue[waiting_fragment]
                 processed_fragments.append(waiting_fragment)
@@ -593,6 +611,7 @@ if __name__ == '__main__':
     parser_.add_argument('--from_lang', type=str, dest='from_lang', help='language to translate from')
     parser_.add_argument('--to_lang', type=str, dest='to_lang', help='language to translate to')
     parser_.add_argument('--include_call_graph', action='store_true', help='include call graph in translation')
+    parser_.add_argument('--include_implementation', action='store_true', help='include implementation of dependent methods')
     parser_.add_argument('--cache_dir', type=str, dest='cache_dir', help='cache directory')
     parser_.add_argument('--use_bam', action='store_true', help='translate main files')
     parser_.add_argument('--use_cuda', action='store_true', help='use cuda for translation')
