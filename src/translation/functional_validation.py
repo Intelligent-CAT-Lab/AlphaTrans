@@ -43,6 +43,8 @@ def l2_validation(members_to_validate: list[list]):
         else:
             components[schema_name] = {class_: [fragment_name]}
             
+    print("Deriving compositional tests for the following components:")
+    print(components)
     test = project.derive_compositional_tests(components, debug=True)
     output = test.run()
     status = output['status']
