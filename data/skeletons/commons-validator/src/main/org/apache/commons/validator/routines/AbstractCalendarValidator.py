@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.AbstractFormatValidator import *
+import zoneinfo
 import datetime
 import typing
 from typing import *
@@ -97,7 +98,11 @@ class AbstractCalendarValidator(AbstractFormatValidator, ABC):
         pass
 
     def _parse(
-        self, value: str, pattern: str, locale: typing.Any, timeZone: datetime.timezone
+        self,
+        value: str,
+        pattern: str,
+        locale: typing.Any,
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> typing.Any:
         pass
 
@@ -111,7 +116,7 @@ class AbstractCalendarValidator(AbstractFormatValidator, ABC):
         value: typing.Any,
         pattern: str,
         locale: typing.Any,
-        timeZone: datetime.timezone,
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> str:
         pass
 
@@ -119,16 +124,26 @@ class AbstractCalendarValidator(AbstractFormatValidator, ABC):
         pass
 
     def format2(
-        self, value: typing.Any, locale: typing.Any, timeZone: datetime.timezone
+        self,
+        value: typing.Any,
+        locale: typing.Any,
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> str:
         pass
 
     def format1(
-        self, value: typing.Any, pattern: str, timeZone: datetime.timezone
+        self,
+        value: typing.Any,
+        pattern: str,
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> str:
         pass
 
-    def format0(self, value: typing.Any, timeZone: datetime.timezone) -> str:
+    def format0(
+        self,
+        value: typing.Any,
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
+    ) -> str:
         pass
 
     def __init__(self, strict: bool, dateStyle: int, timeStyle: int) -> None:

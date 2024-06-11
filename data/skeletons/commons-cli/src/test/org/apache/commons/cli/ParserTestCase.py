@@ -225,9 +225,7 @@ class ParserTestCase(ABC):
         parser: CommandLineParser,
         opts: Options,
         args: typing.List[str],
-        properties: typing.Union[
-            configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
-        ],
+        properties: typing.Union[configparser.ConfigParser, typing.Dict],
     ) -> CommandLine:
         pass
 

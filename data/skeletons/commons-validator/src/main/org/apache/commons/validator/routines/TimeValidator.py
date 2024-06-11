@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.AbstractCalendarValidator import *
+import zoneinfo
 import datetime
 import typing
 from typing import *
@@ -100,7 +101,11 @@ class TimeValidator(AbstractCalendarValidator):
         pass
 
     def validate7(
-        self, value: str, pattern: str, locale: typing.Any, timeZone: datetime.timezone
+        self,
+        value: str,
+        pattern: str,
+        locale: typing.Any,
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> typing.Union[
         datetime.datetime,
         datetime.date,
@@ -120,7 +125,10 @@ class TimeValidator(AbstractCalendarValidator):
         pass
 
     def validate5(
-        self, value: str, locale: typing.Any, timeZone: datetime.timezone
+        self,
+        value: str,
+        locale: typing.Any,
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> typing.Union[
         datetime.datetime,
         datetime.date,
@@ -140,7 +148,10 @@ class TimeValidator(AbstractCalendarValidator):
         pass
 
     def validate3(
-        self, value: str, pattern: str, timeZone: datetime.timezone
+        self,
+        value: str,
+        pattern: str,
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> typing.Union[
         datetime.datetime,
         datetime.date,
@@ -159,7 +170,9 @@ class TimeValidator(AbstractCalendarValidator):
     ]:
         pass
 
-    def validate1(self, value: str, timeZone: datetime.timezone) -> typing.Union[
+    def validate1(
+        self, value: str, timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]
+    ) -> typing.Union[
         datetime.datetime,
         datetime.date,
         datetime.time,

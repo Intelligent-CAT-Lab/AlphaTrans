@@ -66,9 +66,7 @@ class DefaultParser(CommandLineParser):
         self,
         options: Options,
         arguments: typing.List[str],
-        properties: typing.Union[
-            configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
-        ],
+        properties: typing.Union[configparser.ConfigParser, typing.Dict],
         stopAtNonOption: bool,
     ) -> CommandLine:
         pass
@@ -77,9 +75,7 @@ class DefaultParser(CommandLineParser):
         self,
         options: Options,
         arguments: typing.List[str],
-        properties: typing.Union[
-            configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
-        ],
+        properties: typing.Union[configparser.ConfigParser, typing.Dict],
     ) -> CommandLine:
         pass
 
@@ -146,10 +142,7 @@ class DefaultParser(CommandLineParser):
         pass
 
     def __handleProperties(
-        self,
-        properties: typing.Union[
-            configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
-        ],
+        self, properties: typing.Union[configparser.ConfigParser, typing.Dict]
     ) -> None:
         pass
 
