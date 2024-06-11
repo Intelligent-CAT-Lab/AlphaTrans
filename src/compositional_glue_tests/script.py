@@ -205,7 +205,8 @@ class CompositionalTest:
                 schema_data = json.load(f)
                 
             schema_object = Schema(schema, self.project, schema_data)
-            schema_name = schema.split('.')[-2]
+            schema_name_full = schema.split('.')[-2]
+            schema_name = schema_name_full.split('_python_partial')[0]
             
             # get the classes to process
             if schema_name not in components or components[schema_name] == {}:
@@ -277,7 +278,7 @@ class CompositionalTest:
                     
                 schema_object.add_class(_class, schema_data['classes'][_class], methods_to_process)
                 
-            # write the schema back
+            # write back into the java file (with glue-instrumentation)
             local_path = schema_data['path'].split('/src/')[-1]
             self.__log_write(
                 f"{self.project.glue_dir}/src/{local_path}",
