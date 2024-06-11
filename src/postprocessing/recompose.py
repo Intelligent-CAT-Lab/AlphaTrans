@@ -41,12 +41,20 @@ def main(args):
                 if all([x in class_order for x in data['classes'][class_]['nests']]):
                     class_order.append(class_)
         
+        class_initialize_methods = []
         for class_ in class_order:
 
             if 'new' in class_ or '{' in class_: # skip nested and nameless classes
                 continue
 
-            recomposed_file += data['classes'][class_]['python_class_declaration']
+            if 'src.test' in schema and class_.endswith('Test'):
+                recomposed_file = recomposed_file.replace('from __future__ import annotations\n', 'from __future__ import annotations\nimport unittest\nimport pytest\n') if 'import unittest\nimport pytest' not in recomposed_file else recomposed_file
+                if '):' not in data['classes'][class_]['python_class_declaration']:
+                    recomposed_file += data['classes'][class_]['python_class_declaration'].replace(':', '(unittest.TestCase):')
+                else:
+                    recomposed_file += data['classes'][class_]['python_class_declaration'].replace('):', ', unittest.TestCase):')
+            else:
+                recomposed_file += data['classes'][class_]['python_class_declaration']
 
             if data['classes'][class_]['fields'] == {} and data['classes'][class_]['methods'] == {}:
                 recomposed_file += '    pass\n\n'
@@ -77,6 +85,7 @@ def main(args):
             
             field_order += dependent_fields
 
+            intialize_later_fields = []
             for field in field_order:
 
                 total_fragments += 1
@@ -88,15 +97,42 @@ def main(args):
                 if type(data['classes'][class_]['fields'][field]['translation']) == str:
                     recomposed_file += data['classes'][class_]['fields'][field]['translation']
                     continue
+
+                field_translation = '\n'.join(data['classes'][class_]['fields'][field]['translation'])
+
+                found = False
+                for a_class in class_order:
+                    if f'{a_class}(' in field_translation:
+                        intialize_later_fields.append((field, field_translation.split('=')[0].strip(), field_translation.split('=')[1].strip()))
+                        recomposed_file += data['classes'][class_]['fields'][field]['partial_translation'].replace('<placeholder>', f'None')
+                        found = True
+                
+                if found:
+                    continue
+
                 recomposed_file += '\n'.join(data['classes'][class_]['fields'][field]['translation'])
             
+            # create static method for field initialization
+            if intialize_later_fields != []:
+                recomposed_file += f'\n\n    @staticmethod\n    def initialize_fields() -> None:\n'
+                for field, field_name, field_value in intialize_later_fields:
+                    recomposed_file += '    ' + data['classes'][class_]['fields'][field]['partial_translation'].replace(f'{field_name}', f'{class_}.{field_name}').replace('<placeholder>', f'{field_value}\n')
+                class_initialize_methods.append(f'{class_}.initialize_fields()')
+            
             for method in data['classes'][class_]['methods']:
+
+                if 'Ignore' in data['classes'][class_]['methods'][method]['annotations']:
+                    recomposed_file += '\n    @pytest.mark.skip(reason="Ignore")\n'
+
                 if data['classes'][class_]['methods'][method]['translation'] == None:
                     recomposed_file += '\n'.join([''] + data['classes'][class_]['methods'][method]['partial_translation']).replace('pass', 'pass # LLM could not translate this method')
                     total_unsuccessful += 1
                     continue
                 recomposed_file += '\n'.join(data['classes'][class_]['methods'][method]['translation'])
                 total_fragments += 1
+
+        for initialize_method in class_initialize_methods:
+            recomposed_file += f'\n\n{initialize_method}'
 
         import_map = {'urllib': 'import urllib\n', 'sys': 'import sys\n', 'mock': 'import mock\n', 'cmp_to_key': 'from functools import cmp_to_key\n', 'field': 'from dataclasses import field\n'}
 
@@ -139,7 +175,10 @@ def main(args):
             f.write('')
     
     with open(f'data/recomposed_projects/{args.model_name}/{args.project_name}/pytest.ini', 'w') as f:
-        f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=no\n\n# Define directories to look for tests\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*')
+        f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=no --junitxml=pytest-report.xml\n\n# Define directories to look for tests\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*')
+    
+    with open(f'data/recomposed_projects/{args.model_name}/{args.project_name}/run.sh', 'w') as f:
+        f.write('python3 -m pytest\nxmllint --format pytest-report.xml -o pytest-report.xml')
 
     print(f'total fragments: {total_fragments}, total unsuccessful: {total_unsuccessful}')
     print(f'percentage unsuccessful: {total_unsuccessful / total_fragments * 100}%')
