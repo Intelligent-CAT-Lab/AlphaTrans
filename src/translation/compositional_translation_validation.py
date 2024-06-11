@@ -178,6 +178,14 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type):
         for related_field in related_fields:
             instruction += ''.join(data['classes'][class_]['fields'][related_field]['partial_translation'].replace('<placeholder>', 'None') + '\n')
 
+        related_methods = []
+        for method in data['classes'][class_]['methods']:
+            if method.split(':')[1] in original_fragment:
+                related_methods.append(method)
+        
+        for related_method in related_methods:
+            instruction += ''.join(data['classes'][class_]['methods'][related_method]['partial_translation'])
+
         instruction += ''.join(data['classes'][class_]['fields'][fragment_]['partial_translation'].replace('<placeholder>', '') + '\n')
         instruction += '\n```\n\n### Response:\n'
         instruction += f'Python field translation:\n'
