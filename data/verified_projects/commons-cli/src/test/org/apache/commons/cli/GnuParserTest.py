@@ -13,6 +13,7 @@ class GnuParserTest(ParserTestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @classmethod
     def setUpClass(cls):
         pass
 
