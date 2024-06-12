@@ -15,44 +15,39 @@ class BigIntegerValidatorTest(AbstractNumberValidatorTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-            
-            self._validator = BigIntegerValidator(False, 0)
-            self._strictValidator = BigIntegerValidator.BigIntegerValidator1()
-
-            self._testPattern = "#,###"
-
-            self._max = None
-            self._maxPlusOne = None
-            self._min = None
-            self._minMinusOne = None
-
-            self._invalidStrict = [None, "", "X", "X12", "12X", "1X2", "1.2"]
-
-            self._invalid = [None, "", "X", "X12"]
-
-            self._testNumber = Decimal("1234")
-            self._testZero = Decimal("0")
-
-            self._validStrict = ["0", "1234", "1,234"]
-            self._validStrictCompare = [self._testZero, self._testNumber, self._testNumber]
-
-            self._valid = ["0", "1234", "1,234", "1,234.5", "1234X"]
-            self._validCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber
-            ]
-
-            self._testStringUS = "1,234"
-            self._testStringDE = "1.234"
-
-            self._localeValue = self._testStringDE
-            self._localePattern = "#.###"
-            self._testLocale = 'de_DE.UTF-8'
-            self._localeExpected = self._testNumber
+            super().setUp(
+                validator = BigIntegerValidator(False, 0),
+                strictValidator = BigIntegerValidator.BigIntegerValidator1(),
+                testPattern = "#,###",
+                _max = None,
+                maxPlusOne = None,
+                _min = None,
+                minMinusOne = None,
+                invalidStrict = [None, "", "X", "X12", "12X", "1X2", "1.2"],
+                invalid = [None, "", "X", "X12"],
+                testNumber = Decimal("1234"),
+                testZero = Decimal("0"),
+                validStrict = ["0", "1234", "1,234"],
+                validStrictCompare = [
+                    Decimal("0"),
+                    Decimal("1234"),
+                    Decimal("1234")
+                ],
+                valid = ["0", "1234", "1,234", "1,234.5", "1234X"],
+                validCompare = [
+                    Decimal("0"),
+                    Decimal("1234"),
+                    Decimal("1234"),
+                    Decimal("1234"),
+                    Decimal("1234")
+                ],
+                testStringUS = "1,234",
+                testStringDE = "1.234",
+                localeValue = "1.234",
+                localePattern = "#.###",
+                testLocale = 'de_DE.UTF-8',
+                localeExpected = Decimal("1234")
+            )
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     

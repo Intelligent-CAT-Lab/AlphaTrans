@@ -18,13 +18,16 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
     
     def __init__(self, methodName='runTest') -> None:
         super().__init__(methodName)
-        self.__calValidator = CalendarValidator.CalendarValidator1()
-        self._validator = self.__calValidator
+        self.__calValidator = None
 
     
     def setUp(self) -> None:
         try:
             super().setUp()
+            super().setUpValidator(
+                CalendarValidator.CalendarValidator1()
+            )
+            self.__calValidator = CalendarValidator.CalendarValidator1()
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     
@@ -119,9 +122,13 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
 
         defaultZone = ZoneInfo("UTC")
         defaultOffset = datetime.now(defaultZone).utcoffset().total_seconds()
-        eetOffset = datetime.now(self._EET).utcoffset().total_seconds()
+        eetOffset = datetime.now(AbstractCalendarValidatorTest._EET)\
+            .utcoffset().total_seconds()
 
-        zone = self._EST if defaultOffset == eetOffset else self._EET
+        if defaultOffset == eetOffset:
+            zone = AbstractCalendarValidatorTest._EST
+        else:
+            zone = AbstractCalendarValidatorTest._EET
 
         expectedZone = self.__createCalendar(zone, 20051231, 0)
         expected = datetime(2005, 12, 31, tzinfo=defaultZone)
@@ -157,29 +164,85 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
     def test_Compare(self) -> None:
         sameTime = 124522
         testDate = 20050823
-        diffHour = self._createCalendar(self._GMT, testDate, 115922)
-        diffMin = self._createCalendar(self._GMT, testDate, 124422)
-        diffSec = self._createCalendar(self._GMT, testDate, 124521)
+        diffHour = self._createCalendar(AbstractCalendarValidatorTest._GMT, testDate, 115922)
+        diffMin = self._createCalendar(AbstractCalendarValidatorTest._GMT, testDate, 124422)
+        diffSec = self._createCalendar(AbstractCalendarValidatorTest._GMT, testDate, 124521)
         
-        value = self._createCalendar(self._GMT, testDate, sameTime)
-        cal20050824 = self._createCalendar(self._GMT, 20050824, sameTime)
-        cal20050822 = self._createCalendar(self._GMT, 20050822, sameTime)
+        value = self._createCalendar(AbstractCalendarValidatorTest._GMT, testDate, sameTime)
+        cal20050824 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20050824,
+            sameTime
+        )
+        cal20050822 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20050822,
+            sameTime
+        )
         
-        cal20050830 = self._createCalendar(self._GMT, 20050830, sameTime)
-        cal20050816 = self._createCalendar(self._GMT, 20050816, sameTime)
+        cal20050830 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20050830,
+            sameTime
+        )
+        cal20050816 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20050816,
+            sameTime
+        )
         
-        cal20050901 = self._createCalendar(self._GMT, 20050901, sameTime)
-        cal20050801 = self._createCalendar(self._GMT, 20050801, sameTime)
-        cal20050731 = self._createCalendar(self._GMT, 20050731, sameTime)
+        cal20050901 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20050901,
+            sameTime
+        )
+        cal20050801 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20050801,
+            sameTime
+        )
+        cal20050731 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20050731,
+            sameTime
+        )
         
-        cal20051101 = self._createCalendar(self._GMT, 20051101, sameTime)
-        cal20051001 = self._createCalendar(self._GMT, 20051001, sameTime)
-        cal20050701 = self._createCalendar(self._GMT, 20050701, sameTime)
-        cal20050630 = self._createCalendar(self._GMT, 20050630, sameTime)
+        cal20051101 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20051101,
+            sameTime
+        )
+        cal20051001 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20051001,
+            sameTime
+        )
+        cal20050701 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20050701,
+            sameTime
+        )
+        cal20050630 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20050630,
+            sameTime
+        )
         
-        cal20060101 = self._createCalendar(self._GMT, 20060101, sameTime)
-        cal20050101 = self._createCalendar(self._GMT, 20050101, sameTime)
-        cal20041231 = self._createCalendar(self._GMT, 20041231, sameTime)
+        cal20060101 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20060101,
+            sameTime
+        )
+        cal20050101 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20050101,
+            sameTime
+        )
+        cal20041231 = self._createCalendar(
+            AbstractCalendarValidatorTest._GMT,
+            20041231,
+            sameTime
+        )
         
         self.assertEqual(
             1,
@@ -338,7 +401,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
         origDefault = getlocale(LC_TIME)
         setlocale(LC_TIME, 'en_GB.UTF-8')
 
-        cal20050101 = self._createCalendar(self._GMT, 20051231, 11500)
+        cal20050101 = self._createCalendar(AbstractCalendarValidatorTest._GMT, 20051231, 11500)
         self.assertIsNone(
             self.__calValidator.format0(None),
             "null"
@@ -365,33 +428,50 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
         )
         self.assertEqual(
             "31 Dez 2005",
-            self.__calValidator.format3(cal20050101, "dd MMM yyyy", Locale.GERMAN),
+            self.__calValidator.format3(cal20050101, "dd MMM yyyy", 'de_DE.UTF-8'),
             "both"
         )
 
         self.assertEqual(
             "30/12/05",
-            self.__calValidator.format0(cal20050101, self._EST),
+            self.__calValidator.format0(cal20050101, AbstractCalendarValidatorTest._EST),
             "EST default"
         )
         self.assertEqual(
             "12/30/05",
-            self.__calValidator.format2(cal20050101, 'en_US.UTF-8', self._EST),
+            self.__calValidator.format2(
+                cal20050101,
+                'en_US.UTF-8',
+                AbstractCalendarValidatorTest._EST
+            ),
             "EST locale"
         )
         self.assertEqual(
             "2005-12-30 20:15",
-            self.__calValidator.format1(cal20050101, "yyyy-MM-dd HH:mm", self._EST),
+            self.__calValidator.format1(
+                cal20050101,
+                "yyyy-MM-dd HH:mm",
+                AbstractCalendarValidatorTest._EST
+            ),
             "EST patternA"
         )
         self.assertEqual(
             "2005-12-30 EST",
-            self.__calValidator.format1(cal20050101, "yyyy-MM-dd z", self._EST),
+            self.__calValidator.format1(
+                cal20050101,
+                "yyyy-MM-dd z",
+                AbstractCalendarValidatorTest._EST
+            ),
             "EST patternB"
         )
         self.assertEqual(
             "30 Dez 2005",
-            self.__calValidator.format4(cal20050101, "dd MMM yyyy", 'de_DE.UTF-8', self._EST),
+            self.__calValidator.format4(
+                cal20050101,
+                "dd MMM yyyy",
+                'de_DE.UTF-8',
+                AbstractCalendarValidatorTest._EST
+            ),
             "EST both"
         )
 
@@ -400,21 +480,21 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
 
     def test_AdjustToTimeZone(self) -> None:
         calEST = self._createCalendar(
-            self._EST,
+            AbstractCalendarValidatorTest._EST,
             CalendarValidatorTest.__DATE_2005_11_23,
             CalendarValidatorTest.__TIME_12_03_45
         )
         dateEST = calEST
 
         calGMT = self._createCalendar(
-            self._GMT,
+            AbstractCalendarValidatorTest._GMT,
             CalendarValidatorTest.__DATE_2005_11_23,
             CalendarValidatorTest.__TIME_12_03_45
         )
         dateGMT = calGMT
 
         calCET = self._createCalendar(
-            self._EET,
+            AbstractCalendarValidatorTest._EET,
             CalendarValidatorTest.__DATE_2005_11_23,
             CalendarValidatorTest.__TIME_12_03_45
         )
@@ -433,7 +513,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
             "Check CET != EST"
         )
 
-        CalendarValidator.adjustToTimeZone(calEST, self._GMT)
+        CalendarValidator.adjustToTimeZone(calEST, AbstractCalendarValidatorTest._GMT)
         self.assertEqual(
             dateGMT,
             calEST,
@@ -443,7 +523,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
             dateEST == calEST,
             "Check EST = GMT"
         )
-        CalendarValidator.adjustToTimeZone(calEST, self._EST)
+        CalendarValidator.adjustToTimeZone(calEST, AbstractCalendarValidatorTest._EST)
         self.assertEqual(
             dateEST,
             calEST,
@@ -454,7 +534,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
             "Check EST != GMT"
         )
 
-        CalendarValidator.adjustToTimeZone(calCET, self._GMT)
+        CalendarValidator.adjustToTimeZone(calCET, AbstractCalendarValidatorTest._GMT)
         self.assertEqual(
             dateGMT,
             calCET,
@@ -464,7 +544,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
             dateCET == calCET,
             "Check CET = GMT"
         )
-        CalendarValidator.adjustToTimeZone(calCET, self._EET)
+        CalendarValidator.adjustToTimeZone(calCET, AbstractCalendarValidatorTest._EET)
         self.assertEqual(
             dateCET,
             calCET,
@@ -476,12 +556,14 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
         )
 
         calUTC = self._createCalendar(
-            self._UTC,
+            AbstractCalendarValidatorTest._UTC,
             CalendarValidatorTest.__DATE_2005_11_23,
             CalendarValidatorTest.__TIME_12_03_45
         )
         self.assertTrue(
-            self._GMT.utcoffset(None) == self._UTC.utcoffset(None),
+            AbstractCalendarValidatorTest._GMT\
+                .utcoffset(None) == AbstractCalendarValidatorTest\
+                ._UTC.utcoffset(None),
             "SAME: UTC = GMT"
         )
         self.assertEqual(
@@ -490,25 +572,25 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
             "SAME: Check time (A)"
         )
         self.assertFalse(
-            self._GMT == calUTC.tzinfo,
+            AbstractCalendarValidatorTest._GMT == calUTC.tzinfo,
             "SAME: Check GMT(A)"
         )
         self.assertTrue(
-            self._UTC == calUTC.tzinfo,
+            AbstractCalendarValidatorTest._UTC == calUTC.tzinfo,
             "SAME: Check UTC(A)"
         )
-        CalendarValidator.adjustToTimeZone(calUTC, self._GMT)
+        CalendarValidator.adjustToTimeZone(calUTC, AbstractCalendarValidatorTest._GMT)
         self.assertEqual(
             calUTC,
             calGMT,
             "SAME: Check time (B)"
         )
         self.assertTrue(
-            self._GMT == calUTC.tzinfo,
+            AbstractCalendarValidatorTest._GMT == calUTC.tzinfo,
             "SAME: Check GMT(B)"
         )
         self.assertFalse(
-            self._UTC == calUTC.tzinfo,
+            AbstractCalendarValidatorTest._UTC == calUTC.tzinfo,
             "SAME: Check UTC(B)"
         )
 

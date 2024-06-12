@@ -10,11 +10,13 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
 
     @classmethod
     def setUpClass(cls):
-        "Tests shall only be executed on child classes with concrete implementations."
-        raise unittest.SkipTest("Skip tests in the abstract base class.")
+        if cls == AbstractNumberValidatorTest:
+            "Tests shall only be executed on child classes with concrete implementations."
+            raise unittest.SkipTest("Skip tests in the abstract base class.")
     
 
     def __init__(self, methodName='runTest') -> None:
+        self.setUpClass()
         super().__init__(methodName)
 
         self._validator = None
@@ -44,11 +46,56 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
         self._localeExpected = None
     
     
-    def setUp(self) -> None:
+    def setUp(
+        self,
+        validator = None,
+        strictValidator = None,
+        _max = None,
+        maxPlusOne = None,
+        _min = None,
+        minMinusOne = None,
+        invalid = None,
+        valid = None,
+        validCompare = None,
+        invalidStrict = None,
+        validStrict = None,
+        validStrictCompare = None,
+        testPattern = None,
+        testNumber = None,
+        testZero = None,
+        testStringUS = None,
+        testStringDE = None,
+        localeValue = None,
+        localePattern = None,
+        testLocale = None,
+        localeExpected = None
+        ) -> None:
         try:
             super().setUp()
 
             setlocale(LC_NUMERIC, 'en_US.UTF-8')
+
+            self._validator = validator
+            self._strictValidator = strictValidator
+            self._max = _max
+            self._maxPlusOne = maxPlusOne
+            self._min = _min
+            self._minMinusOne = minMinusOne
+            self._invalid = invalid
+            self._valid = valid
+            self._validCompare = validCompare
+            self._invalidStrict = invalidStrict
+            self._validStrict = validStrict
+            self._validStrictCompare = validStrictCompare
+            self._testPattern = testPattern
+            self._testNumber = testNumber
+            self._testZero = testZero
+            self._testStringUS = testStringUS
+            self._testStringDE = testStringDE
+            self._localeValue = localeValue
+            self._localePattern = localePattern
+            self._testLocale = testLocale
+            self._localeExpected = localeExpected
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     

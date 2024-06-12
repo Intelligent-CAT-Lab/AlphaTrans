@@ -9,8 +9,9 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
 
     @classmethod
     def setUpClass(cls):
-        "Tests shall only be executed on child classes with concrete implementations."
-        raise unittest.SkipTest("Skip tests in the abstract base class.")
+        if cls == AbstractCalendarValidatorTest:
+            "Tests shall only be executed on child classes with concrete implementations."
+            raise unittest.SkipTest("Skip tests in the abstract base class.")
 
     _GMT = ZoneInfo('Etc/GMT')  # 0 offset
     _EST = ZoneInfo('US/Eastern')  # - 5 hours
@@ -19,6 +20,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
 
     
     def __init__(self, methodName='runTest') -> None:
+        self.setUpClass()
         super().__init__(methodName)
         self._validator = None
         self._patternValid = [
@@ -81,6 +83,10 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             "01/2005",  # invalid pattern
             "01//2005"  # invalid pattern
         ]
+
+    
+    def setUpValidator(self, validator) -> None:
+        self._validator = validator
 
     
     def setUp(self) -> None:
