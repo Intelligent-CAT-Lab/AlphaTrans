@@ -138,11 +138,17 @@ class Project:
                     subpackage = schema_object.subpackage
                     # if the class is nested inside another class, add the parent class to the class name
                     if schema_data['classes'][_class]['nested_inside']:
-                        class_name = f"{schema_data['classes'][_class]['nested_inside']}.{_class}"
+                        outer_class_name = schema_data['classes'][_class]['nested_inside']
+                        python_file_contents.append(f"    javaClz = java.type(\"org.apache.{self.formatted_name}{subpackage}.{outer_class_name}\").{_class}")
                     else:
-                        class_name = _class
+                        python_file_contents.append(f"    javaClz = java.type(\"org.apache.{self.formatted_name}{subpackage}.{_class}\")")
                     
-                    python_file_contents.append(f"    javaClz = java.type(\"org.apache.{self.formatted_name}{subpackage}.{class_name}\")")
+                    # add default constructor
+                    python_file_contents.append("\n".join([
+                        f"    @staticmethod",
+                        f"    def getDefaultInstance():",
+                        f"        return object.__new__({_class})"
+                    ]))
                     
                 # write the new contents to the python file
                 python_file_path = "".join([
@@ -179,7 +185,7 @@ class Project:
         if "static" in method_schema_data['modifiers'] or is_constructor:
             caller = f"{class_name}.javaClz"
         else:
-            caller = "self.obj"
+            caller = "self.javaObj"
             
         if is_constructor:
             java_call = f"{caller}.pythonFactory()"
@@ -463,8 +469,14 @@ class CompositionalTest:
                         imports.append(import_to_add)
                         
         # code for the mappings
-        mapping_code = "".join([
-            f".targetTypeMapping(Value.class, {_class}.class, null, (v) -> new {_class}(v))\n" 
+        mapping_code = "\n".join([
+            "\n".join([
+                f".targetTypeMapping(Value.class, {_class}.class, null, (v) -> {{",
+                f"    {_class} obj = new {_class}(v);",
+                f"    obj.sync();",
+                "    return obj;",
+                "})"
+            ])
             for _class in classes_to_map
         ]) + "// TODO: Add other mappings"
         
@@ -700,7 +712,7 @@ class Schema:
         
         class_obj["fields"].extend([
             f"private static Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");",
-            "private Value obj;"
+            "private Value obj = clz.invokeMember(\"getDefaultInstance\");"
         ])
         unititialized_fields_body = "".join(class_obj["unitialized_fields"])
         
