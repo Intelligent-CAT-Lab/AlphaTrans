@@ -366,8 +366,8 @@ def main(args):
 
             pbar = tqdm.tqdm(data['classes'][class_]['methods'])
             for method_ in pbar:
-                if "valueSeparator1" not in method_:
-                    continue
+                # if "valueSeparator0" not in method_:
+                #     continue
                 
                 pbar.update()
                 pbar.set_description(f"Translating method {method_} in class {class_} @ schema {schema}...")
