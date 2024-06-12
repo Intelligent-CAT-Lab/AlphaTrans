@@ -106,11 +106,29 @@ class Project:
                 # add imports
                 python_file_contents.extend(schema_data['python_imports'])
                 python_file_contents.append("import java") # import the java module (from Polyglot)
+                python_file_contents.append(f"from src.{paths[self.name]['main'].replace('/java/', '/').replace('/', '.')}java_handler import JavaHandler, StaticFieldRedirector")
                 
                 # add classes
                 for _class in schema_data['classes']:
                     # add declaration
-                    python_file_contents.append(schema_data['classes'][_class]['python_class_declaration'])
+                    class_declaration = schema_data['classes'][_class]['python_class_declaration']
+                    
+                    # the class should inherit from StaticFieldRedirector
+                    class_declaration_prefix_pos = class_declaration.find(_class) + len(_class)
+                    class_declaration_prefix = class_declaration[:class_declaration_prefix_pos]
+                    class_declaration_suffix = class_declaration[class_declaration_prefix_pos:].strip()
+                    if class_declaration_suffix == ":":
+                        class_declaration_suffix = "(metaclass=StaticFieldRedirector):"
+                    else:
+                        bracket_left = class_declaration_suffix.find("(")
+                        bracket_right = class_declaration_suffix.rfind(")")
+                        if class_declaration_suffix[bracket_left+1:bracket_right].strip() == "":
+                            class_declaration_suffix = "(metaclass=StaticFieldRedirector):"
+                        else:
+                            class_declaration_suffix = class_declaration_suffix[:bracket_right] + ", metaclass=StaticFieldRedirector" + class_declaration_suffix[bracket_right:]
+                            
+                    class_declaration = class_declaration_prefix + class_declaration_suffix
+                    python_file_contents.append(class_declaration)
                     
                     # ----------------------------------------------------------------------------------------------------------------
                     # add fields
@@ -199,7 +217,7 @@ class Project:
         elif 'void' in method_schema_data['modifiers']:
             method_content.append(f"        {java_call}")
         else:
-            method_content.append(f"        return {java_call}")
+            method_content.append(f"        return JavaHandler.mapping({java_call})")
             
         # TODO: revsync and sync?
         # TODO: Add error handling
@@ -687,8 +705,8 @@ class Schema:
             "fields": [],
             "unitialized_fields": [],
             "methods": [],
-            "sync": SyncMethod(class_name) if not dont_process else None,
-            "revsync": SyncMethod(class_name, reverse=True) if not dont_process else None,
+            "sync": SyncMethod(class_name),
+            "revsync": SyncMethod(class_name, reverse=True),
             "nests": []
         }
         

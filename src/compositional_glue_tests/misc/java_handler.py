@@ -12,7 +12,15 @@ class JavaHandler:
         
         # get underlying python objects from java objects
         if hasattr(x, 'getPythonObject'):
-            return x.getPythonObject()
+            obj = x.getPythonObject()
+            
+            # recursively map all fields of the object
+            if hasattr(obj, '__dict__'):
+                for key in obj.__dict__:
+                    if key != "javaObj": # leave javaObj as it is
+                        obj.__dict__[key] = JavaHandler.mapping(obj.__dict__[key])
+                    
+            return obj
         
         # Properties
         if hasattr(x, 'getProperty'):
@@ -54,6 +62,7 @@ class JavaHandler:
             L.append(JavaHandler.mapping(item))
         return L
 
+
 class Types:
     String = java.type('java.lang.String')
     Object = java.type('java.lang.Object')
@@ -64,3 +73,18 @@ class Types:
     File = java.type('java.io.File')
     Files = java.type('java.io.File[]')
     URL = java.type('java.net.URL')
+
+
+class StaticFieldRedirector(type):
+    """
+    This metaclass is used to redirect static field access to the corresponding Java class fields.
+    """
+    
+    def __getattr__(cls, name):
+        try:
+            x = object.__getattribute__(cls, name)
+            if callable(x) or name in ['javaObj', 'javaClz']:
+                return x
+        except AttributeError:
+            pass
+        return getattr(cls.javaClz, name)
