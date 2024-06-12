@@ -28,8 +28,13 @@ class ParserTestCase(unittest.TestCase, ABC):
     # Class Methods Begin
     @classmethod
     def setUpClass(cls):
-        "Tests shall only be executed on child classes with concrete parser implementations."
-        raise unittest.SkipTest
+        if cls == ParserTestCase:
+            "Tests shall only be executed on child classes with concrete parser implementations."
+            raise unittest.SkipTest
+    
+    def __init__(self, methodName='runTest'):
+        self.setUpClass()
+        super().__init__(methodName)
     
     
     def __parse(
@@ -49,12 +54,12 @@ class ParserTestCase(unittest.TestCase, ABC):
         )
     
     
-    def setUp(self) -> None:
-        self.__parser = None
+    def setUp(self, parser) -> None:
+        self.__parser = parser
         self.__options = Options()\
             .addOption3("a", "enable-a", False, "turn [a] on or off")\
             .addOption3("b", "bfile", True, "set the value of [b]")\
-            .addOption3("c", "copt", False, "turn [c] on or off")\
+            .addOption3("c", "copt", False, "turn [c] on or off")
     
 
     def test_AmbiguousLongWithoutEqualSingleDash(self) -> None:

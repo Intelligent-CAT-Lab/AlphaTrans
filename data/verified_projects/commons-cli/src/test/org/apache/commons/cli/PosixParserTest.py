@@ -19,8 +19,7 @@ class PosixParserTest(ParserTestCase):
 
 
     def setUp(self) -> None:
-        super().setUp()
-        self.__parser = PosixParser()
+        super().setUp(PosixParser())
 
 
     @unittest.skip("not supported by the PosixParser")

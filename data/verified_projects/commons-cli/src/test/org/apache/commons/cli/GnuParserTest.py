@@ -18,8 +18,7 @@ class GnuParserTest(ParserTestCase):
         pass
 
     def setUp(self) -> None:
-        super().setUp()
-        self.__parser = GnuParser()
+        super().setUp(GnuParser())
 
     @unittest.skip("not supported by the GnuParser")
     def test_AmbiguousLongWithoutEqualSingleDash(self) -> None:

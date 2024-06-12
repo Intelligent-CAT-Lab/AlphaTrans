@@ -14,9 +14,12 @@ class DefaultParserTest(ParserTestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @classmethod
+    def setUpClass(cls):
+        pass
+
     def setUp(self) -> None:
-        super().setUp()
-        self.__parser = DefaultParser(2, False, None)
+        super().setUp(DefaultParser(2, False, None))
 
     def test_Builder(self) -> None:
         parser = DefaultParser.builder()\

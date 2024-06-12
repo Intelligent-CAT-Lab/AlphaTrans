@@ -18,8 +18,7 @@ class BasicParserTest(ParserTestCase):
         pass
 
     def setUp(self) -> None:
-        super().setUp()
-        self.__parser = BasicParser()
+        super().setUp(BasicParser())
 
     @unittest.skip("not supported by the BasicParser")
     def test_AmbiguousLongWithoutEqualSingleDash(self) -> None:
