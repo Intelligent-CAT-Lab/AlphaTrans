@@ -155,7 +155,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
     
     if not status:
         # TODO: handle feedback
-        print(feedback, flush=True)
+        # print(feedback, flush=True)
         return None, 0
 
     elapsed_time = time.time() - start_time
