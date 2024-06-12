@@ -28,8 +28,8 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
     """
     global i
     i += 1
-    if i > 2:
-        quit()
+    # if i > 2:
+    #     quit()
     syntactically_validated_members = []    
     for member in members_to_translate:
         prompt = member['prompt']
@@ -44,7 +44,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
         parsed_fragment = None
         feedback = ''
         start_time = time.time()
-        while max_attempts < 5:
+        while max_attempts < 1:
 
             print(prompt, flush=True)
             print('=======================GENERATING=======================', flush=True)
@@ -153,6 +153,13 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
 
     status, functionally_validated_members, feedback = l2_validation(syntactically_validated_members)
     
+    if status:
+        print("PASSED!")
+    else:
+        print("FAILED!")
+        if input("Do you want to interrupt? (no=Enter)"):
+            quit()
+        
     if not status:
         # TODO: handle feedback
         # print(feedback, flush=True)
@@ -163,6 +170,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
 
 
 def generate_prompt(data, schema, class_, fragment_, args, fragment_type):
+    return "<prompt>" # short-circuiting for now
 
     persona = f"You are an AI programming assistant, utilizing the DeepSeek Coder model, developed by DeepSeek Company, and you only answer questions related to computer science. For politically sensitive questions, security and privacy issues, and other non-computer science questions, you will refuse to answer."
 
@@ -278,6 +286,8 @@ def main(args):
     processed_fragments = []
 
     for schema in schemas:
+        if ".Option" not in schema:
+            continue
 
         path_ = f'data/schemas/{args.project_name}/{schema}'
         with open(path_, 'r') as f:
@@ -303,6 +313,8 @@ def main(args):
                     class_order.append(class_)
         
         for class_ in class_order:
+            if class_ != "Builder":
+                continue 
 
             if 'new' in class_ or '{' in class_: # skip nested and nameless classes
                 continue
@@ -354,6 +366,9 @@ def main(args):
 
             pbar = tqdm.tqdm(data['classes'][class_]['methods'])
             for method_ in pbar:
+                if "valueSeparator1" not in method_:
+                    continue
+                
                 pbar.update()
                 pbar.set_description(f"Translating method {method_} in class {class_} @ schema {schema}...")
 
