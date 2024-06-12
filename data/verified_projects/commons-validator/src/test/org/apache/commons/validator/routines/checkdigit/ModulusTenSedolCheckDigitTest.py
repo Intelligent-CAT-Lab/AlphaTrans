@@ -22,20 +22,21 @@ class ModulusTenSedolCheckDigitTest(AbstractCheckDigitTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-            self._routine = ModulusTenCheckDigit\
-                .ModulusTenCheckDigit2([1, 3, 1, 7, 3, 9, 1])
-            self._valid = [
-                "0263494",
-                "0870612",
-                "B06LQ97",
-                "3437575",
-                "B07LF55",
-            ]
-            self._invalid = [
-                "123#567"
-            ]
-            self._zeroSum = "0000000"
+            super().setUp(
+                routine = ModulusTenCheckDigit\
+                    .ModulusTenCheckDigit2([1, 3, 1, 7, 3, 9, 1]),
+                valid = [
+                    "0263494",
+                    "0870612",
+                    "B06LQ97",
+                    "3437575",
+                    "B07LF55",
+                ],
+                invalid = [
+                    "123#567"
+                ],
+                zeroSum = "0000000"
+            )
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
 

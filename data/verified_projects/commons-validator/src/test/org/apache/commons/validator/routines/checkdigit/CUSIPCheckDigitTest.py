@@ -21,19 +21,20 @@ class CUSIPCheckDigitTest(AbstractCheckDigitTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-            self._routine = CUSIPCheckDigit.CUSIP_CHECK_DIGIT
-            self._valid = [
-                "037833100",
-                "931142103",
-                "837649128",
-                "392690QT3",
-                "594918104",
-                "86770G101",
-                "Y8295N109",
-                "G8572F100"
-            ]
-            self._invalid = ["0378#3100"]
+            super().setUp(
+                routine = CUSIPCheckDigit.CUSIP_CHECK_DIGIT,
+                valid = [
+                    "037833100",
+                    "931142103",
+                    "837649128",
+                    "392690QT3",
+                    "594918104",
+                    "86770G101",
+                    "Y8295N109",
+                    "G8572F100"
+                ],
+                invalid = ["0378#3100"]
+            )
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
 

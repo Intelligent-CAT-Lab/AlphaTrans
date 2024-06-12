@@ -13,11 +13,13 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
     
     @classmethod
     def setUpClass(cls):
-        "Tests shall only be executed on child classes with concrete implementations."
-        raise unittest.SkipTest("Skip tests in the abstract base class.")
+        if cls == AbstractCheckDigitTest:
+            "Tests shall only be executed on child classes with concrete implementations."
+            raise unittest.SkipTest("Skip tests in the abstract base class.")
 
     
     def __init__(self, methodName='runTest') -> None:
+        self.setUpClass()
         super().__init__(methodName)
         self._log = logging.getLogger(__name__)
         self._checkDigitLth = 1
@@ -26,6 +28,21 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
         self._invalid = ["12345678A"]
         self._zeroSum = "0000000000"
         self._missingMessage = "Code is missing"
+    
+
+    def setUp(
+        self,
+        routine = None,
+        valid = [],
+        invalid = ["12345678A"],
+        zeroSum = "0000000000",
+        missingMessage = "Code is missing"
+        ) -> None:
+        self._routine = routine
+        self._valid = valid
+        self._invalid = invalid
+        self._zeroSum = zeroSum
+        self._missingMessage = missingMessage
 
     
     def tearDown(self) -> None:

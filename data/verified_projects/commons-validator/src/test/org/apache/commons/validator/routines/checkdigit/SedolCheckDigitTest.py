@@ -23,17 +23,18 @@ class SedolCheckDigitTest(AbstractCheckDigitTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-            self._routine = SedolCheckDigit.SEDOL_CHECK_DIGIT
-            self._valid = [
-                "0263494",
-                "0870612",
-                "B06LQ97",
-                "3437575",
-                "B07LF55",
-            ]
-            self._invalid = ["123#567"]
-            self._zeroSum = "0000000"
+            super().setUp(
+                routine = SedolCheckDigit.SEDOL_CHECK_DIGIT,
+                valid = [
+                    "0263494",
+                    "0870612",
+                    "B06LQ97",
+                    "3437575",
+                    "B07LF55",
+                ],
+                invalid = ["123#567"],
+                zeroSum = "0000000"
+            )
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     
