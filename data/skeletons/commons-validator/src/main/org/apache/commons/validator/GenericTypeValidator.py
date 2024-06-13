@@ -5,6 +5,7 @@ from src.main.org.apache.commons.validator.GenericValidator import *
 
 # from src.main.org.apache.commons.logging.LogFactory import *
 # from src.main.org.apache.commons.logging.Log import *
+import logging
 import datetime
 import typing
 from typing import *
