@@ -106,7 +106,7 @@ class Project:
                 # add imports
                 python_file_contents.extend(schema_data['python_imports'])
                 python_file_contents.append("import java") # import the java module (from Polyglot)
-                python_file_contents.append(f"from src.{paths[self.name]['main'].replace('/java/', '/').replace('/', '.')}java_handler import JavaHandler, StaticFieldRedirector")
+                python_file_contents.append(f"from src.{paths[self.name]['main'].replace('/java/', '/').replace('/', '.')}java_handler import *")
                 
                 # add classes
                 for _class in schema_data['classes']:
@@ -165,7 +165,7 @@ class Project:
                     python_file_contents.append("\n".join([
                         f"    @staticmethod",
                         f"    def getDefaultInstance():",
-                        f"        return object.__new__({_class})"
+                        f"        return {_class}.__new__({_class})"
                     ]))
                     
                 # write the new contents to the python file
@@ -234,13 +234,6 @@ class Project:
                 "class_name": ["method_name"]
             }
         }
-        If no schemas are provided, all schemas in the project will be processed.
-        
-        For a given schema, if an empty dictionary is provided, all classes will be processed.
-        If None is provided, no classes will be processed.
-        
-        For a given class, if an empty list is provided, all methods will be processed.
-        If None is provided, no methods will be processed.
         """
         return CompositionalTest(self, components, debug)
 
@@ -274,7 +267,7 @@ class CompositionalTest:
         # list of exception-method pairs to map (from all schemas)
         self.__exceptions = []
         
-        for schema in self.schemas_to_process:
+        for schema in self.project_schemas:            
             with open(f'{self.project.schema_dir}/{self.project.name}/{schema}') as f:
                 schema_data = json.load(f)
                 
@@ -283,38 +276,15 @@ class CompositionalTest:
             schema_name = schema_name_full.split('_python_partial')[0]
             
             # get the classes to process
-            if schema_name not in components or components[schema_name] == {}:
-                # Process all classes if no classes are provided
-                # or no schema was provided to begin with
-                classes_to_process = list(schema_data['classes'].keys())
-            elif components[schema_name] is None:
-                classes_to_process = []            
+            if schema not in self.schemas_to_process:
+                # all classes remain unprocessed but have some modifications made to them
+                classes_to_process = []
             else:
                 classes_to_process = []
                 for _class in components[schema_name]:
                     if _class not in schema_data['classes']:
                         raise ValueError(f"Class {_class} not found in schema {schema}!")
                     classes_to_process.append(_class)
-                    
-                    # check if this class extends another class
-                    if schema_data['classes'][_class]['extends']:
-                        parent_class = schema_data['classes'][_class]['extends'][0]
-                                                
-                        # check if this class is being processed
-                        if parent_class not in [
-                            c for s in components for c in components[s] if components[s][c] is not None
-                        ]:
-                            # find the schema for the parent class
-                            # (assuming the parent class has its own schema)
-                            for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}'):
-                                if file_name.endswith(f'.{parent_class}_python_partial.json'):
-                                    # add the parent class to the components
-                                    _schema = file_name[:file_name.rfind('.')].split('.')[-1]
-                                    if _schema in components:
-                                        components[_schema][parent_class] = None
-                                    else:
-                                        self.schemas_to_process.append(file_name)
-                                        components[_schema] = {parent_class: None}
                     
             class_list = self.__resolve_class_order(schema_data)
             
@@ -330,8 +300,6 @@ class CompositionalTest:
                     # Process all methods if no methods are provided
                     # or no class or schema was provided to begin with
                     methods_to_process = list(schema_data['classes'][_class]['methods'].keys())
-                elif components[schema_name][_class] is None:
-                    methods_to_process = []
                 else:
                     methods_to_process = []
                     
@@ -430,17 +398,17 @@ class CompositionalTest:
         Set up the schemas to process for the project.
         If no schemas are provided, all schemas in the project will be processed.
         """   
-        project_schemas = [file_name for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}') if (
+        self.project_schemas = [file_name for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}') if (
             'src.test' not in file_name # ignore test schemas
             # and not file_name.endswith('_python_partial.json') # ignore partial schemas
         )]
         
         if not schemas_to_process:
-            self.schemas_to_process = project_schemas
+            self.schemas_to_process = self.project_schemas
         else:
             self.schemas_to_process = []
             for schema in schemas_to_process:
-                mathing_schemas = [s for s in project_schemas if s.endswith(f'.{schema}_python_partial.json')]
+                mathing_schemas = [s for s in self.project_schemas if s.endswith(f'.{schema}_python_partial.json')]
                 if not mathing_schemas:
                     raise ValueError(f"Schema for {schema} not found!")
                 self.schemas_to_process.extend(mathing_schemas)
@@ -698,6 +666,8 @@ class Schema:
     def add_class(self, class_name: str, class_schema_data: dict, methods_to_process: list[str] = None, dont_process: bool = False):
         if not methods_to_process:
             methods_to_process = []
+            
+        is_interface = class_schema_data['is_interface']
         
         # create the class declaration
         with open(self.schema_data['path'], 'r') as f:
@@ -718,8 +688,8 @@ class Schema:
             "fields": [],
             "unitialized_fields": [],
             "methods": [],
-            "sync": SyncMethod(class_name),
-            "revsync": SyncMethod(class_name, reverse=True),
+            "sync": SyncMethod(class_name) if not is_interface else None,
+            "revsync": SyncMethod(class_name, reverse=True) if not is_interface else None,
             "nests": []
         }
         
@@ -736,39 +706,48 @@ class Schema:
                     self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)
         
         # add graal-related members and a default constructor
-        python_file_dir = self.subpackage.replace('.', '/')
-        python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
-        current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
-        python_file = f'{python_file_dir}/{current_file_name}.py'
-        
-        class_obj["fields"].extend([
-            f"private static Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");",
-            "private Value obj = clz.invokeMember(\"getDefaultInstance\");"
-        ])
-        unititialized_fields_body = "".join(class_obj["unitialized_fields"])
-        
-        # add Value constructor
-        class_obj["methods"].append(f"""
-            public {class_name}(Value obj) {{
-                {unititialized_fields_body}
-                this.obj = obj;
-            }}                            
-        """)
+        # unless it is an interface
+        if not is_interface:
+            python_file_dir = self.subpackage.replace('.', '/')
+            python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
+            current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
+            python_file = f'{python_file_dir}/{current_file_name}.py'
+            
+            class_obj["fields"].extend([
+                f"private static Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");",
+                f"private Value obj = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\").invokeMember(\"getDefaultInstance\");"
+            ])
+            unititialized_fields_body = "".join(class_obj["unitialized_fields"])
+            
+            # add Value constructor
+            class_obj["methods"].append(f"""
+                public {class_name}(Value obj) {{
+                    {unititialized_fields_body}
+                    this.obj = obj;
+                }}                            
+            """)
 
-        # add getPythonObject()
-        class_obj["methods"].append(f"""
-            public Value getPythonObject() {{
-                return obj;
-            }}
-        """)
+            # add getPythonObject()
+            class_obj["methods"].append(f"""
+                public Value getPythonObject() {{
+                    return obj;
+                }}
+            """)
 
-        # add a Default constructor
-        class_obj["methods"].append(f"""
-            public {class_name}() {{
-                {unititialized_fields_body}
-                this.obj = clz.newInstance();
-            }}
-        """)
+            # add a Default constructor if one does not exist already
+            # first check all the methods
+            for _method in class_schema_data['methods']:
+                if (class_schema_data['methods'][_method]['is_constructor']
+                    and not class_schema_data['methods'][_method]['parameters']):
+                    break
+            else:
+                # if no constructor was found, add a default constructor
+                class_obj["methods"].append(f"""
+                    public {class_name}() {{
+                        {unititialized_fields_body}
+                        this.obj = clz.newInstance();
+                    }}
+                """)
         
         # check if this class is nested inside another class
         if class_schema_data['nested_inside']:
@@ -802,14 +781,25 @@ class Schema:
         
     def __add_method_to_unprocessed_class(self, class_obj: dict, method_name: str, method_schema_data: dict):
         method_body = "".join(method_schema_data['body'])
+        # check if the method is not implemented
+        if method_body.strip()[-1] != '}':
+            # add a semi-colon if not present
+            if method_body.strip()[-1] != ';':
+                method_body += ';'
+            
+            class_obj["methods"].append(method_body)
+            return
+
         method_signature = method_body[:method_body.find('{')+1]
         method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
         
         # if the method is not public, make it so
         if 'public' not in method_signature:
-            # check if the method is marked as private
+            # check if the method is marked as private or protected
             if 'private' in method_signature:
                 method_signature = method_signature.replace('private', 'public', 1)
+            elif 'protected' in method_signature:
+                method_signature = method_signature.replace('protected', 'public', 1)
             else:
                 method_signature = "public " + method_signature
                 
@@ -831,9 +821,11 @@ class Schema:
         
         # if the method is not public, make it so
         if 'public' not in method_signature:
-            # check if the method is marked as private
+            # check if the method is marked as private or protected
             if 'private' in method_signature:
                 method_signature = method_signature.replace('private', 'public', 1)
+            elif 'protected' in method_signature:
+                method_signature = method_signature.replace('protected', 'public', 1)
             else:
                 method_signature = "public " + method_signature
         

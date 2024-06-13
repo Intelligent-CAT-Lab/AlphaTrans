@@ -1,4 +1,5 @@
 import java
+import abc
 
 class JavaHandler:
     def mapping(x):
@@ -75,7 +76,7 @@ class Types:
     URL = java.type('java.net.URL')
 
 
-class StaticFieldRedirector(type):
+class StaticFieldRedirector(abc.ABCMeta):
     """
     This metaclass is used to redirect static field access to the corresponding Java class fields.
     """
