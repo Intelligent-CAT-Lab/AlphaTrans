@@ -366,7 +366,7 @@ def main(args):
 
             pbar = tqdm.tqdm(data['classes'][class_]['methods'])
             for method_ in pbar:
-                if METHOD_BREAK and METHOD_BREAK not in method_:
+                if METHOD_BREAK and not method_.endswith(METHOD_BREAK):
                     continue
                 
                 pbar.update()
@@ -624,8 +624,8 @@ if __name__ == '__main__':
     args.include_call_graph = True
     args.dump_syntactically_validated_fragments = False
     
-    SCHEMA_BREAK = '.OptionValidator'
-    CLASS_BREAK = 'OptionValidator'
-    METHOD_BREAK = 'validate'
+    SCHEMA_BREAK = '.Option_'
+    CLASS_BREAK = 'Builder'
+    METHOD_BREAK = 'option'
     
     main(args)
