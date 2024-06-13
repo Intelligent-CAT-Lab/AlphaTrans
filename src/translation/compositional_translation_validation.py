@@ -286,7 +286,7 @@ def main(args):
     processed_fragments = []
 
     for schema in schemas:
-        if ".Option" not in schema:
+        if SCHEMA_BREAK and SCHEMA_BREAK not in schema:
             continue
 
         path_ = f'data/schemas/{args.project_name}/{schema}'
@@ -313,7 +313,7 @@ def main(args):
                     class_order.append(class_)
         
         for class_ in class_order:
-            if class_ != "Builder":
+            if CLASS_BREAK and CLASS_BREAK != class_:
                 continue 
 
             if 'new' in class_ or '{' in class_: # skip nested and nameless classes
@@ -366,7 +366,7 @@ def main(args):
 
             pbar = tqdm.tqdm(data['classes'][class_]['methods'])
             for method_ in pbar:
-                if "valueSeparator0" not in method_:
+                if METHOD_BREAK and METHOD_BREAK not in method_:
                     continue
                 
                 pbar.update()
@@ -623,5 +623,9 @@ if __name__ == '__main__':
     args.use_cuda = False
     args.include_call_graph = True
     args.dump_syntactically_validated_fragments = False
+    
+    SCHEMA_BREAK = '.OptionValidator'
+    CLASS_BREAK = 'OptionValidator'
+    METHOD_BREAK = 'validate'
     
     main(args)
