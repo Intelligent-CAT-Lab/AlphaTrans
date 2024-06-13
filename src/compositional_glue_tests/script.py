@@ -5,7 +5,7 @@ import json
 import keyword
 import xml.etree.ElementTree as ET
  
-from src.compositional_glue_tests.utils import default_type_value, write_to_file, type_handling, pre_order_traversal
+from src.compositional_glue_tests.utils import default_type_value, write_to_file, type_handling, pre_order_traversal, exception_handling
 from src.compositional_glue_tests.constants import *
 
 
@@ -271,6 +271,9 @@ class CompositionalTest:
         # set the schemas to process
         self.__set_schemas_to_process(list(components.keys()))
         
+        # list of exception-method pairs to map (from all schemas)
+        self.__exceptions = []
+        
         for schema in self.schemas_to_process:
             with open(f'{self.project.schema_dir}/{self.project.name}/{schema}') as f:
                 schema_data = json.load(f)
@@ -349,12 +352,16 @@ class CompositionalTest:
                     
                 schema_object.add_class(_class, schema_data['classes'][_class], methods_to_process)
                 
+                self.__exceptions.extend(schema_object.get_exceptions())
+                
             # write back into the java file (with glue-instrumentation)
             local_path = schema_data['path'].split('/src/')[-1]
             self.__log_write(
                 f"{self.project.glue_dir}/src/{local_path}",
                 schema_object.get_body()
             )
+                
+        self.__add_schema_dependent_files()
         
     def __resolve_class_order(self, schema_data: dict):
         """
@@ -437,8 +444,6 @@ class CompositionalTest:
                 if not mathing_schemas:
                     raise ValueError(f"Schema for {schema} not found!")
                 self.schemas_to_process.extend(mathing_schemas)
-                
-        self.__add_schema_dependent_files()
 
     def __add_schema_dependent_files(self):
         # Add ContextInitializer.java
@@ -525,7 +530,12 @@ class CompositionalTest:
         mapping_code = "".join([
             f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(exceptionObj);}}\n" 
             for _class in classes_to_map
-        ]) + "// TODO: Add other mappings"
+        ])
+        
+        for exception, method in self.__exceptions:
+            if exception in exception_handling:
+                target, call = exception_handling[exception]["target"], exception_handling[exception]["call"]
+                mapping_code += f"if(exceptionType.equals(\"{target}\") && thrower.equals(\"{method}\")){{ return new {call};}}\n"
         
         # code for the imports
         imports_code = "".join([
@@ -681,6 +691,9 @@ class Schema:
         # where each class is a string of the class body
         # or a dictionary with different parts of the class
         self.__classes = []
+        
+        # list of exception-method pairs to map
+        self.__exceptions = []
         
     def add_class(self, class_name: str, class_schema_data: dict, methods_to_process: list[str] = None, dont_process: bool = False):
         if not methods_to_process:
@@ -894,6 +907,7 @@ class Schema:
                 throw ({exception_name}) ExceptionHandler.handle(e, "{class_obj['name']}.{method_name}");
             }}
             """
+            self.__exceptions.append((exception_name, f"{class_obj['name']}.{method_name}"))
             
         class_obj["methods"].append(f"{method_signature}\n{final_method_content}\n}}")
         
@@ -954,6 +968,9 @@ class Schema:
         {"".join(self.imports)}
         {class_bodies}
         """
+        
+    def get_exceptions(self):
+        return self.__exceptions
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate glue code for Compositional Testing.')
