@@ -14,7 +14,7 @@ class BugCLI18Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def test_CLI18(self) -> None:
+    def testCLI18(self) -> None:
         options = Options()
         options.addOption0(Option(0, "a", "aaa", "aaaaaaa", False, None))
         options.addOption0(

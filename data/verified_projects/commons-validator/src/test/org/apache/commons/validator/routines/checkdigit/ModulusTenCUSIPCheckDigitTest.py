@@ -38,7 +38,7 @@ class ModulusTenCUSIPCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_VALIDATOR_336_InvalidCheckDigits(self) -> None:
+    def testVALIDATOR_336_InvalidCheckDigits(self) -> None:
         for i in range(len(ModulusTenCUSIPCheckDigitTest.__invalidCheckDigits)):
             invalidCheckDigit = ModulusTenCUSIPCheckDigitTest.__invalidCheckDigits[i]
             self.assertFalse(
@@ -47,7 +47,7 @@ class ModulusTenCUSIPCheckDigitTest(AbstractCheckDigitTest):
             )
     
 
-    def test_VALIDATOR_336_ValidCheckDigits(self) -> None:
+    def testVALIDATOR_336_ValidCheckDigits(self) -> None:
         for i in range(len(ModulusTenCUSIPCheckDigitTest.__validCheckDigits)):
             validCheckDigit = ModulusTenCUSIPCheckDigitTest.__validCheckDigits[i]
             self.assertTrue(

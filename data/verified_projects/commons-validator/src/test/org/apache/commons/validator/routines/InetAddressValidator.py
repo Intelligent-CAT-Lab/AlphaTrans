@@ -16,7 +16,7 @@ class InetAddressValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_InetAddressesFromTheWild(self) -> None:
+    def testInetAddressesFromTheWild(self) -> None:
         self.assertTrue(
             self.__validator.isValid("140.211.11.130"),
             "www.apache.org IP should be valid"
@@ -35,14 +35,14 @@ class InetAddressValidatorTest(unittest.TestCase):
         )
 
     
-    def test_VALIDATOR_335(self) -> None:
+    def testVALIDATOR_335(self) -> None:
         self.assertTrue(
             self.__validator.isValid("2001:0438:FFFE:0000:0000:0000:0000:0A35"),
             "2001:0438:FFFE:0000:0000:0000:0000:0A35 should be valid"
         )
 
     
-    def test_VALIDATOR_419(self) -> None:
+    def testVALIDATOR_419(self) -> None:
         addr = "0:0:0:0:0:0:13.1.68.3"
         self.assertTrue(
             self.__validator.isValid(addr),
@@ -76,7 +76,7 @@ class InetAddressValidatorTest(unittest.TestCase):
         )
 
     
-    def test_VALIDATOR_445(self) -> None:
+    def testVALIDATOR_445(self) -> None:
         valid = [
             "2001:0000:1234:0000:0000:C1C0:ABCD:0876",
             "2001:0000:1234:0000:0000:C1C0:ABCD:0876/123",
@@ -105,7 +105,7 @@ class InetAddressValidatorTest(unittest.TestCase):
             )
     
 
-    def test_InetAddressesByClass(self) -> None:
+    def testInetAddressesByClass(self) -> None:
         self.assertTrue(
             self.__validator.isValid("24.25.231.12"),
             "class A IP should be valid"
@@ -152,7 +152,7 @@ class InetAddressValidatorTest(unittest.TestCase):
         )
 
     
-    def test_ReservedInetAddresses(self) -> None:
+    def testReservedInetAddresses(self) -> None:
         self.assertTrue(
             self.__validator.isValid("127.0.0.1"),
             "localhost IP should be valid"
@@ -163,7 +163,7 @@ class InetAddressValidatorTest(unittest.TestCase):
         )
 
     
-    def test_BrokenInetAddresses(self) -> None:
+    def testBrokenInetAddresses(self) -> None:
         self.assertFalse(
             self.__validator.isValid("124.14.32.abc"),
             "IP with characters should be invalid"
@@ -186,7 +186,7 @@ class InetAddressValidatorTest(unittest.TestCase):
         )
     
 
-    def test_IPv6(self) -> None:
+    def testIPv6(self) -> None:
         self.assertFalse(
             self.__validator.isValidInet6Address(""),
             "IPV6 empty string should be invalid"

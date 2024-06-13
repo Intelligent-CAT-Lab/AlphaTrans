@@ -17,7 +17,7 @@ from typing import *
 
 class KosarajuSharirTestCase(unittest.TestCase):
 
-    def test_NotExistVertex(self) -> None:
+    def testNotExistVertex(self) -> None:
         with self.assertRaises(RuntimeError):
             graph = DirectedMutableGraph()
 
@@ -25,14 +25,14 @@ class KosarajuSharirTestCase(unittest.TestCase):
                 .applyingKosarajuSharir1(BaseLabeledVertex("NOT EXISTS"))
     
     
-    def test_NullGraph(self) -> None:
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = None
             CommonsGraph.findStronglyConnectedComponent(graph)\
                 .applyingKosarajuSharir0()
 
     
-    def test_NullVertices(self) -> None:
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             a = None
             graph = DirectedMutableGraph()
@@ -40,7 +40,7 @@ class KosarajuSharirTestCase(unittest.TestCase):
                 .applyingKosarajuSharir1(a)
 
     
-    def test_UnconnectedGraph(self) -> None:
+    def testUnconnectedGraph(self) -> None:
         a = BaseLabeledVertex("A")
         b = BaseLabeledVertex("B")
         c = BaseLabeledVertex("C")
@@ -90,7 +90,7 @@ class KosarajuSharirTestCase(unittest.TestCase):
         self.assertEqual({g, h, c}, actualG)
 
     
-    def test_VerifyHasStronglyConnectedComponents(self) -> None:
+    def testVerifyHasStronglyConnectedComponents(self) -> None:
         a = BaseLabeledVertex("A")
         b = BaseLabeledVertex("B")
         c = BaseLabeledVertex("C")

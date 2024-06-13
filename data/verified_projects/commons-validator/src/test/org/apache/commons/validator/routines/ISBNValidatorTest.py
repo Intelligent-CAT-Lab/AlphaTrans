@@ -76,7 +76,7 @@ class ISBNValidatorTest(unittest.TestCase):
         ]
 
     
-    def test_ValidISBN10Format(self) -> None:
+    def testValidISBN10Format(self) -> None:
         pattern = re.compile(ISBNValidator.ISBN10_REGEX)
         for i in range(len(self.__validISBN10Format)):
             self.assertTrue(
@@ -85,7 +85,7 @@ class ISBNValidatorTest(unittest.TestCase):
             )
 
     
-    def test_InvalidISBN10Format(self) -> None:
+    def testInvalidISBN10Format(self) -> None:
         validator = ISBNValidator.getInstance0()
         pattern = re.compile(ISBNValidator.ISBN10_REGEX)
         for i in range(len(self.__invalidISBN10Format)):
@@ -103,7 +103,7 @@ class ISBNValidatorTest(unittest.TestCase):
             )
 
     
-    def test_ValidISBN13Format(self) -> None:
+    def testValidISBN13Format(self) -> None:
         pattern = re.compile(ISBNValidator.ISBN13_REGEX)
         for i in range(len(self.__validISBN13Format)):
             self.assertTrue(
@@ -112,7 +112,7 @@ class ISBNValidatorTest(unittest.TestCase):
             )
 
     
-    def test_InvalidISBN13Format(self) -> None:
+    def testInvalidISBN13Format(self) -> None:
         pattern = re.compile(ISBNValidator.ISBN13_REGEX)
         validator = ISBNValidator.getInstance0()
         for i in range(len(self.__invalidISBN13Format)):
@@ -130,7 +130,7 @@ class ISBNValidatorTest(unittest.TestCase):
             )
 
     
-    def test_IsValidISBN10(self) -> None:
+    def testIsValidISBN10(self) -> None:
         validator = ISBNValidator.getInstance0()
         self.assertTrue(
             validator.isValidISBN10("1930110995"), "isValidISBN10-1"
@@ -171,7 +171,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
-    def test_IsValidISBN13(self) -> None:
+    def testIsValidISBN13(self) -> None:
         validator = ISBNValidator.getInstance0()
         self.assertTrue(
             validator.isValidISBN13("9781930110991"), "isValidISBN13-1"
@@ -212,7 +212,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
-    def test_ValidateISBN10(self) -> None:
+    def testValidateISBN10(self) -> None:
         validator = ISBNValidator.getInstance1(False)
         self.assertEqual(
             "1930110995",
@@ -277,7 +277,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
-    def test_ValidateISBN10Convert(self) -> None:
+    def testValidateISBN10Convert(self) -> None:
         validator = ISBNValidator.getInstance0()
         self.assertEqual(
             "9781930110991",
@@ -311,7 +311,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
-    def test_ValidateISBN13(self) -> None:
+    def testValidateISBN13(self) -> None:
         validator = ISBNValidator.getInstance0()
         self.assertEqual(
             "9781930110991",
@@ -376,7 +376,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Null(self) -> None:
+    def testNull(self) -> None:
         validator = ISBNValidator.getInstance0()
         self.assertFalse(
             validator.isValid(None),
@@ -408,7 +408,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Invalid(self) -> None:
+    def testInvalid(self) -> None:
         validator = ISBNValidator.getInstance0()
         base_code = "193011099"
         self.assertFalse(
@@ -499,7 +499,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
-    def test_ConversionErrors(self) -> None:
+    def testConversionErrors(self) -> None:
         validator = ISBNValidator.getInstance0()
         inputs = [
             "123456789 ",

@@ -32,7 +32,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_CalendarValidatorMethods(self) -> None:
+    def testCalendarValidatorMethods(self) -> None:
         setlocale(LC_TIME, 'en_US.UTF-8')
         locale = 'de_DE.UTF-8'
         pattern = "yyyy-MM-dd"
@@ -161,7 +161,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
         )
 
     
-    def test_Compare(self) -> None:
+    def testCompare(self) -> None:
         sameTime = 124522
         testDate = 20050823
         diffHour = self._createCalendar(AbstractCalendarValidatorTest._GMT, testDate, 115922)
@@ -376,7 +376,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
             )
 
 
-    def test_DateTimeStyle(self) -> None:
+    def testDateTimeStyle(self) -> None:
         origDefault = getlocale(LC_TIME)
         setlocale(LC_TIME, 'en_GB.UTF-8')
         
@@ -397,7 +397,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
 
         setlocale(LC_TIME, origDefault)
     
-    def test_Format(self) -> None:
+    def testFormat(self) -> None:
         origDefault = getlocale(LC_TIME)
         setlocale(LC_TIME, 'en_GB.UTF-8')
 
@@ -478,7 +478,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
         setlocale(LC_TIME, origDefault)
     
 
-    def test_AdjustToTimeZone(self) -> None:
+    def testAdjustToTimeZone(self) -> None:
         calEST = self._createCalendar(
             AbstractCalendarValidatorTest._EST,
             CalendarValidatorTest.__DATE_2005_11_23,

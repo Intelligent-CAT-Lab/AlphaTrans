@@ -47,7 +47,7 @@ class ISINCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_VALIDATOR_345(self) -> None:
+    def testVALIDATOR_345(self) -> None:
         for i in range(len(ISINCheckDigitTest.__invalidCheckDigits)):
             invalidCheckDigit = ISINCheckDigitTest.__invalidCheckDigits[i]
             self.assertFalse(

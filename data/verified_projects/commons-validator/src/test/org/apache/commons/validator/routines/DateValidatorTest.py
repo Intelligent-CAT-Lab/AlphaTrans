@@ -24,7 +24,7 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
     
-    def test_LocaleProviders(self) -> None:
+    def testLocaleProviders(self) -> None:
         localeProviders = os.getenv('java.locale.providers')
         if localeProviders is not None:
             self.assertTrue(
@@ -42,7 +42,7 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
         )
 
     
-    def test_DateValidatorMethods(self) -> None:
+    def testDateValidatorMethods(self) -> None:
         setlocale(LC_TIME, 'en_US.UTF-8')
         locale = 'de_DE.UTF-8'
         pattern = "yyyy-MM-dd"
@@ -162,7 +162,7 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
         )
 
     
-    def test_Compare(self) -> None:
+    def testCompare(self) -> None:
         sameTime = 124522
         testDate = 20050823
         diffHour = self._createDate(AbstractCalendarValidatorTest._GMT, testDate, 115922)

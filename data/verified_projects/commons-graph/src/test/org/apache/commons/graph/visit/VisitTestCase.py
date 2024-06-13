@@ -17,7 +17,7 @@ import unittest
 
 class VisitTestCase(unittest.TestCase):
 
-    def test_NotExistVertex(self) -> None:
+    def testNotExistVertex(self) -> None:
         with self.assertRaises(RuntimeError):
             input = CommonsGraph.newDirectedMutableGraph(
                 GraphConnectionVisitTestCaseTestNotExistVertex()
@@ -27,7 +27,7 @@ class VisitTestCase(unittest.TestCase):
                 .from_(BaseLabeledVertex("NOT EXIST"))
 
     
-    def test_VerifyBreadthFirstSearch(self) -> None:
+    def testVerifyBreadthFirstSearch(self) -> None:
         input = CommonsGraph.newDirectedMutableGraph(
             GraphConnectionVisitTestCaseTestVerifyBreadthFirstSearchInput()
         )
@@ -43,7 +43,7 @@ class VisitTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     
-    def test_VerifyDepthFirstSearch(self) -> None:
+    def testVerifyDepthFirstSearch(self) -> None:
         expected = []
 
         input = CommonsGraph.newDirectedMutableGraph(

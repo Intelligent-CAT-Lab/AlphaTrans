@@ -52,7 +52,7 @@ class BigIntegerValidatorTest(AbstractNumberValidatorTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_BigIntegerValidatorMethods(self) -> None:
+    def testBigIntegerValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -140,7 +140,7 @@ class BigIntegerValidatorTest(AbstractNumberValidatorTest):
         )
 
     
-    def test_BigIntegerRangeMinMax(self) -> None:
+    def testBigIntegerRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")

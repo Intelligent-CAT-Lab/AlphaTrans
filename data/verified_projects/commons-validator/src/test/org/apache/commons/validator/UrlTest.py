@@ -115,7 +115,7 @@ class UrlTest(unittest.TestCase):
             self.testPartsIndex[index] = 0
 
     
-    def test_IsValid0(self) -> None:
+    def testIsValid0(self) -> None:
         self.checkTestIsValid1(self.testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES)
         self.setUp()
         options = UrlValidator.ALLOW_2_SLASHES +\
@@ -124,7 +124,7 @@ class UrlTest(unittest.TestCase):
         self.checkTestIsValid1(self.testUrlPartsOptions, options)
     
 
-    def test_IsValidScheme(self) -> None:
+    def testIsValidScheme(self) -> None:
         if self.__printStatus:
             print("\n testIsValidScheme() ")
         schemes = ["http", "gopher"]
@@ -146,7 +146,7 @@ class UrlTest(unittest.TestCase):
             print()
     
 
-    def test_Validator202(self) -> None:
+    def testValidator202(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator(schemes, UrlValidator.NO_FRAGMENTS)
         urlValidator.isValid(
@@ -161,7 +161,7 @@ class UrlTest(unittest.TestCase):
         )
 
 
-    def test_Validator204(self) -> None:
+    def testValidator204(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator.UrlValidator2(schemes)
         self.assertTrue(
@@ -171,7 +171,7 @@ class UrlTest(unittest.TestCase):
         )
     
 
-    def test_ValidateUrl(self) -> None:
+    def testValidateUrl(self) -> None:
         self.assertTrue(True)
     
 
@@ -179,8 +179,8 @@ class UrlTest(unittest.TestCase):
     def main(argv) -> None:
         fct = UrlTest()
         fct.setUp()
-        fct.test_IsValid0()
-        fct.test_IsValidScheme()
+        fct.testIsValid0()
+        fct.testIsValidScheme()
 
 
     def checkTestIsValid1(self, testObjects, options) -> None:

@@ -12,7 +12,7 @@ import unittest
 
 class GraphBuilderTestCase(unittest.TestCase):
 
-    def test_VerifyProducedGraphesAreEquals(self) -> None:
+    def testVerifyProducedGraphesAreEquals(self) -> None:
         expected = UndirectedMutableGraph()
         
         start = BaseLabeledVertex("start")

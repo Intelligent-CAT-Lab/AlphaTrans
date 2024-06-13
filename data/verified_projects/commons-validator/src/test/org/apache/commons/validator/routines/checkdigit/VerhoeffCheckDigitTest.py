@@ -26,5 +26,5 @@ class VerhoeffCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
 
-    def test_ZeroSum(self) -> None:
+    def testZeroSum(self) -> None:
         pass

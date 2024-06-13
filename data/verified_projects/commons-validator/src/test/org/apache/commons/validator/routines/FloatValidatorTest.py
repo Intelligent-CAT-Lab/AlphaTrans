@@ -59,7 +59,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_FloatValidatorMethods(self) -> None:
+    def testFloatValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -141,7 +141,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
 
 
-    def test_FloatSmallestValues(self) -> None:
+    def testFloatSmallestValues(self) -> None:
         pattern = "#.#################################################################"
         precision = max(len(pattern.split('.')[1]), 500)
 
@@ -176,7 +176,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
     
 
-    def test_FloatRangeMinMax(self) -> None:
+    def testFloatRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")

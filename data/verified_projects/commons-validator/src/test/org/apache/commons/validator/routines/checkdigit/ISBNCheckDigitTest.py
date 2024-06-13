@@ -31,7 +31,7 @@ class ISBNCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_InvalidLength(self) -> None:
+    def testInvalidLength(self) -> None:
         self.assertFalse(self._routine.isValid("123456789"), "isValid() Lth 9")
         self.assertFalse(self._routine.isValid("12345678901"), "isValid() Lth 11")
         self.assertFalse(self._routine.isValid("123456789012"), "isValid() Lth 12")

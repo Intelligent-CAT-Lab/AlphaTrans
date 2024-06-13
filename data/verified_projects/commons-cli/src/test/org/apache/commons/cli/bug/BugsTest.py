@@ -47,7 +47,7 @@ class BugsTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def test_11456(self) -> None:
+    def test11456(self) -> None:
         try:
             options = Options()
             options.addOption0(OptionBuilder.hasOptionalArg().create1('a'))
@@ -72,7 +72,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
-    def test_11457(self) -> None:
+    def test11457(self) -> None:
         try:
             options = Options()
             options.addOption0(OptionBuilder.withLongOpt("verbose").create0())
@@ -86,7 +86,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_11458(self) -> None:
+    def test11458(self) -> None:
         try:
             options = Options()
             options.addOption0(
@@ -128,7 +128,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_11680(self) -> None:
+    def test11680(self) -> None:
         try:
             options = Options()
             options.addOption1("f", True, "foobar")
@@ -145,7 +145,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_12210(self) -> None:
+    def test12210(self) -> None:
         try:
             mainOptions = Options()
 
@@ -183,7 +183,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_13425(self) -> None:
+    def test13425(self) -> None:
         try:
             options = Options()
             oldpass = OptionBuilder.withLongOpt("old-password")\
@@ -211,7 +211,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An unexpected exception occurred. Expected MissingArgumentException but got: {e}")
 
     
-    def test_13666(self) -> None:
+    def test13666(self) -> None:
         try:
             options = Options()
             dir = OptionBuilder.withDescription("dir").hasArg0().create1('d')
@@ -242,7 +242,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_13935(self) -> None:
+    def test13935(self) -> None:
         try:
             directions = OptionGroup()
 
@@ -288,7 +288,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An unexpected exception occurred. Expected ParseException but got: {e}")
 
     
-    def test_14786(self) -> None:
+    def test14786(self) -> None:
         try:
             o = OptionBuilder.isRequired0().withDescription("test").create2("test")
             opts = Options()
@@ -305,7 +305,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_15046(self) -> None:
+    def test15046(self) -> None:
         try:
             parser = PosixParser()
             cliArgs = ["-z", "c"]
@@ -323,7 +323,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
-    def test_15648(self) -> None:
+    def test15648(self) -> None:
         try:
             parser = PosixParser()
             args = ["-m", "\"Two Words\""]
@@ -336,7 +336,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_31148(self) -> None:
+    def test31148(self) -> None:
         try:
             multiArgOption = Option.Option1("o", "option with multiple args")
             multiArgOption.setArgs(1)

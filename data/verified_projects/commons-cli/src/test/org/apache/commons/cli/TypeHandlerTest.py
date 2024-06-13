@@ -18,7 +18,7 @@ class TypeHandlerTest(unittest.TestCase):
             raise AssertionError("This class should not be instantiated.")
 
     # Class Methods Begin
-    def test_CreateValueClass(self) -> None:
+    def testCreateValueClass(self) -> None:
         try:
             clazz = TypeHandler.createValue0(
                 self.Instantiable.__name__, PatternOptionBuilder.CLASS_VALUE)
@@ -27,7 +27,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_CreateValueClass_notFound(self) -> None:
+    def testCreateValueClass_notFound(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0("what ever", PatternOptionBuilder.CLASS_VALUE)
@@ -35,7 +35,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
 
     
-    def test_CreateValueDate(self) -> None:
+    def testCreateValueDate(self) -> None:
         try:
             with self.assertRaises((RuntimeError, NotImplementedError)):
                 TypeHandler.createValue0("what ever", PatternOptionBuilder.DATE_VALUE)
@@ -43,7 +43,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected RuntimeError or NotImplementedError, got: {e}")
     
     
-    def test_CreateValueExistingFile(self) -> None:
+    def testCreateValueExistingFile(self) -> None:
         try:
             with TypeHandler.createValue0(
                 "src/test/resources/org/apache/commons/cli/existing-readable.file",
@@ -54,7 +54,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_CreateValueExistingFile_nonExistingFile(self) -> None:
+    def testCreateValueExistingFile_nonExistingFile(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0(
@@ -64,7 +64,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
     
     
-    def test_CreateValueFile(self) -> None:
+    def testCreateValueFile(self) -> None:
         try:
             result = TypeHandler.createValue0(
                 "some-file.txt", PatternOptionBuilder.FILE_VALUE
@@ -74,7 +74,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_CreateValueFiles(self) -> None:
+    def testCreateValueFiles(self) -> None:
         try:
             with self.assertRaises((RuntimeError, NotImplementedError)):
                 TypeHandler.createValue0("some.files", PatternOptionBuilder.FILES_VALUE)
@@ -82,7 +82,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected RuntimeError or NotImplementedError, got: {e}")
     
     
-    def test_CreateValueInteger_failure(self) -> None:
+    def testCreateValueInteger_failure(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0("just-a-string", int)
@@ -90,7 +90,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
 
     
-    def test_CreateValueNumber_Double(self) -> None:
+    def testCreateValueNumber_Double(self) -> None:
         try:
             self.assertEqual(
                 1.5, TypeHandler.createValue0("1.5", PatternOptionBuilder.NUMBER_VALUE)
@@ -99,7 +99,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_CreateValueNumber_Long(self) -> None:
+    def testCreateValueNumber_Long(self) -> None:
         try:
             self.assertEqual(
                 15, TypeHandler.createValue0("15", PatternOptionBuilder.NUMBER_VALUE)
@@ -108,7 +108,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_CreateValueNumber_noNumber(self) -> None:
+    def testCreateValueNumber_noNumber(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0("not a number", PatternOptionBuilder.NUMBER_VALUE)
@@ -116,7 +116,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
     
     
-    def test_CreateValueObject_InstantiableClass(self) -> None:
+    def testCreateValueObject_InstantiableClass(self) -> None:
         try:
             result = TypeHandler.createValue0(
                 self.Instantiable.__name__, PatternOptionBuilder.OBJECT_VALUE)
@@ -125,7 +125,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
-    def test_CreateValueObject_notInstantiableClass(self) -> None:
+    def testCreateValueObject_notInstantiableClass(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0(self.NotInstantiable.__name__, PatternOptionBuilder.OBJECT_VALUE)
@@ -133,7 +133,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
 
     
-    def test_CreateValueObject_unknownClass(self) -> None:
+    def testCreateValueObject_unknownClass(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0("unknown", PatternOptionBuilder.OBJECT_VALUE)
@@ -141,7 +141,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
 
     
-    def test_CreateValueString(self) -> None:
+    def testCreateValueString(self) -> None:
         try:
             self.assertEqual(
                 "String",
@@ -151,7 +151,7 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_CreateValueURL(self) -> None:
+    def testCreateValueURL(self) -> None:
         try:
             urlString = "https://commons.apache.org"
             result = TypeHandler.createValue0(urlString, PatternOptionBuilder.URL_VALUE)
@@ -162,7 +162,7 @@ class TypeHandlerTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
     
-    def test_CreateValueURL_malformed(self) -> None:
+    def testCreateValueURL_malformed(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0("malformed-url", PatternOptionBuilder.URL_VALUE)

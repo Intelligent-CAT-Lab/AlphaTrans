@@ -13,7 +13,7 @@ class MultipartStreamTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def test_ThreeParamConstructor(self) -> None:
+    def testThreeParamConstructor(self) -> None:
 
         try:
             strData = "foobar"
@@ -31,7 +31,7 @@ class MultipartStreamTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_SmallBuffer(self) -> None:
+    def testSmallBuffer(self) -> None:
 
         with self.assertRaises(ValueError):
             strData = "foobar"

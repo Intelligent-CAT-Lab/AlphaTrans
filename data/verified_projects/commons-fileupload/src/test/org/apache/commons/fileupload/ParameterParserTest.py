@@ -13,7 +13,7 @@ class ParameterParserTest(unittest.TestCase):
 
     # Class Methods Begin
 
-    def test_Parsing(self) -> None:
+    def testParsing(self) -> None:
         
         s = "test; test1 =  stuff   ; test2 =  \"stuff; stuff\"; test3=\"stuff"
         parser = ParameterParser()
@@ -49,7 +49,7 @@ class ParameterParserTest(unittest.TestCase):
         self.assertEqual(0, len(params))
         # LLM could not translate method body
 
-    def test_ContentTypeParsing(self) -> None:
+    def testContentTypeParsing(self) -> None:
 
         s = "text/plain; Charset=UTF-8"
         parser = ParameterParser()
@@ -58,7 +58,7 @@ class ParameterParserTest(unittest.TestCase):
         self.assertEqual("UTF-8", params.get("charset"))
         # LLM could not translate method body
 
-    def test_ParsingEscapedChars(self) -> None:
+    def testParsingEscapedChars(self) -> None:
 
         s = "param = \"stuff\\\"; more stuff\""
         parser = ParameterParser()
@@ -73,7 +73,7 @@ class ParameterParserTest(unittest.TestCase):
         self.assertIsNone(params.get("anotherparam"))
         # LLM could not translate method body
 
-    def test_FileUpload139(self) -> None:
+    def testFileUpload139(self) -> None:
 
         parser = ParameterParser()
 
@@ -89,7 +89,7 @@ class ParameterParserTest(unittest.TestCase):
         params = parser.parse0(s, [',', ';'])
         self.assertEqual("BbC04y", params.get("boundary"))
 
-    def test_fileUpload199(self) -> None:
+    def testFileUpload199(self) -> None:
 
         parser = ParameterParser()
         s = (

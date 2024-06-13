@@ -60,7 +60,7 @@ class BugCLI266Test(unittest.TestCase):
         return options
 
     
-    def test_OptionComparatorDefaultOrder(self) -> None:
+    def testOptionComparatorDefaultOrder(self) -> None:
         formatter = HelpFormatter()
         options = list(self.__getOptions().getOptions())
         options.sort(key=formatter.getOptionComparator())
@@ -70,7 +70,7 @@ class BugCLI266Test(unittest.TestCase):
             i += 1
 
     
-    def test_OptionComparatorInsertedOrder(self) -> None:
+    def testOptionComparatorInsertedOrder(self) -> None:
         options = self.__getOptions().getOptions()
         i = 0
         for o in options:

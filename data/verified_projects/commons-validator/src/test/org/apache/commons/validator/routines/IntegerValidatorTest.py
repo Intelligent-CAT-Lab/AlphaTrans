@@ -101,7 +101,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_IntegerValidatorMethods(self) -> None:
+    def testIntegerValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -183,7 +183,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
 
     
-    def test_IntegerRangeMinMax(self) -> None:
+    def testIntegerRangeMinMax(self) -> None:
         validator = IntegerValidator(self._strictValidator)
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")
@@ -240,7 +240,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
     
 
-    def test_MinMaxValues(self) -> None:
+    def testMinMaxValues(self) -> None:
         self.assertTrue(
             self._validator.isValid0("2147483647"),
             "2147483647 is max integer"

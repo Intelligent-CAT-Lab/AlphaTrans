@@ -11,13 +11,13 @@ class MimeUtilityTestCase(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def test_noNeedToDecode(self) -> None:
+    def testNoNeedToDecode(self) -> None:
         try:
             self.__assertEncoded("abc", "abc")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_decodeUtf8QuotedPrintableEncoded(self) -> None:
+    def testDecodeUtf8QuotedPrintableEncoded(self) -> None:
         try:
             self.__assertEncoded(
                 " h\u00e9! \u00e0\u00e8\u00f4u !!!",
@@ -26,7 +26,7 @@ class MimeUtilityTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_decodeUtf8Base64Encoded(self) -> None:
+    def testDecodeUtf8Base64Encoded(self) -> None:
         try:
             self.__assertEncoded(
                 " h\u00e9! \u00e0\u00e8\u00f4u !!!",
@@ -36,7 +36,7 @@ class MimeUtilityTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
         # LLM added redundant (and incorrect) test logic to this test.
 
-    def test_decodeIso88591Base64Encoded(self) -> None:
+    def testDecodeIso88591Base64Encoded(self) -> None:
         try:
             self.__assertEncoded(
                 "If you can read this you understand the example.",
@@ -46,7 +46,7 @@ class MimeUtilityTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_decodeIso88591Base64EncodedWithWhiteSpace(self) -> None:
+    def testDecodeIso88591Base64EncodedWithWhiteSpace(self) -> None:
         try:
             self.__assertEncoded(
                 "If you can read this you understand the example.",
@@ -56,7 +56,7 @@ class MimeUtilityTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
     
-    def test_decodeInvalidEncoding(self) -> None:
+    def testDecodeInvalidEncoding(self) -> None:
         with self.assertRaises(Exception) as context:
             MimeUtility.decodeText("=?invalid?B?xyz-?=")
         self.assertTrue(isinstance(context.exception, UnicodeEncodeError) or isinstance(context.exception, UnicodeDecodeError))

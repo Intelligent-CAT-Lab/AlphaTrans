@@ -71,7 +71,7 @@ class ShortValidatorTest(AbstractNumberValidatorTest):
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_ShortValidatorMethods(self) -> None:
+    def testShortValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"

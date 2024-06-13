@@ -39,7 +39,7 @@ class SedolCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_VALIDATOR_346(self) -> None:
+    def testVALIDATOR_346(self) -> None:
         for i in range(len(SedolCheckDigitTest.__invalidCheckDigits)):
             invalidCheckDigit = SedolCheckDigitTest.__invalidCheckDigits[i]
             self.assertFalse(

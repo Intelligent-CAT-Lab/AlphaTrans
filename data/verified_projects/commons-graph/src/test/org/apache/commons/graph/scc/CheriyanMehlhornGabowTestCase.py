@@ -17,21 +17,21 @@ from typing import *
 
 class CheriyanMehlhornGabowTestCase(unittest.TestCase):
 
-    def test_EmptyGraph(self) -> None:
+    def testEmptyGraph(self) -> None:
         graph = DirectedMutableGraph()
 
         CommonsGraph.findStronglyConnectedComponent(graph)\
             .applyingCheriyanMehlhornGabow()
 
     
-    def test_NullGraph(self) -> None:
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = None
             CommonsGraph.findStronglyConnectedComponent(graph)\
                 .applyingCheriyanMehlhornGabow()
 
     
-    def test_Sparse(self) -> None:
+    def testSparse(self) -> None:
         graph = CommonsGraph.newDirectedMutableGraph(
             GraphConnectionCheriyanMehlhornGabowTestCaseTestSparse()
         )
@@ -44,7 +44,7 @@ class CheriyanMehlhornGabowTestCase(unittest.TestCase):
         self.assertEqual(len(actual), expected)
 
     
-    def test_VerifyHasStronglyConnectedComponents(self) -> None:
+    def testVerifyHasStronglyConnectedComponents(self) -> None:
         a = BaseLabeledVertex("A")
         b = BaseLabeledVertex("B")
         c = BaseLabeledVertex("C")

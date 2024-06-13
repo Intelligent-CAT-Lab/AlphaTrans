@@ -34,7 +34,7 @@ class BugCLI71Test(unittest.TestCase):
         self.__parser = PosixParser()
     
     
-    def test_Basic(self) -> None:
+    def testBasic(self) -> None:
         try:
             args = ["-a", "Caesar", "-k", "A"]
             line = self.__parser.parse0(self.__options, args)
@@ -44,7 +44,7 @@ class BugCLI71Test(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_GetsDefaultIfOptional(self) -> None:
+    def testGetsDefaultIfOptional(self) -> None:
         try:
             args = ["-k", "-a", "Caesar"]
             self.__options.getOption("k").setOptionalArg(True)
@@ -56,7 +56,7 @@ class BugCLI71Test(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_LackOfError(self) -> None:
+    def testLackOfError(self) -> None:
         try:
             args = ["-k", "-a", "Caesar"]
             try:
@@ -68,7 +68,7 @@ class BugCLI71Test(unittest.TestCase):
             self.fail(f"An unexpected exception occurred. Expected MissingArgumentException but got: {e}")
 
     
-    def test_MistakenArgument(self) -> None:
+    def testMistakenArgument(self) -> None:
         try:
             args = ["-a", "Caesar", "-k", "A"]
             line = self.__parser.parse0(self.__options, args)

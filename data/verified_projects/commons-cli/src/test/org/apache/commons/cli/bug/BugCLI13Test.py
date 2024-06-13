@@ -16,7 +16,7 @@ class BugCLI13Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def test_CLI13(self) -> None:
+    def testCLI13(self) -> None:
         try:
             debugOpt = "debug"
             debug = OptionBuilder.withArgName(debugOpt)\

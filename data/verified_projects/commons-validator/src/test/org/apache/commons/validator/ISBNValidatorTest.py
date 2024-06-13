@@ -13,7 +13,7 @@ class ISBNValidatorTest(unittest.TestCase):
         super().__init__(methodName)
     
 
-    def test_IsValid(self) -> None:
+    def testIsValid(self) -> None:
         try:
             validator = ISBNValidator()
             self.assertFalse(validator.isValid(None))

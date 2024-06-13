@@ -31,7 +31,7 @@ class PrimTestCase(unittest.TestCase):
         PrimTestCase.assertEquals(expected, actual)
     
     
-    def test_EmptyGraph(self) -> None:
+    def testEmptyGraph(self) -> None:
         with self.assertRaises(RuntimeError):
             input = UndirectedMutableGraph()
 
@@ -41,7 +41,7 @@ class PrimTestCase(unittest.TestCase):
                 .applyingPrimAlgorithm(DoubleWeightBaseOperations())
 
     
-    def test_NotExistVertex(self) -> None:
+    def testNotExistVertex(self) -> None:
         with self.assertRaises(RuntimeError):
             input = UndirectedMutableGraph()
 
@@ -50,7 +50,7 @@ class PrimTestCase(unittest.TestCase):
                 .fromSource(BaseLabeledVertex("NOT EXIST"))
     
 
-    def test_NullGraph(self) -> None:
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.minimumSpanningTree(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -58,7 +58,7 @@ class PrimTestCase(unittest.TestCase):
                 .applyingPrimAlgorithm(DoubleWeightBaseOperations())
 
     
-    def test_NullMonoid(self) -> None:
+    def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = None
             a = None
@@ -75,7 +75,7 @@ class PrimTestCase(unittest.TestCase):
                 .applyingBoruvkaAlgorithm(None)
     
 
-    def test_NullVertex(self) -> None:
+    def testNullVertex(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = UndirectedMutableGraph()
 
@@ -85,7 +85,7 @@ class PrimTestCase(unittest.TestCase):
                 .applyingPrimAlgorithm(DoubleWeightBaseOperations())
 
     
-    def test_VerifyMinimumSpanningTree2(self) -> None:
+    def testVerifyMinimumSpanningTree2(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("a")
@@ -139,7 +139,7 @@ class PrimTestCase(unittest.TestCase):
         PrimTestCase.__internalPrimAssertion(input, a, expected)
 
     
-    def test_VerifyWikipediaMinimumSpanningTree(self) -> None:
+    def testVerifyWikipediaMinimumSpanningTree(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("A")

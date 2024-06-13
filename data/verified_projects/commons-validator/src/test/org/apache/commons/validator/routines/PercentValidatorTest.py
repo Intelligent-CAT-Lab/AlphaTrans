@@ -26,7 +26,7 @@ class PercentValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
-    def test_FormatType(self) -> None:
+    def testFormatType(self) -> None:
         self.assertEqual(
             2,
             PercentValidator.getInstance().getFormatType(),
@@ -39,7 +39,7 @@ class PercentValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Valid(self) -> None:
+    def testValid(self) -> None:
         origDefault = getlocale(LC_NUMERIC)
         setlocale(LC_NUMERIC, 'en_GB.UTF-8')
 
@@ -100,7 +100,7 @@ class PercentValidatorTest(unittest.TestCase):
         setlocale(LC_NUMERIC, origDefault)
 
     
-    def test_Invalid(self) -> None:
+    def testInvalid(self) -> None:
         validator = PercentValidator.getInstance()
 
         self.assertFalse(

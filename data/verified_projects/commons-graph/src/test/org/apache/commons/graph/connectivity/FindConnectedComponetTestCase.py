@@ -15,7 +15,7 @@ import unittest
 
 class FindConnectedComponetTestCase(unittest.TestCase):
 
-    def test_VerifyConnectedComponents(self) -> None:
+    def testVerifyConnectedComponents(self) -> None:
         a = BaseLabeledVertex("A")
 
         graph = CommonsGraph.newUndirectedMutableGraph(
@@ -30,7 +30,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(8, len(c))
     
 
-    def test_VerifyConnectedComponents2(self) -> None:
+    def testVerifyConnectedComponents2(self) -> None:
         a = BaseLabeledVertex("A")
 
         graph = CommonsGraph.newUndirectedMutableGraph(
@@ -45,7 +45,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(2, len(c))
 
 
-    def test_VerifyConnectedComponents3(self) -> None:
+    def testVerifyConnectedComponents3(self) -> None:
         a = BaseLabeledVertex("A")
 
         graph = CommonsGraph.newUndirectedMutableGraph(
@@ -60,7 +60,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(1, len(c))
     
     
-    def test_VerifyConnectedComponentsIncludingVertices(self) -> None:
+    def testVerifyConnectedComponentsIncludingVertices(self) -> None:
         a = BaseLabeledVertex("A")
 
         graph = CommonsGraph.newUndirectedMutableGraph(
@@ -75,7 +75,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(1, len(coll))
 
     
-    def test_VerifyConnectedComponentsIncludingVertices2(self) -> None:
+    def testVerifyConnectedComponentsIncludingVertices2(self) -> None:
         a = BaseLabeledVertex("A")
         e = BaseLabeledVertex("E")
 
@@ -91,7 +91,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(2, len(coll))
 
 
-    def test_VerifyEmptyGraph(self) -> None:
+    def testVerifyEmptyGraph(self) -> None:
         graph = UndirectedMutableGraph()
 
         c = CommonsGraph.findConnectedComponent(graph)\
@@ -100,7 +100,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(0, len(c))
 
 
-    def test_VerifyNullVerticesGraph(self) -> None:
+    def testVerifyNullVerticesGraph(self) -> None:
         graph = CommonsGraph.newUndirectedMutableGraph(
             GraphConnectionFindConnectedComponetTestCaseTestVerifyNullVerticesGraph()
         )
@@ -110,7 +110,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(0, len(c))
 
     
-    def test_verifyNullGraph(self) -> None:
+    def testverifyNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findConnectedComponent(None)\
                 .includingAllVertices().applyingMinimumSpanningTreeAlgorithm()

@@ -21,147 +21,147 @@ class GnuParserTest(ParserTestCase):
         super().setUp(GnuParser())
 
     @unittest.skip("not supported by the GnuParser")
-    def test_AmbiguousLongWithoutEqualSingleDash(self) -> None:
+    def testAmbiguousLongWithoutEqualSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_AmbiguousPartialLongOption1(self) -> None:
+    def testAmbiguousPartialLongOption1(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_AmbiguousPartialLongOption2(self) -> None:
+    def testAmbiguousPartialLongOption2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_AmbiguousPartialLongOption3(self) -> None:
+    def testAmbiguousPartialLongOption3(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_AmbiguousPartialLongOption4(self) -> None:
+    def testAmbiguousPartialLongOption4(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_Bursting(self) -> None:
+    def testBursting(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_DoubleDash2(self) -> None:
+    def testDoubleDash2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_LongWithoutEqualSingleDash(self) -> None:
+    def testLongWithoutEqualSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_LongWithUnexpectedArgument1(self) -> None:
+    def testLongWithUnexpectedArgument1(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_LongWithUnexpectedArgument2(self) -> None:
+    def testLongWithUnexpectedArgument2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_MissingArgWithBursting(self) -> None:
+    def testMissingArgWithBursting(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
     
     @unittest.skip("not supported by the GnuParser (CLI-184)")
-    def test_NegativeOption(self) -> None:
+    def testNegativeOption(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_PartialLongOptionSingleDash(self) -> None:
+    def testPartialLongOptionSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_ShortWithUnexpectedArgument(self) -> None:
+    def testShortWithUnexpectedArgument(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_StopBursting(self) -> None:
+    def testStopBursting(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_StopBursting2(self) -> None:
+    def testStopBursting2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_UnambiguousPartialLongOption1(self) -> None:
+    def testUnambiguousPartialLongOption1(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_UnambiguousPartialLongOption2(self) -> None:
+    def testUnambiguousPartialLongOption2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_UnambiguousPartialLongOption3(self) -> None:
+    def testUnambiguousPartialLongOption3(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_UnambiguousPartialLongOption4(self) -> None:
+    def testUnambiguousPartialLongOption4(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the GnuParser")
-    def test_UnrecognizedOptionWithBursting(self) -> None:
+    def testUnrecognizedOptionWithBursting(self) -> None:
         try:
             pass
         except Exception as e:

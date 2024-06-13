@@ -41,7 +41,7 @@ class ISSNValidatorTest(unittest.TestCase):
         ]
 
     
-    def test_IsValidISSN(self) -> None:
+    def testIsValidISSN(self) -> None:
         for f in self.__validFormat:
             self.assertTrue(
                 ISSNValidatorTest.__VALIDATOR.isValid(f),
@@ -49,14 +49,14 @@ class ISSNValidatorTest(unittest.TestCase):
             )
 
     
-    def test_Null(self) -> None:
+    def testNull(self) -> None:
         self.assertFalse(
             ISSNValidatorTest.__VALIDATOR.isValid(None),
             "isValid"
         )
 
     
-    def test_Invalid(self) -> None:
+    def testInvalid(self) -> None:
         for f in self.__invalidFormat:
             self.assertFalse(
                 ISSNValidatorTest.__VALIDATOR.isValid(f),
@@ -64,13 +64,13 @@ class ISSNValidatorTest(unittest.TestCase):
             )
 
     
-    def test_IsValidISSNConvertNull(self) -> None:
+    def testIsValidISSNConvertNull(self) -> None:
         self.assertIsNone(
             ISSNValidatorTest.__VALIDATOR.convertToEAN13(None, "00")
         )
 
     
-    def test_IsValidISSNConvertSuffix(self) -> None:
+    def testIsValidISSNConvertSuffix(self) -> None:
         for suffix in [None, "", "0", "A", "AA", "999"]:
             with self.assertRaises(
                 ValueError,
@@ -79,7 +79,7 @@ class ISSNValidatorTest(unittest.TestCase):
                 ISSNValidatorTest.__VALIDATOR.convertToEAN13(None, suffix)
 
     
-    def test_IsValidISSNConvert(self) -> None:
+    def testIsValidISSNConvert(self) -> None:
         ean13cd = EAN13CheckDigit.EAN13_CHECK_DIGIT
         r = Random()
         for f in self.__validFormat:
@@ -103,7 +103,7 @@ class ISSNValidatorTest(unittest.TestCase):
         )
 
     
-    def test_ConversionErrors(self) -> None:
+    def testConversionErrors(self) -> None:
         inputs = ["9780072129519", "9791090636071", "03178471"]
         for input in inputs:
             with self.assertRaises(
@@ -113,7 +113,7 @@ class ISSNValidatorTest(unittest.TestCase):
                 ISSNValidatorTest.__VALIDATOR.extractFromEAN13(input)
 
     
-    def test_ValidCheckDigitEAN13(self) -> None:
+    def testValidCheckDigitEAN13(self) -> None:
         valideCodes = ["9771234567003"]
         invalideCodes = [
             "9771234567001",
@@ -136,7 +136,7 @@ class ISSNValidatorTest(unittest.TestCase):
             )
 
     
-    def test_IsValidExtract(self) -> None:
+    def testIsValidExtract(self) -> None:
         self.assertEqual(
             "12345679",
             ISSNValidatorTest.__VALIDATOR.extractFromEAN13("9771234567003")

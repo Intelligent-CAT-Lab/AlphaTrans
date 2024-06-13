@@ -20,7 +20,7 @@ import unittest
 
 class ReverseDeleteTestCase(unittest.TestCase):
 
-    def test_EmptyGraph(self) -> None:
+    def testEmptyGraph(self) -> None:
         input = UndirectedMutableGraph()
 
         tree = CommonsGraph.minimumSpanningTree(input)\
@@ -31,14 +31,14 @@ class ReverseDeleteTestCase(unittest.TestCase):
         self.assertEqual(0, tree.getSize())
 
     
-    def test_NullGraph(self) -> None:
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.minimumSpanningTree(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
                 .applyingReverseDeleteAlgorithm(DoubleWeightBaseOperations())
 
     
-    def test_NullMonoid(self) -> None:
+    def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = None
 
@@ -47,7 +47,7 @@ class ReverseDeleteTestCase(unittest.TestCase):
                 .applyingReverseDeleteAlgorithm(None)
 
     
-    def test_VerifyMinimumSpanningTree(self) -> None:
+    def testVerifyMinimumSpanningTree(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("a")
@@ -79,7 +79,7 @@ class ReverseDeleteTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
-    def test_VerifyNotConnectGraph(self) -> None:
+    def testVerifyNotConnectGraph(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("a")
@@ -104,7 +104,7 @@ class ReverseDeleteTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     
-    def test_VerifyNotConnectGraph2(self) -> None:
+    def testVerifyNotConnectGraph2(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("a")

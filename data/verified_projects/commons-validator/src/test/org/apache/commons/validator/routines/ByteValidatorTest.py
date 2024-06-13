@@ -102,7 +102,7 @@ class ByteValidatorTest(AbstractNumberValidatorTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_ByteValidatorMethods(self) -> None:
+    def testByteValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00"
         patternVal = "1,23"
@@ -189,7 +189,7 @@ class ByteValidatorTest(AbstractNumberValidatorTest):
         )
     
 
-    def test_ByteRangeMinMax(self) -> None:
+    def testByteRangeMinMax(self) -> None:
         validator = self.strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")

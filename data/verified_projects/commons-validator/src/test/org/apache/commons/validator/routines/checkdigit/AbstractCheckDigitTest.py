@@ -54,9 +54,9 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
-    def test_IsValidTrue(self) -> None:
+    def testIsValidTrue(self) -> None:
         if self._log.isEnabledFor(logging.DEBUG):
-            self._log.debug(f"test_IsValidTrue() for {self._routine.__class__.__name__}")
+            self._log.debug(f"testIsValidTrue() for {self._routine.__class__.__name__}")
 
         for i in range(len(self._valid)):
             if self._log.isEnabledFor(logging.DEBUG):
@@ -64,9 +64,9 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self.assertTrue(self._routine.isValid(self._valid[i]), f"valid[{i}]: {self._valid[i]}")
 
     
-    def test_IsValidFalse(self) -> None:
+    def testIsValidFalse(self) -> None:
         if self._log.isEnabledFor(logging.DEBUG):
-            self._log.debug(f"test_IsValidFalse() for {self._routine.__class__.__name__}")
+            self._log.debug(f"testIsValidFalse() for {self._routine.__class__.__name__}")
 
         for i in range(len(self._invalid)):
             if self._log.isEnabledFor(logging.DEBUG):
@@ -80,9 +80,9 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self.assertFalse(self._routine.isValid(invalidCheckDigits[i]), f"invalid check digit[{i}]: {invalidCheckDigits[i]}")
 
     
-    def test_CalculateValid(self) -> None:
+    def testCalculateValid(self) -> None:
         if self._log.isEnabledFor(logging.DEBUG):
-            self._log.debug(f"test_CalculateValid() for {self._routine.__class__.__name__}")
+            self._log.debug(f"testCalculateValid() for {self._routine.__class__.__name__}")
 
         for i in range(len(self._valid)):
             code = self._removeCheckDigit(self._valid[i])
@@ -95,9 +95,9 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
                 self.fail(f"valid[{i}]={self._valid[i]} threw {e}")
 
     
-    def test_CalculateInvalid(self) -> None:
+    def testCalculateInvalid(self) -> None:
         if self._log.isEnabledFor(logging.DEBUG):
-            self._log.debug(f"test_CalculateInvalid() for {self._routine.__class__.__name__}")
+            self._log.debug(f"testCalculateInvalid() for {self._routine.__class__.__name__}")
 
         for i in range(len(self._invalid)):
             try:
@@ -111,7 +111,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
                 self.assertTrue(e.getMessage().startswith("Invalid "), f"Invalid Character[{i}]={e.getMessage()}")
 
     
-    def test_MissingCode(self) -> None:
+    def testMissingCode(self) -> None:
         self.assertFalse(self._routine.isValid(None), "isValid() Null")
 
         self.assertFalse(self._routine.isValid(""), "isValid() Zero Length")
@@ -131,7 +131,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self.assertEqual(self._missingMessage, str(e), "calculate() Zero Length")
 
     
-    def test_ZeroSum(self) -> None:
+    def testZeroSum(self) -> None:
         self.assertFalse(self._routine.isValid(self._zeroSum), "isValid() Zero Sum")
 
         try:
@@ -141,7 +141,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self.assertEqual("Invalid code, sum is zero", str(e), "isValid() Zero Sum")
 
     
-    def test_Serialization(self) -> None:
+    def testSerialization(self) -> None:
         baos = BytesIO()
         try:
             pickle.dump(self._routine, baos)

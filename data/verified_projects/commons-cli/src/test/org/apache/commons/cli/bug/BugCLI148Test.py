@@ -23,7 +23,7 @@ class BugCLI148Test(unittest.TestCase):
         self.__options.addOption0(OptionBuilder.hasArg0().create1('s'))
 
     
-    def test_Workaround1(self) -> None:
+    def testWorkaround1(self) -> None:
         try:
             parser = PosixParser()
             args = ["-t-something"]
@@ -34,7 +34,7 @@ class BugCLI148Test(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_Workaround2(self) -> None:
+    def testWorkaround2(self) -> None:
         try:
             parser = PosixParser()
             args = ["-t", "\"-something\""]

@@ -113,7 +113,7 @@ class IBANValidatorTest(unittest.TestCase):
         ]
 
     
-    def test_Valid(self) -> None:
+    def testValid(self) -> None:
         for f in self.__validIBANFormat:
             self.assertTrue(
                 IBANCheckDigit.IBAN_CHECK_DIGIT.isValid(f),
@@ -126,60 +126,60 @@ class IBANValidatorTest(unittest.TestCase):
             self.assertTrue(IBANValidatorTest.__VALIDATOR.isValid(f), f)
 
     
-    def test_InValid(self) -> None:
+    def testInValid(self) -> None:
         for f in self.__invalidIBANFormat:
             self.assertFalse(IBANValidatorTest.__VALIDATOR.isValid(f), f)
 
     
-    def test_Null(self) -> None:
+    def testNull(self) -> None:
         self.assertFalse(IBANValidatorTest.__VALIDATOR.isValid(None), "isValid(null)")
 
     
-    def test_HasValidator(self) -> None:
+    def testHasValidator(self) -> None:
         self.assertTrue(IBANValidatorTest.__VALIDATOR.hasValidator("GB"), "GB")
         self.assertFalse(IBANValidatorTest.__VALIDATOR.hasValidator("gb"), "gb")
 
     
-    def test_GetValidator(self) -> None:
+    def testGetValidator(self) -> None:
         self.assertIsNotNone(IBANValidatorTest.__VALIDATOR.getValidator("GB"), "GB")
         self.assertIsNone(IBANValidatorTest.__VALIDATOR.getValidator("gb"), "gb")
 
     
-    def test_SetDefaultValidator1(self) -> None:
+    def testSetDefaultValidator1(self) -> None:
         with self.assertRaises(RuntimeError):
             self.assertIsNotNone(IBANValidatorTest.__VALIDATOR.setValidator1("GB", 15, "GB"))
 
     
-    def test_SetDefaultValidator2(self) -> None:
+    def testSetDefaultValidator2(self) -> None:
         with self.assertRaises(RuntimeError):
             self.assertIsNotNone(IBANValidatorTest.__VALIDATOR.setValidator1("GB", -1, "GB"))
 
     
-    def test_SetValidatorLC(self) -> None:
+    def testSetValidatorLC(self) -> None:
         with self.assertRaises(ValueError):
             validator = IBANValidator.IBANValidator1()
             self.assertIsNotNone(validator.setValidator1("gb", 15, "GB"))
 
     
-    def test_SetValidatorLen7(self) -> None:
+    def testSetValidatorLen7(self) -> None:
         with self.assertRaises(ValueError):
             validator = IBANValidator.IBANValidator1()
             self.assertIsNotNone(validator.setValidator1("GB", 7, "GB"))
 
     
-    def test_SetValidatorLen35(self) -> None:
+    def testSetValidatorLen35(self) -> None:
         with self.assertRaises(ValueError):
             validator = IBANValidator.IBANValidator1()
             self.assertIsNotNone(validator.setValidator1("GB", 35, "GB"))
 
     
-    def test_SetValidatorLen_1(self) -> None:
+    def testSetValidatorLen_1(self) -> None:
         validator = IBANValidator.IBANValidator1()
         self.assertIsNotNone(validator.setValidator1("GB", -1, ""), "should be present")
         self.assertIsNone(validator.setValidator1("GB", -1, ""), "no longer present")
 
     
-    def test_Sorted(self) -> None:
+    def testSorted(self) -> None:
         validator = IBANValidator.IBANValidator1()
         vals = validator.getDefaultValidators()
         self.assertIsNotNone(vals)

@@ -118,7 +118,7 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
     
-    def test_ZeroSum(self) -> None:
+    def testZeroSum(self) -> None:
         pass
 
     
@@ -145,7 +145,7 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
         return code[2:4]
 
     
-    def test_Other(self):
+    def testOther(self):
         with open("IBANtests.txt", "r") as file:
             for line in file:
                 line = line.strip()

@@ -51,7 +51,7 @@ class RegexValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
-    def test_Single(self) -> None:
+    def testSingle(self) -> None:
         sensitive = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX)
         insensitive = RegexValidator.RegexValidator2(RegexValidatorTest.__REGEX, False)
 
@@ -129,7 +129,7 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
-    def test_MultipleSensitive(self) -> None:
+    def testMultipleSensitive(self) -> None:
         multiple = RegexValidator.RegexValidator1(RegexValidatorTest.__MULTIPLE_REGEX)
         single1 = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX_1)
         single2 = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX_2)
@@ -220,7 +220,7 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
-    def test_MultipleInsensitive(self) -> None:
+    def testMultipleInsensitive(self) -> None:
         multiple = RegexValidator(RegexValidatorTest.__MULTIPLE_REGEX, False)
         single1 = RegexValidator.RegexValidator2(RegexValidatorTest.__REGEX_1, False)
         single2 = RegexValidator.RegexValidator2(RegexValidatorTest.__REGEX_2, False)
@@ -311,7 +311,7 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
-    def test_NullValue(self) -> None:
+    def testNullValue(self) -> None:
         validator = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX)
         self.assertEqual(
             False,
@@ -330,7 +330,7 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
-    def test_MissingRegex(self) -> None:
+    def testMissingRegex(self) -> None:
         with self.assertRaises(ValueError) as context:
             RegexValidator.RegexValidator3(None)
         self.assertEqual(
@@ -382,13 +382,13 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Exceptions(self) -> None:
+    def testExceptions(self) -> None:
         invalidRegex = "^([abCD12]*$"
         with self.assertRaises(re.error):
             RegexValidator.RegexValidator3(invalidRegex)
 
     
-    def test_ToString(self) -> None:
+    def testToString(self) -> None:
         single = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX)
         self.assertEqual(
             "RegexValidator{" + RegexValidatorTest.__REGEX + "}",

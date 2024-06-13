@@ -54,7 +54,7 @@ class DoubleValidatorTest(AbstractNumberValidatorTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_DoubleValidatorMethods(self) -> None:
+    def testDoubleValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -136,7 +136,7 @@ class DoubleValidatorTest(AbstractNumberValidatorTest):
         )
 
     
-    def test_DoubleRangeMinMax(self) -> None:
+    def testDoubleRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")

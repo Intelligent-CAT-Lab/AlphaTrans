@@ -94,7 +94,7 @@ class BugCLI162Test(unittest.TestCase):
         self.__sw = io.StringIO()
 
 
-    def test_InfiniteLoop(self) -> None:
+    def testInfiniteLoop(self) -> None:
         options = Options()
         options.addOption3("h", "help", False, "This is a looooong description")
         self.__formatter.printHelp2(
@@ -124,7 +124,7 @@ class BugCLI162Test(unittest.TestCase):
         self.assertEqual(expected, self.__sw.getvalue())
 
     
-    def test_LongLineChunking(self) -> None:
+    def testLongLineChunking(self) -> None:
         options = Options()
         options.addOption3(
             "x",
@@ -189,7 +189,7 @@ class BugCLI162Test(unittest.TestCase):
         )
 
     
-    def test_LongLineChunkingIndentIgnored(self) -> None:
+    def testLongLineChunkingIndentIgnored(self) -> None:
         options = Options()
         options.addOption3("x", "extralongarg", False, "This description is Long.")
         self.__formatter.printHelp2(

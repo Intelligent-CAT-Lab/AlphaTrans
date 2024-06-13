@@ -15,7 +15,7 @@ class BugCLI133Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def test_Order(self) -> None:
+    def testOrder(self) -> None:
         try:
             optionA = Option.Option1("a", "first")
             opts = Options()

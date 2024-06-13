@@ -24,7 +24,7 @@ import pathlib
 
 class AStarTestCase(unittest.TestCase):
 
-    def test_FindShortestPathAndVerify(self) -> None:
+    def testFindShortestPathAndVerify(self) -> None:
         graph = UndirectedMutableGraph()
 
         start = BaseLabeledVertex("start")
@@ -102,7 +102,7 @@ class AStarTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
-    def test_NotConnectGraph(self) -> None:
+    def testNotConnectGraph(self) -> None:
         with self.assertRaises(PathNotFoundException):
             graph = UndirectedMutableGraph()
 
@@ -123,7 +123,7 @@ class AStarTestCase(unittest.TestCase):
                 .withHeuristic(heuristic)
 
 
-    def test_NullGraph(self) -> None:
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findShortestPath(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -133,7 +133,7 @@ class AStarTestCase(unittest.TestCase):
                 .withHeuristic(None)
 
     
-    def test_NullHeuristic(self) -> None:
+    def testNullHeuristic(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 
@@ -145,7 +145,7 @@ class AStarTestCase(unittest.TestCase):
                 .withHeuristic(None)
     
     
-    def test_NullMonoid(self) -> None:
+    def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 
@@ -170,7 +170,7 @@ class AStarTestCase(unittest.TestCase):
                 .withHeuristic(heuristic)
 
     
-    def test_NullVertices(self) -> None:
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 

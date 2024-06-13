@@ -51,7 +51,7 @@ class OptionGroupTest(unittest.TestCase):
         self.__options.addOption3("r", "revision", False, "revision number")
 
     
-    def test_GetNames(self) -> None:
+    def testGetNames(self) -> None:
         group = OptionGroup()
         group.addOption(OptionBuilder.create1('a'))
         group.addOption(OptionBuilder.create1('b'))
@@ -62,7 +62,7 @@ class OptionGroupTest(unittest.TestCase):
         self.assertTrue("b" in group.getNames())
 
 
-    def test_NoOptionsExtraArgs(self) -> None:
+    def testNoOptionsExtraArgs(self) -> None:
         try:
             args = ["arg1", "arg2"]
 
@@ -78,7 +78,7 @@ class OptionGroupTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SingleLongOption(self) -> None:
+    def testSingleLongOption(self) -> None:
         try:
             args = ["--file"]
 
@@ -94,7 +94,7 @@ class OptionGroupTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_SingleOption(self) -> None:
+    def testSingleOption(self) -> None:
         try:
             args = ["-r"]
 
@@ -110,7 +110,7 @@ class OptionGroupTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_SingleOptionFromGroup(self) -> None:
+    def testSingleOptionFromGroup(self) -> None:
         try:
             args = ["-f"]
 
@@ -126,7 +126,7 @@ class OptionGroupTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_ToString(self) -> None:
+    def testToString(self) -> None:
         group1 = OptionGroup()
         group1.addOption(Option(0, None, "foo", "Foo", False, None))
         group1.addOption(Option(0, None, "bar", "Bar", False, None))
@@ -142,7 +142,7 @@ class OptionGroupTest(unittest.TestCase):
             self.assertEqual("[-f Foo, -b Bar]", group2.toString())
     
     
-    def test_TwoLongOptionsFromGroup(self) -> None:
+    def testTwoLongOptionsFromGroup(self) -> None:
         try:
             args = ["--file", "--directory"]
             try:
@@ -156,7 +156,7 @@ class OptionGroupTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_TwoOptionsFromDifferentGroup(self) -> None:
+    def testTwoOptionsFromDifferentGroup(self) -> None:
         try:
             args = ["-f", "-s"]
 
@@ -171,7 +171,7 @@ class OptionGroupTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_TwoOptionsFromGroup(self) -> None:
+    def testTwoOptionsFromGroup(self) -> None:
         try:
             args = ["-f", "-d"]
             try:
@@ -185,7 +185,7 @@ class OptionGroupTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_TwoOptionsFromGroupWithProperties(self) -> None:
+    def testTwoOptionsFromGroupWithProperties(self) -> None:
         try:
             args = ["-f"]
 
@@ -198,7 +198,7 @@ class OptionGroupTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_TwoValidLongOptions(self) -> None:
+    def testTwoValidLongOptions(self) -> None:
         try:
             args = ["--revision", "--file"]
 
@@ -214,7 +214,7 @@ class OptionGroupTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_TwoValidOptions(self) -> None:
+    def testTwoValidOptions(self) -> None:
         try:
             args = ["-r", "-f"]
 
@@ -230,7 +230,7 @@ class OptionGroupTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_ValidLongOnlyOptions(self) -> None:
+    def testValidLongOnlyOptions(self) -> None:
         try:
             cl1 = self.__parser.parse0(self.__options, ["--export"])
             self.assertTrue(cl1.hasOption2("export"), "Confirm --export is set")

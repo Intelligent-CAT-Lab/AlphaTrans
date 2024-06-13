@@ -59,7 +59,7 @@ class BigDecimalValidatorTest(AbstractNumberValidatorTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
     
-    def test_BigDecimalValidatorMethods(self) -> None:
+    def testBigDecimalValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -141,7 +141,7 @@ class BigDecimalValidatorTest(AbstractNumberValidatorTest):
         )
 
     
-    def test_BigDecimalRangeMinMax(self) -> None:
+    def testBigDecimalRangeMinMax(self) -> None:
         validator = BigDecimalValidator(True, AbstractNumberValidator.STANDARD_FORMAT, True)
         number9 = Decimal("9")
         number10 = Decimal("10")

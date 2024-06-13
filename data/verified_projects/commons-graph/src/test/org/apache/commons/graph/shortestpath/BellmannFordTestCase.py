@@ -27,7 +27,7 @@ import pathlib
 
 class BellmannFordTestCase(unittest.TestCase):
 
-    def test_FindShortestPathAndVerify(self) -> None:
+    def testFindShortestPathAndVerify(self) -> None:
         graph = DirectedMutableGraph()
 
         one = BaseLabeledVertex("1")
@@ -79,7 +79,7 @@ class BellmannFordTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
-    def test_NotConnectGraph(self) -> None:
+    def testNotConnectGraph(self) -> None:
         with self.assertRaises(PathNotFoundException):
             a = None
             b = None
@@ -101,7 +101,7 @@ class BellmannFordTestCase(unittest.TestCase):
             allVertexPairsShortestPath.findShortestPath(a, b)
 
     
-    def test_NullGraph(self) -> None:
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findShortestPath(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -109,7 +109,7 @@ class BellmannFordTestCase(unittest.TestCase):
                 .applyingBelmannFord(DoubleWeightBaseOperations())
 
     
-    def test_NullMonoid(self) -> None:
+    def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = None
             a = None
@@ -129,7 +129,7 @@ class BellmannFordTestCase(unittest.TestCase):
                 .applyingBelmannFord(None)
 
     
-    def test_NullVertices(self) -> None:
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 
