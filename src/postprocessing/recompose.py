@@ -5,7 +5,9 @@ import os
 
 def main(args):
 
-    schema_files = os.listdir(f'data/schemas/{args.project_name}')
+    translation_dir = f'data/translations/{args.model_name}/signature/{args.project_name}'
+    schema_files = os.listdir(translation_dir)
+    recomposed_projects_dir = f'data/recomposed_projects'
 
     total_fragments = 0
     total_unsuccessful = 0
@@ -16,7 +18,7 @@ def main(args):
             continue
 
         data = {}
-        with open(f'data/schemas/{args.project_name}/{schema}') as f:
+        with open(f'{translation_dir}/{schema}') as f:
             data = json.load(f)
 
         recomposed_file = '\n'.join(data['python_imports'])
@@ -101,11 +103,13 @@ def main(args):
                 total_fragments += 1
                 if data['classes'][class_]['fields'][field]['translation'] == None:
                     recomposed_file += '\n'.join([''] + data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', 'None # LLM could not translate this field')
+                    recomposed_file += '\n'
                     total_unsuccessful += 1
                     continue
 
                 if type(data['classes'][class_]['fields'][field]['translation']) == str:
                     recomposed_file += data['classes'][class_]['fields'][field]['translation']
+                    recomposed_file += '\n'
                     continue
 
                 field_translation = '\n'.join(data['classes'][class_]['fields'][field]['translation'])
@@ -115,18 +119,21 @@ def main(args):
                     if f'{a_class}(' in field_translation:
                         intialize_later_fields.append((field, field_translation.split('=')[0].strip(), field_translation.split('=')[1].strip()))
                         recomposed_file += data['classes'][class_]['fields'][field]['partial_translation'].replace('<placeholder>', f'None')
+                        recomposed_file += '\n'
                         found = True
                 
                 if found:
                     continue
 
                 recomposed_file += '\n'.join(data['classes'][class_]['fields'][field]['translation'])
+                recomposed_file += '\n'
             
             # create static method for field initialization
             if intialize_later_fields != []:
                 recomposed_file += f'\n\n    @staticmethod\n    def initialize_fields() -> None:\n'
                 for field, field_name, field_value in intialize_later_fields:
                     recomposed_file += '    ' + data['classes'][class_]['fields'][field]['partial_translation'].replace(f'{field_name}', f'{class_}.{field_name}').replace('<placeholder>', f'{field_value}\n')
+                    recomposed_file += '\n'
                 class_initialize_methods.append(f'{class_}.initialize_fields()')
             
             for method in data['classes'][class_]['methods']:
@@ -136,9 +143,11 @@ def main(args):
 
                 if data['classes'][class_]['methods'][method]['translation'] == None:
                     recomposed_file += '\n'.join([''] + data['classes'][class_]['methods'][method]['partial_translation']).replace('pass', 'pass # LLM could not translate this method')
+                    recomposed_file += '\n'
                     total_unsuccessful += 1
                     continue
                 recomposed_file += '\n'.join(data['classes'][class_]['methods'][method]['translation'])
+                recomposed_file += '\n'
                 total_fragments += 1
 
         for initialize_method in class_initialize_methods:
@@ -162,8 +171,8 @@ def main(args):
 
         formatted_schema_fname = '.'.join(schema.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
-        os.makedirs(f'data/recomposed_projects/{args.model_name}/{args.project_name}/{sub_dir}', exist_ok=True)
-        file_path = f"data/recomposed_projects/{args.model_name}/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
+        os.makedirs(f'{recomposed_projects_dir}/{args.model_name}/{args.project_name}/{sub_dir}', exist_ok=True)
+        file_path = f"{recomposed_projects_dir}/{args.model_name}/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
         with open(file_path, 'w') as f:
             f.write(recomposed_file)
         
@@ -173,22 +182,22 @@ def main(args):
     for schema in schema_files:
         formatted_schema_fname = '.'.join(schema.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
-        os.makedirs(f'data/recomposed_projects/{args.model_name}/{args.project_name}/{sub_dir}', exist_ok=True)
+        os.makedirs(f'{recomposed_projects_dir}/{args.model_name}/{args.project_name}/{sub_dir}', exist_ok=True)
 
         sub_dirs = sub_dir.split('/')
         for i in range(len(sub_dirs)):
             current_sub_dir = '/'.join(sub_dirs[:i+1])
-            with open(f'data/recomposed_projects/{args.model_name}/{args.project_name}/{current_sub_dir}/__init__.py', 'w') as f:
+            with open(f'{recomposed_projects_dir}/{args.model_name}/{args.project_name}/{current_sub_dir}/__init__.py', 'w') as f:
                 f.write('')
 
-        file_path = f"data/recomposed_projects/{args.model_name}/{args.project_name}/{sub_dir}/__init__.py"
+        file_path = f"{recomposed_projects_dir}/{args.model_name}/{args.project_name}/{sub_dir}/__init__.py"
         with open(file_path, 'w') as f:
             f.write('')
     
-    with open(f'data/recomposed_projects/{args.model_name}/{args.project_name}/pytest.ini', 'w') as f:
+    with open(f'{recomposed_projects_dir}/{args.model_name}/{args.project_name}/pytest.ini', 'w') as f:
         f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=short --junitxml=pytest-report.xml\n\n# Define directories to look for tests\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*')
     
-    with open(f'data/recomposed_projects/{args.model_name}/{args.project_name}/run.sh', 'w') as f:
+    with open(f'{recomposed_projects_dir}/{args.model_name}/{args.project_name}/run.sh', 'w') as f:
         f.write('python3 -m pytest\nxmllint --format pytest-report.xml -o pytest-report.xml')
 
     # print(f'total fragments: {total_fragments}, total unsuccessful: {total_unsuccessful}')
