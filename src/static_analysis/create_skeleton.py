@@ -239,6 +239,9 @@ def main(args):
                 target_schema['classes'][class_]['fields'][field]['partial_translation'] = f'    {field_body}'
                 target_schema['classes'][class_]['fields'][field]['translation'] = []
                 target_schema['classes'][class_]['fields'][field]['translation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['syntactical_validation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['test_validation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['graal_validation_status'] = 'pending'
                 target_schema['classes'][class_]['fields'][field]['elapsed_time'] = 0
                 target_schema['classes'][class_]['fields'][field]['generation_timestamp'] = 0
                 target_schema['classes'][class_]['fields'][field]['model_name'] = 'deepseek-coder-33b-instruct'
@@ -326,6 +329,9 @@ def main(args):
                 target_schema['classes'][class_]['methods'][method]['partial_translation'] = current_method
                 target_schema['classes'][class_]['methods'][method]['translation'] = []
                 target_schema['classes'][class_]['methods'][method]['translation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['syntactical_validation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['test_validation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['graal_validation_status'] = 'pending'
                 target_schema['classes'][class_]['methods'][method]['elapsed_time'] = 0
                 target_schema['classes'][class_]['methods'][method]['generation_timestamp'] = 0
                 target_schema['classes'][class_]['methods'][method]['model_name'] = 'deepseek-coder-33b-instruct'

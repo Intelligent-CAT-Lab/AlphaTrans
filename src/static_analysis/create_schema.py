@@ -44,7 +44,7 @@ def create_schema(args):
     
     for line in lines:
         res_row = line.split('|')[1:-1]
-        class_name, class_location, callable_name, modifier, return_type, return_type_qualified_name, signature, annotation, start, end = [x.strip() for x in res_row]
+        class_name, class_location, callable_name, modifier, return_type, return_type_qualified_name, signature, annotation_location, start, end = [x.strip() for x in res_row]
 
         if callable_name in ['<clinit>', '<obinit>']:
             continue
@@ -63,6 +63,13 @@ def create_schema(args):
         callable_body = ''
         with open(path, 'r') as f:
             callable_body = f.readlines()[start_line-1:end_line]
+
+        if start == end:
+            while ';' not in ''.join(callable_body) and '{' not in ''.join(callable_body):
+                callable_body = ''
+                with open(path, 'r') as f:
+                    callable_body = f.readlines()[start_line-1:end_line]
+                end_line += 1
 
         schemas[path].setdefault("path", path)
         schemas[path].setdefault("imports", {})
@@ -109,8 +116,17 @@ def create_schema(args):
         if callable_name == class_name:
             schemas[path]["classes"][class_name]["methods"][pos_callable_name]['is_constructor'] = True
         
-        if annotation != 'null':
-            schemas[path]["classes"][class_name]["methods"][pos_callable_name]["annotations"].append(annotation)
+        if annotation_location != 'null':
+            annotation_path = annotation_location[annotation_location.find(':')+1:annotation_location.find(':', annotation_location.find(':')+1)]
+            annotation_start_line = int(annotation_location[annotation_location.find(':', annotation_location.find(':')+1)+1:].split(':')[0])
+            annotation_end_line = int(annotation_location[annotation_location.find(':', annotation_location.find(':')+1)+1:].split(':')[2])
+            annotation_start_col = int(annotation_location[annotation_location.find(':', annotation_location.find(':')+1)+1:].split(':')[1])
+            annotation_end_col = int(annotation_location[annotation_location.find(':', annotation_location.find(':')+1)+1:].split(':')[3])
+            annotation_body = ''
+            with open(annotation_path, 'r') as f:
+                annotation_body = f.readlines()[annotation_start_line-1:annotation_end_line][0]
+                annotation_body = annotation_body[annotation_start_col:annotation_end_col]
+            schemas[path]["classes"][class_name]["methods"][pos_callable_name]["annotations"].append(annotation_body)
 
     interfaces_query_out = f'data/query_outputs/{project}/{project}_interfaces.txt'
     lines = []
@@ -135,7 +151,14 @@ def create_schema(args):
         callable_body = ''
         with open(path, 'r') as f:
             callable_body = f.readlines()[start_line-1:end_line]
-
+        
+        if start == end:
+            while ';' not in ''.join(callable_body) and '{' not in ''.join(callable_body):
+                callable_body = ''
+                with open(path, 'r') as f:
+                    callable_body = f.readlines()[start_line-1:end_line]
+                end_line += 1
+        
         schemas[path].setdefault("path", path)
         schemas[path].setdefault("imports", {})
         schemas[path].setdefault("classes", {})
@@ -279,6 +302,17 @@ def create_schema(args):
 
         start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0])
         end_line = int(end[end.find(':', end.find(':')+1)+1:].split(':')[2])
+
+        callable_body = ''
+        with open(path, 'r') as f:
+            callable_body = f.readlines()[start_line-1:end_line]
+        
+        if start == end:
+            while ';' not in ''.join(callable_body) and '{' not in ''.join(callable_body):
+                callable_body = ''
+                with open(path, 'r') as f:
+                    callable_body = f.readlines()[start_line-1:end_line]
+                end_line += 1
 
         schemas[path]["classes"][class_name]["methods"][f'{start_line}-{end_line}:{method_name}']["parameters"].append(parameter_name)
 
