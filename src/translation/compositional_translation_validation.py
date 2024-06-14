@@ -626,6 +626,6 @@ if __name__ == '__main__':
     
     SCHEMA_BREAK = '.Option_'
     CLASS_BREAK = 'Builder'
-    METHOD_BREAK = 'option'
+    METHOD_BREAK = 'hasArg0'
     
     main(args)
