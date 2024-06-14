@@ -630,7 +630,7 @@ if __name__ == '__main__':
     
     SCHEMA_BREAK = '.Option_'
     CLASS_BREAK = 'Builder'
-    METHOD_BREAK = 'build'
+    METHOD_BREAK = 'setType0'
     
     SCHEMA_BREAK_PASSED, CLASS_BREAK_PASSED, METHOD_BREAK_PASSED = False, False, False
     
