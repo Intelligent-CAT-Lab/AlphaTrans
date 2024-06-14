@@ -916,14 +916,11 @@ class Schema:
         if keyword.iskeyword(method_name):
             method_name += "_"
         
-        # comment out the original method contents if method is not a constructor, else leave it as it is
-        if is_constructor:
-            final_method_content = method_content
-        else:
-            final_method_content = "".join([f"// {line.strip()}\n" for line in method_content.split('\n')])
+        # comment out the original method contents
+        final_method_content = "".join([f"// {line.strip()}\n" for line in method_content.split('\n')])
             
         # construct call to Python
-        if "static" in method_schema_data['modifiers'] or is_constructor:
+        if "static" in method_schema_data['modifiers']:
             caller = "clz"
         else:
             caller = "this.obj"
@@ -933,12 +930,12 @@ class Schema:
         args_buildup = ", ".join(casted_parameters)
         
         if is_constructor:
-            python_call = f"clz.newInstance({args_buildup})"
+            python_call = f"{caller}.invokeMember(\"__init__\"{', ' + args_buildup if args_buildup else ''})"
         else:
             python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
             
         if is_constructor:
-            final_method_content += f"this.obj = {python_call};sync();"
+            final_method_content += f"revsync();{python_call};sync();"
         elif 'void' in method_signature:
             if 'static' in method_schema_data['modifiers']:
                 final_method_content += f"{python_call};" # no need to sync for static methods
