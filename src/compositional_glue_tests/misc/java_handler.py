@@ -13,6 +13,7 @@ class JavaHandler:
         
         # get underlying python objects from java objects
         if hasattr(x, 'getPythonObject'):
+            x.revsync() # sync the java object with the python object
             obj = x.getPythonObject()
             
             # recursively map all fields of the object
