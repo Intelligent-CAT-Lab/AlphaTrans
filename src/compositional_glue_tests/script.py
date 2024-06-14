@@ -207,14 +207,18 @@ class Project:
             caller = "self.javaObj"
             
         if is_constructor:
-            java_call = f"{caller}.pythonFactory()"
+            java_call = f"{caller}.pythonFactory({args_buildup})"
         else:
             java_call = f"{caller}.{original_method_name}({args_buildup})"
             
         method_content = []
         if is_constructor:
             # TODO: Fix stuff for constructors
-            method_content.append(f"        self.javaObj = {java_call}")
+            method_content.append("\n".join([
+                f"        self.javaObj = {java_call}",
+                f"        self.javaObj.setPythonObject(self)",
+                f"        self.javaObj.revsync()"
+            ]))
         elif 'void' in method_schema_data['modifiers']:
             method_content.append(f"        {java_call}")
         else:
@@ -222,30 +226,36 @@ class Project:
             
         # TODO: revsync and sync?
         
-        # error handling
-        if 'throws' in java_method_body:
-            exception_name = java_method_body[java_method_body.find('throws')+6:java_method_body.find('{')].strip()
+        # ---------------------------------------------------------------------------------------
+        # # error handling
+        # if 'throws' in java_method_body:
+        #     exception_name = java_method_body[java_method_body.find('throws')+6:java_method_body.find('{')].strip()
             
-            # TODO: Fix later (using finer control)
-            # take the first exception for now if there are multiple
-            exception_name = exception_name.split(',')[0].strip()
+        #     # TODO: Fix later (using finer control)
+        #     # take the first exception for now if there are multiple
+        #     exception_name = exception_name.split(',')[0].strip()
             
-            # check if this is an inbuilt exception
-            if exception_name in exception_handling:
-                target = exception_handling[exception_name]["target"]
-            else:
-                target = exception_name
+        #     # check if this is an inbuilt exception
+        #     if exception_name in exception_handling:
+        #         target = exception_handling[exception_name]["target"]
+        #     else:
+        #         target = exception_name
             
-            method_content = [
-                f"        try:",
-                *[f"    {line}" for line in method_content],
-                f"        except:",
-                f"            exc_type, exc_value, exc_traceback = sys.exc_info()",
-                f"            exc_msg = str(exc_value).split(\"HostException: \", 1)[1]",
-                f"            raise {target}(exc_msg)"
-            ]
+        #     method_content = [
+        #         f"        try:",
+        #         *[f"    {line}" for line in method_content],
+        #         f"        except:",
+        #         f"            exc_type, exc_value, exc_traceback = sys.exc_info()",
+        #         f"            exc_msg = str(exc_value).split(\"HostException: \", 1)[1]",
+        #         f"            raise {target}(exc_msg)"
+        #     ]
             
-            # TODO: Need finer control based on the exception object...
+        #     # TODO: Need finer control based on the exception object...
+        # ---------------------------------------------------------------------------------------
+        # This is not needed anymore due to the .asHostException() in ExceptionHandler.java
+        # TODO: This will not work if the MUT has a try-catching mechanism
+        #       because control will immediately short-circuit to the original 
+        #       java method (and then to the ExceptionHandler)
         
         method_body = method_declaration + "\n" + "\n".join(method_content)
         return method_body        
@@ -638,7 +648,13 @@ class SyncMethod:
             self.fields.append("this.obj.putMember(\"javaObj\", this);")
         
     def add_field(self, field_name: str, field_schema_data: dict):
-        field_type = field_schema_data['types'][0][0]
+        field_type = field_schema_data['types'][0][0].strip()
+        
+        # if field_type has '<>' at the end, don't keep it in the formatted_field_type
+        if field_type.endswith('<>'):
+            formatted_field_type = field_type[:-2].strip()
+        else:
+            formatted_field_type = field_type
         
         # compose name of field in Python
         if 'private' in field_schema_data['modifiers']:
@@ -649,7 +665,7 @@ class SyncMethod:
         field_from_python = type_handling[field_type].format("this.obj.getMember(\"" + python_field_name + "\")")
         
         if not self.reverse:
-            self.fields.append(f"{field_name} = ({field_type}) {field_from_python};")
+            self.fields.append(f"{field_name} = ({formatted_field_type}) {field_from_python};")
         else:
             self.fields.append(f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}));")
     
@@ -752,12 +768,36 @@ class Schema:
                 }}                            
             """)
 
-            # add getPythonObject()
+            # add getPythonObject() and setPythonObject() methods
             class_obj["methods"].append(f"""
                 public Value getPythonObject() {{
                     return obj;
                 }}
             """)
+            class_obj["methods"].append(f"""
+                public void setPythonObject(Value obj) {{
+                    this.obj = obj;
+                }}
+            """)
+            
+            # add PythonFactory (if a constructor existed in the Java class)
+            # first search for the constructor
+            for _method in class_schema_data['methods']:
+                if (class_schema_data['methods'][_method]['is_constructor']):
+                    constructor_body = "".join(class_schema_data['methods'][_method]['body'])
+                                        
+                    # get the signature
+                    constructor_signature = constructor_body[:constructor_body.find('{')]
+                    
+                    # get the definition-part of the constructor
+                    constructor_definition = constructor_signature[constructor_signature.find('('):]
+                    
+                    args_buildup = ", ".join(class_schema_data['methods'][_method]['parameters'])
+                    
+                    # add the PythonFactory method
+                    class_obj["methods"].append(f"""public static {class_name} pythonFactory{constructor_definition} {{
+                        return new {class_name}({args_buildup});
+                        }}""")
 
             # add a Default constructor if one does not exist already
             # first check all the methods
@@ -789,7 +829,8 @@ class Schema:
         field_type = field_schema_data['types'][0][0]
         field_body = "".join(field_schema_data['body'])
 
-        if not dont_process:
+        # processing for creating sync and revsync methods (if the field is not static)
+        if 'static' not in field_schema_data['modifiers']:
             # if field is 'final', remove the 'final' keyword
             if 'final' in field_schema_data['modifiers']:
                 field_body = field_body.replace(' final', '', 1)
@@ -915,8 +956,15 @@ class Schema:
             ])
         
         # handle the presence of exceptions
-        if 'throws' in method_body:
+        exception_name = None # We only handle one exception for now! TODO: Fix this later
+        if 'throws' in method_body: # if specificied with the "throws" keyword
             exception_name = method_body[method_body.find('throws')+6:method_body.find('{')].strip()
+            exception_name = exception_name.split(',')[0].strip() # take the first exception for now if there are multiple
+        elif 'throw new' in method_body: # if specified with the "throw new" keyword but not in the method signature
+            throw_new_pos = method_body.find('throw new')
+            exception_name = method_body[throw_new_pos+9:method_body.find('(', throw_new_pos)].strip()
+        
+        if exception_name:            
             final_method_content = f"""
             try {{
                 {final_method_content}
