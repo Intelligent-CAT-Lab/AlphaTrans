@@ -263,6 +263,7 @@ def align_schema_order(schemas, traversal_order):
 
 
 def main(args):
+    global SCHEMA_BREAK, SCHEMA_BREAK_PASSED, CLASS_BREAK, CLASS_BREAK_PASSED, METHOD_BREAK, METHOD_BREAK_PASSED
     device = 'cpu' # 'cuda' if torch.cuda.is_available() and args.use_cuda else 'cpu''
     tokenizer, model = None, None
 
@@ -286,8 +287,9 @@ def main(args):
     processed_fragments = []
 
     for schema in schemas:
-        if SCHEMA_BREAK and SCHEMA_BREAK not in schema:
+        if SCHEMA_BREAK and SCHEMA_BREAK not in schema and not SCHEMA_BREAK_PASSED:
             continue
+        SCHEMA_BREAK_PASSED = True
 
         path_ = f'data/schemas/{args.project_name}/{schema}'
         with open(path_, 'r') as f:
@@ -313,8 +315,9 @@ def main(args):
                     class_order.append(class_)
         
         for class_ in class_order:
-            if CLASS_BREAK and CLASS_BREAK != class_:
-                continue 
+            if CLASS_BREAK and CLASS_BREAK != class_ and not CLASS_BREAK_PASSED:
+                continue
+            CLASS_BREAK_PASSED = True
 
             if 'new' in class_ or '{' in class_: # skip nested and nameless classes
                 continue
@@ -366,8 +369,9 @@ def main(args):
 
             pbar = tqdm.tqdm(data['classes'][class_]['methods'])
             for method_ in pbar:
-                if METHOD_BREAK and not method_.endswith(METHOD_BREAK):
+                if METHOD_BREAK and not method_.endswith(METHOD_BREAK) and not METHOD_BREAK_PASSED:
                     continue
+                METHOD_BREAK_PASSED = True
                 
                 pbar.update()
                 pbar.set_description(f"Translating method {method_} in class {class_} @ schema {schema}...")
@@ -626,6 +630,8 @@ if __name__ == '__main__':
     
     SCHEMA_BREAK = '.Option_'
     CLASS_BREAK = 'Builder'
-    METHOD_BREAK = 'hasArg0'
+    METHOD_BREAK = 'build'
+    
+    SCHEMA_BREAK_PASSED, CLASS_BREAK_PASSED, METHOD_BREAK_PASSED = False, False, False
     
     main(args)
