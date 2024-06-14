@@ -107,6 +107,7 @@ class Project:
                 python_file_contents.extend(schema_data['python_imports'])
                 python_file_contents.append("import java") # import the java module (from Polyglot)
                 python_file_contents.append(f"from src.{paths[self.name]['main'].replace('/java/', '/').replace('/', '.')}java_handler import *")
+                python_file_contents.append(f"import sys") # for exception handling
                 
                 # add classes
                 for _class in schema_data['classes']:
@@ -220,7 +221,31 @@ class Project:
             method_content.append(f"        return JavaHandler.mapping({java_call})")
             
         # TODO: revsync and sync?
-        # TODO: Add error handling
+        
+        # error handling
+        if 'throws' in java_method_body:
+            exception_name = java_method_body[java_method_body.find('throws')+6:java_method_body.find('{')].strip()
+            
+            # TODO: Fix later (using finer control)
+            # take the first exception for now if there are multiple
+            exception_name = exception_name.split(',')[0].strip()
+            
+            # check if this is an inbuilt exception
+            if exception_name in exception_handling:
+                target = exception_handling[exception_name]["target"]
+            else:
+                target = exception_name
+            
+            method_content = [
+                f"        try:",
+                *[f"    {line}" for line in method_content],
+                f"        except:",
+                f"            exc_type, exc_value, exc_traceback = sys.exc_info()",
+                f"            exc_msg = str(exc_value).split(\"HostException: \", 1)[1]",
+                f"            raise {target}(exc_msg)"
+            ]
+            
+            # TODO: Need finer control based on the exception object...
         
         method_body = method_declaration + "\n" + "\n".join(method_content)
         return method_body        
