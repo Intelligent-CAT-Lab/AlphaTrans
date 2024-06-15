@@ -628,9 +628,9 @@ if __name__ == '__main__':
     args.include_call_graph = True
     args.dump_syntactically_validated_fragments = False
     
-    SCHEMA_BREAK = '.Option_'
-    CLASS_BREAK = 'Builder'
-    METHOD_BREAK = 'setType0'
+    SCHEMA_BREAK = '.OptionGroup_'
+    CLASS_BREAK = 'OptionGroup'
+    METHOD_BREAK = 'setSelected'
     
     SCHEMA_BREAK_PASSED, CLASS_BREAK_PASSED, METHOD_BREAK_PASSED = False, False, False
     
