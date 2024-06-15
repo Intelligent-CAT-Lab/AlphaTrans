@@ -16,9 +16,22 @@ final public class ExceptionHandler {{
           return e.asHostException();
         }}
 
-        String exceptionType = e.getMessage().split(":")[0];
-        String exceptionMessage = e.getMessage().split(": ")[1];
+        String exceptionType;
+        String exceptionMessage;
+
+        if (e.getMessage().contains(": ")) {{
+          exceptionType = e.getMessage().split(":", 2)[0].trim();
+          exceptionMessage = e.getMessage().split(": ", 2)[1].trim();
+        }}
+        else {{
+          exceptionType = e.getMessage().trim();
+          exceptionMessage = "".trim();
+        }}
         Value exceptionObj = e.getGuestObject();
+
+        if (exceptionObj.hasMember("javaObj")) {{
+          return exceptionObj.getMember("javaObj").as(Throwable.class);
+        }}
 
         {mappings}
         
