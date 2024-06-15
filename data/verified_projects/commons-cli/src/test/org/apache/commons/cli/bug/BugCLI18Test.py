@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.Option import *
@@ -14,6 +16,7 @@ class BugCLI18Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def testCLI18(self) -> None:
         options = Options()
         options.addOption0(Option(0, "a", "aaa", "aaaaaaa", False, None))

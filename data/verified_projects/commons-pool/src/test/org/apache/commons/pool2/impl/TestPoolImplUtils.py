@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from datetime import datetime, timedelta
 from abc import ABC
@@ -66,6 +68,7 @@ class TestPoolImplUtils(unittest.TestCase):
             return None
 
     
+    @pytest.mark.test
     def testFactoryTypeNotSimple(self) -> None:
         result = PoolImplUtils.getFactoryType(
             TestPoolImplUtils.NotSimpleFactory().__class__
@@ -73,6 +76,7 @@ class TestPoolImplUtils(unittest.TestCase):
         self.assertEqual(result, int)
 
     
+    @pytest.mark.test
     def testFactoryTypeSimple(self) -> None:
         result = PoolImplUtils.getFactoryType(
             TestPoolImplUtils.SimpleFactory().__class__
@@ -80,6 +84,7 @@ class TestPoolImplUtils(unittest.TestCase):
         self.assertEqual(result, str)
 
     
+    @pytest.mark.test
     def testMaxInstants(self) -> None:
         self.assertEqual(
             PoolImplUtils.max(
@@ -111,6 +116,7 @@ class TestPoolImplUtils(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testMinInstants(self) -> None:
         self.assertEqual(
             PoolImplUtils.min(
@@ -142,6 +148,7 @@ class TestPoolImplUtils(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testToChronoUnit(self) -> None:
         self.assertEqual(
             PoolImplUtils.toChronoUnit(timedelta(microseconds=1) / 1000),
@@ -173,6 +180,7 @@ class TestPoolImplUtils(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testToDuration(self) -> None:
         self.assertEqual(
             PoolImplUtils.toDuration(0, timedelta(milliseconds=1)),

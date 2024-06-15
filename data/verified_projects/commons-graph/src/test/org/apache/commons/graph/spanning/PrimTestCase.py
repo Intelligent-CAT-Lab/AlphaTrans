@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
@@ -31,6 +33,7 @@ class PrimTestCase(unittest.TestCase):
         PrimTestCase.assertEquals(expected, actual)
     
     
+    @pytest.mark.test
     def testEmptyGraph(self) -> None:
         with self.assertRaises(RuntimeError):
             input = UndirectedMutableGraph()
@@ -41,6 +44,7 @@ class PrimTestCase(unittest.TestCase):
                 .applyingPrimAlgorithm(DoubleWeightBaseOperations())
 
     
+    @pytest.mark.test
     def testNotExistVertex(self) -> None:
         with self.assertRaises(RuntimeError):
             input = UndirectedMutableGraph()
@@ -50,6 +54,7 @@ class PrimTestCase(unittest.TestCase):
                 .fromSource(BaseLabeledVertex("NOT EXIST"))
     
 
+    @pytest.mark.test
     def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.minimumSpanningTree(None)\
@@ -58,6 +63,7 @@ class PrimTestCase(unittest.TestCase):
                 .applyingPrimAlgorithm(DoubleWeightBaseOperations())
 
     
+    @pytest.mark.test
     def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = None
@@ -75,6 +81,7 @@ class PrimTestCase(unittest.TestCase):
                 .applyingBoruvkaAlgorithm(None)
     
 
+    @pytest.mark.test
     def testNullVertex(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = UndirectedMutableGraph()
@@ -85,6 +92,7 @@ class PrimTestCase(unittest.TestCase):
                 .applyingPrimAlgorithm(DoubleWeightBaseOperations())
 
     
+    @pytest.mark.test
     def testVerifyMinimumSpanningTree2(self) -> None:
         input = UndirectedMutableGraph()
 
@@ -139,6 +147,7 @@ class PrimTestCase(unittest.TestCase):
         PrimTestCase.__internalPrimAssertion(input, a, expected)
 
     
+    @pytest.mark.test
     def testVerifyWikipediaMinimumSpanningTree(self) -> None:
         input = UndirectedMutableGraph()
 

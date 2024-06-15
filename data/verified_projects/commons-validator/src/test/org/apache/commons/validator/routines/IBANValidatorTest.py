@@ -1,3 +1,5 @@
+import pytest
+
 import re
 import unittest
 from src.main.org.apache.commons.validator.routines.IBANValidator import *
@@ -113,6 +115,7 @@ class IBANValidatorTest(unittest.TestCase):
         ]
 
     
+    @pytest.mark.test
     def testValid(self) -> None:
         for f in self.__validIBANFormat:
             self.assertTrue(
@@ -126,59 +129,70 @@ class IBANValidatorTest(unittest.TestCase):
             self.assertTrue(IBANValidatorTest.__VALIDATOR.isValid(f), f)
 
     
+    @pytest.mark.test
     def testInValid(self) -> None:
         for f in self.__invalidIBANFormat:
             self.assertFalse(IBANValidatorTest.__VALIDATOR.isValid(f), f)
 
     
+    @pytest.mark.test
     def testNull(self) -> None:
         self.assertFalse(IBANValidatorTest.__VALIDATOR.isValid(None), "isValid(null)")
 
     
+    @pytest.mark.test
     def testHasValidator(self) -> None:
         self.assertTrue(IBANValidatorTest.__VALIDATOR.hasValidator("GB"), "GB")
         self.assertFalse(IBANValidatorTest.__VALIDATOR.hasValidator("gb"), "gb")
 
     
+    @pytest.mark.test
     def testGetValidator(self) -> None:
         self.assertIsNotNone(IBANValidatorTest.__VALIDATOR.getValidator("GB"), "GB")
         self.assertIsNone(IBANValidatorTest.__VALIDATOR.getValidator("gb"), "gb")
 
     
+    @pytest.mark.test
     def testSetDefaultValidator1(self) -> None:
         with self.assertRaises(RuntimeError):
             self.assertIsNotNone(IBANValidatorTest.__VALIDATOR.setValidator1("GB", 15, "GB"))
 
     
+    @pytest.mark.test
     def testSetDefaultValidator2(self) -> None:
         with self.assertRaises(RuntimeError):
             self.assertIsNotNone(IBANValidatorTest.__VALIDATOR.setValidator1("GB", -1, "GB"))
 
     
+    @pytest.mark.test
     def testSetValidatorLC(self) -> None:
         with self.assertRaises(ValueError):
             validator = IBANValidator.IBANValidator1()
             self.assertIsNotNone(validator.setValidator1("gb", 15, "GB"))
 
     
+    @pytest.mark.test
     def testSetValidatorLen7(self) -> None:
         with self.assertRaises(ValueError):
             validator = IBANValidator.IBANValidator1()
             self.assertIsNotNone(validator.setValidator1("GB", 7, "GB"))
 
     
+    @pytest.mark.test
     def testSetValidatorLen35(self) -> None:
         with self.assertRaises(ValueError):
             validator = IBANValidator.IBANValidator1()
             self.assertIsNotNone(validator.setValidator1("GB", 35, "GB"))
 
     
+    @pytest.mark.test
     def testSetValidatorLen_1(self) -> None:
         validator = IBANValidator.IBANValidator1()
         self.assertIsNotNone(validator.setValidator1("GB", -1, ""), "should be present")
         self.assertIsNone(validator.setValidator1("GB", -1, ""), "no longer present")
 
     
+    @pytest.mark.test
     def testSorted(self) -> None:
         validator = IBANValidator.IBANValidator1()
         vals = validator.getDefaultValidators()

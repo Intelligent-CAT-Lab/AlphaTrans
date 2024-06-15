@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.pool2.impl.PooledSoftReference import *
 import unittest
 import weakref
@@ -18,6 +20,7 @@ class TestPooledSoftReference(unittest.TestCase):
         self.ref = PooledSoftReference(softRef)
     
     
+    @pytest.mark.test
     def testPooledSoftReference(self) -> None:
         self.assertEqual(
             TestPooledSoftReference.__REFERENT,
@@ -48,6 +51,7 @@ class TestPooledSoftReference(unittest.TestCase):
         softRef = None
 
     
+    @pytest.mark.test
     def testToString(self) -> None:
         expected = "Referenced Object: test, State: IDLE"
         self.assertEqual(expected, self.ref.toString())

@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from src.main.org.apache.commons.pool2.proxy.ProxySource import *
 from src.main.org.apache.commons.pool2.ObjectPool import *
@@ -61,6 +63,7 @@ class BaseTestProxiedObjectPool(unittest.TestCase, ABC):
         pass
 
     
+    @pytest.mark.test
     def testAccessAfterInvalidate(self) -> None:
         try:
             obj = self.__pool.borrowObject()
@@ -79,6 +82,7 @@ class BaseTestProxiedObjectPool(unittest.TestCase, ABC):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testAccessAfterReturn(self) -> None:
         try:
             obj = self.__pool.borrowObject()
@@ -96,6 +100,7 @@ class BaseTestProxiedObjectPool(unittest.TestCase, ABC):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBorrowObject(self) -> None:
         try:
             obj = self.__pool.borrowObject()
@@ -109,6 +114,7 @@ class BaseTestProxiedObjectPool(unittest.TestCase, ABC):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testPassThroughMethods01(self) -> None:
         try:
             self.assertEqual(0, self.__pool.getNumActive())
@@ -127,6 +133,7 @@ class BaseTestProxiedObjectPool(unittest.TestCase, ABC):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testPassThroughMethods02(self) -> None:
         self.__pool.close()
 
@@ -134,6 +141,7 @@ class BaseTestProxiedObjectPool(unittest.TestCase, ABC):
             self.__pool.addObject()
 
     
+    @pytest.mark.test
     def testUsageTracking(self) -> None:
         try:
             obj = self.__pool.borrowObject()

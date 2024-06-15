@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 import unittest
 from typing import *
@@ -13,6 +15,7 @@ class ParameterParserTest(unittest.TestCase):
 
     # Class Methods Begin
 
+    @pytest.mark.test
     def testParsing(self) -> None:
         
         s = "test; test1 =  stuff   ; test2 =  \"stuff; stuff\"; test3=\"stuff"
@@ -49,6 +52,7 @@ class ParameterParserTest(unittest.TestCase):
         self.assertEqual(0, len(params))
         # LLM could not translate method body
 
+    @pytest.mark.test
     def testContentTypeParsing(self) -> None:
 
         s = "text/plain; Charset=UTF-8"
@@ -58,6 +62,7 @@ class ParameterParserTest(unittest.TestCase):
         self.assertEqual("UTF-8", params.get("charset"))
         # LLM could not translate method body
 
+    @pytest.mark.test
     def testParsingEscapedChars(self) -> None:
 
         s = "param = \"stuff\\\"; more stuff\""
@@ -73,6 +78,7 @@ class ParameterParserTest(unittest.TestCase):
         self.assertIsNone(params.get("anotherparam"))
         # LLM could not translate method body
 
+    @pytest.mark.test
     def testFileUpload139(self) -> None:
 
         parser = ParameterParser()
@@ -89,6 +95,7 @@ class ParameterParserTest(unittest.TestCase):
         params = parser.parse0(s, [',', ';'])
         self.assertEqual("BbC04y", params.get("boundary"))
 
+    @pytest.mark.test
     def testFileUpload199(self) -> None:
 
         parser = ParameterParser()

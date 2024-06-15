@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *
 from src.main.org.apache.commons.graph.coloring.ColoredVertices import *

@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.FloatValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import AbstractNumberValidatorTest
 import sys
@@ -59,6 +61,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
+    @pytest.mark.test
     def testFloatValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
@@ -141,6 +144,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
 
 
+    @pytest.mark.test
     def testFloatSmallestValues(self) -> None:
         pattern = "#.#################################################################"
         precision = max(len(pattern.split('.')[1]), 500)
@@ -176,6 +180,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
     
 
+    @pytest.mark.test
     def testFloatRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")

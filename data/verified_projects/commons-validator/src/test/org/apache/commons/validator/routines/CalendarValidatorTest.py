@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.AbstractCalendarValidator import *
 from src.main.org.apache.commons.validator.routines.CalendarValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractCalendarValidatorTest import AbstractCalendarValidatorTest
@@ -32,6 +34,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
+    @pytest.mark.test
     def testCalendarValidatorMethods(self) -> None:
         setlocale(LC_TIME, 'en_US.UTF-8')
         locale = 'de_DE.UTF-8'
@@ -161,6 +164,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
         )
 
     
+    @pytest.mark.test
     def testCompare(self) -> None:
         sameTime = 124522
         testDate = 20050823
@@ -376,6 +380,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
             )
 
 
+    @pytest.mark.test
     def testDateTimeStyle(self) -> None:
         origDefault = getlocale(LC_TIME)
         setlocale(LC_TIME, 'en_GB.UTF-8')
@@ -397,6 +402,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
 
         setlocale(LC_TIME, origDefault)
     
+    @pytest.mark.test
     def testFormat(self) -> None:
         origDefault = getlocale(LC_TIME)
         setlocale(LC_TIME, 'en_GB.UTF-8')
@@ -478,6 +484,7 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
         setlocale(LC_TIME, origDefault)
     
 
+    @pytest.mark.test
     def testAdjustToTimeZone(self) -> None:
         calEST = self._createCalendar(
             AbstractCalendarValidatorTest._EST,

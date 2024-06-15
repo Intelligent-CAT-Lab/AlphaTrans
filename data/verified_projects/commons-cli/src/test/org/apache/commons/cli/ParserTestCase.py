@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.UnrecognizedOptionException import *
 from src.main.org.apache.commons.cli.Parser import *
@@ -62,6 +64,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             .addOption3("c", "copt", False, "turn [c] on or off")
     
 
+    @pytest.mark.test
     def testAmbiguousLongWithoutEqualSingleDash(self) -> None:
         try:
             args = ["-b", "-foobar"]
@@ -83,6 +86,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testAmbiguousPartialLongOption1(self) -> None:
         try:
             args = ["--ver"]
@@ -105,6 +109,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testAmbiguousPartialLongOption2(self) -> None:
         try:
             args = ["-ver"]
@@ -127,6 +132,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testAmbiguousPartialLongOption3(self) -> None:
         try:
             args = ["--ver=1"]
@@ -149,6 +155,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testAmbiguousPartialLongOption4(self) -> None:
         try:
             args = ["-ver=1"]
@@ -171,6 +178,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testArgumentStartingWithHyphen(self) -> None:
         try:
             args = ["-b", "-foo"]
@@ -181,6 +189,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testBursting(self) -> None:
         try:
             args = ["-acbtoast", "foo", "bar"]
@@ -196,6 +205,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testDoubleDash1(self) -> None:
         try:
             args = ["--copt", "--", "-b", "toast"]
@@ -209,6 +219,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testDoubleDash2(self) -> None:
         try:    
             options = Options()
@@ -225,6 +236,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testLongOptionQuoteHandling(self) -> None:
         try:
             args = ["--bfile", "\"quoted string\""]
@@ -240,6 +252,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testLongOptionWithEqualsQuoteHandling(self) -> None:
         try:
             args = ["--bfile=\"quoted string\""]
@@ -255,6 +268,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testLongWithEqualDoubleDash(self) -> None:
         try:
             args = ["--foo=bar"]
@@ -269,6 +283,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testLongWithEqualSingleDash(self) -> None:
         try:
             args = ["-foo=bar"]
@@ -283,6 +298,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testLongWithoutEqualDoubleDash(self) -> None:
         try:
             args = ["--foobar"]
@@ -297,6 +313,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testLongWithoutEqualSingleDash(self) -> None:
         try:
             args = ["-foobar"]
@@ -311,6 +328,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testLongWithUnexpectedArgument1(self) -> None:
         try:
             args = ["--foo=bar"]
@@ -329,6 +347,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testLongWithUnexpectedArgument2(self) -> None:
         try:
             args = ["-foobar"]
@@ -347,6 +366,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testMissingArg(self) -> None:
         try:
             args = ["-b"]
@@ -364,6 +384,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
 
+    @pytest.mark.test
     def testMissingArgWithBursting(self) -> None:
         try:
             args = ["-acb"]
@@ -381,6 +402,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testMissingRequiredGroup(self) -> None:
         try:
             group = OptionGroup()
@@ -404,6 +426,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testMissingRequiredOption(self) -> None:
         args = ["-a"]
 
@@ -427,6 +450,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail("expected to catch MissingOptionException")
 
     
+    @pytest.mark.test
     def testMissingRequiredOptions(self) -> None:
         args = ["-a"]
 
@@ -454,6 +478,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail("expected to catch MissingOptionException")
 
     
+    @pytest.mark.test
     def testMultiple(self) -> None:
         try:
             args = ["-c", "foobar", "-b", "toast"]
@@ -485,6 +510,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testMultipleWithLong(self) -> None:
         try:
             args = ["--copt", "foobar", "--bfile", "toast"]
@@ -516,6 +542,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testNegativeArgument(self) -> None:
         try:
             args = ["-b", "-1"]
@@ -526,6 +553,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testNegativeOption(self) -> None:
         try:
             args = ["-b", "-1"]
@@ -538,6 +566,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testOptionAndRequiredOption(self) -> None:
         try:
             args = ["-a", "-b", "file"]
@@ -558,6 +587,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
 
+    @pytest.mark.test
     def testOptionGroup(self) -> None:
         try:
             group = OptionGroup()
@@ -574,6 +604,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testOptionGroupLong(self) -> None:
         try:
             group = OptionGroup()
@@ -591,6 +622,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testPartialLongOptionSingleDash(self) -> None:
         try:
             args = ["-ver"]
@@ -607,6 +639,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testPropertiesOption1(self) -> None:
         try:
             args = ["-Jsource=1.5", "-J", "target", "1.5", "foo"]
@@ -631,6 +664,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testPropertiesOption2(self) -> None:
         try:
             args = ["-Dparam1", "-Dparam2=value2", "-D"]
@@ -654,6 +688,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testPropertyOptionFlags(self) -> None:
         try:
             opts = Options()
@@ -698,6 +733,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testPropertyOptionGroup(self) -> None:
         try:
             opts = Options()
@@ -726,6 +762,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testPropertyOptionMultipleValues(self) -> None:
         try:
             opts = Options()
@@ -743,6 +780,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testPropertyOptionRequired(self) -> None:
         try:
             opts = Options()
@@ -756,6 +794,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testPropertyOptionSingularValue(self) -> None:
         try:
             opts = Options()
@@ -771,6 +810,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testPropertyOptionUnexpected(self) -> None:
         try:
             opts = Options()
@@ -786,6 +826,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testPropertyOverrideValues(self) -> None:
         try:
             opts = Options()
@@ -806,6 +847,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testReuseOptionsTwice(self) -> None:
         try:
             opts = Options()
@@ -822,6 +864,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testShortOptionConcatenatedQuoteHandling(self) -> None:
         try:
             args = ["-b\"quoted string\""]
@@ -837,6 +880,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testShortOptionQuoteHandling(self) -> None:
         try:
             args = ["-b", "\"quoted string\""]
@@ -852,6 +896,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testShortWithEqual(self) -> None:
         try:
             args = ["-f=bar"]
@@ -866,6 +911,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testShortWithoutEqual(self) -> None:
         try:
             args = ["-fbar"]
@@ -880,6 +926,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testShortWithUnexpectedArgument(self) -> None:
         try:
             args = ["-f=bar"]
@@ -898,6 +945,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testSimpleLong(self) -> None:
         try:
             args = ["--enable-a", "--bfile", "toast", "foo", "bar"]
@@ -913,6 +961,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testSimpleShort(self) -> None:
         try:
             args = ["-a", "-b", "toast", "foo", "bar"]
@@ -927,6 +976,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testSingleDash(self) -> None:
         try:
             args = ["--copt", "-b", "-", "-a", "-"]
@@ -950,6 +1000,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testStopAtExpectedArg(self) -> None:
         try:
             args = ["-b", "foo"]
@@ -967,6 +1018,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testStopAtNonOptionLong(self) -> None:
         try:
             args = ["--zop==1", "-abtoast", "--b=bar"]
@@ -984,6 +1036,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testStopAtNonOptionShort(self) -> None:
         try:
             args = ["-z", "-a", "-btoast"]
@@ -999,6 +1052,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testStopAtUnexpectedArg(self) -> None:
         try:
             args = ["-c", "foober", "-b", "toast"]
@@ -1014,6 +1068,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testStopBursting(self) -> None:
         try:
             args = ["-azc"]
@@ -1033,6 +1088,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testStopBursting2(self) -> None:
         try:
             args = ["-c", "foobar", "-btoast"]
@@ -1064,6 +1120,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testUnambiguousPartialLongOption1(self) -> None:
         try:
             args = ["--ver"]
@@ -1079,6 +1136,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testUnambiguousPartialLongOption2(self) -> None:
         try:
             args = ["-ver"]
@@ -1094,6 +1152,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
 
+    @pytest.mark.test
     def testUnambiguousPartialLongOption3(self) -> None:
         try:
             args = ["--ver=1"]
@@ -1112,6 +1171,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testUnambiguousPartialLongOption4(self) -> None:
         try:
             args = ["-ver=1"]
@@ -1130,6 +1190,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testUnlimitedArgs(self) -> None:
         try:
             args = ["-e", "one", "two", "-f", "alpha"]
@@ -1148,6 +1209,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testUnrecognizedOption(self) -> None:
         try:
             args = ["-a", "-d", "-b", "toast", "foo", "bar"]
@@ -1161,6 +1223,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testUnrecognizedOptionWithBursting(self) -> None:
         try:
             args = ["-adbtoast", "foo", "bar"]
@@ -1174,6 +1237,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testWithRequiredOption(self) -> None:
         try:
             args = ["-b", "file"]

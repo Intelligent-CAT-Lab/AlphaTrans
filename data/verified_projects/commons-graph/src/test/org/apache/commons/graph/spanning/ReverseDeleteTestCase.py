@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
@@ -20,6 +22,7 @@ import unittest
 
 class ReverseDeleteTestCase(unittest.TestCase):
 
+    @pytest.mark.test
     def testEmptyGraph(self) -> None:
         input = UndirectedMutableGraph()
 
@@ -31,6 +34,7 @@ class ReverseDeleteTestCase(unittest.TestCase):
         self.assertEqual(0, tree.getSize())
 
     
+    @pytest.mark.test
     def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.minimumSpanningTree(None)\
@@ -38,6 +42,7 @@ class ReverseDeleteTestCase(unittest.TestCase):
                 .applyingReverseDeleteAlgorithm(DoubleWeightBaseOperations())
 
     
+    @pytest.mark.test
     def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = None
@@ -47,6 +52,7 @@ class ReverseDeleteTestCase(unittest.TestCase):
                 .applyingReverseDeleteAlgorithm(None)
 
     
+    @pytest.mark.test
     def testVerifyMinimumSpanningTree(self) -> None:
         input = UndirectedMutableGraph()
 
@@ -79,6 +85,7 @@ class ReverseDeleteTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
+    @pytest.mark.test
     def testVerifyNotConnectGraph(self) -> None:
         input = UndirectedMutableGraph()
 
@@ -104,6 +111,7 @@ class ReverseDeleteTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     
+    @pytest.mark.test
     def testVerifyNotConnectGraph2(self) -> None:
         input = UndirectedMutableGraph()
 
@@ -143,6 +151,7 @@ class ReverseDeleteTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     
+    @pytest.mark.test
     def testVerifyNotConnectGraph3(self) -> None:
         input = UndirectedMutableGraph()
 

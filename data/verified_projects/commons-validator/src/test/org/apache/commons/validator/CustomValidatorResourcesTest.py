@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from io import StringIO
 
@@ -15,6 +17,7 @@ class CustomValidatorResourcesTest(unittest.TestCase):
         pass
 
     
+    @pytest.mark.test
     def testCustomResources(self) -> None:
         inStream = None
         try:

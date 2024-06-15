@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.AmbiguousOptionException import *
 from src.main.org.apache.commons.cli.ParseException import *
@@ -23,6 +25,7 @@ class BugCLI252Test(unittest.TestCase):
         return options
     
 
+    @pytest.mark.test
     def testAmbiquousOptionName(self) -> None:
         try:
             with self.assertRaises(AmbiguousOptionException):
@@ -31,6 +34,7 @@ class BugCLI252Test(unittest.TestCase):
             self.fail(f"Unexpected ParseException occurred: {e}")
 
     
+    @pytest.mark.test
     def testExactOptionNameMatch(self) -> None:
         try:
             DefaultParser(2, False, None).parse0(self.__getOptions(), ["--prefix"])

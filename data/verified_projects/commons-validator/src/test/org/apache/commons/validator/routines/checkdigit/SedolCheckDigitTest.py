@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.SedolCheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import AbstractCheckDigitTest
 
@@ -39,6 +41,7 @@ class SedolCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
+    @pytest.mark.test
     def testVALIDATOR_346(self) -> None:
         for i in range(len(SedolCheckDigitTest.__invalidCheckDigits)):
             invalidCheckDigit = SedolCheckDigitTest.__invalidCheckDigits[i]

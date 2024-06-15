@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.DefaultParser import *
@@ -21,6 +23,7 @@ class DefaultParserTest(ParserTestCase):
     def setUp(self) -> None:
         super().setUp(DefaultParser(2, False, None))
 
+    @pytest.mark.test
     def testBuilder(self) -> None:
         parser = DefaultParser.builder()\
                               .setStripLeadingAndTrailingQuotes(False)\
@@ -28,6 +31,7 @@ class DefaultParserTest(ParserTestCase):
                               .build()
         self.assertTrue(isinstance(parser, DefaultParser))
 
+    @pytest.mark.test
     def testLongOptionQuoteHandlingWithoutStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(False).build()
@@ -41,6 +45,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testLongOptionQuoteHandlingWithStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(True).build()
@@ -54,6 +59,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testLongOptionWithEqualsQuoteHandling(self) -> None:
         try:
             args = ["--bfile=\"quoted string\""]
@@ -66,6 +72,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testLongOptionWithEqualsQuoteHandlingWithoutStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(False).build()
@@ -79,6 +86,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testLongOptionWithEqualsQuoteHandlingWithStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(True).build()
@@ -92,6 +100,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testShortOptionConcatenatedQuoteHandling(self) -> None:
         try:
             args = ["-b", "\"quoted string\""]
@@ -104,6 +113,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testShortOptionQuoteHandlingWithoutStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(False).build()
@@ -118,6 +128,7 @@ class DefaultParserTest(ParserTestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testShortOptionQuoteHandlingWithStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(True).build()

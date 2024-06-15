@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.OptionGroup import *
@@ -15,6 +17,7 @@ class HelpFormatterTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def testAccessors(self) -> None:
         formatter = HelpFormatter()
 
@@ -43,6 +46,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(80, formatter.getWidth(), "width")
 
 
+    @pytest.mark.test
     def testAutomaticUsage(self) -> None: 
         hf = HelpFormatter()
         options = None
@@ -69,6 +73,7 @@ class HelpFormatterTest(unittest.TestCase):
         out.truncate(0)
 
 
+    @pytest.mark.test
     def testDefaultArgName(self) -> None:
         option = Option.builder1("f").hasArg0().required1(True).build()
 
@@ -87,6 +92,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, result)
 
     
+    @pytest.mark.test
     def testFindWrapPos(self) -> None:
         hf = HelpFormatter()
 
@@ -108,6 +114,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(7, hf.findWrapPos(text, 6, 0), "wrap position 6")
 
     
+    @pytest.mark.test
     def testHeaderStartingWithLineSeparator(self) -> None:
         options = Options()
         formatter = HelpFormatter()
@@ -129,6 +136,7 @@ class HelpFormatterTest(unittest.TestCase):
                 out.getvalue())
         
     
+    @pytest.mark.test
     def testHelpWithLongOptSeparator(self) -> None:
         options = Options()
         options.addOption1("f", True, "the file")
@@ -164,6 +172,7 @@ class HelpFormatterTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testIndentedHeaderAndFooter(self) -> None:
         options = Options()
         formatter = HelpFormatter()
@@ -189,6 +198,7 @@ class HelpFormatterTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testOptionWithoutShortFormat(self) -> None:
         options = Options()
         options.addOption0(Option(0, "a", "aaa", "aaaaaaa", False, None))
@@ -211,6 +221,7 @@ class HelpFormatterTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testOptionWithoutShortFormat2(self) -> None:
         help = Option(0, "h", "help", "print this message", False, None)
         version = Option(0, "v", "version", "print version information", False, None)
@@ -305,6 +316,7 @@ class HelpFormatterTest(unittest.TestCase):
                 out.getvalue())
 
     
+    @pytest.mark.test
     def testPrintHelpNewlineFooter(self) -> None:
         formatter = HelpFormatter()
         out = io.BytesIO()
@@ -318,6 +330,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, result, "footer newline")
 
     
+    @pytest.mark.test
     def testPrintHelpNewlineHeader(self) -> None:
         formatter = HelpFormatter()
         out = io.BytesIO()
@@ -331,6 +344,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, result, "header newline")
 
     
+    @pytest.mark.test
     def testPrintHelpWithEmptySyntax(self) -> None:
         formatter = HelpFormatter()
         try:
@@ -345,6 +359,7 @@ class HelpFormatterTest(unittest.TestCase):
                 pass
 
     
+    @pytest.mark.test
     def testPrintOptionGroupUsage(self) -> None:
         group = OptionGroup()
         group.addOption(Option.builder1("a").build())
@@ -362,6 +377,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app [-a | -b | -c]" + HelpFormatterTest.__EOL, out.getvalue())
 
     
+    @pytest.mark.test
     def testPrintOptions(self) -> None:
         sb = ""
         hf = HelpFormatter()
@@ -438,6 +454,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "multiple wrapped options")
 
     
+    @pytest.mark.test
     def testPrintOptionWithEmptyArgNameUsage(self) -> None:
         option = Option.Option2("f", True, None)
         option.setArgName("")
@@ -454,6 +471,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app -f" + HelpFormatterTest.__EOL, out.getvalue())
 
     
+    @pytest.mark.test
     def testPrintRequiredOptionGroupUsage(self) -> None:
         group = OptionGroup()
         group.addOption(Option.builder1("a").build())
@@ -472,6 +490,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app -a | -b | -c" + HelpFormatterTest.__EOL, out.getvalue())
 
 
+    @pytest.mark.test
     def testPrintSortedUsage(self) -> None:
         opts = Options()
         opts.addOption0(Option.Option1("a", "first"))
@@ -489,6 +508,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app [-c] [-b] [-a]" + HelpFormatterTest.__EOL, out.getvalue())
 
     
+    @pytest.mark.test
     def testPrintSortedUsageWithNullComparator(self) -> None:
         opts = Options()
         opts.addOption0(Option.Option1("c", "first"))
@@ -503,6 +523,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app [-c] [-b] [-a]" + HelpFormatterTest.__EOL, out.getvalue())
 
 
+    @pytest.mark.test
     def testPrintUsage(self) -> None:
         optionA = Option.Option1("a", "first")
         optionB = Option.Option1("b", "second")
@@ -523,6 +544,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app [-a] [-b] [-c]" + HelpFormatterTest.__EOL, result)
 
 
+    @pytest.mark.test
     def testRenderWrappedTextMultiLine(self) -> None:
         width = 16
         padding = 0
@@ -538,6 +560,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "multi line text")
 
 
+    @pytest.mark.test
     def testRenderWrappedTextMultiLinePadded(self) -> None:
         width = 16
         padding = 4
@@ -558,6 +581,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "multi-line padded text")
 
 
+    @pytest.mark.test
     def testRenderWrappedTextSingleLine(self) -> None:
         width = 12
         padding = 0
@@ -570,6 +594,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "single line text")
 
 
+    @pytest.mark.test
     def testRenderWrappedTextSingleLinePadded(self) -> None:
         width = 12
         padding = 4
@@ -582,6 +607,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "single line padded text")
 
 
+    @pytest.mark.test
     def testRenderWrappedTextSingleLinePadded2(self) -> None:
         width = 53
         padding = 24
@@ -599,6 +625,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "single line padded text 2")
 
 
+    @pytest.mark.test
     def testRenderWrappedTextWordCut(self) -> None:
         width = 7
         padding = 0
@@ -611,6 +638,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "cut and wrap")
     
     
+    @pytest.mark.test
     def testRtrim(self) -> None:
         formatter = HelpFormatter()
 
@@ -619,6 +647,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("  foo", formatter.rtrim("  foo  "))
     
     
+    @pytest.mark.test
     def testUsageWithLongOptSeparator(self) -> None:
         options = Options()
         options.addOption1("f", True, "the file")

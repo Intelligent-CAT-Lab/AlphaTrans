@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from src.main.org.apache.commons.validator.ISBNValidator import *
 
@@ -13,6 +15,7 @@ class ISBNValidatorTest(unittest.TestCase):
         super().__init__(methodName)
     
 
+    @pytest.mark.test
     def testIsValid(self) -> None:
         try:
             validator = ISBNValidator()

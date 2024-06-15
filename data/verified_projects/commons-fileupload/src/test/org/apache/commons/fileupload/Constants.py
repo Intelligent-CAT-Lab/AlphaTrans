@@ -1,3 +1,5 @@
+import pytest
+
 class Constants:
 
     CONTENT_TYPE: str = "multipart/form-data; boundary=---1234"

@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 import pickle
 from abc import ABC
@@ -109,6 +111,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
+    @pytest.mark.test
     def testFormatType(self) -> None:
         self.assertEqual(0, self._validator.getFormatType(), "Format Type A")
         self.assertEqual(
@@ -118,6 +121,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
         )
 
     
+    @pytest.mark.test
     def testValidateMinMax(self) -> None:
         if self._max is not None:
             self.assertEqual(
@@ -140,6 +144,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             )
 
     
+    @pytest.mark.test
     def testInvalidStrict(self) -> None:
         for i, val in enumerate(self._invalidStrict):
             text = f"idx=[{i}] value=[{val}]"
@@ -161,6 +166,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             )
 
     
+    @pytest.mark.test
     def testInvalidNotStrict(self) -> None:
         for i, val in enumerate(self._invalid):
             text = f"idx=[{i}] value=[{val}]"
@@ -182,6 +188,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             )
 
     
+    @pytest.mark.test
     def testValidStrict(self) -> None:
         for i, val in enumerate(self._validStrict):
             text = f"idx=[{i}] value=[{self._validStrictCompare[i]}]"
@@ -205,6 +212,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             )
 
     
+    @pytest.mark.test
     def testValidNotStrict(self) -> None:
         for i, val in enumerate(self._valid):
             text = f"idx=[{i}] value=[{self._validCompare[i]}]"
@@ -226,6 +234,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             )
 
     
+    @pytest.mark.test
     def testValidateLocale(self) -> None:
         self.assertEqual(
             self._testNumber,
@@ -258,6 +267,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
         )
 
     
+    @pytest.mark.test
     def testFormat(self) -> None:
         number = Decimal("1234.5")
         self.assertEqual(
@@ -277,6 +287,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
         )
 
     
+    @pytest.mark.test
     def testRangeMinMax(self) -> None:
         number9 = 9
         number10 = 10
@@ -333,6 +344,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
         )
 
     
+    @pytest.mark.test
     def testSerialization(self) -> None:
         baos = BytesIO()
         try:

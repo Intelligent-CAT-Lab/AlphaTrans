@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from abc import ABC, abstractmethod
 from src.test.org.apache.commons.pool2.MethodCall import *
@@ -189,6 +191,7 @@ class TestKeyedObjectPool(unittest.TestCase, ABC):
     def tearDown(self) -> None:
         self.__pool = None
 
+    @pytest.mark.test
     def testBaseAddObject(self) -> None:
         try:
             try:
@@ -226,6 +229,7 @@ class TestKeyedObjectPool(unittest.TestCase, ABC):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseBorrow(self) -> None:
         try:
             try:
@@ -270,6 +274,7 @@ class TestKeyedObjectPool(unittest.TestCase, ABC):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseBorrowReturn(self) -> None:
         try:
             try:
@@ -307,6 +312,7 @@ class TestKeyedObjectPool(unittest.TestCase, ABC):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseClear(self) -> None:
         try:
             try:
@@ -335,6 +341,7 @@ class TestKeyedObjectPool(unittest.TestCase, ABC):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseInvalidateObject(self) -> None:
         try:
             try:
@@ -360,6 +367,7 @@ class TestKeyedObjectPool(unittest.TestCase, ABC):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseNumActiveNumIdle(self) -> None:
         try:
             try:
@@ -391,6 +399,7 @@ class TestKeyedObjectPool(unittest.TestCase, ABC):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseNumActiveNumIdle2(self) -> None:
         try:
             try:

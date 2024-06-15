@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.ParseException import *
@@ -16,6 +18,7 @@ class BugCLI13Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def testCLI13(self) -> None:
         try:
             debugOpt = "debug"

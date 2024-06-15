@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.pool2.impl.CallStack import *
 from src.main.org.apache.commons.pool2.impl.ThrowableCallStack import *
 import unittest
@@ -22,6 +24,7 @@ class TestCallStack(unittest.TestCase):
         self.__writer = StringIO()
 
     
+    @pytest.mark.test
     def testPrintClearedStackTraceIsNoOp(self) -> None:
         for stack in TestCallStack.data():
             with self.subTest(stack=stack):
@@ -36,6 +39,7 @@ class TestCallStack(unittest.TestCase):
                 )
 
     
+    @pytest.mark.test
     def testPrintFilledStackTrace(self) -> None:
         for stack in TestCallStack.data():
             with self.subTest(stack=stack):

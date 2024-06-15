@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -17,6 +19,7 @@ import unittest
 
 class VisitTestCase(unittest.TestCase):
 
+    @pytest.mark.test
     def testNotExistVertex(self) -> None:
         with self.assertRaises(RuntimeError):
             input = CommonsGraph.newDirectedMutableGraph(
@@ -27,6 +30,7 @@ class VisitTestCase(unittest.TestCase):
                 .from_(BaseLabeledVertex("NOT EXIST"))
 
     
+    @pytest.mark.test
     def testVerifyBreadthFirstSearch(self) -> None:
         input = CommonsGraph.newDirectedMutableGraph(
             GraphConnectionVisitTestCaseTestVerifyBreadthFirstSearchInput()
@@ -43,6 +47,7 @@ class VisitTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     
+    @pytest.mark.test
     def testVerifyDepthFirstSearch(self) -> None:
         expected = []
 

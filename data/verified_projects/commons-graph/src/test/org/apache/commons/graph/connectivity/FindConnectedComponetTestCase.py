@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -15,6 +17,7 @@ import unittest
 
 class FindConnectedComponetTestCase(unittest.TestCase):
 
+    @pytest.mark.test
     def testVerifyConnectedComponents(self) -> None:
         a = BaseLabeledVertex("A")
 
@@ -30,6 +33,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(8, len(c))
     
 
+    @pytest.mark.test
     def testVerifyConnectedComponents2(self) -> None:
         a = BaseLabeledVertex("A")
 
@@ -45,6 +49,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(2, len(c))
 
 
+    @pytest.mark.test
     def testVerifyConnectedComponents3(self) -> None:
         a = BaseLabeledVertex("A")
 
@@ -60,6 +65,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(1, len(c))
     
     
+    @pytest.mark.test
     def testVerifyConnectedComponentsIncludingVertices(self) -> None:
         a = BaseLabeledVertex("A")
 
@@ -75,6 +81,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(1, len(coll))
 
     
+    @pytest.mark.test
     def testVerifyConnectedComponentsIncludingVertices2(self) -> None:
         a = BaseLabeledVertex("A")
         e = BaseLabeledVertex("E")
@@ -91,6 +98,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(2, len(coll))
 
 
+    @pytest.mark.test
     def testVerifyEmptyGraph(self) -> None:
         graph = UndirectedMutableGraph()
 
@@ -100,6 +108,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(0, len(c))
 
 
+    @pytest.mark.test
     def testVerifyNullVerticesGraph(self) -> None:
         graph = CommonsGraph.newUndirectedMutableGraph(
             GraphConnectionFindConnectedComponetTestCaseTestVerifyNullVerticesGraph()
@@ -110,6 +119,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         self.assertEqual(0, len(c))
 
     
+    @pytest.mark.test
     def testverifyNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findConnectedComponent(None)\

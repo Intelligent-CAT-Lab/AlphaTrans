@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
@@ -21,6 +23,7 @@ import unittest
 
 class BoruvkaTestCase(unittest.TestCase):
 
+    @pytest.mark.test
     def testEmptyGraph(self) -> None:
         with self.assertRaises(RuntimeError):
             input = UndirectedMutableGraph()
@@ -31,6 +34,7 @@ class BoruvkaTestCase(unittest.TestCase):
                 .applyingBoruvkaAlgorithm(DoubleWeightBaseOperations())
 
     
+    @pytest.mark.test
     def testNotExistVertex(self) -> None:
         with self.assertRaises(RuntimeError):
             input = UndirectedMutableGraph()
@@ -40,6 +44,7 @@ class BoruvkaTestCase(unittest.TestCase):
                 .fromSource(BaseLabeledVertex("NOT EXIST"))
 
     
+    @pytest.mark.test
     def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.minimumSpanningTree(None)\
@@ -48,6 +53,7 @@ class BoruvkaTestCase(unittest.TestCase):
                 .applyingBoruvkaAlgorithm(DoubleWeightBaseOperations())
     
     
+    @pytest.mark.test
     def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = None
@@ -65,6 +71,7 @@ class BoruvkaTestCase(unittest.TestCase):
                 .applyingBoruvkaAlgorithm(None)
 
     
+    @pytest.mark.test
     def testNullVertex(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = UndirectedMutableGraph()
@@ -74,6 +81,7 @@ class BoruvkaTestCase(unittest.TestCase):
                 .applyingBoruvkaAlgorithm(DoubleWeightBaseOperations())
 
     
+    @pytest.mark.test
     def testVerifyWikipediaMinimumSpanningTree(self) -> None:
         input = UndirectedMutableGraph()
 
@@ -130,6 +138,7 @@ class BoruvkaTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     
+    @pytest.mark.test
     def testverifySparseGraphMinimumSpanningTree(self) -> None:
         with self.assertRaises(RuntimeError):
             input = UndirectedMutableGraph()

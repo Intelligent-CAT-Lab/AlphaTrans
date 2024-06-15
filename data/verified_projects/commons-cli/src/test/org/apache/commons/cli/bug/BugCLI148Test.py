@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Options import *
@@ -23,6 +25,7 @@ class BugCLI148Test(unittest.TestCase):
         self.__options.addOption0(OptionBuilder.hasArg0().create1('s'))
 
     
+    @pytest.mark.test
     def testWorkaround1(self) -> None:
         try:
             parser = PosixParser()
@@ -34,6 +37,7 @@ class BugCLI148Test(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testWorkaround2(self) -> None:
         try:
             parser = PosixParser()

@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Parser import *
@@ -21,6 +23,7 @@ class ApplicationTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def testAnt(self) -> None:
 
         try:
@@ -68,6 +71,7 @@ class ApplicationTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testGroovy(self) -> None:
 
         try:
@@ -157,6 +161,7 @@ class ApplicationTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
+    @pytest.mark.test
     def testLs(self) -> None:
 
         try:
@@ -192,6 +197,7 @@ class ApplicationTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testMan(self) -> None:
 
         cmdLine = "man [-c|-f|-k|-w|-tZT device] [-adlhu7V] [-Mpath] [-Ppager] [-Slist] [-msystem]" + \
@@ -350,6 +356,7 @@ class ApplicationTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testNLT(self) -> None:
 
         try:

@@ -1,3 +1,5 @@
+import pytest
+
 class PrivateException(RuntimeError):
 
     __serialVersionUID = 1

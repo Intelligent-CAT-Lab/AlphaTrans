@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.test.org.apache.commons.graph.utils.TestRunner import *
 from src.test.org.apache.commons.graph.utils.MultiThreadedTestRunner import *
@@ -43,6 +45,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
                                 pass
     
     
+    @pytest.mark.test
     def testAddVertexAndEdge(self) -> None:
         g = UndirectedMutableGraph()
         GraphUtils.buildCompleteGraph(50, g)
@@ -81,6 +84,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertFalse(gSimple.containsVertex(BaseLabeledVertex("Not exist vertex")))
     
     
+    @pytest.mark.test
     def testDirectedGraphRemoveEdge(self) -> None:
         g = DirectedMutableGraph()
 
@@ -96,6 +100,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertIsNone(edge)
 
     
+    @pytest.mark.test
     def testDirectedGraphRemoveEdgeNotExists(self) -> None:
         with self.assertRaises(GraphException):
             g = None
@@ -111,6 +116,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
             g.removeEdge(e)
     
     
+    @pytest.mark.test
     def testDirectedMultiTh(self) -> None:
         g = CommonsGraph.synchronize2(DirectedMutableGraph())
 
@@ -127,6 +133,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertEqual((30 * (30 - 1)), g.getSize())
 
     
+    @pytest.mark.test
     def testGetConnectedVertices(self) -> None:
         g = UndirectedMutableGraph()
         GraphUtils.buildCompleteGraph(10, g)
@@ -143,6 +150,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertFalse(testVertex in v)
     
     
+    @pytest.mark.test
     def testGetConnectedVerticesNPE(self) -> None:
         with self.assertRaises(GraphException):
             g = None
@@ -157,6 +165,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
             g.getConnectedVertices(notExistsVertex);
     
     
+    @pytest.mark.test
     def testGetConnectedVerticesOnNotConnectedGraph(self) -> None:
         g = UndirectedMutableGraph()
 
@@ -175,6 +184,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertEqual(0, len(v))
     
     
+    @pytest.mark.test
     def testGetEdge(self) -> None:
         g = UndirectedMutableGraph()
         GraphUtils.buildCompleteGraph(10, g)
@@ -185,6 +195,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertIsNotNone(edge)
     
     
+    @pytest.mark.test
     def testGetEgdeNotExistsVertex(self) -> None:
         with self.assertRaises(GraphException):
             g = None
@@ -202,6 +213,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
             g.getEdge(source, target)
     
     
+    @pytest.mark.test
     def testGetEgdeNotExistsVertex_2(self) -> None:
         with self.assertRaises(GraphException):
             g = None
@@ -219,6 +231,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
             g.getEdge(source, target)
     
     
+    @pytest.mark.test
     def testGetNotExistsEdge(self) -> None:
         g = UndirectedMutableGraph()
         for i in range(4):
@@ -231,6 +244,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertIsNone(edge)
 
     
+    @pytest.mark.test
     def testMultiThreadUndirectGraph(self) -> None:
         g = CommonsGraph.synchronize2(UndirectedMutableGraph())
 
@@ -248,6 +262,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertEqual((30 * (30 - 1) / 2), g.getSize())
     
     
+    @pytest.mark.test
     def testUndirectedGraphRemoveEdge(self) -> None:
         g = UndirectedMutableGraph()
 
@@ -264,6 +279,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertIsNone(edge)
 
     
+    @pytest.mark.test
     def testUndirectedGraphRemoveEdgeNotExists(self) -> None:
         with self.assertRaises(GraphException):
             g = None

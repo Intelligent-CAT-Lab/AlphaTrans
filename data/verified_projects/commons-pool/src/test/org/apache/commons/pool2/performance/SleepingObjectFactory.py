@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.pool2.Waiter import *
 from src.main.org.apache.commons.pool2.PooledObject import *
 import threading

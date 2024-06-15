@@ -1,3 +1,5 @@
+import pytest
+
 from abc import ABC, abstractmethod
 from src.test.org.apache.commons.pool2.MethodCallPoolableObjectFactory import *
 from src.test.org.apache.commons.pool2.MethodCall import *

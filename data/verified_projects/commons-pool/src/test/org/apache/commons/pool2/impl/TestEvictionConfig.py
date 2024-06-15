@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from datetime import timedelta
 from src.main.org.apache.commons.pool2.impl.EvictionConfig import *
@@ -5,6 +7,7 @@ import sys
 
 class TestEvictionConfig(unittest.TestCase):
 
+    @pytest.mark.test
     def testConstructor1s(self) -> None:
         config = EvictionConfig(
             timedelta(milliseconds=1),
@@ -42,6 +45,7 @@ class TestEvictionConfig(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testConstructorZerosDurations(self) -> None:
         config = EvictionConfig(timedelta(0), timedelta(0), 0)
 
@@ -75,6 +79,7 @@ class TestEvictionConfig(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testConstructorZerosMillis(self) -> None:
         config = EvictionConfig.EvictionConfig0(0, 0, 0)
 

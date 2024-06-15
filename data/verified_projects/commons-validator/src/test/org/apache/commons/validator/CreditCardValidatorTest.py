@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.CreditCardValidator import *
 import unittest
 
@@ -14,6 +16,7 @@ class CreditCardValidatorTest(unittest.TestCase):
         super().__init__(methodName)
 
 
+    @pytest.mark.test
     def testIsValid(self) -> None:
         ccv = CreditCardValidator.CreditCardValidator1()
 
@@ -33,6 +36,7 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertFalse(ccv.isValid("4417123456789113"))
     
 
+    @pytest.mark.test
     def testAddAllowedCardType(self) -> None:
         ccv = CreditCardValidator(CreditCardValidator.NONE)
         self.assertFalse(ccv.isValid(CreditCardValidatorTest.__VALID_VISA))

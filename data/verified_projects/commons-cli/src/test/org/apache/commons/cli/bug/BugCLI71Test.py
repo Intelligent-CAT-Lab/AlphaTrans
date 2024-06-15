@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Options import *
@@ -34,6 +36,7 @@ class BugCLI71Test(unittest.TestCase):
         self.__parser = PosixParser()
     
     
+    @pytest.mark.test
     def testBasic(self) -> None:
         try:
             args = ["-a", "Caesar", "-k", "A"]
@@ -44,6 +47,7 @@ class BugCLI71Test(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testGetsDefaultIfOptional(self) -> None:
         try:
             args = ["-k", "-a", "Caesar"]
@@ -56,6 +60,7 @@ class BugCLI71Test(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testLackOfError(self) -> None:
         try:
             args = ["-k", "-a", "Caesar"]
@@ -68,6 +73,7 @@ class BugCLI71Test(unittest.TestCase):
             self.fail(f"An unexpected exception occurred. Expected MissingArgumentException but got: {e}")
 
     
+    @pytest.mark.test
     def testMistakenArgument(self) -> None:
         try:
             args = ["-a", "Caesar", "-k", "A"]

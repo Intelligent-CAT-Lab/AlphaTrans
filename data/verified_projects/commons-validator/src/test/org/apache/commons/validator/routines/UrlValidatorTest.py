@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.UrlValidator import *
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
@@ -130,6 +132,7 @@ class UrlValidatorTest(unittest.TestCase):
             self.testPartsIndex[index] = 0
 
     
+    @pytest.mark.test
     def testIsValid0(self) -> None:
         self.checkTestIsValid1(self.testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES)
         self.setUp()
@@ -139,6 +142,7 @@ class UrlValidatorTest(unittest.TestCase):
         self.checkTestIsValid1(self.testUrlPartsOptions, options)
 
     
+    @pytest.mark.test
     def testIsValidScheme(self) -> None:
         if self.__printStatus:
             print("\n testIsValidScheme() ")
@@ -160,6 +164,7 @@ class UrlValidatorTest(unittest.TestCase):
             print()
     
 
+    @pytest.mark.test
     def testValidator202(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator.UrlValidator3(schemes, UrlValidator.NO_FRAGMENTS)
@@ -172,6 +177,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator204(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator.UrlValidator5(schemes)
@@ -182,6 +188,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator218(self) -> None:
         validator = UrlValidator.UrlValidator4(UrlValidator.ALLOW_2_SLASHES)
         self.assertTrue(
@@ -190,6 +197,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator235(self) -> None:
         version = sys.version_info
         if version < (2, 6): 
@@ -224,6 +232,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator248(self) -> None:
         regex = RegexValidator.RegexValidator1(["localhost", ".*\\.my-testing"])
         validator = UrlValidator.UrlValidator2(regex, 0)
@@ -266,6 +275,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator288(self) -> None:
         validator = UrlValidator.UrlValidator4(UrlValidator.ALLOW_LOCAL_URLS)
 
@@ -317,6 +327,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator276(self) -> None:
         validator = UrlValidator.UrlValidator6()
 
@@ -395,6 +406,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator391OK(self) -> None:
         schemes = ["file"]
         urlValidator = UrlValidator.UrlValidator5(schemes)
@@ -403,6 +415,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
     
 
+    @pytest.mark.test
     def testValidator391FAILS(self) -> None:
         schemes = ["file"]
         urlValidator = UrlValidator.UrlValidator5(schemes)
@@ -411,6 +424,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator309(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
@@ -434,6 +448,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator339(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
@@ -453,6 +468,7 @@ class UrlValidatorTest(unittest.TestCase):
         )  # check . does not affect invalid domains
 
     
+    @pytest.mark.test
     def testValidator339IDN(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
@@ -472,6 +488,7 @@ class UrlValidatorTest(unittest.TestCase):
         )  # doubly dotty
 
     
+    @pytest.mark.test
     def testValidator342(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
@@ -482,6 +499,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator411(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
@@ -501,6 +519,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
     
 
+    @pytest.mark.test
     def testValidator464(self) -> None:
         schemes = ["file"]
         urlValidator = UrlValidator.UrlValidator5(schemes)
@@ -511,6 +530,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator452(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
@@ -518,17 +538,20 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator473_1(self) -> None:
         with self.assertRaises(ValueError):
             UrlValidator([], None, 0, None)
 
     
+    @pytest.mark.test
     def testValidator473_2(self) -> None:
         items = []
         with self.assertRaises(ValueError):
             UrlValidator([], None, 0, DomainValidator.getInstance2(True, items))
 
     
+    @pytest.mark.test
     def testValidator473_3(self) -> None:
         items = []
         with self.assertRaises(ValueError):
@@ -540,10 +563,12 @@ class UrlValidatorTest(unittest.TestCase):
             )
     
 
+    @pytest.mark.test
     def testValidateUrl(self) -> None:
         self.assertTrue(True)
 
     
+    @pytest.mark.test
     def testValidator290(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertTrue(
@@ -644,11 +669,13 @@ class UrlValidatorTest(unittest.TestCase):
         )  # United Arab Emirates
 
     
+    @pytest.mark.test
     def testValidator361(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertTrue(validator.isValid("http://hello.tokyo/"))
 
     
+    @pytest.mark.test
     def testValidator363(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(urlValidator.isValid("http://www.example.org/a/b/hello..world"))
@@ -669,6 +696,7 @@ class UrlValidatorTest(unittest.TestCase):
         self.assertTrue(urlValidator.isValid("http://www.example.org/.../.."))
 
     
+    @pytest.mark.test
     def testValidator375(self) -> None:
         validator = UrlValidator.UrlValidator6()
         url = "http://[FEDC:BA98:7654:3210:FEDC:BA98:7654:3210]:80/index.html"
@@ -688,6 +716,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator353(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertTrue(validator.isValid("http://www.apache.org:80/path"))
@@ -703,6 +732,7 @@ class UrlValidatorTest(unittest.TestCase):
         self.assertFalse(validator.isValid("http://user:pa@ss@www.apache.org/path"))
 
     
+    @pytest.mark.test
     def testValidator382(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertTrue(
@@ -712,6 +742,7 @@ class UrlValidatorTest(unittest.TestCase):
             )
         )
     
+    @pytest.mark.test
     def testValidator380(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertTrue(validator.isValid("http://www.apache.org:80/path"))
@@ -719,6 +750,7 @@ class UrlValidatorTest(unittest.TestCase):
         self.assertTrue(validator.isValid("http://www.apache.org:/path"))
 
     
+    @pytest.mark.test
     def testValidator420(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertFalse(
@@ -732,6 +764,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
     
 
+    @pytest.mark.test
     def testValidator467(self) -> None:
         validator = UrlValidator.UrlValidator4(UrlValidator.ALLOW_2_SLASHES)
         self.assertTrue(validator.isValid("https://example.com/some_path/path/"))
@@ -740,6 +773,7 @@ class UrlValidatorTest(unittest.TestCase):
         self.assertTrue(validator.isValid("http://example.com//_test")) # VALIDATOR-429
 
     
+    @pytest.mark.test
     def testValidator283(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertFalse(
@@ -756,6 +790,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
     
 
+    @pytest.mark.test
     def testFragments(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator.UrlValidator3(schemes, UrlValidator.NO_FRAGMENTS)

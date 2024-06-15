@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.LongValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import AbstractNumberValidatorTest
 import sys
@@ -105,6 +107,7 @@ class LongValidatorTest(AbstractNumberValidatorTest):
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
+    @pytest.mark.test
     def testLongValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
@@ -187,6 +190,7 @@ class LongValidatorTest(AbstractNumberValidatorTest):
         )
     
 
+    @pytest.mark.test
     def testLongRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")

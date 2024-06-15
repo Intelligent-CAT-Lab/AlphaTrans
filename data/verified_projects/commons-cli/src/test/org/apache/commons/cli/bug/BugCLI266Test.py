@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.OptionGroup import *
@@ -60,6 +62,7 @@ class BugCLI266Test(unittest.TestCase):
         return options
 
     
+    @pytest.mark.test
     def testOptionComparatorDefaultOrder(self) -> None:
         formatter = HelpFormatter()
         options = list(self.__getOptions().getOptions())
@@ -70,6 +73,7 @@ class BugCLI266Test(unittest.TestCase):
             i += 1
 
     
+    @pytest.mark.test
     def testOptionComparatorInsertedOrder(self) -> None:
         options = self.__getOptions().getOptions()
         i = 0

@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from random import Random
 from src.main.org.apache.commons.validator.routines.ISSNValidator import *
@@ -41,6 +43,7 @@ class ISSNValidatorTest(unittest.TestCase):
         ]
 
     
+    @pytest.mark.test
     def testIsValidISSN(self) -> None:
         for f in self.__validFormat:
             self.assertTrue(
@@ -49,6 +52,7 @@ class ISSNValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testNull(self) -> None:
         self.assertFalse(
             ISSNValidatorTest.__VALIDATOR.isValid(None),
@@ -56,6 +60,7 @@ class ISSNValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testInvalid(self) -> None:
         for f in self.__invalidFormat:
             self.assertFalse(
@@ -64,12 +69,14 @@ class ISSNValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testIsValidISSNConvertNull(self) -> None:
         self.assertIsNone(
             ISSNValidatorTest.__VALIDATOR.convertToEAN13(None, "00")
         )
 
     
+    @pytest.mark.test
     def testIsValidISSNConvertSuffix(self) -> None:
         for suffix in [None, "", "0", "A", "AA", "999"]:
             with self.assertRaises(
@@ -79,6 +86,7 @@ class ISSNValidatorTest(unittest.TestCase):
                 ISSNValidatorTest.__VALIDATOR.convertToEAN13(None, suffix)
 
     
+    @pytest.mark.test
     def testIsValidISSNConvert(self) -> None:
         ean13cd = EAN13CheckDigit.EAN13_CHECK_DIGIT
         r = Random()
@@ -103,6 +111,7 @@ class ISSNValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testConversionErrors(self) -> None:
         inputs = ["9780072129519", "9791090636071", "03178471"]
         for input in inputs:
@@ -113,6 +122,7 @@ class ISSNValidatorTest(unittest.TestCase):
                 ISSNValidatorTest.__VALIDATOR.extractFromEAN13(input)
 
     
+    @pytest.mark.test
     def testValidCheckDigitEAN13(self) -> None:
         valideCodes = ["9771234567003"]
         invalideCodes = [
@@ -136,6 +146,7 @@ class ISSNValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testIsValidExtract(self) -> None:
         self.assertEqual(
             "12345679",

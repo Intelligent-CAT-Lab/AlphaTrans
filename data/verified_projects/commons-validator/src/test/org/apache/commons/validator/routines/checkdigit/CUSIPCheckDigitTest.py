@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.CUSIPCheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import AbstractCheckDigitTest
 from typing import *
@@ -39,6 +41,7 @@ class CUSIPCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
     
+    @pytest.mark.test
     def testVALIDATOR_336_InvalidCheckDigits(self) -> None:
         for i in range(len(CUSIPCheckDigitTest.__invalidCheckDigits)):
             invalidCheckDigit = CUSIPCheckDigitTest.__invalidCheckDigits[i]
@@ -48,6 +51,7 @@ class CUSIPCheckDigitTest(AbstractCheckDigitTest):
             )
 
     
+    @pytest.mark.test
     def testVALIDATOR_336_ValidCheckDigits(self) -> None:
         for i in range(len(CUSIPCheckDigitTest.__validCheckDigits)):
             validCheckDigit = CUSIPCheckDigitTest.__validCheckDigits[i]

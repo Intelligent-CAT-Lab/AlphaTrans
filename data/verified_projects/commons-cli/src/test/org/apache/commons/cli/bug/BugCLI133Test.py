@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.ParseException import *
@@ -15,6 +17,7 @@ class BugCLI133Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def testOrder(self) -> None:
         try:
             optionA = Option.Option1("a", "first")

@@ -1,3 +1,5 @@
+import pytest
+
 class ResultPair:
 
     def __init__(self, item, valid) -> None:

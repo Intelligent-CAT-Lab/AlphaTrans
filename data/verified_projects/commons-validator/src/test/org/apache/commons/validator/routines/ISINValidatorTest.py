@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from src.main.org.apache.commons.validator.routines.ISINValidator import *
 
@@ -45,6 +47,7 @@ class ISINValidatorTest(unittest.TestCase):
         ]
 
     
+    @pytest.mark.test
     def testIsValidTrue(self) -> None:
         for f in self.__validFormat:
             self.assertTrue(
@@ -53,6 +56,7 @@ class ISINValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testInvalidTrue(self) -> None:
         for f in self.__invalidFormat:
             self.assertFalse(
@@ -66,6 +70,7 @@ class ISINValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testIsValidFalse(self) -> None:
         for f in self.__validFormat:
             self.assertTrue(
@@ -74,6 +79,7 @@ class ISINValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testInvalidFalse(self) -> None:
         for f in self.__invalidFormat:
             self.assertFalse(

@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.BigIntegerValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import AbstractNumberValidatorTest
 from decimal import Decimal
@@ -52,6 +54,7 @@ class BigIntegerValidatorTest(AbstractNumberValidatorTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
+    @pytest.mark.test
     def testBigIntegerValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
@@ -140,6 +143,7 @@ class BigIntegerValidatorTest(AbstractNumberValidatorTest):
         )
 
     
+    @pytest.mark.test
     def testBigIntegerRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")

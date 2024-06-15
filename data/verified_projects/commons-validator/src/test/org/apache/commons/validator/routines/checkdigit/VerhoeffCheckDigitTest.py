@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.VerhoeffCheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import AbstractCheckDigitTest
 
@@ -26,5 +28,6 @@ class VerhoeffCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
 
+    @pytest.mark.test
     def testZeroSum(self) -> None:
         pass

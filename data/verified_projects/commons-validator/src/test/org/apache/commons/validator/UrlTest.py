@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.UrlValidator import *
 from src.test.org.apache.commons.validator.ResultPair import ResultPair
 import unittest
@@ -115,6 +117,7 @@ class UrlTest(unittest.TestCase):
             self.testPartsIndex[index] = 0
 
     
+    @pytest.mark.test
     def testIsValid0(self) -> None:
         self.checkTestIsValid1(self.testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES)
         self.setUp()
@@ -124,6 +127,7 @@ class UrlTest(unittest.TestCase):
         self.checkTestIsValid1(self.testUrlPartsOptions, options)
     
 
+    @pytest.mark.test
     def testIsValidScheme(self) -> None:
         if self.__printStatus:
             print("\n testIsValidScheme() ")
@@ -146,6 +150,7 @@ class UrlTest(unittest.TestCase):
             print()
     
 
+    @pytest.mark.test
     def testValidator202(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator(schemes, UrlValidator.NO_FRAGMENTS)
@@ -161,6 +166,7 @@ class UrlTest(unittest.TestCase):
         )
 
 
+    @pytest.mark.test
     def testValidator204(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator.UrlValidator2(schemes)
@@ -171,6 +177,7 @@ class UrlTest(unittest.TestCase):
         )
     
 
+    @pytest.mark.test
     def testValidateUrl(self) -> None:
         self.assertTrue(True)
     

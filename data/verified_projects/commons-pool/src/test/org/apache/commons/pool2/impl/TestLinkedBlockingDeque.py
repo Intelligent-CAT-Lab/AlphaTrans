@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque import *
 import unittest
 from datetime import timedelta
@@ -41,6 +43,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.deque = LinkedBlockingDeque.LinkedBlockingDeque3(2)
 
     
+    @pytest.mark.test
     def testAdd(self) -> None:
         self.assertTrue(self.deque.add(TestLinkedBlockingDeque.__ONE))
         self.assertTrue(self.deque.add(TestLinkedBlockingDeque.__TWO))
@@ -50,6 +53,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.deque.add(None)
 
     
+    @pytest.mark.test
     def testAddFirst(self) -> None:
         self.deque.addFirst(TestLinkedBlockingDeque.__ONE)
         self.deque.addFirst(TestLinkedBlockingDeque.__TWO)
@@ -59,6 +63,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(2, self.deque.pop())
 
     
+    @pytest.mark.test
     def testAddLast(self) -> None:
         self.deque.addLast(TestLinkedBlockingDeque.__ONE)
         self.deque.addLast(TestLinkedBlockingDeque.__TWO)
@@ -68,6 +73,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(1, self.deque.pop())
 
     
+    @pytest.mark.test
     def testClear(self) -> None:
         self.deque.add(TestLinkedBlockingDeque.__ONE)
         self.deque.add(TestLinkedBlockingDeque.__TWO)
@@ -76,6 +82,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(1, self.deque.size())
 
     
+    @pytest.mark.test
     def testConstructors(self) -> None:
         deque = LinkedBlockingDeque.LinkedBlockingDeque0()
         self.assertEqual(sys.maxsize, deque.remainingCapacity())
@@ -94,6 +101,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testContains(self) -> None:
         self.deque.add(TestLinkedBlockingDeque.__ONE)
         self.assertTrue(self.deque.contains(TestLinkedBlockingDeque.__ONE))
@@ -104,6 +112,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertFalse(self.deque.contains(TestLinkedBlockingDeque.__THREE))
 
     
+    @pytest.mark.test
     def testDescendingIterator(self) -> None:
         with self.assertRaises(StopIteration):
             next(self.deque.descendingIterator())
@@ -115,6 +124,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(1, next(iter_))
 
     
+    @pytest.mark.test
     def testDrainTo(self) -> None:
         c = []
         self.deque.add(TestLinkedBlockingDeque.__ONE)
@@ -131,6 +141,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(TestLinkedBlockingDeque.__ONE, c[0])
 
     
+    @pytest.mark.test
     def testElement(self) -> None:
         with self.assertRaises(StopIteration):
             self.deque.element()
@@ -139,6 +150,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(1, self.deque.element())
 
     
+    @pytest.mark.test
     def testGetFirst(self) -> None:
         with self.assertRaises(StopIteration):
             self.deque.getFirst()
@@ -147,6 +159,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(1, self.deque.getFirst())
 
     
+    @pytest.mark.test
     def testGetLast(self) -> None:
         with self.assertRaises(StopIteration):
             self.deque.getLast()
@@ -155,6 +168,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(2, self.deque.getLast())
 
     
+    @pytest.mark.test
     def testIterator(self) -> None:
         with self.assertRaises(StopIteration):
             next(self.deque.iterator())
@@ -166,6 +180,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(2, next(iter_))
 
     
+    @pytest.mark.test
     def testOffer(self) -> None:
         self.assertTrue(self.deque.offer(TestLinkedBlockingDeque.__ONE))
         self.assertTrue(self.deque.offer(TestLinkedBlockingDeque.__TWO))
@@ -174,6 +189,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.deque.offer(None)
 
     
+    @pytest.mark.test
     def testOfferFirst(self) -> None:
         self.deque.offerFirst(TestLinkedBlockingDeque.__ONE)
         self.deque.offerFirst(TestLinkedBlockingDeque.__TWO)
@@ -183,6 +199,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(2, self.deque.pop())
 
     
+    @pytest.mark.test
     def testOfferFirstWithTimeout(self) -> None:
         try:
             with self.assertRaises((TypeError, AttributeError)):
@@ -214,6 +231,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testOfferLast(self) -> None:
         self.deque.offerLast(TestLinkedBlockingDeque.__ONE)
         self.deque.offerLast(TestLinkedBlockingDeque.__TWO)
@@ -223,6 +241,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(1, self.deque.pop())
 
     
+    @pytest.mark.test
     def testOfferLastWithTimeout(self) -> None:
         try:
             with self.assertRaises((TypeError, AttributeError)):
@@ -254,6 +273,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testOfferWithTimeout(self) -> None:
         try:
             self.assertTrue(
@@ -285,6 +305,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testPeek(self) -> None:
         self.assertIsNone(self.deque.peek())
         self.deque.add(TestLinkedBlockingDeque.__ONE)
@@ -292,6 +313,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(1, self.deque.peek())
 
     
+    @pytest.mark.test
     def testPeekFirst(self) -> None:
         self.assertIsNone(self.deque.peekFirst())
         self.deque.add(TestLinkedBlockingDeque.__ONE)
@@ -299,6 +321,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(1, self.deque.peekFirst())
 
     
+    @pytest.mark.test
     def testPeekLast(self) -> None:
         self.assertIsNone(self.deque.peekLast())
         self.deque.add(TestLinkedBlockingDeque.__ONE)
@@ -306,6 +329,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(2, self.deque.peekLast())
 
     
+    @pytest.mark.test
     def testPollFirst(self) -> None:
         self.assertIsNone(self.deque.pollFirst())
         self.assertTrue(self.deque.offerFirst(TestLinkedBlockingDeque.__ONE))
@@ -313,6 +337,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(2, self.deque.pollFirst())
 
     
+    @pytest.mark.test
     def testPollFirstWithTimeout(self) -> None:
         try:
             self.assertIsNone(self.deque.pollFirst())
@@ -328,6 +353,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testPollLast(self) -> None:
         self.assertIsNone(self.deque.pollLast())
         self.assertTrue(self.deque.offerFirst(TestLinkedBlockingDeque.__ONE))
@@ -335,6 +361,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(1, self.deque.pollLast())
 
     
+    @pytest.mark.test
     def testPollLastWithTimeout(self) -> None:
         try:
             self.assertIsNone(self.deque.pollLast())
@@ -350,6 +377,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testPollWithTimeout(self) -> None:
         try:
             self.assertIsNone(self.deque.poll1(TestLinkedBlockingDeque.__TIMEOUT_50_MILLIS))
@@ -363,6 +391,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testPop(self) -> None:
         with self.assertRaises(StopIteration):
             self.deque.pop()
@@ -375,6 +404,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
 
     
     @timeout(10)
+    @pytest.mark.test
     def testPossibleBug(self) -> None:
         deque = LinkedBlockingDeque.LinkedBlockingDeque0()
         for i in range(3):
@@ -390,6 +420,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         next(iter_)
 
     
+    @pytest.mark.test
     def testPush(self) -> None:
         self.deque.push(TestLinkedBlockingDeque.__ONE)
         self.deque.push(TestLinkedBlockingDeque.__TWO)
@@ -399,6 +430,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(2, self.deque.pop())
 
     
+    @pytest.mark.test
     def testPut(self) -> None:
         try:
             with self.assertRaises((TypeError, AttributeError)):
@@ -414,6 +446,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testPutFirst(self) -> None:
         try:
             with self.assertRaises((TypeError, AttributeError)):
@@ -431,6 +464,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testPutLast(self) -> None:
         try:
             with self.assertRaises((TypeError, AttributeError)):
@@ -448,6 +482,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testRemove(self) -> None:
         with self.assertRaises(StopIteration):
             self.deque.remove()
@@ -456,6 +491,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(1, self.deque.remove())
 
     
+    @pytest.mark.test
     def testRemoveFirst(self) -> None:
         with self.assertRaises(StopIteration):
             self.deque.removeFirst()
@@ -467,6 +503,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.deque.removeFirst()
 
     
+    @pytest.mark.test
     def testRemoveLast(self) -> None:
         with self.assertRaises(StopIteration):
             self.deque.removeLast()
@@ -478,6 +515,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.deque.removeLast()
 
     
+    @pytest.mark.test
     def testRemoveLastOccurrence(self) -> None:
         self.assertFalse(self.deque.removeLastOccurrence(None))
         self.assertFalse(self.deque.removeLastOccurrence(TestLinkedBlockingDeque.__ONE))
@@ -487,6 +525,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertEqual(1, self.deque.size())
 
     
+    @pytest.mark.test
     def testTake(self) -> None:
         try:
             self.assertTrue(self.deque.offerFirst(TestLinkedBlockingDeque.__ONE))
@@ -501,6 +540,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testTakeFirst(self) -> None:
         try:
             self.assertTrue(self.deque.offerFirst(TestLinkedBlockingDeque.__ONE))
@@ -515,6 +555,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testTakeLast(self) -> None:
         try:
             self.assertTrue(self.deque.offerFirst(TestLinkedBlockingDeque.__ONE))
@@ -529,6 +570,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testToArray(self) -> None:
         self.deque.add(TestLinkedBlockingDeque.__ONE)
         self.deque.add(TestLinkedBlockingDeque.__TWO)

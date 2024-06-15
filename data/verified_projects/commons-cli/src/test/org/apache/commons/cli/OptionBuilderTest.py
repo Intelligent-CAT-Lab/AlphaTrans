@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.OptionBuilder import *
 from src.main.org.apache.commons.cli.Option import *
@@ -12,6 +14,7 @@ class OptionBuilderTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def testBaseOptionCharOpt(self) -> None:
         base = OptionBuilder.withDescription("option description").create1('o')
         self.assertEqual("o", base.getOpt())
@@ -19,6 +22,7 @@ class OptionBuilderTest(unittest.TestCase):
         self.assertFalse(base.hasArg())
 
     
+    @pytest.mark.test
     def testBaseOptionStringOpt(self) -> None:
         base = OptionBuilder.withDescription("option description").create2("o")
         self.assertEqual("o", base.getOpt())
@@ -26,6 +30,7 @@ class OptionBuilderTest(unittest.TestCase):
         self.assertFalse(base.hasArg())
 
     
+    @pytest.mark.test
     def testBuilderIsResettedAlways(self) -> None:
         try:
             OptionBuilder.withDescription("JUnit").create1('"')
@@ -45,6 +50,7 @@ class OptionBuilderTest(unittest.TestCase):
         )
 
 
+    @pytest.mark.test
     def testCompleteOption(self) -> None:
         simple = OptionBuilder.withLongOpt("simple option")\
                               .hasArg0()\
@@ -62,12 +68,14 @@ class OptionBuilderTest(unittest.TestCase):
         self.assertTrue(simple.hasArgs())
 
 
+    @pytest.mark.test
     def testCreateIncompleteOption(self) -> None:
         with self.assertRaises(ValueError):
             OptionBuilder.hasArg0().create0()
         OptionBuilder.create2("opt")
 
 
+    @pytest.mark.test
     def testIllegalOptions(self) -> None:
         try:
             OptionBuilder.withDescription("option description").create1('"')
@@ -85,11 +93,13 @@ class OptionBuilderTest(unittest.TestCase):
             self.fail("IllegalArgumentException caught")
 
 
+    @pytest.mark.test
     def testOptionArgNumbers(self) -> None:
         opt = OptionBuilder.withDescription("option description").hasArgs1(2).create1('o')
         self.assertEqual(2, opt.getArgs())
     
     
+    @pytest.mark.test
     def testSpecialOptChars(self) -> None:
         try:
             opt1 = OptionBuilder.withDescription("help options").create1("?")
@@ -107,6 +117,7 @@ class OptionBuilderTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testTwoCompleteOptions(self) -> None:
 
         simple = OptionBuilder.withLongOpt("simple option")\

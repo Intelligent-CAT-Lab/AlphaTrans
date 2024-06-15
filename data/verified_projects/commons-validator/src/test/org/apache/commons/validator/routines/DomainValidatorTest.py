@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
 import unittest
 import sys
@@ -16,6 +18,7 @@ class DomainValidatorTest(unittest.TestCase):
         self.__validator = DomainValidator.getInstance0()
 
     
+    @pytest.mark.test
     def testValidDomains(self) -> None:
         self.assertTrue(
             self.__validator.isValid("apache.org"),
@@ -59,6 +62,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testInvalidDomains(self) -> None:
         self.assertFalse(
             self.__validator.isValid(".org"),
@@ -107,6 +111,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testTopLevelDomains(self) -> None:
         self.assertTrue(
             self.__validator.isValidInfrastructureTld(".arpa"),
@@ -158,6 +163,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testAllowLocal(self) -> None:
         noLocal = DomainValidator.getInstance1(False)
         allowLocal = DomainValidator.getInstance1(True)
@@ -185,6 +191,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testIDN(self) -> None:
         self.assertTrue(
             self.__validator.isValid("www.xn--bcher-kva.ch"),
@@ -192,6 +199,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testIDNJava6OrLater(self) -> None:
         version = sys.version_info
         if version < (2, 6): 
@@ -216,6 +224,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testRFC2396domainlabel(self) -> None:
         self.assertTrue(self.__validator.isValid("a.ch"), "a.ch should validate")
         self.assertTrue(self.__validator.isValid("9.ch"), "9.ch should validate")
@@ -226,6 +235,7 @@ class DomainValidatorTest(unittest.TestCase):
         self.assertFalse(self.__validator.isValid("-.ch"), "-.ch should not validate")
 
     
+    @pytest.mark.test
     def testRFC2396toplabel(self) -> None:
         self.assertTrue(
             self.__validator.isValidDomainSyntax("a.c"),
@@ -266,6 +276,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testDomainNoDots(self) -> None:
         self.assertTrue(
             self.__validator.isValidDomainSyntax("a"),
@@ -294,6 +305,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator297(self) -> None:
         self.assertTrue(
             self.__validator.isValid("xn--d1abbgf6aiiy.xn--p1ai"),
@@ -301,6 +313,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidator306(self) -> None:
         longString = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789A"
         self.assertEqual(len(longString), 63)
@@ -335,6 +348,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testUnicodeToASCII(self) -> None:
         asciidots = [
             "", ",", ".", # fails IDNA.toASCII, but should pass wrapped version
@@ -356,6 +370,7 @@ class DomainValidatorTest(unittest.TestCase):
             self.assertEqual(s[1], DomainValidator.unicodeToASCII(s[0]))
 
     
+    @pytest.mark.test
     def testIsIDNtoASCIIBroken(self) -> None:
         print(">>DomainValidatorTest.testIsIDNtoASCIIBroken()")
         input_str = "."
@@ -379,6 +394,7 @@ class DomainValidatorTest(unittest.TestCase):
         self.assertTrue(True)
 
     
+    @pytest.mark.test
     def testINFRASTRUCTURE_TLDS_sortedAndLowerCase(self) -> None:
         try:
             sorted = self.__isSortedLowerCase0("INFRASTRUCTURE_TLDS")
@@ -387,6 +403,7 @@ class DomainValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testCOUNTRY_CODE_TLDS_sortedAndLowerCase(self) -> None:
         try:
             sorted = self.__isSortedLowerCase0("COUNTRY_CODE_TLDS")
@@ -395,6 +412,7 @@ class DomainValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testGENERIC_TLDS_sortedAndLowerCase(self) -> None:
         try:
             sorted = self.__isSortedLowerCase0("GENERIC_TLDS")
@@ -403,6 +421,7 @@ class DomainValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testLOCAL_TLDS_sortedAndLowerCase(self) -> None:
         try:
             sorted = self.__isSortedLowerCase0("LOCAL_TLDS")
@@ -411,10 +430,12 @@ class DomainValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testEnumIsPublic(self) -> None:
         self.assertTrue(hasattr(DomainValidator, 'ArrayType'))
 
     
+    @pytest.mark.test
     def testGetArray(self) -> None:
         self.assertIsNotNone(
             DomainValidator.getTLDEntries(DomainValidator.ArrayType.COUNTRY_CODE_MINUS)

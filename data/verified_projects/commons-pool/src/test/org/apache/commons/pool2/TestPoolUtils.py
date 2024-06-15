@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from unittest.mock import create_autospec, MagicMock, Mock
 from threading import Timer
@@ -187,6 +189,7 @@ class TestPoolUtils(unittest.TestCase):
             raise e
     
 
+    @pytest.mark.test
     def testCheckMinIdleKeyedObjectPoolKeys(self) -> None:
         try:
             afe = None
@@ -227,6 +230,7 @@ class TestPoolUtils(unittest.TestCase):
             self.fail(f"An unexpected exception occurred: {e}")
     
 
+    @pytest.mark.test
     def testCheckMinIdleKeyedObjectPoolKeysNulls(self) -> None:
         with self.assertRaises(
             ValueError,
@@ -246,6 +250,7 @@ class TestPoolUtils(unittest.TestCase):
             )
     
 
+    @pytest.mark.test
     def testCheckRethrow(self) -> None:
         try:
             PoolUtils.checkRethrow(Exception())
@@ -274,6 +279,7 @@ class TestPoolUtils(unittest.TestCase):
                 "ThreadError and VirtualMachineError.")
     
 
+    @pytest.mark.test
     def testErodingObjectPoolDefaultFactor(self) -> None:
         try:
             internalPool = TestPoolUtils.__createProxy0(ObjectPool, lambda *args: None)
@@ -289,6 +295,7 @@ class TestPoolUtils(unittest.TestCase):
             self.fail(f"An unexpected exception occurred: {e}")
     
 
+    @pytest.mark.test
     def testErodingPoolKeyedObjectPoolDefaultFactor(self) -> None:
         try:
             internalPool = TestPoolUtils.__createProxy0(KeyedObjectPool, lambda *args: None)
@@ -304,10 +311,12 @@ class TestPoolUtils(unittest.TestCase):
             self.fail(f"An unexpected exception occurred: {e}")
     
 
+    @pytest.mark.test
     def testJavaBeanInstantiation(self) -> None:
         self.assertIsNotNone(PoolUtils())
     
 
+    @pytest.mark.test
     def testPrefillKeyedObjectPoolCollection(self) -> None:
         pool = TestPoolUtils.__createProxy1(KeyedObjectPool, None)
         try:
@@ -339,6 +348,7 @@ class TestPoolUtils(unittest.TestCase):
             self.fail(f"An unexpected exception occurred: {e}")
     
 
+    @pytest.mark.test
     def testPrefillObjectPool(self) -> None:
         with self.assertRaises(
             ValueError,
@@ -362,6 +372,7 @@ class TestPoolUtils(unittest.TestCase):
             self.fail(f"An unexpected exception occurred: {e}")
     
 
+    @pytest.mark.test
     def testSynchronizedPoolKeyedObjectPool(self) -> None:
         with self.assertRaises(
             ValueError,
@@ -380,6 +391,7 @@ class TestPoolUtils(unittest.TestCase):
             self.fail(f"An unexpected exception occurred: {e}")
     
 
+    @pytest.mark.test
     def testSynchronizedPoolObjectPool(self) -> None:
         with self.assertRaises(
             ValueError,
@@ -398,6 +410,7 @@ class TestPoolUtils(unittest.TestCase):
             self.fail(f"An unexpected exception occurred: {e}")
     
 
+    @pytest.mark.test
     def testTimerHolder(self) -> None:
         h = PoolUtils.TimerHolder()
         self.assertIsNotNone(h)

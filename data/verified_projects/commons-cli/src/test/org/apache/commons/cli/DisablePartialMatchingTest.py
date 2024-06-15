@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.Option import *
@@ -15,6 +17,7 @@ class DisablePartialMatchingTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def testDisablePartialMatching(self) -> None:
         try:
             parser = DefaultParser(0, False, None)
@@ -39,6 +42,7 @@ class DisablePartialMatchingTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testRegularPartialMatching(self) -> None:
         try:
             parser = DefaultParser(2, False, None)

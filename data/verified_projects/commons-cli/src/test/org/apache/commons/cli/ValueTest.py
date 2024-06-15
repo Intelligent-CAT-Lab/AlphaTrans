@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Parser import *
@@ -47,16 +49,19 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
     
+    @pytest.mark.test
     def testLongNoArg(self) -> None:
         self.assertTrue(self.__cl.hasOption2("c"))
         self.assertIsNone(self.__cl.getOptionValue4("c"))
 
     
+    @pytest.mark.test
     def testLongNoArgWithOption(self) -> None:
         self.assertTrue(self.__cl.hasOption1(self.__opts.getOption("c")))
         self.assertIsNone(self.__cl.getOptionValue2(self.__opts.getOption("c")))
     
     
+    @pytest.mark.test
     def testLongOptionalArgValue(self) -> None:
         try:
             args = ["--fish", "face"]
@@ -69,6 +74,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testLongOptionalArgValues(self) -> None:
         try:
             args = ["--gravy", "gold", "garden"]
@@ -84,6 +90,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testLongOptionalArgValuesWithOption(self) -> None:
         try:
             args = ["--gravy", "gold", "garden"]
@@ -99,6 +106,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testLongOptionalArgValueWithOption(self) -> None:
         try:
             args = ["--fish", "face"]
@@ -110,6 +118,7 @@ class ValueTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
     
+    @pytest.mark.test
     def testLongOptionalNArgValues(self) -> None:
         try:
             args = ["--hide", "house", "hair", "head"]
@@ -127,6 +136,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testLongOptionalNArgValuesWithOption(self) -> None:
         try:
             args = ["--hide", "house", "hair", "head"]
@@ -145,6 +155,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testLongOptionalNoValue(self) -> None:
         try:
             args = ["--fish"]
@@ -157,6 +168,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testLongOptionalNoValueWithOption(self) -> None:
         try:
             args = ["--fish"]
@@ -169,28 +181,33 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
+    @pytest.mark.test
     def testLongWithArg(self) -> None:
         self.assertTrue(self.__cl.hasOption2("d"))
         self.assertIsNotNone(self.__cl.getOptionValue4("d"))
         self.assertEqual(self.__cl.getOptionValue4("d"), "bar")
 
     
+    @pytest.mark.test
     def testLongWithArgWithOption(self) -> None:
         self.assertTrue(self.__cl.hasOption1(self.__opts.getOption("d")))
         self.assertIsNotNone(self.__cl.getOptionValue2(self.__opts.getOption("d")))
         self.assertEqual(self.__cl.getOptionValue2(self.__opts.getOption("d")), "bar")
 
     
+    @pytest.mark.test
     def testShortNoArg(self) -> None:
         self.assertTrue(self.__cl.hasOption2("a"))
         self.assertIsNone(self.__cl.getOptionValue4("a"))
 
     
+    @pytest.mark.test
     def testShortNoArgWithOption(self) -> None:
         self.assertTrue(self.__cl.hasOption1(self.__opts.getOption("a")))
         self.assertIsNone(self.__cl.getOptionValue2(self.__opts.getOption("a")))
 
     
+    @pytest.mark.test
     def testShortOptionalArgNoValue(self) -> None:
         try:
             args = ["-e"]
@@ -203,6 +220,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testShortOptionalArgNoValueWithOption(self) -> None:
         try:
             args = ["-e"]
@@ -215,6 +233,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testShortOptionalArgValue(self) -> None:
         try:
             args = ["-e", "everything"]
@@ -227,6 +246,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testShortOptionalArgValues(self) -> None:
         try:
             args = ["-j", "ink", "idea"]
@@ -242,6 +262,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
+    @pytest.mark.test
     def testShortOptionalArgValuesWithOption(self) -> None:
         try:
             args = ["-j", "ink", "idea"]
@@ -257,6 +278,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testShortOptionalArgValueWithOption(self) -> None:
         try:
             args = ["-e", "everything"]
@@ -269,6 +291,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testShortOptionalNArgValues(self) -> None:
         try:
             args = ["-i", "ink", "idea", "isotope", "ice"]
@@ -286,6 +309,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
+    @pytest.mark.test
     def testShortOptionalNArgValuesWithOption(self) -> None:
         try:
             args = ["-i", "ink", "idea", "isotope", "ice"]
@@ -303,12 +327,14 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testShortWithArg(self) -> None:
         self.assertTrue(self.__cl.hasOption2("b"))
         self.assertIsNotNone(self.__cl.getOptionValue4("b"))
         self.assertEqual(self.__cl.getOptionValue4("b"), "foo")
 
     
+    @pytest.mark.test
     def testShortWithArgWithOption(self) -> None:
         self.assertTrue(self.__cl.hasOption1(self.__opts.getOption("b")))
         self.assertIsNotNone(self.__cl.getOptionValue2(self.__opts.getOption("b")))

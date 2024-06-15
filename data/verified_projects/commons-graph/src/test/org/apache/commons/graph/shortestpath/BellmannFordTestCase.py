@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
@@ -27,6 +29,7 @@ import pathlib
 
 class BellmannFordTestCase(unittest.TestCase):
 
+    @pytest.mark.test
     def testFindShortestPathAndVerify(self) -> None:
         graph = DirectedMutableGraph()
 
@@ -79,6 +82,7 @@ class BellmannFordTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
+    @pytest.mark.test
     def testNotConnectGraph(self) -> None:
         with self.assertRaises(PathNotFoundException):
             a = None
@@ -101,6 +105,7 @@ class BellmannFordTestCase(unittest.TestCase):
             allVertexPairsShortestPath.findShortestPath(a, b)
 
     
+    @pytest.mark.test
     def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findShortestPath(None)\
@@ -109,6 +114,7 @@ class BellmannFordTestCase(unittest.TestCase):
                 .applyingBelmannFord(DoubleWeightBaseOperations())
 
     
+    @pytest.mark.test
     def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = None
@@ -129,6 +135,7 @@ class BellmannFordTestCase(unittest.TestCase):
                 .applyingBelmannFord(None)
 
     
+    @pytest.mark.test
     def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()

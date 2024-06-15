@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.ByteValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import AbstractNumberValidatorTest
 from decimal import Decimal
@@ -102,6 +104,7 @@ class ByteValidatorTest(AbstractNumberValidatorTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
+    @pytest.mark.test
     def testByteValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00"
@@ -189,6 +192,7 @@ class ByteValidatorTest(AbstractNumberValidatorTest):
         )
     
 
+    @pytest.mark.test
     def testByteRangeMinMax(self) -> None:
         validator = self.strictValidator
         number9 = validator.validate1("9", "#")

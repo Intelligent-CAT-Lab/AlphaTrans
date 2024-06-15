@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.ParseException import *
@@ -18,6 +20,7 @@ class OptionsTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def testDuplicateLong(self) -> None:
         opts = Options()
         opts.addOption3("a", "--a", False, "toggle -a")
@@ -25,6 +28,7 @@ class OptionsTest(unittest.TestCase):
         self.assertEqual("toggle -a*", opts.getOption("a").getDescription(), "last one in wins")
 
 
+    @pytest.mark.test
     def testDuplicateSimple(self) -> None:
         opts = Options()
         opts.addOption1("a", False, "toggle -a")
@@ -33,6 +37,7 @@ class OptionsTest(unittest.TestCase):
         self.assertEqual("toggle -a*", opts.getOption("a").getDescription(), "last one in wins")
 
 
+    @pytest.mark.test
     def testGetMatchingOpts(self) -> None:
         options = Options()
         options.addOption0(OptionBuilder.withLongOpt("version").create0())
@@ -43,6 +48,7 @@ class OptionsTest(unittest.TestCase):
         self.assertEqual(2, len(options.getMatchingOptions("ver")))
 
 
+    @pytest.mark.test
     def testGetOptionsGroups(self) -> None:
         options = Options()
 
@@ -61,6 +67,7 @@ class OptionsTest(unittest.TestCase):
         self.assertEqual(2, len(options.getOptionGroups()))
 
 
+    @pytest.mark.test
     def testHelpOptions(self) -> None:
         longOnly1 = OptionBuilder.withLongOpt("long-only1").create0()
         longOnly2 = OptionBuilder.withLongOpt("long-only2").create0()
@@ -89,6 +96,7 @@ class OptionsTest(unittest.TestCase):
         )
     
     
+    @pytest.mark.test
     def testLong(self) -> None:
         opts = Options()
 
@@ -99,6 +107,7 @@ class OptionsTest(unittest.TestCase):
         self.assertTrue(opts.hasOption("b"))
 
 
+    @pytest.mark.test
     def testMissingOptionException(self) -> None:
         try:
             options = Options()
@@ -112,6 +121,7 @@ class OptionsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testMissingOptionsException(self) -> None:
         try:
             options = Options()
@@ -126,6 +136,7 @@ class OptionsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testSimple(self) -> None:
         opts = Options()
 
@@ -136,6 +147,7 @@ class OptionsTest(unittest.TestCase):
         self.assertTrue(opts.hasOption("b"))
     
     
+    @pytest.mark.test
     def testToString(self) -> None:
         options = Options()
         options.addOption3("f", "foo", True, "Foo")

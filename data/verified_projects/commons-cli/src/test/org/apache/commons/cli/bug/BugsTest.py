@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Parser import *
@@ -47,6 +49,7 @@ class BugsTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def test11456(self) -> None:
         try:
             options = Options()
@@ -72,6 +75,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
+    @pytest.mark.test
     def test11457(self) -> None:
         try:
             options = Options()
@@ -86,6 +90,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def test11458(self) -> None:
         try:
             options = Options()
@@ -128,6 +133,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def test11680(self) -> None:
         try:
             options = Options()
@@ -145,6 +151,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def test12210(self) -> None:
         try:
             mainOptions = Options()
@@ -183,6 +190,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def test13425(self) -> None:
         try:
             options = Options()
@@ -211,6 +219,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An unexpected exception occurred. Expected MissingArgumentException but got: {e}")
 
     
+    @pytest.mark.test
     def test13666(self) -> None:
         try:
             options = Options()
@@ -242,6 +251,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def test13935(self) -> None:
         try:
             directions = OptionGroup()
@@ -288,6 +298,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An unexpected exception occurred. Expected ParseException but got: {e}")
 
     
+    @pytest.mark.test
     def test14786(self) -> None:
         try:
             o = OptionBuilder.isRequired0().withDescription("test").create2("test")
@@ -305,6 +316,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def test15046(self) -> None:
         try:
             parser = PosixParser()
@@ -323,6 +335,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
+    @pytest.mark.test
     def test15648(self) -> None:
         try:
             parser = PosixParser()
@@ -336,6 +349,7 @@ class BugsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
+    @pytest.mark.test
     def test31148(self) -> None:
         try:
             multiArgOption = Option.Option1("o", "option with multiple args")

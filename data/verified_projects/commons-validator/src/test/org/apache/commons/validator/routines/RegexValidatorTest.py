@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
 import unittest
 import re
@@ -51,6 +53,7 @@ class RegexValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
+    @pytest.mark.test
     def testSingle(self) -> None:
         sensitive = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX)
         insensitive = RegexValidator.RegexValidator2(RegexValidatorTest.__REGEX, False)
@@ -129,6 +132,7 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testMultipleSensitive(self) -> None:
         multiple = RegexValidator.RegexValidator1(RegexValidatorTest.__MULTIPLE_REGEX)
         single1 = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX_1)
@@ -220,6 +224,7 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testMultipleInsensitive(self) -> None:
         multiple = RegexValidator(RegexValidatorTest.__MULTIPLE_REGEX, False)
         single1 = RegexValidator.RegexValidator2(RegexValidatorTest.__REGEX_1, False)
@@ -311,6 +316,7 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testNullValue(self) -> None:
         validator = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX)
         self.assertEqual(
@@ -330,6 +336,7 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testMissingRegex(self) -> None:
         with self.assertRaises(ValueError) as context:
             RegexValidator.RegexValidator3(None)
@@ -382,12 +389,14 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testExceptions(self) -> None:
         invalidRegex = "^([abCD12]*$"
         with self.assertRaises(re.error):
             RegexValidator.RegexValidator3(invalidRegex)
 
     
+    @pytest.mark.test
     def testToString(self) -> None:
         single = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX)
         self.assertEqual(

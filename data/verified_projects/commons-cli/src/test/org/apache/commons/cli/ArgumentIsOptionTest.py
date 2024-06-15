@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Options import *
@@ -17,6 +19,7 @@ class ArgumentIsOptionTest(unittest.TestCase):
             .addOption1("attr", True, "Option accepts argument")
         self.__parser = PosixParser()
     
+    @pytest.mark.test
     def testOption(self) -> None:
 
         try:
@@ -28,6 +31,7 @@ class ArgumentIsOptionTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testOptionAndOptionWithArgument(self) -> None:
 
         try:
@@ -40,6 +44,7 @@ class ArgumentIsOptionTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testOptionWithArgument(self) -> None:
 
         try:

@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -38,6 +40,7 @@ class ExportTestCase(unittest.TestCase):
         self.__actual = None
 
 
+    @pytest.mark.test
     def testShouldPrintDotFormat(self) -> None:
         CommonsGraph.export(self.__actual)\
             .withName("DotFormatGraph")\

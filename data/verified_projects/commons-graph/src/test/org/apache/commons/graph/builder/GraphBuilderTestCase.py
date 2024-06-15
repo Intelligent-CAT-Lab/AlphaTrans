@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -12,6 +14,7 @@ import unittest
 
 class GraphBuilderTestCase(unittest.TestCase):
 
+    @pytest.mark.test
     def testVerifyProducedGraphesAreEquals(self) -> None:
         expected = UndirectedMutableGraph()
         

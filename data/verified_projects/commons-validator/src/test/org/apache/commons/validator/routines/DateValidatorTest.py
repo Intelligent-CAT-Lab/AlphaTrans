@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.DateValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractCalendarValidatorTest import AbstractCalendarValidatorTest
 from src.main.org.apache.commons.validator.routines.AbstractCalendarValidator import *
@@ -24,6 +26,7 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
     
+    @pytest.mark.test
     def testLocaleProviders(self) -> None:
         localeProviders = os.getenv('java.locale.providers')
         if localeProviders is not None:
@@ -42,6 +45,7 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
         )
 
     
+    @pytest.mark.test
     def testDateValidatorMethods(self) -> None:
         setlocale(LC_TIME, 'en_US.UTF-8')
         locale = 'de_DE.UTF-8'
@@ -162,6 +166,7 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
         )
 
     
+    @pytest.mark.test
     def testCompare(self) -> None:
         sameTime = 124522
         testDate = 20050823

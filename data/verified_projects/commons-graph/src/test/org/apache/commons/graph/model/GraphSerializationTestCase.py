@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -64,6 +66,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             os.remove(f)
 
     
+    @pytest.mark.test
     def testSerializeDirectedGraph(self) -> None:
         try:
             g = CommonsGraph.newDirectedMutableGraph(GraphSerializationTestCase\
@@ -73,6 +76,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testSerializeDirectedWeightdGraph(self) -> None:
         try:
             g = CommonsGraph.newDirectedMutableGraph(GraphSerializationTestCase\
@@ -82,6 +86,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testSerializePath(self) -> None:
         try:
             start = BaseLabeledVertex("start")
@@ -107,6 +112,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testSerializeSpanningTree(self) -> None:
         try:
             spanningTree = MutableSpanningTree(
@@ -121,6 +127,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
+    @pytest.mark.test
     def testSerializeSyncronyzedDirectedWeightdGraph(self) -> None:
         try:
             g = CommonsGraph.synchronize2(
@@ -133,6 +140,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testSerializeUndirectedGraph(self) -> None:
         try:
             g = CommonsGraph.newUndirectedMutableGraph(GraphSerializationTestCase\
@@ -143,6 +151,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testSerializeUndirectedWeightdGraph(self) -> None:
         try:
             g = CommonsGraph.newUndirectedMutableGraph(GraphSerializationTestCase\

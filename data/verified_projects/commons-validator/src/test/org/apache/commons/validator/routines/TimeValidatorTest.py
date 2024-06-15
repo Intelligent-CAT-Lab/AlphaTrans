@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.TimeValidator import *
 import unittest
 from datetime import datetime
@@ -68,6 +70,7 @@ class TimeValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
+    @pytest.mark.test
     def testPatternValid(self) -> None:
         for i in range(len(self._patternValid)):
             text = f"{i} value=[{self._patternValid[i]}] failed "
@@ -88,6 +91,7 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testPatternInvalid(self) -> None:
         for i in range(len(self._patternInvalid)):
             text = f"{i} value=[{self._patternInvalid[i]}] passed "
@@ -102,6 +106,7 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testLocaleValid(self) -> None:
         for i in range(len(self._localeValid)):
             text = f"{i} value=[{self._localeValid[i]}] failed "
@@ -122,6 +127,7 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testLocaleInvalid(self) -> None:
         for i in range(len(self._localeInvalid)):
             text = f"{i} value=[{self._localeInvalid[i]}] passed "
@@ -136,6 +142,7 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testTimeZone(self) -> None:
         setlocale(LC_TIME, 'en_GB.UTF-8')
 
@@ -307,6 +314,7 @@ class TimeValidatorTest(unittest.TestCase):
         )
         result = None
 
+    @pytest.mark.test
     def testFormat(self) -> None:
         self.__origDefault = 'en_GB.UTF-8'
 
@@ -331,6 +339,7 @@ class TimeValidatorTest(unittest.TestCase):
             "Format default"
         )
 
+    @pytest.mark.test
     def testCompare(self) -> None:
         testTime = 154523
         min = 100

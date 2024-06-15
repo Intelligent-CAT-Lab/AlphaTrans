@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
@@ -17,6 +19,7 @@ from typing import *
 
 class KosarajuSharirTestCase(unittest.TestCase):
 
+    @pytest.mark.test
     def testNotExistVertex(self) -> None:
         with self.assertRaises(RuntimeError):
             graph = DirectedMutableGraph()
@@ -25,6 +28,7 @@ class KosarajuSharirTestCase(unittest.TestCase):
                 .applyingKosarajuSharir1(BaseLabeledVertex("NOT EXISTS"))
     
     
+    @pytest.mark.test
     def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = None
@@ -32,6 +36,7 @@ class KosarajuSharirTestCase(unittest.TestCase):
                 .applyingKosarajuSharir0()
 
     
+    @pytest.mark.test
     def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             a = None
@@ -40,6 +45,7 @@ class KosarajuSharirTestCase(unittest.TestCase):
                 .applyingKosarajuSharir1(a)
 
     
+    @pytest.mark.test
     def testUnconnectedGraph(self) -> None:
         a = BaseLabeledVertex("A")
         b = BaseLabeledVertex("B")
@@ -90,6 +96,7 @@ class KosarajuSharirTestCase(unittest.TestCase):
         self.assertEqual({g, h, c}, actualG)
 
     
+    @pytest.mark.test
     def testVerifyHasStronglyConnectedComponents(self) -> None:
         a = BaseLabeledVertex("A")
         b = BaseLabeledVertex("B")

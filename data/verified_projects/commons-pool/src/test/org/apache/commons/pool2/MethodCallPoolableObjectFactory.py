@@ -1,3 +1,5 @@
+import pytest
+
 from src.test.org.apache.commons.pool2.PrivateException import *
 from src.main.org.apache.commons.pool2.PooledObject import *
 from src.test.org.apache.commons.pool2.MethodCall import *

@@ -1,3 +1,5 @@
+import pytest
+
 from urllib.parse import urljoin, urlparse
 from urllib.request import urlopen
 from pathlib import Path

@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.CurrencyValidator import *
 from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
@@ -37,6 +39,7 @@ class CurrencyValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
+    @pytest.mark.test
     def testFormatType(self) -> None:
         self.assertEqual(
             1,
@@ -50,6 +53,7 @@ class CurrencyValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValid(self) -> None:
         origDefault = getlocale(LC_MONETARY)
         setlocale(LC_MONETARY, 'en_GB.UTF-8')
@@ -131,6 +135,7 @@ class CurrencyValidatorTest(unittest.TestCase):
         setlocale(LC_MONETARY, origDefault)
 
     
+    @pytest.mark.test
     def testInvalid(self) -> None:
         validator = CurrencyValidator.getInstance()
 
@@ -158,6 +163,7 @@ class CurrencyValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testIntegerValid(self) -> None:
         origDefault = getlocale(LC_MONETARY)
         setlocale(LC_MONETARY, 'en_GB.UTF-8')
@@ -197,6 +203,7 @@ class CurrencyValidatorTest(unittest.TestCase):
         setlocale(LC_MONETARY, origDefault)
 
     
+    @pytest.mark.test
     def testIntegerInvalid(self) -> None:
         validator = CurrencyValidator(True, False)
 
@@ -219,6 +226,7 @@ class CurrencyValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testPattern(self) -> None:
         origDefault = getlocale(LC_MONETARY)
         setlocale(LC_MONETARY, 'en_GB.UTF-8')

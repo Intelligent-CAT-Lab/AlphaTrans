@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 import logging
 import pickle
@@ -54,6 +56,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
+    @pytest.mark.test
     def testIsValidTrue(self) -> None:
         if self._log.isEnabledFor(logging.DEBUG):
             self._log.debug(f"testIsValidTrue() for {self._routine.__class__.__name__}")
@@ -64,6 +67,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self.assertTrue(self._routine.isValid(self._valid[i]), f"valid[{i}]: {self._valid[i]}")
 
     
+    @pytest.mark.test
     def testIsValidFalse(self) -> None:
         if self._log.isEnabledFor(logging.DEBUG):
             self._log.debug(f"testIsValidFalse() for {self._routine.__class__.__name__}")
@@ -80,6 +84,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self.assertFalse(self._routine.isValid(invalidCheckDigits[i]), f"invalid check digit[{i}]: {invalidCheckDigits[i]}")
 
     
+    @pytest.mark.test
     def testCalculateValid(self) -> None:
         if self._log.isEnabledFor(logging.DEBUG):
             self._log.debug(f"testCalculateValid() for {self._routine.__class__.__name__}")
@@ -95,6 +100,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
                 self.fail(f"valid[{i}]={self._valid[i]} threw {e}")
 
     
+    @pytest.mark.test
     def testCalculateInvalid(self) -> None:
         if self._log.isEnabledFor(logging.DEBUG):
             self._log.debug(f"testCalculateInvalid() for {self._routine.__class__.__name__}")
@@ -111,6 +117,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
                 self.assertTrue(e.getMessage().startswith("Invalid "), f"Invalid Character[{i}]={e.getMessage()}")
 
     
+    @pytest.mark.test
     def testMissingCode(self) -> None:
         self.assertFalse(self._routine.isValid(None), "isValid() Null")
 
@@ -131,6 +138,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self.assertEqual(self._missingMessage, str(e), "calculate() Zero Length")
 
     
+    @pytest.mark.test
     def testZeroSum(self) -> None:
         self.assertFalse(self._routine.isValid(self._zeroSum), "isValid() Zero Sum")
 
@@ -141,6 +149,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self.assertEqual("Invalid code, sum is zero", str(e), "isValid() Zero Sum")
 
     
+    @pytest.mark.test
     def testSerialization(self) -> None:
         baos = BytesIO()
         try:

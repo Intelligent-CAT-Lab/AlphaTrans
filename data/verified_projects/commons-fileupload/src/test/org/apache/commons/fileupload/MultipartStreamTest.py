@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 import unittest
 from io import BytesIO
@@ -13,6 +15,7 @@ class MultipartStreamTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def testThreeParamConstructor(self) -> None:
 
         try:
@@ -31,6 +34,7 @@ class MultipartStreamTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testSmallBuffer(self) -> None:
 
         with self.assertRaises(ValueError):
@@ -46,6 +50,7 @@ class MultipartStreamTest(unittest.TestCase):
                 ProgressNotifier(None, len(contents))
             )
 
+    @pytest.mark.test
     def test_TwoParamConstructor(self) -> None:
 
         try:

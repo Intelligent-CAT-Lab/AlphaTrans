@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Parser import *
 from src.main.org.apache.commons.cli.Options import *
@@ -20,6 +22,7 @@ class CommandLineTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def testBuilder(self) -> None:
         builder = CommandLine.Builder()
         builder.addArg("foo").addArg("bar")
@@ -30,6 +33,7 @@ class CommandLineTest(unittest.TestCase):
         self.assertEqual("bar", cmd.getArgList().get(1))
         self.assertEqual("T", cmd.getOptions()[0].getOpt())
 
+    @pytest.mark.test
     def testGetOptionProperties(self) -> None:
         try:
             args = [
@@ -64,6 +68,7 @@ class CommandLineTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testGetOptionPropertiesWithOption(self) -> None:
         try:
             args = [
@@ -98,6 +103,7 @@ class CommandLineTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testGetOptions(self) -> None:
         cmd = commandLine()
         self.assertIsNotNone(cmd.getOptions())
@@ -109,6 +115,7 @@ class CommandLineTest(unittest.TestCase):
 
         self.assertEqual(3, cmd.getOptions().length)
 
+    @pytest.mark.test
     def testGetParsedOptionValue(self) -> None:
         try:
             options = Options()
@@ -121,6 +128,7 @@ class CommandLineTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testNullhOption(self) -> None:
         try:
             options = Options()
@@ -135,6 +143,7 @@ class CommandLineTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testGetParsedOptionValueWithOption(self) -> None:
         try:
             options = Options()
@@ -149,6 +158,7 @@ class CommandLineTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
+    @pytest.mark.test
     def testGetParsedOptionValueWithChar(self) -> None:
         try:
             options = Options()

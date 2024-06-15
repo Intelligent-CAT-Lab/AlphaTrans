@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
@@ -23,6 +25,7 @@ class PosixParserTest(ParserTestCase):
 
 
     @unittest.skip("not supported by the PosixParser")
+    @pytest.mark.test
     def testAmbiguousLongWithoutEqualSingleDash(self) -> None:
         try:
             pass
@@ -31,6 +34,7 @@ class PosixParserTest(ParserTestCase):
     
     
     @unittest.skip("not supported by the PosixParser")
+    @pytest.mark.test
     def testAmbiguousPartialLongOption4(self) -> None:
         try:
             pass
@@ -39,6 +43,7 @@ class PosixParserTest(ParserTestCase):
     
     
     @unittest.skip("not supported by the PosixParser")
+    @pytest.mark.test
     def testDoubleDash2(self) -> None:
         try:
             pass
@@ -47,6 +52,7 @@ class PosixParserTest(ParserTestCase):
 
     
     @unittest.skip("not supported by the PosixParser")
+    @pytest.mark.test
     def testLongWithEqualSingleDash(self) -> None:
         try:
             pass
@@ -55,6 +61,7 @@ class PosixParserTest(ParserTestCase):
 
     
     @unittest.skip("not supported by the PosixParser")
+    @pytest.mark.test
     def testLongWithoutEqualSingleDash(self) -> None:
         try:
             pass
@@ -63,6 +70,7 @@ class PosixParserTest(ParserTestCase):
 
     
     @unittest.skip("not supported by the PosixParser")
+    @pytest.mark.test
     def testLongWithUnexpectedArgument1(self) -> None:
         try:
             pass
@@ -71,6 +79,7 @@ class PosixParserTest(ParserTestCase):
 
     
     @unittest.skip("not supported by the PosixParser (CLI-184)")
+    @pytest.mark.test
     def testNegativeOption(self) -> None:
         try:
             pass
@@ -79,6 +88,7 @@ class PosixParserTest(ParserTestCase):
 
     
     @unittest.skip("not supported by the PosixParser")
+    @pytest.mark.test
     def testShortWithEqual(self) -> None:
         try:
             pass
@@ -87,6 +97,7 @@ class PosixParserTest(ParserTestCase):
 
     
     @unittest.skip("not supported by the PosixParser")
+    @pytest.mark.test
     def testUnambiguousPartialLongOption4(self) -> None:
         try:
             pass

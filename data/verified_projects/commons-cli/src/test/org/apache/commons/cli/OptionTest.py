@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Option import *
 import unittest
@@ -74,36 +76,43 @@ class OptionTest(unittest.TestCase):
         OptionTest.assertEqual(cls, type(option))
     
 
+    @pytest.mark.test
     def testBuilderInsufficientParams1(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder0().desc("desc").build()
 
     
+    @pytest.mark.test
     def testBuilderInsufficientParams2(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder1(None).desc("desc").build()
     
     
+    @pytest.mark.test
     def testBuilderInvalidOptionName1(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder0().option("invalid?")
     
     
+    @pytest.mark.test
     def testBuilderInvalidOptionName2(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder0().option("invalid@")
     
     
+    @pytest.mark.test
     def testBuilderInvalidOptionName3(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder1("invalid?")
     
     
+    @pytest.mark.test
     def testBuilderInvalidOptionName4(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder1("invalid@")
     
     
+    @pytest.mark.test
     def testBuilderMethods(self) -> None:
         defaultSeparator = '\x00'
 
@@ -275,6 +284,7 @@ class OptionTest(unittest.TestCase):
                 int)
     
     
+    @pytest.mark.test
     def testClear(self) -> None:
         option = OptionTest.TestOption("x", True, "")
         self.assertEqual(0, len(option.getValuesList()))
@@ -284,6 +294,7 @@ class OptionTest(unittest.TestCase):
         self.assertEqual(0, len(option.getValuesList()))
 
     
+    @pytest.mark.test
     def testClone(self) -> None:
         a = OptionTest.TestOption("a", True, "")
         b = a.clone()
@@ -299,6 +310,7 @@ class OptionTest(unittest.TestCase):
         self.assertEqual(2, len(b.getValues()))
 
     
+    @pytest.mark.test
     def testGetValue(self) -> None:
         option = Option.Option1("f", None)
         option.setArgs(Option.UNLIMITED_VALUES)
@@ -313,6 +325,7 @@ class OptionTest(unittest.TestCase):
         self.assertEqual("foo", option.getValue2("default"))
 
     
+    @pytest.mark.test
     def testHasArgName(self) -> None:
         option = Option.Option1("f", None)
 
@@ -326,6 +339,7 @@ class OptionTest(unittest.TestCase):
         self.assertTrue(option.hasArgName())
 
 
+    @pytest.mark.test
     def testHasArgs(self) -> None:
         option = Option.Option1("f", None)
 
@@ -345,6 +359,7 @@ class OptionTest(unittest.TestCase):
         self.assertFalse(option.hasArgs())
     
     
+    @pytest.mark.test
     def testHashCode(self) -> None:
         self.assertNotEqual(
                 Option.builder1("test").build().hashCode(),\
@@ -357,6 +372,7 @@ class OptionTest(unittest.TestCase):
                 Option.builder1("test").longOpt("long test").build().hashCode())
     
     
+    @pytest.mark.test
     def testSubclass(self) -> None:
         option = OptionTest.DefaultOption("f", "file", "myfile.txt")
         clone = option.clone()

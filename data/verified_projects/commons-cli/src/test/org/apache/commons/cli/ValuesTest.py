@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Options import *
@@ -106,6 +108,7 @@ class ValuesTest(unittest.TestCase):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
 
+    @pytest.mark.test
     def testCharSeparator(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("j"), "Option j is not set")
         self.assertTrue(self.__cmd.hasOption0('j'), "Option j is not set")
@@ -125,21 +128,25 @@ class ValuesTest(unittest.TestCase):
         self.assertListEqual(["key", "value"], self.__cmd.getOptionValues0('m'))
     
     
+    @pytest.mark.test
     def testComplexValues(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("i"), "Option i is not set")
         self.assertTrue(self.__cmd.hasOption2("h"), "Option h is not set")
         self.assertListEqual(["val1", "val2"], self.__cmd.getOptionValues2("h"))
 
     
+    @pytest.mark.test
     def testExtraArgs(self) -> None:
         self.assertListEqual(["arg1", "arg2", "arg3"], self.__cmd.getArgs(), "Extra args")
     
     
+    @pytest.mark.test
     def testMultipleArgValues(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("e"), "Option e is not set")
         self.assertListEqual(["one", "two"], self.__cmd.getOptionValues2("e"))
 
     
+    @pytest.mark.test
     def testShortArgs(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("a"), "Option a is not set")
         self.assertTrue(self.__cmd.hasOption2("c"), "Option c is not set")
@@ -148,6 +155,7 @@ class ValuesTest(unittest.TestCase):
         self.assertIsNone(self.__cmd.getOptionValues2("c"))
 
     
+    @pytest.mark.test
     def testShortArgsWithValue(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("b"), "Option b is not set")
         self.assertEqual("foo", self.__cmd.getOptionValue4("b"))
@@ -158,6 +166,7 @@ class ValuesTest(unittest.TestCase):
         self.assertEqual(1, len(self.__cmd.getOptionValues2("d")))
     
     
+    @pytest.mark.test
     def testTwoArgValues(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("g"), "Option g is not set")
         self.assertListEqual(["val1", "val2"], self.__cmd.getOptionValues2("g"))

@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.graph.elo.GameResult import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
@@ -20,6 +22,7 @@ class EloTestCase(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
+    @pytest.mark.test
     def testPerformElo(self) -> None:
         tournament = CommonsGraph.newDirectedMutableGraph(
             GraphConnectionEloTestCaseTestPerformElo()

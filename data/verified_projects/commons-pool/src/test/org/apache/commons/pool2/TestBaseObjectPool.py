@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from src.main.org.apache.commons.pool2.BaseObjectPool import *
 from src.main.org.apache.commons.pool2.ObjectPool import *
@@ -58,6 +60,7 @@ class TestBaseObjectPool(TestObjectPool):
         raise NotImplementedError("BaseObjectPool isn't a complete implementation.")
 
     
+    @pytest.mark.test
     def testBaseAddObject(self) -> None:
         try:
             try:
@@ -85,6 +88,7 @@ class TestBaseObjectPool(TestObjectPool):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseBorrow(self) -> None:
         try:
             try:
@@ -99,6 +103,7 @@ class TestBaseObjectPool(TestObjectPool):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseBorrowReturn(self) -> None:
         try:
             try:
@@ -135,6 +140,7 @@ class TestBaseObjectPool(TestObjectPool):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseClear(self) -> None:
         try:
             try:
@@ -161,6 +167,7 @@ class TestBaseObjectPool(TestObjectPool):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseClosePool(self) -> None:
         try:
             try:
@@ -177,6 +184,7 @@ class TestBaseObjectPool(TestObjectPool):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseInvalidateObject(self) -> None:
         try:
             try:
@@ -200,6 +208,7 @@ class TestBaseObjectPool(TestObjectPool):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testBaseNumActiveNumIdle(self) -> None:
         try:
             try:
@@ -225,6 +234,7 @@ class TestBaseObjectPool(TestObjectPool):
             self.fail(f"An unexpected exception occurred: {e}")
 
     
+    @pytest.mark.test
     def testClose(self) -> None:
         pool = self.TestObjectPool()
 
@@ -232,6 +242,7 @@ class TestBaseObjectPool(TestObjectPool):
         pool.close()  # should not error as of Pool 2.0
 
     
+    @pytest.mark.test
     def testUnsupportedOperations(self) -> None:
         try:
             if self.__class__ != TestBaseObjectPool:

@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
@@ -17,6 +19,7 @@ from typing import *
 
 class TarjanTestCase(unittest.TestCase):
 
+    @pytest.mark.test
     def testEmptyGraph(self) -> None:
         graph = DirectedMutableGraph()
 
@@ -24,6 +27,7 @@ class TarjanTestCase(unittest.TestCase):
             .applyingTarjan()
     
 
+    @pytest.mark.test
     def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = None
@@ -31,6 +35,7 @@ class TarjanTestCase(unittest.TestCase):
                 .applyingTarjan()
 
     
+    @pytest.mark.test
     def testSparse(self) -> None:
         graph = CommonsGraph.newDirectedMutableGraph(
             GraphConnectionTarjanTestCaseTestSparse()
@@ -44,6 +49,7 @@ class TarjanTestCase(unittest.TestCase):
         self.assertEqual(len(actual), expected)
 
     
+    @pytest.mark.test
     def testverifyHasStronglyConnectedComponents(self) -> None:
         a = BaseLabeledVertex("A")
         b = BaseLabeledVertex("B")

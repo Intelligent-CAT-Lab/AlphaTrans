@@ -1,3 +1,5 @@
+import pytest
+
 class NameBean:
 
     def __init__(self) -> None:

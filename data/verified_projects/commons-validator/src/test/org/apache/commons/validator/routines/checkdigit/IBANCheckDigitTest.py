@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.IBANCheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import AbstractCheckDigitTest
 from typing import List
@@ -118,6 +120,7 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
     
+    @pytest.mark.test
     def testZeroSum(self) -> None:
         pass
 
@@ -145,6 +148,7 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
         return code[2:4]
 
     
+    @pytest.mark.test
     def testOther(self):
         with open("IBANtests.txt", "r") as file:
             for line in file:

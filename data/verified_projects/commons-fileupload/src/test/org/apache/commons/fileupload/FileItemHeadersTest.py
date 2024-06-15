@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from typing import *
 from src.main.org.apache.commons.fileupload.util.FileItemHeadersImpl import FileItemHeadersImpl
@@ -28,6 +30,7 @@ class PeekableIterator:
 
 class FileItemHeadersTest(unittest.TestCase):
 
+    @pytest.mark.test
     def testFileItemHeaders(self) -> None:
 
         aMutableFileItemHeaders = FileItemHeadersImpl()

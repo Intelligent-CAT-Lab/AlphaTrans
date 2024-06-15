@@ -1,3 +1,5 @@
+import pytest
+
 # Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
@@ -94,6 +96,7 @@ class BugCLI162Test(unittest.TestCase):
         self.__sw = io.StringIO()
 
 
+    @pytest.mark.test
     def testInfiniteLoop(self) -> None:
         options = Options()
         options.addOption3("h", "help", False, "This is a looooong description")
@@ -124,6 +127,7 @@ class BugCLI162Test(unittest.TestCase):
         self.assertEqual(expected, self.__sw.getvalue())
 
     
+    @pytest.mark.test
     def testLongLineChunking(self) -> None:
         options = Options()
         options.addOption3(
@@ -189,6 +193,7 @@ class BugCLI162Test(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testLongLineChunkingIndentIgnored(self) -> None:
         options = Options()
         options.addOption3("x", "extralongarg", False, "This description is Long.")

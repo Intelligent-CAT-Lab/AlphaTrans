@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 import re
 from src.main.org.apache.commons.validator.routines.ISBNValidator import *
@@ -76,6 +78,7 @@ class ISBNValidatorTest(unittest.TestCase):
         ]
 
     
+    @pytest.mark.test
     def testValidISBN10Format(self) -> None:
         pattern = re.compile(ISBNValidator.ISBN10_REGEX)
         for i in range(len(self.__validISBN10Format)):
@@ -85,6 +88,7 @@ class ISBNValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testInvalidISBN10Format(self) -> None:
         validator = ISBNValidator.getInstance0()
         pattern = re.compile(ISBNValidator.ISBN10_REGEX)
@@ -103,6 +107,7 @@ class ISBNValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testValidISBN13Format(self) -> None:
         pattern = re.compile(ISBNValidator.ISBN13_REGEX)
         for i in range(len(self.__validISBN13Format)):
@@ -112,6 +117,7 @@ class ISBNValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testInvalidISBN13Format(self) -> None:
         pattern = re.compile(ISBNValidator.ISBN13_REGEX)
         validator = ISBNValidator.getInstance0()
@@ -130,6 +136,7 @@ class ISBNValidatorTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testIsValidISBN10(self) -> None:
         validator = ISBNValidator.getInstance0()
         self.assertTrue(
@@ -171,6 +178,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testIsValidISBN13(self) -> None:
         validator = ISBNValidator.getInstance0()
         self.assertTrue(
@@ -212,6 +220,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidateISBN10(self) -> None:
         validator = ISBNValidator.getInstance1(False)
         self.assertEqual(
@@ -277,6 +286,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidateISBN10Convert(self) -> None:
         validator = ISBNValidator.getInstance0()
         self.assertEqual(
@@ -311,6 +321,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testValidateISBN13(self) -> None:
         validator = ISBNValidator.getInstance0()
         self.assertEqual(
@@ -376,6 +387,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testNull(self) -> None:
         validator = ISBNValidator.getInstance0()
         self.assertFalse(
@@ -408,6 +420,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testInvalid(self) -> None:
         validator = ISBNValidator.getInstance0()
         base_code = "193011099"
@@ -499,6 +512,7 @@ class ISBNValidatorTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testConversionErrors(self) -> None:
         validator = ISBNValidator.getInstance0()
         inputs = [

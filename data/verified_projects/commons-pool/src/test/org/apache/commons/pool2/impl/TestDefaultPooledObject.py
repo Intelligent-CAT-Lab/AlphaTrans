@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.pool2.impl.DefaultPooledObject import *
 from concurrent.futures import ThreadPoolExecutor
 from threading import Event
@@ -8,6 +10,7 @@ import random
 
 class TestDefaultPooledObject(unittest.TestCase):
 
+    @pytest.mark.test
     def testGetIdleTimeMillis(self) -> None:
         try:
             dpo = DefaultPooledObject(object())

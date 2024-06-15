@@ -1,9 +1,12 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
 import unittest
 from typing import *
 
 class DomainValidatorStartupTest(unittest.TestCase):
 
+    @pytest.mark.test
     def testUpdateBaseArrayCC(self) -> None:
         with self.assertRaises(ValueError):
             DomainValidator.updateTLDOverride(
@@ -12,6 +15,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testUpdateBaseArrayGeneric(self) -> None:
         with self.assertRaises(ValueError):
             DomainValidator.updateTLDOverride(
@@ -20,6 +24,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testUpdateBaseArrayInfra(self) -> None:
         with self.assertRaises(ValueError):
             DomainValidator.updateTLDOverride(
@@ -28,6 +33,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testUpdateBaseArrayLocal(self) -> None:
         with self.assertRaises(ValueError):
             DomainValidator.updateTLDOverride(
@@ -36,11 +42,13 @@ class DomainValidatorStartupTest(unittest.TestCase):
             )
 
     
+    @pytest.mark.test
     def testUpdateCountryCode1a(self) -> None:
         validator = DomainValidator.getInstance0()
         self.assertFalse(validator.isValidCountryCodeTld("com"))  # cannot be valid
 
     
+    @pytest.mark.test
     def testUpdateCountryCode1b(self) -> None:
         DomainValidator.updateTLDOverride(
             DomainValidator.ArrayType.COUNTRY_CODE_PLUS,
@@ -50,6 +58,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertTrue(validator.isValidCountryCodeTld("com"))  # it is now!
 
     
+    @pytest.mark.test
     def testUpdateCountryCode2(self) -> None:
         DomainValidator.updateTLDOverride(
             DomainValidator.ArrayType.COUNTRY_CODE_PLUS,
@@ -65,11 +74,13 @@ class DomainValidatorStartupTest(unittest.TestCase):
         )  # show that minus overrides the rest
 
     
+    @pytest.mark.test
     def testUpdateCountryCode3a(self) -> None:
         validator = DomainValidator.getInstance0()
         self.assertTrue(validator.isValidCountryCodeTld("ch"))
 
     
+    @pytest.mark.test
     def testUpdateCountryCode3b(self) -> None:
         DomainValidator.updateTLDOverride(
             DomainValidator.ArrayType.COUNTRY_CODE_MINUS,
@@ -79,6 +90,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertFalse(validator.isValidCountryCodeTld("ch"))
 
     
+    @pytest.mark.test
     def testUpdateCountryCode3c(self) -> None:
         DomainValidator.updateTLDOverride(
             DomainValidator.ArrayType.COUNTRY_CODE_MINUS,
@@ -92,11 +104,13 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertTrue(validator.isValidCountryCodeTld("ch"))
 
     
+    @pytest.mark.test
     def testUpdateGeneric1(self) -> None:
         validator = DomainValidator.getInstance0()
         self.assertFalse(validator.isValidGenericTld("ch"))  # cannot be valid
 
     
+    @pytest.mark.test
     def testUpdateGeneric2(self) -> None:
         DomainValidator.updateTLDOverride(
             DomainValidator.ArrayType.GENERIC_PLUS,
@@ -106,6 +120,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertTrue(validator.isValidGenericTld("ch"))  # it is now!
 
     
+    @pytest.mark.test
     def testUpdateGeneric3(self) -> None:
         DomainValidator.updateTLDOverride(
             DomainValidator.ArrayType.GENERIC_PLUS,
@@ -123,6 +138,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertTrue(validator.isValidGenericTld("com"))
 
     
+    @pytest.mark.test
     def testUpdateGeneric4(self) -> None:
         DomainValidator.updateTLDOverride(
             DomainValidator.ArrayType.GENERIC_PLUS,
@@ -140,6 +156,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertFalse(validator.isValidGenericTld("com"))
 
     
+    @pytest.mark.test
     def testUpdateGeneric5(self) -> None:
         DomainValidator.updateTLDOverride(
             DomainValidator.ArrayType.GENERIC_PLUS,
@@ -162,6 +179,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertTrue(validator.isValidGenericTld("com"))
 
     
+    @pytest.mark.test
     def testVALIDATOR_412a(self) -> None:
         validator = DomainValidator.getInstance0()
         self.assertFalse(validator.isValidGenericTld("local"))
@@ -170,6 +188,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertFalse(validator.isValid("abc.pvt"))
 
     
+    @pytest.mark.test
     def testVALIDATOR_412b(self) -> None:
         DomainValidator.updateTLDOverride(
             DomainValidator.ArrayType.GENERIC_PLUS,
@@ -182,6 +201,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertTrue(validator.isValid("abc.pvt"))
 
     
+    @pytest.mark.test
     def testVALIDATOR_412c(self) -> None:
         validator = DomainValidator.getInstance1(True)
         self.assertFalse(validator.isValidLocalTld("local"))
@@ -190,6 +210,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertFalse(validator.isValid("abc.pvt"))
 
     
+    @pytest.mark.test
     def testVALIDATOR_412d(self) -> None:
         DomainValidator.updateTLDOverride(
             DomainValidator.ArrayType.LOCAL_PLUS,
@@ -201,6 +222,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertTrue(validator.isValid("abc.local"))
         self.assertTrue(validator.isValid("abc.pvt"))
 
+    @pytest.mark.test
     def testCannotUpdate(self) -> None:
         DomainValidator.updateTLDOverride(
             DomainValidator.ArrayType.GENERIC_PLUS,
@@ -219,6 +241,7 @@ class DomainValidatorStartupTest(unittest.TestCase):
             pass
             
 
+    @pytest.mark.test
     def testInstanceOverride(self) -> None:
         # Show that the instance picks up static values
         DomainValidator.updateTLDOverride(

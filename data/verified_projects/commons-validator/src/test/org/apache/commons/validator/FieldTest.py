@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.Arg import *
 from src.main.org.apache.commons.validator.Field import *
 import unittest
@@ -21,6 +23,7 @@ class FieldTest(unittest.TestCase):
         self._field = None
 
     
+    @pytest.mark.test
     def testEmptyArgs(self) -> None:
         self.assertEqual(
             len(self._field.getArgs("required")),
@@ -29,6 +32,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testDefaultPositionImplied(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg0("default-position-1"))
@@ -56,6 +60,7 @@ class FieldTest(unittest.TestCase):
         )
 
    
+    @pytest.mark.test
     def testDefaultUsingPositions(self) -> None:
         self._field.addArg(self.__createArg1("default-position-1", 1))
         self._field.addArg(self.__createArg1("default-position-0", 0))
@@ -83,6 +88,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testDefaultOnePosition(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg1("default-position-2", 2))
@@ -114,6 +120,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testDefaultSomePositions(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg1("default-position-2", 2))
@@ -147,6 +154,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testOverrideUsingPositionA(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg0("default-position-1"))
@@ -181,6 +189,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testOverrideUsingPositionB(self) -> None:
         self._field.addArg(self.__createArg3("required-position-3", "required", 3))
         self._field.addArg(self.__createArg3("required-position-1", "required", 1))
@@ -240,6 +249,7 @@ class FieldTest(unittest.TestCase):
         )
 
    
+    @pytest.mark.test
     def testOverridePositionImplied(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg2("required-position-1", "required"))
@@ -301,6 +311,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
+    @pytest.mark.test
     def testOverrideSomePosition(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg0("default-position-1"))

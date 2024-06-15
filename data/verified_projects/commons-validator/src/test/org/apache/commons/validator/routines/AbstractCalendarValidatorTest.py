@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from abc import ABC
 from datetime import datetime
@@ -104,6 +106,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
 
+    @pytest.mark.test
     def testPatternValid(self) -> None:
         for i, pattern in enumerate(self._patternValid):
             text = f"{i} value=[{pattern}] failed "
@@ -118,6 +121,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             self.assertEqual(date, self._patternExpect[i], f"compare {text}")
 
     
+    @pytest.mark.test
     def testPatternInvalid(self) -> None:
         for i, pattern in enumerate(self._patternInvalid):
             text = f"{i} value=[{pattern}] passed "
@@ -129,6 +133,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             )
 
     
+    @pytest.mark.test
     def testLocaleValid(self) -> None:
         for i, pattern in enumerate(self._localeValid):
             text = f"{i} value=[{pattern}] failed "
@@ -143,6 +148,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             self.assertEqual(date, self._patternExpect[i], f"compare {text}")
 
     
+    @pytest.mark.test
     def testLocaleInvalid(self) -> None:
         for i, pattern in enumerate(self._localeInvalid):
             text = f"{i} value=[{pattern}] passed "
@@ -154,6 +160,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             )
 
     
+    @pytest.mark.test
     def testFormat(self) -> None:
         test = self._validator.parse("2005-11-28", "yyyy-MM-dd", None, None)
         self.assertIsNotNone(test, "Test Date")
@@ -169,6 +176,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
         )
 
     
+    @pytest.mark.test
     def testSerialization(self) -> None:
         baos = BytesIO()
         try:
