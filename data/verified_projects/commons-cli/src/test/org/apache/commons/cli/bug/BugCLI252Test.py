@@ -23,7 +23,7 @@ class BugCLI252Test(unittest.TestCase):
         return options
     
 
-    def test_AmbiquousOptionName(self) -> None:
+    def testAmbiquousOptionName(self) -> None:
         try:
             with self.assertRaises(AmbiguousOptionException):
                 DefaultParser(2, False, None).parse0(self.__getOptions(), ["--pref"])
@@ -31,7 +31,7 @@ class BugCLI252Test(unittest.TestCase):
             self.fail(f"Unexpected ParseException occurred: {e}")
 
     
-    def test_ExactOptionNameMatch(self) -> None:
+    def testExactOptionNameMatch(self) -> None:
         try:
             DefaultParser(2, False, None).parse0(self.__getOptions(), ["--prefix"])
         except ParseException as e:

@@ -1,0 +1,1146 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-codec/src/main/java/org/apache/commons/codec/language/Nysiis.java",
+    "imports": {
+        "23-23:import Pattern": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.regex.Pattern;\n"
+            ]
+        },
+        "20-20:import EncoderException": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.EncoderException;\n"
+            ]
+        },
+        "21-21:import StringEncoder": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.codec.StringEncoder;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Nysiis": {
+            "start": 70,
+            "end": 70,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "StringEncoder"
+            ],
+            "extends": [],
+            "methods": {
+                "239-300:nysiis": {
+                    "start": 239,
+                    "end": 300,
+                    "body": [
+                        "    public String nysiis(String str) {\n",
+                        "        if (str == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        str = SoundexUtils.clean(str);\n",
+                        "\n",
+                        "        if (str.isEmpty()) {\n",
+                        "            return str;\n",
+                        "        }\n",
+                        "\n",
+                        "        str = PAT_MAC.matcher(str).replaceFirst(\"MCC\");\n",
+                        "        str = PAT_KN.matcher(str).replaceFirst(\"NN\");\n",
+                        "        str = PAT_K.matcher(str).replaceFirst(\"C\");\n",
+                        "        str = PAT_PH_PF.matcher(str).replaceFirst(\"FF\");\n",
+                        "        str = PAT_SCH.matcher(str).replaceFirst(\"SSS\");\n",
+                        "\n",
+                        "        str = PAT_EE_IE.matcher(str).replaceFirst(\"Y\");\n",
+                        "        str = PAT_DT_ETC.matcher(str).replaceFirst(\"D\");\n",
+                        "\n",
+                        "        final StringBuilder key = new StringBuilder(str.length());\n",
+                        "        key.append(str.charAt(0));\n",
+                        "\n",
+                        "        final char[] chars = str.toCharArray();\n",
+                        "        final int len = chars.length;\n",
+                        "\n",
+                        "        for (int i = 1; i < len; i++) {\n",
+                        "            final char next = i < len - 1 ? chars[i + 1] : SPACE;\n",
+                        "            final char aNext = i < len - 2 ? chars[i + 2] : SPACE;\n",
+                        "            final char[] transcoded = transcodeRemaining(chars[i - 1], chars[i], next, aNext);\n",
+                        "            System.arraycopy(transcoded, 0, chars, i, transcoded.length);\n",
+                        "\n",
+                        "            if (chars[i] != chars[i - 1]) {\n",
+                        "                key.append(chars[i]);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (key.length() > 1) {\n",
+                        "            char lastChar = key.charAt(key.length() - 1);\n",
+                        "\n",
+                        "            if (lastChar == 'S') {\n",
+                        "                key.deleteCharAt(key.length() - 1);\n",
+                        "                lastChar = key.charAt(key.length() - 1);\n",
+                        "            }\n",
+                        "\n",
+                        "            if (key.length() > 2) {\n",
+                        "                final char last2Char = key.charAt(key.length() - 2);\n",
+                        "                if (last2Char == 'A' && lastChar == 'Y') {\n",
+                        "                    key.deleteCharAt(key.length() - 2);\n",
+                        "                }\n",
+                        "            }\n",
+                        "\n",
+                        "            if (lastChar == 'A') {\n",
+                        "                key.deleteCharAt(key.length() - 1);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        final String string = key.toString();\n",
+                        "        return this.isStrict()\n",
+                        "                ? string.substring(0, Math.min(TRUE_LENGTH, string.length()))\n",
+                        "                : string;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "nysiis(String)",
+                    "parameters": [
+                        "str"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.SoundexUtils",
+                            "SoundexUtils",
+                            "38-54:clean"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.Nysiis",
+                            "Nysiis",
+                            "113-156:transcodeRemaining"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.Nysiis",
+                            "Nysiis",
+                            "229-231:isStrict"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def nysiis(self, str: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def nysiis(self, str: str) -> str:",
+                        "        ",
+                        "",
+                        "        if str is None:",
+                        "            return None",
+                        "",
+                        "        str = SoundexUtils.clean(str)",
+                        "",
+                        "        if not str:",
+                        "            return str",
+                        "",
+                        "        str = re.sub(self.__PAT_MAC, 'MCC', str)",
+                        "        str = re.sub(self.__PAT_KN, 'NN', str)",
+                        "        str = re.sub(self.__PAT_K, 'C', str)",
+                        "        str = re.sub(self.__PAT_PH_PF, 'FF', str)",
+                        "        str = re.sub(self.__PAT_SCH, 'SSS', str)",
+                        "",
+                        "        str = re.sub(self.__PAT_EE_IE, 'Y', str)",
+                        "        str = re.sub(self.__PAT_DT_ETC, 'D', str)",
+                        "",
+                        "        key = [str[0]]",
+                        "",
+                        "        chars = list(str)",
+                        "        len_chars = len(chars)",
+                        "",
+                        "        for i in range(1, len_chars):",
+                        "            next_char = chars[i + 1] if i < len_chars - 1 else self.__SPACE",
+                        "            aNext_char = chars[i + 2] if i < len_chars - 2 else self.__SPACE",
+                        "            transcoded = self.__transcodeRemaining(chars[i - 1], chars[i], next_char, aNext_char)",
+                        "            chars[i:i + 1] = transcoded",
+                        "",
+                        "            if chars[i] != chars[i - 1]:",
+                        "                key.append(chars[i])",
+                        "",
+                        "        if len(key) > 1:",
+                        "            lastChar = key[-1]",
+                        "",
+                        "            if lastChar == 'S':",
+                        "                key = key[:-1]",
+                        "                lastChar = key[-1]",
+                        "",
+                        "            if len(key) > 2:",
+                        "                last2Char = key[-2]",
+                        "                if last2Char == 'A' and lastChar == 'Y':",
+                        "                    key = key[:-2]",
+                        "",
+                        "            if lastChar == 'A':",
+                        "                key = key[:-1]",
+                        "",
+                        "        string = ''.join(key)",
+                        "        return string[:min(self.__TRUE_LENGTH, len(string))] if self.isStrict() else string",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 17.265035390853882,
+                    "generation_timestamp": "2024-06-05T20:20:07.431499",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "229-231:isStrict": {
+                    "start": 229,
+                    "end": 231,
+                    "body": [
+                        "    public boolean isStrict() {\n",
+                        "        return this.strict;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isStrict()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isStrict(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isStrict(self) -> bool:",
+                        "        ",
+                        "",
+                        "        return self.__strict",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.541227102279663,
+                    "generation_timestamp": "2024-06-05T20:19:23.648561",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "220-222:encode1": {
+                    "start": 220,
+                    "end": 222,
+                    "body": [
+                        "    public String encode1(final String str) {\n",
+                        "        return this.nysiis(str);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encode1(String)",
+                    "parameters": [
+                        "str"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.Nysiis",
+                            "Nysiis",
+                            "239-300:nysiis"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def encode1(self, str: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def encode1(self, str: str) -> str:",
+                        "        ",
+                        "",
+                        "        return self.nysiis(str)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.8737103939056396,
+                    "generation_timestamp": "2024-06-05T20:20:11.308601",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "200-206:encode0": {
+                    "start": 200,
+                    "end": 206,
+                    "body": [
+                        "    public Object encode0(final Object obj) throws EncoderException {\n",
+                        "        if (!(obj instanceof String)) {\n",
+                        "            throw new EncoderException(\n",
+                        "                    \"Parameter supplied to Nysiis encode is not of type java.lang.String\", null);\n",
+                        "        }\n",
+                        "        return this.nysiis((String) obj);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "encode0(Object)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                            "EncoderException",
+                            "62-64:EncoderException"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.Nysiis",
+                            "Nysiis",
+                            "239-300:nysiis"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def encode0(self, obj: typing.Any) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def encode0(self, obj: typing.Any) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        if not isinstance(obj, str):",
+                        "            raise EncoderException(",
+                        "                \"Parameter supplied to Nysiis encode is not of type java.lang.String\", None)",
+                        "        return self.nysiis(obj)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.023314952850342,
+                    "generation_timestamp": "2024-06-05T20:20:15.335839",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "169-171:Nysiis1": {
+                    "start": 169,
+                    "end": 171,
+                    "body": [
+                        "    public static Nysiis Nysiis1() {\n",
+                        "        return new Nysiis(true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Nysiis",
+                            "Nysiis"
+                        ]
+                    ],
+                    "signature": "Nysiis1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.Nysiis",
+                            "Nysiis",
+                            "165-167:Nysiis"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def Nysiis1() -> Nysiis:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def Nysiis1() -> Nysiis:",
+                        "        ",
+                        "",
+                        "        return Nysiis(True)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.4629712104797363,
+                    "generation_timestamp": "2024-06-06T11:05:11.819313",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "165-167:Nysiis": {
+                    "start": 165,
+                    "end": 167,
+                    "body": [
+                        "    public Nysiis(final boolean strict) {\n",
+                        "        this.strict = strict;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Nysiis(boolean)",
+                    "parameters": [
+                        "strict"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, strict: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self, strict: bool) -> None:",
+                        "        ",
+                        "",
+                        "        self.__strict = strict",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.8913676738739014,
+                    "generation_timestamp": "2024-06-05T20:19:25.543073",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "113-156:transcodeRemaining": {
+                    "start": 113,
+                    "end": 156,
+                    "body": [
+                        "    private static char[] transcodeRemaining(\n",
+                        "            final char prev, final char curr, final char next, final char aNext) {\n",
+                        "        if (curr == 'E' && next == 'V') {\n",
+                        "            return CHARS_AF;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (isVowel(curr)) {\n",
+                        "            return CHARS_A;\n",
+                        "        }\n",
+                        "\n",
+                        "        switch (curr) {\n",
+                        "            case 'Q':\n",
+                        "                return CHARS_G;\n",
+                        "            case 'Z':\n",
+                        "                return CHARS_S;\n",
+                        "            case 'M':\n",
+                        "                return CHARS_N;\n",
+                        "            case 'K':\n",
+                        "                if (next == 'N') {\n",
+                        "                    return CHARS_NN;\n",
+                        "                }\n",
+                        "                return CHARS_C;\n",
+                        "            default:\n",
+                        "                break;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (curr == 'S' && next == 'C' && aNext == 'H') {\n",
+                        "            return CHARS_SSS;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (curr == 'P' && next == 'H') {\n",
+                        "            return CHARS_FF;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (curr == 'H' && (!isVowel(prev) || !isVowel(next))) {\n",
+                        "            return new char[] {prev};\n",
+                        "        }\n",
+                        "\n",
+                        "        if (curr == 'W' && isVowel(prev)) {\n",
+                        "            return new char[] {prev};\n",
+                        "        }\n",
+                        "\n",
+                        "        return new char[] {curr};\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "signature": "transcodeRemaining(char, char, char, char)",
+                    "parameters": [
+                        "prev",
+                        "curr",
+                        "next",
+                        "aNext"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.Nysiis",
+                            "Nysiis",
+                            "99-101:isVowel"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __transcodeRemaining(prev: str, curr: str, next: str, aNext: str) -> typing.List[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def __transcodeRemaining(prev: str, curr: str, next: str, aNext: str) -> typing.List[str]:",
+                        "        ",
+                        "",
+                        "        if curr == 'E' and next == 'V':",
+                        "            return Nysiis.__CHARS_AF",
+                        "",
+                        "        if Nysiis.__isVowel(curr):",
+                        "            return Nysiis.__CHARS_A",
+                        "",
+                        "        if curr == 'Q':",
+                        "            return Nysiis.__CHARS_G",
+                        "        elif curr == 'Z':",
+                        "            return Nysiis.__CHARS_S",
+                        "        elif curr == 'M':",
+                        "            return Nysiis.__CHARS_N",
+                        "        elif curr == 'K':",
+                        "            if next == 'N':",
+                        "                return Nysiis.__CHARS_NN",
+                        "            return Nysiis.__CHARS_C",
+                        "",
+                        "        if curr == 'S' and next == 'C' and aNext == 'H':",
+                        "            return Nysiis.__CHARS_SSS",
+                        "",
+                        "        if curr == 'P' and next == 'H':",
+                        "            return Nysiis.__CHARS_FF",
+                        "",
+                        "        if curr == 'H' and (not Nysiis.__isVowel(prev) or not Nysiis.__isVowel(next)):",
+                        "            return [prev]",
+                        "",
+                        "        if curr == 'W' and Nysiis.__isVowel(prev):",
+                        "            return [prev]",
+                        "",
+                        "        return [curr]",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 10.58814287185669,
+                    "generation_timestamp": "2024-06-05T20:19:43.133665",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "99-101:isVowel": {
+                    "start": 99,
+                    "end": 101,
+                    "body": [
+                        "    private static boolean isVowel(final char c) {\n",
+                        "        return c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isVowel(char)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __isVowel(c: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def __isVowel(c: str) -> bool:",
+                        "        ",
+                        "",
+                        "        return c.upper() in ['A', 'E', 'I', 'O', 'U']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.60077166557312,
+                    "generation_timestamp": "2024-06-05T20:19:32.541991",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {
+                "159-159:strict": {
+                    "start": 159,
+                    "end": 159,
+                    "body": [
+                        "    private final boolean strict;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": "    __strict: bool = None\n",
+                    "translation": [
+                        "    __strict: bool = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-11T13:26:54.001958",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "91-91:TRUE_LENGTH": {
+                    "start": 91,
+                    "end": 91,
+                    "body": [
+                        "    private static final int TRUE_LENGTH = 6;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": "    __TRUE_LENGTH: int = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __TRUE_LENGTH: int = 6",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.1900498867034912,
+                    "generation_timestamp": "2024-06-05T20:17:52.827924",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "90-90:SPACE": {
+                    "start": 90,
+                    "end": 90,
+                    "body": [
+                        "    private static final char SPACE = ' ';\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ],
+                    "partial_translation": "    __SPACE: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __SPACE: str = ' '",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.092753648757935,
+                    "generation_timestamp": "2024-06-05T20:17:57.923373",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "88-88:PAT_DT_ETC": {
+                    "start": 88,
+                    "end": 88,
+                    "body": [
+                        "    private static final Pattern PAT_DT_ETC = Pattern.compile(\"(DT|RT|RD|NT|ND)$\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __PAT_DT_ETC: re.Pattern = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 16.0997052192688,
+                    "generation_timestamp": "2024-06-05T20:18:14.025691",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "87-87:PAT_EE_IE": {
+                    "start": 87,
+                    "end": 87,
+                    "body": [
+                        "    private static final Pattern PAT_EE_IE = Pattern.compile(\"(EE|IE)$\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __PAT_EE_IE: re.Pattern = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 6.898166656494141,
+                    "generation_timestamp": "2024-06-05T20:18:20.926838",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "86-86:PAT_SCH": {
+                    "start": 86,
+                    "end": 86,
+                    "body": [
+                        "    private static final Pattern PAT_SCH = Pattern.compile(\"^SCH\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __PAT_SCH: re.Pattern = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 6.2158567905426025,
+                    "generation_timestamp": "2024-06-05T20:18:27.145469",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "85-85:PAT_PH_PF": {
+                    "start": 85,
+                    "end": 85,
+                    "body": [
+                        "    private static final Pattern PAT_PH_PF = Pattern.compile(\"^(PH|PF)\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __PAT_PH_PF: re.Pattern = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 7.155698537826538,
+                    "generation_timestamp": "2024-06-05T20:18:34.303830",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "84-84:PAT_K": {
+                    "start": 84,
+                    "end": 84,
+                    "body": [
+                        "    private static final Pattern PAT_K = Pattern.compile(\"^K\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __PAT_K: re.Pattern = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 5.985376596450806,
+                    "generation_timestamp": "2024-06-05T20:18:40.291932",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "83-83:PAT_KN": {
+                    "start": 83,
+                    "end": 83,
+                    "body": [
+                        "    private static final Pattern PAT_KN = Pattern.compile(\"^KN\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __PAT_KN: re.Pattern = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 6.345796346664429,
+                    "generation_timestamp": "2024-06-05T20:18:46.640532",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "82-82:PAT_MAC": {
+                    "start": 82,
+                    "end": 82,
+                    "body": [
+                        "    private static final Pattern PAT_MAC = Pattern.compile(\"^MAC\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __PAT_MAC: re.Pattern = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 12.499279260635376,
+                    "generation_timestamp": "2024-06-05T20:18:59.142591",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "80-80:CHARS_SSS": {
+                    "start": 80,
+                    "end": 80,
+                    "body": [
+                        "    private static final char[] CHARS_SSS = {'S', 'S', 'S'};\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": "    __CHARS_SSS: typing.List[str] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __CHARS_SSS: typing.List[str] = ['S', 'S', 'S']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.2935588359832764,
+                    "generation_timestamp": "2024-06-05T20:19:00.438626",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "79-79:CHARS_S": {
+                    "start": 79,
+                    "end": 79,
+                    "body": [
+                        "    private static final char[] CHARS_S = {'S'};\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": "    __CHARS_S: typing.List[str] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __CHARS_S: typing.List[str] = ['S']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.367147445678711,
+                    "generation_timestamp": "2024-06-05T20:19:02.808264",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "78-78:CHARS_NN": {
+                    "start": 78,
+                    "end": 78,
+                    "body": [
+                        "    private static final char[] CHARS_NN = {'N', 'N'};\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": "    __CHARS_NN: typing.List[str] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __CHARS_NN: typing.List[str] = ['N', 'N']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.927119255065918,
+                    "generation_timestamp": "2024-06-05T20:19:05.738047",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "77-77:CHARS_N": {
+                    "start": 77,
+                    "end": 77,
+                    "body": [
+                        "    private static final char[] CHARS_N = {'N'};\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": "    __CHARS_N: typing.List[str] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __CHARS_N: typing.List[str] = ['N']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.355999231338501,
+                    "generation_timestamp": "2024-06-05T20:19:08.096771",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "76-76:CHARS_G": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "    private static final char[] CHARS_G = {'G'};\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": "    __CHARS_G: typing.List[str] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __CHARS_G: typing.List[str] = ['G']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.9850339889526367,
+                    "generation_timestamp": "2024-06-05T20:19:11.084571",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "75-75:CHARS_FF": {
+                    "start": 75,
+                    "end": 75,
+                    "body": [
+                        "    private static final char[] CHARS_FF = {'F', 'F'};\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": "    __CHARS_FF: typing.List[str] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __CHARS_FF: typing.List[str] = ['F', 'F']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.7538933753967285,
+                    "generation_timestamp": "2024-06-05T20:19:13.840979",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "74-74:CHARS_C": {
+                    "start": 74,
+                    "end": 74,
+                    "body": [
+                        "    private static final char[] CHARS_C = {'C'};\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": "    __CHARS_C: typing.List[str] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __CHARS_C: typing.List[str] = ['C']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.3490498065948486,
+                    "generation_timestamp": "2024-06-05T20:19:16.192642",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "73-73:CHARS_AF": {
+                    "start": 73,
+                    "end": 73,
+                    "body": [
+                        "    private static final char[] CHARS_AF = {'A', 'F'};\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": "    __CHARS_AF: typing.List[str] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __CHARS_AF: typing.List[str] = ['A', 'F']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.6595335006713867,
+                    "generation_timestamp": "2024-06-05T20:19:18.854866",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "72-72:CHARS_A": {
+                    "start": 72,
+                    "end": 72,
+                    "body": [
+                        "    private static final char[] CHARS_A = {'A'};\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": "    __CHARS_A: typing.List[str] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __CHARS_A: typing.List[str] = ['A']",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.246539354324341,
+                    "generation_timestamp": "2024-06-05T20:19:22.103942",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "python_class_declaration": "class Nysiis(StringEncoder):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.codec.EncoderException import *",
+        "from src.main.org.apache.commons.codec.StringEncoder import *",
+        "from src.main.org.apache.commons.codec.language.SoundexUtils import *"
+    ]
+}

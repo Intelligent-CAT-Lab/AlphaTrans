@@ -99,16 +99,16 @@ class EmailValidatorTest(unittest.TestCase):
         self.__validator = EmailValidator.getInstance0()
 
     
-    def test_Email(self) -> None:
+    def testEmail(self) -> None:
         self.assertTrue(self.__validator.isValid("jsmith@apache.org"))
 
     
-    def test_EmailWithNumericAddress(self) -> None:
+    def testEmailWithNumericAddress(self) -> None:
         self.assertTrue(self.__validator.isValid("someone@[216.109.118.76]"))
         self.assertTrue(self.__validator.isValid("someone@yahoo.com"))
 
     
-    def test_EmailExtension(self) -> None:
+    def testEmailExtension(self) -> None:
         self.assertTrue(self.__validator.isValid("jsmith@apache.org"))
 
         self.assertTrue(self.__validator.isValid("jsmith@apache.com"))
@@ -126,7 +126,7 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertFalse(self.__validator.isValid("someone@yahoo.mu-seum"))
 
     
-    def test_EmailWithDash(self) -> None:
+    def testEmailWithDash(self) -> None:
         self.assertTrue(self.__validator.isValid("andy.noble@data-workshop.com"))
 
         self.assertFalse(self.__validator.isValid("andy-noble@data-workshop.-com"))
@@ -136,11 +136,11 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertFalse(self.__validator.isValid("andy-noble@data-workshop.co-m"))
 
     
-    def test_EmailWithDotEnd(self) -> None:
+    def testEmailWithDotEnd(self) -> None:
         self.assertFalse(self.__validator.isValid("andy.noble@data-workshop.com."))
 
     
-    def test_EmailWithBogusCharacter(self) -> None:
+    def testEmailWithBogusCharacter(self) -> None:
         self.assertFalse(self.__validator.isValid("andy.noble@\u008fdata-workshop.com"))
 
         self.assertTrue(self.__validator.isValid("andy.o'reilly@data-workshop.com"))
@@ -155,17 +155,17 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertFalse(self.__validator.isValid("test@^&#.com"))
 
     
-    def test_VALIDATOR_315(self) -> None:
+    def testVALIDATOR_315(self) -> None:
         self.assertFalse(self.__validator.isValid("me@at&t.net"))
         self.assertTrue(self.__validator.isValid("me@att.net"))
 
     
-    def test_VALIDATOR_278(self) -> None:
+    def testVALIDATOR_278(self) -> None:
         self.assertFalse(self.__validator.isValid("someone@-test.com"))
         self.assertFalse(self.__validator.isValid("someone@test-.com"))
 
     
-    def test_Validator235(self) -> None:
+    def testValidator235(self) -> None:
         version = sys.version_info
         if version < (2, 6): 
             #Python 2.6 is the latest version available at the birth of Java 1.6
@@ -197,7 +197,7 @@ class EmailValidatorTest(unittest.TestCase):
         )
 
     
-    def test_EmailWithCommas(self) -> None:
+    def testEmailWithCommas(self) -> None:
         self.assertFalse(self.__validator.isValid("joeblow@apa,che.org"))
 
         self.assertFalse(self.__validator.isValid("joeblow@apache.o,rg"))
@@ -205,7 +205,7 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertFalse(self.__validator.isValid("joeblow@apache,org"))
 
     
-    def test_EmailWithSpaces(self) -> None:
+    def testEmailWithSpaces(self) -> None:
         self.assertFalse(self.__validator.isValid("joeblow @apache.org"))
 
         self.assertFalse(self.__validator.isValid("joeblow@ apache.org"))
@@ -225,7 +225,7 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertTrue(self.__validator.isValid("\" joe blow \"@apache.org"))
 
     
-    def test_EmailWithControlChars(self) -> None:
+    def testEmailWithControlChars(self) -> None:
         for c in range(32):
             self.assertFalse(
                 self.__validator.isValid(f"foo{c}bar@domain.com"),
@@ -237,7 +237,7 @@ class EmailValidatorTest(unittest.TestCase):
         )
 
     
-    def test_EmailLocalhost(self) -> None:
+    def testEmailLocalhost(self) -> None:
         noLocal = EmailValidator.getInstance2(False)
         allowLocal = EmailValidator.getInstance2(True)
         self.assertEqual(self.__validator, noLocal)
@@ -261,7 +261,7 @@ class EmailValidatorTest(unittest.TestCase):
         )
 
     
-    def test_EmailWithSlashes(self) -> None:
+    def testEmailWithSlashes(self) -> None:
         self.assertTrue(
             self.__validator.isValid("joe!/blow@apache.org"),
             "/ and ! valid in username"
@@ -276,7 +276,7 @@ class EmailValidatorTest(unittest.TestCase):
         )
     
 
-    def test_EmailUserName(self) -> None:
+    def testEmailUserName(self) -> None:
         
         self.assertTrue(self.__validator.isValid("joe1blow@apache.org"))
 
@@ -420,7 +420,7 @@ class EmailValidatorTest(unittest.TestCase):
 
 
     @unittest.skip("VALIDATOR-267")
-    def test_EmailFromPerl(self) -> None:
+    def testEmailFromPerl(self) -> None:
         errors = 0
         for index in range(len(self.__testEmailFromPerl)):
             item = self.__testEmailFromPerl[index].item
@@ -433,7 +433,7 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertEqual(0, errors, "Expected 0 errors")
 
     
-    def test_Validator293(self) -> None:
+    def testValidator293(self) -> None:
         self.assertTrue(self.__validator.isValid("abc-@abc.com"))
         self.assertTrue(self.__validator.isValid("abc_@abc.com"))
         self.assertTrue(self.__validator.isValid("abc-def@abc.com"))
@@ -441,7 +441,7 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertFalse(self.__validator.isValid("abc@abc_def.com"))
 
     
-    def test_Validator365(self) -> None:
+    def testValidator365(self) -> None:
         self.assertFalse(
             self.__validator.isValid(
                 "Loremipsumdolorsitametconsecteturadipiscingelit.Nullavi" +\
@@ -489,38 +489,38 @@ class EmailValidatorTest(unittest.TestCase):
         )
 
     
-    def test_EmailAtTLD(self) -> None:
+    def testEmailAtTLD(self) -> None:
         val = EmailValidator.getInstance1(False, True)
         self.assertTrue(val.isValid("test@com"))
 
     
-    def test_Validator359(self) -> None:
+    def testValidator359(self) -> None:
         val = EmailValidator.getInstance1(False, True)
         self.assertFalse(val.isValid("test@.com"))
 
     
-    def test_Validator374(self) -> None:
+    def testValidator374(self) -> None:
         self.assertTrue(self.__validator.isValid("abc@school.school"))
 
     
-    def test_Validator473_1(self) -> None:
+    def testValidator473_1(self) -> None:
         with self.assertRaises(ValueError):
             EmailValidator(0, False, False, None)
 
     
-    def test_Validator473_2(self) -> None:
+    def testValidator473_2(self) -> None:
         with self.assertRaises(ValueError):
             items = []
             EmailValidator(0, False, False, DomainValidator.getInstance2(True, items))
 
     
-    def test_Validator473_3(self) -> None:
+    def testValidator473_3(self) -> None:
         with self.assertRaises(ValueError):
             items = []
             EmailValidator(0, True, False, DomainValidator.getInstance2(False, items))
 
     
-    def test_Validator473_4(self) -> None:
+    def testValidator473_4(self) -> None:
         self.assertFalse(self.__validator.isValidDomain("test.local"))
 
         items = [DomainValidator.Item(DomainValidator.ArrayType.GENERIC_PLUS, ["local"])]

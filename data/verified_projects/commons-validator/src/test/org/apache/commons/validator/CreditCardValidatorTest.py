@@ -14,7 +14,7 @@ class CreditCardValidatorTest(unittest.TestCase):
         super().__init__(methodName)
 
 
-    def test_IsValid(self) -> None:
+    def testIsValid(self) -> None:
         ccv = CreditCardValidator.CreditCardValidator1()
 
         self.assertFalse(ccv.isValid(None))
@@ -33,7 +33,7 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertFalse(ccv.isValid("4417123456789113"))
     
 
-    def test_AddAllowedCardType(self) -> None:
+    def testAddAllowedCardType(self) -> None:
         ccv = CreditCardValidator(CreditCardValidator.NONE)
         self.assertFalse(ccv.isValid(CreditCardValidatorTest.__VALID_VISA))
         self.assertFalse(ccv.isValid(CreditCardValidatorTest.__VALID_AMEX))

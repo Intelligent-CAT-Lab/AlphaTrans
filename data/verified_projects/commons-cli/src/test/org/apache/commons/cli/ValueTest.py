@@ -47,17 +47,17 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
     
-    def test_LongNoArg(self) -> None:
+    def testLongNoArg(self) -> None:
         self.assertTrue(self.__cl.hasOption2("c"))
         self.assertIsNone(self.__cl.getOptionValue4("c"))
 
     
-    def test_LongNoArgWithOption(self) -> None:
+    def testLongNoArgWithOption(self) -> None:
         self.assertTrue(self.__cl.hasOption1(self.__opts.getOption("c")))
         self.assertIsNone(self.__cl.getOptionValue2(self.__opts.getOption("c")))
     
     
-    def test_LongOptionalArgValue(self) -> None:
+    def testLongOptionalArgValue(self) -> None:
         try:
             args = ["--fish", "face"]
 
@@ -69,7 +69,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_LongOptionalArgValues(self) -> None:
+    def testLongOptionalArgValues(self) -> None:
         try:
             args = ["--gravy", "gold", "garden"]
 
@@ -84,7 +84,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_LongOptionalArgValuesWithOption(self) -> None:
+    def testLongOptionalArgValuesWithOption(self) -> None:
         try:
             args = ["--gravy", "gold", "garden"]
 
@@ -99,7 +99,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_LongOptionalArgValueWithOption(self) -> None:
+    def testLongOptionalArgValueWithOption(self) -> None:
         try:
             args = ["--fish", "face"]
 
@@ -110,7 +110,7 @@ class ValueTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
     
-    def test_LongOptionalNArgValues(self) -> None:
+    def testLongOptionalNArgValues(self) -> None:
         try:
             args = ["--hide", "house", "hair", "head"]
 
@@ -127,7 +127,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_LongOptionalNArgValuesWithOption(self) -> None:
+    def testLongOptionalNArgValuesWithOption(self) -> None:
         try:
             args = ["--hide", "house", "hair", "head"]
 
@@ -145,7 +145,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_LongOptionalNoValue(self) -> None:
+    def testLongOptionalNoValue(self) -> None:
         try:
             args = ["--fish"]
 
@@ -157,7 +157,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_LongOptionalNoValueWithOption(self) -> None:
+    def testLongOptionalNoValueWithOption(self) -> None:
         try:
             args = ["--fish"]
 
@@ -169,29 +169,29 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
-    def test_LongWithArg(self) -> None:
+    def testLongWithArg(self) -> None:
         self.assertTrue(self.__cl.hasOption2("d"))
         self.assertIsNotNone(self.__cl.getOptionValue4("d"))
         self.assertEqual(self.__cl.getOptionValue4("d"), "bar")
 
     
-    def test_LongWithArgWithOption(self) -> None:
+    def testLongWithArgWithOption(self) -> None:
         self.assertTrue(self.__cl.hasOption1(self.__opts.getOption("d")))
         self.assertIsNotNone(self.__cl.getOptionValue2(self.__opts.getOption("d")))
         self.assertEqual(self.__cl.getOptionValue2(self.__opts.getOption("d")), "bar")
 
     
-    def test_ShortNoArg(self) -> None:
+    def testShortNoArg(self) -> None:
         self.assertTrue(self.__cl.hasOption2("a"))
         self.assertIsNone(self.__cl.getOptionValue4("a"))
 
     
-    def test_ShortNoArgWithOption(self) -> None:
+    def testShortNoArgWithOption(self) -> None:
         self.assertTrue(self.__cl.hasOption1(self.__opts.getOption("a")))
         self.assertIsNone(self.__cl.getOptionValue2(self.__opts.getOption("a")))
 
     
-    def test_ShortOptionalArgNoValue(self) -> None:
+    def testShortOptionalArgNoValue(self) -> None:
         try:
             args = ["-e"]
 
@@ -203,7 +203,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_ShortOptionalArgNoValueWithOption(self) -> None:
+    def testShortOptionalArgNoValueWithOption(self) -> None:
         try:
             args = ["-e"]
 
@@ -215,7 +215,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_ShortOptionalArgValue(self) -> None:
+    def testShortOptionalArgValue(self) -> None:
         try:
             args = ["-e", "everything"]
 
@@ -227,7 +227,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_ShortOptionalArgValues(self) -> None:
+    def testShortOptionalArgValues(self) -> None:
         try:
             args = ["-j", "ink", "idea"]
 
@@ -242,7 +242,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
-    def test_ShortOptionalArgValuesWithOption(self) -> None:
+    def testShortOptionalArgValuesWithOption(self) -> None:
         try:
             args = ["-j", "ink", "idea"]
 
@@ -257,7 +257,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_ShortOptionalArgValueWithOption(self) -> None:
+    def testShortOptionalArgValueWithOption(self) -> None:
         try:
             args = ["-e", "everything"]
 
@@ -269,7 +269,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_ShortOptionalNArgValues(self) -> None:
+    def testShortOptionalNArgValues(self) -> None:
         try:
             args = ["-i", "ink", "idea", "isotope", "ice"]
 
@@ -286,7 +286,7 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
-    def test_ShortOptionalNArgValuesWithOption(self) -> None:
+    def testShortOptionalNArgValuesWithOption(self) -> None:
         try:
             args = ["-i", "ink", "idea", "isotope", "ice"]
 
@@ -303,13 +303,13 @@ class ValueTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_ShortWithArg(self) -> None:
+    def testShortWithArg(self) -> None:
         self.assertTrue(self.__cl.hasOption2("b"))
         self.assertIsNotNone(self.__cl.getOptionValue4("b"))
         self.assertEqual(self.__cl.getOptionValue4("b"), "foo")
 
     
-    def test_ShortWithArgWithOption(self) -> None:
+    def testShortWithArgWithOption(self) -> None:
         self.assertTrue(self.__cl.hasOption1(self.__opts.getOption("b")))
         self.assertIsNotNone(self.__cl.getOptionValue2(self.__opts.getOption("b")))
         self.assertEqual(self.__cl.getOptionValue2(self.__opts.getOption("b")), "foo")

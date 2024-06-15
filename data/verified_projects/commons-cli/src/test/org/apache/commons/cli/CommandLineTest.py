@@ -20,7 +20,7 @@ class CommandLineTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def test_Builder(self) -> None:
+    def testBuilder(self) -> None:
         builder = CommandLine.Builder()
         builder.addArg("foo").addArg("bar")
         builder.addOption(Option.builder1("T").build())
@@ -30,7 +30,7 @@ class CommandLineTest(unittest.TestCase):
         self.assertEqual("bar", cmd.getArgList().get(1))
         self.assertEqual("T", cmd.getOptions()[0].getOpt())
 
-    def test_GetOptionProperties(self) -> None:
+    def testGetOptionProperties(self) -> None:
         try:
             args = [
                 "-Dparam1=value1",
@@ -64,7 +64,7 @@ class CommandLineTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_GetOptionPropertiesWithOption(self) -> None:
+    def testGetOptionPropertiesWithOption(self) -> None:
         try:
             args = [
                 "-Dparam1=value1",
@@ -98,7 +98,7 @@ class CommandLineTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_GetOptions(self) -> None:
+    def testGetOptions(self) -> None:
         cmd = commandLine()
         self.assertIsNotNone(cmd.getOptions())
         self.assertEqual(0, cmd.getOptions().length)
@@ -109,7 +109,7 @@ class CommandLineTest(unittest.TestCase):
 
         self.assertEqual(3, cmd.getOptions().length)
 
-    def test_GetParsedOptionValue(self) -> None:
+    def testGetParsedOptionValue(self) -> None:
         try:
             options = Options()
             options.addOption0(OptionBuilder.hasArg0().withType0(numbers.Number).create2("i"))
@@ -121,7 +121,7 @@ class CommandLineTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_NullhOption(self) -> None:
+    def testNullhOption(self) -> None:
         try:
             options = Options()
             optI = Option.builder1("i").hasArg0().type(numbers.Number).build()
@@ -135,7 +135,7 @@ class CommandLineTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_GetParsedOptionValueWithOption(self) -> None:
+    def testGetParsedOptionValueWithOption(self) -> None:
         try:
             options = Options()
             optI = Option.builder1("i").hasArg0().type(numbers.Number).build()
@@ -149,7 +149,7 @@ class CommandLineTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_GetParsedOptionValueWithChar(self) -> None:
+    def testGetParsedOptionValueWithChar(self) -> None:
         try:
             options = Options()
             options.addOption0(Option.builder1("i").hasArg0().type(numbers.Number).build())

@@ -64,7 +64,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             os.remove(f)
 
     
-    def test_SerializeDirectedGraph(self) -> None:
+    def testSerializeDirectedGraph(self) -> None:
         try:
             g = CommonsGraph.newDirectedMutableGraph(GraphSerializationTestCase\
                 .__buildGraphConnections())
@@ -73,7 +73,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SerializeDirectedWeightdGraph(self) -> None:
+    def testSerializeDirectedWeightdGraph(self) -> None:
         try:
             g = CommonsGraph.newDirectedMutableGraph(GraphSerializationTestCase\
                 .__buildWeightedGraphConnections())
@@ -82,7 +82,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SerializePath(self) -> None:
+    def testSerializePath(self) -> None:
         try:
             start = BaseLabeledVertex("start")
             goal = BaseLabeledVertex("goal")
@@ -107,7 +107,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_SerializeSpanningTree(self) -> None:
+    def testSerializeSpanningTree(self) -> None:
         try:
             spanningTree = MutableSpanningTree(
                 DoubleWeightBaseOperations(), BaseWeightedEdge()
@@ -121,7 +121,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_SerializeSyncronyzedDirectedWeightdGraph(self) -> None:
+    def testSerializeSyncronyzedDirectedWeightdGraph(self) -> None:
         try:
             g = CommonsGraph.synchronize2(
                 CommonsGraph.newDirectedMutableGraph(GraphSerializationTestCase\
@@ -133,7 +133,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SerializeUndirectedGraph(self) -> None:
+    def testSerializeUndirectedGraph(self) -> None:
         try:
             g = CommonsGraph.newUndirectedMutableGraph(GraphSerializationTestCase\
                 .__buildGraphConnections())
@@ -143,7 +143,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SerializeUndirectedWeightdGraph(self) -> None:
+    def testSerializeUndirectedWeightdGraph(self) -> None:
         try:
             g = CommonsGraph.newUndirectedMutableGraph(GraphSerializationTestCase\
                 .__buildWeightedGraphConnections())

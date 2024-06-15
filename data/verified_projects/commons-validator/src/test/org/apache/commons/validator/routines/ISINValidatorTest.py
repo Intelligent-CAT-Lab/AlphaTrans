@@ -45,7 +45,7 @@ class ISINValidatorTest(unittest.TestCase):
         ]
 
     
-    def test_IsValidTrue(self) -> None:
+    def testIsValidTrue(self) -> None:
         for f in self.__validFormat:
             self.assertTrue(
                 ISINValidatorTest.__VALIDATOR_TRUE.isValid(f),
@@ -53,7 +53,7 @@ class ISINValidatorTest(unittest.TestCase):
             )
 
     
-    def test_InvalidTrue(self) -> None:
+    def testInvalidTrue(self) -> None:
         for f in self.__invalidFormat:
             self.assertFalse(
                 ISINValidatorTest.__VALIDATOR_TRUE.isValid(f),
@@ -66,7 +66,7 @@ class ISINValidatorTest(unittest.TestCase):
             )
 
     
-    def test_IsValidFalse(self) -> None:
+    def testIsValidFalse(self) -> None:
         for f in self.__validFormat:
             self.assertTrue(
                 ISINValidatorTest.__VALIDATOR_FALSE.isValid(f),
@@ -74,7 +74,7 @@ class ISINValidatorTest(unittest.TestCase):
             )
 
     
-    def test_InvalidFalse(self) -> None:
+    def testInvalidFalse(self) -> None:
         for f in self.__invalidFormat:
             self.assertFalse(
                 ISINValidatorTest.__VALIDATOR_FALSE.isValid(f),

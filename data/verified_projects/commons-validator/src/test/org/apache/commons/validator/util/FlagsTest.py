@@ -12,17 +12,17 @@ class FlagsTest(unittest.TestCase):
         super().__init__(methodName)
     
 
-    def test_HashCode(self) -> None:
+    def testHashCode(self) -> None:
         f = Flags(1, 45)
         self.assertEqual(f.hashCode(), 45)
     
 
-    def test_GetFlags(self) -> None:
+    def testGetFlags(self) -> None:
         f = Flags(1, 45)
         self.assertEquals(f.getFlags(), 45)
     
 
-    def test_IsOnOff(self) -> None:
+    def testIsOnOff(self) -> None:
         f = Flags(0, 0)
         f.turnOn(FlagsTest.__LONG_FLAG)
         f.turnOn(FlagsTest.__INT_FLAG)
@@ -35,51 +35,51 @@ class FlagsTest(unittest.TestCase):
         self.assertTrue(f.isOff(FlagsTest.__LONG_FLAG_2))
     
 
-    def test_TurnOnOff(self) -> None:
+    def testTurnOnOff(self) -> None:
         pass
 
     
-    def test_TurnOff(self) -> None:
+    def testTurnOff(self) -> None:
         pass
 
 
-    def test_TurnOffAll(self) -> None:
+    def testTurnOffAll(self) -> None:
         f = Flags(1, 98432)
         f.turnOffAll()
         self.assertEqual(0, f.getFlags())
 
     
-    def test_Clear(self) -> None:
+    def testClear(self) -> None:
         f = Flags(1, 98432)
         f.clear()
         self.assertEqual(0, f.getFlags())
     
 
-    def test_TurnOnAll(self) -> None:
+    def testTurnOnAll(self) -> None:
         f = Flags(0, 0)
         f.turnOnAll()
         self.assertEqual(~0, f.getFlags())
     
 
-    def test_IsOn_isFalseWhenNotAllFlagsInArgumentAreOn(self) -> None:
+    def testIsOn_isFalseWhenNotAllFlagsInArgumentAreOn(self) -> None:
         first = Flags(1, 1)
         firstAndSecond = 3
 
         self.assertFalse(first.isOn(firstAndSecond))
     
 
-    def test_IsOn_isTrueWhenHighOrderBitIsSetAndQueried(self) -> None:
+    def testIsOn_isTrueWhenHighOrderBitIsSetAndQueried(self) -> None:
         allOn = Flags(1, ~0)
         highOrderBit = 0x8000000000000000
 
         self.assertTrue(allOn.isOn(highOrderBit))
     
 
-    def test_Clone(self) -> None:
+    def testClone(self) -> None:
         pass
     
 
-    def test_EqualsObject(self) -> None:
+    def testEqualsObject(self) -> None:
         pass
 
 

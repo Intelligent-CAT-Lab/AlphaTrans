@@ -18,186 +18,185 @@ class BasicParserTest(ParserTestCase):
         pass
 
     def setUp(self) -> None:
-        super().setUp()
-        self.__parser = BasicParser()
+        super().setUp(BasicParser())
 
     @unittest.skip("not supported by the BasicParser")
-    def test_AmbiguousLongWithoutEqualSingleDash(self) -> None:
+    def testAmbiguousLongWithoutEqualSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_AmbiguousPartialLongOption1(self) -> None:
+    def testAmbiguousPartialLongOption1(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_AmbiguousPartialLongOption2(self) -> None:
+    def testAmbiguousPartialLongOption2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_AmbiguousPartialLongOption3(self) -> None:
+    def testAmbiguousPartialLongOption3(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_AmbiguousPartialLongOption4(self) -> None:
+    def testAmbiguousPartialLongOption4(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_Bursting(self) -> None:
+    def testBursting(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_DoubleDash2(self) -> None:
+    def testDoubleDash2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_LongOptionWithEqualsQuoteHandling(self) -> None:
+    def testLongOptionWithEqualsQuoteHandling(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_LongWithEqualDoubleDash(self) -> None:
+    def testLongWithEqualDoubleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_LongWithEqualSingleDash(self) -> None:
+    def testLongWithEqualSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_LongWithoutEqualSingleDash(self) -> None:
+    def testLongWithoutEqualSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_MissingArgWithBursting(self) -> None:
+    def testMissingArgWithBursting(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser (CLI-184)")
-    def test_NegativeOption(self) -> None:
+    def testNegativeOption(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_PartialLongOptionSingleDash(self) -> None:
+    def testPartialLongOptionSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_PropertiesOption1(self) -> None:
+    def testPropertiesOption1(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
     
     @unittest.skip("not supported by the BasicParser")
-    def test_PropertiesOption2(self) -> None:
+    def testPropertiesOption2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_ShortOptionConcatenatedQuoteHandling(self) -> None:
+    def testShortOptionConcatenatedQuoteHandling(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_ShortWithEqual(self) -> None:
+    def testShortWithEqual(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_ShortWithoutEqual(self) -> None:
+    def testShortWithoutEqual(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_StopBursting(self) -> None:
+    def testStopBursting(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_StopBursting2(self) -> None:
+    def testStopBursting2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_UnambiguousPartialLongOption1(self) -> None:
+    def testUnambiguousPartialLongOption1(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_UnambiguousPartialLongOption2(self) -> None:
+    def testUnambiguousPartialLongOption2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_UnambiguousPartialLongOption3(self) -> None:
+    def testUnambiguousPartialLongOption3(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_UnambiguousPartialLongOption4(self) -> None:
+    def testUnambiguousPartialLongOption4(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_UnrecognizedOptionWithBursting(self) -> None:
+    def testUnrecognizedOptionWithBursting(self) -> None:
         try:
             pass
         except Exception as e:

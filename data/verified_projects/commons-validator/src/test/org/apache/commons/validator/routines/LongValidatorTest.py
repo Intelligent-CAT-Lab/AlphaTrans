@@ -26,93 +26,86 @@ class LongValidatorTest(AbstractNumberValidatorTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-
-            self._validator = LongValidator(False, 0)
-            self._strictValidator = LongValidator.LongValidator1()
-
-            self._testPattern = "#,###"
-
-            self._max = None
-            self._maxPlusOne = None
-            self._min = None
-            self._minMinusOne = None
-
-            self._invalidStrict = [
-                None,
-                "",
-                "X",
-                "X12",
-                "12X",
-                "1X2",
-                "1.2",
-                LongValidatorTest.__LONG_MAX_1,
-                LongValidatorTest.__LONG_MIN_1,
-                LongValidatorTest.__NINES
-            ]
-
-            self._invalid = [
-                None,
-                "",
-                "X",
-                "X12",
-                "",
-                LongValidatorTest.__LONG_MAX_1,
-                LongValidatorTest.__LONG_MIN_1,
-                LongValidatorTest.__NINES
-            ]
-
-            self._testNumber = 1234
-            self._testZero = 0
-            self._validStrict = [
-                "0",
-                "1234",
-                "1,234",
-                LongValidatorTest.__LONG_MAX,
-                LongValidatorTest.__LONG_MIN
-            ]
-            self._validStrictCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                LongValidatorTest.__LONG_MAX_VAL,
-                LongValidatorTest.__LONG_MIN_VAL
-            ]
-            self._valid = [
-                "0",
-                "1234",
-                "1,234",
-                "1,234.5",
-                "1234X",
-                LongValidatorTest.__LONG_MAX,
-                LongValidatorTest.__LONG_MIN,
-                LongValidatorTest.__LONG_MAX_0,
-                LongValidatorTest.__LONG_MIN_0
-            ]
-            self._validCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                LongValidatorTest.__LONG_MAX_VAL,
-                LongValidatorTest.__LONG_MIN_VAL,
-                LongValidatorTest.__LONG_MAX_VAL,
-                LongValidatorTest.__LONG_MIN_VAL
-            ]
-
-            self._testStringUS = "1,234"
-            self._testStringDE = "1.234"
-
-            self._localeValue = self._testStringDE
-            self._localePattern = "#.###"
-            self._testLocale = 'de_DE.UTF-8'
-            self._localeExpected = self._testNumber
+            super().setUp(
+                validator = LongValidator(False, 0),
+                strictValidator = LongValidator.LongValidator1(),
+                testPattern = "#,###",
+                _max = None,
+                maxPlusOne = None,
+                _min = None,
+                minMinusOne = None,
+                invalidStrict = [
+                    None,
+                    "",
+                    "X",
+                    "X12",
+                    "12X",
+                    "1X2",
+                    "1.2",
+                    LongValidatorTest.__LONG_MAX_1,
+                    LongValidatorTest.__LONG_MIN_1,
+                    LongValidatorTest.__NINES
+                ],
+                invalid = [
+                    None,
+                    "",
+                    "X",
+                    "X12",
+                    "",
+                    LongValidatorTest.__LONG_MAX_1,
+                    LongValidatorTest.__LONG_MIN_1,
+                    LongValidatorTest.__NINES
+                ],
+                testNumber = 1234,
+                testZero = 0,
+                validStrict = [
+                    "0",
+                    "1234",
+                    "1,234",
+                    LongValidatorTest.__LONG_MAX,
+                    LongValidatorTest.__LONG_MIN
+                ],
+                validStrictCompare = [
+                    0,
+                    1234,
+                    1234,
+                    LongValidatorTest.__LONG_MAX_VAL,
+                    LongValidatorTest.__LONG_MIN_VAL
+                ],
+                valid = [
+                    "0",
+                    "1234",
+                    "1,234",
+                    "1,234.5",
+                    "1234X",
+                    LongValidatorTest.__LONG_MAX,
+                    LongValidatorTest.__LONG_MIN,
+                    LongValidatorTest.__LONG_MAX_0,
+                    LongValidatorTest.__LONG_MIN_0
+                ],
+                validCompare = [
+                    0,
+                    1234,
+                    1234,
+                    1234,
+                    1234,
+                    LongValidatorTest.__LONG_MAX_VAL,
+                    LongValidatorTest.__LONG_MIN_VAL,
+                    LongValidatorTest.__LONG_MAX_VAL,
+                    LongValidatorTest.__LONG_MIN_VAL
+                ],
+                testStringUS = "1,234",
+                testStringDE = "1.234",
+                localeValue = "1.234",
+                localePattern = "#.###",
+                testLocale = 'de_DE.UTF-8',
+                localeExpected = 1234
+            )
         except Exception as e:
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_LongValidatorMethods(self) -> None:
+    def testLongValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -194,7 +187,7 @@ class LongValidatorTest(AbstractNumberValidatorTest):
         )
     
 
-    def test_LongRangeMinMax(self) -> None:
+    def testLongRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")

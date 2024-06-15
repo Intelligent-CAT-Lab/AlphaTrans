@@ -10,11 +10,13 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
 
     @classmethod
     def setUpClass(cls):
-        "Tests shall only be executed on child classes with concrete implementations."
-        raise unittest.SkipTest("Skip tests in the abstract base class.")
+        if cls == AbstractNumberValidatorTest:
+            "Tests shall only be executed on child classes with concrete implementations."
+            raise unittest.SkipTest("Skip tests in the abstract base class.")
     
 
     def __init__(self, methodName='runTest') -> None:
+        self.setUpClass()
         super().__init__(methodName)
 
         self._validator = None
@@ -44,11 +46,56 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
         self._localeExpected = None
     
     
-    def setUp(self) -> None:
+    def setUp(
+        self,
+        validator = None,
+        strictValidator = None,
+        _max = None,
+        maxPlusOne = None,
+        _min = None,
+        minMinusOne = None,
+        invalid = None,
+        valid = None,
+        validCompare = None,
+        invalidStrict = None,
+        validStrict = None,
+        validStrictCompare = None,
+        testPattern = None,
+        testNumber = None,
+        testZero = None,
+        testStringUS = None,
+        testStringDE = None,
+        localeValue = None,
+        localePattern = None,
+        testLocale = None,
+        localeExpected = None
+        ) -> None:
         try:
             super().setUp()
 
             setlocale(LC_NUMERIC, 'en_US.UTF-8')
+
+            self._validator = validator
+            self._strictValidator = strictValidator
+            self._max = _max
+            self._maxPlusOne = maxPlusOne
+            self._min = _min
+            self._minMinusOne = minMinusOne
+            self._invalid = invalid
+            self._valid = valid
+            self._validCompare = validCompare
+            self._invalidStrict = invalidStrict
+            self._validStrict = validStrict
+            self._validStrictCompare = validStrictCompare
+            self._testPattern = testPattern
+            self._testNumber = testNumber
+            self._testZero = testZero
+            self._testStringUS = testStringUS
+            self._testStringDE = testStringDE
+            self._localeValue = localeValue
+            self._localePattern = localePattern
+            self._testLocale = testLocale
+            self._localeExpected = localeExpected
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     
@@ -62,7 +109,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
-    def test_FormatType(self) -> None:
+    def testFormatType(self) -> None:
         self.assertEqual(0, self._validator.getFormatType(), "Format Type A")
         self.assertEqual(
             AbstractNumberValidator.STANDARD_FORMAT,
@@ -71,7 +118,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
         )
 
     
-    def test_ValidateMinMax(self) -> None:
+    def testValidateMinMax(self) -> None:
         if self._max is not None:
             self.assertEqual(
                 self._max,
@@ -93,7 +140,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             )
 
     
-    def test_InvalidStrict(self) -> None:
+    def testInvalidStrict(self) -> None:
         for i, val in enumerate(self._invalidStrict):
             text = f"idx=[{i}] value=[{val}]"
             self.assertIsNone(
@@ -114,7 +161,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             )
 
     
-    def test_InvalidNotStrict(self) -> None:
+    def testInvalidNotStrict(self) -> None:
         for i, val in enumerate(self._invalid):
             text = f"idx=[{i}] value=[{val}]"
             self.assertIsNone(
@@ -135,7 +182,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             )
 
     
-    def test_ValidStrict(self) -> None:
+    def testValidStrict(self) -> None:
         for i, val in enumerate(self._validStrict):
             text = f"idx=[{i}] value=[{self._validStrictCompare[i]}]"
             self.assertEqual(
@@ -158,7 +205,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             )
 
     
-    def test_ValidNotStrict(self) -> None:
+    def testValidNotStrict(self) -> None:
         for i, val in enumerate(self._valid):
             text = f"idx=[{i}] value=[{self._validCompare[i]}]"
             self.assertEqual(
@@ -179,7 +226,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             )
 
     
-    def test_ValidateLocale(self) -> None:
+    def testValidateLocale(self) -> None:
         self.assertEqual(
             self._testNumber,
             self._strictValidator.parse(self._testStringUS, None, 'en_US.UTF-8'),
@@ -211,7 +258,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
         )
 
     
-    def test_Format(self) -> None:
+    def testFormat(self) -> None:
         number = Decimal("1234.5")
         self.assertEqual(
             "1,234.5",
@@ -230,7 +277,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
         )
 
     
-    def test_RangeMinMax(self) -> None:
+    def testRangeMinMax(self) -> None:
         number9 = 9
         number10 = 10
         number11 = 11
@@ -286,7 +333,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
         )
 
     
-    def test_Serialization(self) -> None:
+    def testSerialization(self) -> None:
         baos = BytesIO()
         try:
             pickle.dump(self._validator, baos)

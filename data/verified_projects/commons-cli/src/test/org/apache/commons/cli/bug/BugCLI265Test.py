@@ -33,7 +33,7 @@ class BugCLI265Test(unittest.TestCase):
                         .addOption0(optionLast)
 
     
-    def test_shouldParseConcatenatedShortOptions(self) -> None:
+    def testshouldParseConcatenatedShortOptions(self) -> None:
         try:
             concatenatedShortOptions = ["-t1", "-ab"]
 
@@ -48,7 +48,7 @@ class BugCLI265Test(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_shouldParseShortOptionWithoutValue(self) -> None:
+    def testshouldParseShortOptionWithoutValue(self) -> None:
         try:
             twoShortOptions = ["-t1", "-last"]
 
@@ -65,7 +65,7 @@ class BugCLI265Test(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_shouldParseShortOptionWithValue(self) -> None:
+    def testshouldParseShortOptionWithValue(self) -> None:
         try:
             shortOptionWithValue = ["-t1", "path/to/my/db"]
 

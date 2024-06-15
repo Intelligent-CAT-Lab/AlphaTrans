@@ -14,23 +14,24 @@ class ISBNCheckDigitTest(AbstractCheckDigitTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-            self._routine = ISBNCheckDigit.ISBN_CHECK_DIGIT
-            self._valid = [
-                "9780072129519",
-                "9780764558313",
-                "1930110995",
-                "020163385X",
-                "1590596277", # ISBN-10 Ubuntu Book
-                "9781590596272" # ISBN-13 Ubuntu Book
-            ]
-            self._missingMessage = "ISBN Code is missing"
-            self._zeroSum = "000000000000"
+            super().setUp(
+                routine = ISBNCheckDigit.ISBN_CHECK_DIGIT,
+                valid = [
+                    "9780072129519",
+                    "9780764558313",
+                    "1930110995",
+                    "020163385X",
+                    "1590596277", # ISBN-10 Ubuntu Book
+                    "9781590596272" # ISBN-13 Ubuntu Book
+                ],
+                missingMessage = "ISBN Code is missing",
+                zeroSum = "000000000000"
+            )
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_InvalidLength(self) -> None:
+    def testInvalidLength(self) -> None:
         self.assertFalse(self._routine.isValid("123456789"), "isValid() Lth 9")
         self.assertFalse(self._routine.isValid("12345678901"), "isValid() Lth 11")
         self.assertFalse(self._routine.isValid("123456789012"), "isValid() Lth 12")

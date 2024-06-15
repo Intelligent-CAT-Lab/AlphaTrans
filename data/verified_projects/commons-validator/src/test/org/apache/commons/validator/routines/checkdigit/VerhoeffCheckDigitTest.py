@@ -14,16 +14,17 @@ class VerhoeffCheckDigitTest(AbstractCheckDigitTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-            self._routine = VerhoeffCheckDigit.VERHOEFF_CHECK_DIGIT
-            self._valid = [
-                "15",
-                "1428570",
-                "12345678902"
-            ]
+            super().setUp(
+                routine = VerhoeffCheckDigit.VERHOEFF_CHECK_DIGIT,
+                valid = [
+                    "15",
+                    "1428570",
+                    "12345678902"
+                ]
+            )
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
 
 
-    def test_ZeroSum(self) -> None:
+    def testZeroSum(self) -> None:
         pass

@@ -74,37 +74,37 @@ class OptionTest(unittest.TestCase):
         OptionTest.assertEqual(cls, type(option))
     
 
-    def test_BuilderInsufficientParams1(self) -> None:
+    def testBuilderInsufficientParams1(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder0().desc("desc").build()
 
     
-    def test_BuilderInsufficientParams2(self) -> None:
+    def testBuilderInsufficientParams2(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder1(None).desc("desc").build()
     
     
-    def test_BuilderInvalidOptionName1(self) -> None:
+    def testBuilderInvalidOptionName1(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder0().option("invalid?")
     
     
-    def test_BuilderInvalidOptionName2(self) -> None:
+    def testBuilderInvalidOptionName2(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder0().option("invalid@")
     
     
-    def test_BuilderInvalidOptionName3(self) -> None:
+    def testBuilderInvalidOptionName3(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder1("invalid?")
     
     
-    def test_BuilderInvalidOptionName4(self) -> None:
+    def testBuilderInvalidOptionName4(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder1("invalid@")
     
     
-    def test_BuilderMethods(self) -> None:
+    def testBuilderMethods(self) -> None:
         defaultSeparator = '\x00'
 
         self.__checkOption(
@@ -275,7 +275,7 @@ class OptionTest(unittest.TestCase):
                 int)
     
     
-    def test_Clear(self) -> None:
+    def testClear(self) -> None:
         option = OptionTest.TestOption("x", True, "")
         self.assertEqual(0, len(option.getValuesList()))
         option.addValue("a")
@@ -284,7 +284,7 @@ class OptionTest(unittest.TestCase):
         self.assertEqual(0, len(option.getValuesList()))
 
     
-    def test_Clone(self) -> None:
+    def testClone(self) -> None:
         a = OptionTest.TestOption("a", True, "")
         b = a.clone()
         self.assertEqual(a, b)
@@ -299,7 +299,7 @@ class OptionTest(unittest.TestCase):
         self.assertEqual(2, len(b.getValues()))
 
     
-    def test_GetValue(self) -> None:
+    def testGetValue(self) -> None:
         option = Option.Option1("f", None)
         option.setArgs(Option.UNLIMITED_VALUES)
 
@@ -313,7 +313,7 @@ class OptionTest(unittest.TestCase):
         self.assertEqual("foo", option.getValue2("default"))
 
     
-    def test_HasArgName(self) -> None:
+    def testHasArgName(self) -> None:
         option = Option.Option1("f", None)
 
         option.setArgName(None)
@@ -326,7 +326,7 @@ class OptionTest(unittest.TestCase):
         self.assertTrue(option.hasArgName())
 
 
-    def test_HasArgs(self) -> None:
+    def testHasArgs(self) -> None:
         option = Option.Option1("f", None)
 
         option.setArgs(0)
@@ -345,7 +345,7 @@ class OptionTest(unittest.TestCase):
         self.assertFalse(option.hasArgs())
     
     
-    def test_HashCode(self) -> None:
+    def testHashCode(self) -> None:
         self.assertNotEqual(
                 Option.builder1("test").build().hashCode(),\
                 Option.builder1("test2").build().hashCode())
@@ -357,7 +357,7 @@ class OptionTest(unittest.TestCase):
                 Option.builder1("test").longOpt("long test").build().hashCode())
     
     
-    def test_Subclass(self) -> None:
+    def testSubclass(self) -> None:
         option = OptionTest.DefaultOption("f", "file", "myfile.txt")
         clone = option.clone()
         self.assertEqual("myfile.txt", clone.getValue0())

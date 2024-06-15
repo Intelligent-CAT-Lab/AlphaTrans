@@ -1,0 +1,715 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-csv/src/test/java/org/apache/commons/csv/issues/JiraCsv203Test.java",
+    "imports": {
+        "21-21:import CSVFormat": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.csv.CSVFormat;\n"
+            ]
+        },
+        "23-23:import QuoteMode": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.csv.QuoteMode;\n"
+            ]
+        },
+        "22-22:import CSVPrinter": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.csv.CSVPrinter;\n"
+            ]
+        },
+        "24-24:import Test": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "19-19:import static Assertions.assertEquals": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        }
+    },
+    "classes": {
+        "JiraCsv203Test": {
+            "start": 30,
+            "end": 30,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "128-140:testWithoutQuoteMode": {
+                    "start": 128,
+                    "end": 140,
+                    "body": [
+                        "    public void testWithoutQuoteMode() throws Exception {\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.EXCEL\n",
+                        "                        .builder()\n",
+                        "                        .setNullString(\"N/A\")\n",
+                        "                        .setIgnoreSurroundingSpaces(true)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder buffer = new StringBuilder();\n",
+                        "        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {\n",
+                        "            printer.printRecord1(null, \"Hello\", null, \"World\");\n",
+                        "        }\n",
+                        "        assertEquals(\"N/A,Hello,N/A,World\\r\\n\", buffer.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testWithoutQuoteMode()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "554-557:setIgnoreSurroundingSpaces"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "574-578:setNullString"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "88-103:CSVPrinter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "257-259:printRecord1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testWithoutQuoteMode(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testWithoutQuoteMode(self) -> None:",
+                        "        ",
+                        "",
+                        "        format = CSVFormat.EXCEL.builder().setNullString(\"N/A\").setIgnoreSurroundingSpaces(True).build()",
+                        "        buffer = io.StringIO()",
+                        "        with CSVPrinter(buffer, format) as printer:",
+                        "            printer.printRecord(None, \"Hello\", None, \"World\")",
+                        "",
+                        "        assert buffer.getvalue() == \"N/A,Hello,N/A,World\\r\\n\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.817986965179443,
+                    "generation_timestamp": "2024-06-05T17:55:54.939492",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "113-125:testWithoutNullString": {
+                    "start": 113,
+                    "end": 125,
+                    "body": [
+                        "    public void testWithoutNullString() throws Exception {\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.EXCEL\n",
+                        "                        .builder()\n",
+                        "                        .setIgnoreSurroundingSpaces(true)\n",
+                        "                        .setQuoteMode(QuoteMode.ALL)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder buffer = new StringBuilder();\n",
+                        "        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {\n",
+                        "            printer.printRecord1(null, \"Hello\", null, \"World\");\n",
+                        "        }\n",
+                        "        assertEquals(\",\\\"Hello\\\",,\\\"World\\\"\\r\\n\", buffer.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testWithoutNullString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "554-557:setIgnoreSurroundingSpaces"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "88-103:CSVPrinter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "257-259:printRecord1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testWithoutNullString(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testWithoutNullString(self) -> None:",
+                        "        ",
+                        "",
+                        "        format = CSVFormat.EXCEL.builder().setIgnoreSurroundingSpaces(True).setQuoteMode(QuoteMode.ALL).build()",
+                        "        buffer = io.StringIO()",
+                        "        with CSVPrinter(buffer, format) as printer:",
+                        "            printer.printRecord1(None, \"Hello\", None, \"World\")",
+                        "        assert buffer.getvalue() == \",Hello,,World\\r\\n\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.50232458114624,
+                    "generation_timestamp": "2024-06-05T17:56:02.473616",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "97-110:testWithEmptyValues": {
+                    "start": 97,
+                    "end": 110,
+                    "body": [
+                        "    public void testWithEmptyValues() throws Exception {\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.EXCEL\n",
+                        "                        .builder()\n",
+                        "                        .setNullString(\"N/A\")\n",
+                        "                        .setIgnoreSurroundingSpaces(true)\n",
+                        "                        .setQuoteMode(QuoteMode.ALL)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder buffer = new StringBuilder();\n",
+                        "        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {\n",
+                        "            printer.printRecord1(\"\", \"Hello\", \"\", \"World\");\n",
+                        "        }\n",
+                        "        assertEquals(\"\\\"\\\",\\\"Hello\\\",\\\"\\\",\\\"World\\\"\\r\\n\", buffer.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testWithEmptyValues()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "554-557:setIgnoreSurroundingSpaces"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "574-578:setNullString"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "88-103:CSVPrinter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "257-259:printRecord1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testWithEmptyValues(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testWithEmptyValues(self) -> None:",
+                        "        ",
+                        "",
+                        "        format = CSVFormat.EXCEL.builder().setNullString(\"N/A\").setIgnoreSurroundingSpaces(True).setQuoteMode(QuoteMode.ALL).build()",
+                        "        buffer = io.StringIO()",
+                        "        try:",
+                        "            printer = CSVPrinter(buffer, format)",
+                        "            printer.printRecord1(\"\", \"Hello\", \"\", \"World\")",
+                        "        finally:",
+                        "            printer.close()",
+                        "        self.assertEqual(\"\\\"\\\",\\\"Hello\\\",\\\"\\\",\\\"World\\\"\\r\\n\", buffer.getvalue())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 10.724272012710571,
+                    "generation_timestamp": "2024-06-05T17:56:13.224520",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "81-94:testQuoteModeNonNumeric": {
+                    "start": 81,
+                    "end": 94,
+                    "body": [
+                        "    public void testQuoteModeNonNumeric() throws Exception {\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.EXCEL\n",
+                        "                        .builder()\n",
+                        "                        .setNullString(\"N/A\")\n",
+                        "                        .setIgnoreSurroundingSpaces(true)\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder buffer = new StringBuilder();\n",
+                        "        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {\n",
+                        "            printer.printRecord1(null, \"Hello\", null, \"World\");\n",
+                        "        }\n",
+                        "        assertEquals(\"N/A,\\\"Hello\\\",N/A,\\\"World\\\"\\r\\n\", buffer.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testQuoteModeNonNumeric()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "554-557:setIgnoreSurroundingSpaces"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "574-578:setNullString"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "88-103:CSVPrinter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "257-259:printRecord1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testQuoteModeNonNumeric(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testQuoteModeNonNumeric(self) -> None:",
+                        "        ",
+                        "",
+                        "        format = CSVFormat.EXCEL.builder().setNullString(\"N/A\").setIgnoreSurroundingSpaces(True).setQuoteMode(QuoteMode.NON_NUMERIC).build()",
+                        "        buffer = io.StringIO()",
+                        "        with CSVPrinter(buffer, format) as printer:",
+                        "            printer.printRecord1(None, \"Hello\", None, \"World\")",
+                        "        assert buffer.getvalue() == \"N/A,\\\"Hello\\\",N/A,\\\"World\\\"\\r\\n\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.286487340927124,
+                    "generation_timestamp": "2024-06-05T17:56:18.543678",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "65-78:testQuoteModeMinimal": {
+                    "start": 65,
+                    "end": 78,
+                    "body": [
+                        "    public void testQuoteModeMinimal() throws Exception {\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.EXCEL\n",
+                        "                        .builder()\n",
+                        "                        .setNullString(\"N/A\")\n",
+                        "                        .setIgnoreSurroundingSpaces(true)\n",
+                        "                        .setQuoteMode(QuoteMode.MINIMAL)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder buffer = new StringBuilder();\n",
+                        "        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {\n",
+                        "            printer.printRecord1(null, \"Hello\", null, \"World\");\n",
+                        "        }\n",
+                        "        assertEquals(\"N/A,Hello,N/A,World\\r\\n\", buffer.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testQuoteModeMinimal()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "554-557:setIgnoreSurroundingSpaces"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "574-578:setNullString"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "88-103:CSVPrinter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "257-259:printRecord1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testQuoteModeMinimal(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testQuoteModeMinimal(self) -> None:",
+                        "        ",
+                        "",
+                        "        format = CSVFormat.EXCEL.builder().setNullString(\"N/A\").setIgnoreSurroundingSpaces(True).setQuoteMode(QuoteMode.MINIMAL).build()",
+                        "        buffer = io.StringIO()",
+                        "        try:",
+                        "            printer = CSVPrinter(buffer, format)",
+                        "            printer.printRecord1(None, \"Hello\", None, \"World\")",
+                        "        finally:",
+                        "            printer.close()",
+                        "        self.assertEqual(\"N/A,Hello,N/A,World\\r\\n\", buffer.getvalue())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 9.446619272232056,
+                    "generation_timestamp": "2024-06-05T17:56:28.027382",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "49-62:testQuoteModeAllNonNull": {
+                    "start": 49,
+                    "end": 62,
+                    "body": [
+                        "    public void testQuoteModeAllNonNull() throws Exception {\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.EXCEL\n",
+                        "                        .builder()\n",
+                        "                        .setNullString(\"N/A\")\n",
+                        "                        .setIgnoreSurroundingSpaces(true)\n",
+                        "                        .setQuoteMode(QuoteMode.ALL_NON_NULL)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder buffer = new StringBuilder();\n",
+                        "        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {\n",
+                        "            printer.printRecord1(null, \"Hello\", null, \"World\");\n",
+                        "        }\n",
+                        "        assertEquals(\"N/A,\\\"Hello\\\",N/A,\\\"World\\\"\\r\\n\", buffer.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testQuoteModeAllNonNull()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "554-557:setIgnoreSurroundingSpaces"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "574-578:setNullString"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "88-103:CSVPrinter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "257-259:printRecord1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testQuoteModeAllNonNull(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testQuoteModeAllNonNull(self) -> None:",
+                        "        ",
+                        "",
+                        "        format = CSVFormat.EXCEL.builder().setNullString(\"N/A\").setIgnoreSurroundingSpaces(True).setQuoteMode(QuoteMode.ALL_NON_NULL).build()",
+                        "        buffer = io.StringIO()",
+                        "        try:",
+                        "            printer = CSVPrinter(buffer, format)",
+                        "            printer.printRecord1(None, \"Hello\", None, \"World\")",
+                        "        finally:",
+                        "            printer.close()",
+                        "        self.assertEqual(\"N/A,\\\"Hello\\\",N/A,\\\"World\\\"\\r\\n\", buffer.getvalue())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.131020784378052,
+                    "generation_timestamp": "2024-06-05T17:56:35.185903",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "33-46:testQuoteModeAll": {
+                    "start": 33,
+                    "end": 46,
+                    "body": [
+                        "    public void testQuoteModeAll() throws Exception {\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.EXCEL\n",
+                        "                        .builder()\n",
+                        "                        .setNullString(\"N/A\")\n",
+                        "                        .setIgnoreSurroundingSpaces(true)\n",
+                        "                        .setQuoteMode(QuoteMode.ALL)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder buffer = new StringBuilder();\n",
+                        "        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {\n",
+                        "            printer.printRecord1(null, \"Hello\", null, \"World\");\n",
+                        "        }\n",
+                        "        assertEquals(\"\\\"N/A\\\",\\\"Hello\\\",\\\"N/A\\\",\\\"World\\\"\\r\\n\", buffer.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testQuoteModeAll()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "554-557:setIgnoreSurroundingSpaces"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "574-578:setNullString"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "88-103:CSVPrinter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVPrinter",
+                            "CSVPrinter",
+                            "257-259:printRecord1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testQuoteModeAll(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testQuoteModeAll(self) -> None:",
+                        "        ",
+                        "",
+                        "        format = CSVFormat.EXCEL.builder().setNullString(\"N/A\").setIgnoreSurroundingSpaces(True).setQuoteMode(QuoteMode.ALL).build()",
+                        "        buffer = io.StringIO()",
+                        "        try:",
+                        "            printer = CSVPrinter(buffer, format)",
+                        "            printer.printRecord1(None, \"Hello\", None, \"World\")",
+                        "        finally:",
+                        "            printer.close()",
+                        "        self.assertEqual(\"\\\"N/A\\\",\\\"Hello\\\",\\\"N/A\\\",\\\"World\\\"\\r\\n\", buffer.getvalue())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 10.084909677505493,
+                    "generation_timestamp": "2024-06-05T17:56:45.290718",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class JiraCsv203Test:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "from src.main.org.apache.commons.csv.CSVFormat import *",
+        "from src.main.org.apache.commons.csv.CSVPrinter import *",
+        "from src.main.org.apache.commons.csv.QuoteMode import *"
+    ]
+}

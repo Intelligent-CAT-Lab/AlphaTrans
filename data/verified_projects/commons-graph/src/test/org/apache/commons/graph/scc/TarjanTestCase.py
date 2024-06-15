@@ -17,21 +17,21 @@ from typing import *
 
 class TarjanTestCase(unittest.TestCase):
 
-    def test_EmptyGraph(self) -> None:
+    def testEmptyGraph(self) -> None:
         graph = DirectedMutableGraph()
 
         CommonsGraph.findStronglyConnectedComponent(graph)\
             .applyingTarjan()
     
 
-    def test_NullGraph(self) -> None:
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = None
             CommonsGraph.findStronglyConnectedComponent(graph)\
                 .applyingTarjan()
 
     
-    def test_Sparse(self) -> None:
+    def testSparse(self) -> None:
         graph = CommonsGraph.newDirectedMutableGraph(
             GraphConnectionTarjanTestCaseTestSparse()
         )
@@ -44,7 +44,7 @@ class TarjanTestCase(unittest.TestCase):
         self.assertEqual(len(actual), expected)
 
     
-    def test_verifyHasStronglyConnectedComponents(self) -> None:
+    def testverifyHasStronglyConnectedComponents(self) -> None:
         a = BaseLabeledVertex("A")
         b = BaseLabeledVertex("B")
         c = BaseLabeledVertex("C")

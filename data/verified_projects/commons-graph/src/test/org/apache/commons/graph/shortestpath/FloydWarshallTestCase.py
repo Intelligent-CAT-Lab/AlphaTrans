@@ -128,13 +128,13 @@ class FloydWarshallTestCase(unittest.TestCase):
             self.assertEqual(expected, wp)
     
 
-    def test_DirectedShortestPath(self) -> None:
+    def testDirectedShortestPath(self) -> None:
         self.__findShortestPathAndVerify(
             DirectedMutableGraph()
         )
     
     
-    def test_NotConnectGraph(self) -> None:
+    def testNotConnectGraph(self) -> None:
         with self.assertRaises(PathNotFoundException):
             graph = UndirectedMutableGraph()
 
@@ -150,7 +150,7 @@ class FloydWarshallTestCase(unittest.TestCase):
             p.findShortestPath(a, b)
 
     
-    def test_NullGraph(self) -> None:
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findShortestPath(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -159,7 +159,7 @@ class FloydWarshallTestCase(unittest.TestCase):
                 .applyingDijkstra(DoubleWeightBaseOperations())
 
     
-    def test_UndirectedShortestPath(self) -> None:
+    def testUndirectedShortestPath(self) -> None:
         self.__findShortestPathAndVerify(
             UndirectedMutableGraph()
         )

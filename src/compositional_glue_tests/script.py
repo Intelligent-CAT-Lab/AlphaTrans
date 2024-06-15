@@ -5,7 +5,7 @@ import json
 import keyword
 import xml.etree.ElementTree as ET
  
-from src.compositional_glue_tests.utils import default_type_value, write_to_file, type_handling, pre_order_traversal
+from src.compositional_glue_tests.utils import default_type_value, write_to_file, type_handling, pre_order_traversal, exception_handling
 from src.compositional_glue_tests.constants import *
 
 
@@ -32,7 +32,6 @@ class Project:
         self.project_dir = os.path.join(self.root_dir, ORIGINAL_DIR, self.name)
         self.glue_dir = os.path.join(self.root_dir, OUTPUT_DIR, self.name)
 
-        self.__initialize_python_project()
         self.__initialize_java_project()
                 
     def __initialize_java_project(self):
@@ -77,81 +76,191 @@ class Project:
             f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/{paths[self.name]['main'].replace('/java/', '/')}/"
         ], check=True)
         
-    def __initialize_python_project(self):
+    def recompose_python_project(self, injected_translations: dict[tuple[str, str, str], str]): 
         """
-        Copy the skeleton to the translation directory.
+        (Re)compose the python project with the injected translations.
+        injected_translations is a dict with the following structure:
+        {
+            (schema_file_name, class_name, method_name): translation,
+            ...
+        }
         """
-        if not os.path.exists(f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/"):
-            os.makedirs(f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/")
+        # ensure that the python project directory exists
+        os.makedirs(f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/", exist_ok=True)
             
-        # copy the skeleton
-        subprocess.run([
-            'cp', '-r', 
-            f"{self.root_dir}/{SKELETON_DIR}/{self.name}/.", 
-            f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/"
-        ], check=True)
-    
-    def inject_translated_method(self, translated_method: str, schema_file_name: str, class_name: str, method_name: str):
-        """
-        Inject the translated method into the schema by
-        recomposing the file from the schema.
-        """
-        new_file_contents = []
+        # process all the schemas to create instrumented python files
+        for schema_file_name in os.listdir(f"{self.schema_dir}/{self.name}"):
+            if (schema_file_name.endswith('_python_partial.json')
+                and '.test.' not in schema_file_name): # leave the test schemas alone
+                          
+                schema_file_name_without_ext = ".".join(schema_file_name.split('.')[:-1])
+                
+                with open(f"{self.schema_dir}/{self.name}/{schema_file_name}") as f:
+                    schema_data = json.load(f)
+                    
+                schema_object = Schema(schema_file_name, self, schema_data)
+                    
+                # create the python file's contents
+                python_file_contents = []
+                
+                # add imports
+                python_file_contents.extend(schema_data['python_imports'])
+                python_file_contents.append("import java") # import the java module (from Polyglot)
+                python_file_contents.append(f"from src.{paths[self.name]['main'].replace('/java/', '/').replace('/', '.')}java_handler import *")
+                python_file_contents.append(f"import sys") # for exception handling
+                
+                # add classes
+                for _class in schema_data['classes']:
+                    # add declaration
+                    class_declaration = schema_data['classes'][_class]['python_class_declaration']
+                    
+                    # the class should inherit from StaticFieldRedirector
+                    class_declaration_prefix_pos = class_declaration.find(_class) + len(_class)
+                    class_declaration_prefix = class_declaration[:class_declaration_prefix_pos]
+                    class_declaration_suffix = class_declaration[class_declaration_prefix_pos:].strip()
+                    if class_declaration_suffix == ":":
+                        class_declaration_suffix = "(metaclass=StaticFieldRedirector):"
+                    else:
+                        bracket_left = class_declaration_suffix.find("(")
+                        bracket_right = class_declaration_suffix.rfind(")")
+                        if class_declaration_suffix[bracket_left+1:bracket_right].strip() == "":
+                            class_declaration_suffix = "(metaclass=StaticFieldRedirector):"
+                        else:
+                            class_declaration_suffix = class_declaration_suffix[:bracket_right] + ", metaclass=StaticFieldRedirector" + class_declaration_suffix[bracket_right:]
+                            
+                    class_declaration = class_declaration_prefix + class_declaration_suffix
+                    python_file_contents.append(class_declaration)
+                    
+                    # ----------------------------------------------------------------------------------------------------------------
+                    # add fields
+                    # for _field in schema_data['classes'][_class]['fields']:
+                    #     if schema_data['classes'][_class]['fields'][_field]['translation_status'] == "success":
+                    #         python_file_contents.append("\n".join(schema_data['classes'][_class]['fields'][_field]['translation']))
+                    #     else:
+                    #         pass # TODO: What do we do when the field was not translated successfully?
+                    # ----------------------------------------------------------------------------------------------------------------
+                    # On second thought, we will not add fields to the python file!
+                    # This should be taken care of by the sync() and revsync() methods.
+                    
+                    # add methods
+                    for _method in schema_data['classes'][_class]['methods']:
+                        if (schema_file_name_without_ext, _class, _method) in injected_translations:
+                            # this is the translated method
+                            method_body = injected_translations[(schema_file_name_without_ext, _class, _method)]
+                        else:
+                            method_body = self.__get_instrumented_python_method_body(_method, schema_data['classes'][_class]['methods'][_method], _class)
+                                                   
+                        python_file_contents.append(method_body)
+                    
+                    # add other graal stuff
+                    # load up the Java class
+                    subpackage = schema_object.subpackage
+                    # if the class is nested inside another class, add the parent class to the class name
+                    if schema_data['classes'][_class]['nested_inside']:
+                        outer_class_name = schema_data['classes'][_class]['nested_inside']
+                        python_file_contents.append(f"    javaClz = java.type(\"org.apache.{self.formatted_name}{subpackage}.{outer_class_name}\").{_class}")
+                    else:
+                        python_file_contents.append(f"    javaClz = java.type(\"org.apache.{self.formatted_name}{subpackage}.{_class}\")")
+                    
+                    # add default constructor
+                    python_file_contents.append("\n".join([
+                        f"    @staticmethod",
+                        f"    def getDefaultInstance():",
+                        f"        return {_class}.__new__({_class})"
+                    ]))
+                    
+                # write the new contents to the python file
+                python_file_path = "".join([
+                    f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/",
+                    schema_data['path'].split('/src/')[1].replace('.java', '.py').replace('/java/', '/')
+                ])
+
+                os.makedirs(os.path.dirname(python_file_path), exist_ok=True)
+                with open(python_file_path, "w") as f:
+                    f.write("\n".join(python_file_contents))
+            
+    def __get_instrumented_python_method_body(self, method_name: str, method_schema_data: dict, class_name: str):
+        original_method_name = method_name.split(':', 1)[1].strip() # remove the line-numbers from the method name        
+        is_constructor = method_schema_data['is_constructor']
+        java_method_body = "".join(method_schema_data['body'])
         
-        python_partial_schema_name = schema_file_name[:schema_file_name.rfind('.')] + '_python_partial.json'
-        # find the schema file
-        for file_name in os.listdir(f"{self.schema_dir}/{self.name}"):
-            if file_name.endswith(python_partial_schema_name):
-                schema_full_file_name = file_name
+        # if the method was not implemented in Java, just return the partial translation
+        if java_method_body.strip()[-1] != '}':
+            return "".join(method_schema_data['partial_translation'])
+        
+        # get the method declaration from the partial translation
+        method_declaration_lines = []
+        for line in method_schema_data['partial_translation']:
+            if line.strip() == "pass":
                 break
+            method_declaration_lines.append(line)
+        method_declaration = "\n".join(method_declaration_lines)
+        
+        # build the method body            
+        casted_parameters = [param for param in method_schema_data['parameters']] # TODO: Add type casting
+        
+        args_buildup = ", ".join(casted_parameters)
+        
+        if "static" in method_schema_data['modifiers'] or is_constructor:
+            caller = f"{class_name}.javaClz"
         else:
-            raise ValueError(f"Schema {schema_full_file_name} not found!")
+            caller = "self.javaObj"
+            
+        if is_constructor:
+            java_call = f"{caller}.pythonFactory({args_buildup})"
+        else:
+            java_call = f"{caller}.{original_method_name}({args_buildup})"
+            
+        method_content = []
+        if is_constructor:
+            # TODO: Fix stuff for constructors
+            method_content.append("\n".join([
+                f"        self.javaObj = {java_call}",
+                f"        self.javaObj.setPythonObject(self)",
+                f"        self.javaObj.revsync()"
+            ]))
+        elif 'void' in method_schema_data['modifiers']:
+            method_content.append(f"        {java_call}")
+        else:
+            method_content.append(f"        return JavaHandler.mapping({java_call})")
+            
+        # TODO: revsync and sync?
         
-        with open(f"{self.schema_dir}/{self.name}/{schema_full_file_name}") as f:
-            schema_data = json.load(f)
+        # ---------------------------------------------------------------------------------------
+        # # error handling
+        # if 'throws' in java_method_body:
+        #     exception_name = java_method_body[java_method_body.find('throws')+6:java_method_body.find('{')].strip()
             
-        # add the translation to the schema
-        if method_name not in schema_data['classes'][class_name]['methods']:
-            raise ValueError(f"Method {method_name} not found in class {class_name} of schema {python_partial_schema_name}!")        
-        schema_data['classes'][class_name]['methods'][method_name]['translation'] = translated_method 
+        #     # TODO: Fix later (using finer control)
+        #     # take the first exception for now if there are multiple
+        #     exception_name = exception_name.split(',')[0].strip()
             
-        # add imports
-        new_file_contents.extend(schema_data['python_imports'])
+        #     # check if this is an inbuilt exception
+        #     if exception_name in exception_handling:
+        #         target = exception_handling[exception_name]["target"]
+        #     else:
+        #         target = exception_name
+            
+        #     method_content = [
+        #         f"        try:",
+        #         *[f"    {line}" for line in method_content],
+        #         f"        except:",
+        #         f"            exc_type, exc_value, exc_traceback = sys.exc_info()",
+        #         f"            exc_msg = str(exc_value).split(\"HostException: \", 1)[1]",
+        #         f"            raise {target}(exc_msg)"
+        #     ]
+            
+        #     # TODO: Need finer control based on the exception object...
+        # ---------------------------------------------------------------------------------------
+        # This is not needed anymore due to the .asHostException() in ExceptionHandler.java
+        # TODO: This will not work if the MUT has a try-catching mechanism
+        #       because control will immediately short-circuit to the original 
+        #       java method (and then to the ExceptionHandler)
         
-        # add classes
-        for _class in schema_data['classes']:
-            # add declaration
-            new_file_contents.append(schema_data['classes'][_class]['python_class_declaration'])
-            
-            # add fields
-            for _field in schema_data['classes'][_class]['fields']:
-                if 'translation' in schema_data['classes'][_class]['fields'][_field]:
-                    new_file_contents.append(schema_data['classes'][_class]['fields'][_field]['translation'])
-                else:
-                    new_file_contents.append(schema_data['classes'][_class]['fields'][_field]['partial_translation'][0])
-                    
-            # add methods
-            for _method in schema_data['classes'][_class]['methods']:
-                if 'translation' in schema_data['classes'][_class]['methods'][_method]:
-                    new_file_contents.append(schema_data['classes'][_class]['methods'][_method]['translation'])
-                else:
-                    new_file_contents.append(schema_data['classes'][_class]['methods'][_method]['partial_translation'][0])
-                    
-        # write back the schema
-        with open(f"{self.schema_dir}/{self.name}/{schema_full_file_name}", "w") as f:
-            f.write(json.dumps(schema_data, indent=4))
-            
-        # write the new contents to the python file
-        with open("".join([
-            f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/",
-            schema_data['path'].split('/src/')[1].replace('.java', '.py').replace('/java/', '/')
-        ]), "w") as f:
-            f.write("".join(new_file_contents))        
-            
-    def reset_partial_translation_schemas(self):
-        pass # TODO: Implement this
+        method_body = method_declaration + "\n" + "\n".join(method_content)
+        return method_body        
     
-    def derive_compositional_tests(self, components: dict[str, dict[str, list[str]]]):
+    def derive_compositional_tests(self, components: dict[str, dict[str, list[str]]], debug: bool = False):
         """
         Derive compositional tests for the given components.
         components is a dictionary with the following structure:
@@ -160,15 +269,8 @@ class Project:
                 "class_name": ["method_name"]
             }
         }
-        If no schemas are provided, all schemas in the project will be processed.
-        
-        For a given schema, if an empty dictionary is provided, all classes will be processed.
-        If None is provided, no classes will be processed.
-        
-        For a given class, if an empty list is provided, all methods will be processed.
-        If None is provided, no methods will be processed.
         """
-        return CompositionalTest(self, components)
+        return CompositionalTest(self, components, debug)
 
         
 class CompositionalTest:
@@ -177,7 +279,7 @@ class CompositionalTest:
     on the given components.
     """
     
-    def __init__(self, project: Project, components: dict[str, dict[str, list[str]]]):
+    def __init__(self, project: Project, components: dict[str, dict[str, list[str]]], debug: bool = False):
         """
         Derive compositional tests for the given components.
         components is a dictionary with the following structure:
@@ -188,6 +290,7 @@ class CompositionalTest:
         }
         """
         self.project = project
+        self.debug = debug
         
         # log of files to be written
         # { file_name: { original_content: str, new_content: str }}
@@ -196,20 +299,21 @@ class CompositionalTest:
         # set the schemas to process
         self.__set_schemas_to_process(list(components.keys()))
         
-        for schema in self.schemas_to_process:
+        # list of exception-method pairs to map (from all schemas)
+        self.__exceptions = []
+        
+        for schema in self.project_schemas:            
             with open(f'{self.project.schema_dir}/{self.project.name}/{schema}') as f:
                 schema_data = json.load(f)
                 
             schema_object = Schema(schema, self.project, schema_data)
-            schema_name = schema.split('.')[-2]
+            schema_name_full = schema.split('.')[-2]
+            schema_name = schema_name_full.split('_python_partial')[0]
             
             # get the classes to process
-            if schema_name not in components or components[schema_name] == {}:
-                # Process all classes if no classes are provided
-                # or no schema was provided to begin with
-                classes_to_process = list(schema_data['classes'].keys())
-            elif components[schema_name] is None:
-                classes_to_process = []            
+            if schema not in self.schemas_to_process:
+                # all classes remain unprocessed but have some modifications made to them
+                classes_to_process = []
             else:
                 classes_to_process = []
                 for _class in components[schema_name]:
@@ -217,41 +321,20 @@ class CompositionalTest:
                         raise ValueError(f"Class {_class} not found in schema {schema}!")
                     classes_to_process.append(_class)
                     
-                    # check if this class extends another class
-                    if schema_data['classes'][_class]['extends']:
-                        parent_class = schema_data['classes'][_class]['extends'][0]
-                                                
-                        # check if this class is being processed
-                        if parent_class not in [
-                            c for s in components for c in components[s] if components[s][c] is not None
-                        ]:
-                            # find the schema for the parent class
-                            # (assuming the parent class has its own schema)
-                            for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}'):
-                                if file_name.endswith(f'.{parent_class}.json'):
-                                    # add the parent class to the components
-                                    _schema = file_name[:file_name.rfind('.')].split('.')[-1]
-                                    if _schema in components:
-                                        components[_schema][parent_class] = None
-                                    else:
-                                        self.schemas_to_process.append(file_name)
-                                        components[_schema] = {parent_class: None}
-                    
             class_list = self.__resolve_class_order(schema_data)
-                                
+            
             for _class in class_list:
                 if _class not in classes_to_process or schema_data['classes'][_class]['is_interface']:
                     # don't process this class if it's not in the list
                     # or if it's an interface
                     schema_object.add_class(_class, schema_data['classes'][_class], dont_process=True)
-                
+                    continue
+
                 # get the methods to process
                 if schema_name not in components or _class not in components[schema_name] or components[schema_name][_class] == []:
                     # Process all methods if no methods are provided
                     # or no class or schema was provided to begin with
                     methods_to_process = list(schema_data['classes'][_class]['methods'].keys())
-                elif components[schema_name][_class] is None:
-                    methods_to_process = []
                 else:
                     methods_to_process = []
                     
@@ -272,12 +355,16 @@ class CompositionalTest:
                     
                 schema_object.add_class(_class, schema_data['classes'][_class], methods_to_process)
                 
-                # write the schema back
-                local_path = schema_data['path'].split('/src/')[-1]
-                self.__log_write(
-                    f"{self.project.glue_dir}/src/{local_path}",
-                    schema_object.get_body()
-                )
+                self.__exceptions.extend(schema_object.get_exceptions())
+                
+            # write back into the java file (with glue-instrumentation)
+            local_path = schema_data['path'].split('/src/')[-1]
+            self.__log_write(
+                f"{self.project.glue_dir}/src/{local_path}",
+                schema_object.get_body()
+            )
+                
+        self.__add_schema_dependent_files()
         
     def __resolve_class_order(self, schema_data: dict):
         """
@@ -346,22 +433,20 @@ class CompositionalTest:
         Set up the schemas to process for the project.
         If no schemas are provided, all schemas in the project will be processed.
         """   
-        project_schemas = [file_name for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}') if (
-            'src.test' not in file_name and # ignore test schemas
-            not file_name.endswith('_python_partial.json') # ignore partial schemas
+        self.project_schemas = [file_name for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}') if (
+            'src.test' not in file_name # ignore test schemas
+            # and not file_name.endswith('_python_partial.json') # ignore partial schemas
         )]
         
         if not schemas_to_process:
-            self.schemas_to_process = project_schemas
+            self.schemas_to_process = self.project_schemas
         else:
             self.schemas_to_process = []
             for schema in schemas_to_process:
-                mathing_schemas = [s for s in project_schemas if s.endswith(f'.{schema}.json')]
+                mathing_schemas = [s for s in self.project_schemas if s.endswith(f'.{schema}_python_partial.json')]
                 if not mathing_schemas:
                     raise ValueError(f"Schema for {schema} not found!")
                 self.schemas_to_process.extend(mathing_schemas)
-                
-        self.__add_schema_dependent_files()
 
     def __add_schema_dependent_files(self):
         # Add ContextInitializer.java
@@ -410,8 +495,14 @@ class CompositionalTest:
                         imports.append(import_to_add)
                         
         # code for the mappings
-        mapping_code = "".join([
-            f".targetTypeMapping(Value.class, {_class}.class, null, (v) -> new {_class}(v))\n" 
+        mapping_code = "\n".join([
+            "\n".join([
+                f".targetTypeMapping(Value.class, {_class}.class, null, (v) -> {{",
+                f"    {_class} obj = new {_class}(v);",
+                f"    obj.sync();",
+                "    return obj;",
+                "})"
+            ])
             for _class in classes_to_map
         ]) + "// TODO: Add other mappings"
         
@@ -442,7 +533,12 @@ class CompositionalTest:
         mapping_code = "".join([
             f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(exceptionObj);}}\n" 
             for _class in classes_to_map
-        ]) + "// TODO: Add other mappings"
+        ])
+        
+        for exception, method in self.__exceptions:
+            if exception in exception_handling:
+                target, call = exception_handling[exception]["target"], exception_handling[exception]["call"]
+                mapping_code += f"if(exceptionType.equals(\"{target}\") && thrower.equals(\"{method}\")){{ return new {call};}}\n"
         
         # code for the imports
         imports_code = "".join([
@@ -484,24 +580,35 @@ class CompositionalTest:
             subprocess.run(
                 ['mvn', 'clean', 'test', '-Drat.skip', '-q'],
                 cwd=self.project.glue_dir,
-                stderr=subprocess.DEVNULL,
-                stdout=subprocess.DEVNULL,
+                stderr=open(f"{self.project.root_dir}/glue_err.log", "w") if self.debug else subprocess.DEVNULL,
+                stdout=open(f"{self.project.root_dir}/glue.log", "w") if self.debug else subprocess.DEVNULL,
                 check=True
             )
         except Exception:
             failure_flag = True # check if the failure is due to the tests or something else
+            
+        if self.debug:
+            # create a snapshot of the project in logs/glue/
+            os.makedirs(f"{self.project.root_dir}/logs/glue/{self.project.name}/", exist_ok=True)
+            subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/{self.project.name}/"], check=True)
         
         self.__revert_writes()
-        self.project.reset_partial_translation_schemas()
         
         # collect the results
         failed_tests = self.__get_failed_tests_from_surefire()
         
         if failure_flag and not failed_tests:
-            raise Exception("An error occurred while running the tests!")
+            # raise Exception("An error occurred while running the tests!")
+            
+            # for now, we will just return False (a potential false negative)
+            # so that the pipeline doesn't stop
+            return {
+                "status": False,
+                "failed_tests": []
+            }
         
         return {
-            "success": True if not failed_tests else False,
+            "status": True if not failed_tests else False,
             "failed_tests": failed_tests
         }
     
@@ -534,8 +641,20 @@ class SyncMethod:
         self.reverse = reverse
         self.fields = []
         
+        # put the 'javaObj' field into the python object
+        if not self.reverse:
+            pass
+        else:
+            self.fields.append("this.obj.putMember(\"javaObj\", this);")
+        
     def add_field(self, field_name: str, field_schema_data: dict):
-        field_type = field_schema_data['types'][0][0]
+        field_type = field_schema_data['types'][0][0].strip()
+        
+        # if field_type has '<>' at the end, don't keep it in the formatted_field_type
+        if field_type.endswith('<>'):
+            formatted_field_type = field_type[:-2].strip()
+        else:
+            formatted_field_type = field_type
         
         # compose name of field in Python
         if 'private' in field_schema_data['modifiers']:
@@ -546,7 +665,7 @@ class SyncMethod:
         field_from_python = type_handling[field_type].format("this.obj.getMember(\"" + python_field_name + "\")")
         
         if not self.reverse:
-            self.fields.append(f"{field_name} = ({field_type}) {field_from_python};")
+            self.fields.append(f"{field_name} = ({formatted_field_type}) {field_from_python};")
         else:
             self.fields.append(f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}));")
     
@@ -559,7 +678,7 @@ class SyncMethod:
         body = "\n".join(self.fields)
             
         return f"""
-            private void {method_name}() {{
+            public void {method_name}() {{
                 {body}
             }}
         """
@@ -582,44 +701,54 @@ class Schema:
         # or a dictionary with different parts of the class
         self.__classes = []
         
+        # list of exception-method pairs to map
+        self.__exceptions = []
+        
     def add_class(self, class_name: str, class_schema_data: dict, methods_to_process: list[str] = None, dont_process: bool = False):
         if not methods_to_process:
             methods_to_process = []
+            
+        is_interface = class_schema_data['is_interface']
         
         # create the class declaration
         with open(self.schema_data['path'], 'r') as f:
             lst = f.readlines()
-        class_declaration = lst[class_schema_data['start']-1:class_schema_data['end']]
+        class_declaration = "".join(lst[class_schema_data['start']-1:class_schema_data['end']])
+        
+        # if the class is not public, make it public
+        if 'public' not in class_declaration:
+            # check if the class is marked as private
+            if 'private' in class_declaration:
+                class_declaration = class_declaration.replace('private', 'public', 1)
+            else:
+                class_declaration = "public " + class_declaration
         
         class_obj = {
             "name": class_name,
-            "declaration": "".join(class_declaration),
+            "declaration": class_declaration,
             "fields": [],
             "unitialized_fields": [],
             "methods": [],
-            "sync": SyncMethod(class_name) if not dont_process else None,
-            "revsync": SyncMethod(class_name, reverse=True) if not dont_process else None,
+            "sync": SyncMethod(class_name) if not is_interface else None,
+            "revsync": SyncMethod(class_name, reverse=True) if not is_interface else None,
             "nests": []
         }
         
         for _field in class_schema_data['fields']:
-            if dont_process:
-                class_obj["fields"].append("".join(class_schema_data['fields'][_field]['body']))
-            else:
-                self.__add_field_to_class(class_obj, _field, class_schema_data['fields'][_field])
+            self.__add_field_to_class(class_obj, _field, class_schema_data['fields'][_field], dont_process=dont_process)
             
         for _method in class_schema_data['methods']:
             if dont_process:
-                class_obj["methods"].append("".join(class_schema_data['methods'][_method]['body']))
+                self.__add_method_to_unprocessed_class(class_obj, _method, class_schema_data['methods'][_method])
             else:
                 if _method in methods_to_process:
                     self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method])
                 else:
-                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)     
+                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)
         
-        # add graal-related members if the class is being processed
-        # otherwise just add a default constructor
-        if not dont_process:
+        # add graal-related members and a default constructor
+        # unless it is an interface
+        if not is_interface:
             python_file_dir = self.subpackage.replace('.', '/')
             python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
             current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
@@ -627,39 +756,63 @@ class Schema:
             
             class_obj["fields"].extend([
                 f"private static Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");",
-                "private Value obj;"
+                f"private Value obj = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\").invokeMember(\"getDefaultInstance\");"
             ])
-
+            unititialized_fields_body = "".join(class_obj["unitialized_fields"])
+            
             # add Value constructor
             class_obj["methods"].append(f"""
                 public {class_name}(Value obj) {{
+                    {unititialized_fields_body}
                     this.obj = obj;
                 }}                            
             """)
 
-            # add getPythonObject()
+            # add getPythonObject() and setPythonObject() methods
             class_obj["methods"].append(f"""
                 public Value getPythonObject() {{
                     return obj;
                 }}
             """)
+            class_obj["methods"].append(f"""
+                public void setPythonObject(Value obj) {{
+                    this.obj = obj;
+                }}
+            """)
+            
+            # add PythonFactory (if a constructor existed in the Java class)
+            # first search for the constructor
+            for _method in class_schema_data['methods']:
+                if (class_schema_data['methods'][_method]['is_constructor']):
+                    constructor_body = "".join(class_schema_data['methods'][_method]['body'])
+                                        
+                    # get the signature
+                    constructor_signature = constructor_body[:constructor_body.find('{')]
+                    
+                    # get the definition-part of the constructor
+                    constructor_definition = constructor_signature[constructor_signature.find('('):]
+                    
+                    args_buildup = ", ".join(class_schema_data['methods'][_method]['parameters'])
+                    
+                    # add the PythonFactory method
+                    class_obj["methods"].append(f"""public static {class_name} pythonFactory{constructor_definition} {{
+                        return new {class_name}({args_buildup});
+                        }}""")
 
-            # add a Default constructor
-            unititialized_fields_body = "".join(class_obj["unitialized_fields"])
-            class_obj["methods"].append(f"""
-                public {class_name}() {{
-                    {unititialized_fields_body}
-                    this.obj = clz.newInstance();
-                }}
-            """)
-        else:
-            # add a Default constructor
-            unititialized_fields_body = "".join(class_obj["unitialized_fields"])
-            class_obj["methods"].append(f"""
-                public {class_name}() {{
-                    {unititialized_fields_body}
-                }}
-            """)
+            # add a Default constructor if one does not exist already
+            # first check all the methods
+            for _method in class_schema_data['methods']:
+                if (class_schema_data['methods'][_method]['is_constructor']
+                    and not class_schema_data['methods'][_method]['parameters']):
+                    break
+            else:
+                # if no constructor was found, add a default constructor
+                class_obj["methods"].append(f"""
+                    public {class_name}() {{
+                        {unititialized_fields_body}
+                        this.obj = clz.newInstance();
+                    }}
+                """)
         
         # check if this class is nested inside another class
         if class_schema_data['nested_inside']:
@@ -667,7 +820,7 @@ class Schema:
             for _class in self.__classes:
                 if _class['name'] == parent_class:
                     _class["nests"].append(class_obj)
-                    break 
+                    break
         else:
             self.__classes.append(class_obj)
         
@@ -675,14 +828,16 @@ class Schema:
         field_name = field_name.split(':')[1].strip()
         field_type = field_schema_data['types'][0][0]
         field_body = "".join(field_schema_data['body'])
-        
-        # if field is 'final', remove the 'final' keyword
-        if 'final' in field_schema_data['modifiers']:
-            field_body = field_body.replace(' final', '', 1)
-        
-        # add field to sync() and revsync() methods
-        class_obj["sync"].add_field(field_name, field_schema_data)
-        class_obj["revsync"].add_field(field_name, field_schema_data)      
+
+        # processing for creating sync and revsync methods (if the field is not static)
+        if 'static' not in field_schema_data['modifiers']:
+            # if field is 'final', remove the 'final' keyword
+            if 'final' in field_schema_data['modifiers']:
+                field_body = field_body.replace(' final', '', 1)
+            
+            # add field to sync() and revsync() methods
+            class_obj["sync"].add_field(field_name, field_schema_data)
+            class_obj["revsync"].add_field(field_name, field_schema_data)      
         
         class_obj["fields"].append(field_body)
         
@@ -690,6 +845,32 @@ class Schema:
         if '=' not in field_body:
             class_obj["unitialized_fields"].append(f"{field_name} = {default_type_value[field_type]};")
         
+    def __add_method_to_unprocessed_class(self, class_obj: dict, method_name: str, method_schema_data: dict):
+        method_body = "".join(method_schema_data['body'])
+        # check if the method is not implemented
+        if method_body.strip()[-1] != '}':
+            # add a semi-colon if not present
+            if method_body.strip()[-1] != ';':
+                method_body += ';'
+            
+            class_obj["methods"].append(method_body)
+            return
+
+        method_signature = method_body[:method_body.find('{')+1]
+        method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
+        
+        # if the method is not public, make it so
+        if 'public' not in method_signature:
+            # check if the method is marked as private or protected
+            if 'private' in method_signature:
+                method_signature = method_signature.replace('private', 'public', 1)
+            elif 'protected' in method_signature:
+                method_signature = method_signature.replace('protected', 'public', 1)
+            else:
+                method_signature = "public " + method_signature
+                
+        class_obj["methods"].append(f"{method_signature}\n{method_content}\n}}")
+    
     def __add_method_to_class(self, class_obj: dict, method_name: str, method_schema_data: dict, dont_process: bool = False):
         method_body = "".join(method_schema_data['body'])
         # check if the method is not implemented
@@ -701,9 +882,22 @@ class Schema:
             class_obj["methods"].append(method_body)
             return
         
+        method_signature = method_body[:method_body.find('{')+1]
+        method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
+        
+        # if the method is not public, make it so
+        if 'public' not in method_signature:
+            # check if the method is marked as private or protected
+            if 'private' in method_signature:
+                method_signature = method_signature.replace('private', 'public', 1)
+            elif 'protected' in method_signature:
+                method_signature = method_signature.replace('protected', 'public', 1)
+            else:
+                method_signature = "public " + method_signature
+        
         # if method is not to be processed, add it directly
         if dont_process:
-            class_obj["methods"].append(method_body)
+            class_obj["methods"].append(f"{method_signature}\n{method_content}\n}}")
             return
         
         is_constructor = method_schema_data['is_constructor']
@@ -721,31 +915,27 @@ class Schema:
         # if method name is a keyword, add an underscore at the end
         if keyword.iskeyword(method_name):
             method_name += "_"
-            
-        method_signature = method_body[:method_body.find('{')+1]
-        method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
         
-        # comment out the original method contents if method is not a constructor, else leave it as it is
-        if is_constructor:
-            final_method_content = method_content
-        else:
-            final_method_content = "".join([f"// {line.strip()}\n" for line in method_content.split('\n')])
+        # comment out the original method contents
+        final_method_content = "".join([f"// {line.strip()}\n" for line in method_content.split('\n')])
             
         # construct call to Python
-        if "static" in method_schema_data['modifiers'] or is_constructor:
+        if "static" in method_schema_data['modifiers']:
             caller = "clz"
         else:
             caller = "this.obj"
             
-        args_buildup = ", ".join(method_schema_data['parameters'])
+        casted_parameters = [f"IntegrationUtils.mapToPython({param})" for param in method_schema_data['parameters']]
+            
+        args_buildup = ", ".join(casted_parameters)
         
         if is_constructor:
-            python_call = f"clz.newInstance({args_buildup})"
+            python_call = f"{caller}.invokeMember(\"__init__\"{', ' + args_buildup if args_buildup else ''})"
         else:
             python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
             
         if is_constructor:
-            final_method_content += f"this.obj = {python_call};sync();"
+            final_method_content += f"revsync();{python_call};sync();"
         elif 'void' in method_signature:
             if 'static' in method_schema_data['modifiers']:
                 final_method_content += f"{python_call};" # no need to sync for static methods
@@ -763,8 +953,15 @@ class Schema:
             ])
         
         # handle the presence of exceptions
-        if 'throws' in method_body:
+        exception_name = None # We only handle one exception for now! TODO: Fix this later
+        if 'throws' in method_body: # if specificied with the "throws" keyword
             exception_name = method_body[method_body.find('throws')+6:method_body.find('{')].strip()
+            exception_name = exception_name.split(',')[0].strip() # take the first exception for now if there are multiple
+        elif 'throw new' in method_body: # if specified with the "throw new" keyword but not in the method signature
+            throw_new_pos = method_body.find('throw new')
+            exception_name = method_body[throw_new_pos+9:method_body.find('(', throw_new_pos)].strip()
+        
+        if exception_name:            
             final_method_content = f"""
             try {{
                 {final_method_content}
@@ -772,6 +969,7 @@ class Schema:
                 throw ({exception_name}) ExceptionHandler.handle(e, "{class_obj['name']}.{method_name}");
             }}
             """
+            self.__exceptions.append((exception_name, f"{class_obj['name']}.{method_name}"))
             
         class_obj["methods"].append(f"{method_signature}\n{final_method_content}\n}}")
         
@@ -811,8 +1009,8 @@ class Schema:
             _class['declaration'],
             "".join(_class['fields']),
             "".join(_class['methods']),
-            _class['sync'].get_body(),
-            _class['revsync'].get_body(),
+            _class['sync'].get_body() if _class['sync'] else "",
+            _class['revsync'].get_body() if _class['revsync'] else "",
             "".join([
                 self.__get_class_body(nested_class) for nested_class in _class['nests']
             ]),
@@ -832,6 +1030,9 @@ class Schema:
         {"".join(self.imports)}
         {class_bodies}
         """
+        
+    def get_exceptions(self):
+        return self.__exceptions
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate glue code for Compositional Testing.')

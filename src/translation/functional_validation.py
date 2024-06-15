@@ -17,17 +17,18 @@ def l2_validation(members_to_validate: list[list]):
         project = Project(project_name)
         
     components = dict()
+    injected_translations = dict()
     
     for member in members_to_validate:
         translation, schema, class_, fragment, args = member
         
         with open(f"{project.schema_dir}/{project_name}/{schema}", "r") as f:
             schema_data = json.load(f)
-            
-        schema_file_name = schema_data['path'].split('/')[-1]
+
         schema_name = schema_data['path'].split('/')[-1].split('.')[-2]
+        full_schema_name = ".".join(schema.split('.')[:-1])
         
-        project.inject_translated_method(translation, schema_file_name, class_, fragment)
+        injected_translations[(full_schema_name, class_, fragment)] = translation
         
         fragment_name = fragment.split(':')[-1]
     
@@ -43,7 +44,11 @@ def l2_validation(members_to_validate: list[list]):
         else:
             components[schema_name] = {class_: [fragment_name]}
             
-    test = project.derive_compositional_tests(components)
-    status, feedback = test.run()
-    
+    print("Deriving compositional tests for the following components:", components)
+    project.recompose_python_project(injected_translations)
+    test = project.derive_compositional_tests(components, debug=True)
+    output = test.run()
+    status = output['status']
+    feedback = output['failed_tests']
+
     return status, members_to_validate, feedback

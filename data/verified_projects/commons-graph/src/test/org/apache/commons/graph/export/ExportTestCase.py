@@ -38,7 +38,7 @@ class ExportTestCase(unittest.TestCase):
         self.__actual = None
 
 
-    def test_ShouldPrintDotFormat(self) -> None:
+    def testShouldPrintDotFormat(self) -> None:
         CommonsGraph.export(self.__actual)\
             .withName("DotFormatGraph")\
             .usingDotNotation()\

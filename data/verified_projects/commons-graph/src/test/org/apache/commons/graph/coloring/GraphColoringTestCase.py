@@ -25,7 +25,7 @@ class GraphColoringTestCase(AbstractColoringTest):
         self.__colors = self._createColorsList(11)
     
     
-    def test_CrawnGraph(self) -> None:
+    def testCrawnGraph(self) -> None:
         g = UndirectedMutableGraph()
         GraphUtils.buildCrownGraph(6, g)
 
@@ -34,7 +34,7 @@ class GraphColoringTestCase(AbstractColoringTest):
         self._checkColoring(g, coloredVertices)
     
     
-    def test_CromaticNumber(self) -> None:
+    def testCromaticNumber(self) -> None:
         try:
             g = CommonsGraph.newUndirectedMutableGraph(
                 GraphConnectionGraphColoringTestCaseTestCromaticNumber()
@@ -47,7 +47,7 @@ class GraphColoringTestCase(AbstractColoringTest):
             self.fail(f"An exception occurred: {e}")
         
     
-    def test_CromaticNumberBiparted(self) -> None:
+    def testCromaticNumberBiparted(self) -> None:
         g1 = UndirectedMutableGraph()
         GraphUtils.buildBipartedGraph(100, g1)
 
@@ -56,7 +56,7 @@ class GraphColoringTestCase(AbstractColoringTest):
         self._checkColoring(g1, coloredVertices)
     
     
-    def test_CromaticNumberComplete(self) -> None:
+    def testCromaticNumberComplete(self) -> None:
         g1 = UndirectedMutableGraph()
         GraphUtils.buildCompleteGraph(100, g1)
 
@@ -65,7 +65,7 @@ class GraphColoringTestCase(AbstractColoringTest):
         self._checkColoring(g1, coloredVertices)
     
     
-    def test_CromaticNumberSparseGraph(self) -> None:
+    def testCromaticNumberSparseGraph(self) -> None:
         g1 = UndirectedMutableGraph()
         for i in range(100):
             g1.addVertex(BaseLabeledVertex(str(i)))
@@ -77,7 +77,7 @@ class GraphColoringTestCase(AbstractColoringTest):
         self._checkColoring(g1, coloredVertices)
 
     
-    def test_EmptyGraph(self) -> None:
+    def testEmptyGraph(self) -> None:
         g = UndirectedMutableGraph()
 
         coloredVertices = CommonsGraph.coloring(g)\
@@ -86,7 +86,7 @@ class GraphColoringTestCase(AbstractColoringTest):
         self.assertEqual(0, coloredVertices.getRequiredColors())
     
     
-    def test_NotEnoughtColorGreedyGraph(self) -> None:
+    def testNotEnoughtColorGreedyGraph(self) -> None:
         with self.assertRaises(NotEnoughColorsException):
             two = BaseLabeledVertex("2")
 
@@ -97,20 +97,20 @@ class GraphColoringTestCase(AbstractColoringTest):
                 .withColors(self._createColorsList(1)).applyingGreedyAlgorithm()
 
     
-    def test_NullColorGraph(self) -> None:
+    def testNullColorGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             g = UndirectedMutableGraph()
             CommonsGraph.coloring(g)\
                 .withColors(None).applyingBackTrackingAlgorithm0()
 
     
-    def test_NullGraph(self) -> None:
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.coloring(None)\
                 .withColors(None).applyingGreedyAlgorithm()
 
     
-    def test_Sudoku(self) -> None:
+    def testSudoku(self) -> None:
         try:
             g1 = UndirectedMutableGraph()
             GraphUtils.buildSudokuGraph(g1)

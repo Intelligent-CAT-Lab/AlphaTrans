@@ -15,10 +15,14 @@ class ISBN10CheckDigitTest(AbstractCheckDigitTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-            self._routine = ISBN10CheckDigit.ISBN10_CHECK_DIGIT
-            self._valid = [
-                "1930110995", "020163385X", "1932394354", "1590596277"
-            ]
+            super().setUp(
+                routine = ISBN10CheckDigit.ISBN10_CHECK_DIGIT,
+                valid = [
+                    "1930110995",
+                    "020163385X",
+                    "1932394354",
+                    "1590596277"
+                ]
+            )
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")

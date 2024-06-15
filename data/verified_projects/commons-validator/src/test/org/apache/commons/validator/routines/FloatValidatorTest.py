@@ -16,45 +16,50 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-            self._validator = FloatValidator(False, 0)
-            self._strictValidator = FloatValidator.FloatValidator1()
-            
-            self._testPattern = "#,###.#"
-            
-            self._max = float(FloatValidator.MAX_VALUE)
-            self._maxPlusOne = float(self._max * 10)
-            self._min = float(FloatValidator.MAX_VALUE * -1)
-            self._minMinusOne = float(self._min * 10)
-            
-            self._invalidStrict = [None, "", "X", "X12", "12X", "1X2"]
-            self._invalid = [None, "", "X", "X12"]
-            
-            self._testNumber = float(1234.5)
-            self._testZero = float(0)
-            self._validStrict = ["0", "1234.5", "1,234.5"]
-            self._validStrictCompare = [self._testZero, self._testNumber, self._testNumber]
-            self._valid = ["0", "1234.5", "1,234.5", "1,234.5", "1234.5X"]
-            self._validCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber
-            ]
-            
-            self._testStringUS = "1,234.5"
-            self._testStringDE = "1.234,5"
-            
-            self._localeValue = self._testStringDE
-            self._localePattern = "#.###,#"
-            self._testLocale = 'de_DE.UTF-8'
-            self._localeExpected = self._testNumber
+            super().setUp(
+                validator = FloatValidator(False, 0),
+                strictValidator = FloatValidator.FloatValidator1(),
+                testPattern = "#,###.#",
+                _max = float(FloatValidator.MAX_VALUE),
+                maxPlusOne = float(float(FloatValidator.MAX_VALUE) * 10),
+                _min = float(FloatValidator.MAX_VALUE * -1),
+                minMinusOne = float(float(FloatValidator.MAX_VALUE * -1) * 10),
+                invalidStrict = [None, "", "X", "X12", "12X", "1X2"],
+                invalid = [None, "", "X", "X12"],
+                testNumber = float(1234.5),
+                testZero = float(0),
+                validStrict = ["0", "1234.5", "1,234.5"],
+                validStrictCompare = [
+                    float(0),
+                    float(1234.5),
+                    float(1234.5)
+                ],
+                valid = [
+                    "0",
+                    "1234.5",
+                    "1,234.5",
+                    "1,234.5",
+                    "1234.5X"
+                ],
+                validCompare = [
+                    float(0),
+                    float(1234.5),
+                    float(1234.5),
+                    float(1234.5),
+                    float(1234.5)
+                ],
+                testStringUS = "1,234.5",
+                testStringDE = "1.234,5",
+                localeValue = "1.234,5",
+                localePattern = "#.###,#",
+                testLocale = 'de_DE.UTF-8',
+                localeExpected = float(1234.5)
+            )
         except Exception as e:
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_FloatValidatorMethods(self) -> None:
+    def testFloatValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -136,7 +141,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
 
 
-    def test_FloatSmallestValues(self) -> None:
+    def testFloatSmallestValues(self) -> None:
         pattern = "#.#################################################################"
         precision = max(len(pattern.split('.')[1]), 500)
 
@@ -171,7 +176,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
     
 
-    def test_FloatRangeMinMax(self) -> None:
+    def testFloatRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")

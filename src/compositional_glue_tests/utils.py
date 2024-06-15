@@ -5,6 +5,7 @@ from src.compositional_glue_tests.constants import *
 
 default_type_value = defaultdict(lambda: "null")
 default_type_value.update({
+    "char": "'\\0'",
     "int": "0",
     "boolean": "false",
     "float": "0",
@@ -14,8 +15,11 @@ default_type_value.update({
 
 # load type handling information
 with open('src/compositional_glue_tests/type_handling.json') as f:
-    type_handling = json.load(f) 
-
+    type_handling = json.load(f)
+    
+# load exception handling information
+with open('src/compositional_glue_tests/exception_handling.json') as f:
+    exception_handling = json.load(f)
 
 def write_to_file(file, content):
     with open(file, "w") as f:

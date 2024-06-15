@@ -1,0 +1,372 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-convert/src/main/java/org/joda/convert/ReflectionStringConverter.java",
+    "imports": {
+        "18-18:import InvocationTargetException": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.lang.reflect.InvocationTargetException;\n"
+            ]
+        },
+        "19-19:import Method": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.lang.reflect.Method;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ReflectionStringConverter": {
+            "start": 32,
+            "end": 32,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "TypedStringConverter"
+            ],
+            "extends": [],
+            "methods": {
+                "89-91:toString": {
+                    "start": 89,
+                    "end": 91,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return \"RefectionStringConverter[\" + cls.getSimpleName() + \"]\";\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def toString(self) -> str:",
+                        "        ",
+                        "",
+                        "        return \"RefectionStringConverter[\" + self.__cls.__name__ + \"]\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.1619160175323486,
+                    "generation_timestamp": "2024-06-06T07:47:43.257204",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "84-86:getEffectiveType": {
+                    "start": 84,
+                    "end": 86,
+                    "body": [
+                        "    public Class<?> getEffectiveType() {\n",
+                        "        return fromString.getEffectiveType();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Class<?>",
+                            "java.lang.Class<?>"
+                        ]
+                    ],
+                    "signature": "getEffectiveType()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getEffectiveType(self) -> typing.Type[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getEffectiveType(self) -> typing.Type[typing.Any]:",
+                        "        ",
+                        "",
+                        "        return self.fromString.getEffectiveType()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.5474905967712402,
+                    "generation_timestamp": "2024-06-06T07:47:46.806209",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "79-81:convertFromString": {
+                    "start": 79,
+                    "end": 81,
+                    "body": [
+                        "    public T convertFromString(Class<? extends T> cls, String str) {\n",
+                        "        return fromString.convertFromString(cls, str);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "T",
+                            "T"
+                        ]
+                    ],
+                    "signature": "convertFromString(Class<? extends T>, String)",
+                    "parameters": [
+                        "cls",
+                        "str"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        if self.fromString is None:",
+                        "            raise ValueError(\"fromString is not set\")",
+                        "",
+                        "        return self.fromString.convertFromString(cls, str)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.132216215133667,
+                    "generation_timestamp": "2024-06-06T07:47:50.940262",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "65-76:convertToString": {
+                    "start": 65,
+                    "end": 76,
+                    "body": [
+                        "    public String convertToString(T object) {\n",
+                        "        try {\n",
+                        "            return (String) toString.invoke(object);\n",
+                        "        } catch (IllegalAccessException ex) {\n",
+                        "            throw new IllegalStateException(\"Method is not accessible: \" + toString);\n",
+                        "        } catch (InvocationTargetException ex) {\n",
+                        "            if (ex.getCause() instanceof RuntimeException) {\n",
+                        "                throw (RuntimeException) ex.getCause();\n",
+                        "            }\n",
+                        "            throw new RuntimeException(ex.getMessage(), ex.getCause());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "convertToString(T)",
+                    "parameters": [
+                        "object"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def convertToString(self, object: typing.Any) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def convertToString(self, object: typing.Any) -> str:",
+                        "        ",
+                        "",
+                        "        try:",
+                        "            return str(object)",
+                        "        except Exception as ex:",
+                        "            raise RuntimeError(\"Error converting object to string: \" + str(ex))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.157141923904419,
+                    "generation_timestamp": "2024-06-06T07:47:57.098893",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "51-62:ReflectionStringConverter": {
+                    "start": 51,
+                    "end": 62,
+                    "body": [
+                        "    ReflectionStringConverter(\n",
+                        "            Class<T> cls, Method toString, TypedFromStringConverter<T> fromString) {\n",
+                        "        if (toString.getParameterTypes().length != 0) {\n",
+                        "            throw new IllegalStateException(\"ToString method must have no parameters: \" + toString);\n",
+                        "        }\n",
+                        "        if (toString.getReturnType() != String.class) {\n",
+                        "            throw new IllegalStateException(\"ToString method must return a String: \" + toString);\n",
+                        "        }\n",
+                        "        this.cls = cls;\n",
+                        "        this.toString = toString;\n",
+                        "        this.fromString = fromString;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ReflectionStringConverter(Class<T>, Method, TypedFromStringConverter<T>)",
+                    "parameters": [
+                        "cls",
+                        "toString",
+                        "fromString"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, cls: typing.Type[typing.Any], toString: typing.Union[inspect.Signature, typing.Callable], fromString: TypedStringConverter[typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self, cls: typing.Type[typing.Any], toString: typing.Union[inspect.Signature, typing.Callable], fromString: TypedStringConverter[typing.Any]) -> None:",
+                        "        ",
+                        "",
+                        "        if toString.parameters and len(list(toString.parameters.values())) != 0:",
+                        "            raise IllegalStateException(\"ToString method must have no parameters: \" + toString)",
+                        "",
+                        "        if toString.return_annotation != str:",
+                        "            raise IllegalStateException(\"ToString method must return a String: \" + toString)",
+                        "",
+                        "        self.__cls = cls",
+                        "        self.__toString = toString",
+                        "        self.fromString = fromString",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.39470648765564,
+                    "generation_timestamp": "2024-06-06T07:48:02.495179",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {
+                "41-41:fromString": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    final TypedFromStringConverter<T> fromString;\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "TypedFromStringConverter<T>",
+                            "TypedFromStringConverter<T>"
+                        ]
+                    ],
+                    "partial_translation": "    fromString: TypedStringConverter[typing.Any] = None\n",
+                    "translation": [
+                        "    fromString: TypedStringConverter[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T11:45:47.689259",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "38-38:toString": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final Method toString;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Method",
+                            "java.lang.reflect.Method"
+                        ]
+                    ],
+                    "partial_translation": "    __toString: typing.Union[inspect.Signature, typing.Callable] = None\n",
+                    "translation": [
+                        "    __toString: typing.Union[inspect.Signature, typing.Callable] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T11:45:47.691200",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "35-35:cls": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private final Class<T> cls;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Class<T>",
+                            "java.lang.Class<T>"
+                        ]
+                    ],
+                    "partial_translation": "    __cls: typing.Type[typing.Any] = None\n",
+                    "translation": [
+                        "    __cls: typing.Type[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T11:45:47.693145",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "python_class_declaration": "class ReflectionStringConverter(TypedStringConverter):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.joda.convert.TypedFromStringConverter import *",
+        "from src.main.org.joda.convert.TypedStringConverter import *"
+    ]
+}

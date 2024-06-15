@@ -14,18 +14,21 @@ class DefaultParserTest(ParserTestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def setUp(self) -> None:
-        super().setUp()
-        self.__parser = DefaultParser(2, False, None)
+    @classmethod
+    def setUpClass(cls):
+        pass
 
-    def test_Builder(self) -> None:
+    def setUp(self) -> None:
+        super().setUp(DefaultParser(2, False, None))
+
+    def testBuilder(self) -> None:
         parser = DefaultParser.builder()\
                               .setStripLeadingAndTrailingQuotes(False)\
                               .setAllowPartialMatching(False)\
                               .build()
         self.assertTrue(isinstance(parser, DefaultParser))
 
-    def test_LongOptionQuoteHandlingWithoutStrip(self) -> None:
+    def testLongOptionQuoteHandlingWithoutStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(False).build()
             args = ["--bfile", "\"quoted string\""]
@@ -38,7 +41,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_LongOptionQuoteHandlingWithStrip(self) -> None:
+    def testLongOptionQuoteHandlingWithStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(True).build()
             args = ["--bfile", "\"quoted string\""]
@@ -51,7 +54,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_LongOptionWithEqualsQuoteHandling(self) -> None:
+    def testLongOptionWithEqualsQuoteHandling(self) -> None:
         try:
             args = ["--bfile=\"quoted string\""]
             cl = self.__parser.parse0(self.options, args)
@@ -63,7 +66,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_LongOptionWithEqualsQuoteHandlingWithoutStrip(self) -> None:
+    def testLongOptionWithEqualsQuoteHandlingWithoutStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(False).build()
             args = ["--bfile=\"quoted string\""]
@@ -76,7 +79,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_LongOptionWithEqualsQuoteHandlingWithStrip(self) -> None:
+    def testLongOptionWithEqualsQuoteHandlingWithStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(True).build()
             args = ["--bfile=\"quoted string\""]
@@ -89,7 +92,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_ShortOptionConcatenatedQuoteHandling(self) -> None:
+    def testShortOptionConcatenatedQuoteHandling(self) -> None:
         try:
             args = ["-b", "\"quoted string\""]
             cl = self.__parser.parse0(self.options, args)
@@ -101,7 +104,7 @@ class DefaultParserTest(ParserTestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_ShortOptionQuoteHandlingWithoutStrip(self) -> None:
+    def testShortOptionQuoteHandlingWithoutStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(False).build()
             args = ["-b", "\"quoted string\""]
@@ -115,7 +118,7 @@ class DefaultParserTest(ParserTestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_ShortOptionQuoteHandlingWithStrip(self) -> None:
+    def testShortOptionQuoteHandlingWithStrip(self) -> None:
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(True).build()
             args = ["-b", "\"quoted string\""]

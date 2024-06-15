@@ -16,47 +16,62 @@ class ShortValidatorTest(AbstractNumberValidatorTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-
-            self._validator = ShortValidator(False, 0)
-            self._strictValidator = ShortValidator.ShortValidator1()
-
-            self._testPattern = "#,###"
-
-            self._max = sys.maxsize
-            self._maxPlusOne = sys.maxsize + 1
-            self._min = -sys.maxsize - 1
-            self._minMinusOne = -sys.maxsize - 1 - 1
-
-            self._invalidStrict = [None, "", "X", "X12", "12X", "1X2", "1.2"]
-
-            self._invalid = [None, "", "X", "X12"]
-
-            self._testNumber = 1234
-            self._testZero = 0
-            self._validStrict = ["0", "1234", "1,234"]
-            self._validStrictCompare = [self._testZero, self._testNumber, self._testNumber]
-            self._valid = ["0", "1234", "1,234", "1,234.5", "1234X"]
-            self._validCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber
-            ]
-
-            self._testStringUS = "1,234"
-            self._testStringDE = "1.234"
-
-            self._localeValue = self._testStringDE
-            self._localePattern = "#.###"
-            self._testLocale = 'de_DE.UTF-8'
-            self._localeExpected = self._testNumber
+            super().setUp(
+                validator = ShortValidator(False, 0),
+                strictValidator = ShortValidator.ShortValidator1(),
+                testPattern = "#,###",
+                _max = sys.maxsize,
+                maxPlusOne = sys.maxsize + 1,
+                _min = -sys.maxsize - 1,
+                minMinusOne = -sys.maxsize - 1 - 1,
+                invalidStrict = [
+                    None,
+                    "",
+                    "X",
+                    "X12",
+                    "12X",
+                    "1X2",
+                    "1.2"
+                ],
+                invalid = [None, "", "X", "X12"],
+                testNumber = 1234,
+                testZero = 0,
+                validStrict = [
+                    "0",
+                    "1234",
+                    "1,234"
+                ],
+                validStrictCompare = [
+                    0, 
+                    1234,
+                    1234
+                ],
+                valid = [
+                    "0",
+                    "1234",
+                    "1,234",
+                    "1,234.5",
+                    "1234X"
+                ],
+                validCompare = [
+                    0,
+                    1234,
+                    1234,
+                    1234,
+                    1234
+                ],
+                testStringUS = "1,234",
+                testStringDE = "1.234",
+                localeValue = "1.234",
+                localePattern = "#.###",
+                testLocale = 'de_DE.UTF-8',
+                localeExpected = 1234
+            )
         except Exception as e:
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_ShortValidatorMethods(self) -> None:
+    def testShortValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"

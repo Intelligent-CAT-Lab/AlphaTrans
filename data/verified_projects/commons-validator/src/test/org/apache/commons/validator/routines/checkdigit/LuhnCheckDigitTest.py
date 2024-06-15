@@ -22,17 +22,16 @@ class LuhnCheckDigitTest(AbstractCheckDigitTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-
-            self._routine = LuhnCheckDigit.LUHN_CHECK_DIGIT
-            
-            self._valid = [
-                LuhnCheckDigitTest.__VALID_VISA,
-                LuhnCheckDigitTest.__VALID_SHORT_VISA,
-                LuhnCheckDigitTest.__VALID_AMEX,
-                LuhnCheckDigitTest.__VALID_MASTERCARD,
-                LuhnCheckDigitTest.__VALID_DISCOVER,
-                LuhnCheckDigitTest.__VALID_DINERS
-            ]
+            super().setUp(
+                routine = LuhnCheckDigit.LUHN_CHECK_DIGIT,
+                valid = [
+                    LuhnCheckDigitTest.__VALID_VISA,
+                    LuhnCheckDigitTest.__VALID_SHORT_VISA,
+                    LuhnCheckDigitTest.__VALID_AMEX,
+                    LuhnCheckDigitTest.__VALID_MASTERCARD,
+                    LuhnCheckDigitTest.__VALID_DISCOVER,
+                    LuhnCheckDigitTest.__VALID_DINERS
+                ]
+            )
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")

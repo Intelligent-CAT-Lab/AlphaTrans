@@ -106,7 +106,7 @@ class ValuesTest(unittest.TestCase):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
 
-    def test_CharSeparator(self) -> None:
+    def testCharSeparator(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("j"), "Option j is not set")
         self.assertTrue(self.__cmd.hasOption0('j'), "Option j is not set")
         self.assertListEqual(["key", "value", "key", "value"], self.__cmd.getOptionValues2("j"))
@@ -125,22 +125,22 @@ class ValuesTest(unittest.TestCase):
         self.assertListEqual(["key", "value"], self.__cmd.getOptionValues0('m'))
     
     
-    def test_ComplexValues(self) -> None:
+    def testComplexValues(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("i"), "Option i is not set")
         self.assertTrue(self.__cmd.hasOption2("h"), "Option h is not set")
         self.assertListEqual(["val1", "val2"], self.__cmd.getOptionValues2("h"))
 
     
-    def test_ExtraArgs(self) -> None:
+    def testExtraArgs(self) -> None:
         self.assertListEqual(["arg1", "arg2", "arg3"], self.__cmd.getArgs(), "Extra args")
     
     
-    def test_MultipleArgValues(self) -> None:
+    def testMultipleArgValues(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("e"), "Option e is not set")
         self.assertListEqual(["one", "two"], self.__cmd.getOptionValues2("e"))
 
     
-    def test_ShortArgs(self) -> None:
+    def testShortArgs(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("a"), "Option a is not set")
         self.assertTrue(self.__cmd.hasOption2("c"), "Option c is not set")
 
@@ -148,7 +148,7 @@ class ValuesTest(unittest.TestCase):
         self.assertIsNone(self.__cmd.getOptionValues2("c"))
 
     
-    def test_ShortArgsWithValue(self) -> None:
+    def testShortArgsWithValue(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("b"), "Option b is not set")
         self.assertEqual("foo", self.__cmd.getOptionValue4("b"))
         self.assertEqual(1, len(self.__cmd.getOptionValues2("b")))
@@ -158,7 +158,7 @@ class ValuesTest(unittest.TestCase):
         self.assertEqual(1, len(self.__cmd.getOptionValues2("d")))
     
     
-    def test_TwoArgValues(self) -> None:
+    def testTwoArgValues(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("g"), "Option g is not set")
         self.assertListEqual(["val1", "val2"], self.__cmd.getOptionValues2("g"))
 

@@ -16,7 +16,7 @@ class DomainValidatorTest(unittest.TestCase):
         self.__validator = DomainValidator.getInstance0()
 
     
-    def test_ValidDomains(self) -> None:
+    def testValidDomains(self) -> None:
         self.assertTrue(
             self.__validator.isValid("apache.org"),
             "apache.org should validate"
@@ -59,7 +59,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
-    def test_InvalidDomains(self) -> None:
+    def testInvalidDomains(self) -> None:
         self.assertFalse(
             self.__validator.isValid(".org"),
             "bare TLD .org shouldn't validate"
@@ -107,7 +107,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
-    def test_TopLevelDomains(self) -> None:
+    def testTopLevelDomains(self) -> None:
         self.assertTrue(
             self.__validator.isValidInfrastructureTld(".arpa"),
             ".arpa should validate as iTLD"
@@ -158,7 +158,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
-    def test_AllowLocal(self) -> None:
+    def testAllowLocal(self) -> None:
         noLocal = DomainValidator.getInstance1(False)
         allowLocal = DomainValidator.getInstance1(True)
 
@@ -185,14 +185,14 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
-    def test_IDN(self) -> None:
+    def testIDN(self) -> None:
         self.assertTrue(
             self.__validator.isValid("www.xn--bcher-kva.ch"),
             "b\u00fccher.ch in IDN should validate"
         )
 
     
-    def test_IDNJava6OrLater(self) -> None:
+    def testIDNJava6OrLater(self) -> None:
         version = sys.version_info
         if version < (2, 6): 
             #Python 2.6 is the latest version available at the birth of Java 1.6
@@ -216,7 +216,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
-    def test_RFC2396domainlabel(self) -> None:
+    def testRFC2396domainlabel(self) -> None:
         self.assertTrue(self.__validator.isValid("a.ch"), "a.ch should validate")
         self.assertTrue(self.__validator.isValid("9.ch"), "9.ch should validate")
         self.assertTrue(self.__validator.isValid("az.ch"), "az.ch should validate")
@@ -226,7 +226,7 @@ class DomainValidatorTest(unittest.TestCase):
         self.assertFalse(self.__validator.isValid("-.ch"), "-.ch should not validate")
 
     
-    def test_RFC2396toplabel(self) -> None:
+    def testRFC2396toplabel(self) -> None:
         self.assertTrue(
             self.__validator.isValidDomainSyntax("a.c"),
             "a.c (alpha) should validate"
@@ -266,7 +266,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
-    def test_DomainNoDots(self) -> None:
+    def testDomainNoDots(self) -> None:
         self.assertTrue(
             self.__validator.isValidDomainSyntax("a"),
             "a (alpha) should validate"
@@ -294,14 +294,14 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator297(self) -> None:
+    def testValidator297(self) -> None:
         self.assertTrue(
             self.__validator.isValid("xn--d1abbgf6aiiy.xn--p1ai"),
             "xn--d1abbgf6aiiy.xn--p1ai should validate"
         )
 
     
-    def test_Validator306(self) -> None:
+    def testValidator306(self) -> None:
         longString = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789A"
         self.assertEqual(len(longString), 63)
         
@@ -335,7 +335,7 @@ class DomainValidatorTest(unittest.TestCase):
         )
 
     
-    def test_UnicodeToASCII(self) -> None:
+    def testUnicodeToASCII(self) -> None:
         asciidots = [
             "", ",", ".", # fails IDNA.toASCII, but should pass wrapped version
             "a.", # ditto
@@ -356,7 +356,7 @@ class DomainValidatorTest(unittest.TestCase):
             self.assertEqual(s[1], DomainValidator.unicodeToASCII(s[0]))
 
     
-    def test_IsIDNtoASCIIBroken(self) -> None:
+    def testIsIDNtoASCIIBroken(self) -> None:
         print(">>DomainValidatorTest.testIsIDNtoASCIIBroken()")
         input_str = "."
         try:
@@ -379,7 +379,7 @@ class DomainValidatorTest(unittest.TestCase):
         self.assertTrue(True)
 
     
-    def test_INFRASTRUCTURE_TLDS_sortedAndLowerCase(self) -> None:
+    def testINFRASTRUCTURE_TLDS_sortedAndLowerCase(self) -> None:
         try:
             sorted = self.__isSortedLowerCase0("INFRASTRUCTURE_TLDS")
             self.assertTrue(sorted)
@@ -387,7 +387,7 @@ class DomainValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_COUNTRY_CODE_TLDS_sortedAndLowerCase(self) -> None:
+    def testCOUNTRY_CODE_TLDS_sortedAndLowerCase(self) -> None:
         try:
             sorted = self.__isSortedLowerCase0("COUNTRY_CODE_TLDS")
             self.assertTrue(sorted)
@@ -395,7 +395,7 @@ class DomainValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_GENERIC_TLDS_sortedAndLowerCase(self) -> None:
+    def testGENERIC_TLDS_sortedAndLowerCase(self) -> None:
         try:
             sorted = self.__isSortedLowerCase0("GENERIC_TLDS")
             self.assertTrue(sorted)
@@ -403,7 +403,7 @@ class DomainValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_LOCAL_TLDS_sortedAndLowerCase(self) -> None:
+    def testLOCAL_TLDS_sortedAndLowerCase(self) -> None:
         try:
             sorted = self.__isSortedLowerCase0("LOCAL_TLDS")
             self.assertTrue(sorted)
@@ -411,11 +411,11 @@ class DomainValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_EnumIsPublic(self) -> None:
+    def testEnumIsPublic(self) -> None:
         self.assertTrue(hasattr(DomainValidator, 'ArrayType'))
 
     
-    def test_GetArray(self) -> None:
+    def testGetArray(self) -> None:
         self.assertIsNotNone(
             DomainValidator.getTLDEntries(DomainValidator.ArrayType.COUNTRY_CODE_MINUS)
         )

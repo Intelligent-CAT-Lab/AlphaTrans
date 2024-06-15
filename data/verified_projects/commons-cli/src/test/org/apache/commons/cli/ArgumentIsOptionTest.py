@@ -17,7 +17,7 @@ class ArgumentIsOptionTest(unittest.TestCase):
             .addOption1("attr", True, "Option accepts argument")
         self.__parser = PosixParser()
     
-    def test_Option(self) -> None:
+    def testOption(self) -> None:
 
         try:
             args = ["-p"]
@@ -28,7 +28,7 @@ class ArgumentIsOptionTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_OptionAndOptionWithArgument(self) -> None:
+    def testOptionAndOptionWithArgument(self) -> None:
 
         try:
             args = ["-p", "-attr", "p"]
@@ -40,7 +40,7 @@ class ArgumentIsOptionTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_OptionWithArgument(self) -> None:
+    def testOptionWithArgument(self) -> None:
 
         try:
             args = ["-attr", "p"]

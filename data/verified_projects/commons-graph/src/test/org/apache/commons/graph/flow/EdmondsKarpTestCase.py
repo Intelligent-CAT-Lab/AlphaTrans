@@ -21,7 +21,7 @@ import unittest
 
 class EdmondsKarpTestCase(unittest.TestCase):
 
-    def test_FindMaxFlowAndVerify(self) -> None:
+    def testFindMaxFlowAndVerify(self) -> None:
         a = BaseLabeledVertex("A")
         g = BaseLabeledVertex("G")
 
@@ -40,7 +40,7 @@ class EdmondsKarpTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
-    def test_NullGraph(self) -> None:
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             a = BaseLabeledVertex("A")
             g = BaseLabeledVertex("G")
@@ -52,7 +52,7 @@ class EdmondsKarpTestCase(unittest.TestCase):
                 .applyingEdmondsKarp(IntegerWeightBaseOperations())
 
     
-    def test_NullVertices(self) -> None:
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
 
             a = None
@@ -67,7 +67,7 @@ class EdmondsKarpTestCase(unittest.TestCase):
                 .applyingEdmondsKarp(IntegerWeightBaseOperations())
 
     
-    def test_Sparse(self) -> None:
+    def testSparse(self) -> None:
         a = BaseLabeledVertex("A")
         g = BaseLabeledVertex("G")
 

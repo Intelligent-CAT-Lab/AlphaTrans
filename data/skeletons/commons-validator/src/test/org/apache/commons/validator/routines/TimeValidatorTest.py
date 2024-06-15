@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.TimeValidator import *
+import zoneinfo
 import unittest
 import datetime
 import typing
@@ -15,9 +16,9 @@ class TimeValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     __origDefault: typing.Any = None
-    __defaultZone: datetime.timezone = None
-    _GMT: datetime.timezone = None
-    _EST: datetime.timezone = None
+    __defaultZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = None
+    _GMT: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = None
+    _EST: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = None
     _validator: TimeValidator = None
     _patternValid: typing.List[str] = None
     _patternExpect: typing.List[typing.Union[datetime.date, datetime.datetime]] = None
@@ -36,13 +37,17 @@ class TimeValidatorTest(unittest.TestCase):
 
     @staticmethod
     def _createDate(
-        zone: datetime.timezone, time: int, millisecond: int
-    ) -> typing.Union[datetime.date, datetime.datetime]:
+        zone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
+        time: int,
+        millisecond: int,
+    ) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     @staticmethod
     def _createTime(
-        zone: datetime.timezone, time: int, millisecond: int
+        zone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
+        time: int,
+        millisecond: int,
     ) -> typing.Union[
         datetime.datetime,
         datetime.date,

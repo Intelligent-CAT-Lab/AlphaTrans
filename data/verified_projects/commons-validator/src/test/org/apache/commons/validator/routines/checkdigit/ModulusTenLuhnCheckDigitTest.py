@@ -22,17 +22,16 @@ class ModulusTenLuhnCheckDigitTest(AbstractCheckDigitTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-
-            self._routine = ModulusTenCheckDigit([1, 2], True, True)
-
-            self._valid = [
-                ModulusTenLuhnCheckDigitTest.__VALID_VISA,
-                ModulusTenLuhnCheckDigitTest.__VALID_SHORT_VISA,
-                ModulusTenLuhnCheckDigitTest.__VALID_AMEX,
-                ModulusTenLuhnCheckDigitTest.__VALID_MASTERCARD,
-                ModulusTenLuhnCheckDigitTest.__VALID_DISCOVER,
-                ModulusTenLuhnCheckDigitTest.__VALID_DINERS
-            ]
+            super().setUp(
+                routine = ModulusTenCheckDigit([1, 2], True, True),
+                valid = [
+                    ModulusTenLuhnCheckDigitTest.__VALID_VISA,
+                    ModulusTenLuhnCheckDigitTest.__VALID_SHORT_VISA,
+                    ModulusTenLuhnCheckDigitTest.__VALID_AMEX,
+                    ModulusTenLuhnCheckDigitTest.__VALID_MASTERCARD,
+                    ModulusTenLuhnCheckDigitTest.__VALID_DISCOVER,
+                    ModulusTenLuhnCheckDigitTest.__VALID_DINERS
+                ]
+            )
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")

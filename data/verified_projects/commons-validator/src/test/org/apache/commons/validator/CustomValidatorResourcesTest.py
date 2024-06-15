@@ -15,7 +15,7 @@ class CustomValidatorResourcesTest(unittest.TestCase):
         pass
 
     
-    def test_CustomResources(self) -> None:
+    def testCustomResources(self) -> None:
         inStream = None
         try:
             inStream = StringIO(self.__getResourceContent("TestNumber-config.xml"))

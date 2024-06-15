@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.AbstractCalendarValidator import *
+import zoneinfo
 import unittest
 import datetime
 import typing
@@ -17,10 +18,10 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
     # Class Fields Begin
     _localeInvalid: typing.List[str] = None
     _validator: AbstractCalendarValidator = None
-    _GMT: datetime.timezone = None
-    _EST: datetime.timezone = None
-    _EET: datetime.timezone = None
-    _UTC: datetime.timezone = None
+    _GMT: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = None
+    _EST: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = None
+    _EET: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = None
+    _UTC: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = None
     _patternValid: typing.List[str] = None
     _localeValid: typing.List[str] = None
     _patternExpect: typing.List[typing.Union[datetime.date, datetime.datetime]] = None
@@ -36,12 +37,14 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
 
     @staticmethod
     def _createDate(
-        zone: datetime.timezone, date: int, time: int
-    ) -> typing.Union[datetime.date, datetime.datetime]:
+        zone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone], date: int, time: int
+    ) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     @staticmethod
-    def _createCalendar(zone: datetime.timezone, date: int, time: int) -> typing.Union[
+    def _createCalendar(
+        zone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone], date: int, time: int
+    ) -> typing.Union[
         datetime.datetime,
         datetime.date,
         datetime.time,

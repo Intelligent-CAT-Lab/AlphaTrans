@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.cli.PatternOptionBuilder import *
 from src.main.org.apache.commons.cli.ParseException import *
+import urllib
 import datetime
 import typing
 from typing import *
@@ -59,7 +60,7 @@ class TypeHandler:
         pass
 
     @staticmethod
-    def createDate(str: str) -> typing.Union[datetime.date, datetime.datetime]:
+    def createDate(str: str) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     @staticmethod

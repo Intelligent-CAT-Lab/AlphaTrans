@@ -9,8 +9,9 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
 
     @classmethod
     def setUpClass(cls):
-        "Tests shall only be executed on child classes with concrete implementations."
-        raise unittest.SkipTest("Skip tests in the abstract base class.")
+        if cls == AbstractCalendarValidatorTest:
+            "Tests shall only be executed on child classes with concrete implementations."
+            raise unittest.SkipTest("Skip tests in the abstract base class.")
 
     _GMT = ZoneInfo('Etc/GMT')  # 0 offset
     _EST = ZoneInfo('US/Eastern')  # - 5 hours
@@ -19,6 +20,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
 
     
     def __init__(self, methodName='runTest') -> None:
+        self.setUpClass()
         super().__init__(methodName)
         self._validator = None
         self._patternValid = [
@@ -83,6 +85,10 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
         ]
 
     
+    def setUpValidator(self, validator) -> None:
+        self._validator = validator
+
+    
     def setUp(self) -> None:
         try:
             super().setUp()
@@ -98,7 +104,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
 
-    def test_PatternValid(self) -> None:
+    def testPatternValid(self) -> None:
         for i, pattern in enumerate(self._patternValid):
             text = f"{i} value=[{pattern}] failed "
             date = self._validator.parse(pattern, "yy-MM-dd", None, None)
@@ -112,7 +118,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             self.assertEqual(date, self._patternExpect[i], f"compare {text}")
 
     
-    def test_PatternInvalid(self) -> None:
+    def testPatternInvalid(self) -> None:
         for i, pattern in enumerate(self._patternInvalid):
             text = f"{i} value=[{pattern}] passed "
             date = self._validator.parse(pattern, "yy-MM-dd", None, None)
@@ -123,7 +129,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             )
 
     
-    def test_LocaleValid(self) -> None:
+    def testLocaleValid(self) -> None:
         for i, pattern in enumerate(self._localeValid):
             text = f"{i} value=[{pattern}] failed "
             date = self._validator.parse(pattern, None, 'en_US.UTF-8', None)
@@ -137,7 +143,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             self.assertEqual(date, self._patternExpect[i], f"compare {text}")
 
     
-    def test_LocaleInvalid(self) -> None:
+    def testLocaleInvalid(self) -> None:
         for i, pattern in enumerate(self._localeInvalid):
             text = f"{i} value=[{pattern}] passed "
             date = self._validator.parse(pattern, None, 'en_US.UTF-8', None)
@@ -148,7 +154,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             )
 
     
-    def test_Format(self) -> None:
+    def testFormat(self) -> None:
         test = self._validator.parse("2005-11-28", "yyyy-MM-dd", None, None)
         self.assertIsNotNone(test, "Test Date")
         self.assertEqual(
@@ -163,7 +169,7 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
         )
 
     
-    def test_Serialization(self) -> None:
+    def testSerialization(self) -> None:
         baos = BytesIO()
         try:
             pickle.dump(self._validator, baos)

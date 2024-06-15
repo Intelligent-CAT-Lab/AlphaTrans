@@ -6,6 +6,7 @@ from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import
 
 # from src.main.org.apache.commons.logging.LogFactory import *
 # from src.main.org.apache.commons.logging.Log import *
+import logging
 import unittest
 import typing
 from typing import *

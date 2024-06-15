@@ -1,0 +1,776 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-graph/src/test/java/org/apache/commons/graph/spanning/ReverseDeleteTestCase.java",
+    "imports": {
+        "25-25:import Graph": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "31-31:import UndirectedMutableGraph": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.apache.commons.graph.model.UndirectedMutableGraph;\n"
+            ]
+        },
+        "26-26:import SpanningTree": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.SpanningTree;\n"
+            ]
+        },
+        "33-33:import Test": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "28-28:import BaseLabeledWeightedEdge": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledWeightedEdge;\n"
+            ]
+        },
+        "27-27:import BaseLabeledVertex": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledVertex;\n"
+            ]
+        },
+        "29-29:import BaseWeightedEdge": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.model.BaseWeightedEdge;\n"
+            ]
+        },
+        "30-30:import MutableSpanningTree": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.graph.model.MutableSpanningTree;\n"
+            ]
+        },
+        "32-32:import DoubleWeightBaseOperations": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations;\n"
+            ]
+        },
+        "23-23:import static Assert.assertEquals": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "22-22:import static CommonsGraph.minimumSpanningTree": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.minimumSpanningTree;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ReverseDeleteTestCase": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "179-224:testVerifyNotConnectGraph3": {
+                    "start": 179,
+                    "end": 224,
+                    "body": [
+                        "    public void testVerifyNotConnectGraph3() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"e\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"f\");\n",
+                        "\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 21D), c);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> a\", 4D), a);\n",
+                        "\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> e\", 7D), e);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 21D), f);\n",
+                        "        input.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> d\", 4D), d);\n",
+                        "\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> a\", 4D), a);\n",
+                        "\n",
+                        "        expected.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> e\", 4D), e);\n",
+                        "        expected.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> d\", 4D), d);\n",
+                        "\n",
+                        "        SpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> actual =\n",
+                        "                minimumSpanningTree(input)\n",
+                        "                        .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                        .applyingReverseDeleteAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyNotConnectGraph3()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testVerifyNotConnectGraph3(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testVerifyNotConnectGraph3(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = UndirectedMutableGraph()",
+                        "",
+                        "        a = BaseLabeledVertex(\"a\")",
+                        "        b = BaseLabeledVertex(\"b\")",
+                        "        c = BaseLabeledVertex(\"c\")",
+                        "        d = BaseLabeledVertex(\"d\")",
+                        "        e = BaseLabeledVertex(\"e\")",
+                        "        f = BaseLabeledVertex(\"f\")",
+                        "",
+                        "        input.addVertex(a)",
+                        "        input.addVertex(b)",
+                        "        input.addVertex(c)",
+                        "        input.addVertex(d)",
+                        "        input.addVertex(e)",
+                        "        input.addVertex(f)",
+                        "",
+                        "        input.addEdge(a, BaseLabeledWeightedEdge(\"a <-> b\", 7), b)",
+                        "        input.addEdge(b, BaseLabeledWeightedEdge(\"b <-> c\", 21), c)",
+                        "        input.addEdge(c, BaseLabeledWeightedEdge(\"c <-> a\", 4), a)",
+                        "",
+                        "        input.addEdge(d, BaseLabeledWeightedEdge(\"d <-> e\", 7), e)",
+                        "        input.addEdge(e, BaseLabeledWeightedEdge(\"e <-> f\", 21), f)",
+                        "        input.addEdge(f, BaseLabeledWeightedEdge(\"f <-> d\", 4), d)",
+                        "",
+                        "        expected = MutableSpanningTree(DoubleWeightBaseOperations(), BaseWeightedEdge())",
+                        "",
+                        "        for vertex in input.getVertices0():",
+                        "            expected.addVertex(vertex)",
+                        "",
+                        "        expected.addEdge(a, BaseLabeledWeightedEdge(\"a <-> b\", 7), b)",
+                        "        expected.addEdge(c, BaseLabeledWeightedEdge(\"c <-> a\", 4), a)",
+                        "",
+                        "        expected.addEdge(d, BaseLabeledWeightedEdge(\"d <-> e\", 4), e)",
+                        "        expected.addEdge(f, BaseLabeledWeightedEdge(\"f <-> d\", 4), d)",
+                        "",
+                        "        actual = CommonsGraph.minimumSpanningTree(input) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "            .applyingReverseDeleteAlgorithm(DoubleWeightBaseOperations())",
+                        "        ",
+                        "        assert expected == actual",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 16.897416353225708,
+                    "generation_timestamp": "2024-06-06T04:50:57.996730",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "135-175:testVerifyNotConnectGraph2": {
+                    "start": 135,
+                    "end": 175,
+                    "body": [
+                        "    public void testVerifyNotConnectGraph2() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"e\");\n",
+                        "\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 21D), c);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> a\", 4D), a);\n",
+                        "\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> e\", 4D), e);\n",
+                        "\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> a\", 4D), a);\n",
+                        "\n",
+                        "        expected.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> e\", 4D), e);\n",
+                        "\n",
+                        "        SpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> actual =\n",
+                        "                minimumSpanningTree(input)\n",
+                        "                        .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                        .applyingReverseDeleteAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyNotConnectGraph2()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testVerifyNotConnectGraph2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testVerifyNotConnectGraph2(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = UndirectedMutableGraph()",
+                        "",
+                        "        a = BaseLabeledVertex(\"a\")",
+                        "        b = BaseLabeledVertex(\"b\")",
+                        "        c = BaseLabeledVertex(\"c\")",
+                        "        d = BaseLabeledVertex(\"d\")",
+                        "        e = BaseLabeledVertex(\"e\")",
+                        "",
+                        "        input.addVertex(a)",
+                        "        input.addVertex(b)",
+                        "        input.addVertex(c)",
+                        "        input.addVertex(d)",
+                        "        input.addVertex(e)",
+                        "",
+                        "        input.addEdge(a, BaseLabeledWeightedEdge(\"a <-> b\", 7), b)",
+                        "        input.addEdge(b, BaseLabeledWeightedEdge(\"b <-> c\", 21), c)",
+                        "        input.addEdge(c, BaseLabeledWeightedEdge(\"c <-> a\", 4), a)",
+                        "",
+                        "        input.addEdge(d, BaseLabeledWeightedEdge(\"d <-> e\", 4), e)",
+                        "",
+                        "        expected = MutableSpanningTree(DoubleWeightBaseOperations(), BaseWeightedEdge())",
+                        "",
+                        "        for vertex in input.getVertices0():",
+                        "            expected.addVertex(vertex)",
+                        "",
+                        "        expected.addEdge(a, BaseLabeledWeightedEdge(\"a <-> b\", 7), b)",
+                        "        expected.addEdge(c, BaseLabeledWeightedEdge(\"c <-> a\", 4), a)",
+                        "",
+                        "        expected.addEdge(d, BaseLabeledWeightedEdge(\"d <-> e\", 4), e)",
+                        "",
+                        "        actual = CommonsGraph.minimumSpanningTree(input).whereEdgesHaveWeights(BaseWeightedEdge()).applyingReverseDeleteAlgorithm(DoubleWeightBaseOperations())",
+                        "",
+                        "        assert expected == actual",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 13.725464820861816,
+                    "generation_timestamp": "2024-06-06T04:51:11.725013",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "106-131:testVerifyNotConnectGraph": {
+                    "start": 106,
+                    "end": 131,
+                    "body": [
+                        "    public void testVerifyNotConnectGraph() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "\n",
+                        "        SpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> actual =\n",
+                        "                minimumSpanningTree(input)\n",
+                        "                        .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                        .applyingReverseDeleteAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyNotConnectGraph()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testVerifyNotConnectGraph(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testVerifyNotConnectGraph(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = UndirectedMutableGraph()",
+                        "",
+                        "        a = BaseLabeledVertex(\"a\")",
+                        "        b = BaseLabeledVertex(\"b\")",
+                        "        c = BaseLabeledVertex(\"c\")",
+                        "",
+                        "        input.addVertex(a)",
+                        "        input.addVertex(b)",
+                        "        input.addVertex(c)",
+                        "",
+                        "        expected = MutableSpanningTree(DoubleWeightBaseOperations(), BaseWeightedEdge())",
+                        "",
+                        "        for vertex in input.getVertices0():",
+                        "            expected.addVertex(vertex)",
+                        "",
+                        "        actual = minimumSpanningTree(input).whereEdgesHaveWeights(BaseWeightedEdge()).applyingReverseDeleteAlgorithm(DoubleWeightBaseOperations())",
+                        "",
+                        "        assert expected == actual",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.617655992507935,
+                    "generation_timestamp": "2024-06-06T04:51:19.345551",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "70-102:testVerifyMinimumSpanningTree": {
+                    "start": 70,
+                    "end": 102,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 21D), c);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> a\", 4D), a);\n",
+                        "\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> a\", 4D), a);\n",
+                        "\n",
+                        "        SpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> actual =\n",
+                        "                minimumSpanningTree(input)\n",
+                        "                        .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                        .applyingReverseDeleteAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testVerifyMinimumSpanningTree(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = UndirectedMutableGraph()",
+                        "",
+                        "        a = BaseLabeledVertex(\"a\")",
+                        "        b = BaseLabeledVertex(\"b\")",
+                        "        c = BaseLabeledVertex(\"c\")",
+                        "",
+                        "        input.addVertex(a)",
+                        "        input.addVertex(b)",
+                        "        input.addVertex(c)",
+                        "",
+                        "        input.addEdge(a, BaseLabeledWeightedEdge(\"a <-> b\", 7), b)",
+                        "        input.addEdge(b, BaseLabeledWeightedEdge(\"b <-> c\", 21), c)",
+                        "        input.addEdge(c, BaseLabeledWeightedEdge(\"c <-> a\", 4), a)",
+                        "",
+                        "        expected = MutableSpanningTree(DoubleWeightBaseOperations(), BaseWeightedEdge())",
+                        "",
+                        "        for vertex in input.getVertices0():",
+                        "            expected.addVertex(vertex)",
+                        "",
+                        "        expected.addEdge(a, BaseLabeledWeightedEdge(\"a <-> b\", 7), b)",
+                        "        expected.addEdge(c, BaseLabeledWeightedEdge(\"c <-> a\", 4), a)",
+                        "",
+                        "        actual = CommonsGraph.minimumSpanningTree(input).whereEdgesHaveWeights(BaseWeightedEdge()).applyingReverseDeleteAlgorithm(DoubleWeightBaseOperations())",
+                        "",
+                        "        assert expected == actual",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 10.843074321746826,
+                    "generation_timestamp": "2024-06-06T04:51:30.191282",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "60-66:testNullMonoid": {
+                    "start": 60,
+                    "end": 66,
+                    "body": [
+                        "    public void testNullMonoid() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input = null;\n",
+                        "\n",
+                        "        minimumSpanningTree(input)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .applyingReverseDeleteAlgorithm(null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullMonoid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testNullMonoid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testNullMonoid(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = None",
+                        "",
+                        "        CommonsGraph.minimumSpanningTree(input) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "            .applyingReverseDeleteAlgorithm(None)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.274533033370972,
+                    "generation_timestamp": "2024-06-06T04:51:34.468295",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "53-57:testNullGraph": {
+                    "start": 53,
+                    "end": 57,
+                    "body": [
+                        "    public void testNullGraph() {\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .applyingReverseDeleteAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullGraph()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testNullGraph(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testNullGraph(self) -> None:",
+                        "        ",
+                        "",
+                        "        CommonsGraph.minimumSpanningTree(None) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "            .applyingReverseDeleteAlgorithm(DoubleWeightBaseOperations())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.1661765575408936,
+                    "generation_timestamp": "2024-06-06T04:51:38.637389",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "39-50:testEmptyGraph": {
+                    "start": 39,
+                    "end": 50,
+                    "body": [
+                        "    public void testEmptyGraph() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "\n",
+                        "        SpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> tree =\n",
+                        "                minimumSpanningTree(input)\n",
+                        "                        .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                        .applyingReverseDeleteAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "\n",
+                        "        assertEquals(0, tree.getOrder());\n",
+                        "        assertEquals(0, tree.getSize());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyGraph()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "173-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testEmptyGraph(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testEmptyGraph(self) -> None:",
+                        "        ",
+                        "",
+                        "        input = UndirectedMutableGraph()",
+                        "",
+                        "        tree = CommonsGraph.minimumSpanningTree(input) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "            .applyingReverseDeleteAlgorithm(DoubleWeightBaseOperations())",
+                        "",
+                        "        assert tree.getOrder() == 0",
+                        "        assert tree.getSize() == 0",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.677858352661133,
+                    "generation_timestamp": "2024-06-06T04:51:44.318077",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class ReverseDeleteTestCase:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "from src.main.org.apache.commons.graph.CommonsGraph import *",
+        "from src.main.org.apache.commons.graph.Graph import *",
+        "from src.main.org.apache.commons.graph.Mapper import *",
+        "from src.main.org.apache.commons.graph.SpanningTree import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledWeightedEdge import *",
+        "from src.test.org.apache.commons.graph.model.BaseWeightedEdge import *",
+        "from src.main.org.apache.commons.graph.model.MutableSpanningTree import *",
+        "from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *",
+        "from src.main.org.apache.commons.graph.spanning.SpanningTreeSourceSelector import *",
+        "from src.main.org.apache.commons.graph.spanning.SpanningWeightedEdgeMapperBuilder import *",
+        "from src.main.org.apache.commons.graph.weight.Monoid import *",
+        "from src.main.org.apache.commons.graph.weight.OrderedMonoid import *",
+        "from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *"
+    ]
+}

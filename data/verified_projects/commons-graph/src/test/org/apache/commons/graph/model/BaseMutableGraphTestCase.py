@@ -43,7 +43,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
                                 pass
     
     
-    def test_AddVertexAndEdge(self) -> None:
+    def testAddVertexAndEdge(self) -> None:
         g = UndirectedMutableGraph()
         GraphUtils.buildCompleteGraph(50, g)
 
@@ -81,7 +81,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertFalse(gSimple.containsVertex(BaseLabeledVertex("Not exist vertex")))
     
     
-    def test_DirectedGraphRemoveEdge(self) -> None:
+    def testDirectedGraphRemoveEdge(self) -> None:
         g = DirectedMutableGraph()
 
         source = BaseLabeledVertex(str(1))
@@ -96,7 +96,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertIsNone(edge)
 
     
-    def test_DirectedGraphRemoveEdgeNotExists(self) -> None:
+    def testDirectedGraphRemoveEdgeNotExists(self) -> None:
         with self.assertRaises(GraphException):
             g = None
             e = None
@@ -111,7 +111,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
             g.removeEdge(e)
     
     
-    def test_DirectedMultiTh(self) -> None:
+    def testDirectedMultiTh(self) -> None:
         g = CommonsGraph.synchronize2(DirectedMutableGraph())
 
         tr1 = BaseMutableGraphTestCase.GraphInsert(g, 0, 10)
@@ -127,7 +127,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertEqual((30 * (30 - 1)), g.getSize())
 
     
-    def test_GetConnectedVertices(self) -> None:
+    def testGetConnectedVertices(self) -> None:
         g = UndirectedMutableGraph()
         GraphUtils.buildCompleteGraph(10, g)
 
@@ -143,7 +143,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertFalse(testVertex in v)
     
     
-    def test_GetConnectedVerticesNPE(self) -> None:
+    def testGetConnectedVerticesNPE(self) -> None:
         with self.assertRaises(GraphException):
             g = None
             notExistsVertex = None
@@ -157,7 +157,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
             g.getConnectedVertices(notExistsVertex);
     
     
-    def test_GetConnectedVerticesOnNotConnectedGraph(self) -> None:
+    def testGetConnectedVerticesOnNotConnectedGraph(self) -> None:
         g = UndirectedMutableGraph()
 
         for i in range(4):
@@ -175,7 +175,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertEqual(0, len(v))
     
     
-    def test_GetEdge(self) -> None:
+    def testGetEdge(self) -> None:
         g = UndirectedMutableGraph()
         GraphUtils.buildCompleteGraph(10, g)
 
@@ -185,7 +185,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertIsNotNone(edge)
     
     
-    def test_GetEgdeNotExistsVertex(self) -> None:
+    def testGetEgdeNotExistsVertex(self) -> None:
         with self.assertRaises(GraphException):
             g = None
             source = None
@@ -202,7 +202,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
             g.getEdge(source, target)
     
     
-    def test_GetEgdeNotExistsVertex_2(self) -> None:
+    def testGetEgdeNotExistsVertex_2(self) -> None:
         with self.assertRaises(GraphException):
             g = None
             source = None
@@ -219,7 +219,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
             g.getEdge(source, target)
     
     
-    def test_GetNotExistsEdge(self) -> None:
+    def testGetNotExistsEdge(self) -> None:
         g = UndirectedMutableGraph()
         for i in range(4):
             v = BaseLabeledVertex(str(i))
@@ -231,7 +231,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertIsNone(edge)
 
     
-    def test_MultiThreadUndirectGraph(self) -> None:
+    def testMultiThreadUndirectGraph(self) -> None:
         g = CommonsGraph.synchronize2(UndirectedMutableGraph())
 
         tr1 = BaseMutableGraphTestCase.GraphInsert(g, 0, 10)
@@ -248,7 +248,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertEqual((30 * (30 - 1) / 2), g.getSize())
     
     
-    def test_UndirectedGraphRemoveEdge(self) -> None:
+    def testUndirectedGraphRemoveEdge(self) -> None:
         g = UndirectedMutableGraph()
 
         source = BaseLabeledVertex(str(1))
@@ -264,7 +264,7 @@ class BaseMutableGraphTestCase(unittest.TestCase):
         self.assertIsNone(edge)
 
     
-    def test_UndirectedGraphRemoveEdgeNotExists(self) -> None:
+    def testUndirectedGraphRemoveEdgeNotExists(self) -> None:
         with self.assertRaises(GraphException):
             g = None
             e = None

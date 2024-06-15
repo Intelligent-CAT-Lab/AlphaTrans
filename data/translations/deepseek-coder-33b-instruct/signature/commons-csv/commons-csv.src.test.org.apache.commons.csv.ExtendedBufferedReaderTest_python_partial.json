@@ -1,0 +1,812 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-csv/src/test/java/org/apache/commons/csv/ExtendedBufferedReaderTest.java",
+    "imports": {
+        "28-28:import StringReader": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.io.StringReader;\n"
+            ]
+        },
+        "26-26:import Test": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "20-20:import static Constants.END_OF_STREAM": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.apache.commons.csv.Constants.END_OF_STREAM;\n"
+            ]
+        },
+        "21-21:import static Constants.UNDEFINED": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.apache.commons.csv.Constants.UNDEFINED;\n"
+            ]
+        },
+        "23-23:import static Assertions.assertEquals": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        },
+        "24-24:import static Assertions.assertNull": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertNull;\n"
+            ]
+        },
+        "22-22:import static Assertions.assertArrayEquals": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertArrayEquals;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ExtendedBufferedReaderTest": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "192-210:testReadLookahead2": {
+                    "start": 192,
+                    "end": 210,
+                    "body": [
+                        "    public void testReadLookahead2() throws Exception {\n",
+                        "        final char[] ref = new char[5];\n",
+                        "        final char[] res = new char[5];\n",
+                        "\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"abcdefg\")) {\n",
+                        "            ref[0] = 'a';\n",
+                        "            ref[1] = 'b';\n",
+                        "            ref[2] = 'c';\n",
+                        "            assertEquals(3, br.read1(res, 0, 3));\n",
+                        "            assertArrayEquals(ref, res);\n",
+                        "            assertEquals('c', br.getLastChar());\n",
+                        "\n",
+                        "            assertEquals('d', br.lookAhead0());\n",
+                        "            ref[4] = 'd';\n",
+                        "            assertEquals(1, br.read1(res, 4, 1));\n",
+                        "            assertArrayEquals(ref, res);\n",
+                        "            assertEquals('d', br.getLastChar());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadLookahead2()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "90-92:getLastChar"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testReadLookahead2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testReadLookahead2(self) -> None:",
+                        "        ",
+                        "",
+                        "        ref = [''] * 5",
+                        "        res = [''] * 5",
+                        "",
+                        "        with self.__createBufferedReader(\"abcdefg\") as br:",
+                        "            ref[0] = 'a'",
+                        "            ref[1] = 'b'",
+                        "            ref[2] = 'c'",
+                        "            assert 3 == br.read1(res, 0, 3)",
+                        "            assert ref == res",
+                        "            assert 'c' == br.getLastChar()",
+                        "",
+                        "            assert 'd' == br.lookAhead0()",
+                        "            ref[4] = 'd'",
+                        "            assert 1 == br.read1(res, 4, 1)",
+                        "            assert ref == res",
+                        "            assert 'd' == br.getLastChar()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 10.810609579086304,
+                    "generation_timestamp": "2024-06-05T18:30:30.087061",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "134-189:testReadLookahead1": {
+                    "start": 134,
+                    "end": 189,
+                    "body": [
+                        "    public void testReadLookahead1() throws Exception {\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"1\\n2\\r3\\n\")) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            assertEquals('1', br.lookAhead0());\n",
+                        "            assertEquals(UNDEFINED, br.getLastChar());\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            assertEquals('1', br.read0()); // Start line 1\n",
+                        "            assertEquals('1', br.getLastChar());\n",
+                        "\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('\\n', br.lookAhead0());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('1', br.getLastChar());\n",
+                        "            assertEquals('\\n', br.read0());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('\\n', br.getLastChar());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "\n",
+                        "            assertEquals('2', br.lookAhead0());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('\\n', br.getLastChar());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('2', br.read0()); // Start line 2\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "            assertEquals('2', br.getLastChar());\n",
+                        "\n",
+                        "            assertEquals('\\r', br.lookAhead0());\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "            assertEquals('2', br.getLastChar());\n",
+                        "            assertEquals('\\r', br.read0());\n",
+                        "            assertEquals('\\r', br.getLastChar());\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "\n",
+                        "            assertEquals('3', br.lookAhead0());\n",
+                        "            assertEquals('\\r', br.getLastChar());\n",
+                        "            assertEquals('3', br.read0()); // Start line 3\n",
+                        "            assertEquals('3', br.getLastChar());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "\n",
+                        "            assertEquals('\\n', br.lookAhead0());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "            assertEquals('3', br.getLastChar());\n",
+                        "            assertEquals('\\n', br.read0());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "            assertEquals('\\n', br.getLastChar());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "\n",
+                        "            assertEquals(END_OF_STREAM, br.lookAhead0());\n",
+                        "            assertEquals('\\n', br.getLastChar());\n",
+                        "            assertEquals(END_OF_STREAM, br.read0());\n",
+                        "            assertEquals(END_OF_STREAM, br.getLastChar());\n",
+                        "            assertEquals(END_OF_STREAM, br.read0());\n",
+                        "            assertEquals(END_OF_STREAM, br.lookAhead0());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadLookahead1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "90-92:getLastChar"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testReadLookahead1(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testReadLookahead1(self) -> None:",
+                        "        ",
+                        "",
+                        "        with self.__createBufferedReader(\"1\\n2\\r3\\n\") as br:",
+                        "            self.assertEqual(0, br.getCurrentLineNumber())",
+                        "            self.assertEqual('1', br.lookAhead0())",
+                        "            self.assertEqual(UNDEFINED, br.getLastChar())",
+                        "            self.assertEqual(0, br.getCurrentLineNumber())",
+                        "            self.assertEqual('1', br.read0())  # Start line 1",
+                        "            self.assertEqual('1', br.getLastChar())",
+                        "",
+                        "            self.assertEqual(1, br.getCurrentLineNumber())",
+                        "            self.assertEqual('\\n', br.lookAhead0())",
+                        "            self.assertEqual(1, br.getCurrentLineNumber())",
+                        "            self.assertEqual('1', br.getLastChar())",
+                        "            self.assertEqual('\\n', br.read0())",
+                        "            self.assertEqual(1, br.getCurrentLineNumber())",
+                        "            self.assertEqual('\\n', br.getLastChar())",
+                        "            self.assertEqual(1, br.getCurrentLineNumber())",
+                        "",
+                        "            self.assertEqual('2', br.lookAhead0())",
+                        "            self.assertEqual(1, br.getCurrentLineNumber())",
+                        "            self.assertEqual('\\n', br.getLastChar())",
+                        "            self.assertEqual(1, br.getCurrentLineNumber())",
+                        "            self.assertEqual('2', br.read0())  # Start line 2",
+                        "            self.assertEqual(2, br.getCurrentLineNumber())",
+                        "            self.assertEqual('2', br.getLastChar())",
+                        "",
+                        "            self.assertEqual('\\r', br.lookAhead0())",
+                        "            self.assertEqual(2, br.getCurrentLineNumber())",
+                        "            self.assertEqual('2', br.getLastChar())",
+                        "            self.assertEqual('\\r', br.read0())",
+                        "            self.assertEqual('\\r', br.getLastChar())",
+                        "            self.assertEqual(2, br.getCurrentLineNumber())",
+                        "",
+                        "            self.assertEqual('3', br.lookAhead0())",
+                        "            self.assertEqual('\\r', br.getLastChar())",
+                        "            self.assertEqual('3', br.read0())  # Start line 3",
+                        "            self.assertEqual('3', br.getLastChar())",
+                        "            self.assertEqual(3, br.getCurrentLineNumber())",
+                        "",
+                        "            self.assertEqual('\\n', br.lookAhead0())",
+                        "            self.assertEqual(3, br.getCurrentLineNumber())",
+                        "            self.assertEqual('3', br.getLastChar())",
+                        "            self.assertEqual('\\n', br.read0())",
+                        "            self.assertEqual(3, br.getCurrentLineNumber())",
+                        "            self.assertEqual('\\n', br.getLastChar())",
+                        "            self.assertEqual(3, br.getCurrentLineNumber())",
+                        "",
+                        "            self.assertEqual(END_OF_STREAM, br.lookAhead0())",
+                        "            self.assertEqual('\\n', br.getLastChar())",
+                        "            self.assertEqual(END_OF_STREAM, br.read0())",
+                        "            self.assertEqual(END_OF_STREAM, br.getLastChar())",
+                        "            self.assertEqual(END_OF_STREAM, br.read0())",
+                        "            self.assertEqual(END_OF_STREAM, br.lookAhead0())",
+                        "            self.assertEqual(3, br.getCurrentLineNumber())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 23.39674949645996,
+                    "generation_timestamp": "2024-06-05T18:30:53.487645",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "91-131:testReadLine": {
+                    "start": 91,
+                    "end": 131,
+                    "body": [
+                        "    public void testReadLine() throws Exception {\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\")) {\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\\n\")) {\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"foo\\n\\nhello\")) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"foo\", br.readLine());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"hello\", br.readLine());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "            assertNull(br.readLine());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"foo\\n\\nhello\")) {\n",
+                        "            assertEquals('f', br.read0());\n",
+                        "            assertEquals('o', br.lookAhead0());\n",
+                        "            assertEquals(\"oo\", br.readLine());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('\\n', br.lookAhead0());\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "            assertEquals('h', br.lookAhead0());\n",
+                        "            assertEquals(\"hello\", br.readLine());\n",
+                        "            assertNull(br.readLine());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"foo\\rbaar\\r\\nfoo\")) {\n",
+                        "            assertEquals(\"foo\", br.readLine());\n",
+                        "            assertEquals('b', br.lookAhead0());\n",
+                        "            assertEquals(\"baar\", br.readLine());\n",
+                        "            assertEquals('f', br.lookAhead0());\n",
+                        "            assertEquals(\"foo\", br.readLine());\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadLine()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testReadLine(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testReadLine(self) -> None:",
+                        "        ",
+                        "",
+                        "        # Test 1",
+                        "        with self.__createBufferedReader(\"\") as br:",
+                        "            assert br.readLine() is None",
+                        "",
+                        "        # Test 2",
+                        "        with self.__createBufferedReader(\"\\n\") as br:",
+                        "            assert br.readLine() == \"\"",
+                        "            assert br.readLine() is None",
+                        "",
+                        "        # Test 3",
+                        "        with self.__createBufferedReader(\"foo\\n\\nhello\") as br:",
+                        "            assert br.getCurrentLineNumber() == 0",
+                        "            assert br.readLine() == \"foo\"",
+                        "            assert br.getCurrentLineNumber() == 1",
+                        "            assert br.readLine() == \"\"",
+                        "            assert br.getCurrentLineNumber() == 2",
+                        "            assert br.readLine() == \"hello\"",
+                        "            assert br.getCurrentLineNumber() == 3",
+                        "            assert br.readLine() is None",
+                        "            assert br.getCurrentLineNumber() == 3",
+                        "",
+                        "        # Test 4",
+                        "        with self.__createBufferedReader(\"foo\\n\\nhello\") as br:",
+                        "            assert br.read0() == 'f'",
+                        "            assert br.lookAhead0() == 'o'",
+                        "            assert br.readLine() == \"oo\"",
+                        "            assert br.getCurrentLineNumber() == 1",
+                        "            assert br.lookAhead0() == '\\n'",
+                        "            assert br.readLine() == \"\"",
+                        "            assert br.getCurrentLineNumber() == 2",
+                        "            assert br.lookAhead0() == 'h'",
+                        "            assert br.readLine() == \"hello\"",
+                        "            assert br.readLine() is None",
+                        "            assert br.getCurrentLineNumber() == 3",
+                        "",
+                        "        # Test 5",
+                        "        with self.__createBufferedReader(\"foo\\rbaar\\r\\nfoo\") as br:",
+                        "            assert br.readLine() == \"foo\"",
+                        "            assert br.lookAhead0() == 'b'",
+                        "            assert br.readLine() == \"baar\"",
+                        "            assert br.lookAhead0() == 'f'",
+                        "            assert br.readLine() == \"foo\"",
+                        "            assert br.readLine() is None",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 16.712055683135986,
+                    "generation_timestamp": "2024-06-05T18:31:10.205718",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "81-88:testReadingInDifferentBuffer": {
+                    "start": 81,
+                    "end": 88,
+                    "body": [
+                        "    public void testReadingInDifferentBuffer() throws Exception {\n",
+                        "        final char[] tmp1 = new char[2], tmp2 = new char[4];\n",
+                        "        try (ExtendedBufferedReader reader = createBufferedReader(\"1\\r\\n2\\r\\n\")) {\n",
+                        "            reader.read1(tmp1, 0, 2);\n",
+                        "            reader.read1(tmp2, 2, 2);\n",
+                        "            assertEquals(2, reader.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadingInDifferentBuffer()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testReadingInDifferentBuffer(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testReadingInDifferentBuffer(self) -> None:",
+                        "        ",
+                        "",
+                        "        tmp1 = ['\\0'] * 2",
+                        "        tmp2 = ['\\0'] * 4",
+                        "        try:",
+                        "            reader = self.__createBufferedReader(\"1\\r\\n2\\r\\n\")",
+                        "            reader.read1(tmp1, 0, 2)",
+                        "            reader.read1(tmp2, 2, 2)",
+                        "            assert reader.getCurrentLineNumber() == 2",
+                        "        finally:",
+                        "            reader.close()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 8.194170236587524,
+                    "generation_timestamp": "2024-06-05T18:31:18.402474",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "53-78:testReadChar": {
+                    "start": 53,
+                    "end": 78,
+                    "body": [
+                        "    public void testReadChar() throws Exception {\n",
+                        "        final String LF = \"\\n\";\n",
+                        "        final String CR = \"\\r\";\n",
+                        "        final String CRLF = CR + LF;\n",
+                        "        final String LFCR = LF + CR; // easier to read the string below\n",
+                        "        final String test =\n",
+                        "                \"a\" + LF + \"b\" + CR + \"c\" + LF + LF + \"d\" + CR + CR + \"e\" + LFCR + \"f \" + CRLF;\n",
+                        "        final int EOLeolct = 9;\n",
+                        "\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(test)) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            while (br.readLine() != null) {}\n",
+                        "            assertEquals(EOLeolct, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(test)) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            while (br.read0() != -1) {}\n",
+                        "            assertEquals(EOLeolct, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(test)) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            final char[] buff = new char[10];\n",
+                        "            while (br.read1(buff, 0, 3) != -1) {}\n",
+                        "            assertEquals(EOLeolct, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadChar()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testReadChar(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testReadChar(self) -> None:",
+                        "        ",
+                        "",
+                        "        LF = \"\\n\"",
+                        "        CR = \"\\r\"",
+                        "        CRLF = CR + LF",
+                        "        LFCR = LF + CR",
+                        "        test = \"a\" + LF + \"b\" + CR + \"c\" + LF + LF + \"d\" + CR + CR + \"e\" + LFCR + \"f \" + CRLF",
+                        "        EOLeolct = 9",
+                        "",
+                        "        br = self.__createBufferedReader(test)",
+                        "        assert br.getCurrentLineNumber() == 0",
+                        "        while br.readLine() is not None:",
+                        "            pass",
+                        "        assert br.getCurrentLineNumber() == EOLeolct",
+                        "        br.close()",
+                        "",
+                        "        br = self.__createBufferedReader(test)",
+                        "        assert br.getCurrentLineNumber() == 0",
+                        "        while br.read0() != -1:",
+                        "            pass",
+                        "        assert br.getCurrentLineNumber() == EOLeolct",
+                        "        br.close()",
+                        "",
+                        "        br = self.__createBufferedReader(test)",
+                        "        assert br.getCurrentLineNumber() == 0",
+                        "        buff = [None]*10",
+                        "        while br.read1(buff, 0, 3) != -1:",
+                        "            pass",
+                        "        assert br.getCurrentLineNumber() == EOLeolct",
+                        "        br.close()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 10.23001217842102,
+                    "generation_timestamp": "2024-06-05T18:31:28.635944",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "38-46:testEmptyInput": {
+                    "start": 38,
+                    "end": 46,
+                    "body": [
+                        "    public void testEmptyInput() throws Exception {\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\")) {\n",
+                        "            assertEquals(END_OF_STREAM, br.read0());\n",
+                        "            assertEquals(END_OF_STREAM, br.lookAhead0());\n",
+                        "            assertEquals(END_OF_STREAM, br.getLastChar());\n",
+                        "            assertNull(br.readLine());\n",
+                        "            assertEquals(0, br.read1(new char[10], 0, 0));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyInput()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "90-92:getLastChar"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testEmptyInput(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testEmptyInput(self) -> None:",
+                        "        ",
+                        "",
+                        "        with self.__createBufferedReader(\"\") as br:",
+                        "            self.assertEqual(END_OF_STREAM, br.read0())",
+                        "            self.assertEqual(END_OF_STREAM, br.lookAhead0())",
+                        "            self.assertEqual(END_OF_STREAM, br.getLastChar())",
+                        "            self.assertIsNone(br.readLine())",
+                        "            self.assertEqual(0, br.read1(bytearray(10), 0, 0))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.4610021114349365,
+                    "generation_timestamp": "2024-06-05T18:31:35.100640",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "33-35:createBufferedReader": {
+                    "start": 33,
+                    "end": 35,
+                    "body": [
+                        "    private ExtendedBufferedReader createBufferedReader(final String s) {\n",
+                        "        return new ExtendedBufferedReader(new StringReader(s));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "ExtendedBufferedReader",
+                            "ExtendedBufferedReader"
+                        ]
+                    ],
+                    "signature": "createBufferedReader(String)",
+                    "parameters": [
+                        "s"
+                    ],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def __createBufferedReader(self, s: str) -> ExtendedBufferedReader:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __createBufferedReader(self, s: str) -> ExtendedBufferedReader:",
+                        "        ",
+                        "",
+                        "        return ExtendedBufferedReader(io.StringIO(s))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.979128837585449,
+                    "generation_timestamp": "2024-06-05T18:29:18.855523",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class ExtendedBufferedReaderTest:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "from src.main.org.apache.commons.csv.Constants import *",
+        "from src.main.org.apache.commons.csv.ExtendedBufferedReader import *"
+    ]
+}

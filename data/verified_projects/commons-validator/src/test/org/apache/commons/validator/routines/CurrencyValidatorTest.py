@@ -37,7 +37,7 @@ class CurrencyValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
-    def test_FormatType(self) -> None:
+    def testFormatType(self) -> None:
         self.assertEqual(
             1,
             CurrencyValidator.getInstance().getFormatType(),
@@ -50,7 +50,7 @@ class CurrencyValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Valid(self) -> None:
+    def testValid(self) -> None:
         origDefault = getlocale(LC_MONETARY)
         setlocale(LC_MONETARY, 'en_GB.UTF-8')
 
@@ -131,7 +131,7 @@ class CurrencyValidatorTest(unittest.TestCase):
         setlocale(LC_MONETARY, origDefault)
 
     
-    def test_Invalid(self) -> None:
+    def testInvalid(self) -> None:
         validator = CurrencyValidator.getInstance()
 
         self.assertFalse(validator.isValid0(None), "isValid() Null Value")
@@ -158,7 +158,7 @@ class CurrencyValidatorTest(unittest.TestCase):
         )
 
     
-    def test_IntegerValid(self) -> None:
+    def testIntegerValid(self) -> None:
         origDefault = getlocale(LC_MONETARY)
         setlocale(LC_MONETARY, 'en_GB.UTF-8')
 
@@ -197,7 +197,7 @@ class CurrencyValidatorTest(unittest.TestCase):
         setlocale(LC_MONETARY, origDefault)
 
     
-    def test_IntegerInvalid(self) -> None:
+    def testIntegerInvalid(self) -> None:
         validator = CurrencyValidator(True, False)
 
         self.assertFalse(
@@ -219,7 +219,7 @@ class CurrencyValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Pattern(self) -> None:
+    def testPattern(self) -> None:
         origDefault = getlocale(LC_MONETARY)
         setlocale(LC_MONETARY, 'en_GB.UTF-8')
 

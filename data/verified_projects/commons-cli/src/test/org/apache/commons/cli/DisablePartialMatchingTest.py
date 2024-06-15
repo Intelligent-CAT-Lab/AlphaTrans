@@ -15,7 +15,7 @@ class DisablePartialMatchingTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def test_DisablePartialMatching(self) -> None:
+    def testDisablePartialMatching(self) -> None:
         try:
             parser = DefaultParser(0, False, None)
             options = Options()
@@ -39,7 +39,7 @@ class DisablePartialMatchingTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_RegularPartialMatching(self) -> None:
+    def testRegularPartialMatching(self) -> None:
         try:
             parser = DefaultParser(2, False, None)
             options = Options()

@@ -100,16 +100,12 @@ class CommandLine:
 
     def getOptionProperties1(
         self, opt: str
-    ) -> typing.Union[
-        configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
-    ]:
+    ) -> typing.Union[configparser.ConfigParser, typing.Dict]:
         pass
 
     def getOptionProperties0(
         self, option: Option
-    ) -> typing.Union[
-        configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
-    ]:
+    ) -> typing.Union[configparser.ConfigParser, typing.Dict]:
         pass
 
     def getArgs(self) -> typing.List[str]:

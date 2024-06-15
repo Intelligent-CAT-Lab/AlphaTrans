@@ -1,0 +1,881 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-validator/src/main/java/org/apache/commons/validator/EmailValidator.java",
+    "imports": {
+        "21-21:import Matcher": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.regex.Matcher;\n"
+            ]
+        },
+        "22-22:import Pattern": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.regex.Pattern;\n"
+            ]
+        },
+        "19-19:import InetAddressValidator": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.InetAddressValidator;\n"
+            ]
+        }
+    },
+    "classes": {
+        "EmailValidator": {
+            "start": 42,
+            "end": 42,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "205-215:stripComments": {
+                    "start": 205,
+                    "end": 215,
+                    "body": [
+                        "    protected String stripComments(String emailStr) {\n",
+                        "        String result = emailStr;\n",
+                        "        String commentPat =\n",
+                        "                \"^((?:[^\\\"\\\\\\\\]|\\\\\\\\.)*(?:\\\"(?:[^\\\"\\\\\\\\]|\\\\\\\\.)*\\\"(?:[^\\\"\\\\\\\\]|\\111111\\\\\\\\.)*)*)\\\\((?:[^()\\\\\\\\]|\\\\\\\\.)*\\\\)/\";\n",
+                        "        Pattern commentMatcher = Pattern.compile(commentPat);\n",
+                        "\n",
+                        "        while (commentMatcher.matcher(result).matches()) {\n",
+                        "            result = result.replaceFirst(commentPat, \"\\1 \");\n",
+                        "        }\n",
+                        "        return result;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "stripComments(String)",
+                    "parameters": [
+                        "emailStr"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _stripComments(self, emailStr: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _stripComments(self, emailStr: str) -> str:",
+                        "        ",
+                        "",
+                        "        commentPat = r\"^((?:[^\\\"\\\\]|\\\\\\\\.)*(?:\\\"(?:[^\\\"\\\\]|\\\\\\\\.)*\\\"(?:[^\\\"\\\\]|\\\\\\\\.)*)*)\\\\((?:[^()\\\\\\\\]|\\\\\\\\.)*\\\\)/\"",
+                        "        commentMatcher = re.compile(commentPat)",
+                        "",
+                        "        result = emailStr",
+                        "",
+                        "        while commentMatcher.match(result):",
+                        "            result = re.sub(commentPat, r\"\\1 \", result, count=1)",
+                        "",
+                        "        return result",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.09625244140625,
+                    "generation_timestamp": "2024-06-06T12:13:00.275977",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "163-195:isValidSymbolicDomain": {
+                    "start": 163,
+                    "end": 195,
+                    "body": [
+                        "    protected boolean isValidSymbolicDomain(String domain) {\n",
+                        "        String[] domainSegment = new String[10]; // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        boolean match = true;\n",
+                        "        int i = 0;\n",
+                        "        Matcher atomMatcher = ATOM_PATTERN.matcher(domain);\n",
+                        "        while (match) {\n",
+                        "            match = atomMatcher.matches();\n",
+                        "            if (match) {\n",
+                        "                domainSegment[i] = atomMatcher.group(1);\n",
+                        "                int l = domainSegment[i].length() + 1;\n",
+                        "                domain = (l >= domain.length()) ? \"\" : domain.substring(l);\n",
+                        "\n",
+                        "                i++;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        int len = i;\n",
+                        "\n",
+                        "        if (len < 2) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        String tld = domainSegment[len - 1];\n",
+                        "        if (tld.length() > 1) {\n",
+                        "            if (!TLD_PATTERN.matcher(tld).matches()) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidSymbolicDomain(String)",
+                    "parameters": [
+                        "domain"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _isValidSymbolicDomain(self, domain: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _isValidSymbolicDomain(self, domain: str) -> bool:",
+                        "        ",
+                        "",
+                        "        domain_segment = [\"\"] * 10",
+                        "        match = True",
+                        "        i = 0",
+                        "        atom_matcher = self.__ATOM_PATTERN.match(domain)",
+                        "        while match:",
+                        "            match = atom_matcher is not None",
+                        "            if match:",
+                        "                domain_segment[i] = atom_matcher.group(1)",
+                        "                l = len(domain_segment[i]) + 1",
+                        "                domain = \"\" if l >= len(domain) else domain[l:]",
+                        "",
+                        "                i += 1",
+                        "                atom_matcher = self.__ATOM_PATTERN.match(domain)",
+                        "",
+                        "        len_ = i",
+                        "",
+                        "        if len_ < 2:",
+                        "            return False",
+                        "",
+                        "        tld = domain_segment[len_ - 1]",
+                        "        if len(tld) > 1:",
+                        "            if not self.__TLD_PATTERN.match(tld):",
+                        "                return False",
+                        "        else:",
+                        "            return False",
+                        "",
+                        "        return True",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 9.18894100189209,
+                    "generation_timestamp": "2024-06-06T12:13:09.467361",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "134-155:isValidIpAddress": {
+                    "start": 134,
+                    "end": 155,
+                    "body": [
+                        "    protected boolean isValidIpAddress(String ipAddress) {\n",
+                        "        Matcher ipAddressMatcher = IP_DOMAIN_PATTERN.matcher(ipAddress);\n",
+                        "        for (int i = 1; i <= 4; i++) { // CHECKSTYLE IGNORE MagicNumber\n",
+                        "            String ipSegment = ipAddressMatcher.group(i);\n",
+                        "            if (ipSegment == null || ipSegment.length() <= 0) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "            int iIpSegment = 0;\n",
+                        "\n",
+                        "            try {\n",
+                        "                iIpSegment = Integer.parseInt(ipSegment);\n",
+                        "            } catch (NumberFormatException e) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "            if (iIpSegment > 255) { // CHECKSTYLE IGNORE MagicNumber\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidIpAddress(String)",
+                    "parameters": [
+                        "ipAddress"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _isValidIpAddress(self, ipAddress: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _isValidIpAddress(self, ipAddress: str) -> bool:",
+                        "        ",
+                        "",
+                        "        ipAddressMatcher = re.match(self.__IP_DOMAIN_PATTERN, ipAddress)",
+                        "        if ipAddressMatcher is None:",
+                        "            return False",
+                        "",
+                        "        for i in range(1, 5):  # CHECKSTYLE IGNORE MagicNumber",
+                        "            ipSegment = ipAddressMatcher.group(i)",
+                        "            if ipSegment is None or len(ipSegment) <= 0:",
+                        "                return False",
+                        "",
+                        "            try:",
+                        "                iIpSegment = int(ipSegment)",
+                        "            except ValueError:",
+                        "                return False",
+                        "",
+                        "            if iIpSegment > 255:  # CHECKSTYLE IGNORE MagicNumber",
+                        "                return False",
+                        "",
+                        "        return True",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 8.617725372314453,
+                    "generation_timestamp": "2024-06-06T12:13:18.087332",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "124-126:isValidUser": {
+                    "start": 124,
+                    "end": 126,
+                    "body": [
+                        "    protected boolean isValidUser(String user) {\n",
+                        "        return USER_PATTERN.matcher(user).matches();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidUser(String)",
+                    "parameters": [
+                        "user"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _isValidUser(self, user: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _isValidUser(self, user: str) -> bool:",
+                        "        ",
+                        "",
+                        "        USER_PATTERN = re.compile(",
+                        "            r\"(^[-a-z0-9_.]+$)\"",
+                        "        )",
+                        "",
+                        "        return bool(USER_PATTERN.match(user))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.993045806884766,
+                    "generation_timestamp": "2024-06-06T12:13:24.083317",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "93-116:isValidDomain": {
+                    "start": 93,
+                    "end": 116,
+                    "body": [
+                        "    protected boolean isValidDomain(String domain) {\n",
+                        "        boolean symbolic = false;\n",
+                        "\n",
+                        "        Matcher ipDomainMatcher = IP_DOMAIN_PATTERN.matcher(domain);\n",
+                        "\n",
+                        "        if (ipDomainMatcher.matches()) {\n",
+                        "            InetAddressValidator inetAddressValidator = InetAddressValidator.getInstance();\n",
+                        "            if (inetAddressValidator.isValid(ipDomainMatcher.group(1))) {\n",
+                        "                return true;\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            symbolic = DOMAIN_PATTERN.matcher(domain).matches();\n",
+                        "        }\n",
+                        "\n",
+                        "        if (symbolic) {\n",
+                        "            if (!isValidSymbolicDomain(domain)) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidDomain(String)",
+                    "parameters": [
+                        "domain"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "63-65:getInstance"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "73-75:isValid"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.EmailValidator",
+                            "EmailValidator",
+                            "163-195:isValidSymbolicDomain"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def _isValidDomain(self, domain: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _isValidDomain(self, domain: str) -> bool:",
+                        "        ",
+                        "",
+                        "        symbolic = False",
+                        "",
+                        "        ip_domain_matcher = self.__IP_DOMAIN_PATTERN.match(domain)",
+                        "",
+                        "        if ip_domain_matcher:",
+                        "            inet_address_validator = InetAddressValidator.getInstance()",
+                        "            if inet_address_validator.isValid(ip_domain_matcher.group(1)):",
+                        "                return True",
+                        "        else:",
+                        "            symbolic = bool(self.__DOMAIN_PATTERN.match(domain))",
+                        "",
+                        "        if symbolic:",
+                        "            if not self._isValidSymbolicDomain(domain):",
+                        "                return False",
+                        "        else:",
+                        "            return False",
+                        "",
+                        "        return True",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.32816219329834,
+                    "generation_timestamp": "2024-06-06T12:13:31.415027",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "83-85:isValid": {
+                    "start": 83,
+                    "end": 85,
+                    "body": [
+                        "    public boolean isValid(String email) {\n",
+                        "        return org.apache.commons.validator.routines.EmailValidator.getInstance0().isValid(email);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "email"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.EmailValidator",
+                            "EmailValidator",
+                            "169-192:isValid"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.EmailValidator",
+                            "EmailValidator",
+                            "77-79:getInstance0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def isValid(self, email: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isValid(self, email: str) -> bool:",
+                        "        ",
+                        "",
+                        "        # The EmailValidator class from apache.commons.validator.routines is not available in Python.",
+                        "        # Therefore, we will use a simple regex to validate the email.",
+                        "        # This is a very basic validation and does not cover all possible valid email addresses.",
+                        "        # For a complete validation, you would need to use a library or write a more complex regex.",
+                        "",
+                        "        import re",
+                        "",
+                        "        email_regex = re.compile(r\"[^@]+@[^@]+\\.[^@]+\")",
+                        "",
+                        "        if email_regex.match(email):",
+                        "            return True",
+                        "        else:",
+                        "            return False",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.6481146812438965,
+                    "generation_timestamp": "2024-06-06T12:15:58.632965",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "72-74:EmailValidator": {
+                    "start": 72,
+                    "end": 74,
+                    "body": [
+                        "    protected EmailValidator() {\n",
+                        "        super();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "EmailValidator()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self) -> None:",
+                        "        ",
+                        "",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 19.773398399353027,
+                    "generation_timestamp": "2024-06-06T12:13:51.191095",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "67-69:getInstance": {
+                    "start": 67,
+                    "end": 69,
+                    "body": [
+                        "    public static EmailValidator getInstance() {\n",
+                        "        return EMAIL_VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "signature": "getInstance()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance() -> EmailValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def getInstance() -> EmailValidator:",
+                        "        ",
+                        "",
+                        "        if not hasattr(EmailValidator, '__EMAIL_VALIDATOR'):",
+                        "            EmailValidator.__EMAIL_VALIDATOR = EmailValidator()",
+                        "",
+                        "        return EmailValidator.__EMAIL_VALIDATOR",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.058685302734375,
+                    "generation_timestamp": "2024-06-06T12:13:55.251939",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {
+                "60-60:EMAIL_VALIDATOR": {
+                    "start": 60,
+                    "end": 60,
+                    "body": [
+                        "    private static final EmailValidator EMAIL_VALIDATOR = new EmailValidator();\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "partial_translation": "    __EMAIL_VALIDATOR: EmailValidator = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __EMAIL_VALIDATOR: EmailValidator = EmailValidator()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.7415640354156494,
+                    "generation_timestamp": "2024-06-06T12:10:53.962823",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "57-57:ATOM_PATTERN": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    private static final Pattern ATOM_PATTERN = Pattern.compile(\"(\" + ATOM + \")\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __ATOM_PATTERN: re.Pattern = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 23.160844087600708,
+                    "generation_timestamp": "2024-06-06T12:11:17.125867",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "55-56:DOMAIN_PATTERN": {
+                    "start": 55,
+                    "end": 56,
+                    "body": [
+                        "    private static final Pattern DOMAIN_PATTERN =\n",
+                        "            Pattern.compile(\"^\" + ATOM + \"(\\\\.\" + ATOM + \")*\\\\s*$\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __DOMAIN_PATTERN: re.Pattern = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 24.68579888343811,
+                    "generation_timestamp": "2024-06-06T12:11:41.813827",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "53-54:USER_PATTERN": {
+                    "start": 53,
+                    "end": 54,
+                    "body": [
+                        "    private static final Pattern USER_PATTERN =\n",
+                        "            Pattern.compile(\"^\\\\s*\" + WORD + \"(\\\\.\" + WORD + \")*$\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __USER_PATTERN: re.Pattern = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 30.024781465530396,
+                    "generation_timestamp": "2024-06-06T12:12:11.840719",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "51-51:TLD_PATTERN": {
+                    "start": 51,
+                    "end": 51,
+                    "body": [
+                        "    private static final Pattern TLD_PATTERN = Pattern.compile(\"^([a-zA-Z]+)$\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __TLD_PATTERN: re.Pattern = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 23.0845844745636,
+                    "generation_timestamp": "2024-06-06T12:12:34.928171",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "50-50:IP_DOMAIN_PATTERN": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "    private static final Pattern IP_DOMAIN_PATTERN = Pattern.compile(\"^\\\\[(.*)\\\\]$\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": "    __IP_DOMAIN_PATTERN: re.Pattern = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __IP_DOMAIN_PATTERN: re.Pattern = re.compile(r\"^\\[(.*)\\]$\")",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.035014867782593,
+                    "generation_timestamp": "2024-06-06T12:12:38.965388",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "48-48:WORD": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private static final String WORD = \"((\" + VALID_CHARS + \"|')+|\" + QUOTED_USER + \")\";\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    __WORD: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __WORD: str = \"((\" + VALID_CHARS + \"|')+|\" + QUOTED_USER + \")\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.6265158653259277,
+                    "generation_timestamp": "2024-06-06T12:12:41.594040",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "47-47:ATOM": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private static final String ATOM = VALID_CHARS + '+';\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    __ATOM: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __ATOM: str = VALID_CHARS + '+'",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.1990902423858643,
+                    "generation_timestamp": "2024-06-06T12:12:43.795512",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "46-46:QUOTED_USER": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private static final String QUOTED_USER = \"(\\\"[^\\\"]*\\\")\";\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    __QUOTED_USER: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __QUOTED_USER: str = r'(\\\"[^\\\"]*\\\")'",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.9018704891204834,
+                    "generation_timestamp": "2024-06-06T12:12:46.699587",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "45-45:VALID_CHARS": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private static final String VALID_CHARS = \"[^\\\\s\" + SPECIAL_CHARS + \"]\";\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    __VALID_CHARS: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __VALID_CHARS: str = \"[^\\\\s\" + SPECIAL_CHARS + \"]\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.835843324661255,
+                    "generation_timestamp": "2024-06-06T12:12:51.537310",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "44-44:SPECIAL_CHARS": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    private static final String SPECIAL_CHARS = \"\\\\p{Cntrl}\\\\(\\\\)<>@,;:'\\\\\\\\\\\\\\\"\\\\.\\\\[\\\\]\";\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    __SPECIAL_CHARS: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __SPECIAL_CHARS: str = \"\\\\p{Cntrl}\\\\(\\\\)<>@,;:'\\\\\\\\\\\\\\\"\\\\.\\\\[\\\\]\";",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.6372041702270508,
+                    "generation_timestamp": "2024-06-06T12:12:53.176521",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "python_class_declaration": "class EmailValidator:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "from src.main.org.apache.commons.validator.routines.InetAddressValidator import *",
+        "from src.main.org.apache.commons.validator.routines.DomainValidator import *"
+    ]
+}

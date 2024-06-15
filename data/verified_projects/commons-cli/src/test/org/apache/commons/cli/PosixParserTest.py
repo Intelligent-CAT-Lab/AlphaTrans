@@ -19,12 +19,11 @@ class PosixParserTest(ParserTestCase):
 
 
     def setUp(self) -> None:
-        super().setUp()
-        self.__parser = PosixParser()
+        super().setUp(PosixParser())
 
 
     @unittest.skip("not supported by the PosixParser")
-    def test_AmbiguousLongWithoutEqualSingleDash(self) -> None:
+    def testAmbiguousLongWithoutEqualSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
@@ -32,7 +31,7 @@ class PosixParserTest(ParserTestCase):
     
     
     @unittest.skip("not supported by the PosixParser")
-    def test_AmbiguousPartialLongOption4(self) -> None:
+    def testAmbiguousPartialLongOption4(self) -> None:
         try:
             pass
         except Exception as e:
@@ -40,15 +39,7 @@ class PosixParserTest(ParserTestCase):
     
     
     @unittest.skip("not supported by the PosixParser")
-    def test_DoubleDash2(self) -> None:
-        try:
-            pass
-        except Exception as e:
-            self.fail(f"An exception occurred: {e}")
-
-    
-    @unittest.skip("not supported by the PosixParser")
-    def test_LongWithEqualSingleDash(self) -> None:
+    def testDoubleDash2(self) -> None:
         try:
             pass
         except Exception as e:
@@ -56,7 +47,7 @@ class PosixParserTest(ParserTestCase):
 
     
     @unittest.skip("not supported by the PosixParser")
-    def test_LongWithoutEqualSingleDash(self) -> None:
+    def testLongWithEqualSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
@@ -64,7 +55,15 @@ class PosixParserTest(ParserTestCase):
 
     
     @unittest.skip("not supported by the PosixParser")
-    def test_LongWithUnexpectedArgument1(self) -> None:
+    def testLongWithoutEqualSingleDash(self) -> None:
+        try:
+            pass
+        except Exception as e:
+            self.fail(f"An exception occurred: {e}")
+
+    
+    @unittest.skip("not supported by the PosixParser")
+    def testLongWithUnexpectedArgument1(self) -> None:
         try:
             pass
         except Exception as e:
@@ -72,7 +71,7 @@ class PosixParserTest(ParserTestCase):
 
     
     @unittest.skip("not supported by the PosixParser (CLI-184)")
-    def test_NegativeOption(self) -> None:
+    def testNegativeOption(self) -> None:
         try:
             pass
         except Exception as e:
@@ -80,7 +79,7 @@ class PosixParserTest(ParserTestCase):
 
     
     @unittest.skip("not supported by the PosixParser")
-    def test_ShortWithEqual(self) -> None:
+    def testShortWithEqual(self) -> None:
         try:
             pass
         except Exception as e:
@@ -88,7 +87,7 @@ class PosixParserTest(ParserTestCase):
 
     
     @unittest.skip("not supported by the PosixParser")
-    def test_UnambiguousPartialLongOption4(self) -> None:
+    def testUnambiguousPartialLongOption4(self) -> None:
         try:
             pass
         except Exception as e:

@@ -20,7 +20,7 @@ class EloTestCase(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def test_PerformElo(self) -> None:
+    def testPerformElo(self) -> None:
         tournament = CommonsGraph.newDirectedMutableGraph(
             GraphConnectionEloTestCaseTestPerformElo()
         )

@@ -1,0 +1,1132 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-codec/src/main/java/org/apache/commons/codec/net/QCodec.java",
+    "imports": {
+        "26-26:import Charset": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.nio.charset.Charset;\n"
+            ]
+        },
+        "25-25:import UnsupportedEncodingException": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.io.UnsupportedEncodingException;\n"
+            ]
+        },
+        "27-27:import StandardCharsets": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.nio.charset.StandardCharsets;\n"
+            ]
+        },
+        "28-28:import BitSet": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.BitSet;\n"
+            ]
+        },
+        "20-20:import DecoderException": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.DecoderException;\n"
+            ]
+        },
+        "21-21:import EncoderException": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.codec.EncoderException;\n"
+            ]
+        },
+        "22-22:import StringDecoder": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.codec.StringDecoder;\n"
+            ]
+        },
+        "23-23:import StringEncoder": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.codec.StringEncoder;\n"
+            ]
+        }
+    },
+    "classes": {
+        "QCodec": {
+            "start": 49,
+            "end": 49,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "StringDecoder",
+                "StringEncoder",
+                "RFC1522Codec"
+            ],
+            "methods": {
+                "165-189:doDecoding": {
+                    "start": 165,
+                    "end": 189,
+                    "body": [
+                        "    protected byte[] doDecoding(final byte[] bytes) throws DecoderException {\n",
+                        "        if (bytes == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        boolean hasUnderscores = false;\n",
+                        "        for (final byte b : bytes) {\n",
+                        "            if (b == UNDERSCORE) {\n",
+                        "                hasUnderscores = true;\n",
+                        "                break;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        if (hasUnderscores) {\n",
+                        "            final byte[] tmp = new byte[bytes.length];\n",
+                        "            for (int i = 0; i < bytes.length; i++) {\n",
+                        "                final byte b = bytes[i];\n",
+                        "                if (b != UNDERSCORE) {\n",
+                        "                    tmp[i] = b;\n",
+                        "                } else {\n",
+                        "                    tmp[i] = SPACE;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            return QuotedPrintableCodec.decodeQuotedPrintable(tmp);\n",
+                        "        }\n",
+                        "        return QuotedPrintableCodec.decodeQuotedPrintable(bytes);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "doDecoding(byte[])",
+                    "parameters": [
+                        "bytes"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                            "QuotedPrintableCodec",
+                            "331-354:decodeQuotedPrintable"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:",
+                        "        ",
+                        "",
+                        "        if bytes is None:",
+                        "            return None",
+                        "        ",
+                        "        has_underscores = False",
+                        "        for b in bytes:",
+                        "            if b == self.__UNDERSCORE:",
+                        "                has_underscores = True",
+                        "                break",
+                        "        ",
+                        "        if has_underscores:",
+                        "            tmp = [0]*len(bytes)",
+                        "            for i in range(len(bytes)):",
+                        "                b = bytes[i]",
+                        "                if b != self.__UNDERSCORE:",
+                        "                    tmp[i] = b",
+                        "                else:",
+                        "                    tmp[i] = self.__SPACE",
+                        "            return QuotedPrintableCodec.decodeQuotedPrintable(tmp)",
+                        "        ",
+                        "        return QuotedPrintableCodec.decodeQuotedPrintable(bytes)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.970414400100708,
+                    "generation_timestamp": "2024-06-05T21:44:36.189868",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "149-162:doEncoding": {
+                    "start": 149,
+                    "end": 162,
+                    "body": [
+                        "    protected byte[] doEncoding(final byte[] bytes) {\n",
+                        "        if (bytes == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        final byte[] data = QuotedPrintableCodec.encodeQuotedPrintable1(PRINTABLE_CHARS, bytes);\n",
+                        "        if (this.encodeBlanks) {\n",
+                        "            for (int i = 0; i < data.length; i++) {\n",
+                        "                if (data[i] == SPACE) {\n",
+                        "                    data[i] = UNDERSCORE;\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return data;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "doEncoding(byte[])",
+                    "parameters": [
+                        "bytes"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                            "QuotedPrintableCodec",
+                            "244-246:encodeQuotedPrintable1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:",
+                        "        ",
+                        "",
+                        "        if bytes is None:",
+                        "            return None",
+                        "        ",
+                        "        data = QuotedPrintableCodec.encodeQuotedPrintable1(self.__PRINTABLE_CHARS, bytes)",
+                        "        ",
+                        "        if self.__encodeBlanks:",
+                        "            for i in range(len(data)):",
+                        "                if data[i] == self.__SPACE:",
+                        "                    data[i] = self.__UNDERSCORE",
+                        "        ",
+                        "        return data",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.234460830688477,
+                    "generation_timestamp": "2024-06-05T21:44:41.427640",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "144-146:getEncoding": {
+                    "start": 144,
+                    "end": 146,
+                    "body": [
+                        "    protected String getEncoding() {\n",
+                        "        return \"Q\";\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getEncoding()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _getEncoding(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def _getEncoding(self) -> str:",
+                        "        ",
+                        "",
+                        "        return \"Q\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.2431960105895996,
+                    "generation_timestamp": "2024-06-05T21:44:43.673694",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "363-365:setEncodeBlanks": {
+                    "start": 363,
+                    "end": 365,
+                    "body": [
+                        "    public void setEncodeBlanks(final boolean b) {\n",
+                        "        this.encodeBlanks = b;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setEncodeBlanks(boolean)",
+                    "parameters": [
+                        "b"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def setEncodeBlanks(self, b: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def setEncodeBlanks(self, b: bool) -> None:",
+                        "        ",
+                        "",
+                        "        self.__encodeBlanks = b",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.1305203437805176,
+                    "generation_timestamp": "2024-06-05T21:44:45.806878",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "354-356:isEncodeBlanks": {
+                    "start": 354,
+                    "end": 356,
+                    "body": [
+                        "    public boolean isEncodeBlanks() {\n",
+                        "        return this.encodeBlanks;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEncodeBlanks()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isEncodeBlanks(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isEncodeBlanks(self) -> bool:",
+                        "        ",
+                        "",
+                        "        return self.__encodeBlanks",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.2505545616149902,
+                    "generation_timestamp": "2024-06-05T21:44:48.060425",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "345-347:getDefaultCharset": {
+                    "start": 345,
+                    "end": 347,
+                    "body": [
+                        "    public String getDefaultCharset() {\n",
+                        "        return this.charset.name();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getDefaultCharset()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getDefaultCharset(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getDefaultCharset(self) -> str:",
+                        "        ",
+                        "",
+                        "        return self.__charset",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.3669002056121826,
+                    "generation_timestamp": "2024-06-05T21:44:50.430293",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "336-338:getCharset": {
+                    "start": 336,
+                    "end": 338,
+                    "body": [
+                        "    public Charset getCharset() {\n",
+                        "        return this.charset;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Charset",
+                            "java.nio.charset.Charset"
+                        ]
+                    ],
+                    "signature": "getCharset()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getCharset(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getCharset(self) -> str:",
+                        "        ",
+                        "",
+                        "        return self.__charset",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.626570701599121,
+                    "generation_timestamp": "2024-06-05T21:44:52.059759",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "318-328:decode1": {
+                    "start": 318,
+                    "end": 328,
+                    "body": [
+                        "    public Object decode1(final Object obj) throws DecoderException {\n",
+                        "        if (obj == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        if (obj instanceof String) {\n",
+                        "            return decode0((String) obj);\n",
+                        "        }\n",
+                        "        throw new DecoderException(\n",
+                        "                \"Objects of type \" + obj.getClass().getName() + \" cannot be decoded using Q codec\",\n",
+                        "                null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "decode1(Object)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                            "QCodec",
+                            "267-276:decode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.DecoderException",
+                            "DecoderException",
+                            "63-65:DecoderException"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def decode1(self, obj: typing.Any) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def decode1(self, obj: typing.Any) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        if obj is None:",
+                        "            return None",
+                        "        if isinstance(obj, str):",
+                        "            return self.decode0(obj)",
+                        "        raise DecoderException(",
+                        "            \"Objects of type \" + type(obj).__name__ + \" cannot be decoded using Q codec\",",
+                        "            None)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.779228210449219,
+                    "generation_timestamp": "2024-06-06T11:10:06.413792",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "292-302:encode3": {
+                    "start": 292,
+                    "end": 302,
+                    "body": [
+                        "    public Object encode3(final Object obj) throws EncoderException {\n",
+                        "        if (obj == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        if (obj instanceof String) {\n",
+                        "            return encode2((String) obj);\n",
+                        "        }\n",
+                        "        throw new EncoderException(\n",
+                        "                \"Objects of type \" + obj.getClass().getName() + \" cannot be encoded using Q codec\",\n",
+                        "                null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "encode3(Object)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                            "QCodec",
+                            "246-251:encode2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                            "EncoderException",
+                            "62-64:EncoderException"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def encode3(self, obj: typing.Any) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def encode3(self, obj: typing.Any) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        if obj is None:",
+                        "            return None",
+                        "        if isinstance(obj, str):",
+                        "            return self.encode2(obj)",
+                        "        raise EncoderException(",
+                        "            \"Objects of type \" + type(obj).__name__ + \" cannot be encoded using Q codec\",",
+                        "            None)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.7215845584869385,
+                    "generation_timestamp": "2024-06-05T21:45:21.123077",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "267-276:decode0": {
+                    "start": 267,
+                    "end": 276,
+                    "body": [
+                        "    public String decode0(final String str) throws DecoderException {\n",
+                        "        if (str == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            return decodeText(str);\n",
+                        "        } catch (final UnsupportedEncodingException e) {\n",
+                        "            throw new DecoderException(e.getMessage(), e);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "decode0(String)",
+                    "parameters": [
+                        "str"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "120-153:decodeText"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.DecoderException",
+                            "DecoderException",
+                            "63-65:DecoderException"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def decode0(self, str: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def decode0(self, str: str) -> str:",
+                        "        ",
+                        "",
+                        "        if str is None:",
+                        "            return None",
+                        "        try:",
+                        "            return self.decodeText(str)",
+                        "        except UnsupportedEncodingException as e:",
+                        "            raise DecoderException(e.getMessage(), e)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.3347413539886475,
+                    "generation_timestamp": "2024-06-05T21:44:57.398418",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "246-251:encode2": {
+                    "start": 246,
+                    "end": 251,
+                    "body": [
+                        "    public String encode2(final String sourceStr) throws EncoderException {\n",
+                        "        if (sourceStr == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        return encode0(sourceStr, getCharset());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encode2(String)",
+                    "parameters": [
+                        "sourceStr"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                            "QCodec",
+                            "202-208:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                            "QCodec",
+                            "336-338:getCharset"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def encode2(self, sourceStr: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def encode2(self, sourceStr: str) -> str:",
+                        "        ",
+                        "",
+                        "        if sourceStr is None:",
+                        "            return None",
+                        "        return self.encode0(sourceStr, self.getCharset())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.6175405979156494,
+                    "generation_timestamp": "2024-06-06T11:10:10.034695",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "220-230:encode1": {
+                    "start": 220,
+                    "end": 230,
+                    "body": [
+                        "    public String encode1(final String sourceStr, final String sourceCharset)\n",
+                        "            throws EncoderException {\n",
+                        "        if (sourceStr == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            return encodeText1(sourceStr, sourceCharset);\n",
+                        "        } catch (final UnsupportedEncodingException e) {\n",
+                        "            throw new EncoderException(e.getMessage(), e);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encode1(String, String)",
+                    "parameters": [
+                        "sourceStr",
+                        "sourceCharset"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "99-105:encodeText1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                            "EncoderException",
+                            "62-64:EncoderException"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def encode1(self, sourceStr: str, sourceCharset: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def encode1(self, sourceStr: str, sourceCharset: str) -> str:",
+                        "        ",
+                        "",
+                        "        if sourceStr is None:",
+                        "            return None",
+                        "        try:",
+                        "            return self.encodeText1(sourceStr, sourceCharset)",
+                        "        except UnsupportedEncodingException as e:",
+                        "            raise EncoderException(e.getMessage(), e)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.345905542373657,
+                    "generation_timestamp": "2024-06-05T21:45:06.502437",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "202-208:encode0": {
+                    "start": 202,
+                    "end": 208,
+                    "body": [
+                        "    public String encode0(final String sourceStr, final Charset sourceCharset)\n",
+                        "            throws EncoderException {\n",
+                        "        if (sourceStr == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        return encodeText0(sourceStr, sourceCharset);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encode0(String, Charset)",
+                    "parameters": [
+                        "sourceStr",
+                        "sourceCharset"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "67-80:encodeText0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def encode0(self, sourceStr: str, sourceCharset: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def encode0(self, sourceStr: str, sourceCharset: str) -> str:",
+                        "        ",
+                        "",
+                        "        if sourceStr is None:",
+                        "            return None",
+                        "        return self.encodeText0(sourceStr, sourceCharset)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.764047145843506,
+                    "generation_timestamp": "2024-06-05T21:45:09.269890",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "119-121:QCodec2": {
+                    "start": 119,
+                    "end": 121,
+                    "body": [
+                        "    public static QCodec QCodec2() {\n",
+                        "        return new QCodec(1, null, StandardCharsets.UTF_8);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "QCodec",
+                            "QCodec"
+                        ]
+                    ],
+                    "signature": "QCodec2()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                            "QCodec",
+                            "105-113:QCodec"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def QCodec2() -> QCodec:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def QCodec2() -> QCodec:",
+                        "        ",
+                        "",
+                        "        return QCodec(1, None, 'UTF-8')",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.2800145149230957,
+                    "generation_timestamp": "2024-06-05T21:45:23.406442",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "115-117:QCodec0": {
+                    "start": 115,
+                    "end": 117,
+                    "body": [
+                        "    public static QCodec QCodec0(final String charsetName) {\n",
+                        "        return new QCodec(1, null, Charset.forName(charsetName));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "QCodec",
+                            "QCodec"
+                        ]
+                    ],
+                    "signature": "QCodec0(String)",
+                    "parameters": [
+                        "charsetName"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                            "QCodec",
+                            "105-113:QCodec"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def QCodec0(charsetName: str) -> QCodec:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def QCodec0(charsetName: str) -> QCodec:",
+                        "        ",
+                        "",
+                        "        return QCodec(1, None, charsetName)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.938352584838867,
+                    "generation_timestamp": "2024-06-05T21:45:26.348269",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "105-113:QCodec": {
+                    "start": 105,
+                    "end": 113,
+                    "body": [
+                        "    public QCodec(int constructorId, final String charsetName, final Charset charset) {\n",
+                        "        if (constructorId == 1) {\n",
+                        "\n",
+                        "            this.charset = charset;\n",
+                        "        } else {\n",
+                        "\n",
+                        "            this.charset = charset;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "QCodec(int, String, Charset)",
+                    "parameters": [
+                        "constructorId",
+                        "charsetName",
+                        "charset"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, constructorId: int, charsetName: str, charset: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self, constructorId: int, charsetName: str, charset: str) -> None:",
+                        "        ",
+                        "",
+                        "        if constructorId == 1:",
+                        "            self.__charset = charset",
+                        "        else:",
+                        "            self.__charset = charset",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.4718189239501953,
+                    "generation_timestamp": "2024-06-05T21:45:16.397944",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {
+                "102-102:encodeBlanks": {
+                    "start": 102,
+                    "end": 102,
+                    "body": [
+                        "    private boolean encodeBlanks = false;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": "    __encodeBlanks: bool = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __encodeBlanks: bool = False",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.543482542037964,
+                    "generation_timestamp": "2024-06-05T21:44:23.840029",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "100-100:UNDERSCORE": {
+                    "start": 100,
+                    "end": 100,
+                    "body": [
+                        "    private static final byte UNDERSCORE = 95;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "partial_translation": "    __UNDERSCORE: int = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __UNDERSCORE: int = 95",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 0.8877935409545898,
+                    "generation_timestamp": "2024-06-05T21:44:24.731216",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "98-98:SPACE": {
+                    "start": 98,
+                    "end": 98,
+                    "body": [
+                        "    private static final byte SPACE = 32;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "partial_translation": "    __SPACE: int = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __SPACE: int = 32",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 0.845008134841919,
+                    "generation_timestamp": "2024-06-05T21:44:25.579005",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "54-54:PRINTABLE_CHARS": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "    private static final BitSet PRINTABLE_CHARS = new BitSet(256);\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "BitSet",
+                            "java.util.BitSet"
+                        ]
+                    ],
+                    "partial_translation": "    __PRINTABLE_CHARS: typing.List[bool] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __PRINTABLE_CHARS: typing.List[bool] = [False] * 256",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.632472276687622,
+                    "generation_timestamp": "2024-06-05T21:44:29.214118",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "51-51:charset": {
+                    "start": 51,
+                    "end": 51,
+                    "body": [
+                        "    private final Charset charset;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Charset",
+                            "java.nio.charset.Charset"
+                        ]
+                    ],
+                    "partial_translation": "    __charset: str = None\n",
+                    "translation": [
+                        "    __charset: str = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-11T13:26:58.074709",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "python_class_declaration": "class QCodec(StringDecoder, StringEncoder, RFC1522Codec):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.codec.DecoderException import *",
+        "from src.main.org.apache.commons.codec.EncoderException import *",
+        "from src.main.org.apache.commons.codec.StringDecoder import *",
+        "from src.main.org.apache.commons.codec.StringEncoder import *",
+        "from src.main.org.apache.commons.codec.net.QuotedPrintableCodec import *",
+        "from src.main.org.apache.commons.codec.net.RFC1522Codec import *"
+    ]
+}

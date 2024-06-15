@@ -1,0 +1,227 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-csv/src/test/java/org/apache/commons/csv/issues/JiraCsv263Test.java",
+    "imports": {
+        "26-26:import IOException": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "27-27:import Reader": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.io.Reader;\n"
+            ]
+        },
+        "28-28:import StringReader": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.io.StringReader;\n"
+            ]
+        },
+        "22-22:import CSVFormat": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.csv.CSVFormat;\n"
+            ]
+        },
+        "23-23:import QuoteMode": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.csv.QuoteMode;\n"
+            ]
+        },
+        "24-24:import Test": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "20-20:import static Assertions.assertEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        }
+    },
+    "classes": {
+        "JiraCsv263Test": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "34-73:testPrintFromReaderWithQuotes": {
+                    "start": 34,
+                    "end": 73,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes() throws IOException {\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "\n",
+                        "        final Reader atEndOnly = new StringReader(\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atEndOnly, out, true);\n",
+                        "        assertEquals(\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "\n",
+                        "        final Reader atBeginEnd = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atBeginEnd, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "\n",
+                        "        final Reader embeddedBeginMiddle = new StringReader(\"\\\"a\\\",b,c\\r\\nx,\\\"y\\\",z\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedBeginMiddle, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a\\\"\\\",b,c\\r\\nx,\\\"\\\"y\\\"\\\",z\\\"\", out.toString());\n",
+                        "\n",
+                        "        final Reader embeddedMiddleEnd = new StringReader(\"a,\\\"b\\\",c\\r\\nx,y,\\\"z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedMiddleEnd, out, true);\n",
+                        "        assertEquals(\"\\\"a,\\\"\\\"b\\\"\\\",c\\r\\nx,y,\\\"\\\"z\\\"\\\"\\\"\", out.toString());\n",
+                        "\n",
+                        "        final Reader nested = new StringReader(\"a,\\\"b \\\"and\\\" c\\\",d\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(nested, out, true);\n",
+                        "        assertEquals(\"\\\"a,\\\"\\\"b \\\"\\\"and\\\"\\\" c\\\"\\\",d\\\"\", out.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testPrintFromReaderWithQuotes(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def testPrintFromReaderWithQuotes(self) -> None:",
+                        "        ",
+                        "",
+                        "        format = CSVFormat.builder() \\",
+                        "            .setDelimiter0(',') \\",
+                        "            .setQuote0('\"') \\",
+                        "            .setEscape0('?') \\",
+                        "            .setQuoteMode(QuoteMode.NON_NUMERIC) \\",
+                        "            .build()",
+                        "",
+                        "        out = io.StringIO()",
+                        "",
+                        "        atStartOnly = io.StringIO(\"\\\"a,b,c\\r\\nx,y,z\")",
+                        "        format.print2(atStartOnly, out, True)",
+                        "        assert out.getvalue() == \"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.getvalue()",
+                        "",
+                        "        atEndOnly = io.StringIO(\"a,b,c\\r\\nx,y,z\\\"\")",
+                        "        out = io.StringIO()",
+                        "        format.print2(atEndOnly, out, True)",
+                        "        assert out.getvalue() == \"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.getvalue()",
+                        "",
+                        "        atBeginEnd = io.StringIO(\"\\\"a,b,c\\r\\nx,y,z\\\"\")",
+                        "        out = io.StringIO()",
+                        "        format.print2(atBeginEnd, out, True)",
+                        "        assert out.getvalue() == \"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.getvalue()",
+                        "",
+                        "        embeddedBeginMiddle = io.StringIO(\"\\\"a\\\",b,c\\r\\nx,\\\"y\\\",z\")",
+                        "        out = io.StringIO()",
+                        "        format.print2(embeddedBeginMiddle, out, True)",
+                        "        assert out.getvalue() == \"\\\"\\\"\\\"a\\\"\\\",b,c\\r\\nx,\\\"\\\"y\\\"\\\",z\\\"\", out.getvalue()",
+                        "",
+                        "        embeddedMiddleEnd = io.StringIO(\"a,\\\"b\\\",c\\r\\nx,y,\\\"z\\\"\")",
+                        "        out = io.StringIO()",
+                        "        format.print2(embeddedMiddleEnd, out, True)",
+                        "        assert out.getvalue() == \"\\\"a,\\\"\\\"b\\\"\\\",c\\r\\nx,y,\\\"\\\"z\\\"\\\"\\\"\", out.getvalue()",
+                        "",
+                        "        nested = io.StringIO(\"a,\\\"b \\\"and\\\" c\\\",d\")",
+                        "        out = io.StringIO()",
+                        "        format.print2(nested, out, True)",
+                        "        assert out.getvalue() == \"\\\"a,\\\"\\\"b \\\"and\\\" c\\\",d\\\"\", out.getvalue()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 19.64845561981201,
+                    "generation_timestamp": "2024-06-05T17:58:51.863466",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class JiraCsv263Test:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "from src.main.org.apache.commons.csv.CSVFormat import *",
+        "from src.main.org.apache.commons.csv.QuoteMode import *"
+    ]
+}

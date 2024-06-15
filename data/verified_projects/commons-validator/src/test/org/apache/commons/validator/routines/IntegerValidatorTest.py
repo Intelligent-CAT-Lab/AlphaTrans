@@ -25,90 +25,83 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-
-            self._validator = IntegerValidator(False, 0)
-            self._strictValidator = IntegerValidator.IntegerValidator1()
-
-            self._testPattern = "#,###"
-
-            self._max = sys.maxsize
-            self._maxPlusOne = sys.maxsize + 1
-            self._min = -sys.maxsize - 1
-            self._minMinusOne = -sys.maxsize - 1 - 1
-
-            self._invalidStrict = [
-                None,
-                "",
-                "X",
-                "X12",
-                "12X",
-                "1X2",
-                "1.2",
-                FloatValidatorTest.__INT_MAX_1,
-                FloatValidatorTest.__INT_MIN_1
-            ]
-
-            self._invalid = [
-                None,
-                "",
-                "X",
-                "X12",
-                FloatValidatorTest.__INT_MAX_1,
-                FloatValidatorTest.__INT_MIN_1
-            ]
-
-            self._testNumber = 1234
-            self._testZero = 0
-            self._validStrict = [
-                "0",
-                "1234",
-                "1,234",
-                FloatValidatorTest.__INT_MAX,
-                FloatValidatorTest.__INT_MIN
-            ]
-            self._validStrictCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                FloatValidatorTest.__INT_MAX_VAL,
-                FloatValidatorTest.__INT_MIN_VAL
-            ]
-            self._valid = [
-                "0",
-                "1234",
-                "1,234",
-                "1,234.5",
-                "1234X",
-                FloatValidatorTest.__INT_MAX,
-                FloatValidatorTest.__INT_MIN,
-                FloatValidatorTest.__INT_MAX_0,
-                FloatValidatorTest.__INT_MIN_0
-            ]
-            self._validCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                FloatValidatorTest.__INT_MAX_VAL,
-                FloatValidatorTest.__INT_MIN_VAL,
-                FloatValidatorTest.__INT_MAX_VAL,
-                FloatValidatorTest.__INT_MIN_VAL
-            ]
-
-            self._testStringUS = "1,234"
-            self._testStringDE = "1.234"
-
-            self._localeValue = self._testStringDE
-            self._localePattern = "#.###"
-            self._testLocale = 'de_DE.UTF-8'
-            self._localeExpected = self._testNumber
+            super().setUp(
+                validator = IntegerValidator(False, 0),
+                strictValidator = IntegerValidator.IntegerValidator1(),
+                testPattern = "#,###",
+                _max = sys.maxsize,
+                maxPlusOne = sys.maxsize + 1,
+                _min = -sys.maxsize - 1,
+                minMinusOne = -sys.maxsize - 1 - 1,
+                invalidStrict = [
+                    None,
+                    "",
+                    "X",
+                    "X12",
+                    "12X",
+                    "1X2",
+                    "1.2",
+                    FloatValidatorTest.__INT_MAX_1,
+                    FloatValidatorTest.__INT_MIN_1
+                ],
+                invalid = [
+                    None,
+                    "",
+                    "X",
+                    "X12",
+                    FloatValidatorTest.__INT_MAX_1,
+                    FloatValidatorTest.__INT_MIN_1
+                ],
+                testNumber = 1234,
+                testZero = 0,
+                validStrict = [
+                    "0",
+                    "1234",
+                    "1,234",
+                    FloatValidatorTest.__INT_MAX,
+                    FloatValidatorTest.__INT_MIN
+                ],
+                validStrictCompare = [
+                    0,
+                    1234,
+                    1234,
+                    FloatValidatorTest.__INT_MAX_VAL,
+                    FloatValidatorTest.__INT_MIN_VAL
+                ],
+                valid = [
+                    "0",
+                    "1234",
+                    "1,234",
+                    "1,234.5",
+                    "1234X",
+                    FloatValidatorTest.__INT_MAX,
+                    FloatValidatorTest.__INT_MIN,
+                    FloatValidatorTest.__INT_MAX_0,
+                    FloatValidatorTest.__INT_MIN_0
+                ],
+                validCompare = [
+                    0,
+                    1234,
+                    1234,
+                    1234,
+                    1234,
+                    FloatValidatorTest.__INT_MAX_VAL,
+                    FloatValidatorTest.__INT_MIN_VAL,
+                    FloatValidatorTest.__INT_MAX_VAL,
+                    FloatValidatorTest.__INT_MIN_VAL
+                ],
+                testStringUS = "1,234",
+                testStringDE = "1.234",
+                localeValue = "1.234",
+                localePattern = "#.###",
+                testLocale = 'de_DE.UTF-8',
+                localeExpected = 1234
+            )
         except Exception as e:
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_IntegerValidatorMethods(self) -> None:
+    def testIntegerValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -190,7 +183,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
 
     
-    def test_IntegerRangeMinMax(self) -> None:
+    def testIntegerRangeMinMax(self) -> None:
         validator = IntegerValidator(self._strictValidator)
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")
@@ -247,7 +240,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
     
 
-    def test_MinMaxValues(self) -> None:
+    def testMinMaxValues(self) -> None:
         self.assertTrue(
             self._validator.isValid0("2147483647"),
             "2147483647 is max integer"

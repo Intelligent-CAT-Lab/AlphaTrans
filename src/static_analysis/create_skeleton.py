@@ -239,9 +239,13 @@ def main(args):
                 target_schema['classes'][class_]['fields'][field]['partial_translation'] = f'    {field_body}'
                 target_schema['classes'][class_]['fields'][field]['translation'] = []
                 target_schema['classes'][class_]['fields'][field]['translation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['syntactical_validation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['test_validation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['graal_validation_status'] = 'pending'
                 target_schema['classes'][class_]['fields'][field]['elapsed_time'] = 0
                 target_schema['classes'][class_]['fields'][field]['generation_timestamp'] = 0
                 target_schema['classes'][class_]['fields'][field]['model_name'] = 'deepseek-coder-33b-instruct'
+                target_schema['classes'][class_]['fields'][field]['include_implementation'] = False
 
                 skeleton += f'\t{field_name}: {field_type} = None\n'
             skeleton += '\t# Class Fields End\n\n'
@@ -325,9 +329,13 @@ def main(args):
                 target_schema['classes'][class_]['methods'][method]['partial_translation'] = current_method
                 target_schema['classes'][class_]['methods'][method]['translation'] = []
                 target_schema['classes'][class_]['methods'][method]['translation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['syntactical_validation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['test_validation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['graal_validation_status'] = 'pending'
                 target_schema['classes'][class_]['methods'][method]['elapsed_time'] = 0
                 target_schema['classes'][class_]['methods'][method]['generation_timestamp'] = 0
                 target_schema['classes'][class_]['methods'][method]['model_name'] = 'deepseek-coder-33b-instruct'
+                target_schema['classes'][class_]['methods'][method]['include_implementation'] = False
 
                 assert '<placeholder>' not in ''.join(current_method)
 
@@ -342,7 +350,8 @@ def main(args):
                       'Dict': 'import typing\nfrom typing import *\n', 'List': 'import typing\nfrom typing import *\n', 'Union': 'import typing\nfrom typing import *\n', 'datetime': 'import datetime\n', 
                       'os': 'import os\n', 'pickle': 'import pickle\n', 'itertools': 'import itertools\n', 'sys': 'import sys\n', 'collections': 'import collections\n', 
                       'unittest.TestCase': 'import unittest\n', 'uuid': 'import uuid\n', 'tempfile': 'import tempfile\n', 'typing': 'import typing\n', 'BytesIO': 'from io import BytesIO\n',
-                      'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n'}
+                      'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n', 'zoneinfo': 'import zoneinfo\n',
+                      'urllib': 'import urllib\n', 'logging': 'import logging\n'}
 
         python_imports = []
         python_imports.append('from __future__ import annotations')

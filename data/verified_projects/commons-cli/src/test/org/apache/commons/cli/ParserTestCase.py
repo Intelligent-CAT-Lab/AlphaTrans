@@ -28,8 +28,13 @@ class ParserTestCase(unittest.TestCase, ABC):
     # Class Methods Begin
     @classmethod
     def setUpClass(cls):
-        "Tests shall only be executed on child classes with concrete parser implementations."
-        raise unittest.SkipTest
+        if cls == ParserTestCase:
+            "Tests shall only be executed on child classes with concrete parser implementations."
+            raise unittest.SkipTest
+    
+    def __init__(self, methodName='runTest'):
+        self.setUpClass()
+        super().__init__(methodName)
     
     
     def __parse(
@@ -38,7 +43,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         opts: Options,
         args: typing.List[str],
         properties: typing.Union[
-            configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
+            configparser.ConfigParser, typing.Dict
         ],
     ) -> CommandLine:
         
@@ -49,15 +54,15 @@ class ParserTestCase(unittest.TestCase, ABC):
         )
     
     
-    def setUp(self) -> None:
-        self.__parser = None
+    def setUp(self, parser) -> None:
+        self.__parser = parser
         self.__options = Options()\
             .addOption3("a", "enable-a", False, "turn [a] on or off")\
             .addOption3("b", "bfile", True, "set the value of [b]")\
-            .addOption3("c", "copt", False, "turn [c] on or off")\
+            .addOption3("c", "copt", False, "turn [c] on or off")
     
 
-    def test_AmbiguousLongWithoutEqualSingleDash(self) -> None:
+    def testAmbiguousLongWithoutEqualSingleDash(self) -> None:
         try:
             args = ["-b", "-foobar"]
 
@@ -78,7 +83,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_AmbiguousPartialLongOption1(self) -> None:
+    def testAmbiguousPartialLongOption1(self) -> None:
         try:
             args = ["--ver"]
 
@@ -100,7 +105,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_AmbiguousPartialLongOption2(self) -> None:
+    def testAmbiguousPartialLongOption2(self) -> None:
         try:
             args = ["-ver"]
 
@@ -122,7 +127,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_AmbiguousPartialLongOption3(self) -> None:
+    def testAmbiguousPartialLongOption3(self) -> None:
         try:
             args = ["--ver=1"]
 
@@ -144,7 +149,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_AmbiguousPartialLongOption4(self) -> None:
+    def testAmbiguousPartialLongOption4(self) -> None:
         try:
             args = ["-ver=1"]
 
@@ -166,7 +171,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_ArgumentStartingWithHyphen(self) -> None:
+    def testArgumentStartingWithHyphen(self) -> None:
         try:
             args = ["-b", "-foo"]
 
@@ -176,7 +181,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_Bursting(self) -> None:
+    def testBursting(self) -> None:
         try:
             args = ["-acbtoast", "foo", "bar"]
 
@@ -191,7 +196,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_DoubleDash1(self) -> None:
+    def testDoubleDash1(self) -> None:
         try:
             args = ["--copt", "--", "-b", "toast"]
 
@@ -204,7 +209,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_DoubleDash2(self) -> None:
+    def testDoubleDash2(self) -> None:
         try:    
             options = Options()
             options.addOption0(OptionBuilder.hasArg0().create1("n"))
@@ -220,7 +225,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_LongOptionQuoteHandling(self) -> None:
+    def testLongOptionQuoteHandling(self) -> None:
         try:
             args = ["--bfile", "\"quoted string\""]
 
@@ -235,7 +240,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_LongOptionWithEqualsQuoteHandling(self) -> None:
+    def testLongOptionWithEqualsQuoteHandling(self) -> None:
         try:
             args = ["--bfile=\"quoted string\""]
 
@@ -250,7 +255,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_LongWithEqualDoubleDash(self) -> None:
+    def testLongWithEqualDoubleDash(self) -> None:
         try:
             args = ["--foo=bar"]
 
@@ -264,7 +269,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_LongWithEqualSingleDash(self) -> None:
+    def testLongWithEqualSingleDash(self) -> None:
         try:
             args = ["-foo=bar"]
 
@@ -278,7 +283,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_LongWithoutEqualDoubleDash(self) -> None:
+    def testLongWithoutEqualDoubleDash(self) -> None:
         try:
             args = ["--foobar"]
 
@@ -292,7 +297,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_LongWithoutEqualSingleDash(self) -> None:
+    def testLongWithoutEqualSingleDash(self) -> None:
         try:
             args = ["-foobar"]
 
@@ -306,7 +311,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_LongWithUnexpectedArgument1(self) -> None:
+    def testLongWithUnexpectedArgument1(self) -> None:
         try:
             args = ["--foo=bar"]
 
@@ -324,7 +329,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_LongWithUnexpectedArgument2(self) -> None:
+    def testLongWithUnexpectedArgument2(self) -> None:
         try:
             args = ["-foobar"]
 
@@ -342,7 +347,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_MissingArg(self) -> None:
+    def testMissingArg(self) -> None:
         try:
             args = ["-b"]
 
@@ -359,7 +364,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_MissingArgWithBursting(self) -> None:
+    def testMissingArgWithBursting(self) -> None:
         try:
             args = ["-acb"]
 
@@ -376,7 +381,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_MissingRequiredGroup(self) -> None:
+    def testMissingRequiredGroup(self) -> None:
         try:
             group = OptionGroup()
             group.addOption(OptionBuilder.create2('a'))
@@ -399,7 +404,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_MissingRequiredOption(self) -> None:
+    def testMissingRequiredOption(self) -> None:
         args = ["-a"]
 
         options = Options()
@@ -422,7 +427,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail("expected to catch MissingOptionException")
 
     
-    def test_MissingRequiredOptions(self) -> None:
+    def testMissingRequiredOptions(self) -> None:
         args = ["-a"]
 
         options = Options()
@@ -449,7 +454,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail("expected to catch MissingOptionException")
 
     
-    def test_Multiple(self) -> None:
+    def testMultiple(self) -> None:
         try:
             args = ["-c", "foobar", "-b", "toast"]
 
@@ -480,7 +485,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_MultipleWithLong(self) -> None:
+    def testMultipleWithLong(self) -> None:
         try:
             args = ["--copt", "foobar", "--bfile", "toast"]
 
@@ -511,7 +516,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_NegativeArgument(self) -> None:
+    def testNegativeArgument(self) -> None:
         try:
             args = ["-b", "-1"]
 
@@ -521,7 +526,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_NegativeOption(self) -> None:
+    def testNegativeOption(self) -> None:
         try:
             args = ["-b", "-1"]
 
@@ -533,7 +538,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_OptionAndRequiredOption(self) -> None:
+    def testOptionAndRequiredOption(self) -> None:
         try:
             args = ["-a", "-b", "file"]
 
@@ -553,7 +558,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_OptionGroup(self) -> None:
+    def testOptionGroup(self) -> None:
         try:
             group = OptionGroup()
             group.addOption(OptionBuilder.create2("a"))
@@ -569,7 +574,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_OptionGroupLong(self) -> None:
+    def testOptionGroupLong(self) -> None:
         try:
             group = OptionGroup()
             group.addOption(OptionBuilder.withLongOpt("foo").create0())
@@ -586,7 +591,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_PartialLongOptionSingleDash(self) -> None:
+    def testPartialLongOptionSingleDash(self) -> None:
         try:
             args = ["-ver"]
 
@@ -602,7 +607,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_PropertiesOption1(self) -> None:
+    def testPropertiesOption1(self) -> None:
         try:
             args = ["-Jsource=1.5", "-J", "target", "1.5", "foo"]
 
@@ -626,7 +631,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_PropertiesOption2(self) -> None:
+    def testPropertiesOption2(self) -> None:
         try:
             args = ["-Dparam1", "-Dparam2=value2", "-D"]
 
@@ -649,7 +654,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_PropertyOptionFlags(self) -> None:
+    def testPropertyOptionFlags(self) -> None:
         try:
             opts = Options()
             opts.addOption1("a", False, "toggle -a")
@@ -693,7 +698,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_PropertyOptionGroup(self) -> None:
+    def testPropertyOptionGroup(self) -> None:
         try:
             opts = Options()
 
@@ -721,7 +726,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_PropertyOptionMultipleValues(self) -> None:
+    def testPropertyOptionMultipleValues(self) -> None:
         try:
             opts = Options()
             opts.addOption0(OptionBuilder.hasArgs0().withValueSeparator1(",").create1('k'))
@@ -738,7 +743,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_PropertyOptionRequired(self) -> None:
+    def testPropertyOptionRequired(self) -> None:
         try:
             opts = Options()
             opts.addOption0(OptionBuilder.isRequired0().create2("f"))
@@ -751,7 +756,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_PropertyOptionSingularValue(self) -> None:
+    def testPropertyOptionSingularValue(self) -> None:
         try:
             opts = Options()
             opts.addOption0(OptionBuilder.hasOptionalArgs1(2).withLongOpt("hide").create0())
@@ -766,7 +771,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_PropertyOptionUnexpected(self) -> None:
+    def testPropertyOptionUnexpected(self) -> None:
         try:
             opts = Options()
 
@@ -781,7 +786,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_PropertyOverrideValues(self) -> None:
+    def testPropertyOverrideValues(self) -> None:
         try:
             opts = Options()
             opts.addOption0(OptionBuilder.hasOptionalArgs1(2).create1('i'))
@@ -801,7 +806,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_ReuseOptionsTwice(self) -> None:
+    def testReuseOptionsTwice(self) -> None:
         try:
             opts = Options()
             opts.addOption0(OptionBuilder.isRequired0().create1('v'))
@@ -817,7 +822,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_ShortOptionConcatenatedQuoteHandling(self) -> None:
+    def testShortOptionConcatenatedQuoteHandling(self) -> None:
         try:
             args = ["-b\"quoted string\""]
 
@@ -832,7 +837,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_ShortOptionQuoteHandling(self) -> None:
+    def testShortOptionQuoteHandling(self) -> None:
         try:
             args = ["-b", "\"quoted string\""]
 
@@ -847,7 +852,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_ShortWithEqual(self) -> None:
+    def testShortWithEqual(self) -> None:
         try:
             args = ["-f=bar"]
 
@@ -861,7 +866,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_ShortWithoutEqual(self) -> None:
+    def testShortWithoutEqual(self) -> None:
         try:
             args = ["-fbar"]
 
@@ -875,7 +880,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_ShortWithUnexpectedArgument(self) -> None:
+    def testShortWithUnexpectedArgument(self) -> None:
         try:
             args = ["-f=bar"]
 
@@ -893,7 +898,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SimpleLong(self) -> None:
+    def testSimpleLong(self) -> None:
         try:
             args = ["--enable-a", "--bfile", "toast", "foo", "bar"]
 
@@ -908,7 +913,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SimpleShort(self) -> None:
+    def testSimpleShort(self) -> None:
         try:
             args = ["-a", "-b", "toast", "foo", "bar"]
 
@@ -922,7 +927,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_SingleDash(self) -> None:
+    def testSingleDash(self) -> None:
         try:
             args = ["--copt", "-b", "-", "-a", "-"]
 
@@ -945,7 +950,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_StopAtExpectedArg(self) -> None:
+    def testStopAtExpectedArg(self) -> None:
         try:
             args = ["-b", "foo"]
 
@@ -962,7 +967,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_StopAtNonOptionLong(self) -> None:
+    def testStopAtNonOptionLong(self) -> None:
         try:
             args = ["--zop==1", "-abtoast", "--b=bar"]
 
@@ -979,7 +984,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_StopAtNonOptionShort(self) -> None:
+    def testStopAtNonOptionShort(self) -> None:
         try:
             args = ["-z", "-a", "-btoast"]
 
@@ -994,7 +999,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_StopAtUnexpectedArg(self) -> None:
+    def testStopAtUnexpectedArg(self) -> None:
         try:
             args = ["-c", "foober", "-b", "toast"]
 
@@ -1009,7 +1014,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_StopBursting(self) -> None:
+    def testStopBursting(self) -> None:
         try:
             args = ["-azc"]
 
@@ -1028,7 +1033,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_StopBursting2(self) -> None:
+    def testStopBursting2(self) -> None:
         try:
             args = ["-c", "foobar", "-btoast"]
 
@@ -1059,7 +1064,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_UnambiguousPartialLongOption1(self) -> None:
+    def testUnambiguousPartialLongOption1(self) -> None:
         try:
             args = ["--ver"]
 
@@ -1074,7 +1079,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_UnambiguousPartialLongOption2(self) -> None:
+    def testUnambiguousPartialLongOption2(self) -> None:
         try:
             args = ["-ver"]
 
@@ -1089,7 +1094,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
 
-    def test_UnambiguousPartialLongOption3(self) -> None:
+    def testUnambiguousPartialLongOption3(self) -> None:
         try:
             args = ["--ver=1"]
 
@@ -1107,7 +1112,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_UnambiguousPartialLongOption4(self) -> None:
+    def testUnambiguousPartialLongOption4(self) -> None:
         try:
             args = ["-ver=1"]
 
@@ -1125,7 +1130,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_UnlimitedArgs(self) -> None:
+    def testUnlimitedArgs(self) -> None:
         try:
             args = ["-e", "one", "two", "-f", "alpha"]
 
@@ -1143,7 +1148,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_UnrecognizedOption(self) -> None:
+    def testUnrecognizedOption(self) -> None:
         try:
             args = ["-a", "-d", "-b", "toast", "foo", "bar"]
 
@@ -1156,7 +1161,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_UnrecognizedOptionWithBursting(self) -> None:
+    def testUnrecognizedOptionWithBursting(self) -> None:
         try:
             args = ["-adbtoast", "foo", "bar"]
 
@@ -1169,7 +1174,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_WithRequiredOption(self) -> None:
+    def testWithRequiredOption(self) -> None:
         try:
             args = ["-b", "file"]
 

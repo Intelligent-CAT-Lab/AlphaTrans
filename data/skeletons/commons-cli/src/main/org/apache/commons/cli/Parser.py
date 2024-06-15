@@ -33,10 +33,7 @@ class Parser(CommandLineParser, ABC):
         pass
 
     def _processProperties(
-        self,
-        properties: typing.Union[
-            configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
-        ],
+        self, properties: typing.Union[configparser.ConfigParser, typing.Dict]
     ) -> None:
         pass
 
@@ -50,9 +47,7 @@ class Parser(CommandLineParser, ABC):
         self,
         options: Options,
         arguments: typing.List[str],
-        properties: typing.Union[
-            configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
-        ],
+        properties: typing.Union[configparser.ConfigParser, typing.Dict],
         stopAtNonOption: bool,
     ) -> CommandLine:
         pass
@@ -61,9 +56,7 @@ class Parser(CommandLineParser, ABC):
         self,
         options: Options,
         arguments: typing.List[str],
-        properties: typing.Union[
-            configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
-        ],
+        properties: typing.Union[configparser.ConfigParser, typing.Dict],
     ) -> CommandLine:
         pass
 

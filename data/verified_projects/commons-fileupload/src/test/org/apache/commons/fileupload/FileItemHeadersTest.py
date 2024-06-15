@@ -28,7 +28,7 @@ class PeekableIterator:
 
 class FileItemHeadersTest(unittest.TestCase):
 
-    def test_FileItemHeaders(self) -> None:
+    def testFileItemHeaders(self) -> None:
 
         aMutableFileItemHeaders = FileItemHeadersImpl()
         aMutableFileItemHeaders.addHeader(

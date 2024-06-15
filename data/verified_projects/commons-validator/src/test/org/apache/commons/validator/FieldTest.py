@@ -21,7 +21,7 @@ class FieldTest(unittest.TestCase):
         self._field = None
 
     
-    def test_EmptyArgs(self) -> None:
+    def testEmptyArgs(self) -> None:
         self.assertEqual(
             len(self._field.getArgs("required")),
             0,
@@ -29,7 +29,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
-    def test_DefaultPositionImplied(self) -> None:
+    def testDefaultPositionImplied(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg0("default-position-1"))
         self._field.addArg(self.__createArg0("default-position-2"))
@@ -56,7 +56,7 @@ class FieldTest(unittest.TestCase):
         )
 
    
-    def test_DefaultUsingPositions(self) -> None:
+    def testDefaultUsingPositions(self) -> None:
         self._field.addArg(self.__createArg1("default-position-1", 1))
         self._field.addArg(self.__createArg1("default-position-0", 0))
         self._field.addArg(self.__createArg1("default-position-2", 2))
@@ -83,7 +83,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
-    def test_DefaultOnePosition(self) -> None:
+    def testDefaultOnePosition(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg1("default-position-2", 2))
         self._field.addArg(self.__createArg0("default-position-3"))
@@ -114,7 +114,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
-    def test_DefaultSomePositions(self) -> None:
+    def testDefaultSomePositions(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg1("default-position-2", 2))
         self._field.addArg(self.__createArg0("default-position-3"))
@@ -147,7 +147,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
-    def test_OverrideUsingPositionA(self) -> None:
+    def testOverrideUsingPositionA(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg0("default-position-1"))
         self._field.addArg(self.__createArg0("default-position-2"))
@@ -181,7 +181,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
-    def test_OverrideUsingPositionB(self) -> None:
+    def testOverrideUsingPositionB(self) -> None:
         self._field.addArg(self.__createArg3("required-position-3", "required", 3))
         self._field.addArg(self.__createArg3("required-position-1", "required", 1))
         self._field.addArg(self.__createArg0("default-position-0"))
@@ -240,7 +240,7 @@ class FieldTest(unittest.TestCase):
         )
 
    
-    def test_OverridePositionImplied(self) -> None:
+    def testOverridePositionImplied(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg2("required-position-1", "required"))
         self._field.addArg(self.__createArg2("required-position-2", "required"))
@@ -301,7 +301,7 @@ class FieldTest(unittest.TestCase):
         )
 
     
-    def test_OverrideSomePosition(self) -> None:
+    def testOverrideSomePosition(self) -> None:
         self._field.addArg(self.__createArg0("default-position-0"))
         self._field.addArg(self.__createArg0("default-position-1"))
         self._field.addArg(self.__createArg0("default-position-2"))

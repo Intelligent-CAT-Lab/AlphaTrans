@@ -68,7 +68,7 @@ class TimeValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
-    def test_PatternValid(self) -> None:
+    def testPatternValid(self) -> None:
         for i in range(len(self._patternValid)):
             text = f"{i} value=[{self._patternValid[i]}] failed "
             calendar = self._validator.validate2(self._patternValid[i], "HH-mm-ss")
@@ -88,7 +88,7 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
-    def test_PatternInvalid(self) -> None:
+    def testPatternInvalid(self) -> None:
         for i in range(len(self._patternInvalid)):
             text = f"{i} value=[{self._patternInvalid[i]}] passed "
             date = self._validator.validate2(self._patternInvalid[i], "HH-mm-ss")
@@ -102,7 +102,7 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
-    def test_LocaleValid(self) -> None:
+    def testLocaleValid(self) -> None:
         for i in range(len(self._localeValid)):
             text = f"{i} value=[{self._localeValid[i]}] failed "
             calendar = self._validator.validate4(self._localeValid[i], 'en_GB.UTF-8')
@@ -122,7 +122,7 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
-    def test_LocaleInvalid(self) -> None:
+    def testLocaleInvalid(self) -> None:
         for i in range(len(self._localeInvalid)):
             text = f"{i} value=[{self._localeInvalid[i]}] passed "
             date = self._validator.validate4(self._localeInvalid[i], 'en_US.UTF-8')
@@ -136,7 +136,7 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
-    def test_TimeZone(self) -> None:
+    def testTimeZone(self) -> None:
         setlocale(LC_TIME, 'en_GB.UTF-8')
 
         result = None
@@ -307,7 +307,7 @@ class TimeValidatorTest(unittest.TestCase):
         )
         result = None
 
-    def test_Format(self) -> None:
+    def testFormat(self) -> None:
         self.__origDefault = 'en_GB.UTF-8'
 
         test = TimeValidator.getInstance().validate2("16:49:23", "HH:mm:ss")
@@ -331,7 +331,7 @@ class TimeValidatorTest(unittest.TestCase):
             "Format default"
         )
 
-    def test_Compare(self) -> None:
+    def testCompare(self) -> None:
         testTime = 154523
         min = 100
         hour = 10000

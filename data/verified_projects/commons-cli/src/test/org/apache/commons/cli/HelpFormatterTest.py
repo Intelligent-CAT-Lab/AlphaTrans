@@ -15,7 +15,7 @@ class HelpFormatterTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def test_Accessors(self) -> None:
+    def testAccessors(self) -> None:
         formatter = HelpFormatter()
 
         formatter.setArgName("argname")
@@ -43,7 +43,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(80, formatter.getWidth(), "width")
 
 
-    def test_AutomaticUsage(self) -> None: 
+    def testAutomaticUsage(self) -> None: 
         hf = HelpFormatter()
         options = None
         out = io.BytesIO()
@@ -69,7 +69,7 @@ class HelpFormatterTest(unittest.TestCase):
         out.truncate(0)
 
 
-    def test_DefaultArgName(self) -> None:
+    def testDefaultArgName(self) -> None:
         option = Option.builder1("f").hasArg0().required1(True).build()
 
         options = Options()
@@ -87,7 +87,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, result)
 
     
-    def test_FindWrapPos(self) -> None:
+    def testFindWrapPos(self) -> None:
         hf = HelpFormatter()
 
         text = "This is a test."
@@ -108,7 +108,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(7, hf.findWrapPos(text, 6, 0), "wrap position 6")
 
     
-    def test_HeaderStartingWithLineSeparator(self) -> None:
+    def testHeaderStartingWithLineSeparator(self) -> None:
         options = Options()
         formatter = HelpFormatter()
         header = HelpFormatterTest.__EOL + "Header"
@@ -129,7 +129,7 @@ class HelpFormatterTest(unittest.TestCase):
                 out.getvalue())
         
     
-    def test_HelpWithLongOptSeparator(self) -> None:
+    def testHelpWithLongOptSeparator(self) -> None:
         options = Options()
         options.addOption1("f", True, "the file")
         options.addOption0(Option.builder1("s")\
@@ -164,7 +164,7 @@ class HelpFormatterTest(unittest.TestCase):
         )
 
     
-    def test_IndentedHeaderAndFooter(self) -> None:
+    def testIndentedHeaderAndFooter(self) -> None:
         options = Options()
         formatter = HelpFormatter()
         header = "  Header1\n  Header2"
@@ -189,7 +189,7 @@ class HelpFormatterTest(unittest.TestCase):
         )
 
     
-    def test_OptionWithoutShortFormat(self) -> None:
+    def testOptionWithoutShortFormat(self) -> None:
         options = Options()
         options.addOption0(Option(0, "a", "aaa", "aaaaaaa", False, None))
         options.addOption0(Option(0, None, "bbb", "bbbbbbb", False, None))
@@ -211,7 +211,7 @@ class HelpFormatterTest(unittest.TestCase):
         )
 
     
-    def test_OptionWithoutShortFormat2(self) -> None:
+    def testOptionWithoutShortFormat2(self) -> None:
         help = Option(0, "h", "help", "print this message", False, None)
         version = Option(0, "v", "version", "print version information", False, None)
         newRun = Option(0, "n", "new", "Create NLT cache entries only for new items", False, None)
@@ -305,7 +305,7 @@ class HelpFormatterTest(unittest.TestCase):
                 out.getvalue())
 
     
-    def test_PrintHelpNewlineFooter(self) -> None:
+    def testPrintHelpNewlineFooter(self) -> None:
         formatter = HelpFormatter()
         out = io.BytesIO()
         pw = io.TextIOWrapper(out, write_through=True)
@@ -318,7 +318,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, result, "footer newline")
 
     
-    def test_PrintHelpNewlineHeader(self) -> None:
+    def testPrintHelpNewlineHeader(self) -> None:
         formatter = HelpFormatter()
         out = io.BytesIO()
         pw = io.TextIOWrapper(out, write_through=True)
@@ -331,7 +331,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, result, "header newline")
 
     
-    def test_PrintHelpWithEmptySyntax(self) -> None:
+    def testPrintHelpWithEmptySyntax(self) -> None:
         formatter = HelpFormatter()
         try:
                 formatter.printHelp4(None, Options())
@@ -345,7 +345,7 @@ class HelpFormatterTest(unittest.TestCase):
                 pass
 
     
-    def test_PrintOptionGroupUsage(self) -> None:
+    def testPrintOptionGroupUsage(self) -> None:
         group = OptionGroup()
         group.addOption(Option.builder1("a").build())
         group.addOption(Option.builder1("b").build())
@@ -362,7 +362,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app [-a | -b | -c]" + HelpFormatterTest.__EOL, out.getvalue())
 
     
-    def test_PrintOptions(self) -> None:
+    def testPrintOptions(self) -> None:
         sb = ""
         hf = HelpFormatter()
         leftPad = 1
@@ -438,7 +438,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "multiple wrapped options")
 
     
-    def test_PrintOptionWithEmptyArgNameUsage(self) -> None:
+    def testPrintOptionWithEmptyArgNameUsage(self) -> None:
         option = Option.Option2("f", True, None)
         option.setArgName("")
         option.setRequired(True)
@@ -454,7 +454,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app -f" + HelpFormatterTest.__EOL, out.getvalue())
 
     
-    def test_PrintRequiredOptionGroupUsage(self) -> None:
+    def testPrintRequiredOptionGroupUsage(self) -> None:
         group = OptionGroup()
         group.addOption(Option.builder1("a").build())
         group.addOption(Option.builder1("b").build())
@@ -472,7 +472,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app -a | -b | -c" + HelpFormatterTest.__EOL, out.getvalue())
 
 
-    def test_PrintSortedUsage(self) -> None:
+    def testPrintSortedUsage(self) -> None:
         opts = Options()
         opts.addOption0(Option.Option1("a", "first"))
         opts.addOption0(Option.Option1("b", "second"))
@@ -489,7 +489,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app [-c] [-b] [-a]" + HelpFormatterTest.__EOL, out.getvalue())
 
     
-    def test_PrintSortedUsageWithNullComparator(self) -> None:
+    def testPrintSortedUsageWithNullComparator(self) -> None:
         opts = Options()
         opts.addOption0(Option.Option1("c", "first"))
         opts.addOption0(Option.Option1("b", "second"))
@@ -503,7 +503,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app [-c] [-b] [-a]" + HelpFormatterTest.__EOL, out.getvalue())
 
 
-    def test_PrintUsage(self) -> None:
+    def testPrintUsage(self) -> None:
         optionA = Option.Option1("a", "first")
         optionB = Option.Option1("b", "second")
         optionC = Option.Option1("c", "third")
@@ -523,7 +523,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("usage: app [-a] [-b] [-c]" + HelpFormatterTest.__EOL, result)
 
 
-    def test_RenderWrappedTextMultiLine(self) -> None:
+    def testRenderWrappedTextMultiLine(self) -> None:
         width = 16
         padding = 0
         expected = "aaaa aaaa aaaa" + \
@@ -538,7 +538,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "multi line text")
 
 
-    def test_RenderWrappedTextMultiLinePadded(self) -> None:
+    def testRenderWrappedTextMultiLinePadded(self) -> None:
         width = 16
         padding = 4
         text = "aaaa aaaa aaaa" + \
@@ -558,7 +558,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "multi-line padded text")
 
 
-    def test_RenderWrappedTextSingleLine(self) -> None:
+    def testRenderWrappedTextSingleLine(self) -> None:
         width = 12
         padding = 0
         text = "This is a test."
@@ -570,7 +570,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "single line text")
 
 
-    def test_RenderWrappedTextSingleLinePadded(self) -> None:
+    def testRenderWrappedTextSingleLinePadded(self) -> None:
         width = 12
         padding = 4
         text = "This is a test."
@@ -582,7 +582,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "single line padded text")
 
 
-    def test_RenderWrappedTextSingleLinePadded2(self) -> None:
+    def testRenderWrappedTextSingleLinePadded2(self) -> None:
         width = 53
         padding = 24
         text = "  -p,--period <PERIOD>  PERIOD is time duration of form " + \
@@ -599,7 +599,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "single line padded text 2")
 
 
-    def test_RenderWrappedTextWordCut(self) -> None:
+    def testRenderWrappedTextWordCut(self) -> None:
         width = 7
         padding = 0
         text = "Thisisatest."
@@ -611,7 +611,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual(expected, str(sb), "cut and wrap")
     
     
-    def test_Rtrim(self) -> None:
+    def testRtrim(self) -> None:
         formatter = HelpFormatter()
 
         self.assertIsNone(formatter.rtrim(None))
@@ -619,7 +619,7 @@ class HelpFormatterTest(unittest.TestCase):
         self.assertEqual("  foo", formatter.rtrim("  foo  "))
     
     
-    def test_UsageWithLongOptSeparator(self) -> None:
+    def testUsageWithLongOptSeparator(self) -> None:
         options = Options()
         options.addOption1("f", True, "the file")
         options.addOption0(

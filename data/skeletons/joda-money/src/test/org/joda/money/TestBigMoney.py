@@ -14,30 +14,6 @@ import io
 # Imports End
 
 
-class BadDecimal(decimal.Decimal):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    __serialVersionUID: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    # Class Methods End
-
-
-class BadInteger(int):
-
-    # Class Fields Begin
-    __serialVersionUID: int = None
-    # Class Fields End
-
-    # Class Methods Begin
-    def __init__(self) -> None:
-        pass
-
-    # Class Methods End
-
-
 class TestBigMoney:
 
     # Class Fields Begin

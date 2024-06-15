@@ -18,26 +18,27 @@ class ModulusTenCUSIPCheckDigitTest(AbstractCheckDigitTest):
     
     def setUp(self) -> None:
         try:
-            super().setUp()
-            self._routine = ModulusTenCheckDigit([1, 2], True, True)
-            self._valid = [
-                "037833100",
-                "931142103",
-                "837649128",
-                "392690QT3",
-                "594918104",
-                "86770G101",
-                "Y8295N109",
-                "G8572F100"
-            ]
-            self._invalid = [
-                "0378#3100"
-            ]
+            super().setUp(
+                routine = ModulusTenCheckDigit([1, 2], True, True),
+                valid = [
+                    "037833100",
+                    "931142103",
+                    "837649128",
+                    "392690QT3",
+                    "594918104",
+                    "86770G101",
+                    "Y8295N109",
+                    "G8572F100"
+                ],
+                invalid = [
+                    "0378#3100"
+                ]
+            )
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_VALIDATOR_336_InvalidCheckDigits(self) -> None:
+    def testVALIDATOR_336_InvalidCheckDigits(self) -> None:
         for i in range(len(ModulusTenCUSIPCheckDigitTest.__invalidCheckDigits)):
             invalidCheckDigit = ModulusTenCUSIPCheckDigitTest.__invalidCheckDigits[i]
             self.assertFalse(
@@ -46,7 +47,7 @@ class ModulusTenCUSIPCheckDigitTest(AbstractCheckDigitTest):
             )
     
 
-    def test_VALIDATOR_336_ValidCheckDigits(self) -> None:
+    def testVALIDATOR_336_ValidCheckDigits(self) -> None:
         for i in range(len(ModulusTenCUSIPCheckDigitTest.__validCheckDigits)):
             validCheckDigit = ModulusTenCUSIPCheckDigitTest.__validCheckDigits[i]
             self.assertTrue(

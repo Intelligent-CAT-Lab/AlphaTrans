@@ -25,7 +25,7 @@ import pathlib
 
 class DijkstraTestCase(unittest.TestCase):
     
-    def test_FindShortestPathAndVerify(self) -> None:
+    def testFindShortestPathAndVerify(self) -> None:
         graph = DirectedMutableGraph()
 
         one = BaseLabeledVertex("1")
@@ -81,7 +81,7 @@ class DijkstraTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
-    def test_NotConnectGraph(self) -> None:
+    def testNotConnectGraph(self) -> None:
         with self.assertRaises(PathNotFoundException):
             graph = UndirectedMutableGraph()
 
@@ -98,7 +98,7 @@ class DijkstraTestCase(unittest.TestCase):
                 .applyingDijkstra(DoubleWeightBaseOperations())
 
 
-    def test_NullGraph(self) -> None:
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findShortestPath(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -107,7 +107,7 @@ class DijkstraTestCase(unittest.TestCase):
                 .applyingDijkstra(DoubleWeightBaseOperations())
     
     
-    def test_NullMonoid(self) -> None:
+    def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 
@@ -123,7 +123,7 @@ class DijkstraTestCase(unittest.TestCase):
                 .applyingDijkstra(None)
 
     
-    def test_NullVertices(self) -> None:
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 

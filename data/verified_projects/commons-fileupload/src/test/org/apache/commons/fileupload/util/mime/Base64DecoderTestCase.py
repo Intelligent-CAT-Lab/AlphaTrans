@@ -14,7 +14,7 @@ class Base64DecoderTestCase(unittest.TestCase):
 
     # Class Methods Begin
 
-    def test_rfc4648Section10Decode(self) -> None:
+    def testRfc4648Section10Decode(self) -> None:
         try:
             self.__assertEncoded("", "") 
             self.__assertEncoded("f", "Zg==")
@@ -26,7 +26,7 @@ class Base64DecoderTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_decodeWithInnerPad(self) -> None:
+    def testDecodeWithInnerPad(self) -> None:
         try:
             self.__assertEncoded(
                 "Hello WorldHello World", "SGVsbG8gV29ybGQ=SGVsbG8gV29ybGQ="
@@ -34,68 +34,68 @@ class Base64DecoderTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_nonBase64Bytes(self) -> None:
+    def testNonBase64Bytes(self) -> None:
         try:
             self.__assertEncoded("Hello World", "S?G!V%sbG 8g\rV\t\n29ybGQ*=")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_truncatedString(self) -> None:
+    def testTruncatedString(self) -> None:
         x = b'n'
         with self.assertRaises(Exception) as context:
             Base64Decoder.decode(x, BytesIO())
         
         self.assertTrue(isinstance(context.exception, IOError) or isinstance(context.exception, OSError))
 
-    def test_decodeTrailingJunk(self) -> None:
+    def testDecodeTrailingJunk(self) -> None:
         try:
             self.__assertEncoded("foobar", "Zm9vYmFy!!!")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_decodeTrailing1(self) -> None:
+    def testDecodeTrailing1(self) -> None:
         try:
             self.__assertIOException("truncated", "Zm9vYmFy1")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_decodeTrailing2(self) -> None:
+    def testDecodeTrailing2(self) -> None:
         try:
             self.__assertIOException("truncated", "Zm9vYmFy12")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_decodeTrailing3(self) -> None:
+    def testDecodeTrailing3(self) -> None:
         try:
             self.__assertIOException("truncated", "Zm9vYmFy123")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_badPadding(self) -> None:
+    def testBadPadding(self) -> None:
         try:
             self.__assertIOException("incorrect padding, 4th byte", "Zg=a")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_badPaddingLeading1(self) -> None:
+    def testBadPaddingLeading1(self) -> None:
         try:
             self.__assertIOException("incorrect padding, first two bytes cannot be padding", "=A==")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_badPaddingLeading2(self) -> None:
+    def testBadPaddingLeading2(self) -> None:
         try:
             self.__assertIOException("incorrect padding, first two bytes cannot be padding", "====")
         except Exception as e:
             self.fail(str(e))
 
-    def test_badLength(self) -> None:
+    def testBadLength(self) -> None:
         try:
             self.__assertIOException("truncated", "Zm8==")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_nonASCIIcharacter(self) -> None:
+    def testNonASCIIcharacter(self) -> None:
         try:
             self.__assertEncoded("f", "Zg=À=")
             self.__assertEncoded("f", "Zg=\u0100=")

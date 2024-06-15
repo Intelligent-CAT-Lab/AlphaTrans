@@ -1,0 +1,991 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-pool/src/test/java/org/apache/commons/pool2/Waiter.java",
+    "imports": {
+        "20-20:import AtomicInteger": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.concurrent.atomic.AtomicInteger;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Waiter": {
+            "start": 28,
+            "end": 28,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "161-170:toString": {
+                    "start": 161,
+                    "end": 170,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        final StringBuilder buff = new StringBuilder();\n",
+                        "        buff.append(\"ID = \" + id + '\\n');\n",
+                        "        buff.append(\"valid = \" + valid + '\\n');\n",
+                        "        buff.append(\"active = \" + active + '\\n');\n",
+                        "        buff.append(\"lastPassivated = \" + lastPassivatedMillis + '\\n');\n",
+                        "        buff.append(\"lastIdleTimeMs = \" + lastIdleTimeMillis + '\\n');\n",
+                        "        buff.append(\"latency = \" + latency + '\\n');\n",
+                        "        return buff.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def toString(self) -> str:",
+                        "        ",
+                        "",
+                        "        buff = io.StringIO()",
+                        "        buff.write(\"ID = \" + str(self.__id) + '\\n')",
+                        "        buff.write(\"valid = \" + str(self.__valid) + '\\n')",
+                        "        buff.write(\"active = \" + str(self.__active) + '\\n')",
+                        "        buff.write(\"lastPassivated = \" + str(self.__lastPassivatedMillis) + '\\n')",
+                        "        buff.write(\"lastIdleTimeMs = \" + str(self.__lastIdleTimeMillis) + '\\n')",
+                        "        buff.write(\"latency = \" + str(self.__latency) + '\\n')",
+                        "        return buff.getvalue()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.760631799697876,
+                    "generation_timestamp": "2024-06-06T02:55:39.096779",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "105-107:hashCode": {
+                    "start": 105,
+                    "end": 107,
+                    "body": [
+                        "    public int hashCode() {\n",
+                        "        return id;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hashCode()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def hashCode(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def hashCode(self) -> int:",
+                        "        ",
+                        "",
+                        "        return self.__id",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.478928327560425,
+                    "generation_timestamp": "2024-06-06T02:55:41.578206",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "52-57:equals": {
+                    "start": 52,
+                    "end": 57,
+                    "body": [
+                        "    public boolean equals(final Object obj) {\n",
+                        "        if (!(obj instanceof Waiter)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        return obj.hashCode() == id;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "equals(Object)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def equals(self, obj: typing.Any) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def equals(self, obj: typing.Any) -> bool:",
+                        "        ",
+                        "",
+                        "        if not isinstance(obj, Waiter):",
+                        "            return False",
+                        "        return hash(obj) == self.__id",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.055912256240845,
+                    "generation_timestamp": "2024-06-06T02:55:46.636864",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "173-178:sleepQuietly": {
+                    "start": 173,
+                    "end": 178,
+                    "body": [
+                        "    public static void sleepQuietly(final long millis) {\n",
+                        "        try {\n",
+                        "            Thread.sleep(millis);\n",
+                        "        } catch (final InterruptedException e) {\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "sleepQuietly(long)",
+                    "parameters": [
+                        "millis"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def sleepQuietly(millis: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def sleepQuietly(millis: int) -> None:",
+                        "        ",
+                        "",
+                        "        try:",
+                        "            time.sleep(millis / 1000)",
+                        "        except InterruptedError:",
+                        "            pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.3921806812286377,
+                    "generation_timestamp": "2024-06-06T02:55:50.031638",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "156-158:setValid": {
+                    "start": 156,
+                    "end": 158,
+                    "body": [
+                        "    public void setValid(final boolean valid) {\n",
+                        "        this.valid = valid;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setValid(boolean)",
+                    "parameters": [
+                        "valid"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def setValid(self, valid: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def setValid(self, valid: bool) -> None:",
+                        "        ",
+                        "",
+                        "        self.__valid = valid",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.6768450736999512,
+                    "generation_timestamp": "2024-06-06T02:55:51.711583",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "152-154:setLatency": {
+                    "start": 152,
+                    "end": 154,
+                    "body": [
+                        "    public void setLatency(final long latency) {\n",
+                        "        this.latency = latency;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setLatency(long)",
+                    "parameters": [
+                        "latency"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def setLatency(self, latency: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def setLatency(self, latency: int) -> None:",
+                        "        ",
+                        "",
+                        "        self.__latency = latency",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.3435018062591553,
+                    "generation_timestamp": "2024-06-06T02:55:54.057699",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "137-150:setActive": {
+                    "start": 137,
+                    "end": 150,
+                    "body": [
+                        "    public void setActive(final boolean active) {\n",
+                        "        final boolean activeState = this.active;\n",
+                        "        if (activeState == active) {\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        this.active = active;\n",
+                        "        final long currentTimeMillis = System.currentTimeMillis();\n",
+                        "        if (active) { // activating\n",
+                        "            lastIdleTimeMillis = currentTimeMillis - lastPassivatedMillis;\n",
+                        "        } else { // passivating\n",
+                        "            lastPassivatedMillis = currentTimeMillis;\n",
+                        "            passivationCount++;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setActive(boolean)",
+                    "parameters": [
+                        "active"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def setActive(self, active: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def setActive(self, active: bool) -> None:",
+                        "        ",
+                        "",
+                        "        activeState = self.__active",
+                        "        if activeState == active:",
+                        "            return",
+                        "        self.__active = active",
+                        "        currentTimeMillis = int(time.time() * 1000)",
+                        "        if active:  # activating",
+                        "            self.__lastIdleTimeMillis = currentTimeMillis - self.__lastPassivatedMillis",
+                        "        else:  # passivating",
+                        "            self.__lastPassivatedMillis = currentTimeMillis",
+                        "            self.__passivationCount += 1",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 8.396791934967041,
+                    "generation_timestamp": "2024-06-06T02:56:02.457259",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "118-121:isValid": {
+                    "start": 118,
+                    "end": 121,
+                    "body": [
+                        "    public boolean isValid() {\n",
+                        "        validationCount++;\n",
+                        "        return valid;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isValid(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isValid(self) -> bool:",
+                        "        ",
+                        "",
+                        "        self.__validationCount += 1",
+                        "        return self.__valid",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.391293525695801,
+                    "generation_timestamp": "2024-06-06T02:56:04.851095",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "114-116:isActive": {
+                    "start": 114,
+                    "end": 116,
+                    "body": [
+                        "    public boolean isActive() {\n",
+                        "        return active;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isActive()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isActive(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isActive(self) -> bool:",
+                        "        ",
+                        "",
+                        "        return self.__active",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.5148215293884277,
+                    "generation_timestamp": "2024-06-06T02:56:06.368537",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "100-102:getValidationCount": {
+                    "start": 100,
+                    "end": 102,
+                    "body": [
+                        "    public long getValidationCount() {\n",
+                        "        return validationCount;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getValidationCount()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getValidationCount(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getValidationCount(self) -> int:",
+                        "        ",
+                        "",
+                        "        return self.__validationCount",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.5550901889801025,
+                    "generation_timestamp": "2024-06-06T02:56:07.926340",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "93-95:getPassivationCount": {
+                    "start": 93,
+                    "end": 95,
+                    "body": [
+                        "    public long getPassivationCount() {\n",
+                        "        return passivationCount;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getPassivationCount()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getPassivationCount(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getPassivationCount(self) -> int:",
+                        "        ",
+                        "",
+                        "        return self.__passivationCount",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.651423692703247,
+                    "generation_timestamp": "2024-06-06T02:56:09.580349",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "86-88:getLatency": {
+                    "start": 86,
+                    "end": 88,
+                    "body": [
+                        "    public long getLatency() {\n",
+                        "        return latency;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getLatency()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getLatency(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getLatency(self) -> int:",
+                        "        ",
+                        "",
+                        "        return self.__latency",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.1239938735961914,
+                    "generation_timestamp": "2024-06-06T02:56:11.706927",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "82-84:getLastPassivatedMillis": {
+                    "start": 82,
+                    "end": 84,
+                    "body": [
+                        "    public long getLastPassivatedMillis() {\n",
+                        "        return lastPassivatedMillis;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getLastPassivatedMillis()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getLastPassivatedMillis(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getLastPassivatedMillis(self) -> int:",
+                        "        ",
+                        "",
+                        "        return self.__lastPassivatedMillis",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.7822937965393066,
+                    "generation_timestamp": "2024-06-06T02:56:13.491401",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "71-73:getLastIdleTimeMillis": {
+                    "start": 71,
+                    "end": 73,
+                    "body": [
+                        "    public long getLastIdleTimeMillis() {\n",
+                        "        return lastIdleTimeMillis;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getLastIdleTimeMillis()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getLastIdleTimeMillis(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getLastIdleTimeMillis(self) -> int:",
+                        "        ",
+                        "",
+                        "        return self.__lastIdleTimeMillis",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.341064691543579,
+                    "generation_timestamp": "2024-06-06T02:56:15.835504",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "47-49:doWait": {
+                    "start": 47,
+                    "end": 49,
+                    "body": [
+                        "    public void doWait() {\n",
+                        "        sleepQuietly(latency);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "doWait()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.Waiter",
+                            "Waiter",
+                            "173-178:sleepQuietly"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def doWait(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def doWait(self) -> None:",
+                        "        ",
+                        "",
+                        "        self.sleepQuietly(self.__latency)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.7447848320007324,
+                    "generation_timestamp": "2024-06-06T02:56:18.583096",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "39-44:Waiter": {
+                    "start": 39,
+                    "end": 44,
+                    "body": [
+                        "    public Waiter(final boolean active, final boolean valid, final long latency) {\n",
+                        "        this.active = active;\n",
+                        "        this.valid = valid;\n",
+                        "        this.latency = latency;\n",
+                        "        this.lastPassivatedMillis = System.currentTimeMillis();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Waiter(boolean, boolean, long)",
+                    "parameters": [
+                        "active",
+                        "valid",
+                        "latency"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, active: bool, valid: bool, latency: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self, active: bool, valid: bool, latency: int) -> None:",
+                        "        ",
+                        "",
+                        "        self.__active = active",
+                        "        self.__valid = valid",
+                        "        self.__latency = latency",
+                        "        self.__lastPassivatedMillis = int(round(time.time() * 1000))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 4.726213693618774,
+                    "generation_timestamp": "2024-06-06T02:56:23.311792",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {
+                "37-37:id": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private final int id = instanceCount.getAndIncrement();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": "    __id: int = <placeholder>\n",
+                    "translation": null,
+                    "translation_status": "failed",
+                    "elapsed_time": 33.299076318740845,
+                    "generation_timestamp": "2024-06-06T02:55:29.477942",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "36-36:validationCount": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private long validationCount;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": "    __validationCount: int = None\n",
+                    "translation": [
+                        "    __validationCount: int = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T09:50:12.985265",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "35-35:passivationCount": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private long passivationCount;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": "    __passivationCount: int = None\n",
+                    "translation": [
+                        "    __passivationCount: int = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T09:50:12.988642",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "34-34:lastIdleTimeMillis": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private long lastIdleTimeMillis;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": "    __lastIdleTimeMillis: int = None\n",
+                    "translation": [
+                        "    __lastIdleTimeMillis: int = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T09:50:12.991921",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "33-33:lastPassivatedMillis": {
+                    "start": 33,
+                    "end": 33,
+                    "body": [
+                        "    private long lastPassivatedMillis;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": "    __lastPassivatedMillis: int = None\n",
+                    "translation": [
+                        "    __lastPassivatedMillis: int = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T09:50:12.995205",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "32-32:latency": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    private long latency;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": "    __latency: int = None\n",
+                    "translation": [
+                        "    __latency: int = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T09:50:12.998499",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "31-31:valid": {
+                    "start": 31,
+                    "end": 31,
+                    "body": [
+                        "    private boolean valid;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": "    __valid: bool = None\n",
+                    "translation": [
+                        "    __valid: bool = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T09:50:13.001756",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "30-30:active": {
+                    "start": 30,
+                    "end": 30,
+                    "body": [
+                        "    private boolean active;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": "    __active: bool = None\n",
+                    "translation": [
+                        "    __active: bool = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-06T09:50:13.004949",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "29-29:instanceCount": {
+                    "start": 29,
+                    "end": 29,
+                    "body": [
+                        "    private static final AtomicInteger instanceCount = new AtomicInteger();\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "AtomicInteger",
+                            "java.util.concurrent.atomic.AtomicInteger"
+                        ]
+                    ],
+                    "partial_translation": "    __instanceCount: int = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __instanceCount: int = 0",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.8308959007263184,
+                    "generation_timestamp": "2024-06-06T02:55:33.332901",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "python_class_declaration": "class Waiter:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *"
+    ]
+}

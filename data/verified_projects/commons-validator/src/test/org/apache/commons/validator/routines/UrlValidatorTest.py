@@ -130,7 +130,7 @@ class UrlValidatorTest(unittest.TestCase):
             self.testPartsIndex[index] = 0
 
     
-    def test_IsValid0(self) -> None:
+    def testIsValid0(self) -> None:
         self.checkTestIsValid1(self.testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES)
         self.setUp()
         options = UrlValidator.ALLOW_2_SLASHES +\
@@ -139,7 +139,7 @@ class UrlValidatorTest(unittest.TestCase):
         self.checkTestIsValid1(self.testUrlPartsOptions, options)
 
     
-    def test_IsValidScheme(self) -> None:
+    def testIsValidScheme(self) -> None:
         if self.__printStatus:
             print("\n testIsValidScheme() ")
         urlVal = UrlValidator.UrlValidator3(self.__schemes, 0)
@@ -160,7 +160,7 @@ class UrlValidatorTest(unittest.TestCase):
             print()
     
 
-    def test_Validator202(self) -> None:
+    def testValidator202(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator.UrlValidator3(schemes, UrlValidator.NO_FRAGMENTS)
         self.assertTrue(
@@ -172,7 +172,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator204(self) -> None:
+    def testValidator204(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator.UrlValidator5(schemes)
         self.assertTrue(
@@ -182,7 +182,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator218(self) -> None:
+    def testValidator218(self) -> None:
         validator = UrlValidator.UrlValidator4(UrlValidator.ALLOW_2_SLASHES)
         self.assertTrue(
             validator.isValid("http://somewhere.com/pathxyz/file(1).html"),
@@ -190,7 +190,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator235(self) -> None:
+    def testValidator235(self) -> None:
         version = sys.version_info
         if version < (2, 6): 
             #Python 2.6 is the latest version available at the birth of Java 1.6
@@ -224,7 +224,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator248(self) -> None:
+    def testValidator248(self) -> None:
         regex = RegexValidator.RegexValidator1(["localhost", ".*\\.my-testing"])
         validator = UrlValidator.UrlValidator2(regex, 0)
 
@@ -266,7 +266,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator288(self) -> None:
+    def testValidator288(self) -> None:
         validator = UrlValidator.UrlValidator4(UrlValidator.ALLOW_LOCAL_URLS)
 
         self.assertTrue(
@@ -317,7 +317,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator276(self) -> None:
+    def testValidator276(self) -> None:
         validator = UrlValidator.UrlValidator6()
 
         self.assertTrue(
@@ -395,7 +395,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator391OK(self) -> None:
+    def testValidator391OK(self) -> None:
         schemes = ["file"]
         urlValidator = UrlValidator.UrlValidator5(schemes)
         self.assertTrue(
@@ -403,7 +403,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
     
 
-    def test_Validator391FAILS(self) -> None:
+    def testValidator391FAILS(self) -> None:
         schemes = ["file"]
         urlValidator = UrlValidator.UrlValidator5(schemes)
         self.assertTrue(
@@ -411,7 +411,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator309(self) -> None:
+    def testValidator309(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
             urlValidator.isValid("http://sample.ondemand.com/")
@@ -434,7 +434,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator339(self) -> None:
+    def testValidator339(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
             urlValidator.isValid("http://www.cnn.com/WORLD/?hpt=sitenav")
@@ -453,7 +453,7 @@ class UrlValidatorTest(unittest.TestCase):
         )  # check . does not affect invalid domains
 
     
-    def test_Validator339IDN(self) -> None:
+    def testValidator339IDN(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
             urlValidator.isValid("http://президент.рф/WORLD/?hpt=sitenav")
@@ -472,7 +472,7 @@ class UrlValidatorTest(unittest.TestCase):
         )  # doubly dotty
 
     
-    def test_Validator342(self) -> None:
+    def testValidator342(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
             urlValidator.isValid("http://example.rocks/")
@@ -482,7 +482,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator411(self) -> None:
+    def testValidator411(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
             urlValidator.isValid("http://example.rocks:/")
@@ -501,7 +501,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
     
 
-    def test_Validator464(self) -> None:
+    def testValidator464(self) -> None:
         schemes = ["file"]
         urlValidator = UrlValidator.UrlValidator5(schemes)
         fileNAK = "file://bad ^ domain.com/label/test"
@@ -511,25 +511,25 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator452(self) -> None:
+    def testValidator452(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(
             urlValidator.isValid("http://[::FFFF:129.144.52.38]:80/index.html")
         )
 
     
-    def test_Validator473_1(self) -> None:
+    def testValidator473_1(self) -> None:
         with self.assertRaises(ValueError):
             UrlValidator([], None, 0, None)
 
     
-    def test_Validator473_2(self) -> None:
+    def testValidator473_2(self) -> None:
         items = []
         with self.assertRaises(ValueError):
             UrlValidator([], None, 0, DomainValidator.getInstance2(True, items))
 
     
-    def test_Validator473_3(self) -> None:
+    def testValidator473_3(self) -> None:
         items = []
         with self.assertRaises(ValueError):
             UrlValidator(
@@ -540,11 +540,11 @@ class UrlValidatorTest(unittest.TestCase):
             )
     
 
-    def test_ValidateUrl(self) -> None:
+    def testValidateUrl(self) -> None:
         self.assertTrue(True)
 
     
-    def test_Validator290(self) -> None:
+    def testValidator290(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertTrue(
             validator.isValid("http://xn--h1acbxfam.idn.icann.org/")
@@ -644,12 +644,12 @@ class UrlValidatorTest(unittest.TestCase):
         )  # United Arab Emirates
 
     
-    def test_Validator361(self) -> None:
+    def testValidator361(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertTrue(validator.isValid("http://hello.tokyo/"))
 
     
-    def test_Validator363(self) -> None:
+    def testValidator363(self) -> None:
         urlValidator = UrlValidator.UrlValidator6()
         self.assertTrue(urlValidator.isValid("http://www.example.org/a/b/hello..world"))
         self.assertTrue(urlValidator.isValid("http://www.example.org/a/hello..world"))
@@ -669,7 +669,7 @@ class UrlValidatorTest(unittest.TestCase):
         self.assertTrue(urlValidator.isValid("http://www.example.org/.../.."))
 
     
-    def test_Validator375(self) -> None:
+    def testValidator375(self) -> None:
         validator = UrlValidator.UrlValidator6()
         url = "http://[FEDC:BA98:7654:3210:FEDC:BA98:7654:3210]:80/index.html"
         self.assertTrue(
@@ -688,7 +688,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Validator353(self) -> None:
+    def testValidator353(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertTrue(validator.isValid("http://www.apache.org:80/path"))
         self.assertTrue(validator.isValid("http://user:pass@www.apache.org:80/path"))
@@ -703,7 +703,7 @@ class UrlValidatorTest(unittest.TestCase):
         self.assertFalse(validator.isValid("http://user:pa@ss@www.apache.org/path"))
 
     
-    def test_Validator382(self) -> None:
+    def testValidator382(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertTrue(
             validator.isValid(
@@ -712,14 +712,14 @@ class UrlValidatorTest(unittest.TestCase):
             )
         )
     
-    def test_Validator380(self) -> None:
+    def testValidator380(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertTrue(validator.isValid("http://www.apache.org:80/path"))
         self.assertTrue(validator.isValid("http://www.apache.org:8/path"))
         self.assertTrue(validator.isValid("http://www.apache.org:/path"))
 
     
-    def test_Validator420(self) -> None:
+    def testValidator420(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertFalse(
             validator.isValid("http://example.com/serach?address=Main Avenue")
@@ -732,7 +732,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
     
 
-    def test_Validator467(self) -> None:
+    def testValidator467(self) -> None:
         validator = UrlValidator.UrlValidator4(UrlValidator.ALLOW_2_SLASHES)
         self.assertTrue(validator.isValid("https://example.com/some_path/path/"))
         self.assertTrue(validator.isValid("https://example.com//somepath/path/"))
@@ -740,7 +740,7 @@ class UrlValidatorTest(unittest.TestCase):
         self.assertTrue(validator.isValid("http://example.com//_test")) # VALIDATOR-429
 
     
-    def test_Validator283(self) -> None:
+    def testValidator283(self) -> None:
         validator = UrlValidator.UrlValidator6()
         self.assertFalse(
             validator.isValid(
@@ -756,7 +756,7 @@ class UrlValidatorTest(unittest.TestCase):
         )
     
 
-    def test_Fragments(self) -> None:
+    def testFragments(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator.UrlValidator3(schemes, UrlValidator.NO_FRAGMENTS)
         self.assertFalse(urlValidator.isValid("http://apache.org/a/b/c#frag"))

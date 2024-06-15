@@ -1,0 +1,1998 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-codec/src/main/java/org/apache/commons/codec/language/bm/Languages.java",
+    "imports": {
+        "25-25:import Map": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "28-28:import Set": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "22-22:import Collections": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Collections;\n"
+            ]
+        },
+        "23-23:import EnumMap": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.EnumMap;\n"
+            ]
+        },
+        "24-24:import HashSet": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "26-26:import NoSuchElementException": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.NoSuchElementException;\n"
+            ]
+        },
+        "27-27:import Scanner": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.Scanner;\n"
+            ]
+        },
+        "20-20:import Resources": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.Resources;\n"
+            ]
+        }
+    },
+    "classes": {
+        "SomeLanguages": {
+            "start": 152,
+            "end": 152,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Languages",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "LanguageSet"
+            ],
+            "methods": {
+                "217-219:toString": {
+                    "start": 217,
+                    "end": 219,
+                    "body": [
+                        "        public String toString() {\n",
+                        "            return \"Languages(\" + languages.toString() + \")\";\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def toString(self) -> str:",
+                        "        ",
+                        "",
+                        "        return \"Languages(\" + str(self.__languages) + \")\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.342958450317383,
+                    "generation_timestamp": "2024-06-05T19:03:09.734917",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "203-214:merge": {
+                    "start": 203,
+                    "end": 214,
+                    "body": [
+                        "        public LanguageSet merge(final LanguageSet other) {\n",
+                        "            if (other == NO_LANGUAGES) {\n",
+                        "                return this;\n",
+                        "            }\n",
+                        "            if (other == ANY_LANGUAGE) {\n",
+                        "                return other;\n",
+                        "            }\n",
+                        "            final SomeLanguages someLanguages = (SomeLanguages) other;\n",
+                        "            final Set<String> set = new HashSet<>(languages);\n",
+                        "            set.addAll(someLanguages.languages);\n",
+                        "            return from(set);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "signature": "merge(LanguageSet)",
+                    "parameters": [
+                        "other"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.bm.Languages",
+                            "LanguageSet",
+                            "64-66:from"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def merge(self, other: LanguageSet) -> LanguageSet:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def merge(self, other: LanguageSet) -> LanguageSet:",
+                        "        ",
+                        "",
+                        "        if other == NO_LANGUAGES:",
+                        "            return self",
+                        "        if other == ANY_LANGUAGE:",
+                        "            return other",
+                        "        someLanguages = other",
+                        "        set_ = set(self.__languages)",
+                        "        set_.update(someLanguages.languages)",
+                        "        return self.from_(set_)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 60.39287877082825,
+                    "generation_timestamp": "2024-06-06T10:53:19.723606",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "184-200:restrictTo": {
+                    "start": 184,
+                    "end": 200,
+                    "body": [
+                        "        public LanguageSet restrictTo(final LanguageSet other) {\n",
+                        "            if (other == NO_LANGUAGES) {\n",
+                        "                return other;\n",
+                        "            }\n",
+                        "            if (other == ANY_LANGUAGE) {\n",
+                        "                return this;\n",
+                        "            }\n",
+                        "            final SomeLanguages someLanguages = (SomeLanguages) other;\n",
+                        "            final Set<String> set =\n",
+                        "                    new HashSet<>(Math.min(languages.size(), someLanguages.languages.size()));\n",
+                        "            for (final String lang : languages) {\n",
+                        "                if (someLanguages.languages.contains(lang)) {\n",
+                        "                    set.add(lang);\n",
+                        "                }\n",
+                        "            }\n",
+                        "            return from(set);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "signature": "restrictTo(LanguageSet)",
+                    "parameters": [
+                        "other"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.bm.Languages",
+                            "LanguageSet",
+                            "64-66:from"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def restrictTo(self, other: LanguageSet) -> LanguageSet:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def restrictTo(self, other: LanguageSet) -> LanguageSet:",
+                        "        ",
+                        "",
+                        "        if other == NO_LANGUAGES:",
+                        "            return other",
+                        "        if other == ANY_LANGUAGE:",
+                        "            return self",
+                        "        someLanguages = other",
+                        "        set_ = set(min(len(self.__languages), len(someLanguages.__languages)))",
+                        "        for lang in self.__languages:",
+                        "            if lang in someLanguages.__languages:",
+                        "                set_.add(lang)",
+                        "        return self.from_(set_)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.518633604049683,
+                    "generation_timestamp": "2024-06-06T10:53:25.247213",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "179-181:isSingleton": {
+                    "start": 179,
+                    "end": 181,
+                    "body": [
+                        "        public boolean isSingleton() {\n",
+                        "            return this.languages.size() == 1;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isSingleton()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isSingleton(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isSingleton(self) -> bool:",
+                        "        ",
+                        "",
+                        "        return len(self.__languages) == 1",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.9850220680236816,
+                    "generation_timestamp": "2024-06-05T19:03:12.724739",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "174-176:isEmpty": {
+                    "start": 174,
+                    "end": 176,
+                    "body": [
+                        "        public boolean isEmpty() {\n",
+                        "            return this.languages.isEmpty();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEmpty()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isEmpty(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isEmpty(self) -> bool:",
+                        "        ",
+                        "",
+                        "        if self.__languages is None:",
+                        "            return True",
+                        "        else:",
+                        "            return len(self.__languages) == 0",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.8578269481658936,
+                    "generation_timestamp": "2024-06-05T19:03:15.587750",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "165-167:getAny": {
+                    "start": 165,
+                    "end": 167,
+                    "body": [
+                        "        public String getAny() {\n",
+                        "            return this.languages.iterator().next();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getAny()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getAny(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getAny(self) -> str:",
+                        "        ",
+                        "",
+                        "        if self.__languages is None:",
+                        "            return None",
+                        "",
+                        "        for language in self.__languages:",
+                        "            return language",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.3369767665863037,
+                    "generation_timestamp": "2024-06-05T19:03:17.929001",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "160-162:contains": {
+                    "start": 160,
+                    "end": 162,
+                    "body": [
+                        "        public boolean contains(final String language) {\n",
+                        "            return this.languages.contains(language);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "contains(String)",
+                    "parameters": [
+                        "language"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def contains(self, language: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def contains(self, language: str) -> bool:",
+                        "        ",
+                        "",
+                        "        if self.__languages is None:",
+                        "            return False",
+                        "",
+                        "        return language in self.__languages",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.5375664234161377,
+                    "generation_timestamp": "2024-06-05T19:03:20.470812",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "169-171:getLanguages": {
+                    "start": 169,
+                    "end": 171,
+                    "body": [
+                        "        public Set<String> getLanguages() {\n",
+                        "            return this.languages;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Set<String>",
+                            "java.util.Set<String>"
+                        ]
+                    ],
+                    "signature": "getLanguages()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getLanguages(self) -> typing.Set[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getLanguages(self) -> typing.Set[str]:",
+                        "        ",
+                        "",
+                        "        return self.__languages",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.5930919647216797,
+                    "generation_timestamp": "2024-06-05T19:03:22.068175",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "155-157:SomeLanguages": {
+                    "start": 155,
+                    "end": 157,
+                    "body": [
+                        "        private SomeLanguages(final Set<String> languages) {\n",
+                        "            this.languages = Collections.unmodifiableSet(languages);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "SomeLanguages(Set<String>)",
+                    "parameters": [
+                        "languages"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, languages: typing.Set[str]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self, languages: typing.Set[str]) -> None:",
+                        "        ",
+                        "",
+                        "        self.__languages = frozenset(languages)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.0387957096099854,
+                    "generation_timestamp": "2024-06-05T19:03:24.111112",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {
+                "153-153:languages": {
+                    "start": 153,
+                    "end": 153,
+                    "body": [
+                        "        private final Set<String> languages;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Set<String>",
+                            "java.util.Set<String>"
+                        ]
+                    ],
+                    "partial_translation": "    __languages: typing.Set[str] = None\n",
+                    "translation": [
+                        "    __languages: typing.Set[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-11T13:26:53.146109",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "python_class_declaration": "class SomeLanguages(LanguageSet):\n\n"
+        },
+        "LanguageSet": {
+            "start": 62,
+            "end": 62,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": "Languages",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "64-66:from": {
+                    "start": 64,
+                    "end": 66,
+                    "body": [
+                        "        public static LanguageSet from(final Set<String> langs) {\n",
+                        "            return langs.isEmpty() ? NO_LANGUAGES : new SomeLanguages(langs);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "signature": "from(Set<String>)",
+                    "parameters": [
+                        "langs"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.bm.Languages",
+                            "SomeLanguages",
+                            "155-157:SomeLanguages"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def from_(langs: typing.Set[str]) -> LanguageSet:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def from_(langs: typing.Set[str]) -> LanguageSet:",
+                        "        ",
+                        "",
+                        "        if not langs:",
+                        "            return NO_LANGUAGES",
+                        "        else:",
+                        "            return SomeLanguages(langs)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.236409902572632,
+                    "generation_timestamp": "2024-06-06T10:52:19.325915",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "78-78:merge": {
+                    "start": 78,
+                    "end": 78,
+                    "body": [
+                        "        abstract LanguageSet merge(LanguageSet other);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "signature": "merge(LanguageSet)",
+                    "parameters": [
+                        "other"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def merge(self, other: LanguageSet) -> LanguageSet:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def merge(self, other: LanguageSet) -> LanguageSet:",
+                        "        ",
+                        "",
+                        "        # Your implementation here",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.413116931915283,
+                    "generation_timestamp": "2024-06-05T19:02:16.082381",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "76-76:restrictTo": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "        public abstract LanguageSet restrictTo(LanguageSet other);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "signature": "restrictTo(LanguageSet)",
+                    "parameters": [
+                        "other"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def restrictTo(self, other: LanguageSet) -> LanguageSet:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def restrictTo(self, other: LanguageSet) -> LanguageSet:",
+                        "        ",
+                        "",
+                        "        # Your implementation here",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.247739791870117,
+                    "generation_timestamp": "2024-06-05T19:02:18.334453",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "74-74:isSingleton": {
+                    "start": 74,
+                    "end": 74,
+                    "body": [
+                        "        public abstract boolean isSingleton();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isSingleton()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isSingleton(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isSingleton(self) -> bool:",
+                        "        ",
+                        "",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.7378349304199219,
+                    "generation_timestamp": "2024-06-05T19:02:20.076113",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "72-72:isEmpty": {
+                    "start": 72,
+                    "end": 72,
+                    "body": [
+                        "        public abstract boolean isEmpty();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEmpty()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isEmpty(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isEmpty(self) -> bool:",
+                        "        ",
+                        "",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.166421890258789,
+                    "generation_timestamp": "2024-06-05T19:02:22.246355",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "70-70:getAny": {
+                    "start": 70,
+                    "end": 70,
+                    "body": [
+                        "        public abstract String getAny();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getAny()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getAny(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getAny(self) -> str:",
+                        "        ",
+                        "",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.1089932918548584,
+                    "generation_timestamp": "2024-06-05T19:02:24.359920",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "68-68:contains": {
+                    "start": 68,
+                    "end": 68,
+                    "body": [
+                        "        public abstract boolean contains(String language);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "contains(String)",
+                    "parameters": [
+                        "language"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def contains(self, language: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def contains(self, language: str) -> bool:",
+                        "        ",
+                        "",
+                        "        pass",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.991497278213501,
+                    "generation_timestamp": "2024-06-05T19:02:26.355413",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class LanguageSet(ABC):\n\n"
+        },
+        "Languages": {
+            "start": 59,
+            "end": 59,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "AnyLanguage",
+                "LanguageSet",
+                "NoLanguage",
+                "SomeLanguages"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "276-278:getLanguages": {
+                    "start": 276,
+                    "end": 278,
+                    "body": [
+                        "    public Set<String> getLanguages() {\n",
+                        "        return this.languages;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Set<String>",
+                            "java.util.Set<String>"
+                        ]
+                    ],
+                    "signature": "getLanguages()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getLanguages(self) -> typing.Set[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getLanguages(self) -> typing.Set[str]:",
+                        "        ",
+                        "",
+                        "        return self.__languages",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.5787208080291748,
+                    "generation_timestamp": "2024-06-05T19:04:47.603053",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "236-257:getInstance1": {
+                    "start": 236,
+                    "end": 257,
+                    "body": [
+                        "    public static Languages getInstance1(final String languagesResourceName) {\n",
+                        "        final Set<String> ls = new HashSet<>();\n",
+                        "        try (final Scanner lsScanner =\n",
+                        "                new Scanner(\n",
+                        "                        Resources.getInputStream(languagesResourceName),\n",
+                        "                        ResourceConstants.ENCODING)) {\n",
+                        "            boolean inExtendedComment = false;\n",
+                        "            while (lsScanner.hasNextLine()) {\n",
+                        "                final String line = lsScanner.nextLine().trim();\n",
+                        "                if (inExtendedComment) {\n",
+                        "                    if (line.endsWith(ResourceConstants.EXT_CMT_END)) {\n",
+                        "                        inExtendedComment = false;\n",
+                        "                    }\n",
+                        "                } else if (line.startsWith(ResourceConstants.EXT_CMT_START)) {\n",
+                        "                    inExtendedComment = true;\n",
+                        "                } else if (!line.isEmpty()) {\n",
+                        "                    ls.add(line);\n",
+                        "                }\n",
+                        "            }\n",
+                        "            return new Languages(Collections.unmodifiableSet(ls));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Languages",
+                            "Languages"
+                        ]
+                    ],
+                    "signature": "getInstance1(String)",
+                    "parameters": [
+                        "languagesResourceName"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.Resources",
+                            "Resources",
+                            "35-41:getInputStream"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.bm.Languages",
+                            "Languages",
+                            "272-274:Languages"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance1(languagesResourceName: str) -> Languages:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def getInstance1(languagesResourceName: str) -> Languages:",
+                        "        ",
+                        "",
+                        "        ls = set()",
+                        "        with io.open(Resources.getInputStream(languagesResourceName), 'r', encoding=ResourceConstants.ENCODING) as lsScanner:",
+                        "            inExtendedComment = False",
+                        "            for line in lsScanner:",
+                        "                line = line.strip()",
+                        "                if inExtendedComment:",
+                        "                    if line.endswith(ResourceConstants.EXT_CMT_END):",
+                        "                        inExtendedComment = False",
+                        "                elif line.startswith(ResourceConstants.EXT_CMT_START):",
+                        "                    inExtendedComment = True",
+                        "                elif line:",
+                        "                    ls.add(line)",
+                        "",
+                        "        return Languages(frozenset(ls))",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 6.600348234176636,
+                    "generation_timestamp": "2024-06-06T10:53:31.853211",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "232-234:getInstance0": {
+                    "start": 232,
+                    "end": 234,
+                    "body": [
+                        "    public static Languages getInstance0(final NameType nameType) {\n",
+                        "        return LANGUAGES.get(nameType);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Languages",
+                            "Languages"
+                        ]
+                    ],
+                    "signature": "getInstance0(NameType)",
+                    "parameters": [
+                        "nameType"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance0(nameType: NameType) -> Languages:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def getInstance0(nameType: NameType) -> Languages:",
+                        "        ",
+                        "",
+                        "        return Languages.__LANGUAGES.get(nameType)",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.0774729251861572,
+                    "generation_timestamp": "2024-06-05T19:04:49.685913",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "272-274:Languages": {
+                    "start": 272,
+                    "end": 274,
+                    "body": [
+                        "    private Languages(final Set<String> languages) {\n",
+                        "        this.languages = languages;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Languages(Set<String>)",
+                    "parameters": [
+                        "languages"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, languages: typing.Set[str]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self, languages: typing.Set[str]) -> None:",
+                        "        ",
+                        "",
+                        "        self.__languages = languages",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.7899563312530518,
+                    "generation_timestamp": "2024-06-05T19:04:51.479836",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "259-262:langResourceName": {
+                    "start": 259,
+                    "end": 262,
+                    "body": [
+                        "    private static String langResourceName(final NameType nameType) {\n",
+                        "        return String.format(\n",
+                        "                \"org/apache/commons/codec/language/bm/%s_languages.txt\", nameType.getName());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "langResourceName(NameType)",
+                    "parameters": [
+                        "nameType"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.bm.NameType",
+                            "NameType",
+                            "49-51:getName"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __langResourceName(nameType: NameType) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def __langResourceName(nameType: NameType) -> str:",
+                        "        ",
+                        "",
+                        "        return \"org/apache/commons/codec/language/bm/{}_languages.txt\".format(nameType.getName())",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.6925809383392334,
+                    "generation_timestamp": "2024-06-05T19:05:01.738677",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {
+                "270-270:ANY_LANGUAGE": {
+                    "start": 270,
+                    "end": 270,
+                    "body": [
+                        "    public static final LanguageSet ANY_LANGUAGE = new AnyLanguage();\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "partial_translation": "    ANY_LANGUAGE: LanguageSet = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    ANY_LANGUAGE: LanguageSet = AnyLanguage()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.220045804977417,
+                    "generation_timestamp": "2024-06-05T19:04:36.124604",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "267-267:NO_LANGUAGES": {
+                    "start": 267,
+                    "end": 267,
+                    "body": [
+                        "    public static final LanguageSet NO_LANGUAGES = new NoLanguage();\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "partial_translation": "    NO_LANGUAGES: LanguageSet = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    NO_LANGUAGES: LanguageSet = NoLanguage()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 3.4080073833465576,
+                    "generation_timestamp": "2024-06-05T19:04:39.536620",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "222-222:ANY": {
+                    "start": 222,
+                    "end": 222,
+                    "body": [
+                        "    public static final String ANY = \"any\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": "    ANY: str = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    ANY: str = \"any\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 0.8604915142059326,
+                    "generation_timestamp": "2024-06-05T19:04:40.401079",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "264-264:languages": {
+                    "start": 264,
+                    "end": 264,
+                    "body": [
+                        "    private final Set<String> languages;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Set<String>",
+                            "java.util.Set<String>"
+                        ]
+                    ],
+                    "partial_translation": "    __languages: typing.Set[str] = None\n",
+                    "translation": [
+                        "    __languages: typing.Set[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-06-11T13:26:53.157140",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "224-224:LANGUAGES": {
+                    "start": 224,
+                    "end": 224,
+                    "body": [
+                        "    private static final Map<NameType, Languages> LANGUAGES = new EnumMap<>(NameType.class);\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Map<NameType,Languages>",
+                            "java.util.Map<NameType,Languages>"
+                        ]
+                    ],
+                    "partial_translation": "    __LANGUAGES: typing.Dict[NameType, Languages] = <placeholder>\n",
+                    "translation": [
+                        "",
+                        "    __LANGUAGES: Dict[NameType, Languages] = {}",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 5.606087923049927,
+                    "generation_timestamp": "2024-06-05T19:04:46.019377",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "python_class_declaration": "class Languages:\n\n"
+        },
+        "AnyLanguage": {
+            "start": 81,
+            "end": 81,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Languages",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "LanguageSet"
+            ],
+            "methods": {
+                "111-113:toString": {
+                    "start": 111,
+                    "end": 113,
+                    "body": [
+                        "        public String toString() {\n",
+                        "            return \"ANY_LANGUAGE\";\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def toString(self) -> str:",
+                        "        ",
+                        "",
+                        "        return \"ANY_LANGUAGE\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.392632484436035,
+                    "generation_timestamp": "2024-06-05T19:02:28.752797",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "107-109:merge": {
+                    "start": 107,
+                    "end": 109,
+                    "body": [
+                        "        public LanguageSet merge(final LanguageSet other) {\n",
+                        "            return other;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "signature": "merge(LanguageSet)",
+                    "parameters": [
+                        "other"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def merge(self, other: LanguageSet) -> LanguageSet:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def merge(self, other: LanguageSet) -> LanguageSet:",
+                        "        ",
+                        "",
+                        "        return other",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.630549669265747,
+                    "generation_timestamp": "2024-06-05T19:02:30.387839",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "103-105:restrictTo": {
+                    "start": 103,
+                    "end": 105,
+                    "body": [
+                        "        public LanguageSet restrictTo(final LanguageSet other) {\n",
+                        "            return other;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "signature": "restrictTo(LanguageSet)",
+                    "parameters": [
+                        "other"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def restrictTo(self, other: LanguageSet) -> LanguageSet:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def restrictTo(self, other: LanguageSet) -> LanguageSet:",
+                        "        ",
+                        "",
+                        "        return other",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.057608127593994,
+                    "generation_timestamp": "2024-06-05T19:02:32.449630",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "99-101:isSingleton": {
+                    "start": 99,
+                    "end": 101,
+                    "body": [
+                        "        public boolean isSingleton() {\n",
+                        "            return false;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isSingleton()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isSingleton(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isSingleton(self) -> bool:",
+                        "        ",
+                        "",
+                        "        return False",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.0860543251037598,
+                    "generation_timestamp": "2024-06-05T19:02:34.540106",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "95-97:isEmpty": {
+                    "start": 95,
+                    "end": 97,
+                    "body": [
+                        "        public boolean isEmpty() {\n",
+                        "            return false;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEmpty()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isEmpty(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isEmpty(self) -> bool:",
+                        "        ",
+                        "",
+                        "        return False",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.87459397315979,
+                    "generation_timestamp": "2024-06-05T19:02:36.418889",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "90-93:getAny": {
+                    "start": 90,
+                    "end": 93,
+                    "body": [
+                        "        public String getAny() {\n",
+                        "            throw new NoSuchElementException(\n",
+                        "                    \"Can't fetch any language from the any language set.\");\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getAny()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getAny(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getAny(self) -> str:",
+                        "        ",
+                        "",
+                        "        raise NoSuchElementException(",
+                        "            \"Can't fetch any language from the any language set.\")",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 7.537302732467651,
+                    "generation_timestamp": "2024-06-05T19:02:43.960325",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "86-88:contains": {
+                    "start": 86,
+                    "end": 88,
+                    "body": [
+                        "        public boolean contains(final String language) {\n",
+                        "            return true;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "contains(String)",
+                    "parameters": [
+                        "language"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def contains(self, language: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def contains(self, language: str) -> bool:",
+                        "        ",
+                        "",
+                        "        return True",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 1.7630958557128906,
+                    "generation_timestamp": "2024-06-05T19:02:45.728094",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "82-84:AnyLanguage": {
+                    "start": 82,
+                    "end": 84,
+                    "body": [
+                        "        public AnyLanguage() {\n",
+                        "            super();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "AnyLanguage()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.bm.Languages",
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self) -> None:",
+                        "        ",
+                        "",
+                        "        super().__init__()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.5148539543151855,
+                    "generation_timestamp": "2024-06-05T19:02:48.247790",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class AnyLanguage(LanguageSet):\n\n"
+        },
+        "NoLanguage": {
+            "start": 116,
+            "end": 116,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Languages",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "LanguageSet"
+            ],
+            "methods": {
+                "146-148:toString": {
+                    "start": 146,
+                    "end": 148,
+                    "body": [
+                        "        public String toString() {\n",
+                        "            return \"NO_LANGUAGES\";\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def toString(self) -> str:",
+                        "        ",
+                        "",
+                        "        return \"NO_LANGUAGES\"",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.4985878467559814,
+                    "generation_timestamp": "2024-06-05T19:02:50.751156",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "142-144:merge": {
+                    "start": 142,
+                    "end": 144,
+                    "body": [
+                        "        public LanguageSet merge(final LanguageSet other) {\n",
+                        "            return other;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "signature": "merge(LanguageSet)",
+                    "parameters": [
+                        "other"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def merge(self, other: LanguageSet) -> LanguageSet:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def merge(self, other: LanguageSet) -> LanguageSet:",
+                        "        ",
+                        "",
+                        "        return other",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.5629384517669678,
+                    "generation_timestamp": "2024-06-05T19:02:53.317963",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "138-140:restrictTo": {
+                    "start": 138,
+                    "end": 140,
+                    "body": [
+                        "        public LanguageSet restrictTo(final LanguageSet other) {\n",
+                        "            return this;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "signature": "restrictTo(LanguageSet)",
+                    "parameters": [
+                        "other"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def restrictTo(self, other: LanguageSet) -> LanguageSet:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def restrictTo(self, other: LanguageSet) -> LanguageSet:",
+                        "        ",
+                        "",
+                        "        return self",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.6200525760650635,
+                    "generation_timestamp": "2024-06-05T19:02:55.942570",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "134-136:isSingleton": {
+                    "start": 134,
+                    "end": 136,
+                    "body": [
+                        "        public boolean isSingleton() {\n",
+                        "            return false;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isSingleton()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isSingleton(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isSingleton(self) -> bool:",
+                        "        ",
+                        "",
+                        "        return False",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.0636332035064697,
+                    "generation_timestamp": "2024-06-05T19:02:58.010556",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "130-132:isEmpty": {
+                    "start": 130,
+                    "end": 132,
+                    "body": [
+                        "        public boolean isEmpty() {\n",
+                        "            return true;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEmpty()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isEmpty(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def isEmpty(self) -> bool:",
+                        "        ",
+                        "",
+                        "        return True",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.1819629669189453,
+                    "generation_timestamp": "2024-06-05T19:03:00.199204",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "125-128:getAny": {
+                    "start": 125,
+                    "end": 128,
+                    "body": [
+                        "        public String getAny() {\n",
+                        "            throw new NoSuchElementException(\n",
+                        "                    \"Can't fetch any language from the empty language set.\");\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getAny()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getAny(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def getAny(self) -> str:",
+                        "        ",
+                        "",
+                        "        raise NoSuchElementException(",
+                        "            \"Can't fetch any language from the empty language set.\")",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.610610246658325,
+                    "generation_timestamp": "2024-06-05T19:03:02.814173",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "121-123:contains": {
+                    "start": 121,
+                    "end": 123,
+                    "body": [
+                        "        public boolean contains(final String language) {\n",
+                        "            return false;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "contains(String)",
+                    "parameters": [
+                        "language"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def contains(self, language: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def contains(self, language: str) -> bool:",
+                        "        ",
+                        "",
+                        "        return False",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.0680713653564453,
+                    "generation_timestamp": "2024-06-05T19:03:04.886388",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "117-119:NoLanguage": {
+                    "start": 117,
+                    "end": 119,
+                    "body": [
+                        "        public NoLanguage() {\n",
+                        "            super();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "NoLanguage()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.bm.Languages",
+                            "LanguageSet",
+                            "LanguageSet"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "",
+                        "    def __init__(self) -> None:",
+                        "        ",
+                        "",
+                        "        super().__init__()",
+                        ""
+                    ],
+                    "translation_status": "syntactical_success",
+                    "elapsed_time": 2.4897139072418213,
+                    "generation_timestamp": "2024-06-05T19:03:07.381016",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class NoLanguage(LanguageSet):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from abc import ABC",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.codec.Resources import *",
+        "from src.main.org.apache.commons.codec.language.bm.NameType import *",
+        "from src.main.org.apache.commons.codec.language.bm.ResourceConstants import *"
+    ]
+}
