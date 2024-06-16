@@ -64,16 +64,16 @@ class OptionTest(unittest.TestCase):
         valueSeparator: str,
         cls: typing.Type[typing.Any],
     ) -> None:
-        OptionTest.assertEqual(opt, option.getOpt())
-        OptionTest.assertEqual(description, option.getDescription())
-        OptionTest.assertEqual(longOpt, option.getLongOpt())
-        OptionTest.assertEqual(numArgs, option.getArgs())
-        OptionTest.assertEqual(argName, option.getArgName())
-        OptionTest.assertEqual(required, option.isRequired())
+        unittest.TestCase().assertEqual(opt, option.getOpt())
+        unittest.TestCase().assertEqual(description, option.getDescription())
+        unittest.TestCase().assertEqual(longOpt, option.getLongOpt())
+        unittest.TestCase().assertEqual(numArgs, option.getArgs())
+        unittest.TestCase().assertEqual(argName, option.getArgName())
+        unittest.TestCase().assertEqual(required, option.isRequired())
 
-        OptionTest.assertEqual(optionalArg, option.hasOptionalArg())
-        OptionTest.assertEqual(valueSeparator, option.getValueSeparator())
-        OptionTest.assertEqual(cls, type(option))
+        unittest.TestCase().assertEqual(optionalArg, option.hasOptionalArg())
+        unittest.TestCase().assertEqual(valueSeparator, option.getValueSeparator())
+        unittest.TestCase().assertEqual(cls, type(option))
     
 
     @pytest.mark.test

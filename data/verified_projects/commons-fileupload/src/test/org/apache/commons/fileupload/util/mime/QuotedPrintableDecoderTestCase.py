@@ -109,10 +109,10 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
         encoded_data = encoded.encode(QuotedPrintableDecoderTestCase.__US_ASCII_CHARSET)
         try:
             QuotedPrintableDecoder.decode(encoded_data, out)
-            QuotedPrintableDecoderTestCase.fail("Expected IO-related Exception")
+            unittest.TestCase().fail("Expected IO-related Exception")
         except (IOError, OSError) as e:
             em = str(e)
-            QuotedPrintableDecoderTestCase.assertIn(messageText, em, f"Expected to find {messageText} in '{em}'")
+            unittest.TestCase().assertIn(messageText, em, f"Expected to find {messageText} in '{em}'")
         # LLM could not translate method body
 
     @staticmethod
@@ -122,7 +122,7 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
         encoded_data = encoded.encode(QuotedPrintableDecoderTestCase.__US_ASCII_CHARSET)
         QuotedPrintableDecoder.decode(encoded_data, out)
         actual = out.getvalue()
-        QuotedPrintableDecoderTestCase.assertEqual(expected, actual)
+        unittest.TestCase().assertEqual(expected, actual)
         # LLM could not translate method body
 
     # Class Methods End
