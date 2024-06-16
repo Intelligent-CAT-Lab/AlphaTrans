@@ -14,9 +14,7 @@ class TestGenericObjectPoolClassLoaders:
         .parent\
         .parent\
         .parent\
-        .parent\
-        .parent\
-        .parent / 'main/resources/org/apache/commons/pool2/impl/')
+        .parent / 'resources')
 
     class CustomClassLoader:
         
