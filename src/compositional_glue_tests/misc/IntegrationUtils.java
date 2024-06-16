@@ -21,11 +21,9 @@ public final class IntegrationUtils {{
     public static <T, C extends Collection<T>> C valueArrayToCollection(Value source, Class<T> clazz, Class<C> collectionType) {{
         C result;
         try {{     
-            result = collectionType.newInstance();       
+            result = collectionType.getDeclaredConstructor().newInstance();     
             for (Value value : source.as(Value[].class)) {{
-                Constructor<T> constructor = clazz.getDeclaredConstructor(Value.class);
-                T object = clazz.cast(constructor.newInstance(value));
-                result.add(object);
+                result.add(value.as(clazz));
             }}
         }} catch (Exception e) {{
             result = null;

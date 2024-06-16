@@ -169,6 +169,17 @@ class Project:
                         f"        return {_class}.__new__({_class})"
                     ]))
                     
+                    # modify __getattr__ method to handle cases like 
+                    # static field access from 'self'
+                    python_file_contents.append("\n".join([
+                        f"    def __getattr__(self, name):",
+                        f"        try:",
+                        f"            return object.__getattribute__(self, name)",
+                        f"        except AttributeError:",
+                        f"            pass",
+                        f"        return getattr(self.javaClz, name)"
+                    ]))
+                    
                 # write the new contents to the python file
                 python_file_path = "".join([
                     f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/",
@@ -182,6 +193,7 @@ class Project:
     def __get_instrumented_python_method_body(self, method_name: str, method_schema_data: dict, class_name: str):
         original_method_name = method_name.split(':', 1)[1].strip() # remove the line-numbers from the method name        
         is_constructor = method_schema_data['is_constructor']
+        is_static = 'static' in method_schema_data['modifiers']
         java_method_body = "".join(method_schema_data['body'])
         
         # if the method was not implemented in Java, just return the partial translation
@@ -213,18 +225,24 @@ class Project:
             
         method_content = []
         if is_constructor:
-            # TODO: Fix stuff for constructors
             method_content.append("\n".join([
                 f"        self.javaObj = {java_call}",
                 f"        self.javaObj.setPythonObject(self)",
                 f"        self.javaObj.revsync()"
             ]))
-        elif 'void' in method_schema_data['modifiers']:
-            method_content.append(f"        {java_call}")
+        elif 'void' in method_schema_data['return_types'][0]:
+            method_content.append("\n".join([
+                f"        self.javaObj.sync()" if not is_static else "",
+                f"        {java_call}",
+                f"        self.javaObj.revsync()" if not is_static else ""                
+            ]))
         else:
-            method_content.append(f"        return JavaHandler.mapping({java_call})")
-            
-        # TODO: revsync and sync?
+            method_content.append("\n".join([
+                f"        self.javaObj.sync()" if not is_static else "",
+                f"        val = JavaHandler.mapping({java_call})",
+                f"        self.javaObj.revsync()" if not is_static else "",
+                f"        return val"
+            ]))
         
         # ---------------------------------------------------------------------------------------
         # # error handling
@@ -256,6 +274,8 @@ class Project:
         # TODO: This will not work if the MUT has a try-catching mechanism
         #       because control will immediately short-circuit to the original 
         #       java method (and then to the ExceptionHandler)
+        #       This will also not work if the method is neither annotated nor throws an exception
+        #       in its own body but can still throw an exception due to a method call
         
         method_body = method_declaration + "\n" + "\n".join(method_content)
         return method_body        
@@ -479,15 +499,15 @@ class CompositionalTest:
         classes_to_map = []
         imports = []
         
-        for schema in self.schemas_to_process:
+        for schema in self.project_schemas:
             with open(f'{self.project.schema_dir}/{self.project.name}/{schema}') as f:
                 data = json.load(f)
 
             for _class in data['classes']:
                 if (
-                        not data['classes'][_class]['is_interface'] 
-                        and not '/test/' in data['path'] 
-                        and not _class.endswith('Exception')
+                        not data['classes'][_class]['is_interface']
+                        and not data['classes'][_class]['is_abstract']
+                        and not '/test/' in data['path']
                 ):
                     class_to_map, import_to_add = self.__process_class_for_mapping(_class, data)
                     classes_to_map.append(class_to_map)
@@ -498,9 +518,10 @@ class CompositionalTest:
         mapping_code = "\n".join([
             "\n".join([
                 f".targetTypeMapping(Value.class, {_class}.class, null, (v) -> {{",
+                f"    if(v.isNull()){{ return null; }}",
                 f"    {_class} obj = new {_class}(v);",
                 f"    obj.sync();",
-                "    return obj;",
+                f"    return obj;",
                 "})"
             ])
             for _class in classes_to_map

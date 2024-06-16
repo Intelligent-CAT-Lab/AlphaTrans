@@ -1,17 +1,25 @@
-from collections import defaultdict
 import subprocess
 import json
 from src.compositional_glue_tests.constants import *
 
-default_type_value = defaultdict(lambda: "null")
-default_type_value.update({
-    "char": "'\\0'",
-    "int": "0",
-    "boolean": "false",
-    "float": "0",
-    "double": "0",
-    "long": "0",
-})
+
+class default_type_value_class(dict):
+    constants = {
+        "char": "'\\0'",
+        "int": "0",
+        "boolean": "false",
+        "float": "0",
+        "double": "0",
+        "long": "0",
+    }
+    
+    def __getitem__(self, key):
+        if key in self.constants:
+            return self.constants[key]
+        
+        return "null"
+    
+default_type_value = default_type_value_class()
 
 # load type handling information
 with open('src/compositional_glue_tests/type_handling.json') as f:
