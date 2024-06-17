@@ -5,39 +5,39 @@ id_map = dict() # map IDs of Java objects to IDs of their corresponding Python o
 
 class JavaHandler:
     def mapping(x):
-        # if not 'foreign' type, return as it is
-        if not type(x).__name__ == 'foreign':
-            return x
-        
         # Noneify
         if x == None:
             return None
-        
+
+        # if not 'foreign' type, return as it is
+        if not type(x).__name__ == 'foreign':
+            return x
+
         # get underlying python objects from java objects
         if hasattr(x, 'getPythonObject'):
             x.revsync() # sync the java object with the python object
             obj = x.getPythonObject()
-            
+
             # recursively map all fields of the object
             if hasattr(obj, '__dict__'):
                 for key in obj.__dict__:
                     if key != "javaObj": # leave javaObj as it is
                         obj.__dict__[key] = JavaHandler.mapping(obj.__dict__[key])
-                    
+
             return obj
-        
+
         # Properties
         if hasattr(x, 'getProperty'):
-            return JavaHandler.properties_to_dict(x)
-        
+            return JavaHandler.return_through_id_map(x, JavaHandler.properties_to_dict(x))
+
         # Map
         if hasattr(x, 'keySet'):
-            return JavaHandler.map_to_dict(x)
-        
+            return JavaHandler.return_through_id_map(x, JavaHandler.map_to_dict(x))
+
         # List
         if hasattr(x, 'toArray'):
-            return JavaHandler.list_to_list(x)
-        
+            return JavaHandler.return_through_id_map(x,  JavaHandler.list_to_list(x))
+
         # handle the 'Class' type
         # this is safe because Strings don't have the foreign type
         try:
@@ -45,9 +45,17 @@ class JavaHandler:
                 return java.type(str(x))
         except:
             pass
-        
+
         raise ValueError("Unknown Java object type: " + repr(x))
-    
+
+    def return_through_id_map(java_obj, python_obj):
+        if id(java_obj) in id_map:
+            if id_map[id(java_obj)] == python_obj:
+                return id_map[id(java_obj)]
+
+        id_map[id(java_obj)] = python_obj
+        return python_obj
+
     def properties_to_dict(x):
         D = dict()
         for key in x.propertyNames():
