@@ -26,7 +26,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
     """
     members_to_translate: [prompt, fragment, use_bam, project_name, schema, class_, fragment_]
     """
-    global i
+    global i, RECORD_ALL
     i += 1
     # if i > 2:
     #     quit()
@@ -119,6 +119,8 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
                 generation = translation
             else:
                 generation = "\n".join(translation)
+                
+            loc = len(generation.split('\n'))
             
             print(generation, flush=True)
             print('---' * 50, flush=True)
@@ -157,8 +159,14 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
         print("PASSED!")
     else:
         print("FAILED!")
-        if input("Do you want to interrupt? (no=Enter)"):
-            quit()
+        if not RECORD_ALL:
+            if input("Do you want to interrupt? (no=Enter)"):
+                quit()
+                
+    # record
+    if RECORD_ALL:
+        with open(f'{project_name}_stats.csv', 'a') as f:
+            f.write(f"{schema}, {class_}, {fragment_}, {status}, {loc}\n")
         
     if not status:
         # TODO: handle feedback
@@ -263,7 +271,7 @@ def align_schema_order(schemas, traversal_order):
 
 
 def main(args):
-    global SCHEMA_BREAK, SCHEMA_BREAK_PASSED, CLASS_BREAK, CLASS_BREAK_PASSED, METHOD_BREAK, METHOD_BREAK_PASSED
+    global SCHEMA_BREAK, SCHEMA_BREAK_PASSED, CLASS_BREAK, CLASS_BREAK_PASSED, METHOD_BREAK, METHOD_BREAK_PASSED, RECORD_ALL
     device = 'cpu' # 'cuda' if torch.cuda.is_available() and args.use_cuda else 'cpu''
     tokenizer, model = None, None
 
@@ -628,10 +636,12 @@ if __name__ == '__main__':
     args.include_call_graph = True
     args.dump_syntactically_validated_fragments = False
     
-    SCHEMA_BREAK = '.OptionGroup_'
-    CLASS_BREAK = 'OptionGroup'
-    METHOD_BREAK = 'setSelected'
+    SCHEMA_BREAK = '.GnuParser_'
+    CLASS_BREAK = 'GnuParser'
+    METHOD_BREAK = 'flatten'
     
     SCHEMA_BREAK_PASSED, CLASS_BREAK_PASSED, METHOD_BREAK_PASSED = False, False, False
+    
+    RECORD_ALL = True
     
     main(args)
