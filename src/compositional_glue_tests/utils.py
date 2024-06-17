@@ -21,6 +21,15 @@ class default_type_value_class(dict):
     
 default_type_value = default_type_value_class()
 
+
+def type_mapping(obj: str, target_type: str) -> str:
+    # handle arrays separately
+    # TODO: This may not work in general
+    if target_type.endswith("[]"):        
+        return f"IntegrationUtils.valueToArray({obj}, {target_type}.class)"
+    
+    return f"IntegrationUtils.valueToObject({obj}, \"{target_type}\")"
+
 # load type handling information
 with open('src/compositional_glue_tests/type_handling.json') as f:
     type_handling = json.load(f)

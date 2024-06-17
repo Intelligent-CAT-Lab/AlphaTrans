@@ -5,7 +5,7 @@ import json
 import keyword
 import xml.etree.ElementTree as ET
  
-from src.compositional_glue_tests.utils import default_type_value, write_to_file, type_handling, pre_order_traversal, exception_handling
+from src.compositional_glue_tests.utils import default_type_value, write_to_file, pre_order_traversal, exception_handling, type_mapping
 from src.compositional_glue_tests.constants import *
 
 
@@ -479,7 +479,8 @@ class CompositionalTest:
                     imports = ctx_imports,
                     code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/src/{paths[self.project.name]['main'].replace('/java/', '/')}",
                     package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/",
-                    mappings = ctx_mappings                
+                    mappings = ctx_mappings # We shouldn't need these anymore due to IntegrationUtils.valueToObject
+                                            # but sometimes we need this for implicitly handling null values
                 )
             )
             
@@ -519,7 +520,7 @@ class CompositionalTest:
             "\n".join([
                 f".targetTypeMapping(Value.class, {_class}.class, null, (v) -> {{",
                 f"    if(v.isNull()){{ return null; }}",
-                f"    {_class} obj = new {_class}(v);",
+                f"    {_class} obj = v.getMember(\"javaObj\").asHostObject();",
                 f"    obj.sync();",
                 f"    return obj;",
                 "})"
@@ -683,7 +684,7 @@ class SyncMethod:
         else:
             python_field_name = field_name
         
-        field_from_python = type_handling[field_type].format("this.obj.getMember(\"" + python_field_name + "\")")
+        field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type)
         
         if not self.reverse:
             self.fields.append(f"{field_name} = ({formatted_field_type}) {field_from_python};")
@@ -964,7 +965,7 @@ class Schema:
                 final_method_content += f"revsync();{python_call};sync();"
         else:
             return_type = method_schema_data['return_types'][0][0]
-            return_type_casted = type_handling[return_type].format(python_call)
+            return_type_casted = type_mapping(python_call, return_type)
             
             final_method_content += "".join([
                 f"revsync();" if 'static' not in method_schema_data['modifiers'] else '', # no need to sync for static methods
