@@ -1,6 +1,8 @@
 import java
 import abc
 
+id_map = dict() # map IDs of Java objects to IDs of their corresponding Python objects
+
 class JavaHandler:
     def mapping(x):
         # if not 'foreign' type, return as it is
