@@ -49,11 +49,8 @@ class TestGenericObjectPoolClassLoaders:
                 if url.scheme == 'file':
                     modulePath = Path(url.path).resolve()
                 elif url.scheme in ('http', 'https'):
-                    try:
-                        response = urlopen(urlOrPath)
+                    with urlopen(urlOrPath) as response:
                         modulePath = Path(response.read()) / (moduleName + ".py")
-                    except Exception as e:
-                        pass
                 else:
                     modulePath = Path(url.path).resolve() / (moduleName + ".py")
             elif isinstance(urlOrPath, Path):
