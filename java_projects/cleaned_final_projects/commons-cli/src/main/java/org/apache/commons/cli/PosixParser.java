@@ -126,10 +126,10 @@ public class PosixParser extends Parser {
         init();
         this.options = options;
 
-        final Iterator<String> iter = Arrays.asList(arguments).iterator();
+        final Iterator<String> it = Arrays.asList(arguments).iterator();
 
-        while (iter.hasNext()) {
-            final String token = iter.next();
+        while (it.hasNext()) {
+            final String token = it.next();
 
             if ("-".equals(token) || "--".equals(token)) {
                 tokens.add(token);
@@ -168,7 +168,7 @@ public class PosixParser extends Parser {
                 processNonOptionToken(token, stopAtNonOption);
             }
 
-            gobble(iter);
+            gobble(it);
         }
 
         return tokens.toArray(Util.EMPTY_STRING_ARRAY);
