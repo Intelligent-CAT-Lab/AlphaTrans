@@ -636,9 +636,9 @@ if __name__ == '__main__':
     args.include_call_graph = True
     args.dump_syntactically_validated_fragments = False
     
-    SCHEMA_BREAK = '.GnuParser_'
-    CLASS_BREAK = 'GnuParser'
-    METHOD_BREAK = 'flatten'
+    SCHEMA_BREAK = None
+    CLASS_BREAK = None
+    METHOD_BREAK = None
     
     SCHEMA_BREAK_PASSED, CLASS_BREAK_PASSED, METHOD_BREAK_PASSED = False, False, False
     

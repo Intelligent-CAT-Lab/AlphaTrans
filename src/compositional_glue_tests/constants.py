@@ -17,6 +17,7 @@ main_paths = {
     "commons-validator": "main/java/org/apache/commons/validator/",
     "joda-convert": "main/java/org/joda/convert/",
     "joda-money": "main/java/org/joda/money/",
+    "trying_stuff_out": "main/java/my/pack/",
 }
 test_paths = {
     "commons-fileupload": "test/java/org/apache/commons/fileupload/",
@@ -28,6 +29,7 @@ test_paths = {
     "commons-validator": "test/java/org/apache/commons/validator/",
     "joda-convert": "test/java/org/joda/convert/",
     "joda-money": "test/java/org/joda/money/",
+    "trying_stuff_out": "test/java/my/pack/",
 }
 
 paths = dict()
@@ -50,6 +52,12 @@ paths.update({k: {
     ("joda-convert", "convert"),
     ("joda-money", "money"),
 )})
+paths.update({
+    "trying_stuff_out": {
+        "main": "main/java/my/pack/",
+        "test": "test/java/my/pack/",
+    },
+})
 
 package_names = {}
 package_names.update({k: f"org.apache.commons.{v}" for k, v in (
@@ -65,3 +73,6 @@ package_names.update({k: f"org.joda.{v}" for k, v in (
     ("joda-convert", "convert"),
     ("joda-money", "money"),
 )})
+package_names.update({
+    "trying_stuff_out": "my.pack",
+})
