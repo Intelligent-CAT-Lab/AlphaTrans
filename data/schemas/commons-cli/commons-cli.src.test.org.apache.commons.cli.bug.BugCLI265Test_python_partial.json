@@ -140,22 +140,23 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def shouldParseShortOptionWithValue(self) -> None:",
                         "        ",
-                        "",
                         "        shortOptionWithValue = [\"-t1\", \"path/to/my/db\"]",
                         "",
                         "        commandLine = self.__parser.parse0(self.__options, shortOptionWithValue)",
                         "",
-                        "        assert commandLine.getOptionValue4(\"t1\") == \"path/to/my/db\"",
-                        "        assert not commandLine.hasOption2(\"last\")",
-                        ""
+                        "        self.assertEqual(\"path/to/my/db\", commandLine.getOptionValue4(\"t1\"))",
+                        "        self.assertFalse(commandLine.hasOption2(\"last\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.344681739807129,
-                    "generation_timestamp": "2024-06-09T20:12:49.974735",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.161158084869385,
+                    "generation_timestamp": "2024-06-17T22:39:19.193786",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "80-91:shouldParseShortOptionWithoutValue": {
                     "start": 80,
@@ -211,23 +212,28 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def shouldParseShortOptionWithoutValue(self) -> None:",
                         "        ",
-                        "",
                         "        two_short_options = [\"-t1\", \"-last\"]",
                         "",
                         "        command_line = self.__parser.parse0(self.__options, two_short_options)",
                         "",
-                        "        assert command_line.hasOption2(\"t1\")",
-                        "        assert command_line.getOptionValue4(\"t1\") != \"-last\", \"Second option has been used as value for first option\"",
-                        "        assert command_line.hasOption2(\"last\"), \"Second option has not been detected\"",
-                        ""
+                        "        self.assertTrue(command_line.hasOption2(\"t1\"))",
+                        "        self.assertNotEqual(",
+                        "            \"Second option has been used as value for first option\",",
+                        "            \"-last\",",
+                        "            command_line.getOptionValue4(\"t1\")",
+                        "        )",
+                        "        self.assertTrue(\"Second option has not been detected\", command_line.hasOption2(\"last\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 8.747403383255005,
-                    "generation_timestamp": "2024-06-09T20:12:58.727007",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.816127061843872,
+                    "generation_timestamp": "2024-06-17T22:39:30.020864",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "67-77:shouldParseConcatenatedShortOptions": {
                     "start": 67,
@@ -282,25 +288,26 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def shouldParseConcatenatedShortOptions(self) -> None:",
                         "        ",
-                        "",
                         "        concatenatedShortOptions = [\"-t1\", \"-ab\"]",
                         "",
                         "        commandLine = self.__parser.parse0(self.__options, concatenatedShortOptions)",
                         "",
-                        "        assert commandLine.hasOption2(\"t1\")",
-                        "        assert commandLine.getOptionValue4(\"t1\") is None",
-                        "        assert commandLine.hasOption2(\"a\")",
-                        "        assert commandLine.hasOption2(\"b\")",
-                        "        assert not commandLine.hasOption2(\"last\")",
-                        ""
+                        "        self.assertTrue(commandLine.hasOption2(\"t1\"))",
+                        "        self.assertIsNone(commandLine.getOptionValue4(\"t1\"))",
+                        "        self.assertTrue(commandLine.hasOption2(\"a\"))",
+                        "        self.assertTrue(commandLine.hasOption2(\"b\"))",
+                        "        self.assertFalse(commandLine.hasOption2(\"last\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.062010288238525,
-                    "generation_timestamp": "2024-06-09T20:13:03.792651",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.817488431930542,
+                    "generation_timestamp": "2024-06-17T22:39:39.848081",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "44-64:setUp": {
                     "start": 44,
@@ -400,27 +407,25 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def setUp(self) -> None:",
                         "        ",
-                        "",
-                        "        parser = DefaultParser(2, False, None)",
+                        "        self.__parser = DefaultParser(1, False, None)",
                         "",
                         "        optionT1 = Option.builder1(\"t1\").hasArg0().numberOfArgs(1).optionalArg(True).argName(\"t1_path\").build()",
                         "        optionA = Option.builder1(\"a\").hasArg1(False).build()",
                         "        optionB = Option.builder1(\"b\").hasArg1(False).build()",
                         "        optionLast = Option.builder1(\"last\").hasArg1(False).build()",
                         "",
-                        "        options = Options().addOption0(optionT1).addOption0(optionA).addOption0(optionB).addOption0(optionLast)",
-                        "",
-                        "        self.__parser = parser",
-                        "        self.__options = options",
-                        ""
+                        "        self.__options = Options().addOption0(optionT1).addOption0(optionA).addOption0(optionB).addOption0(optionLast)"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 6.426547527313232,
-                    "generation_timestamp": "2024-06-09T20:13:10.231948",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.24944519996643,
+                    "generation_timestamp": "2024-06-17T22:39:53.125308",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -439,15 +444,22 @@
                             "Options"
                         ]
                     ],
-                    "partial_translation": "    __options: Options = None\n",
+                    "partial_translation": [
+                        "    __options: Options = None",
+                        ""
+                    ],
                     "translation": [
                         "    __options: Options = None",
                         ""
                     ],
-                    "translation_status": "success",
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "success",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-06-05T15:34:12.657920",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-17T22:15:47.763433",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "40-40:parser": {
                     "start": 40,
@@ -464,22 +476,31 @@
                             "DefaultParser"
                         ]
                     ],
-                    "partial_translation": "    __parser: DefaultParser = None\n",
+                    "partial_translation": [
+                        "    __parser: DefaultParser = None",
+                        ""
+                    ],
                     "translation": [
                         "    __parser: DefaultParser = None",
                         ""
                     ],
-                    "translation_status": "success",
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "success",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-06-05T15:34:12.661716",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-17T22:15:47.765065",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class BugCLI265Test:\n\n"
+            "python_class_declaration": "class BugCLI265Test(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "from src.main.org.apache.commons.cli.CommandLine import *",
         "from src.main.org.apache.commons.cli.DefaultParser import *",
