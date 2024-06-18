@@ -149,5 +149,13 @@ public final class IntegrationUtils {{
 
     public static Value mapToPython(Object obj) {{
         return JavaHandler.invokeMember("mapping", obj);
-    }}        
+    }}
+
+    public static Value mapToPython(Object obj, Value idMap) {{
+        return JavaHandler.invokeMember("mapping", obj, idMap);
+    }}
+
+    public static int getIdentityHashCode(Object obj) {{
+      return System.identityHashCode(obj);
+    }}
 }}
