@@ -53,7 +53,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             with open(GraphSerializationTestCase.__FILE_NAME, "rb") as fin:
                 cloned = pickle.load(fin)
 
-            GraphSerializationTestCase.assertEqual(g, cloned)
+            unittest.TestCase().assertEqual(g, cloned)
 
         except (FileNotFoundError, IOError, OSError, ModuleNotFoundError, ImportError) as e:
             # Fail the test case with the appropriate error message

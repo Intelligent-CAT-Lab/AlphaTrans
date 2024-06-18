@@ -12,6 +12,10 @@ class TestCallStack(unittest.TestCase):
         self.__writer = None
 
     
+    def getWriter(self) -> StringIO:
+        return self.__writer
+    
+    
     @staticmethod
     def data():
         return [
@@ -24,25 +28,27 @@ class TestCallStack(unittest.TestCase):
         self.__writer = StringIO()
 
     
-    @pytest.mark.parametrize("stack", data())
-    def testPrintClearedStackTraceIsNoOp(self, stack) -> None:
-        stack.fillInStackTrace()
-        stack.clear()
-        stack.printStackTrace(self.__writer)
-        stackTrace = self.__writer.getvalue()
-        self.assertEqual(
-            "",
-            stackTrace,
-            "Stack trace should be empty after clearing"
-        )
+@pytest.mark.parametrize("stack", TestCallStack.data())
+def testPrintClearedStackTraceIsNoOp(stack) -> None:
+    callStackTestCase = TestCallStack()
+    stack.fillInStackTrace()
+    stack.clear()
+    stack.printStackTrace(callStackTestCase.getWriter())
+    stackTrace = callStackTestCase.getWriter().getvalue()
+    unittest.TestCase().assertEqual(
+        "",
+        stackTrace,
+        "Stack trace should be empty after clearing"
+    )
 
-    
-    @pytest.mark.parametrize("stack", data())
-    def testPrintFilledStackTrace(self, stack) -> None:
-        stack.fillInStackTrace()
-        stack.printStackTrace(self.__writer)
-        stackTrace = self.__writer.getvalue()
-        self.assertTrue(
-            self.__class__.__name__ in stackTrace,
-            "Stack trace should contain the class name"
-        )
+
+@pytest.mark.parametrize("stack", TestCallStack.data())
+def testPrintFilledStackTrace(stack) -> None:
+    callStackTestCase = TestCallStack()
+    stack.fillInStackTrace()
+    stack.printStackTrace(callStackTestCase.getWriter())
+    stackTrace = callStackTestCase.getWriter().getvalue()
+    unittest.TestCase().assertTrue(
+        callStackTestCase.__class__.__name__ in stackTrace,
+        "Stack trace should contain the class name"
+    )

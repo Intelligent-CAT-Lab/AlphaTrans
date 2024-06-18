@@ -1,10 +1,16 @@
 package {project};
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.lang.reflect.Constructor;
 
 import org.graalvm.polyglot.Value;
@@ -17,60 +23,126 @@ public final class IntegrationUtils {{
 
     private IntegrationUtils() {{
     }}
-    
-    public static <T, C extends Collection<T>> C valueArrayToCollection(Value source, Class<T> clazz, Class<C> collectionType) {{
-        C result;
-        try {{     
-            result = collectionType.getDeclaredConstructor().newInstance();     
-            for (Value value : source.as(Value[].class)) {{
-                result.add(value.as(clazz));
-            }}
-        }} catch (Exception e) {{
-            result = null;
-        }}
-        return result;
-    }}
-    
-    public static <T, C extends Collection<T>> C valueArrayToCollection(Value source, Class<C> collectionType, Function<Value, Object> mapper) {{
-        C result;
-        try {{     
-            result = collectionType.newInstance();
-            for (Value value : source.as(Value[].class)) {{
-                result.add((T) mapper.apply(value));
-            }}
-        }} catch (Exception e) {{
-            result = null;
-        }}
-        return result;
+
+    /*
+   * Create a method that accepts a Value object and converts it to a Java object,
+   * which may belong to any arbitrary class.
+   */
+  public static Object valueToObject(Value value, String classDescriptor) {{
+    // handle host objects
+    if (value.isHostObject()) {{
+      return value.asHostObject();
     }}
 
-    public static <T> T[] valueArrayToArray(Value source, Class<T> clazz) {{
-        int length = (int) source.getArraySize();
-        T[] result = (T[]) Array.newInstance(clazz, length);
-
-        try {{
-            for (int i = 0; i < length; i++) {{
-                Value value = source.getArrayElement(i);
-                T object = clazz.cast(clazz.getMethod("create", Value.class).invoke(null, value));
-                result[i] = object;
-            }}
-        }} catch (Exception e) {{
-            return null;
-        }}
-
-        return result;
+    // Nullify
+    if (value.isNull()) {{
+      return null;
     }}
 
-    public static Properties valueHashToProperties(Value valueObj) {{
-        Properties properties = new Properties();
-        Map<String, String> map = valueObj.as(Map.class);
+    // return the 'javaObj' member if it exists, which is a Java object
+    // but first call 'sync' on the javaObj
+    if (value.hasMember("javaObj")) {{
+      Value javaObj = value.getMember("javaObj");
+      javaObj.invokeMember("sync");
+      return javaObj.asHostObject();
+    }}
 
-        for (Map.Entry<String, String> entry : map.entrySet()) {{
-            String key = entry.getKey();
-            String value = entry.getValue().toString();
-            properties.setProperty(key, value);
+    // Get the "primary" class name, i.e., everything before <...>
+    String primaryClassName = classDescriptor.split("<")[0];
+
+    // handle lists
+    if (value.hasArrayElements() && primaryClassName.equals("List")) {{
+      String innerClassName = "";
+      if (classDescriptor.contains("<")) {{
+        innerClassName = classDescriptor.substring(classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
+      }}
+      List<Object> list = new ArrayList<>();
+      for (int i = 0; i < value.getArraySize(); i++) {{
+        list.add(valueToObject(value.getArrayElement(i), innerClassName));
+      }}
+      return list;
+    }}
+
+    // handle maps
+    if (value.hasHashEntries() && primaryClassName.equals("Map")) {{
+      String keyClassName = "";
+      String valueClassName = "";
+      if (classDescriptor.contains("<")) {{
+        String[] types = extractTypesFromMap(classDescriptor);
+        if (types != null) {{
+          keyClassName = types[0];
+          valueClassName = types[1];
         }}
-        return properties;
+      }}
+
+      Map<Object, Object> map = new LinkedHashMap<>();
+      for (Object key : value.getHashKeysIterator().as(Iterable.class)) {{
+        map.put(valueToObject(Value.asValue(key), keyClassName), valueToObject(value.getHashValue(key), valueClassName));
+      }}
+      return map;
+    }}
+
+    // handle strings and characters
+    if (value.isString()) {{
+      if (classDescriptor.equals("String")) {{
+        return value.asString();
+      }}
+      if (classDescriptor.equals("Character")) {{
+        return value.as(Character.class);
+      }}
+      if (classDescriptor.equals("char")) {{
+        return value.as(char.class);
+      }}
+    }}
+
+    // handle other types
+    if (value.isBoolean()) {{
+      return value.asBoolean();
+    }}
+
+    if (value.isNumber()) {{
+        if (classDescriptor.equals("int")) {{
+            return (int) value.asLong();
+        }}
+        return value.as(Number.class);
+    }}
+
+    throw new RuntimeException("Unhandled type: " + value);
+  }}
+
+  public static <T> Object valueToArray(Value value, Class<T> arrayClass) {{
+    return value.as(arrayClass);
+  }}
+
+  private static String[] extractTypesFromMap(String input) {{
+        // Define the regex pattern to match the content inside the outermost <>
+        Pattern pattern = Pattern.compile("^Map<((?:[^<>]+|<[^<>]*>)*)>");
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.find()) {{
+            String insideBrackets = matcher.group(1);
+
+            int depth = 0;
+            int splitIndex = -1;
+            for (int i = 0; i < insideBrackets.length(); i++) {{
+                char ch = insideBrackets.charAt(i);
+                if (ch == '<') {{
+                    depth++;
+                }} else if (ch == '>') {{
+                    depth--;
+                }} else if (ch == ',' && depth == 0) {{
+                    splitIndex = i;
+                    break;
+                }}
+            }}
+
+            if (splitIndex != -1) {{
+                String something = insideBrackets.substring(0, splitIndex).trim();
+                String somethingElse = insideBrackets.substring(splitIndex + 1).trim();
+                return new String[] {{ something, somethingElse }};
+            }}
+        }}
+        return null; // Return null if no match is found
     }}
 
     private static Value JavaHandler = ContextInitializer.getPythonClass("java_handler.py", "JavaHandler");

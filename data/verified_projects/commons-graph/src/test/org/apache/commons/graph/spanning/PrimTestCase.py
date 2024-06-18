@@ -30,7 +30,7 @@ class PrimTestCase(unittest.TestCase):
             .fromSource(source)\
             .applyingPrimAlgorithm(DoubleWeightBaseOperations())
 
-        PrimTestCase.assertEquals(expected, actual)
+        unittest.TestCase().assertEquals(expected, actual)
     
     
     @pytest.mark.test
