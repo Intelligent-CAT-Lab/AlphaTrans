@@ -70,10 +70,12 @@ class Project:
             )
             
         # copy java_handler.py to the translated project
+        java_handler_path = f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/{paths[self.name]['main'].replace('/java/', '/')}/java_handler.py"
+        os.makedirs(os.path.dirname(java_handler_path), exist_ok=True)
         subprocess.run([
             "cp", 
             f"{self.script_dir}/misc/java_handler.py", 
-            f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/{paths[self.name]['main'].replace('/java/', '/')}/"
+            java_handler_path
         ], check=True)
         
     def recompose_python_project(self, injected_translations: dict[tuple[str, str, str], str]): 
