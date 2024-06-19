@@ -40,14 +40,15 @@ class IOUtils:
     @staticmethod
     def copy1(
         input: typing.Union[io.TextIOWrapper, io.BufferedReader],
-        output: io.TextIOBase,
+        output: typing.Union[typing.List, io.TextIOBase],
         buffer: typing.Union[str, typing.List[str], io.StringIO],
     ) -> int:
         pass
 
     @staticmethod
     def copy0(
-        input: typing.Union[io.TextIOWrapper, io.BufferedReader], output: io.TextIOBase
+        input: typing.Union[io.TextIOWrapper, io.BufferedReader],
+        output: typing.Union[typing.List, io.TextIOBase],
     ) -> int:
         pass
 

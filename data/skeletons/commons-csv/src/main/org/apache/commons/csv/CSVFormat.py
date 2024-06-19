@@ -318,20 +318,27 @@ class CSVFormat:
         pass
 
     def printRecord(
-        self, appendable: io.TextIOBase, values: typing.List[typing.Any]
+        self,
+        appendable: typing.Union[typing.List, io.TextIOBase],
+        values: typing.List[typing.Any],
     ) -> None:
         pass
 
-    def println(self, appendable: io.TextIOBase) -> None:
+    def println(self, appendable: typing.Union[typing.List, io.TextIOBase]) -> None:
         pass
 
     def printer(self) -> CSVPrinter:
         pass
 
-    def print2(self, value: typing.Any, out: io.TextIOBase, newRecord: bool) -> None:
+    def print2(
+        self,
+        value: typing.Any,
+        out: typing.Union[typing.List, io.TextIOBase],
+        newRecord: bool,
+    ) -> None:
         pass
 
-    def print0(self, out: io.TextIOBase) -> CSVPrinter:
+    def print0(self, out: typing.Union[typing.List, io.TextIOBase]) -> CSVPrinter:
         pass
 
     def parse(
@@ -462,35 +469,45 @@ class CSVFormat:
     def __printWithQuotes1(
         self,
         reader: typing.Union[io.TextIOWrapper, io.BufferedReader],
-        appendable: io.TextIOBase,
+        appendable: typing.Union[typing.List, io.TextIOBase],
     ) -> None:
         pass
 
     def __printWithQuotes0(
-        self, object: typing.Any, charSeq: str, out: io.TextIOBase, newRecord: bool
+        self,
+        object: typing.Any,
+        charSeq: str,
+        out: typing.Union[typing.List, io.TextIOBase],
+        newRecord: bool,
     ) -> None:
         pass
 
     def __printWithEscapes1(
         self,
         reader: typing.Union[io.TextIOWrapper, io.BufferedReader],
-        appendable: io.TextIOBase,
+        appendable: typing.Union[typing.List, io.TextIOBase],
     ) -> None:
         pass
 
-    def __printWithEscapes0(self, charSeq: str, appendable: io.TextIOBase) -> None:
+    def __printWithEscapes0(
+        self, charSeq: str, appendable: typing.Union[typing.List, io.TextIOBase]
+    ) -> None:
         pass
 
     def __print5(
         self,
         reader: typing.Union[io.TextIOWrapper, io.BufferedReader],
-        out: io.TextIOBase,
+        out: typing.Union[typing.List, io.TextIOBase],
         newRecord: bool,
     ) -> None:
         pass
 
     def __print3(
-        self, object: typing.Any, value: str, out: io.TextIOBase, newRecord: bool
+        self,
+        object: typing.Any,
+        value: str,
+        out: typing.Union[typing.List, io.TextIOBase],
+        newRecord: bool,
     ) -> None:
         pass
 
@@ -504,10 +521,14 @@ class CSVFormat:
     ) -> bool:
         pass
 
-    def __append1(self, csq: str, appendable: io.TextIOBase) -> None:
+    def __append1(
+        self, csq: str, appendable: typing.Union[typing.List, io.TextIOBase]
+    ) -> None:
         pass
 
-    def __append0(self, c: str, appendable: io.TextIOBase) -> None:
+    def __append0(
+        self, c: str, appendable: typing.Union[typing.List, io.TextIOBase]
+    ) -> None:
         pass
 
     @staticmethod
