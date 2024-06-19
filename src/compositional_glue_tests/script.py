@@ -70,12 +70,16 @@ class Project:
             )
             
         # copy java_handler.py to the translated project
-        subprocess.run([
-            "cp", 
-            f"{self.script_dir}/misc/java_handler.py", 
-            f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/{paths[self.name]['main'].replace('/java/', '/')}/"
-        ], check=True)
-        
+        java_handler_path = f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/{paths[self.name]['main'].replace('/java/', '/')}/java_handler.py"
+        os.makedirs(os.path.dirname(java_handler_path), exist_ok=True)
+        with open(f"{self.script_dir}/misc/java_handler.py") as f:
+            write_to_file(
+                f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/{paths[self.name]['main'].replace('/java/', '/')}/java_handler.py",
+                f.read().format(
+                    project = f"org.apache.{self.formatted_name}"
+                )
+            )
+
     def recompose_python_project(self, injected_translations: dict[tuple[str, str, str], str]): 
         """
         (Re)compose the python project with the injected translations.

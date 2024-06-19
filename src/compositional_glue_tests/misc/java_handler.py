@@ -1,43 +1,48 @@
 import java
 import abc
 
-id_map = dict() # map IDs of Java objects to IDs of their corresponding Python objects
-
 class JavaHandler:
-    def mapping(x):
-        # if not 'foreign' type, return as it is
-        if not type(x).__name__ == 'foreign':
-            return x
-        
+    def mapping(x, id_map=None):
+        if id_map is None:
+            id_map = dict() # map IDs of Java objects to IDs of their corresponding Python objects
+
         # Noneify
         if x == None:
             return None
-        
+
+        # if not 'foreign' type, return as it is
+        if not type(x).__name__ == 'foreign':
+            return x
+
+        # check if the object has already been mapped
+        id = JavaHandler.getJavaId(x)
+        if id in id_map:
+            return id_map[id]
+
         # get underlying python objects from java objects
-        if hasattr(x, 'getPythonObject'):
-            x.revsync() # sync the java object with the python object
+        if hasattr(x, 'getPythonObject'):            
             obj = x.getPythonObject()
-            
-            # recursively map all fields of the object
-            if hasattr(obj, '__dict__'):
-                for key in obj.__dict__:
-                    if key != "javaObj": # leave javaObj as it is
-                        obj.__dict__[key] = JavaHandler.mapping(obj.__dict__[key])
-                    
+            id_map[id] = obj            
+            x.revsync() # sync the java object with the python object
+
             return obj
         
         # Properties
         if hasattr(x, 'getProperty'):
             return JavaHandler.properties_to_dict(x)
-        
+
         # Map
         if hasattr(x, 'keySet'):
-            return JavaHandler.map_to_dict(x)
-        
+            obj = JavaHandler.map_to_dict(x, id_map)
+            id_map[id] = obj
+            return obj
+
         # List
         if hasattr(x, 'toArray'):
-            return JavaHandler.list_to_list(x)
-        
+            obj = JavaHandler.list_to_list(x, id_map)
+            id_map[id] = obj
+            return obj
+
         # handle the 'Class' type
         # this is safe because Strings don't have the foreign type
         try:
@@ -47,37 +52,27 @@ class JavaHandler:
             pass
         
         raise ValueError("Unknown Java object type: " + repr(x))
-    
+
     def properties_to_dict(x):
         D = dict()
         for key in x.propertyNames():
             D[key] = x.getProperty(key)
         return D
 
-    def map_to_dict(x):
+    def map_to_dict(x, id_map=None):
         D = dict()
         for key in x.keySet():
-            D[JavaHandler.mapping(key)] = JavaHandler.mapping(x.get(key))
+            D[JavaHandler.mapping(key)] = JavaHandler.mapping(x.get(key), id_map)
         return D
     
-    def list_to_list(x):
+    def list_to_list(x, id_map=None):
         L = []
         for item in x.toArray():
-            L.append(JavaHandler.mapping(item))
+            L.append(JavaHandler.mapping(item, id_map))
         return L
-
-
-class Types:
-    String = java.type('java.lang.String')
-    Object = java.type('java.lang.Object')
-    Number = java.type('java.lang.Number')
-    Class = java.type('java.lang.Class')
-    Date = java.type('java.util.Date')
-    FileInputStream = java.type('java.io.FileInputStream')
-    File = java.type('java.io.File')
-    Files = java.type('java.io.File[]')
-    URL = java.type('java.net.URL')
-
+    
+    def getJavaId(obj):
+        return java.type('{project}.IntegrationUtils').getIdentityHashCode(obj)
 
 class StaticFieldRedirector(abc.ABCMeta):
     """
