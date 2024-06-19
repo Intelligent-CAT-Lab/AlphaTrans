@@ -1,42 +1,42 @@
 package {project};
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Properties;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.lang.reflect.Constructor;
-
 import org.graalvm.polyglot.Value;
 
-
-/**
- * Provides utility methods for integration with GraalVM.
- */
+/** Provides utility methods for integration with GraalVM. */
 public final class IntegrationUtils {{
 
-    private IntegrationUtils() {{
+  private IntegrationUtils() {{
+  }}
+
+  public static Object valueToObject(Value value, String classDescriptor) {{
+    return valueToObject(value, classDescriptor, new HashMap<>());
+  }}
+
+  public static Object valueToObject(Value value, String classDescriptor, Map<Long, Object> idMap) {{
+    // Nullify
+    if (value.isNull()) {{
+      return null;
     }}
 
-    /*
-   * Create a method that accepts a Value object and converts it to a Java object,
-   * which may belong to any arbitrary class.
-   */
-  public static Object valueToObject(Value value, String classDescriptor) {{
     // handle host objects
     if (value.isHostObject()) {{
       return value.asHostObject();
     }}
 
-    // Nullify
-    if (value.isNull()) {{
-      return null;
+    // check if the object has already been mapped
+    Long id = getPythonObjectId(value);
+    if (idMap.containsKey(id)) {{
+      return idMap.get(id);
     }}
 
     // return the 'javaObj' member if it exists, which is a Java object
@@ -44,7 +44,9 @@ public final class IntegrationUtils {{
     if (value.hasMember("javaObj")) {{
       Value javaObj = value.getMember("javaObj");
       javaObj.invokeMember("sync");
-      return javaObj.asHostObject();
+      Object hostObj = javaObj.asHostObject();
+      idMap.put(id, hostObj);
+      return hostObj;
     }}
 
     // Get the "primary" class name, i.e., everything before <...>
@@ -54,11 +56,13 @@ public final class IntegrationUtils {{
     if (value.hasArrayElements() && primaryClassName.equals("List")) {{
       String innerClassName = "";
       if (classDescriptor.contains("<")) {{
-        innerClassName = classDescriptor.substring(classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
+        innerClassName = classDescriptor.substring(
+            classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
       }}
       List<Object> list = new ArrayList<>();
+      idMap.put(id, list);
       for (int i = 0; i < value.getArraySize(); i++) {{
-        list.add(valueToObject(value.getArrayElement(i), innerClassName));
+        list.add(valueToObject(value.getArrayElement(i), innerClassName, idMap));
       }}
       return list;
     }}
@@ -76,8 +80,11 @@ public final class IntegrationUtils {{
       }}
 
       Map<Object, Object> map = new LinkedHashMap<>();
+      idMap.put(id, map);
       for (Object key : value.getHashKeysIterator().as(Iterable.class)) {{
-        map.put(valueToObject(Value.asValue(key), keyClassName), valueToObject(value.getHashValue(key), valueClassName));
+        map.put(
+            valueToObject(Value.asValue(key), keyClassName),
+            valueToObject(value.getHashValue(key), valueClassName));
       }}
       return map;
     }}
@@ -101,10 +108,10 @@ public final class IntegrationUtils {{
     }}
 
     if (value.isNumber()) {{
-        if (classDescriptor.equals("int")) {{
-            return (int) value.asLong();
-        }}
-        return value.as(Number.class);
+      if (classDescriptor.equals("int")) {{
+        return (int) value.asLong();
+      }}
+      return value.as(Number.class);
     }}
 
     throw new RuntimeException("Unhandled type: " + value);
@@ -115,47 +122,56 @@ public final class IntegrationUtils {{
   }}
 
   private static String[] extractTypesFromMap(String input) {{
-        // Define the regex pattern to match the content inside the outermost <>
-        Pattern pattern = Pattern.compile("^Map<((?:[^<>]+|<[^<>]*>)*)>");
-        Matcher matcher = pattern.matcher(input);
+    // Define the regex pattern to match the content inside the outermost <>
+    Pattern pattern = Pattern.compile("^Map<((?:[^<>]+|<[^<>]*>)*)>");
+    Matcher matcher = pattern.matcher(input);
 
-        if (matcher.find()) {{
-            String insideBrackets = matcher.group(1);
+    if (matcher.find()) {{
+      String insideBrackets = matcher.group(1);
 
-            int depth = 0;
-            int splitIndex = -1;
-            for (int i = 0; i < insideBrackets.length(); i++) {{
-                char ch = insideBrackets.charAt(i);
-                if (ch == '<') {{
-                    depth++;
-                }} else if (ch == '>') {{
-                    depth--;
-                }} else if (ch == ',' && depth == 0) {{
-                    splitIndex = i;
-                    break;
-                }}
-            }}
-
-            if (splitIndex != -1) {{
-                String something = insideBrackets.substring(0, splitIndex).trim();
-                String somethingElse = insideBrackets.substring(splitIndex + 1).trim();
-                return new String[] {{ something, somethingElse }};
-            }}
+      int depth = 0;
+      int splitIndex = -1;
+      for (int i = 0; i < insideBrackets.length(); i++) {{
+        char ch = insideBrackets.charAt(i);
+        if (ch == '<') {{
+          depth++;
+        }} else if (ch == '>') {{
+          depth--;
+        }} else if (ch == ',' && depth == 0) {{
+          splitIndex = i;
+          break;
         }}
-        return null; // Return null if no match is found
-    }}
+      }}
 
-    private static Value JavaHandler = ContextInitializer.getPythonClass("java_handler.py", "JavaHandler");
-
-    public static Value mapToPython(Object obj) {{
-        return JavaHandler.invokeMember("mapping", obj);
+      if (splitIndex != -1) {{
+        String something = insideBrackets.substring(0, splitIndex).trim();
+        String somethingElse = insideBrackets.substring(splitIndex + 1).trim();
+        return new String[] {{ something, somethingElse }};
+      }}
     }}
+    return null; // Return null if no match is found
+  }}
 
-    public static Value mapToPython(Object obj, Value idMap) {{
-        return JavaHandler.invokeMember("mapping", obj, idMap);
-    }}
+  private static Value JavaHandler = ContextInitializer.getPythonClass("java_handler.py", "JavaHandler");
 
-    public static int getIdentityHashCode(Object obj) {{
-      return System.identityHashCode(obj);
-    }}
+  public static Value mapToPython(Object obj) {{
+    return JavaHandler.invokeMember("mapping", obj);
+  }}
+
+  public static Value mapToPython(Object obj, Value idMap) {{
+    System.out.println("mapping with idMap :: " + obj + " :: " + idMap);
+    return JavaHandler.invokeMember("mapping", obj, idMap);
+  }}
+
+  public static void pyPrintAll(Object obj) {{
+    JavaHandler.invokeMember("printAllObjects", obj);
+  }}
+
+  public static int getIdentityHashCode(Object obj) {{
+    return System.identityHashCode(obj);
+  }}
+
+  public static Long getPythonObjectId(Value obj) {{
+    return JavaHandler.invokeMember("getObjectId", obj).asLong();
+  }}
 }}

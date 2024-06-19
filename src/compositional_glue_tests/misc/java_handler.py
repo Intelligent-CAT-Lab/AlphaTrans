@@ -20,10 +20,10 @@ class JavaHandler:
             return id_map[id]
 
         # get underlying python objects from java objects
-        if hasattr(x, 'getPythonObject'):            
+        if hasattr(x, 'getPythonObject'):
             obj = x.getPythonObject()
-            id_map[id] = obj            
-            x.revsync() # sync the java object with the python object
+            id_map[id] = obj
+            x.revsync(id_map) # sync the java object with the python object
 
             return obj
 
@@ -34,13 +34,11 @@ class JavaHandler:
         # Map
         if hasattr(x, 'keySet'):
             obj = JavaHandler.map_to_dict(x, id_map)
-            id_map[id] = obj
             return obj
 
         # List
         if hasattr(x, 'toArray'):
             obj = JavaHandler.list_to_list(x, id_map)
-            id_map[id] = obj
             return obj
 
         # handle the 'Class' type
@@ -61,18 +59,26 @@ class JavaHandler:
 
     def map_to_dict(x, id_map=None):
         D = dict()
+        id = JavaHandler.getJavaId(x)
+        id_map[id] = D
         for key in x.keySet():
             D[JavaHandler.mapping(key)] = JavaHandler.mapping(x.get(key), id_map)
         return D
     
     def list_to_list(x, id_map=None):
         L = []
+        id = JavaHandler.getJavaId(x)
+        id_map[id] = L
         for item in x.toArray():
-            L.append(JavaHandler.mapping(item, id_map))
+            L.append(JavaHandler.mapping(item, id_map))        
         return L
     
     def getJavaId(obj):
         return java.type('{project}.IntegrationUtils').getIdentityHashCode(obj)
+
+    def getPythonId(obj):
+        return id(obj)
+
 
 class StaticFieldRedirector(abc.ABCMeta):
     """
