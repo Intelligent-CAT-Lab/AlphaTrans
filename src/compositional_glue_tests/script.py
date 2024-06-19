@@ -686,7 +686,7 @@ class SyncMethod:
         else:
             python_field_name = field_name
         
-        field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type)
+        field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True)
         
         if not self.reverse:
             self.fields.append(f"{field_name} = ({formatted_field_type}) {field_from_python};")
@@ -698,8 +698,13 @@ class SyncMethod:
             method_name = "sync"
         else:
             method_name = "revsync"
+            
+        body = ""
         
-        body = "\n".join(self.fields)
+        if not self.reverse:
+            body += "java.util.Map idMap = new java.util.HashMap();"
+        
+        body += "\n".join(self.fields)
             
         return f"""
             public void {method_name}() {{
