@@ -163,15 +163,11 @@ public final class IntegrationUtils {{
     return JavaHandler.invokeMember("mapping", obj, idMap);
   }}
 
-  public static void pyPrintAll(Object obj) {{
-    JavaHandler.invokeMember("printAllObjects", obj);
-  }}
-
   public static int getIdentityHashCode(Object obj) {{
     return System.identityHashCode(obj);
   }}
 
   public static Long getPythonObjectId(Value obj) {{
-    return JavaHandler.invokeMember("getObjectId", obj).asLong();
+    return JavaHandler.invokeMember("getPythonId", obj).asLong();
   }}
 }}

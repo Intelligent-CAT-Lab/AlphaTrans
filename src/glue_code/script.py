@@ -43,11 +43,12 @@ def write_to_file(file, content):
     with open(file, "w") as f:
         f.write(content)
 
-    # format java file
-    try:
-        subprocess.run(['java', '-jar', 'src/glue_code/google-java-format-1.20.0-all-deps.jar', '-r', file], check=True)
-    except Exception as e:
-        print(f"Error formatting {file}: {e}")
+    # format if java file
+    if file.endswith('.java'):
+        try:
+            subprocess.run(['java', '-jar', 'src/glue_code/google-java-format-1.20.0-all-deps.jar', '-r', file], check=True)
+        except Exception as e:
+            print(f"Error formatting {file}: {e}")
     return
 
 def make_mappings(args, schemas):
