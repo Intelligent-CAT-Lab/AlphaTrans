@@ -688,31 +688,33 @@ class SyncMethod:
         else:
             python_field_name = field_name
         
-        field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True)
-        
         if not self.reverse:
+            field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True)
             self.fields.append(f"{field_name} = ({formatted_field_type}) {field_from_python};")
         else:
             self.fields.append(f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}));")
     
     def get_body(self):
-        if not self.reverse:
-            method_name = "sync"
-        else:
-            method_name = "revsync"
-            
-        body = ""
+        fields_body = "\n".join(self.fields)
         
         if not self.reverse:
-            body += "java.util.Map idMap = new java.util.HashMap();"
-        
-        body += "\n".join(self.fields)
-            
-        return f"""
-            public void {method_name}() {{
-                {body}
+            return f"""
+            public void sync() {{
+                java.util.Map idMap = new java.util.HashMap();
+                {fields_body}
             }}
         """
+        else:
+            return f"""
+            public void revsync() {{
+                Value idMap = IntegrationUtils.mapToPython(new java.util.HashMap());
+                revsync(idMap);
+            }}
+            public void revsync(Value idMap) {{
+                {fields_body}
+            }}
+        """
+                
 
 class Schema:
     """
