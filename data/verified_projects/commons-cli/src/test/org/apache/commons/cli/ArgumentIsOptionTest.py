@@ -1,18 +1,14 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
 
-# Imports End
-
 
 class ArgumentIsOptionTest(unittest.TestCase):
 
-    # Class Methods Begin
     def setUp(self) -> None:
 
         self.__options = Options().addOption1("p", False, "Option p")\
@@ -56,5 +52,3 @@ class ArgumentIsOptionTest(unittest.TestCase):
             self.assertEqual(0, len(cl.getArgs()), "Confirm all arguments recognized")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End

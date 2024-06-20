@@ -1,18 +1,10 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.Util import *
 import unittest
 
-# Imports End
-
-
 class UtilTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
     @pytest.mark.test
     def testStripLeadingAndTrailingQuotes(self) -> None:
         self.assertEqual("foo", Util.stripLeadingAndTrailingQuotes("\"foo\""))
@@ -29,5 +21,3 @@ class UtilTest(unittest.TestCase):
         self.assertEqual("foo", Util.stripLeadingHyphens("--foo"))
         self.assertEqual("-foo", Util.stripLeadingHyphens("---foo"))
         self.assertIsNone(Util.stripLeadingHyphens(None))
-
-    # Class Methods End

@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.OptionGroup import *
 from src.main.org.apache.commons.cli.Option import *
@@ -8,16 +7,12 @@ from src.main.org.apache.commons.cli.HelpFormatter import *
 import unittest
 from typing import *
 
-# Imports End
 
 
 class BugCLI266Test(unittest.TestCase):
 
-    # Class Methods Begin
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.__insertedOrder = ["h", "d", "f", "x", "s", "p", "t", "w", "o"]
-        self.__sortOrder = ["d", "f", "h", "o", "p", "s", "t", "w", "x"]
+    __insertedOrder = ["h", "d", "f", "x", "s", "p", "t", "w", "o"]
+    __sortOrder = ["d", "f", "h", "o", "p", "s", "t", "w", "x"]
 
 
     def __buildOptionsGroup(self, options: Options) -> None:
@@ -80,5 +75,3 @@ class BugCLI266Test(unittest.TestCase):
         for o in options:
             self.assertEqual(o.getOpt(), self.__insertedOrder[i])
             i += 1
-
-    # Class Methods End

@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.PatternOptionBuilder import *
 from src.main.org.apache.commons.cli.Options import *
@@ -13,15 +12,9 @@ from pathlib import Path
 from urllib.parse import urlparse
 import datetime
 
-# Imports End
-
 
 class PatternOptionBuilderTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
     @pytest.mark.test
     def testClassPattern(self) -> None:
         try:
@@ -255,5 +248,3 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.assertIsNone(line.getOptionObject1("v"), "v value")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End

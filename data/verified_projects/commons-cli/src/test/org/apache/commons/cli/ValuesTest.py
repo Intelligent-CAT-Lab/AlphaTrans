@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.OptionBuilder import *
@@ -10,15 +9,9 @@ from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
 from typing import *
 
-# Imports End
-
 
 class ValuesTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
     def setUp(self) -> None:
         try:
             options = Options()
@@ -170,6 +163,3 @@ class ValuesTest(unittest.TestCase):
     def testTwoArgValues(self) -> None:
         self.assertTrue(self.__cmd.hasOption2("g"), "Option g is not set")
         self.assertListEqual(["val1", "val2"], self.__cmd.getOptionValues2("g"))
-
-
-    # Class Methods End

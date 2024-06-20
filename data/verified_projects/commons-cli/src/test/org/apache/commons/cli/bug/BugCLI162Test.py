@@ -1,18 +1,15 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
 import unittest
 import os
 import io
 
-# Imports End
 
 
 class BugCLI162Test(unittest.TestCase):
 
-    # Class Fields Begin
     __CR: str = os.linesep
 
     __OPT: str = "-"
@@ -88,9 +85,8 @@ class BugCLI162Test(unittest.TestCase):
                     __PMODE_OUT +\
                     ", " +\
                     __PMODE_UNK
-    # Class Fields End
-
-    # Class Methods Begin
+    
+    
     def setUp(self) -> None:
         self.__formatter = HelpFormatter()
         self.__sw = io.StringIO()
@@ -226,5 +222,3 @@ class BugCLI162Test(unittest.TestCase):
         self.assertEqual(
             expected, self.__sw.getvalue(), "Long arguments did not split as expected"
         )
-
-    # Class Methods End

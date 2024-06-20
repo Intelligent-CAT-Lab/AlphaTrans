@@ -1,26 +1,18 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.GnuParser import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 import unittest
 from src.test.org.apache.commons.cli.ParserTestCase import ParserTestCase
 
-# Imports End
-
 
 class GnuParserTest(ParserTestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    @classmethod
-    def setUpClass(cls):
-        pass
+    __test__ = True
 
     def setUp(self) -> None:
-        super().setUp(GnuParser())
+        super().setUp()
+        self._parser = GnuParser()
 
     @unittest.skip("not supported by the GnuParser")
     @pytest.mark.test
@@ -189,5 +181,3 @@ class GnuParserTest(ParserTestCase):
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End

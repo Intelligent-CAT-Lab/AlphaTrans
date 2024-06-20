@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.ParseException import *
 from src.main.org.apache.commons.cli.Options import *
@@ -11,15 +10,8 @@ from src.main.org.apache.commons.cli.MissingOptionException import *
 from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
 
-# Imports End
-
-
 class OptionsTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
     @pytest.mark.test
     def testDuplicateLong(self) -> None:
         opts = Options()
@@ -157,6 +149,3 @@ class OptionsTest(unittest.TestCase):
         self.assertIsNotNone(s, "null string returned")
         self.assertTrue("foo" in s.lower(), "foo option missing")
         self.assertTrue("bar" in s.lower(), "bar option missing")
-
-
-    # Class Methods End

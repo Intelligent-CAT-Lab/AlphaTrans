@@ -1,21 +1,15 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.Option import *
 import unittest
 import typing
 from typing import *
 
-# Imports End
-
 class OptionTest(unittest.TestCase):
-    #Inner Classes Start
     class DefaultOption(Option):
-        # Class Fields Begin
-        __serialVersionUID: int = 1
-        # Class Fields End
 
-        # Class Methods Begin
+        __serialVersionUID: int = 1
+
         def __init__(self, opt: str, description: str, defaultValue: str) -> None:
             super().__init__(-1, None, None, None, False, None)
             self.__defaultValue = defaultValue
@@ -30,14 +24,11 @@ class OptionTest(unittest.TestCase):
                 else self.__defaultValue
             )
         
-        # Class Methods End
     
     class TestOption(Option):
-        # Class Fields Begin
-        __serialVersionUID: int = 1
-        # Class Fields End
 
-        # Class Methods Begin
+        __serialVersionUID: int = 1
+
         def __init__(self, opt, hasArg, description):
             super().__init__(-1, opt, None, description, hasArg, None)
 
@@ -46,11 +37,7 @@ class OptionTest(unittest.TestCase):
             self.addValueForProcessing(value)
             return True
 
-        # Class Methods End
 
-    # Inner Classes End
-        
-    # Class Methods Begin
     @staticmethod
     def __checkOption(
         option: Option,
@@ -378,6 +365,3 @@ class OptionTest(unittest.TestCase):
         clone = option.clone()
         self.assertEqual("myfile.txt", clone.getValue0())
         self.assertEqual(OptionTest.DefaultOption, type(clone))
-    
-    # Class Methods End
-

@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.ParseException import *
 from src.main.org.apache.commons.cli.Options import *
@@ -9,15 +8,9 @@ from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
 
-# Imports End
-
 
 class BugCLI13Test(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
     @pytest.mark.test
     def testCLI13(self) -> None:
         try:
@@ -37,5 +30,3 @@ class BugCLI13Test(unittest.TestCase):
             self.assertTrue(commandLine.hasOption2(debugOpt))
         except ParseException as e:
             self.fail(f"ParseException occurred: {e}")
-
-    # Class Methods End

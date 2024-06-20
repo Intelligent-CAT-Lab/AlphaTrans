@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.UnrecognizedOptionException import *
 from src.main.org.apache.commons.cli.Parser import *
 from src.main.org.apache.commons.cli.ParseException import *
@@ -19,24 +18,12 @@ import typing
 from typing import *
 from abc import ABC
 
-# Imports End
-
 
 class ParserTestCase(unittest.TestCase, ABC):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    @classmethod
-    def setUpClass(cls):
-        if cls == ParserTestCase:
-            "Tests shall only be executed on child classes with concrete parser implementations."
-            raise unittest.SkipTest
-    
-    def __init__(self, methodName='runTest'):
-        self.setUpClass()
-        super().__init__(methodName)
+    __test__ = False
+    _parser = None
+    _options = None
     
     
     def __parse(
@@ -56,9 +43,9 @@ class ParserTestCase(unittest.TestCase, ABC):
         )
     
     
-    def setUp(self, parser) -> None:
-        self.__parser = parser
-        self.__options = Options()\
+    def setUp(self) -> None:
+        # self._parser = parser
+        self._options = Options()\
             .addOption3("a", "enable-a", False, "turn [a] on or off")\
             .addOption3("b", "bfile", True, "set the value of [b]")\
             .addOption3("c", "copt", False, "turn [c] on or off")
@@ -77,7 +64,7 @@ class ParserTestCase(unittest.TestCase, ABC):
                 OptionBuilder.withLongOpt("bar").hasOptionalArg().create1('b')
             )
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertTrue(cl.hasOption2("b"))
             self.assertTrue(cl.hasOption2("f"))
@@ -97,7 +84,7 @@ class ParserTestCase(unittest.TestCase, ABC):
 
             caught = False
             try:
-                self.__parser.parse0(options, args)
+                self._parser.parse0(options, args)
             except AmbiguousOptionException as e:
                 caught = True
                 self.assertEqual("--ver", e.getOption(), "Partial option")
@@ -120,7 +107,7 @@ class ParserTestCase(unittest.TestCase, ABC):
 
             caught = False
             try:
-                self.__parser.parse0(options, args)
+                self._parser.parse0(options, args)
             except AmbiguousOptionException as e:
                 caught = True
                 self.assertEqual("-ver", e.getOption(), "Partial option")
@@ -143,7 +130,7 @@ class ParserTestCase(unittest.TestCase, ABC):
 
             caught = False
             try:
-                self.__parser.parse0(options, args)
+                self._parser.parse0(options, args)
             except AmbiguousOptionException as e:
                 caught = True
                 self.assertEqual("--ver", e.getOption(), "Partial option")
@@ -166,7 +153,7 @@ class ParserTestCase(unittest.TestCase, ABC):
 
             caught = False
             try:
-                self.__parser.parse0(options, args)
+                self._parser.parse0(options, args)
             except AmbiguousOptionException as e:
                 caught = True
                 self.assertEqual("-ver", e.getOption(), "Partial option")
@@ -183,7 +170,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-b", "-foo"]
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
             self.assertEqual("-foo", cl.getOptionValue4("b"))
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
@@ -194,7 +181,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-acbtoast", "foo", "bar"]
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
 
             self.assertTrue(cl.hasOption2("a"), "Confirm -a is set")
             self.assertTrue(cl.hasOption2("b"), "Confirm -b is set")
@@ -210,7 +197,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["--copt", "--", "-b", "toast"]
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
 
             self.assertTrue(cl.hasOption2("c"), "Confirm -c is set")
             self.assertFalse(cl.hasOption2("b"), "Confirm -b is not set")
@@ -227,7 +214,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options.addOption0(OptionBuilder.create1("m"))
 
             try:
-                self.__parser.parse0(options, ["-n", "--", "-m"])
+                self._parser.parse0(options, ["-n", "--", "-m"])
                 self.fail("MissingArgumentException not thrown for option -n")
             except MissingArgumentException as e:
                 self.assertIsNotNone(e.getOption())
@@ -241,7 +228,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["--bfile", "\"quoted string\""]
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
 
             self.assertEqual(
                 "quoted string",
@@ -257,7 +244,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["--bfile=\"quoted string\""]
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
 
             self.assertEqual(
                 "quoted string",
@@ -276,7 +263,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options = Options()
             options.addOption0(OptionBuilder.withLongOpt("foo").hasArg0().create1('f'))
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertEqual("bar", cl.getOptionValue4("foo"))
         except Exception as e:
@@ -291,7 +278,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options = Options()
             options.addOption0(OptionBuilder.withLongOpt("foo").hasArg0().create1('f'))
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertEqual("bar", cl.getOptionValue4("foo"))
         except Exception as e:
@@ -306,7 +293,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options = Options()
             options.addOption0(OptionBuilder.withLongOpt("foo").hasArg0().create1('f'))
 
-            cl = self.__parser.parse1(options, args, True)
+            cl = self._parser.parse1(options, args, True)
 
             self.assertFalse(cl.hasOption2("foo"))
         except Exception as e:
@@ -321,7 +308,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options = Options()
             options.addOption0(OptionBuilder.withLongOpt("foo").hasArg0().create1('f'))
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertEqual("bar", cl.getOptionValue4("foo"))
         except Exception as e:
@@ -337,7 +324,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options.addOption0(OptionBuilder.withLongOpt("foo").create1("f"))
 
             try:
-                self.__parser.parse0(options, args)
+                self._parser.parse0(options, args)
             except UnrecognizedOptionException as e:
                 self.assertEqual("--foo=bar", e.getOption())
                 return
@@ -356,7 +343,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options.addOption0(OptionBuilder.withLongOpt("foo").create1("f"))
 
             try:
-                self.__parser.parse0(options, args)
+                self._parser.parse0(options, args)
             except UnrecognizedOptionException as e:
                 self.assertEqual("-foobar", e.getOption())
                 return
@@ -374,7 +361,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             caught = False
 
             try:
-                self.__parser.parse0(self.__options, args)
+                self._parser.parse0(self._options, args)
             except MissingArgumentException as e:
                 caught = True
                 self.assertEqual("b", e.getOption().getOpt(), "option missing an argument")
@@ -392,7 +379,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             caught = False
 
             try:
-                self.__parser.parse0(self.__options, args)
+                self._parser.parse0(self._options, args)
             except MissingArgumentException as e:
                 caught = True
                 self.assertEqual("b", e.getOption().getOpt(), "option missing an argument")
@@ -415,7 +402,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options.addOption0(OptionBuilder.isRequired0().create2('c'))
 
             try:
-                self.__parser.parse0(options, ["-c"])
+                self._parser.parse0(options, ["-c"])
                 self.fail("MissingOptionException not thrown")
             except MissingOptionException as e:
                 self.assertEqual(1, len(e.getMissingOptions()))
@@ -437,7 +424,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         )
 
         try:
-            self.__parser.parse0(options, args)
+            self._parser.parse0(options, args)
             self.fail("exception should have been thrown")
         except MissingOptionException as e:
             self.assertEqual(
@@ -464,7 +451,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         )
 
         try:
-            self.__parser.parse0(options, args)
+            self._parser.parse0(options, args)
             self.fail("exception should have been thrown")
         except MissingOptionException as e:
             self.assertEqual(
@@ -483,7 +470,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-c", "foobar", "-b", "toast"]
 
-            cl = self.__parser.parse1(self.__options, args, True)
+            cl = self._parser.parse1(self._options, args, True)
             self.assertTrue(cl.hasOption2("c"), "Confirm -c is set")
             self.assertEqual(
                 3,
@@ -491,7 +478,7 @@ class ParserTestCase(unittest.TestCase, ABC):
                 "Confirm  3 extra args: " + str(len(cl.getArgList())),
             )
 
-            cl = self.__parser.parse0(self.__options, cl.getArgs())
+            cl = self._parser.parse0(self._options, cl.getArgs())
 
             self.assertFalse(cl.hasOption2("c"), "Confirm -c is not set")
             self.assertTrue(cl.hasOption2("b"), "Confirm -b is set")
@@ -515,7 +502,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["--copt", "foobar", "--bfile", "toast"]
 
-            cl = self.__parser.parse1(self.__options, args, True)
+            cl = self._parser.parse1(self._options, args, True)
             self.assertTrue(cl.hasOption2("c"), "Confirm -c is set")
             self.assertEqual(
                 3,
@@ -523,7 +510,7 @@ class ParserTestCase(unittest.TestCase, ABC):
                 "Confirm  3 extra args: " + str(len(cl.getArgList())),
             )
 
-            cl = self.__parser.parse0(self.__options, cl.getArgs())
+            cl = self._parser.parse0(self._options, cl.getArgs())
 
             self.assertFalse(cl.hasOption2("c"), "Confirm -c is not set")
             self.assertTrue(cl.hasOption2("b"), "Confirm -b is set")
@@ -547,7 +534,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-b", "-1"]
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
             self.assertEqual("-1", cl.getOptionValue4("b"))
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
@@ -558,9 +545,9 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-b", "-1"]
 
-            self.__options.addOption1("1", False, None)
+            self._options.addOption1("1", False, None)
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
             self.assertEqual("-1", cl.getOptionValue4("b"))
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
@@ -577,7 +564,7 @@ class ParserTestCase(unittest.TestCase, ABC):
                 OptionBuilder.withLongOpt("bfile").hasArg0().isRequired0().create1("b")
             )
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertTrue(cl.hasOption2("a"), "Confirm -a is set")
             self.assertTrue(cl.hasOption2("b"), "Confirm -b is set")
@@ -597,7 +584,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options = Options()
             options.addOptionGroup(group)
 
-            self.__parser.parse0(options, ["-b"])
+            self._parser.parse0(options, ["-b"])
 
             self.assertEqual("b", group.getSelected(), "selected option", ) 
         except Exception as e:
@@ -614,7 +601,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options = Options()
             options.addOptionGroup(group)
 
-            cl = self.__parser.parse0(options, ["--bar"])
+            cl = self._parser.parse0(options, ["--bar"])
 
             self.assertTrue(cl.hasOption2("bar"))
             self.assertEqual("bar", group.getSelected(), "selected option")
@@ -631,7 +618,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options.addOption0(OptionBuilder.withLongOpt("version").create0())
             options.addOption0(OptionBuilder.hasArg0().create1("v"))
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertTrue(cl.hasOption2("version"), "Confirm --version is set")
             self.assertFalse(cl.hasOption2("v"), "Confirm -v is not set")
@@ -647,7 +634,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options = Options()
             options.addOption0(OptionBuilder.withValueSeparator0().hasArgs1(2).create1("J"))
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             values = cl.getOptionValues2("J")
             self.assertIsNotNone("null values", values)
@@ -674,7 +661,7 @@ class ParserTestCase(unittest.TestCase, ABC):
                 OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D')
             )
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             props = cl.getOptionProperties1("D")
             self.assertIsNotNone(props, "null properties")
@@ -698,35 +685,35 @@ class ParserTestCase(unittest.TestCase, ABC):
 
             properties = {"a": "true", "c": "yes", "e": "1"}
 
-            cmd = self.__parse(self.__parser, opts, None, properties)
+            cmd = self.__parse(self._parser, opts, None, properties)
             self.assertTrue(cmd.hasOption2("a"))
             self.assertTrue(cmd.hasOption2("c"))
             self.assertTrue(cmd.hasOption2("e"))
 
             properties = {"a": "false", "c": "no", "e": "0"}
 
-            cmd = self.__parse(self.__parser, opts, None, properties)
+            cmd = self.__parse(self._parser, opts, None, properties)
             self.assertFalse(cmd.hasOption2("a"))
             self.assertFalse(cmd.hasOption2("c"))
             self.assertTrue(cmd.hasOption2("e"))  # this option accepts an argument
 
             properties = {"a": "TRUE", "c": "nO", "e": "TrUe"}
 
-            cmd = self.__parse(self.__parser, opts, None, properties)
+            cmd = self.__parse(self._parser, opts, None, properties)
             self.assertTrue(cmd.hasOption2("a"))
             self.assertFalse(cmd.hasOption2("c"))
             self.assertTrue(cmd.hasOption2("e"))
 
             properties = {"a": "just a string", "e": ""}
 
-            cmd = self.__parse(self.__parser, opts, None, properties)
+            cmd = self.__parse(self._parser, opts, None, properties)
             self.assertFalse(cmd.hasOption2("a"))
             self.assertFalse(cmd.hasOption2("c"))
             self.assertTrue(cmd.hasOption2("e"))
 
             properties = {"a": "0", "c": "1"}
 
-            cmd = self.__parse(self.__parser, opts, None, properties)
+            cmd = self.__parse(self._parser, opts, None, properties)
             self.assertFalse(cmd.hasOption2("a"))
             self.assertTrue(cmd.hasOption2("c"))
         except Exception as e:
@@ -752,7 +739,7 @@ class ParserTestCase(unittest.TestCase, ABC):
 
             properties = {"b": "true", "x": "true"}
 
-            cmd = self.__parse(self.__parser, opts, args, properties)
+            cmd = self.__parse(self._parser, opts, args, properties)
             
             self.assertTrue(cmd.hasOption2("a"))
             self.assertFalse(cmd.hasOption2("b"))
@@ -772,7 +759,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             
             values = ["one", "two"]
 
-            cmd = self.__parse(self.__parser, opts, None, properties)
+            cmd = self.__parse(self._parser, opts, None, properties)
 
             self.assertTrue(cmd.hasOption2("k"))
             self.assertEqual(values, cmd.getOptionValues0('k'))
@@ -788,7 +775,7 @@ class ParserTestCase(unittest.TestCase, ABC):
 
             properties = {"f": "true"}
 
-            cmd = self.__parse(self.__parser, opts, None, properties)
+            cmd = self.__parse(self._parser, opts, None, properties)
             self.assertTrue(cmd.hasOption2("f"))
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
@@ -802,7 +789,7 @@ class ParserTestCase(unittest.TestCase, ABC):
 
             properties = {"hide": "seek"}
 
-            cmd = self.__parse(self.__parser, opts, None, properties)
+            cmd = self.__parse(self._parser, opts, None, properties)
             self.assertTrue(cmd.hasOption2("hide"))
             self.assertEqual("seek", cmd.getOptionValue4("hide"))
             self.assertFalse(cmd.hasOption2("fake"))
@@ -818,7 +805,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             properties = {"f": "true"}
 
             try:
-                self.__parse(self.__parser, opts, None, properties)
+                self.__parse(self._parser, opts, None, properties)
                 self.fail("UnrecognizedOptionException expected")
             except UnrecognizedOptionException:
                 pass
@@ -837,7 +824,7 @@ class ParserTestCase(unittest.TestCase, ABC):
 
             properties = {"j": "seek"}
 
-            cmd = self.__parse(self.__parser, opts, args, properties)
+            cmd = self.__parse(self._parser, opts, args, properties)
             self.assertTrue(cmd.hasOption2("j"))
             self.assertEqual("found", cmd.getOptionValue4("j"))
             self.assertTrue(cmd.hasOption2("i"))
@@ -853,10 +840,10 @@ class ParserTestCase(unittest.TestCase, ABC):
             opts = Options()
             opts.addOption0(OptionBuilder.isRequired0().create1('v'))
 
-            self.__parser.parse0(opts, ["-v"])
+            self._parser.parse0(opts, ["-v"])
 
             try:
-                self.__parser.parse0(opts, [])
+                self._parser.parse0(opts, [])
                 self.fail("MissingOptionException not thrown")
             except MissingOptionException:
                 pass
@@ -869,7 +856,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-b\"quoted string\""]
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
 
             self.assertEqual(
                 "quoted string",
@@ -885,7 +872,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-b", "\"quoted string\""]
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
 
             self.assertEqual(
                 "quoted string",
@@ -904,7 +891,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options = Options()
             options.addOption0(OptionBuilder.withLongOpt("foo").hasArg0().create1('f'))
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertEqual("bar", cl.getOptionValue4("foo"))
         except Exception as e:
@@ -919,7 +906,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options = Options()
             options.addOption0(OptionBuilder.withLongOpt("foo").hasArg0().create1('f'))
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertEqual("bar", cl.getOptionValue4("foo"))
         except Exception as e:
@@ -935,7 +922,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options.addOption0(OptionBuilder.withLongOpt("foo").create1('f'))
 
             try:
-                self.__parser.parse0(options, args)
+                self._parser.parse0(options, args)
             except UnrecognizedOptionException as e:
                 self.assertEqual("-f=bar", e.getOption())
                 return
@@ -950,7 +937,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["--enable-a", "--bfile", "toast", "foo", "bar"]
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
 
             self.assertTrue(cl.hasOption2("a"), "Confirm -a is set")
             self.assertTrue(cl.hasOption2("b"), "Confirm -b is set")
@@ -966,7 +953,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-a", "-b", "toast", "foo", "bar"]
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
 
             self.assertTrue(cl.hasOption2("a"), "Confirm -a is set")
             self.assertTrue(cl.hasOption2("b"), "Confirm -b is set")
@@ -981,7 +968,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["--copt", "-b", "-", "-a", "-"]
 
-            cl = self.__parser.parse0(self.__options, args)
+            cl = self._parser.parse0(self._options, args)
 
             self.assertTrue(cl.hasOption2("a"), "Confirm -a is set")
             self.assertTrue(cl.hasOption2("b"), "Confirm -b is set")
@@ -1005,7 +992,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-b", "foo"]
 
-            cl = self.__parser.parse1(self.__options, args, True)
+            cl = self._parser.parse1(self._options, args, True)
 
             self.assertTrue(cl.hasOption0("b"), "Confirm -b is set")
             self.assertEqual("foo", cl.getOptionValue0("b"), "Confirm -b is set")
@@ -1023,7 +1010,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["--zop==1", "-abtoast", "--b=bar"]
 
-            cl = self.__parser.parse1(self.__options, args, True)
+            cl = self._parser.parse1(self._options, args, True)
 
             self.assertFalse(cl.hasOption2("a"), "Confirm -a is not set")
             self.assertFalse(cl.hasOption2("b"), "Confirm -b is not set")
@@ -1041,7 +1028,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-z", "-a", "-btoast"]
 
-            cl = self.__parser.parse1(self.__options, args, True)
+            cl = self._parser.parse1(self._options, args, True)
             self.assertFalse(cl.hasOption2("a"), "Confirm -a is not set")
             self.assertEqual(
                 3,
@@ -1057,7 +1044,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-c", "foober", "-b", "toast"]
 
-            cl = self.__parser.parse1(self.__options, args, True)
+            cl = self._parser.parse1(self._options, args, True)
             self.assertTrue(cl.hasOption2("a"), "Confirm -c is set")
             self.assertEqual(
                 3,
@@ -1073,7 +1060,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-azc"]
 
-            cl = self.__parser.parse1(self.__options, args, True)
+            cl = self._parser.parse1(self._options, args, True)
 
             self.assertTrue(cl.hasOption2("a"), "Confirm -a is set")
             self.assertFalse(cl.hasOption2("c"), "Confirm -c is not set")
@@ -1093,7 +1080,7 @@ class ParserTestCase(unittest.TestCase, ABC):
         try:
             args = ["-c", "foobar", "-btoast"]
 
-            cl = self.__parser.parse1(self.__options, args, True)
+            cl = self._parser.parse1(self._options, args, True)
             self.assertTrue(cl.hasOption2("c"), "Confirm -c is set")
             self.assertEqual(
                 2,
@@ -1101,7 +1088,7 @@ class ParserTestCase(unittest.TestCase, ABC):
                 "Confirm  2 extra args: " + str(len(cl.getArgList()))
             )
 
-            cl = self.__parser.parse0(self.__options, cl.getArgs())
+            cl = self._parser.parse0(self._options, cl.getArgs())
 
             self.assertFalse(cl.hasOption2("c"), "Confirm -c is not set")
             self.assertTrue(cl.hasOption2("b"), "Confirm -b is set")
@@ -1129,7 +1116,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options.addOption0(OptionBuilder.withLongOpt("version").create0())
             options.addOption0(OptionBuilder.withLongOpt("help").create0())
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertTrue(cl.hasOption2("version"), "Confirm --version is set")
         except Exception as e:
@@ -1145,7 +1132,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options.addOption0(OptionBuilder.withLongOpt("version").create0())
             options.addOption0(OptionBuilder.withLongOpt("help").create0())
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertTrue(cl.hasOption2("version"), "Confirm --version is set")
         except Exception as e:
@@ -1163,7 +1150,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             )
             options.addOption0(OptionBuilder.withLongOpt("help").create0())
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertTrue(cl.hasOption2("verbose"), "Confirm --verbose is set")
             self.assertEqual("1", cl.getOptionValue4("verbose"))
@@ -1182,7 +1169,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             )
             options.addOption0(OptionBuilder.withLongOpt("help").create0())
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertTrue(cl.hasOption2("verbose"), "Confirm --verbose is set", )
             self.assertEqual("1", cl.getOptionValue4("verbose"))
@@ -1199,7 +1186,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             options.addOption0(OptionBuilder.hasArgs0().create2("e"))
             options.addOption0(OptionBuilder.hasArgs0().create2("f"))
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertTrue(cl.hasOption2("e"), "Confirm -e is set")
             self.assertEqual(2, len(cl.getOptionValues2("e")), "number of arg for -e")
@@ -1215,7 +1202,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             args = ["-a", "-d", "-b", "toast", "foo", "bar"]
 
             try:
-                self.__parser.parse0(self.__options, args)
+                self._parser.parse0(self._options, args)
                 self.fail("UnrecognizedOptionException wasn't thrown")
             except UnrecognizedOptionException as e:
                 self.assertEqual("-d", e.getOption())
@@ -1229,7 +1216,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             args = ["-adbtoast", "foo", "bar"]
 
             try:
-                self.__parser.parse0(self.__options, args)
+                self._parser.parse0(self._options, args)
                 self.fail("UnrecognizedOptionException wasn't thrown")
             except UnrecognizedOptionException as e:
                 self.assertEqual("-adbtoast", e.getOption())
@@ -1248,7 +1235,7 @@ class ParserTestCase(unittest.TestCase, ABC):
                 OptionBuilder.withLongOpt("bfile").hasArg0().isRequired0().create1('b')
             )
 
-            cl = self.__parser.parse0(options, args)
+            cl = self._parser.parse0(options, args)
 
             self.assertFalse(cl.hasOption2("a"), "Confirm -a is NOT set")
             self.assertTrue(cl.hasOption2("b"), "Confirm -b is set")
@@ -1256,5 +1243,3 @@ class ParserTestCase(unittest.TestCase, ABC):
             self.assertEqual(0, len(cl.getArgList()), "Confirm NO of extra args")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End

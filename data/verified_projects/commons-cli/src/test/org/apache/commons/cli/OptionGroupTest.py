@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Parser import *
 from src.main.org.apache.commons.cli.Options import *
@@ -12,16 +11,11 @@ from src.main.org.apache.commons.cli.AlreadySelectedException import *
 import unittest
 from typing import *
 
-# Imports End
-
 
 class OptionGroupTest(unittest.TestCase):
 
-    # Class Methods Begin
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.__options = None
-        self.__parser = PosixParser()
+    __options = None
+    __parser = PosixParser()
 
 
     def setUp(self) -> None:

@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.TypeHandler import *
 from src.main.org.apache.commons.cli.PatternOptionBuilder import *
 from src.main.org.apache.commons.cli.ParseException import *
@@ -8,7 +7,6 @@ import unittest
 from urllib.parse import ParseResult, SplitResult, DefragResult, urlunparse
 from typing import *
 
-# Imports End
 
 class TypeHandlerTest(unittest.TestCase):
 
@@ -19,7 +17,7 @@ class TypeHandlerTest(unittest.TestCase):
         def __init__(self) -> None:
             raise AssertionError("This class should not be instantiated.")
 
-    # Class Methods Begin
+    
     @pytest.mark.test
     def testCreateValueClass(self) -> None:
         try:
@@ -187,6 +185,3 @@ class TypeHandlerTest(unittest.TestCase):
                 TypeHandler.createValue0("malformed-url", PatternOptionBuilder.URL_VALUE)
         except Exception as e:
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
-
-    # Class Methods End
-

@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Parser import *
 from src.main.org.apache.commons.cli.ParseException import *
@@ -16,8 +15,6 @@ from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
 import sys
 import io
-
-# Imports End
 
 class PeekableIterator:
     def __init__(self, iterator):
@@ -45,10 +42,6 @@ class PeekableIterator:
 
 class BugsTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
     @pytest.mark.test
     def test11456(self) -> None:
         try:
@@ -367,5 +360,3 @@ class BugsTest(unittest.TestCase):
             self.assertEqual("ovalue", cl.getOptionValue0('o'))
         except ParseException as e:
             self.fail(f"ParseException occurred: {e}")
-
-    # Class Methods End

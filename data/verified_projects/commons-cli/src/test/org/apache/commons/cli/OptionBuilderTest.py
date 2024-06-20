@@ -1,19 +1,14 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.OptionBuilder import *
 from src.main.org.apache.commons.cli.Option import *
 import unittest
 from typing import *
-# Imports End
 
 
 class OptionBuilderTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
 
-    # Class Methods Begin
     @pytest.mark.test
     def testBaseOptionCharOpt(self) -> None:
         base = OptionBuilder.withDescription("option description").create1('o')
@@ -149,4 +144,3 @@ class OptionBuilderTest(unittest.TestCase):
         self.assertFalse(simple.isRequired())
         self.assertFalse(simple.hasArgs())
 
-    # Class Methods End

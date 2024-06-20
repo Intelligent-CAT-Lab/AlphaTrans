@@ -1,27 +1,19 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 import unittest
 from src.test.org.apache.commons.cli.ParserTestCase import ParserTestCase
 
-# Imports End
 
 
 class PosixParserTest(ParserTestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    @classmethod
-    def setUpClass(cls):
-        pass
-
+    __test__ = True
 
     def setUp(self) -> None:
-        super().setUp(PosixParser())
+        super().setUp()
+        self._parser = PosixParser()
 
 
     @unittest.skip("not supported by the PosixParser")
@@ -103,5 +95,3 @@ class PosixParserTest(ParserTestCase):
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End

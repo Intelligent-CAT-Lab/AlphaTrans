@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Parser import *
 from src.main.org.apache.commons.cli.Options import *
@@ -9,16 +8,11 @@ from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
 
-# Imports End
-
 
 class ValueTest(unittest.TestCase):
 
-    # Class Methods Begin
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        self.__cl = None
-        self.__opts = Options()
+    __cl = None
+    __opts = Options()
     
 
     def setUp(self) -> None:
@@ -339,5 +333,3 @@ class ValueTest(unittest.TestCase):
         self.assertTrue(self.__cl.hasOption1(self.__opts.getOption("b")))
         self.assertIsNotNone(self.__cl.getOptionValue2(self.__opts.getOption("b")))
         self.assertEqual(self.__cl.getOptionValue2(self.__opts.getOption("b")), "foo")
-
-    # Class Methods End

@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.OptionGroup import *
 from src.main.org.apache.commons.cli.Option import *
@@ -8,15 +7,12 @@ from src.main.org.apache.commons.cli.HelpFormatter import *
 import unittest
 import os
 import io
-# Imports End
 
 class HelpFormatterTest(unittest.TestCase):
 
-    # Class Fields Begin
     __EOL: str = os.linesep
-    # Class Fields End
+    
 
-    # Class Methods Begin
     @pytest.mark.test
     def testAccessors(self) -> None:
         formatter = HelpFormatter()
@@ -668,5 +664,3 @@ class HelpFormatterTest(unittest.TestCase):
 
         formatter.printUsage1(out, 80, "create", options)
         self.assertEqual("usage: create [--age=<arg>] [-f <arg>] [-s <SIZE>]", out.getvalue().strip())
-
-    # Class Methods End

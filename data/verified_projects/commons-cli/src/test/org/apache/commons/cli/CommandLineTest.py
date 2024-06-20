@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.Parser import *
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.OptionBuilder import *
@@ -13,15 +12,9 @@ import unittest
 from typing import *
 import numbers
 
-# Imports End
-
 
 class CommandLineTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
     @pytest.mark.test
     def testBuilder(self) -> None:
         builder = CommandLine.Builder()
@@ -170,6 +163,3 @@ class CommandLineTest(unittest.TestCase):
             self.assertEqual("foo", cmd.getParsedOptionValue0("f"))
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-
-    # Class Methods End

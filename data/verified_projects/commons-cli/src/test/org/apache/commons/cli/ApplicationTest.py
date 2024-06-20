@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Parser import *
 from src.main.org.apache.commons.cli.Options import *
@@ -14,15 +13,8 @@ import unittest
 import os
 import io
 
-# Imports End
-
-
 class ApplicationTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
     @pytest.mark.test
     def testAnt(self) -> None:
 
@@ -429,8 +421,3 @@ class ApplicationTest(unittest.TestCase):
             self.assertEqual(line.getOptionValue4("file"), "filename")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    
-
-
-    # Class Methods End

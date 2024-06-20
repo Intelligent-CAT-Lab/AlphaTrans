@@ -1,27 +1,20 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.DefaultParser import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.CommandLine import *
 from src.test.org.apache.commons.cli.ParserTestCase import ParserTestCase
 
-# Imports End
 
 
 class DefaultParserTest(ParserTestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    @classmethod
-    def setUpClass(cls):
-        pass
+    __test__ = True
 
     def setUp(self) -> None:
-        super().setUp(DefaultParser(2, False, None))
+        super().setUp()
+        self._parser = DefaultParser(2, False, None)
 
     @pytest.mark.test
     def testBuilder(self) -> None:
@@ -63,7 +56,7 @@ class DefaultParserTest(ParserTestCase):
     def testLongOptionWithEqualsQuoteHandling(self) -> None:
         try:
             args = ["--bfile=\"quoted string\""]
-            cl = self.__parser.parse0(self.options, args)
+            cl = self._parser.parse0(self.options, args)
             self.assertEqual(
                 "\"quoted string\"",
                 cl.getOptionValue4("b"),
@@ -104,7 +97,7 @@ class DefaultParserTest(ParserTestCase):
     def testShortOptionConcatenatedQuoteHandling(self) -> None:
         try:
             args = ["-b", "\"quoted string\""]
-            cl = self.__parser.parse0(self.options, args)
+            cl = self._parser.parse0(self.options, args)
             self.assertEqual(
                 "\"quoted string\"", 
                 cl.getOptionValue4("b"), 
@@ -141,5 +134,3 @@ class DefaultParserTest(ParserTestCase):
             )
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End
