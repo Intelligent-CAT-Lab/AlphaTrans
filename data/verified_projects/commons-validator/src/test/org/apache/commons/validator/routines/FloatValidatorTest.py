@@ -7,56 +7,49 @@ import sys
 
 class FloatValidatorTest(AbstractNumberValidatorTest):
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
         try:
-            super().setUp(
-                validator = FloatValidator(False, 0),
-                strictValidator = FloatValidator.FloatValidator1(),
-                testPattern = "#,###.#",
-                _max = float(FloatValidator.MAX_VALUE),
-                maxPlusOne = float(float(FloatValidator.MAX_VALUE) * 10),
-                _min = float(FloatValidator.MAX_VALUE * -1),
-                minMinusOne = float(float(FloatValidator.MAX_VALUE * -1) * 10),
-                invalidStrict = [None, "", "X", "X12", "12X", "1X2"],
-                invalid = [None, "", "X", "X12"],
-                testNumber = float(1234.5),
-                testZero = float(0),
-                validStrict = ["0", "1234.5", "1,234.5"],
-                validStrictCompare = [
-                    float(0),
-                    float(1234.5),
-                    float(1234.5)
-                ],
-                valid = [
-                    "0",
-                    "1234.5",
-                    "1,234.5",
-                    "1,234.5",
-                    "1234.5X"
-                ],
-                validCompare = [
-                    float(0),
-                    float(1234.5),
-                    float(1234.5),
-                    float(1234.5),
-                    float(1234.5)
-                ],
-                testStringUS = "1,234.5",
-                testStringDE = "1.234,5",
-                localeValue = "1.234,5",
-                localePattern = "#.###,#",
-                testLocale = 'de_DE.UTF-8',
-                localeExpected = float(1234.5)
-            )
+            super().setUp()
+            self._validator = FloatValidator(False, 0)
+            self._strictValidator = FloatValidator.FloatValidator1()
+            self._testPattern = "#,###.#"
+            self._max = float(FloatValidator.MAX_VALUE)
+            self._maxPlusOne = float(float(FloatValidator.MAX_VALUE) * 10)
+            self._min = float(FloatValidator.MAX_VALUE * -1)
+            self._minMinusOne = float(float(FloatValidator.MAX_VALUE * -1) * 10)
+            self._invalidStrict = [None, "", "X", "X12", "12X", "1X2"]
+            self._invalid = [None, "", "X", "X12"]
+            self._testNumber = float(1234.5)
+            self._testZero = float(0)
+            self._validStrict = ["0", "1234.5", "1,234.5"]
+            self._validStrictCompare = [
+                float(0),
+                float(1234.5),
+                float(1234.5)
+            ]
+            self._valid = [
+                "0",
+                "1234.5",
+                "1,234.5",
+                "1,234.5",
+                "1234.5X"
+            ]
+            self._validCompare = [
+                float(0),
+                float(1234.5),
+                float(1234.5),
+                float(1234.5),
+                float(1234.5)
+            ]
+            self._testStringUS = "1,234.5"
+            self._testStringDE = "1.234,5"
+            self._localeValue = "1.234,5"
+            self._localePattern = "#.###,#"
+            self._testLocale = 'de_DE.UTF-8'
+            self._localeExpected = float(1234.5)
         except Exception as e:
             self._fail(f"An exception occurred when setting up the test: {e}")
     

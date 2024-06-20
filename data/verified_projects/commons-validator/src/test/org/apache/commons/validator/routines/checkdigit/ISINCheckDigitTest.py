@@ -16,35 +16,28 @@ class ISINCheckDigitTest(AbstractCheckDigitTest):
     ]
 
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
         try:
-            super().setUp(
-                routine = ISINCheckDigit.ISIN_CHECK_DIGIT,
-                valid = [
-                    "US0378331005",
-                    "BMG8571G1096",
-                    "AU0000XVGZA3",
-                    "GB0002634946",
-                    "FR0004026250",
-                    "3133EHHF3", # see VALIDATOR-422 Valid check-digit, but not valid ISIN
-                    "DK0009763344",
-                    "dk0009763344", # TODO lowercase is currently accepted, but is this valid?
-                    "AU0000xvgza3", # lowercase NSIN
-                    "EZ0000000003", # Invented; for use in ISINValidatorTest
-                    "XS0000000009", # ditto
-                    "AA0000000006", # ditto
-                ],
-                invalid = ["0378#3100"]
-            )
+            super().setUp()
+            self._routine = ISINCheckDigit.ISIN_CHECK_DIGIT
+            self._valid = [
+                "US0378331005",
+                "BMG8571G1096",
+                "AU0000XVGZA3",
+                "GB0002634946",
+                "FR0004026250",
+                "3133EHHF3", # see VALIDATOR-422 Valid check-digit, but not valid ISIN
+                "DK0009763344",
+                "dk0009763344", # TODO lowercase is currently accepted, but is this valid?
+                "AU0000xvgza3", # lowercase NSIN
+                "EZ0000000003", # Invented; for use in ISINValidatorTest
+                "XS0000000009", # ditto
+                "AA0000000006", # ditto
+            ]
+            self._invalid = ["0378#3100"]
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     

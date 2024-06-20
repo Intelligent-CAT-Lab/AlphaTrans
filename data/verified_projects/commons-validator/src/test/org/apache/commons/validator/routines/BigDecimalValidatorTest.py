@@ -8,13 +8,7 @@ from src.main.org.apache.commons.validator.routines.AbstractNumberValidator impo
 
 class BigDecimalValidatorTest(AbstractNumberValidatorTest):
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
@@ -22,41 +16,40 @@ class BigDecimalValidatorTest(AbstractNumberValidatorTest):
             testNumber2 = Decimal(".1")
             testNumber3 = Decimal("12345.67899")
 
-            super().setUp(
-                validator = BigDecimalValidator.BigDecimalValidator1(False),
-                strictValidator = BigDecimalValidator.BigDecimalValidator2(),
-                testPattern = "#,###.###",
-                _max = None,
-                maxPlusOne = None,
-                _min = None,
-                minMinusOne = None,
-                invalidStrict = [None, "", "X", "X12", "12X", "1X2", "1.234X"],
-                invalid = [None, "", "X", "X12"],
-                testNumber = Decimal("1234.5"),
-                testZero = Decimal("0"),
-                validStrict = ["0", "1234.5", "1,234.5", ".1", "12345.678990"],
-                validStrictCompare = [
-                    Decimal("0"),
-                    Decimal("1234.5"),
-                    Decimal("1234.5"),
-                    testNumber2,
-                    testNumber3
-                ],
-                valid = ["0", "1234.5", "1,234.5", "1,234.5", "1234.5X"],
-                validCompare = [
-                    Decimal("0"),
-                    Decimal("1234.5"),
-                    Decimal("1234.5"),
-                    Decimal("1234.5"),
-                    Decimal("1234.5")
-                ],
-                testStringUS = "1,234.5",
-                testStringDE = "1.234,5",
-                localeValue = "1.234,5",
-                localePattern = "#.###,#",
-                testLocale = 'de_DE.UTF-8',
-                localeExpected = Decimal("1234.5")
-            )
+            super().setUp()
+            self._validator = BigDecimalValidator.BigDecimalValidator1(False)
+            self._strictValidator = BigDecimalValidator.BigDecimalValidator2()
+            self._testPattern = "#,###.###"
+            self._max = None
+            self._maxPlusOne = None
+            self._min = None
+            self._minMinusOne = None
+            self._invalidStrict = [None, "", "X", "X12", "12X", "1X2", "1.234X"]
+            self._invalid = [None, "", "X", "X12"]
+            self._testNumber = Decimal("1234.5")
+            self._testZero = Decimal("0")
+            self._validStrict = ["0", "1234.5", "1,234.5", ".1", "12345.678990"]
+            self._validStrictCompare = [
+                Decimal("0"),
+                Decimal("1234.5"),
+                Decimal("1234.5"),
+                testNumber2,
+                testNumber3
+            ]
+            self._valid = ["0", "1234.5", "1,234.5", "1,234.5", "1234.5X"]
+            self._validCompare = [
+                Decimal("0"),
+                Decimal("1234.5"),
+                Decimal("1234.5"),
+                Decimal("1234.5"),
+                Decimal("1234.5")
+            ]
+            self._testStringUS = "1,234.5"
+            self._testStringDE = "1.234,5"
+            self._localeValue = "1.234,5"
+            self._localePattern = "#.###,#"
+            self._testLocale = 'de_DE.UTF-8'
+            self._localeExpected = Decimal("1234.5")
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
 

@@ -35,8 +35,6 @@ class RegexValidatorTest(unittest.TestCase):
         "$"
     __MULTIPLE_REGEX = [__REGEX_1, __REGEX_2, __REGEX_3]
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
 
     
     def setUp(self) -> None:

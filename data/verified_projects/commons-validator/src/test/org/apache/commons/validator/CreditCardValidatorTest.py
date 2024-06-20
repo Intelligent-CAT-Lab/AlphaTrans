@@ -12,9 +12,6 @@ class CreditCardValidatorTest(unittest.TestCase):
     __VALID_DISCOVER = "6011000990139424"
     __VALID_DINERS = "30569309025904"
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-
 
     @pytest.mark.test
     def testIsValid(self) -> None:

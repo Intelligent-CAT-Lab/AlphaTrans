@@ -6,10 +6,6 @@ import unittest
 
 class GenericValidatorTest(unittest.TestCase):
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-    
-
     @pytest.mark.test
     def testMinLength(self) -> None:
         self.assertTrue(GenericValidator.minLength1("12345\n\r", 5, 0), "Min=5 End=0")

@@ -10,18 +10,16 @@ from zoneinfo import ZoneInfo
 
 class DateValidatorTest(AbstractCalendarValidatorTest):
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self.__dateValidator = None
+    __test__ = True
+    
+    __dateValidator = None
 
     
     def setUp(self) -> None:
         try:
             super().setUp()
-            super().setUpValidator(
-                DateValidator.DateValidator1()
-            )
             self.__dateValidator = DateValidator.DateValidator1()
+            self._validator = self.__dateValidator
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
 

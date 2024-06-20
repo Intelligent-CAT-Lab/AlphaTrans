@@ -13,10 +13,8 @@ class CurrencyValidatorTest(unittest.TestCase):
 
     __CURRENCY_SYMBOL = '\u00A4'
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self.__US_DOLLAR = None
-        self.__UK_POUND = None
+    __US_DOLLAR = None
+    __UK_POUND = None
 
     
     def setUp(self) -> None:

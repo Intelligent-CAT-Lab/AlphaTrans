@@ -9,86 +9,75 @@ from zoneinfo import ZoneInfo
 
 class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
 
-    @classmethod
-    def setUpClass(cls):
-        if cls == AbstractCalendarValidatorTest:
-            "Tests shall only be executed on child classes with concrete implementations."
-            raise unittest.SkipTest("Skip tests in the abstract base class.")
-
     _GMT = ZoneInfo('Etc/GMT')  # 0 offset
     _EST = ZoneInfo('US/Eastern')  # - 5 hours
     _EET = ZoneInfo('EET')  # + 2 hours
     _UTC = ZoneInfo('UTC')  # 0 offset
 
-    
-    def __init__(self, methodName='runTest') -> None:
-        self.setUpClass()
-        super().__init__(methodName)
-        self._validator = None
-        self._patternValid = [
-            "2005-01-01",
-            "2005-12-31",
-            "2004-02-29",  # valid leap
-            "2005-04-30",
-            "05-12-31",
-            "2005-1-1",
-            "05-1-1"
-        ]
+    __test__ = False
 
-        self._localeValid = [
-            "01/01/2005",
-            "12/31/2005",
-            "02/29/2004",  # valid leap
-            "04/30/2005",
-            "12/31/05",
-            "1/1/2005",
-            "1/1/05"
-        ]
+    _validator = None
+    _patternValid = [
+        "2005-01-01",
+        "2005-12-31",
+        "2004-02-29",  # valid leap
+        "2005-04-30",
+        "05-12-31",
+        "2005-1-1",
+        "05-1-1"
+    ]
 
-        self._patternExpect = [
-            datetime.strptime("20050101", "%Y%m%d"),
-            datetime.strptime("20051231", "%Y%m%d"),
-            datetime.strptime("20040229", "%Y%m%d"),
-            datetime.strptime("20050430", "%Y%m%d"),
-            datetime.strptime("20051231", "%Y%m%d"),
-            datetime.strptime("20050101", "%Y%m%d"),
-            datetime.strptime("20050101", "%Y%m%d")
-        ]
+    _localeValid = [
+        "01/01/2005",
+        "12/31/2005",
+        "02/29/2004",  # valid leap
+        "04/30/2005",
+        "12/31/05",
+        "1/1/2005",
+        "1/1/05"
+    ]
 
-        self._patternInvalid = [
-            "2005-00-01",  # zero month
-            "2005-01-00",  # zero day
-            "2005-13-03",  # month invalid
-            "2005-04-31",  # invalid day
-            "2005-03-32",  # invalid day
-            "2005-02-29",  # invalid leap
-            "200X-01-01",  # invalid char
-            "2005-0X-01",  # invalid char
-            "2005-01-0X",  # invalid char
-            "01/01/2005",  # invalid pattern
-            "2005-01",  # invalid pattern
-            "2005--01",  # invalid pattern
-            "2005-01-"  # invalid pattern
-        ]
+    _patternExpect = [
+        datetime.strptime("20050101", "%Y%m%d"),
+        datetime.strptime("20051231", "%Y%m%d"),
+        datetime.strptime("20040229", "%Y%m%d"),
+        datetime.strptime("20050430", "%Y%m%d"),
+        datetime.strptime("20051231", "%Y%m%d"),
+        datetime.strptime("20050101", "%Y%m%d"),
+        datetime.strptime("20050101", "%Y%m%d")
+    ]
 
-        self._localeInvalid = [
-            "01/00/2005",  # zero month
-            "00/01/2005",  # zero day
-            "13/01/2005",  # month invalid
-            "04/31/2005",  # invalid day
-            "03/32/2005",  # invalid day
-            "02/29/2005",  # invalid leap
-            "01/01/200X",  # invalid char
-            "01/0X/2005",  # invalid char
-            "0X/01/2005",  # invalid char
-            "01-01-2005",  # invalid pattern
-            "01/2005",  # invalid pattern
-            "01//2005"  # invalid pattern
-        ]
+    _patternInvalid = [
+        "2005-00-01",  # zero month
+        "2005-01-00",  # zero day
+        "2005-13-03",  # month invalid
+        "2005-04-31",  # invalid day
+        "2005-03-32",  # invalid day
+        "2005-02-29",  # invalid leap
+        "200X-01-01",  # invalid char
+        "2005-0X-01",  # invalid char
+        "2005-01-0X",  # invalid char
+        "01/01/2005",  # invalid pattern
+        "2005-01",  # invalid pattern
+        "2005--01",  # invalid pattern
+        "2005-01-"  # invalid pattern
+    ]
 
-    
-    def setUpValidator(self, validator) -> None:
-        self._validator = validator
+    _localeInvalid = [
+        "01/00/2005",  # zero month
+        "00/01/2005",  # zero day
+        "13/01/2005",  # month invalid
+        "04/31/2005",  # invalid day
+        "03/32/2005",  # invalid day
+        "02/29/2005",  # invalid leap
+        "01/01/200X",  # invalid char
+        "01/0X/2005",  # invalid char
+        "0X/01/2005",  # invalid char
+        "01-01-2005",  # invalid pattern
+        "01/2005",  # invalid pattern
+        "01//2005"  # invalid pattern
+    ]
+
 
     
     def setUp(self) -> None:

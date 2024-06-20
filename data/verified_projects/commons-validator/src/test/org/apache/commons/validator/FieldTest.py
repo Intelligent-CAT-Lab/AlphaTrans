@@ -6,9 +6,7 @@ import unittest
 
 class FieldTest(unittest.TestCase):
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self._field = None
+    _field = None
 
     @staticmethod
     def FieldTest1():

@@ -6,10 +6,6 @@ from src.main.org.apache.commons.validator.routines.RegexValidator import *
 import unittest
 
 class CodeValidatorTest(unittest.TestCase):
-
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-
     
     def setUp(self) -> None:
         try:

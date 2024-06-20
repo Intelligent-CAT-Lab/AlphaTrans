@@ -13,27 +13,20 @@ class ModulusTenLuhnCheckDigitTest(AbstractCheckDigitTest):
     __VALID_DISCOVER = "6011000990139424"
     __VALID_DINERS = "30569309025904"
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
         try:
-            super().setUp(
-                routine = ModulusTenCheckDigit([1, 2], True, True),
-                valid = [
-                    ModulusTenLuhnCheckDigitTest.__VALID_VISA,
-                    ModulusTenLuhnCheckDigitTest.__VALID_SHORT_VISA,
-                    ModulusTenLuhnCheckDigitTest.__VALID_AMEX,
-                    ModulusTenLuhnCheckDigitTest.__VALID_MASTERCARD,
-                    ModulusTenLuhnCheckDigitTest.__VALID_DISCOVER,
-                    ModulusTenLuhnCheckDigitTest.__VALID_DINERS
-                ]
-            )
+            super().setUp()
+            self._routine = ModulusTenCheckDigit([1, 2], True, True)
+            self._valid = [
+                ModulusTenLuhnCheckDigitTest.__VALID_VISA,
+                ModulusTenLuhnCheckDigitTest.__VALID_SHORT_VISA,
+                ModulusTenLuhnCheckDigitTest.__VALID_AMEX,
+                ModulusTenLuhnCheckDigitTest.__VALID_MASTERCARD,
+                ModulusTenLuhnCheckDigitTest.__VALID_DISCOVER,
+                ModulusTenLuhnCheckDigitTest.__VALID_DINERS
+            ]
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")

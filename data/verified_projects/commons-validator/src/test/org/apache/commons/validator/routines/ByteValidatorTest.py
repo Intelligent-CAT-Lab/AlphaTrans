@@ -15,91 +15,84 @@ class ByteValidatorTest(AbstractNumberValidatorTest):
     __BYTE_MIN_0 = "-128.99999999999999999999999"  # force double rounding
     __BYTE_MIN_1 = "-129"
     
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
         try:
-            super().setUp(
-                validator = ByteValidator(False, 0),
-                strictValidator = ByteValidator.ByteValidator1(),
-                testPattern = "#,###",
-                _max = ByteValidatorTest.__BYTE_MAX_VAL,
-                maxPlusOne = ByteValidatorTest.__BYTE_MAX_VAL + 1,
-                _min = ByteValidatorTest.__BYTE_MIN_VAL,
-                minMinusOne = ByteValidatorTest.__BYTE_MIN_VAL - 1,
-                invalidStrict = [
-                    None,
-                    "",
-                    "X",
-                    "X12",
-                    "12X",
-                    "1X2",
-                    "1.2",
-                    ByteValidatorTest.__BYTE_MAX_1,
-                    ByteValidatorTest.__BYTE_MIN_1,
-                    ByteValidatorTest.__BYTE_MAX_0,
-                    ByteValidatorTest.__BYTE_MIN_0
-                ],
-                invalid = [
-                    None,
-                    "",
-                    "X",
-                    "X12",
-                    ByteValidatorTest.__BYTE_MAX_1,
-                    ByteValidatorTest.__BYTE_MIN_1
-                ],
-                testNumber = Decimal("123"),
-                testZero = Decimal("0"),
-                validStrict = [
-                    "0",
-                    "123",
-                    ",123",
-                    ByteValidatorTest.__BYTE_MAX,
-                    ByteValidatorTest.__BYTE_MIN
-                ],
-                validStrictCompare = [
-                    Decimal("0"),
-                    Decimal("123"),
-                    Decimal("123"),
-                    ByteValidatorTest.__BYTE_MAX_VAL,
-                    ByteValidatorTest.__BYTE_MIN_VAL
-                ],
-                valid = [
-                    "0",
-                    "123",
-                    ",123",
-                    ",123.5",
-                    "123X",
-                    ByteValidatorTest.__BYTE_MAX,
-                    ByteValidatorTest.__BYTE_MIN,
-                    ByteValidatorTest.__BYTE_MAX_0,
-                    ByteValidatorTest.__BYTE_MIN_0
-                ],
-                validCompare = [
-                    Decimal("0"),
-                    Decimal("123"),
-                    Decimal("123"),
-                    Decimal("123"),
-                    Decimal("123"),
-                    ByteValidatorTest.__BYTE_MAX_VAL,
-                    ByteValidatorTest.__BYTE_MIN_VAL,
-                    ByteValidatorTest.__BYTE_MAX_VAL,
-                    ByteValidatorTest.__BYTE_MIN_VAL
-                ],
-                testStringUS = ",123",
-                testStringDE = ".123",
-                localeValue = ".123",
-                localePattern = "#.###",
-                testLocale = 'de_DE.UTF-8',
-                localeExpected = Decimal("123")
-            )
+            super().setUp()
+            self._validator = ByteValidator(False, 0)
+            self._strictValidator = ByteValidator.ByteValidator1()
+            self._testPattern = "#,###"
+            self._max = ByteValidatorTest.__BYTE_MAX_VAL
+            self._maxPlusOne = ByteValidatorTest.__BYTE_MAX_VAL + 1
+            self._min = ByteValidatorTest.__BYTE_MIN_VAL
+            self._minMinusOne = ByteValidatorTest.__BYTE_MIN_VAL - 1
+            self._invalidStrict = [
+                None,
+                "",
+                "X",
+                "X12",
+                "12X",
+                "1X2",
+                "1.2",
+                ByteValidatorTest.__BYTE_MAX_1,
+                ByteValidatorTest.__BYTE_MIN_1,
+                ByteValidatorTest.__BYTE_MAX_0,
+                ByteValidatorTest.__BYTE_MIN_0
+            ]
+            self._invalid = [
+                None,
+                "",
+                "X",
+                "X12",
+                ByteValidatorTest.__BYTE_MAX_1,
+                ByteValidatorTest.__BYTE_MIN_1
+            ]
+            self._testNumber = Decimal("123")
+            self._testZero = Decimal("0")
+            self._validStrict = [
+                "0",
+                "123",
+                ",123",
+                ByteValidatorTest.__BYTE_MAX,
+                ByteValidatorTest.__BYTE_MIN
+            ]
+            self._validStrictCompare = [
+                Decimal("0"),
+                Decimal("123"),
+                Decimal("123"),
+                ByteValidatorTest.__BYTE_MAX_VAL,
+                ByteValidatorTest.__BYTE_MIN_VAL
+            ]
+            self._valid = [
+                "0",
+                "123",
+                ",123",
+                ",123.5",
+                "123X",
+                ByteValidatorTest.__BYTE_MAX,
+                ByteValidatorTest.__BYTE_MIN,
+                ByteValidatorTest.__BYTE_MAX_0,
+                ByteValidatorTest.__BYTE_MIN_0
+            ]
+            self._validCompare = [
+                Decimal("0"),
+                Decimal("123"),
+                Decimal("123"),
+                Decimal("123"),
+                Decimal("123"),
+                ByteValidatorTest.__BYTE_MAX_VAL,
+                ByteValidatorTest.__BYTE_MIN_VAL,
+                ByteValidatorTest.__BYTE_MAX_VAL,
+                ByteValidatorTest.__BYTE_MIN_VAL
+            ]
+            self._testStringUS = ",123"
+            self._testStringDE = ".123"
+            self._localeValue = ".123"
+            self._localePattern = "#.###"
+            self._testLocale = 'de_DE.UTF-8'
+            self._localeExpected = Decimal("123")
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     

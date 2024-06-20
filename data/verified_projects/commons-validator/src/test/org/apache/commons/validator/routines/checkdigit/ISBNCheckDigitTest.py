@@ -5,30 +5,22 @@ from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigi
 
 class ISBNCheckDigitTest(AbstractCheckDigitTest):
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-
+    __test__ = True
     
     def setUp(self) -> None:
         try:
-            super().setUp(
-                routine = ISBNCheckDigit.ISBN_CHECK_DIGIT,
-                valid = [
-                    "9780072129519",
-                    "9780764558313",
-                    "1930110995",
-                    "020163385X",
-                    "1590596277", # ISBN-10 Ubuntu Book
-                    "9781590596272" # ISBN-13 Ubuntu Book
-                ],
-                missingMessage = "ISBN Code is missing",
-                zeroSum = "000000000000"
-            )
+            super().setUp()
+            self._routine = ISBNCheckDigit.ISBN_CHECK_DIGIT
+            self._valid = [
+                "9780072129519",
+                "9780764558313",
+                "1930110995",
+                "020163385X",
+                "1590596277", # ISBN-10 Ubuntu Book
+                "9781590596272" # ISBN-13 Ubuntu Book
+            ]
+            self._missingMessage = "ISBN Code is missing"
+            self._zeroSum = "000000000000"
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     

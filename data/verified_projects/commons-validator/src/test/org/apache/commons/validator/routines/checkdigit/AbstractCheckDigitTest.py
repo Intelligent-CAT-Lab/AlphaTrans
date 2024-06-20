@@ -12,39 +12,22 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
     __POSSIBLE_CHECK_DIGITS =\
         "0123456789 ABCDEFHIJKLMNOPQRSTUVWXYZ\tabcdefghijklmnopqrstuvwxyz!@£$%^&*()_+"
 
-    
-    @classmethod
-    def setUpClass(cls):
-        if cls == AbstractCheckDigitTest:
-            "Tests shall only be executed on child classes with concrete implementations."
-            raise unittest.SkipTest("Skip tests in the abstract base class.")
+    __test__ = False
 
-    
-    def __init__(self, methodName='runTest') -> None:
-        self.setUpClass()
-        super().__init__(methodName)
-        self._log = logging.getLogger(__name__)
-        self._checkDigitLth = 1
-        self._routine = None
-        self._valid = []
-        self._invalid = ["12345678A"]
-        self._zeroSum = "0000000000"
-        self._missingMessage = "Code is missing"
+    _log = logging.getLogger(__name__)
+    _checkDigitLth = 1
+    _routine = None
+    _valid = []
+    _invalid = ["12345678A"]
+    _zeroSum = "0000000000"
+    _missingMessage = "Code is missing"
     
 
-    def setUp(
-        self,
-        routine = None,
-        valid = [],
-        invalid = ["12345678A"],
-        zeroSum = "0000000000",
-        missingMessage = "Code is missing"
-        ) -> None:
-        self._routine = routine
-        self._valid = valid
-        self._invalid = invalid
-        self._zeroSum = zeroSum
-        self._missingMessage = missingMessage
+    def setUp(self) -> None:
+        try:
+            super().setUp()
+        except Exception as e:
+            self.fail(f"An exception occurred when setting up the test: {e}")
 
     
     def tearDown(self) -> None:

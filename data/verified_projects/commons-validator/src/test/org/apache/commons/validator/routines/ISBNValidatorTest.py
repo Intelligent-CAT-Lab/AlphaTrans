@@ -6,76 +6,76 @@ from src.main.org.apache.commons.validator.routines.ISBNValidator import *
 
 class ISBNValidatorTest(unittest.TestCase):
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self.__validISBN10Format = [
-            "1234567890",
-            "123456789X",
-            "12345-1234567-123456-X",
-            "12345 1234567 123456 X",
-            "1-2-3-4",
-            "1 2 3 4",
-        ]
+    __validISBN10Format = [
+        "1234567890",
+        "123456789X",
+        "12345-1234567-123456-X",
+        "12345 1234567 123456 X",
+        "1-2-3-4",
+        "1 2 3 4",
+    ]
 
-        self.__invalidISBN10Format = [
-            "",  # empty
-            "   ",  # empty
-            "1",  # too short
-            "123456789",  # too short
-            "12345678901",  # too long
-            "12345678X0",  # X not at end
-            "123456-1234567-123456-X",  # Group too long
-            "12345-12345678-123456-X",  # Publisher too long
-            "12345-1234567-1234567-X",  # Title too long
-            "12345-1234567-123456-X2",  # Check Digit too long
-            "--1 930110 99 5",  # format
-            "1 930110 99 5--",  # format
-            "1 930110-99 5-",  # format
-            "1.2.3.4",  # Invalid Separator
-            "1=2=3=4",  # Invalid Separator
-            "1_2_3_4",  # Invalid Separator
-            "123456789Y",  # Other character at the end
-            "dsasdsadsa",  # invalid characters
-            "I love sparrows!",  # invalid characters
-            "068-556-98-45"  # format
-        ]
+    __invalidISBN10Format = [
+        "",  # empty
+        "   ",  # empty
+        "1",  # too short
+        "123456789",  # too short
+        "12345678901",  # too long
+        "12345678X0",  # X not at end
+        "123456-1234567-123456-X",  # Group too long
+        "12345-12345678-123456-X",  # Publisher too long
+        "12345-1234567-1234567-X",  # Title too long
+        "12345-1234567-123456-X2",  # Check Digit too long
+        "--1 930110 99 5",  # format
+        "1 930110 99 5--",  # format
+        "1 930110-99 5-",  # format
+        "1.2.3.4",  # Invalid Separator
+        "1=2=3=4",  # Invalid Separator
+        "1_2_3_4",  # Invalid Separator
+        "123456789Y",  # Other character at the end
+        "dsasdsadsa",  # invalid characters
+        "I love sparrows!",  # invalid characters
+        "068-556-98-45"  # format
+    ]
 
-        self.__validISBN13Format = [
-            "9781234567890",
-            "9791234567890",
-            "978-12345-1234567-123456-1",
-            "979-12345-1234567-123456-1",
-            "978 12345 1234567 123456 1",
-            "979 12345 1234567 123456 1",
-            "978-1-2-3-4",
-            "979-1-2-3-4",
-            "978 1 2 3 4",
-            "979 1 2 3 4",
-        ]
+    __validISBN13Format = [
+        "9781234567890",
+        "9791234567890",
+        "978-12345-1234567-123456-1",
+        "979-12345-1234567-123456-1",
+        "978 12345 1234567 123456 1",
+        "979 12345 1234567 123456 1",
+        "978-1-2-3-4",
+        "979-1-2-3-4",
+        "978 1 2 3 4",
+        "979 1 2 3 4",
+    ]
 
-        self.__invalidISBN13Format = [
-            "",  # empty
-            "   ",  # empty
-            "1",  # too short
-            "978123456789",  # too short
-            "97812345678901",  # too long
-            "978-123456-1234567-123456-1",  # Group too long
-            "978-12345-12345678-123456-1",  # Publisher too long
-            "978-12345-1234567-1234567-1",  # Title too long
-            "978-12345-1234567-123456-12",  # Check Digit too long
-            "--978 1 930110 99 1",  # format
-            "978 1 930110 99 1--",  # format
-            "978 1 930110-99 1-",  # format
-            "123-4-567890-12-8",  # format
-            "978.1.2.3.4",  # Invalid Separator
-            "978=1=2=3=4",  # Invalid Separator
-            "978_1_2_3_4",  # Invalid Separator
-            "978123456789X",  # invalid character
-            "978-0-201-63385-X",  # invalid character
-            "dsasdsadsadsa",  # invalid characters
-            "I love sparrows!",  # invalid characters
-            "979-1-234-567-89-6"  # format
-        ]
+    __invalidISBN13Format = [
+        "",  # empty
+        "   ",  # empty
+        "1",  # too short
+        "978123456789",  # too short
+        "97812345678901",  # too long
+        "978-123456-1234567-123456-1",  # Group too long
+        "978-12345-12345678-123456-1",  # Publisher too long
+        "978-12345-1234567-1234567-1",  # Title too long
+        "978-12345-1234567-123456-12",  # Check Digit too long
+        "--978 1 930110 99 1",  # format
+        "978 1 930110 99 1--",  # format
+        "978 1 930110-99 1-",  # format
+        "123-4-567890-12-8",  # format
+        "978.1.2.3.4",  # Invalid Separator
+        "978=1=2=3=4",  # Invalid Separator
+        "978_1_2_3_4",  # Invalid Separator
+        "978123456789X",  # invalid character
+        "978-0-201-63385-X",  # invalid character
+        "dsasdsadsadsa",  # invalid characters
+        "I love sparrows!",  # invalid characters
+        "979-1-234-567-89-6"  # format
+    ]
+
+        
 
     
     @pytest.mark.test

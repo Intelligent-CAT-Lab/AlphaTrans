@@ -13,23 +13,16 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
     __DATE_2005_11_23 = 20051123
     __TIME_12_03_45 = 120345
     
-    @classmethod
-    def setUpClass(cls):
-        pass
-
+    __test__ = True
     
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self.__calValidator = None
+    __calValidator = None
 
     
     def setUp(self) -> None:
         try:
             super().setUp()
-            super().setUpValidator(
-                CalendarValidator.CalendarValidator1()
-            )
             self.__calValidator = CalendarValidator.CalendarValidator1()
+            self._validator = self.__calValidator
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     

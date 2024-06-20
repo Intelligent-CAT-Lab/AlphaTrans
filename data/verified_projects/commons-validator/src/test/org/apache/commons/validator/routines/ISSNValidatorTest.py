@@ -9,38 +9,36 @@ class ISSNValidatorTest(unittest.TestCase):
 
     __VALIDATOR = ISSNValidator.getInstance()
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self.__validFormat = [
-            "ISSN 0317-8471",
-            "1050-124X",
-            "ISSN 1562-6865",
-            "1063-7710",
-            "1748-7188",
-            "ISSN 0264-2875",
-            "1750-0095",
-            "1188-1534",
-            "1911-1479",
-            "ISSN 1911-1460",
-            "0001-6772",
-            "1365-201X",
-            "0264-3596",
-            "1144-875X",
-        ]
+    __validFormat = [
+        "ISSN 0317-8471",
+        "1050-124X",
+        "ISSN 1562-6865",
+        "1063-7710",
+        "1748-7188",
+        "ISSN 0264-2875",
+        "1750-0095",
+        "1188-1534",
+        "1911-1479",
+        "ISSN 1911-1460",
+        "0001-6772",
+        "1365-201X",
+        "0264-3596",
+        "1144-875X",
+    ]
 
-        self.__invalidFormat = [
-            "",  # empty
-            "   ",  # empty
-            "ISBN 0317-8471",  # wrong prefix
-            "'1050-124X",  # leading garbage
-            "ISSN1562-6865",  # missing separator
-            "10637710",  # missing separator
-            "1748-7188'",  # trailing garbage
-            "ISSN  0264-2875",  # extra space
-            "1750 0095",  # invalid separator
-            "1188_1534",  # invalid separator
-            "1911-1478",  # invalid checkdigit
-        ]
+    __invalidFormat = [
+        "",  # empty
+        "   ",  # empty
+        "ISBN 0317-8471",  # wrong prefix
+        "'1050-124X",  # leading garbage
+        "ISSN1562-6865",  # missing separator
+        "10637710",  # missing separator
+        "1748-7188'",  # trailing garbage
+        "ISSN  0264-2875",  # extra space
+        "1750 0095",  # invalid separator
+        "1188_1534",  # invalid separator
+        "1911-1478",  # invalid checkdigit
+    ]
 
     
     @pytest.mark.test

@@ -5,11 +5,11 @@ from decimal import Decimal
 from src.main.org.apache.commons.validator.routines.PercentValidator import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
 from locale import getlocale, setlocale, LC_NUMERIC
+
+
 class PercentValidatorTest(unittest.TestCase):
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self._validator = None
+    _validator = None
 
     
     def setUp(self) -> None:

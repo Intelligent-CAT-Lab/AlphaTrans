@@ -55,9 +55,6 @@ class CreditCardValidatorTest(unittest.TestCase):
         "4417123456789112",  # invalid check digit
     ]
 
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
 
     
     @pytest.mark.test

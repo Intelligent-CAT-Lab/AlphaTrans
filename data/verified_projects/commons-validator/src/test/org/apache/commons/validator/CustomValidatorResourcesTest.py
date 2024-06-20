@@ -4,10 +4,6 @@ import unittest
 from io import StringIO
 
 class CustomValidatorResourcesTest(unittest.TestCase):
-
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-
     
     def setUp(self) -> None:
         pass

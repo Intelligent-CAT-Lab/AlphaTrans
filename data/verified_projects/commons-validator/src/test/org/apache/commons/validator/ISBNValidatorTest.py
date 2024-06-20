@@ -10,9 +10,6 @@ class ISBNValidatorTest(unittest.TestCase):
     __VALID_ISBN_SPACES = "1 930110 99 5"
     __VALID_ISBN_X = "0-201-63385-X"
     __INVALID_ISBN = "068-556-98-45"
-
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
     
 
     @pytest.mark.test

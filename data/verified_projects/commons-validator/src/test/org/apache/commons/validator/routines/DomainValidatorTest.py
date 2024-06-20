@@ -10,9 +10,7 @@ import urllib.request as request
 
 class DomainValidatorTest(unittest.TestCase):
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self.__validator = None
+    __validator = None
 
     def setUp(self) -> None:
         self.__validator = DomainValidator.getInstance0()
