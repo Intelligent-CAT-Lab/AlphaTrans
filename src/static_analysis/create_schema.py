@@ -137,6 +137,27 @@ def create_schema(args):
         res_row = line.split('|')[1:-1]
         interface_name, interface_loc, callable_name, modifier, return_type, return_type_qualified_name, siganture, start, end = [x.strip() for x in res_row]
 
+        if callable_name == 'null' and modifier == 'null' and return_type == 'null' and return_type_qualified_name == 'null' and siganture == 'null':
+            path = interface_loc[interface_loc.find(':')+1:interface_loc.find(':', interface_loc.find(':')+1)]
+            path = projects_dir + path[path.find(project):]
+            schemas.setdefault(path, {})
+            interface_start_line = int(interface_loc[interface_loc.find(':', interface_loc.find(':')+1)+1:].split(':')[0])
+            interface_end_line = int(interface_loc[interface_loc.find(':', interface_loc.find(':')+1)+1:].split(':')[2])
+            schemas[path].setdefault("path", path)
+            schemas[path].setdefault("imports", {})
+            schemas[path].setdefault("classes", {})
+            schemas[path]["classes"].setdefault(interface_name, {})
+            schemas[path]["classes"][interface_name].setdefault("start", interface_start_line)
+            schemas[path]["classes"][interface_name].setdefault("end", interface_end_line)
+            schemas[path]["classes"][interface_name].setdefault("is_abstract", False)
+            schemas[path]["classes"][interface_name].setdefault("is_interface", True)
+            schemas[path]["classes"][interface_name].setdefault("nested_inside", [])
+            schemas[path]["classes"][interface_name].setdefault("nests", [])        
+            schemas[path]["classes"][interface_name].setdefault("implements", [])
+            schemas[path]["classes"][interface_name].setdefault("extends", [])
+            schemas[path]["classes"][interface_name].setdefault("methods", {})
+            continue
+
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
         path = projects_dir + path[path.find(project):]
 
