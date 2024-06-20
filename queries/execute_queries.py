@@ -31,9 +31,11 @@ def main(args):
     if args.query_name == 'get_interfaces':
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_interfaces_1.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_interfaces.txt")
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_interfaces_2.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_interfaces.txt")
+        os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_interfaces_3.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_interfaces.txt")
 
     if args.query_name == 'get_nested_classes':
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_nested_classes.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_nested_classes.txt")
+        os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_nested_interfaces.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_nested_classes.txt")
 
     if args.query_name == 'get_superclasses':
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_superclasses_1.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_superclasses.txt")
