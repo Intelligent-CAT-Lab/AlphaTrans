@@ -6,7 +6,6 @@ import unittest
 from src.test.org.apache.commons.cli.ParserTestCase import ParserTestCase
 
 
-@pytest.mark.base
 class BasicParserTest(ParserTestCase):
 
     __test__ = True
