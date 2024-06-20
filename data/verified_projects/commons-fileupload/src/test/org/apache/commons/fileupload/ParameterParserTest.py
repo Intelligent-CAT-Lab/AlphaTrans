@@ -1,19 +1,11 @@
 import pytest
 
-# Imports Begin
 import unittest
 from typing import *
 from src.main.org.apache.commons.fileupload.ParameterParser import ParameterParser
 
-# Imports End
-
 
 class ParameterParserTest(unittest.TestCase):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
 
     @pytest.mark.test
     def testParsing(self) -> None:
@@ -50,7 +42,6 @@ class ParameterParserTest(unittest.TestCase):
         s = " = stuff "
         params = parser.parse1(s, ';')
         self.assertEqual(0, len(params))
-        # LLM could not translate method body
 
     @pytest.mark.test
     def testContentTypeParsing(self) -> None:
@@ -60,7 +51,6 @@ class ParameterParserTest(unittest.TestCase):
         parser.setLowerCaseNames(True)
         params = parser.parse1(s, ';')
         self.assertEqual("UTF-8", params.get("charset"))
-        # LLM could not translate method body
 
     @pytest.mark.test
     def testParsingEscapedChars(self) -> None:
@@ -76,7 +66,6 @@ class ParameterParserTest(unittest.TestCase):
         self.assertEqual(2, len(params))
         self.assertEqual("stuff\\\\", params.get("param"))
         self.assertIsNone(params.get("anotherparam"))
-        # LLM could not translate method body
 
     @pytest.mark.test
     def testFileUpload139(self) -> None:
@@ -110,5 +99,3 @@ class ParameterParserTest(unittest.TestCase):
             "If you can read this you understand the example.",
             params.get("filename")
         )
-
-    # Class Methods End

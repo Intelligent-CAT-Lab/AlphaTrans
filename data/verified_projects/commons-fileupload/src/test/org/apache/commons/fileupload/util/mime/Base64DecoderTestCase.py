@@ -1,20 +1,13 @@
 import pytest
 
-# Imports Begin
 import unittest
 from io import BytesIO
 from src.main.org.apache.commons.fileupload.util.mime.Base64Decoder import Base64Decoder
 
-# Imports End
-
 
 class Base64DecoderTestCase(unittest.TestCase):
 
-    # Class Fields Begin
     __US_ASCII_CHARSET: str = "US-ASCII"
-    # Class Fields End
-
-    # Class Methods Begin
 
     @pytest.mark.test
     def testRfc4648Section10Decode(self) -> None:
@@ -127,7 +120,6 @@ class Base64DecoderTestCase(unittest.TestCase):
         except (IOError, OSError) as e:
             em = str(e)
             unittest.TestCase().assertIn(messageText, em, f"Expected to find {messageText} in '{em}'") 
-        # LLM could not translate method body
 
     @staticmethod
     def __assertEncoded(clearText: str, encoded: str) -> None:
@@ -137,6 +129,3 @@ class Base64DecoderTestCase(unittest.TestCase):
         Base64Decoder.decode(encoded_data, out)
         actual = out.getvalue()
         unittest.TestCase().assertEqual(expected, actual)
-        # LLM could not translate method body
-
-    # Class Methods End

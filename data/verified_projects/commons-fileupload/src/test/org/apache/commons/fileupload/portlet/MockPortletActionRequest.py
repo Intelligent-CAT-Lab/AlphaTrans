@@ -1,19 +1,14 @@
 import pytest
 
-# Imports Begin
 import typing
 from typing import *
 from io import BytesIO, BufferedReader
 import locale
 from src.main.org.apache.commons.fileupload.FileUploadBase import FileUploadBase
 
-# Imports End
-
 
 class MockPortletActionRequest:
 
-    # Class Fields Begin
-    # Class Fields End
     def __init__(self, requestLength: int, byteArrayInputStream: BytesIO, contentType: str):
         self.__attributes = {}
         self.__parameters = {}
@@ -23,7 +18,7 @@ class MockPortletActionRequest:
         self.__requestData = byteArrayInputStream
         self.__attributes[FileUploadBase.CONTENT_TYPE] = contentType
 
-    # Class Methods Begin
+    
     @staticmethod
     def MockPortletActionRequest1(requestData: typing.List[int], contentType: str):
         return MockPortletActionRequest(len(requestData), BytesIO(requestData), contentType)
@@ -126,5 +121,3 @@ class MockPortletActionRequest:
     
     def setCharacterEncoding(self, characterEncoding: str) -> None:
         self.__characterEncoding = characterEncoding
-
-    # Class Methods End

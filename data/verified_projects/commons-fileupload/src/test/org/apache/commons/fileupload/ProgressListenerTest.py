@@ -1,11 +1,8 @@
 import pytest
 
-# Imports Begin
 import unittest
 from typing import *
 from src.main.org.apache.commons.fileupload.ProgressListener import ProgressListener
-
-# Imports End
 
 
 class ProgressListenerTest(unittest.TestCase):
@@ -30,4 +27,3 @@ class ProgressListenerTest(unittest.TestCase):
         def check_finished(self) -> None:
             unittest.TestCase().assertEqual(self._expectedContentLength, self._bytesRead)
             unittest.TestCase().assertEqual(self._expectedItems, self._items)
-    

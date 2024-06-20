@@ -1,18 +1,10 @@
 import pytest
 
-# Imports Begin
 import unittest
 from src.main.org.apache.commons.fileupload.util.mime.MimeUtility import MimeUtility
 
-# Imports End
-
-
 class MimeUtilityTestCase(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
     @pytest.mark.test
     def testNoNeedToDecode(self) -> None:
         try:
@@ -39,7 +31,6 @@ class MimeUtilityTestCase(unittest.TestCase):
             )
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-        # LLM added redundant (and incorrect) test logic to this test.
 
     @pytest.mark.test
     def testDecodeIso88591Base64Encoded(self) -> None:
@@ -75,5 +66,3 @@ class MimeUtilityTestCase(unittest.TestCase):
     @staticmethod
     def __assertEncoded(expected: str, encoded: str) -> None:
         unittest.TestCase().assertEqual(expected, MimeUtility.decodeText(encoded))
-
-    # Class Methods End

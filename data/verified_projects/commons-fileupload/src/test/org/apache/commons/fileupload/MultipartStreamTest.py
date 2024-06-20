@@ -1,20 +1,14 @@
 import pytest
 
-# Imports Begin
 import unittest
 from io import BytesIO
 from src.main.org.apache.commons.fileupload.MultipartStream import MultipartStream, ProgressNotifier
 
-# Imports End
-
 
 class MultipartStreamTest(unittest.TestCase):
 
-    # Class Fields Begin
     __BOUNDARY_TEXT: str = "myboundary"
-    # Class Fields End
 
-    # Class Methods Begin
     @pytest.mark.test
     def testThreeParamConstructor(self) -> None:
 
@@ -66,5 +60,3 @@ class MultipartStreamTest(unittest.TestCase):
             self.assertIsNotNone(ms)
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End
