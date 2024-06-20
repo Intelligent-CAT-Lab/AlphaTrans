@@ -7,6 +7,7 @@ from src.test.org.joda.convert.Status import *
 from src.main.org.joda.convert.RenameHandler import *
 from src.main.org.joda.convert.JDKStringConverter import *
 from src.main.org.joda.convert.FromString import *
+import unittest
 import typing
 from typing import *
 import io
@@ -14,7 +15,7 @@ import io
 # Imports End
 
 
-class TestJDKStringConverters:
+class TestJDKStringConverters(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

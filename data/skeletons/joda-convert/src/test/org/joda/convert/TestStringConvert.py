@@ -49,6 +49,7 @@ from src.test.org.joda.convert.DistanceFromStringConstructorInvalidParameterCoun
 from src.test.org.joda.convert.DistanceFromStringConstructorInvalidParameter import *
 from src.main.org.joda.convert.ConstructorFromStringConverter import *
 from src.test.org.joda.convert.AltCharSequence import *
+import unittest
 import typing
 from typing import *
 import enum
@@ -57,7 +58,7 @@ import io
 # Imports End
 
 
-class TestStringConvert:
+class TestStringConvert(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

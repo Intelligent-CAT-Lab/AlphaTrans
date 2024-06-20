@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.pool2.proxy.ProxySource import *
 from src.main.org.apache.commons.pool2.KeyedObjectPool import *
+import unittest
 import datetime
 import io
 from io import StringIO
@@ -42,7 +43,7 @@ class TestObjectImpl(TestObject):
     # Class Methods End
 
 
-class BaseTestProxiedKeyedObjectPool(ABC):
+class BaseTestProxiedKeyedObjectPool(ABC, unittest.TestCase):
 
     # Class Fields Begin
     __KEY1: str = None

@@ -9,12 +9,13 @@ from src.main.org.apache.commons.cli.OptionBuilder import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.MissingOptionException import *
 from src.main.org.apache.commons.cli.CommandLine import *
+import unittest
 import io
 
 # Imports End
 
 
-class OptionsTest:
+class OptionsTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

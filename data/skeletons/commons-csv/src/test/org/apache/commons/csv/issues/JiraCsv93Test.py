@@ -5,6 +5,7 @@ from src.main.org.apache.commons.csv.QuoteMode import *
 from src.main.org.apache.commons.csv.CSVRecord import *
 from src.main.org.apache.commons.csv.CSVParser import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import unittest
 import typing
 from typing import *
 import io
@@ -12,7 +13,7 @@ import io
 # Imports End
 
 
-class JiraCsv93Test:
+class JiraCsv93Test(unittest.TestCase):
 
     # Class Fields Begin
     __objects1: typing.List[typing.Any] = None

@@ -2,12 +2,13 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.DefaultPooledObject import *
+import unittest
 import io
 
 # Imports End
 
 
-class TestDefaultPooledObject:
+class TestDefaultPooledObject(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

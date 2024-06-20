@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.csv.CSVFormat import *
+import unittest
 import os
 import enum
 import io
@@ -9,7 +10,7 @@ import io
 # Imports End
 
 
-class CSVFormatPredefinedTest:
+class CSVFormatPredefinedTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

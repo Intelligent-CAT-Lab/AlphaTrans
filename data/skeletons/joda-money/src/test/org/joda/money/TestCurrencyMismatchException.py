@@ -3,12 +3,13 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.joda.money.CurrencyUnit import *
 from src.main.org.joda.money.CurrencyMismatchException import *
+import unittest
 import io
 
 # Imports End
 
 
-class TestCurrencyMismatchException:
+class TestCurrencyMismatchException(unittest.TestCase):
 
     # Class Fields Begin
     __GBP: CurrencyUnit = None

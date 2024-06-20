@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.digest.PureJavaCrc32 import *
+import unittest
 import typing
 from typing import *
 import io
@@ -93,7 +94,7 @@ class PerformanceTest:
     # Class Methods End
 
 
-class PureJavaCrc32Test:
+class PureJavaCrc32Test(unittest.TestCase):
 
     # Class Fields Begin
     __theirs: typing.Any = None

@@ -6,6 +6,7 @@ from src.main.org.apache.commons.codec.EncoderException import *
 from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
 from src.main.org.apache.commons.codec.CharEncoding import *
+import unittest
 import os
 import typing
 from typing import *
@@ -14,7 +15,7 @@ import io
 # Imports End
 
 
-class BCodecTest:
+class BCodecTest(unittest.TestCase):
 
     # Class Fields Begin
     __BASE64_IMPOSSIBLE_CASES: typing.List[str] = None

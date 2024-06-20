@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.binary.StringUtils import *
 from src.main.org.apache.commons.codec.binary.Hex import *
 from src.main.org.apache.commons.codec.EncoderException import *
 from src.main.org.apache.commons.codec.DecoderException import *
+import unittest
 import os
 import typing
 from typing import *
@@ -13,7 +14,7 @@ import io
 # Imports End
 
 
-class HexTest:
+class HexTest(unittest.TestCase):
 
     # Class Fields Begin
     __BAD_ENCODING_NAME: str = None

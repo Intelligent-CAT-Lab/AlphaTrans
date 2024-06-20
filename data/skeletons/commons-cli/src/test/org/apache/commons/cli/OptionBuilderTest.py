@@ -3,13 +3,14 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.cli.OptionBuilder import *
 from src.main.org.apache.commons.cli.Option import *
+import unittest
 import numbers
 import io
 
 # Imports End
 
 
-class OptionBuilderTest:
+class OptionBuilderTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

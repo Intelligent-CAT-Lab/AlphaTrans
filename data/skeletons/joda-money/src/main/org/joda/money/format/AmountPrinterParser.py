@@ -9,6 +9,8 @@ from src.main.org.joda.money.format.MoneyAmountStyle import *
 from src.main.org.joda.money.format.GroupingStyle import *
 from src.main.org.joda.money.BigMoney import *
 import os
+import typing
+from typing import *
 import io
 from io import IOBase
 
@@ -30,7 +32,10 @@ class AmountPrinterParser(MoneyParser, MoneyPrinter):
         pass
 
     def print(
-        self, context: MoneyPrintContext, appendable: io.TextIOBase, money: BigMoney
+        self,
+        context: MoneyPrintContext,
+        appendable: typing.Union[typing.List, io.TextIOBase],
+        money: BigMoney,
     ) -> None:
         pass
 

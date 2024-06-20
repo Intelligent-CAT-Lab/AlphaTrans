@@ -5,12 +5,13 @@ from src.main.org.apache.commons.csv.CSVRecord import *
 from src.main.org.apache.commons.csv.CSVPrinter import *
 from src.main.org.apache.commons.csv.CSVParser import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import unittest
 import io
 
 # Imports End
 
 
-class JiraCsv288Test:
+class JiraCsv288Test(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

@@ -12,12 +12,13 @@ from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *
 from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import io
 
 # Imports End
 
 
-class CheriyanMehlhornGabowTestCase:
+class CheriyanMehlhornGabowTestCase(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

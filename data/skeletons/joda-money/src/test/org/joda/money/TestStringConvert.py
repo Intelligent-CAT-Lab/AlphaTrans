@@ -6,12 +6,13 @@ from src.main.org.joda.money.CurrencyUnit import *
 from src.main.org.joda.money.BigMoney import *
 
 # from src.main.org.joda.convert.StringConvert import *
+import unittest
 import io
 
 # Imports End
 
 
-class TestStringConvert:
+class TestStringConvert(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

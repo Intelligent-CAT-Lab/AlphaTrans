@@ -7,6 +7,7 @@ from src.main.org.joda.convert.TypedStringConverter import *
 from src.main.org.joda.convert.StringConverterFactory import *
 from src.main.org.joda.convert.StringConvert import *
 from src.test.org.joda.convert.DistanceMethodMethod import *
+import unittest
 import typing
 from typing import *
 import io
@@ -28,7 +29,7 @@ class Factory1(StringConverterFactory):
     # Class Methods End
 
 
-class TestStringConverterFactory:
+class TestStringConverterFactory(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

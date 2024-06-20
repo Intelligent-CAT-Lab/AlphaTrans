@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.checkdigit.IBANCheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
 from src.main.org.apache.commons.validator.routines.IBANValidator import *
+import unittest
 import typing
 from typing import *
 import io
@@ -11,7 +12,7 @@ import io
 # Imports End
 
 
-class IBANValidatorTest:
+class IBANValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     __invalidIBANFormat: typing.List[str] = None

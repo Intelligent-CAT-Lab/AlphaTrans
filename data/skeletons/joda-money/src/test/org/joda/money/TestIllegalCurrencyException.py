@@ -2,12 +2,13 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.joda.money.IllegalCurrencyException import *
+import unittest
 import io
 
 # Imports End
 
 
-class TestIllegalCurrencyException:
+class TestIllegalCurrencyException(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

@@ -23,6 +23,7 @@ from src.main.org.apache.commons.graph.WeightedPath import *
 from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import typing
 from typing import *
 import io
@@ -31,7 +32,7 @@ import pathlib
 # Imports End
 
 
-class BidirDijkstraTestCase:
+class BidirDijkstraTestCase(unittest.TestCase):
 
     # Class Fields Begin
     __TIMES: int = None

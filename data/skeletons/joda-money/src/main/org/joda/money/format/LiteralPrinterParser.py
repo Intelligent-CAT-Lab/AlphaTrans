@@ -6,6 +6,8 @@ from src.main.org.joda.money.format.MoneyPrintContext import *
 from src.main.org.joda.money.format.MoneyParser import *
 from src.main.org.joda.money.format.MoneyParseContext import *
 from src.main.org.joda.money.BigMoney import *
+import typing
+from typing import *
 import io
 from io import IOBase
 
@@ -27,7 +29,10 @@ class LiteralPrinterParser(MoneyParser, MoneyPrinter):
         pass
 
     def print(
-        self, context: MoneyPrintContext, appendable: io.TextIOBase, money: BigMoney
+        self,
+        context: MoneyPrintContext,
+        appendable: typing.Union[typing.List, io.TextIOBase],
+        money: BigMoney,
     ) -> None:
         pass
 

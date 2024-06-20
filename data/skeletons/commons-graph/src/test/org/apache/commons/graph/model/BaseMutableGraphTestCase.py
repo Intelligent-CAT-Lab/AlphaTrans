@@ -13,6 +13,7 @@ from src.main.org.apache.commons.graph.MutableGraph import *
 from src.main.org.apache.commons.graph.GraphException import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import io
 
 # Imports End
@@ -38,7 +39,7 @@ class GraphInsert(TestRunner):
     # Class Methods End
 
 
-class BaseMutableGraphTestCase:
+class BaseMutableGraphTestCase(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.pool2.TrackedUse import *
+import unittest
 import io
 
 # Imports End
@@ -19,7 +20,7 @@ class DefaultTrackedUse(TrackedUse):
     # Class Methods End
 
 
-class TestTrackedUse:
+class TestTrackedUse(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

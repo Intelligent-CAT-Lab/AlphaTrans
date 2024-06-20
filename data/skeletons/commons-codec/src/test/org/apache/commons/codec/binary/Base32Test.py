@@ -7,6 +7,7 @@ from src.main.org.apache.commons.codec.binary.BaseNCodec import *
 from src.main.org.apache.commons.codec.binary.Base32 import *
 from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
+import unittest
 import os
 import typing
 from typing import *
@@ -15,7 +16,7 @@ import io
 # Imports End
 
 
-class Base32Test:
+class Base32Test(unittest.TestCase):
 
     # Class Fields Begin
     __BASE32_TEST_CASES_CHUNKED: typing.List[typing.List[str]] = None

@@ -2,12 +2,13 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.digest.Blake3 import *
+import unittest
 import io
 
 # Imports End
 
 
-class Blake3Test:
+class Blake3Test(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

@@ -14,12 +14,13 @@ from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *
 from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import io
 
 # Imports End
 
 
-class VisitTestCase:
+class VisitTestCase(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

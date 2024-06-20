@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.codec.binary.StringUtils import *
 from src.test.org.apache.commons.codec.binary.BaseNTestData import *
 from src.main.org.apache.commons.codec.binary.Base16InputStream import *
+import unittest
 import typing
 from typing import *
 import io
@@ -11,7 +12,7 @@ import io
 # Imports End
 
 
-class Base16InputStreamTest:
+class Base16InputStreamTest(unittest.TestCase):
 
     # Class Fields Begin
     __ENCODED_B16: str = None

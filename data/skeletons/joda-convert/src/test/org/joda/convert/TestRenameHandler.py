@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.test.org.joda.convert.Status import *
 from src.main.org.joda.convert.RenameHandler import *
 from src.test.org.joda.convert.DistanceMethodMethod import *
+import unittest
 import typing
 from typing import *
 import io
@@ -11,7 +12,7 @@ import io
 # Imports End
 
 
-class TestRenameHandler:
+class TestRenameHandler(unittest.TestCase):
 
     # Class Fields Begin
     BAD_INIT: bool = None

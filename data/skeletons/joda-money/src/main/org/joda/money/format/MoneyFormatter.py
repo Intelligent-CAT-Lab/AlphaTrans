@@ -41,12 +41,16 @@ class MoneyFormatter:
         pass
 
     def printIO(
-        self, appendable: io.TextIOBase, moneyProvider: BigMoneyProvider
+        self,
+        appendable: typing.Union[typing.List, io.TextIOBase],
+        moneyProvider: BigMoneyProvider,
     ) -> None:
         pass
 
     def print1(
-        self, appendable: io.TextIOBase, moneyProvider: BigMoneyProvider
+        self,
+        appendable: typing.Union[typing.List, io.TextIOBase],
+        moneyProvider: BigMoneyProvider,
     ) -> None:
         pass
 

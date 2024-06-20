@@ -20,6 +20,7 @@ from src.main.org.apache.commons.graph.MutableGraph import *
 from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import typing
 from typing import *
 import io
@@ -28,7 +29,7 @@ import pathlib
 # Imports End
 
 
-class GraphSerializationTestCase:
+class GraphSerializationTestCase(unittest.TestCase):
 
     # Class Fields Begin
     __FILE_NAME: str = None

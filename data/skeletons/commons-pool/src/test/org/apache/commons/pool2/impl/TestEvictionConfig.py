@@ -2,13 +2,14 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.EvictionConfig import *
+import unittest
 import os
 import io
 
 # Imports End
 
 
-class TestEvictionConfig:
+class TestEvictionConfig(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

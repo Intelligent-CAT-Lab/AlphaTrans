@@ -6,6 +6,7 @@ from src.main.org.joda.money.CurrencyUnit import *
 from src.main.org.joda.money.CurrencyMismatchException import *
 from src.main.org.joda.money.BigMoneyProvider import *
 from src.main.org.joda.money.BigMoney import *
+import unittest
 import os
 import decimal
 import typing
@@ -15,7 +16,7 @@ import io
 # Imports End
 
 
-class TestMoney:
+class TestMoney(unittest.TestCase):
 
     # Class Fields Begin
     __GBP: CurrencyUnit = None

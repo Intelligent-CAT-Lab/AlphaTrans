@@ -12,12 +12,13 @@ from src.main.org.apache.commons.graph.connectivity.ConnectivityAlgorithmsSelect
 from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import io
 
 # Imports End
 
 
-class FindConnectedComponetTestCase:
+class FindConnectedComponetTestCase(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

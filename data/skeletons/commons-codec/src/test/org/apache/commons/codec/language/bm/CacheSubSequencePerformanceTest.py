@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 # Imports Begin
+import unittest
 import io
 
 # Imports End
 
 
-class CacheSubSequencePerformanceTest:
+class CacheSubSequencePerformanceTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

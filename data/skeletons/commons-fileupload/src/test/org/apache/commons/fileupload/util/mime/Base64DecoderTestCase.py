@@ -2,12 +2,13 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.fileupload.util.mime.Base64Decoder import *
+import unittest
 import io
 
 # Imports End
 
 
-class Base64DecoderTestCase:
+class Base64DecoderTestCase(unittest.TestCase):
 
     # Class Fields Begin
     __US_ASCII_CHARSET: str = None

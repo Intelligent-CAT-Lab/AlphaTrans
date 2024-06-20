@@ -5,6 +5,7 @@ from src.main.org.apache.commons.csv.QuoteMode import *
 from src.main.org.apache.commons.csv.DuplicateHeaderMode import *
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import unittest
 import typing
 from typing import *
 import io
@@ -35,7 +36,7 @@ class Header:
     # Class Methods End
 
 
-class CSVFormatTest:
+class CSVFormatTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

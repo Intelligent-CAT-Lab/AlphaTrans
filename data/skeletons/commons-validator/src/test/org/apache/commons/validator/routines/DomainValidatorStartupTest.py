@@ -2,12 +2,13 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
+import unittest
 import io
 
 # Imports End
 
 
-class DomainValidatorStartupTest:
+class DomainValidatorStartupTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

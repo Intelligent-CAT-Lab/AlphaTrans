@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.StringUtils import *
+import unittest
 import typing
 from typing import *
 import io
@@ -9,7 +10,7 @@ import io
 # Imports End
 
 
-class StringUtilsTest:
+class StringUtilsTest(unittest.TestCase):
 
     # Class Fields Begin
     __BYTES_FIXTURE: typing.List[int] = None

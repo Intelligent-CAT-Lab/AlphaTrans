@@ -7,6 +7,7 @@ from src.main.org.apache.commons.pool2.PooledObjectFactory import *
 from src.main.org.apache.commons.pool2.ObjectPool import *
 from src.test.org.apache.commons.pool2.MethodCallPoolableObjectFactory import *
 from src.test.org.apache.commons.pool2.MethodCall import *
+import unittest
 import os
 import typing
 from typing import *
@@ -33,7 +34,7 @@ class TestObjectPool(BaseObjectPool):
     # Class Methods End
 
 
-class TestBaseObjectPool(TestObjectPool):
+class TestBaseObjectPool(TestObjectPool, unittest.TestCase):
 
     # Class Fields Begin
     __pool: ObjectPool[str] = None

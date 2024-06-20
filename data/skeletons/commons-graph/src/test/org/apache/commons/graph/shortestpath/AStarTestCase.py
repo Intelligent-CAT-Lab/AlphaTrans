@@ -19,13 +19,14 @@ from src.main.org.apache.commons.graph.WeightedPath import *
 from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import io
 import pathlib
 
 # Imports End
 
 
-class AStarTestCase:
+class AStarTestCase(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

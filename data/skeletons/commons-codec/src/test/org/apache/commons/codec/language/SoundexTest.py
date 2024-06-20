@@ -6,13 +6,14 @@ from src.main.org.apache.commons.codec.language.Soundex import *
 from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
+import unittest
 import os
 import io
 
 # Imports End
 
 
-class SoundexTest(StringEncoderAbstractTest):
+class SoundexTest(StringEncoderAbstractTest, unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

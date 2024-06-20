@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.CharSequenceUtils import *
+import unittest
 import typing
 from typing import *
 import io
@@ -59,7 +60,7 @@ class RunTest(ABC):
     # Class Methods End
 
 
-class CharSequenceUtilsTest:
+class CharSequenceUtilsTest(unittest.TestCase):
 
     # Class Fields Begin
     __TEST_DATA: typing.List[TestData] = None

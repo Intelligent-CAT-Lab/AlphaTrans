@@ -4,13 +4,14 @@ from __future__ import annotations
 from src.main.org.joda.money.MoneyUtils import *
 from src.main.org.joda.money.Money import *
 from src.main.org.joda.money.BigMoneyProvider import *
+import unittest
 import os
 import io
 
 # Imports End
 
 
-class TestMoneyUtils_Money:
+class TestMoneyUtils_Money(unittest.TestCase):
 
     # Class Fields Begin
     __GBP_0: Money = None

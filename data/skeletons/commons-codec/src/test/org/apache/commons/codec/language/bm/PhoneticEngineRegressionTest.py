@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.language.bm.RuleType import *
 from src.main.org.apache.commons.codec.language.bm.PhoneticEngine import *
 from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.language.bm.Languages import *
+import unittest
 import typing
 from typing import *
 import io
@@ -12,7 +13,7 @@ import io
 # Imports End
 
 
-class PhoneticEngineRegressionTest:
+class PhoneticEngineRegressionTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

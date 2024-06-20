@@ -8,6 +8,7 @@ from src.main.org.apache.commons.codec.binary.BaseNCodecInputStream import *
 from src.main.org.apache.commons.codec.binary.BaseNCodec import *
 from src.test.org.apache.commons.codec.binary.Base32TestData import *
 from src.main.org.apache.commons.codec.binary.Base32InputStream import *
+import unittest
 import typing
 from typing import *
 import io
@@ -15,7 +16,7 @@ import io
 # Imports End
 
 
-class Base32InputStreamTest:
+class Base32InputStreamTest(unittest.TestCase):
 
     # Class Fields Begin
     __ENCODED_FOO: str = None

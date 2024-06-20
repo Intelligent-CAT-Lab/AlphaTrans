@@ -8,6 +8,7 @@ from src.main.org.joda.convert.StringConverter import *
 from src.main.org.joda.convert.StringConvert import *
 
 # from src.main.com.google.common.reflect.TypeToken import *
+import unittest
 import typing
 from typing import *
 import io
@@ -15,7 +16,7 @@ import io
 # Imports End
 
 
-class TestGuavaTypeTokenStringConverter:
+class TestGuavaTypeTokenStringConverter(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

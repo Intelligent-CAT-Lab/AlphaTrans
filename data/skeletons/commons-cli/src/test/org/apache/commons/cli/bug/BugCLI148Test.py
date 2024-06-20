@@ -7,12 +7,13 @@ from src.main.org.apache.commons.cli.OptionBuilder import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.CommandLine import *
+import unittest
 import io
 
 # Imports End
 
 
-class BugCLI148Test:
+class BugCLI148Test(unittest.TestCase):
 
     # Class Fields Begin
     __options: Options = None

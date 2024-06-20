@@ -31,7 +31,10 @@ class MultiPrinterParser(MoneyParser, MoneyPrinter):
         pass
 
     def print(
-        self, context: MoneyPrintContext, appendable: io.TextIOBase, money: BigMoney
+        self,
+        context: MoneyPrintContext,
+        appendable: typing.Union[typing.List, io.TextIOBase],
+        money: BigMoney,
     ) -> None:
         pass
 

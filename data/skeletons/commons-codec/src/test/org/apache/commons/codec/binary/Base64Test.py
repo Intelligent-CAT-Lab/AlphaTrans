@@ -11,6 +11,7 @@ from src.main.org.apache.commons.codec.binary.Base64 import *
 from src.main.org.apache.commons.codec.EncoderException import *
 from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
+import unittest
 import os
 import typing
 from typing import *
@@ -19,7 +20,7 @@ import io
 # Imports End
 
 
-class Base64Test:
+class Base64Test(unittest.TestCase):
 
     # Class Fields Begin
     __CHARSET_UTF8: str = None

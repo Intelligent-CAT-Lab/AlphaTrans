@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.cli.Option import *
+import unittest
 import typing
 from typing import *
 import io
@@ -42,7 +43,7 @@ class TestOption(Option):
     # Class Methods End
 
 
-class OptionTest:
+class OptionTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

@@ -8,6 +8,7 @@ from src.main.org.apache.commons.csv.CSVRecord import *
 from src.main.org.apache.commons.csv.CSVPrinter import *
 from src.main.org.apache.commons.csv.CSVParser import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import unittest
 import os
 import typing
 from typing import *
@@ -17,7 +18,7 @@ import pathlib
 # Imports End
 
 
-class CSVPrinterTest:
+class CSVPrinterTest(unittest.TestCase):
 
     # Class Fields Begin
     __DQUOTE_CHAR: str = None

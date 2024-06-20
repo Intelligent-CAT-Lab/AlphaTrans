@@ -239,7 +239,7 @@ class HelpFormatter:
 
     def __renderWrappedTextBlock(
         self, sb: str, width: int, nextLineTabStop: int, text: str
-    ) -> io.TextIOBase:
+    ) -> typing.Union[typing.List, io.TextIOBase]:
         pass
 
     def __appendOptionGroup(self, buff: str, group: OptionGroup) -> None:

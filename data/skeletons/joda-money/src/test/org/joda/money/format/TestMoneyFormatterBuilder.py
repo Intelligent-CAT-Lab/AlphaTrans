@@ -13,6 +13,7 @@ from src.main.org.joda.money.Money import *
 from src.main.org.joda.money.CurrencyUnit import *
 from src.main.org.joda.money.BigMoneyProvider import *
 from src.main.org.joda.money.BigMoney import *
+import unittest
 import decimal
 import typing
 from typing import *
@@ -21,7 +22,7 @@ import io
 # Imports End
 
 
-class TestMoneyFormatterBuilder:
+class TestMoneyFormatterBuilder(unittest.TestCase):
 
     # Class Fields Begin
     __GBP: CurrencyUnit = None

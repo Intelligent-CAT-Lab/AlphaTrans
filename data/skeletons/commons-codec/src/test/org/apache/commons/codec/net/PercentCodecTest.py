@@ -3,12 +3,13 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.codec.net.PercentCodec import *
 from src.main.org.apache.commons.codec.DecoderException import *
+import unittest
 import io
 
 # Imports End
 
 
-class PercentCodecTest:
+class PercentCodecTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

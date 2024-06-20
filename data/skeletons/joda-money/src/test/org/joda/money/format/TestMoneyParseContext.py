@@ -4,12 +4,13 @@ from __future__ import annotations
 from src.main.org.joda.money.format.MoneyParseContext import *
 from src.main.org.joda.money.CurrencyUnit import *
 from src.main.org.joda.money.BigMoney import *
+import unittest
 import io
 
 # Imports End
 
 
-class TestMoneyParseContext:
+class TestMoneyParseContext(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

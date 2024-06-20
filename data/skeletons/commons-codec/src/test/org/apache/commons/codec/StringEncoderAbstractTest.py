@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 from src.main.org.apache.commons.codec.Encoder import *
+import unittest
 import typing
 from typing import *
 import io
@@ -12,7 +13,7 @@ from abc import ABC
 # Imports End
 
 
-class StringEncoderAbstractTest(ABC):
+class StringEncoderAbstractTest(ABC, unittest.TestCase):
 
     # Class Fields Begin
     _stringEncoder: typing.Any = None

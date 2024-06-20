@@ -9,12 +9,13 @@ from src.test.org.apache.commons.graph.model.BaseLabeledWeightedEdge import *
 from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *
 from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import io
 
 # Imports End
 
 
-class GraphBuilderTestCase:
+class GraphBuilderTestCase(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.joda.money.IllegalCurrencyException import *
 from src.main.org.joda.money.CurrencyUnit import *
+import unittest
 import os
 import typing
 from typing import *
@@ -11,7 +12,7 @@ import io
 # Imports End
 
 
-class TestCurrencyUnit:
+class TestCurrencyUnit(unittest.TestCase):
 
     # Class Fields Begin
     __JDK_GBP: typing.Any = None

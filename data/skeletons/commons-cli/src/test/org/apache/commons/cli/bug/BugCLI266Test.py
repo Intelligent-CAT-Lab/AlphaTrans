@@ -5,6 +5,7 @@ from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.OptionGroup import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
+import unittest
 import typing
 from typing import *
 import io
@@ -12,7 +13,7 @@ import io
 # Imports End
 
 
-class BugCLI266Test:
+class BugCLI266Test(unittest.TestCase):
 
     # Class Fields Begin
     __insertedOrder: typing.List[str] = None

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.digest.PureJavaCrc32C import *
+import unittest
 import os
 import typing
 from typing import *
@@ -10,7 +11,7 @@ import io
 # Imports End
 
 
-class PureJavaCrc32CTest:
+class PureJavaCrc32CTest(unittest.TestCase):
 
     # Class Fields Begin
     __crc: PureJavaCrc32C = None

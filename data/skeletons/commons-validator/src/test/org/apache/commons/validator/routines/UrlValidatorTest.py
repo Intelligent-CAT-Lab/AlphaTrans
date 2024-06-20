@@ -5,6 +5,7 @@ from src.main.org.apache.commons.validator.routines.UrlValidator import *
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
 from src.test.org.apache.commons.validator.ResultPair import *
+import unittest
 import typing
 from typing import *
 import io
@@ -12,7 +13,7 @@ import io
 # Imports End
 
 
-class UrlValidatorTest:
+class UrlValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     __printStatus: bool = None

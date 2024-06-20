@@ -22,13 +22,14 @@ from src.main.org.apache.commons.graph.MutableGraph import *
 from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import io
 import pathlib
 
 # Imports End
 
 
-class FloydWarshallTestCase:
+class FloydWarshallTestCase(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

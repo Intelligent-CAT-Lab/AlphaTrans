@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.net.URLCodec import *
 from src.main.org.apache.commons.codec.EncoderException import *
 from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.CharEncoding import *
+import unittest
 import typing
 from typing import *
 import io
@@ -12,7 +13,7 @@ import io
 # Imports End
 
 
-class URLCodecTest:
+class URLCodecTest(unittest.TestCase):
 
     # Class Fields Begin
     SWISS_GERMAN_STUFF_UNICODE: typing.List[int] = None

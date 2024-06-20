@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.codec.language.DoubleMetaphone import *
 from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
+import unittest
 import typing
 from typing import *
 import io
@@ -11,7 +12,7 @@ import io
 # Imports End
 
 
-class DoubleMetaphone2Test(StringEncoderAbstractTest):
+class DoubleMetaphone2Test(StringEncoderAbstractTest, unittest.TestCase):
 
     # Class Fields Begin
     __ALTERNATE_INDEX: int = None

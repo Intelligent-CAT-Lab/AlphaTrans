@@ -2,12 +2,13 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.cli.Util import *
+import unittest
 import io
 
 # Imports End
 
 
-class UtilTest:
+class UtilTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

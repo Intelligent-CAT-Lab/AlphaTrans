@@ -5,12 +5,13 @@ from src.main.org.apache.commons.codec.language.Soundex import *
 from src.main.org.apache.commons.codec.language.DoubleMetaphone import *
 from src.main.org.apache.commons.codec.StringEncoderComparator import *
 from src.main.org.apache.commons.codec.StringEncoder import *
+import unittest
 import io
 
 # Imports End
 
 
-class StringEncoderComparatorTest:
+class StringEncoderComparatorTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

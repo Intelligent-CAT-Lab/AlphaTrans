@@ -8,6 +8,7 @@ from src.main.org.joda.money.format.GroupingStyle import *
 from src.main.org.joda.money.CurrencyUnit import *
 from src.main.org.joda.money.BigMoneyProvider import *
 from src.main.org.joda.money.BigMoney import *
+import unittest
 import os
 import decimal
 import typing
@@ -17,7 +18,7 @@ import io
 # Imports End
 
 
-class TestMoneyAmountStyle:
+class TestMoneyAmountStyle(unittest.TestCase):
 
     # Class Fields Begin
     __cCachedLocale: typing.Any = None

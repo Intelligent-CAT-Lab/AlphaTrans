@@ -2,12 +2,13 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.Charsets import *
+import unittest
 import io
 
 # Imports End
 
 
-class CharsetsTest:
+class CharsetsTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

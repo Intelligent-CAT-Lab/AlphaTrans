@@ -2,12 +2,13 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.joda.money.format.MoneyFormatException import *
+import unittest
 import io
 
 # Imports End
 
 
-class TestMoneyFormatterException:
+class TestMoneyFormatterException(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

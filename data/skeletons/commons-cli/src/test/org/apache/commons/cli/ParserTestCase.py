@@ -15,6 +15,7 @@ from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.CommandLine import *
 from src.main.org.apache.commons.cli.AmbiguousOptionException import *
 import configparser
+import unittest
 import typing
 from typing import *
 import io
@@ -23,7 +24,7 @@ from abc import ABC
 # Imports End
 
 
-class ParserTestCase(ABC):
+class ParserTestCase(ABC, unittest.TestCase):
 
     # Class Fields Begin
     _parser: CommandLineParser = None

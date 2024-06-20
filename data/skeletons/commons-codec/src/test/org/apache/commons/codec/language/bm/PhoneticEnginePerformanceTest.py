@@ -4,12 +4,13 @@ from __future__ import annotations
 from src.main.org.apache.commons.codec.language.bm.RuleType import *
 from src.main.org.apache.commons.codec.language.bm.PhoneticEngine import *
 from src.main.org.apache.commons.codec.language.bm.NameType import *
+import unittest
 import io
 
 # Imports End
 
 
-class PhoneticEnginePerformanceTest:
+class PhoneticEnginePerformanceTest(unittest.TestCase):
 
     # Class Fields Begin
     __LOOP: int = None

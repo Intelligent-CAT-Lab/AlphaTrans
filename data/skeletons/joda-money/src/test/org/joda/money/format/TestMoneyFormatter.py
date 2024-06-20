@@ -13,6 +13,7 @@ from src.main.org.joda.money.Money import *
 from src.main.org.joda.money.CurrencyUnit import *
 from src.main.org.joda.money.BigMoneyProvider import *
 from src.main.org.joda.money.BigMoney import *
+import unittest
 import decimal
 import typing
 from typing import *
@@ -22,25 +23,27 @@ from io import IOBase
 # Imports End
 
 
-class IOAppendable(io.TextIOBase):
+class IOAppendable:
 
     # Class Fields Begin
     # Class Fields End
 
     # Class Methods Begin
-    def append2(self, csq: str) -> io.TextIOBase:
+    def append2(self, csq: str) -> typing.Union[typing.List, io.TextIOBase]:
         pass
 
-    def append1(self, c: str) -> io.TextIOBase:
+    def append1(self, c: str) -> typing.Union[typing.List, io.TextIOBase]:
         pass
 
-    def append0(self, csq: str, start: int, end: int) -> io.TextIOBase:
+    def append0(
+        self, csq: str, start: int, end: int
+    ) -> typing.Union[typing.List, io.TextIOBase]:
         pass
 
     # Class Methods End
 
 
-class TestMoneyFormatter:
+class TestMoneyFormatter(unittest.TestCase):
 
     # Class Fields Begin
     __cCachedLocale: typing.Any = None

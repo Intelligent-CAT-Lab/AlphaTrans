@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.codec.binary.BinaryCodec import *
 from src.main.org.apache.commons.codec.EncoderException import *
 from src.main.org.apache.commons.codec.DecoderException import *
+import unittest
 import typing
 from typing import *
 import io
@@ -11,7 +12,7 @@ import io
 # Imports End
 
 
-class BinaryCodecTest:
+class BinaryCodecTest(unittest.TestCase):
 
     # Class Fields Begin
     __CHARSET_UTF8: str = None
