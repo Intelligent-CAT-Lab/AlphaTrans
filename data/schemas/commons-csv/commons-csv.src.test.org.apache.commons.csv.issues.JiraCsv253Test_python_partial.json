@@ -145,11 +145,25 @@
                         "    def testHandleAbsentValues(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testHandleAbsentValues(self) -> None:",
+                        "         source = \"\\\"John\\\",,\\\"Doe\\\"\\n\" + \",\\\"AA\\\",123\\n\" + \"\\\"John\\\",90,\\n\" + \"\\\"\\\",,90\"",
+                        "         csvFormat = CSVFormat.DEFAULT.builder().setQuoteMode(QuoteMode.NON_NUMERIC).build()",
+                        "         parser = csvFormat.parse(io.StringIO(source))",
+                        "         csvRecords = parser.iterator()",
+                        "         self.__assertArrayEqual([\"John\", None, \"Doe\"], next(csvRecords))",
+                        "         self.__assertArrayEqual([None, \"AA\", \"123\"], next(csvRecords))",
+                        "         self.__assertArrayEqual([\"John\", \"90\", None], next(csvRecords))",
+                        "         self.__assertArrayEqual([\"\", None, \"90\"], next(csvRecords))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.256742477416992,
+                    "generation_timestamp": "2024-06-19T22:39:49.852190",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "37-41:assertArrayEqual": {
                     "start": 37,
@@ -188,21 +202,32 @@
                         "    def __assertArrayEqual(self, expected: typing.List[str], actual: CSVRecord) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __assertArrayEqual(self, expected: typing.List[str], actual: CSVRecord) -> None:",
+                        "         for i in range(len(expected)):",
+                        "             self.assertEqual(expected[i], actual.get1(i))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.04397177696228,
+                    "generation_timestamp": "2024-06-19T22:39:34.565222",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class JiraCsv253Test:\n\n"
+            "python_class_declaration": "class JiraCsv253Test(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.main.org.apache.commons.csv.CSVFormat import *",
         "from src.main.org.apache.commons.csv.CSVParser import *",
         "from src.main.org.apache.commons.csv.CSVRecord import *",

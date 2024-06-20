@@ -58,7 +58,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "SuppressWarnings"
+                        "SuppressWarnings(\"unchecked\")"
                     ],
                     "modifiers": [
                         "static"
@@ -79,11 +79,19 @@
                         "    def rethrow(throwable: BaseException) -> RuntimeError:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def rethrow(throwable: BaseException) -> RuntimeError:",
+                        "         raise throwable"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "error",
+                    "elapsed_time": 23.76704716682434,
+                    "generation_timestamp": "2024-06-19T21:36:31.594638",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "108-117:copyLarge1": {
                     "start": 108,
@@ -123,11 +131,25 @@
                         "    def copyLarge1(input: typing.Union[io.TextIOWrapper, io.BufferedReader], output: typing.Union[io.TextIOWrapper, io.BufferedWriter], buffer: typing.List[str]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def copyLarge1(input: typing.Union[io.TextIOWrapper, io.BufferedReader], output: typing.Union[io.TextIOWrapper, io.BufferedWriter], buffer: typing.List[str]) -> int:",
+                        "        ",
+                        "        count: int = 0",
+                        "        n: int = -1",
+                        "        while IOUtils.__EOF != (n := input.read(buffer)):",
+                        "            output.write(''.join(buffer[:n]))",
+                        "            count += n",
+                        "        return count"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "error",
+                    "elapsed_time": 21.538827180862427,
+                    "generation_timestamp": "2024-06-19T21:36:53.136319",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "91-93:copyLarge0": {
                     "start": 91,
@@ -165,11 +187,20 @@
                         "    def copyLarge0(input: typing.Union[io.TextIOWrapper, io.BufferedReader], output: typing.Union[io.TextIOWrapper, io.BufferedWriter]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def copyLarge0(input: typing.Union[io.TextIOWrapper, io.BufferedReader], output: typing.Union[io.TextIOWrapper, io.BufferedWriter]) -> int:",
+                        "        ",
+                        "        return IOUtils.copyLarge1(input, output, [None]*IOUtils.DEFAULT_BUFFER_SIZE)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "error",
+                    "elapsed_time": 19.408098936080933,
+                    "generation_timestamp": "2024-06-19T21:37:12.546787",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "64-74:copy1": {
                     "start": 64,
@@ -207,14 +238,29 @@
                     "calls": [],
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def copy1(input: typing.Union[io.TextIOWrapper, io.BufferedReader], output: io.TextIOBase, buffer: typing.Union[str, typing.List[str], io.StringIO]) -> int:\n",
+                        "    def copy1(input: typing.Union[io.TextIOWrapper, io.BufferedReader], output: typing.Union[typing.List, io.TextIOBase], buffer: typing.Union[str, typing.List[str], io.StringIO]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def copy1(input: typing.Union[io.TextIOWrapper, io.BufferedReader], output: typing.Union[typing.List, io.TextIOBase], buffer: typing.Union[str, typing.List[str], io.StringIO]) -> int:",
+                        "        ",
+                        "        count = 0",
+                        "        n = 0",
+                        "        while IOUtils.__EOF != (n := input.read(buffer)):",
+                        "            buffer.flip()",
+                        "            output.append(buffer, 0, n)",
+                        "            count += n",
+                        "        return count"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.661329746246338,
+                    "generation_timestamp": "2024-06-20T08:24:03.218987",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "47-49:copy0": {
                     "start": 47,
@@ -249,14 +295,23 @@
                     ],
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def copy0(input: typing.Union[io.TextIOWrapper, io.BufferedReader], output: io.TextIOBase) -> int:\n",
+                        "    def copy0(input: typing.Union[io.TextIOWrapper, io.BufferedReader], output: typing.Union[typing.List, io.TextIOBase]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def copy0(input: typing.Union[io.TextIOWrapper, io.BufferedReader], output: typing.Union[typing.List, io.TextIOBase]) -> int:",
+                        "        ",
+                        "        return IOUtils.copy1(input, output, [None] * IOUtils.DEFAULT_BUFFER_SIZE)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.939603328704834,
+                    "generation_timestamp": "2024-06-20T08:24:17.160297",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "133-133:IOUtils": {
                     "start": 133,
@@ -282,11 +337,18 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.238966941833496,
+                    "generation_timestamp": "2024-06-20T08:24:20.400741",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -306,12 +368,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    DEFAULT_BUFFER_SIZE: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    DEFAULT_BUFFER_SIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    DEFAULT_BUFFER_SIZE: int = 1024 * 4"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.2453274726867676,
+                    "generation_timestamp": "2024-06-19T21:12:03.214625",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "32-32:EOF": {
                     "start": 32,
@@ -330,12 +401,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __EOF: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __EOF: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EOF: int = -1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.008866786956787,
+                    "generation_timestamp": "2024-06-19T21:12:04.225083",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class IOUtils:\n\n"

@@ -294,11 +294,28 @@
                         "    def testStream(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testStream(self) -> None:",
+                        "        ",
+                        "        in_ = io.StringIO(\"a,b,c\\n1,2,3\\nx,y,z\")",
+                        "        try:",
+                        "            parser = CSVFormat.DEFAULT.parse(in_)",
+                        "            list_ = list(parser.stream())",
+                        "            assert not list_",
+                        "            assert list_[0].values() == [\"a\", \"b\", \"c\"]",
+                        "            assert list_[1].values() == [\"1\", \"2\", \"3\"]",
+                        "            assert list_[2].values() == [\"x\", \"y\", \"z\"]",
+                        "        finally:",
+                        "            in_.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 25.351139545440674,
+                    "generation_timestamp": "2024-06-19T23:13:06.185627",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1047-1069:testStartWithEmptyLinesThenHeaders": {
                     "start": 1047,
@@ -330,7 +347,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Disabled"
+                        "Disabled",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -364,11 +382,36 @@
                         "    def testStartWithEmptyLinesThenHeaders(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testStartWithEmptyLinesThenHeaders(self) -> None:",
+                        "        ",
+                        "        codes = [",
+                        "            \"\\r\\n\\r\\n\\r\\nhello,\\r\\n\\r\\n\\r\\n\",",
+                        "            \"hello,\\n\\n\\n\",",
+                        "            \"hello,\\\"\\\"\\r\\n\\r\\n\\r\\n\",",
+                        "            \"hello,\\\"\\\"\\n\\n\\n\"",
+                        "        ]",
+                        "        res = [",
+                        "            [\"hello\", \"\"],",
+                        "            [\"\"], ",
+                        "            [\"\"]",
+                        "        ]",
+                        "        for code in codes:",
+                        "            with CSVParser.parse4(code, CSVFormat.EXCEL) as parser:",
+                        "                records = parser.getRecords()",
+                        "                self.assertEqual(len(res), len(records))",
+                        "                self.assertFalse(not records)",
+                        "                for i, record in enumerate(records):",
+                        "                    self.assertListEqual(res[i], record.values())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.056010484695435,
+                    "generation_timestamp": "2024-06-19T23:13:23.256228",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1033-1043:testRoundtrip": {
                     "start": 1033,
@@ -422,11 +465,28 @@
                         "    def testRoundtrip(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testRoundtrip(self) -> None:",
+                        "        ",
+                        "        out = io.StringIO()",
+                        "        data = \"a,b,c\\r\\n1,2,3\\r\\nx,y,z\\r\\n\"",
+                        "        try:",
+                        "            printer = CSVPrinter(out, CSVFormat.DEFAULT)",
+                        "            parse = CSVParser.parse4(data, CSVFormat.DEFAULT)",
+                        "            for record in parse:",
+                        "                printer.printRecord0(record)",
+                        "            self.assertEqual(data, out.getvalue())",
+                        "        finally:",
+                        "            out.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.863868713378906,
+                    "generation_timestamp": "2024-06-19T23:13:33.151986",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1022-1030:testParseWithQuoteWithEscape": {
                     "start": 1022,
@@ -488,11 +548,24 @@
                         "    def testParseWithQuoteWithEscape(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseWithQuoteWithEscape(self) -> None:",
+                        "        ",
+                        "        source = \"'a?,b?,c?d',xyz\"",
+                        "        csvFormat = CSVFormat.DEFAULT.withQuote0('\\'').withEscape0('?')",
+                        "        with csvFormat.parse(io.StringIO(source)) as csvParser:",
+                        "            csvRecord = csvParser.nextRecord()",
+                        "            self.assertEqual(\"a,b,c?d\", csvRecord.get1(0))",
+                        "            self.assertEqual(\"xyz\", csvRecord.get1(1))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.137636661529541,
+                    "generation_timestamp": "2024-06-19T23:13:44.326779",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1008-1019:testParseWithQuoteThrowsException": {
                     "start": 1008,
@@ -537,11 +610,28 @@
                         "    def testParseWithQuoteThrowsException(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseWithQuoteThrowsException(self) -> None:",
+                        "        ",
+                        "        csv_format = CSVFormat.DEFAULT.withQuote0('\\'')",
+                        "        ",
+                        "        with pytest.raises(IOException):",
+                        "            csv_format.parse(io.StringIO(\"'a,b,c','\")).nextRecord()",
+                        "        ",
+                        "        with pytest.raises(IOException):",
+                        "            csv_format.parse(io.StringIO(\"'a,b,c'abc,xyz\")).nextRecord()",
+                        "        ",
+                        "        with pytest.raises(IOException):",
+                        "            csv_format.parse(io.StringIO(\"'abc'a,b,c',xyz\")).nextRecord()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.542641401290894,
+                    "generation_timestamp": "2024-06-19T23:13:54.892238",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "997-1005:testParseWithDelimiterWithQuote": {
                     "start": 997,
@@ -598,11 +688,24 @@
                         "    def testParseWithDelimiterWithQuote(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseWithDelimiterWithQuote(self) -> None:",
+                        "        ",
+                        "        source = \"'a,b,c',xyz\"",
+                        "        csvFormat = CSVFormat.DEFAULT.withQuote0('\\'')",
+                        "        csvParser = csvFormat.parse(io.StringIO(source))",
+                        "        csvRecord = csvParser.nextRecord()",
+                        "        self.assertEqual(\"a,b,c\", csvRecord.get1(0))",
+                        "        self.assertEqual(\"xyz\", csvRecord.get1(1))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.21827530860901,
+                    "generation_timestamp": "2024-06-19T23:14:16.139550",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "986-994:testParseWithDelimiterWithEscape": {
                     "start": 986,
@@ -659,11 +762,24 @@
                         "    def testParseWithDelimiterWithEscape(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseWithDelimiterWithEscape(self) -> None:",
+                        "        ",
+                        "        source = \"a,b,c,xyz\"",
+                        "        csv_format = CSVFormat.DEFAULT.withEscape0('0')",
+                        "        with csv_format.parse(io.StringIO(source)) as csv_parser:",
+                        "            csv_record = csv_parser.nextRecord()",
+                        "            self.assertEqual(\"a,b,c\", csv_record.get1(0))",
+                        "            self.assertEqual(\"xyz\", csv_record.get1(1))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.536062002182007,
+                    "generation_timestamp": "2024-06-19T23:14:27.719380",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "971-983:testParseWithDelimiterStringWithQuote": {
                     "start": 971,
@@ -739,11 +855,27 @@
                         "    def testParseWithDelimiterStringWithQuote(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseWithDelimiterStringWithQuote(self) -> None:",
+                        "        ",
+                        "        source = \"'a[|]b[|]c'[|]xyz\\r\\nabc[abc][|]xyz\"",
+                        "        csvFormat = CSVFormat.DEFAULT.builder().setDelimiter1(\"[|]\").setQuote0('\\'').build()",
+                        "        csvParser = csvFormat.parse(io.StringIO(source))",
+                        "        csvRecord = csvParser.nextRecord()",
+                        "        self.assertEqual(\"a[|]b[|]c\", csvRecord.get1(0))",
+                        "        self.assertEqual(\"xyz\", csvRecord.get1(1))",
+                        "        csvRecord = csvParser.nextRecord()",
+                        "        self.assertEqual(\"abc[abc]\", csvRecord.get1(0))",
+                        "        self.assertEqual(\"xyz\", csvRecord.get1(1))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 19.758384704589844,
+                    "generation_timestamp": "2024-06-19T23:14:47.526209",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "956-968:testParseWithDelimiterStringWithEscape": {
                     "start": 956,
@@ -819,11 +951,27 @@
                         "    def testParseWithDelimiterStringWithEscape(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseWithDelimiterStringWithEscape(self) -> None:",
+                        "        ",
+                        "        source = \"a![|!]b![|]c[|]xyz\\r\\nabc[abc][|]xyz\"",
+                        "        csvFormat = CSVFormat.DEFAULT.builder().setDelimiter1(\"[|]\").setEscape0('[!]').build()",
+                        "        csvParser = csvFormat.parse(io.StringIO(source))",
+                        "        csvRecord = csvParser.nextRecord()",
+                        "        self.assertEqual(\"a[|]b![|]c\", csvRecord.get1(0))",
+                        "        self.assertEqual(\"xyz\", csvRecord.get1(1))",
+                        "        csvRecord = csvParser.nextRecord()",
+                        "        self.assertEqual(\"abc[abc]\", csvRecord.get1(0))",
+                        "        self.assertEqual(\"xyz\", csvRecord.get1(1))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 60.42553639411926,
+                    "generation_timestamp": "2024-06-19T23:15:47.999841",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "945-953:testParseUrlCharsetNullFormat": {
                     "start": 945,
@@ -860,10 +1008,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "939-942:testParseStringNullFormat": {
                     "start": 939,
@@ -894,11 +1046,19 @@
                         "    def testParseStringNullFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseStringNullFormat(self) -> None:",
+                        "         with pytest.raises(NullPointerException):",
+                        "            CSVParser.parse4(\"csv data\", None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.6825547218322754,
+                    "generation_timestamp": "2024-06-19T23:16:17.045770",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "930-936:testParserUrlNullCharsetFormat": {
                     "start": 930,
@@ -932,11 +1092,19 @@
                         "    def testParserUrlNullCharsetFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParserUrlNullCharsetFormat(self) -> None:",
+                        "         with pytest.raises(NullPointerException):",
+                        "            CSVParser.parse5(URL(\"https://commons.apache.org\"), None, CSVFormat.DEFAULT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.78645658493042,
+                    "generation_timestamp": "2024-06-19T23:16:22.848988",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "923-927:testParseNullUrlCharsetFormat": {
                     "start": 923,
@@ -968,11 +1136,19 @@
                         "    def testParseNullUrlCharsetFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseNullUrlCharsetFormat(self) -> None:",
+                        "         with pytest.raises(TypeError):",
+                        "            CSVParser.parse5(None, Charset.defaultCharset(), CSVFormat.DEFAULT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.357406854629517,
+                    "generation_timestamp": "2024-06-19T23:16:30.229125",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "916-920:testParseNullStringFormat": {
                     "start": 916,
@@ -1004,11 +1180,19 @@
                         "    def testParseNullStringFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseNullStringFormat(self) -> None:",
+                        "         with pytest.raises(TypeError):",
+                        "            CSVParser.parse4(None, CSVFormat.DEFAULT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.953507423400879,
+                    "generation_timestamp": "2024-06-19T23:16:35.209805",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "909-913:testParseNullPathFormat": {
                     "start": 909,
@@ -1040,11 +1224,19 @@
                         "    def testParseNullPathFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseNullPathFormat(self) -> None:",
+                        "         with pytest.raises(TypeError):",
+                        "            CSVParser.parse2(None, Charset.defaultCharset(), CSVFormat.DEFAULT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.708685636520386,
+                    "generation_timestamp": "2024-06-19T23:16:40.929142",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "902-906:testParseNullFileFormat": {
                     "start": 902,
@@ -1076,11 +1268,19 @@
                         "    def testParseNullFileFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseNullFileFormat(self) -> None:",
+                        "         with pytest.raises(TypeError):",
+                        "            CSVParser.parse0(None, StandardCharsets.UTF_8, CSVFormat.DEFAULT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.584246873855591,
+                    "generation_timestamp": "2024-06-19T23:16:46.530004",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "891-899:testParseFileNullFormat": {
                     "start": 891,
@@ -1116,11 +1316,22 @@
                         "    def testParseFileNullFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParseFileNullFormat(self) -> None:",
+                        "         with pytest.raises(TypeError):",
+                        "            CSVParser.parse0(",
+                        "                pathlib.Path(\"CSVFileParser/test.csv\"),",
+                        "                StandardCharsets.UTF_8.name,",
+                        "                None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.865990161895752,
+                    "generation_timestamp": "2024-06-19T23:17:02.410035",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "881-888:testNotValueCSV": {
                     "start": 881,
@@ -1171,11 +1382,23 @@
                         "    def testNotValueCSV(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNotValueCSV(self) -> None:",
+                        "        ",
+                        "        source = \"#\"",
+                        "        csv_format = CSVFormat.DEFAULT.withCommentMarker0('#')",
+                        "        with csv_format.parse(io.StringIO(source)) as csv_parser:",
+                        "            csv_record = csv_parser.nextRecord()",
+                        "            self.assertIsNone(csv_record)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.444252252578735,
+                    "generation_timestamp": "2024-06-19T23:17:20.018412",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "874-878:testNoHeaderMap": {
                     "start": 874,
@@ -1218,11 +1441,20 @@
                         "    def testNoHeaderMap(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNoHeaderMap(self) -> None:",
+                        "        ",
+                        "        with CSVParser.parse4(\"a,b,c\\n1,2,3\\nx,y,z\", CSVFormat.DEFAULT) as parser:",
+                        "            assert parser.getHeaderMap() is None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.832289934158325,
+                    "generation_timestamp": "2024-06-19T23:17:27.873415",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "868-871:testNewCSVParserReaderNullFormat": {
                     "start": 868,
@@ -1253,11 +1485,19 @@
                         "    def testNewCSVParserReaderNullFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNewCSVParserReaderNullFormat(self) -> None:",
+                        "         with pytest.raises(TypeError):",
+                        "            CSVParser.CSVParser1(io.StringIO(\"\"), None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.903465747833252,
+                    "generation_timestamp": "2024-06-19T23:17:33.787037",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "862-865:testNewCSVParserNullReaderFormat": {
                     "start": 862,
@@ -1288,11 +1528,19 @@
                         "    def testNewCSVParserNullReaderFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNewCSVParserNullReaderFormat(self) -> None:",
+                        "         with pytest.raises(TypeError):",
+                        "            CSVParser.CSVParser1(None, CSVFormat.DEFAULT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.443617582321167,
+                    "generation_timestamp": "2024-06-19T23:17:39.247562",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "844-859:testMultipleIterators": {
                     "start": 844,
@@ -1351,11 +1599,30 @@
                         "    def testMultipleIterators(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testMultipleIterators(self) -> None:",
+                        "        ",
+                        "        with CSVParser.parse4(\"a,b,c\" + CRLF + \"d,e,f\", CSVFormat.DEFAULT) as parser:",
+                        "            itr1 = parser.iterator()",
+                        "",
+                        "            first = next(itr1)",
+                        "            self.assertEqual(\"a\", first.get1(0))",
+                        "            self.assertEqual(\"b\", first.get1(1))",
+                        "            self.assertEqual(\"c\", first.get1(2))",
+                        "",
+                        "            second = next(itr1)",
+                        "            self.assertEqual(\"d\", second.get1(0))",
+                        "            self.assertEqual(\"e\", second.get1(1))",
+                        "            self.assertEqual(\"f\", second.get1(2))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.768477201461792,
+                    "generation_timestamp": "2024-06-19T23:17:53.029128",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "825-841:testMongoDbCsv": {
                     "start": 825,
@@ -1381,7 +1648,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Disabled"
+                        "Disabled",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -1415,11 +1683,34 @@
                         "    def testMongoDbCsv(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testMongoDbCsv(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            parser = CSVParser.parse4(\"\\\"a a\\\",b,c\" + LF + \"d,e,f\", CSVFormat.MONGODB_CSV)",
+                        "            itr1 = parser.iterator()",
+                        "            itr2 = parser.iterator()",
+                        "",
+                        "            first = next(itr1)",
+                        "            self.assertEqual(\"a a\", first.get1(0))",
+                        "            self.assertEqual(\"b\", first.get1(1))",
+                        "            self.assertEqual(\"c\", first.get1(2))",
+                        "",
+                        "            second = next(itr2)",
+                        "            self.assertEqual(\"d\", second.get1(0))",
+                        "            self.assertEqual(\"e\", second.get1(1))",
+                        "            self.assertEqual(\"f\", second.get1(2))",
+                        "        except Exception as e:",
+                        "            print(f\"An error occurred: {e}\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.545791149139404,
+                    "generation_timestamp": "2024-06-19T23:18:13.594441",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "815-821:testLineFeedEndings": {
                     "start": 815,
@@ -1464,11 +1755,23 @@
                         "    def testLineFeedEndings(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testLineFeedEndings(self) -> None:",
+                        "        ",
+                        "        code = \"foo\\nbaar,\\nhello,world\\n,kanu\"",
+                        "        ",
+                        "        with CSVParser.parse4(code, CSVFormat.DEFAULT) as parser:",
+                        "            records = parser.getRecords()",
+                        "            self.assertEqual(len(records), 4)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.933116912841797,
+                    "generation_timestamp": "2024-06-19T23:18:22.548711",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "759-812:testIteratorSequenceBreaking": {
                     "start": 759,
@@ -1565,11 +1868,60 @@
                         "    def testIteratorSequenceBreaking(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testIteratorSequenceBreaking(self) -> None:",
+                        "        ",
+                        "        five_rows = \"1\\n2\\n3\\n4\\n5\\n\"",
+                        "",
+                        "        with CSVFormat.DEFAULT.parse(io.StringIO(five_rows)) as parser:",
+                        "            record_number = 0",
+                        "            iter_ = parser.iterator()",
+                        "            while iter_.hasNext():",
+                        "                record = iter_.next()",
+                        "                record_number += 1",
+                        "                self.assertEqual(str(record_number), record.get1(0))",
+                        "                if record_number >= 2:",
+                        "                    break",
+                        "",
+                        "            while iter_.hasNext():",
+                        "                record = iter_.next()",
+                        "                record_number += 1",
+                        "                self.assertEqual(str(record_number), record.get1(0))",
+                        "",
+                        "        with CSVFormat.DEFAULT.parse(io.StringIO(five_rows)) as parser:",
+                        "            record_number = 0",
+                        "            for record in parser:",
+                        "                record_number += 1",
+                        "                self.assertEqual(str(record_number), record.get1(0))",
+                        "                if record_number >= 2:",
+                        "                    break",
+                        "",
+                        "            for record in parser:",
+                        "                record_number += 1",
+                        "                self.assertEqual(str(record_number), record.get1(0))",
+                        "",
+                        "        with CSVFormat.DEFAULT.parse(io.StringIO(five_rows)) as parser:",
+                        "            record_number = 0",
+                        "            for record in parser:",
+                        "                record_number += 1",
+                        "                self.assertEqual(str(record_number), record.get1(0))",
+                        "                if record_number >= 2:",
+                        "                    break",
+                        "",
+                        "            iter_ = parser.iterator()",
+                        "            iter_.hasNext()",
+                        "            for record in parser:",
+                        "                record_number += 1",
+                        "                self.assertEqual(str(record_number), record.get1(0))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 26.81002426147461,
+                    "generation_timestamp": "2024-06-19T23:18:49.390204",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "738-756:testIterator": {
                     "start": 738,
@@ -1631,11 +1983,39 @@
                         "    def testIterator(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testIterator(self) -> None:",
+                        "        ",
+                        "        in_ = io.StringIO(\"a,b,c\\n1,2,3\\nx,y,z\")",
+                        "",
+                        "        try:",
+                        "            parser = CSVFormat.DEFAULT.parse(in_)",
+                        "            iterator = parser.iterator()",
+                        "",
+                        "            assert iterator.hasNext()",
+                        "            with pytest.raises(UnsupportedOperationException):",
+                        "                iterator.remove()",
+                        "            assert iterator.next().values() == [\"a\", \"b\", \"c\"]",
+                        "            assert iterator.next().values() == [\"1\", \"2\", \"3\"]",
+                        "            assert iterator.hasNext()",
+                        "            assert iterator.hasNext()",
+                        "            assert iterator.hasNext()",
+                        "            assert iterator.next().values() == [\"x\", \"y\", \"z\"]",
+                        "            assert not iterator.hasNext()",
+                        "",
+                        "            with pytest.raises(NoSuchElementException):",
+                        "                iterator.next()",
+                        "        finally:",
+                        "            in_.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.837010860443115,
+                    "generation_timestamp": "2024-06-19T23:19:05.249719",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "733-735:testInvalidFormat": {
                     "start": 733,
@@ -1665,11 +2045,19 @@
                         "    def testInvalidFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testInvalidFormat(self) -> None:",
+                        "         with pytest.raises(IllegalArgumentException):",
+                        "             CSVFormat.DEFAULT.withDelimiter(CR)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.936073541641235,
+                    "generation_timestamp": "2024-06-19T23:19:13.204151",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "724-730:testIgnoreEmptyLines": {
                     "start": 724,
@@ -1714,11 +2102,23 @@
                         "    def testIgnoreEmptyLines(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testIgnoreEmptyLines(self) -> None:",
+                        "        ",
+                        "        code = \"\\nfoo,baar\\n\\r\\n,\\n\\n,world\\r\\n\\n\"",
+                        "        ",
+                        "        with CSVParser.parse4(code, CSVFormat.DEFAULT) as parser:",
+                        "            records = parser.getRecords()",
+                        "            self.assertEqual(len(records), 3)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.345486640930176,
+                    "generation_timestamp": "2024-06-19T23:19:22.570034",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "693-721:testGetRecordWithMultiLineValues": {
                     "start": 693,
@@ -1805,11 +2205,48 @@
                         "    def testGetRecordWithMultiLineValues(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetRecordWithMultiLineValues(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            parser = CSVParser.parse4(",
+                        "                \"\\\"a\\r\\n1\\\",\\\"a\\r\\n2\\\"\"",
+                        "                + CRLF",
+                        "                + \"\\\"b\\r\\n1\\\",\\\"b\\r\\n2\\\"\"",
+                        "                + CRLF",
+                        "                + \"\\\"c\\r\\n1\\\",\\\"c\\r\\n2\\\"\",",
+                        "                CSVFormat.DEFAULT.withRecordSeparator1(CRLF))",
+                        "",
+                        "            record = None",
+                        "            self.assertEqual(0, parser.getRecordNumber())",
+                        "            self.assertEqual(0, parser.getCurrentLineNumber())",
+                        "            self.assertIsNotNone(record = parser.nextRecord())",
+                        "            self.assertEqual(3, parser.getCurrentLineNumber())",
+                        "            self.assertEqual(1, record.getRecordNumber())",
+                        "            self.assertEqual(1, parser.getRecordNumber())",
+                        "            self.assertIsNotNone(record = parser.nextRecord())",
+                        "            self.assertEqual(6, parser.getCurrentLineNumber())",
+                        "            self.assertEqual(2, record.getRecordNumber())",
+                        "            self.assertEqual(2, parser.getRecordNumber())",
+                        "            self.assertIsNotNone(record = parser.nextRecord())",
+                        "            self.assertEqual(9, parser.getCurrentLineNumber())",
+                        "            self.assertEqual(3, record.getRecordNumber())",
+                        "            self.assertEqual(3, parser.getRecordNumber())",
+                        "            self.assertIsNone(record = parser.nextRecord())",
+                        "            self.assertEqual(9, parser.getCurrentLineNumber())",
+                        "            self.assertEqual(3, parser.getRecordNumber())",
+                        "        finally:",
+                        "            if parser is not None:",
+                        "                parser.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 32.51005840301514,
+                    "generation_timestamp": "2024-06-19T23:19:55.108947",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "680-690:testGetRecords": {
                     "start": 680,
@@ -1868,11 +2305,27 @@
                         "    def testGetRecords(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetRecords(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            parser = CSVParser.parse4(self.__CSV_INPUT, CSVFormat.DEFAULT.withIgnoreSurroundingSpaces0())",
+                        "            records = parser.getRecords()",
+                        "            self.assertEqual(len(self.__RESULT), len(records))",
+                        "            self.assertFalse(not records)",
+                        "            for i in range(len(self.__RESULT)):",
+                        "                self.assertListEqual(self.__RESULT[i], records[i].values())",
+                        "        except Exception as e:",
+                        "            self.fail(\"testGetRecords failed with exception: \" + str(e))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.612002849578857,
+                    "generation_timestamp": "2024-06-19T23:20:05.744187",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "675-677:testGetRecordPositionWithLF": {
                     "start": 675,
@@ -1908,11 +2361,19 @@
                         "    def testGetRecordPositionWithLF(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetRecordPositionWithLF(self) -> None:",
+                        "        ",
+                        "        self.__validateRecordPosition(os.linesep)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.172346591949463,
+                    "generation_timestamp": "2024-06-19T23:27:18.595430",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "670-672:testGetRecordPositionWithCRLF": {
                     "start": 670,
@@ -1948,11 +2409,77 @@
                         "    def testGetRecordPositionWithCRLF(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetRecordPositionWithCRLF(self) -> None:",
+                        "        ",
+                        "        lineSeparator = CRLF",
+                        "",
+                        "        nl = lineSeparator  # used as linebreak in values for better distinction",
+                        "",
+                        "        code = \"a,b,c\" + lineSeparator + \\",
+                        "               \"1,2,3\" + lineSeparator + \\",
+                        "               \"'A\" + nl + \\",
+                        "               \"A','B\" + nl + \\",
+                        "               \"B',CC\" + lineSeparator + \\",
+                        "               \"\\u00c4,\\u00d6,\\u00dc\" + lineSeparator + \\",
+                        "               \"EOF,EOF,EOF\"",
+                        "",
+                        "        format = CSVFormat.newFormat(',').withQuote0('\\'').withRecordSeparator1(lineSeparator)",
+                        "        parser = CSVParser.parse4(code, format)",
+                        "",
+                        "        record = None",
+                        "        self.assertEqual(0, parser.getRecordNumber())",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(1, record.getRecordNumber())",
+                        "        self.assertEqual(code.index('a'), record.getCharacterPosition())",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(2, record.getRecordNumber())",
+                        "        self.assertEqual(code.index('1'), record.getCharacterPosition())",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        positionRecord3 = record.getCharacterPosition()",
+                        "        self.assertEqual(3, record.getRecordNumber())",
+                        "        self.assertEqual(code.index(\"'A\"), record.getCharacterPosition())",
+                        "        self.assertEqual(\"A\" + lineSeparator + \"A\", record.get1(0))",
+                        "        self.assertEqual(\"B\" + lineSeparator + \"B\", record.get1(1))",
+                        "        self.assertEqual(\"CC\", record.get1(2))",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(4, record.getRecordNumber())",
+                        "        self.assertEqual(code.index('\\u00c4'), record.getCharacterPosition())",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(5, record.getRecordNumber())",
+                        "        self.assertEqual(code.index(\"EOF\"), record.getCharacterPosition())",
+                        "",
+                        "        parser.close()",
+                        "",
+                        "        parser = CSVParser(io.StringIO(code[positionRecord3:]), format, positionRecord3, 3)",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(3, record.getRecordNumber())",
+                        "        self.assertEqual(code.index(\"'A\"), record.getCharacterPosition())",
+                        "        self.assertEqual(\"A\" + lineSeparator + \"A\", record.get1(0))",
+                        "        self.assertEqual(\"B\" + lineSeparator + \"B\", record.get1(1))",
+                        "        self.assertEqual(\"CC\", record.get1(2))",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(4, record.getRecordNumber())",
+                        "        self.assertEqual(code.index('\\u00c4'), record.getCharacterPosition())",
+                        "        self.assertEqual(\"\\u00c4\", record.get1(0))",
+                        "",
+                        "        parser.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 42.75702738761902,
+                    "generation_timestamp": "2024-06-19T23:28:01.367135",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "665-667:testGetRecordNumberWithLF": {
                     "start": 665,
@@ -1988,11 +2515,19 @@
                         "    def testGetRecordNumberWithLF(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetRecordNumberWithLF(self) -> None:",
+                        "        ",
+                        "        self.__validateRecordNumbers(os.linesep)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.258437871932983,
+                    "generation_timestamp": "2024-06-19T23:28:23.354223",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "660-662:testGetRecordNumberWithCRLF": {
                     "start": 660,
@@ -2028,11 +2563,19 @@
                         "    def testGetRecordNumberWithCRLF(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetRecordNumberWithCRLF(self) -> None:",
+                        "        ",
+                        "        self.__validateRecordNumbers(CRLF)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.552381753921509,
+                    "generation_timestamp": "2024-06-19T23:28:26.929046",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "655-657:testGetRecordNumberWithCR": {
                     "start": 655,
@@ -2068,11 +2611,19 @@
                         "    def testGetRecordNumberWithCR(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetRecordNumberWithCR(self) -> None:",
+                        "        ",
+                        "        self.__validateRecordNumbers(String.valueOf(CR))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.6403262615203857,
+                    "generation_timestamp": "2024-06-19T23:28:30.585199",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "639-652:testGetOneLineOneParser": {
                     "start": 639,
@@ -2134,11 +2685,28 @@
                         "    def testGetOneLineOneParser(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetOneLineOneParser(self) -> None:",
+                        "        ",
+                        "        format = CSVFormat.DEFAULT",
+                        "        with io.PipedWriter() as writer, CSVParser.CSVParser1(io.PipedReader(writer), format) as parser:",
+                        "            writer.write(self.__CSV_INPUT_1)",
+                        "            writer.write(format.getRecordSeparator())",
+                        "            record1 = parser.nextRecord()",
+                        "            self.assertListEqual(self.__RESULT[0], record1.values())",
+                        "            writer.write(self.__CSV_INPUT_2)",
+                        "            writer.write(format.getRecordSeparator())",
+                        "            record2 = parser.nextRecord()",
+                        "            self.assertListEqual(self.__RESULT[1], record2.values())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.91651463508606,
+                    "generation_timestamp": "2024-06-19T23:20:18.691630",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "625-630:testGetOneLine": {
                     "start": 625,
@@ -2187,11 +2755,24 @@
                         "    def testGetOneLine(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetOneLine(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            parser = CSVParser.parse4(self.__CSV_INPUT_1, CSVFormat.DEFAULT)",
+                        "            record = parser.getRecords()[0]",
+                        "            self.assertListEqual(self.__RESULT[0], record.values())",
+                        "        except Exception as e:",
+                        "            self.fail(\"testGetOneLine failed with exception: \" + str(e))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.217104434967041,
+                    "generation_timestamp": "2024-06-19T23:20:29.928261",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "620-622:testGetLineNumberWithLF": {
                     "start": 620,
@@ -2227,11 +2808,19 @@
                         "    def testGetLineNumberWithLF(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetLineNumberWithLF(self) -> None:",
+                        "        ",
+                        "        self.__validateLineNumbers(LF)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.1760568618774414,
+                    "generation_timestamp": "2024-06-19T23:28:54.600465",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "615-617:testGetLineNumberWithCRLF": {
                     "start": 615,
@@ -2267,11 +2856,19 @@
                         "    def testGetLineNumberWithCRLF(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetLineNumberWithCRLF(self) -> None:",
+                        "        ",
+                        "        self.__validateLineNumbers(CRLF)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.5026841163635254,
+                    "generation_timestamp": "2024-06-19T23:28:58.137124",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "610-612:testGetLineNumberWithCR": {
                     "start": 610,
@@ -2307,11 +2904,19 @@
                         "    def testGetLineNumberWithCR(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetLineNumberWithCR(self) -> None:",
+                        "        ",
+                        "        self.__validateLineNumbers(String.valueOf(CR))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.89061188697815,
+                    "generation_timestamp": "2024-06-19T23:29:13.058827",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "598-607:testGetLine": {
                     "start": 598,
@@ -2369,11 +2974,23 @@
                         "    def testGetLine(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetLine(self) -> None:",
+                        "        ",
+                        "        with CSVParser.parse4(self.__CSV_INPUT, CSVFormat.DEFAULT.withIgnoreSurroundingSpaces0()) as parser:",
+                        "            for re in self.__RESULT:",
+                        "                self.assertListEqual(re, parser.nextRecord().values())",
+                        "",
+                        "            self.assertIsNone(parser.nextRecord())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.125157833099365,
+                    "generation_timestamp": "2024-06-19T23:20:40.084321",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "583-595:testForEach": {
                     "start": 583,
@@ -2424,11 +3041,27 @@
                         "    def testForEach(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testForEach(self) -> None:",
+                        "        ",
+                        "        with io.StringIO(\"a,b,c\\n1,2,3\\nx,y,z\") as in_file:",
+                        "            parser = CSVFormat.DEFAULT.parse(in_file)",
+                        "            records = []",
+                        "            for record in parser:",
+                        "                records.append(record)",
+                        "            self.assertEqual(3, len(records))",
+                        "            self.assertListEqual([\"a\", \"b\", \"c\"], records[0].values())",
+                        "            self.assertListEqual([\"1\", \"2\", \"3\"], records[1].values())",
+                        "            self.assertListEqual([\"x\", \"y\", \"z\"], records[2].values())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.691731691360474,
+                    "generation_timestamp": "2024-06-19T23:20:52.796335",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "573-580:testFirstEndOfLineLf": {
                     "start": 573,
@@ -2479,11 +3112,24 @@
                         "    def testFirstEndOfLineLf(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testFirstEndOfLineLf(self) -> None:",
+                        "        ",
+                        "        data = \"foo\\nbaar,\\nhello,world\\n,kanu\"",
+                        "        ",
+                        "        with CSVParser.parse4(data, CSVFormat.DEFAULT) as parser:",
+                        "            records = parser.getRecords()",
+                        "            self.assertEqual(4, len(records))",
+                        "            self.assertEqual(\"\\n\", parser.getFirstEndOfLine())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.296830654144287,
+                    "generation_timestamp": "2024-06-19T23:21:10.109388",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "563-570:testFirstEndOfLineCrLf": {
                     "start": 563,
@@ -2534,11 +3180,24 @@
                         "    def testFirstEndOfLineCrLf(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testFirstEndOfLineCrLf(self) -> None:",
+                        "        ",
+                        "        data = \"foo\\r\\nbaar,\\r\\nhello,world\\r\\n,kanu\"",
+                        "        ",
+                        "        with CSVParser.parse4(data, CSVFormat.DEFAULT) as parser:",
+                        "            records = parser.getRecords()",
+                        "            self.assertEqual(4, len(records))",
+                        "            self.assertEqual(\"\\r\\n\", parser.getFirstEndOfLine())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.781565189361572,
+                    "generation_timestamp": "2024-06-19T23:21:26.914836",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "553-560:testFirstEndOfLineCr": {
                     "start": 553,
@@ -2589,11 +3248,26 @@
                         "    def testFirstEndOfLineCr(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testFirstEndOfLineCr(self) -> None:",
+                        "        ",
+                        "        data = \"foo\\rbaar,\\rhello,world\\r,kanu\"",
+                        "        try:",
+                        "            parser = CSVParser.parse4(data, CSVFormat.DEFAULT)",
+                        "            records = parser.getRecords()",
+                        "            self.assertEqual(4, len(records))",
+                        "            self.assertEqual(\"\\r\", parser.getFirstEndOfLine())",
+                        "        finally:",
+                        "            parser.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.55642318725586,
+                    "generation_timestamp": "2024-06-19T23:21:37.500888",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "535-546:testExcelFormat2": {
                     "start": 535,
@@ -2648,11 +3322,29 @@
                         "    def testExcelFormat2(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testExcelFormat2(self) -> None:",
+                        "        ",
+                        "        code = \"foo,baar\\r\\n\\r\\nhello,\\r\\n\\r\\nworld,\\r\\n\"",
+                        "        res = [[\"foo\", \"baar\"], [\"\"], [\"hello\", \"\"], [\"\"], [\"world\", \"\"]]",
+                        "        ",
+                        "        with CSVParser.parse4(code, CSVFormat.EXCEL) as parser:",
+                        "            records = parser.getRecords()",
+                        "            ",
+                        "            self.assertEqual(len(res), len(records))",
+                        "            self.assertFalse(not records)",
+                        "            ",
+                        "            for i in range(len(res)):",
+                        "                self.assertListEqual(res[i], records[i].values())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.777397155761719,
+                    "generation_timestamp": "2024-06-19T23:21:51.297826",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "513-532:testExcelFormat1": {
                     "start": 513,
@@ -2715,11 +3407,33 @@
                         "    def testExcelFormat1(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testExcelFormat1(self) -> None:",
+                        "        ",
+                        "        code = \"value1,value2,value3,value4\\r\\na,b,c,d\\r\\n  x,,,\\r\\n\\r\\n\\\"\\\"\\\"hello\\\"\\\"\\\",\\\"  \\\"\\\"world\\\"\\\"\\\",\\\"abc\\ndef\\\",\\r\\n\"",
+                        "        res = [",
+                        "            [\"value1\", \"value2\", \"value3\", \"value4\"],",
+                        "            [\"a\", \"b\", \"c\", \"d\"],",
+                        "            [\"  x\", \"\", \"\", \"\"],",
+                        "            [\"\"],",
+                        "            [\"\\\"hello\\\"\", \"  \\\"world\\\"\", \"abc\\ndef\", \"\"]",
+                        "        ]",
+                        "        ",
+                        "        with CSVParser.parse4(code, CSVFormat.EXCEL) as parser:",
+                        "            records = parser.getRecords()",
+                        "            self.assertEqual(len(res), len(records))",
+                        "            self.assertFalse(not records)",
+                        "            for i in range(len(res)):",
+                        "                self.assertListEqual(res[i], records[i].values())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 23.1979718208313,
+                    "generation_timestamp": "2024-06-19T23:22:14.511637",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "483-510:testEndOfFileBehaviorExcel": {
                     "start": 483,
@@ -2790,11 +3504,41 @@
                         "    def testEndOfFileBehaviorExcel(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEndOfFileBehaviorExcel(self) -> None:",
+                        "        ",
+                        "        codes = [",
+                        "            \"hello,\\r\\n\\r\\nworld,\\r\\n\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\\\"\\\"\\r\\n\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\\\"\\\"\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\\n\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\\\"\\\"\\n\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\\\"\\\"\"",
+                        "        ]",
+                        "        res = [",
+                        "            [\"hello\", \"\"],",
+                        "            [\"\"], # Excel format does not ignore empty lines",
+                        "            [\"world\", \"\"]",
+                        "        ]",
+                        "",
+                        "        for code in codes:",
+                        "            with CSVParser.parse4(code, CSVFormat.EXCEL) as parser:",
+                        "                records = parser.getRecords()",
+                        "                self.assertEqual(len(res), len(records))",
+                        "                self.assertFalse(not records)",
+                        "                for i, record in enumerate(records):",
+                        "                    self.assertEqual(res[i], record.values())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.649595737457275,
+                    "generation_timestamp": "2024-06-19T23:22:32.195991",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "455-480:testEndOfFileBehaviorCSV": {
                     "start": 455,
@@ -2863,11 +3607,39 @@
                         "    def testEndOfFileBehaviorCSV(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEndOfFileBehaviorCSV(self) -> None:",
+                        "        ",
+                        "        codes = [",
+                        "            \"hello,\\r\\n\\r\\nworld,\\r\\n\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\\\"\\\"\\r\\n\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\\\"\\\"\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\\n\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\\\"\\\"\\n\",",
+                        "            \"hello,\\r\\n\\r\\nworld,\\\"\\\"\"",
+                        "        ]",
+                        "        res = [",
+                        "            [\"hello\", \"\"],",
+                        "            [\"world\", \"\"]",
+                        "        ]",
+                        "        for code in codes:",
+                        "            with CSVParser.parse4(code, CSVFormat.DEFAULT) as parser:",
+                        "                records = parser.getRecords()",
+                        "                self.assertEqual(len(res), len(records))",
+                        "                self.assertFalse(not records)",
+                        "                for i, record in enumerate(records):",
+                        "                    self.assertEqual(res[i], record.values())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.01283073425293,
+                    "generation_timestamp": "2024-06-19T23:22:53.224958",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "448-452:testEmptyString": {
                     "start": 448,
@@ -2910,11 +3682,23 @@
                         "    def testEmptyString(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEmptyString(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            with CSVParser.parse4(\"\", CSVFormat.DEFAULT) as parser:",
+                        "                assert parser.nextRecord() is None",
+                        "        except Exception as e:",
+                        "            print(f\"An error occurred: {e}\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.432240962982178,
+                    "generation_timestamp": "2024-06-19T23:22:59.673065",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "426-445:testEmptyLineBehaviorExcel": {
                     "start": 426,
@@ -2977,11 +3761,33 @@
                         "    def testEmptyLineBehaviorExcel(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEmptyLineBehaviorExcel(self) -> None:",
+                        "        ",
+                        "        codes = [",
+                        "            \"hello,\\r\\n\\r\\n\\r\\n\", \"hello,\\n\\n\\n\", \"hello,\\\"\\\"\\r\\n\\r\\n\\r\\n\", \"hello,\\\"\\\"\\n\\n\\n\"",
+                        "        ]",
+                        "        res = [",
+                        "            [\"hello\", \"\"],",
+                        "            [\"\"], # Excel format does not ignore empty lines",
+                        "            [\"\"]",
+                        "        ]",
+                        "        for code in codes:",
+                        "            with CSVParser.parse4(code, CSVFormat.EXCEL) as parser:",
+                        "                records = parser.getRecords()",
+                        "                self.assertEqual(len(res), len(records))",
+                        "                self.assertFalse(not records)",
+                        "                for i in range(len(res)):",
+                        "                    self.assertListEqual(res[i], records[i].values())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.701746225357056,
+                    "generation_timestamp": "2024-06-19T23:23:14.398399",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "406-423:testEmptyLineBehaviorCSV": {
                     "start": 406,
@@ -3042,11 +3848,31 @@
                         "    def testEmptyLineBehaviorCSV(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEmptyLineBehaviorCSV(self) -> None:",
+                        "        ",
+                        "        codes = [",
+                        "            \"hello,\\r\\n\\r\\n\\r\\n\", \"hello,\\n\\n\\n\", \"hello,\\\"\\\"\\r\\n\\r\\n\\r\\n\", \"hello,\\\"\\\"\\n\\n\\n\"",
+                        "        ]",
+                        "        res = [",
+                        "            [\"hello\", \"\"] ",
+                        "        ]",
+                        "        for code in codes:",
+                        "            with CSVParser.parse4(code, CSVFormat.DEFAULT) as parser:",
+                        "                records = parser.getRecords()",
+                        "                self.assertEqual(len(res), len(records))",
+                        "                self.assertFalse(not records)",
+                        "                for i in range(len(res)):",
+                        "                    self.assertListEqual(res[i], records[i].values())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.175688982009888,
+                    "generation_timestamp": "2024-06-19T23:23:28.594187",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "395-403:testEmptyFile": {
                     "start": 395,
@@ -3093,11 +3919,26 @@
                         "    def testEmptyFile(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEmptyFile(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            with CSVParser.parse2(",
+                        "                    pathlib.Path(\"src/test/resources/org/apache/commons/csv/empty.txt\"),",
+                        "                    StandardCharsets.UTF_8.name,",
+                        "                    CSVFormat.DEFAULT) as parser:",
+                        "                assert parser.nextRecord() is None",
+                        "        except Exception as e:",
+                        "            print(f\"An error occurred: {e}\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 23.896467208862305,
+                    "generation_timestamp": "2024-06-19T23:23:52.505894",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "363-392:testDefaultFormat": {
                     "start": 363,
@@ -3180,11 +4021,45 @@
                         "    def testDefaultFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDefaultFormat(self) -> None:",
+                        "        ",
+                        "        code = (",
+                        "            \"\"",
+                        "            + \"a,b#\\n\"  # 1)",
+                        "            + \"\\\"\\n\\\",\\\" \\\",#\\n\"  # 2)",
+                        "            + \"#,\\\"\\\"\\n\"  # 3)",
+                        "            + \"# Final comment\\n\"  # 4)",
+                        "        )",
+                        "        res = [[\"a\", \"b#\"], [\"\\n\", \" \", \"#\"], [\"#\", \"\"], [\"# Final comment\"]]",
+                        "",
+                        "        format = CSVFormat.DEFAULT",
+                        "        assert not format.isCommentMarkerSet()",
+                        "        res_comments = [",
+                        "            [\"a\", \"b#\"], [\"\\n\", \" \", \"#\"],",
+                        "        ]",
+                        "",
+                        "        with CSVParser.parse4(code, format) as parser:",
+                        "            records = parser.getRecords()",
+                        "            assert len(records) != 0",
+                        "",
+                        "            Utils.compare(\"Failed to parse without comments\", res, records)",
+                        "",
+                        "            format = format.withCommentMarker0('#')",
+                        "",
+                        "        with CSVParser.parse4(code, format) as parser:",
+                        "            records = parser.getRecords()",
+                        "",
+                        "            Utils.compare(\"Failed to parse with comments\", res_comments, records)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.143132209777832,
+                    "generation_timestamp": "2024-06-19T23:24:10.697161",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "354-360:testCSV57": {
                     "start": 354,
@@ -3229,11 +4104,25 @@
                         "    def testCSV57(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCSV57(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            parser = CSVParser.parse4(\"\", CSVFormat.DEFAULT)",
+                        "            list = parser.getRecords()",
+                        "            assert list is not None",
+                        "            assert len(list) == 0",
+                        "        finally:",
+                        "            parser.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.977109909057617,
+                    "generation_timestamp": "2024-06-19T23:24:25.702519",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "340-351:testCSV235": {
                     "start": 340,
@@ -3293,11 +4182,27 @@
                         "    def testCSV235(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCSV235(self) -> None:",
+                        "        ",
+                        "        dqString = \"\\\"aaa\\\",\\\"b\\\"\\\"bb\\\",\\\"ccc\\\"\"  # \"aaa\",\"b\"\"bb\",\"ccc\"",
+                        "        parser = CSVFormat.RFC4180.parse(io.StringIO(dqString))",
+                        "        records = parser.iterator()",
+                        "        record = next(records)",
+                        "        self.assertFalse(records.hasNext())",
+                        "        self.assertEqual(3, record.size())",
+                        "        self.assertEqual(\"aaa\", record.get1(0))",
+                        "        self.assertEqual(\"b\\\"bb\", record.get1(1))",
+                        "        self.assertEqual(\"ccc\", record.get1(2))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.55005192756653,
+                    "generation_timestamp": "2024-06-19T23:24:44.277287",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "335-337:testCSV141RFC4180": {
                     "start": 335,
@@ -3333,11 +4238,19 @@
                         "    def testCSV141RFC4180(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCSV141RFC4180(self) -> None:",
+                        "        ",
+                        "        self.__testCSV141Failure(CSVFormat.RFC4180, 3)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 65.97287797927856,
+                    "generation_timestamp": "2024-06-19T23:36:58.458849",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "268-270:testCSV141Excel": {
                     "start": 268,
@@ -3349,7 +4262,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Disabled"
+                        "Disabled(\"PR 295 does not work\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -3373,11 +4287,19 @@
                         "    def testCSV141Excel(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCSV141Excel(self) -> None:",
+                        "        ",
+                        "        self.__testCSV141Ok(CSVFormat.EXCEL)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.259203672409058,
+                    "generation_timestamp": "2024-06-19T23:29:55.469007",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "262-264:testCSV141CSVFormat_POSTGRESQL_CSV": {
                     "start": 262,
@@ -3413,11 +4335,19 @@
                         "    def testCSV141CSVFormat_POSTGRESQL_CSV(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCSV141CSVFormat_POSTGRESQL_CSV(self) -> None:",
+                        "        ",
+                        "        self.__testCSV141Failure(CSVFormat.POSTGRESQL_CSV, 3)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.4243950843811035,
+                    "generation_timestamp": "2024-06-19T23:37:02.897768",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "257-259:testCSV141CSVFormat_ORACLE": {
                     "start": 257,
@@ -3453,11 +4383,19 @@
                         "    def testCSV141CSVFormat_ORACLE(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCSV141CSVFormat_ORACLE(self) -> None:",
+                        "        ",
+                        "        self.__testCSV141Failure(CSVFormat.ORACLE, 2)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.7742228507995605,
+                    "generation_timestamp": "2024-06-19T23:37:07.699466",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "252-254:testCSV141CSVFormat_INFORMIX_UNLOAD_CSV": {
                     "start": 252,
@@ -3493,11 +4431,19 @@
                         "    def testCSV141CSVFormat_INFORMIX_UNLOAD_CSV(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCSV141CSVFormat_INFORMIX_UNLOAD_CSV(self) -> None:",
+                        "        ",
+                        "        self.__testCSV141Failure(CSVFormat.INFORMIX_UNLOAD_CSV, 3)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.680874586105347,
+                    "generation_timestamp": "2024-06-19T23:37:12.389603",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "247-249:testCSV141CSVFormat_INFORMIX_UNLOAD": {
                     "start": 247,
@@ -3533,11 +4479,19 @@
                         "    def testCSV141CSVFormat_INFORMIX_UNLOAD(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCSV141CSVFormat_INFORMIX_UNLOAD(self) -> None:",
+                        "        ",
+                        "        self.__testCSV141Failure(CSVFormat.INFORMIX_UNLOAD, 1)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.973186731338501,
+                    "generation_timestamp": "2024-06-19T23:37:16.378547",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "242-244:testCSV141CSVFormat_DEFAULT": {
                     "start": 242,
@@ -3573,11 +4527,41 @@
                         "    def testCSV141CSVFormat_DEFAULT(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCSV141CSVFormat_DEFAULT(self) -> None:",
+                        "        ",
+                        "        path = pathlib.Path(\"src/test/resources/org/apache/commons/csv/CSV-141/csv-141.csv\")",
+                        "        with path.open('r', encoding=StandardCharsets.UTF_8.name) as file:",
+                        "            parser = CSVParser.parse2(path, StandardCharsets.UTF_8.name, CSVFormat.DEFAULT)",
+                        "            record = self.__testCSV141Failure(parser, 3)",
+                        "            if record is None:",
+                        "                return  # expected failure",
+                        "            assert record.get(0) == \"1414770317901\"",
+                        "            assert record.get(1) == \"android.widget.EditText\"",
+                        "            assert record.get(2) == \"pass sem1 _84*|*\"",
+                        "            assert record.get(3) == \"0\"",
+                        "            assert record.get(4) == \"pass sem1 _8\"",
+                        "            assert record.size() == 5",
+                        "            record = self.__testCSV141Failure(parser, 3)",
+                        "            if record is None:",
+                        "                return  # expected failure",
+                        "            assert record.get(0) == \"1414770318470\"",
+                        "            assert record.get(1) == \"android.widget.EditText\"",
+                        "            assert record.get(2) == \"pass sem1 _84:|\"",
+                        "            assert record.get(3) == \"0\"",
+                        "            assert record.get(4) == \"pass sem1 _84:\\\\\"",
+                        "            assert record.size() == 5",
+                        "            with pytest.raises(IOException):",
+                        "                parser.nextRecord()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.5032217502594,
+                    "generation_timestamp": "2024-06-19T23:37:37.895841",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "233-239:testCarriageReturnLineFeedEndings": {
                     "start": 233,
@@ -3622,11 +4606,26 @@
                         "    def testCarriageReturnLineFeedEndings(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCarriageReturnLineFeedEndings(self) -> None:",
+                        "        ",
+                        "        code = \"foo\\r\\nbaar,\\r\\nhello,world\\r\\n,kanu\"",
+                        "        ",
+                        "        try:",
+                        "            parser = CSVParser.parse4(code, CSVFormat.DEFAULT)",
+                        "            records = parser.getRecords()",
+                        "            self.assertEqual(4, len(records))",
+                        "        finally:",
+                        "            parser.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 25.127989530563354,
+                    "generation_timestamp": "2024-06-19T23:25:09.421160",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "224-230:testCarriageReturnEndings": {
                     "start": 224,
@@ -3671,11 +4670,25 @@
                         "    def testCarriageReturnEndings(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCarriageReturnEndings(self) -> None:",
+                        "        ",
+                        "        code = \"foo\\rbaar,\\rhello,world\\r,kanu\"",
+                        "        try:",
+                        "            parser = CSVParser.parse4(code, CSVFormat.DEFAULT)",
+                        "            records = parser.getRecords()",
+                        "            self.assertEqual(4, len(records))",
+                        "        finally:",
+                        "            parser.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.974315404891968,
+                    "generation_timestamp": "2024-06-19T23:25:28.422375",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "191-221:testBackslashEscapingOld": {
                     "start": 191,
@@ -3715,7 +4728,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Disabled"
+                        "Disabled",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -3749,11 +4763,47 @@
                         "    def testBackslashEscapingOld(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testBackslashEscapingOld(self) -> None:",
+                        "        ",
+                        "        code = \"one,two,three\\n\" \\",
+                        "               \"on\\\\\\\"e,two\\n\" \\",
+                        "               \"on\\\"e,two\\n\" \\",
+                        "               \"one,\\\"tw\\\\\\\"o\\\"\\n\" \\",
+                        "               \"one,\\\"t\\\\,wo\\\"\\n\" \\",
+                        "               \"one,two,\\\"th,ree\\\"\\n\" \\",
+                        "               \"\\\"a\\\\\\\\\\\"\\n\" \\",
+                        "               \"a\\\\,b\\n\" \\",
+                        "               \"\\\"a\\\\\\\\,b\\\"\"",
+                        "        res = [",
+                        "            [\"one\", \"two\", \"three\"],",
+                        "            [\"on\\\\\\\"e\", \"two\"],",
+                        "            [\"on\\\"e\", \"two\"],",
+                        "            [\"one\", \"tw\\\"o\"],",
+                        "            [\"one\", \"t\\\\,wo\"],",
+                        "            [\"one\", \"two\", \"th,ree\"],",
+                        "            [\"a\\\\\\\\\"],",
+                        "            [\"a\\\\\", \"b\"],",
+                        "            [\"a\\\\\\\\,b\"]",
+                        "        ]",
+                        "        try:",
+                        "            parser = CSVParser.parse4(code, CSVFormat.DEFAULT)",
+                        "            records = parser.getRecords()",
+                        "            self.assertEqual(len(res), len(records))",
+                        "            self.assertFalse(not records)",
+                        "            for i in range(len(res)):",
+                        "                self.assertListEqual(res[i], records[i].values())",
+                        "        except Exception as e:",
+                        "            self.fail(f\"Unexpected exception raised: {str(e)}\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.54533076286316,
+                    "generation_timestamp": "2024-06-19T23:25:48.984626",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "161-187:testBackslashEscaping2": {
                     "start": 161,
@@ -3843,11 +4893,38 @@
                         "    def testBackslashEscaping2(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testBackslashEscaping2(self) -> None:",
+                        "        ",
+                        "        code = \"\\n\" \\",
+                        "               \" , , \\n\" \\",
+                        "               \" \\t ,  , \\n\" \\",
+                        "               \" // , /, , /,\\n\"",
+                        "        res = [",
+                        "            [\" \", \" \", \" \"],",
+                        "            [\" \\t \", \"  \", \" \"],",
+                        "            [\" / \", \" , \", \" ,\"],",
+                        "        ]",
+                        "",
+                        "        format = CSVFormat.newFormat(',') \\",
+                        "            .withRecordSeparator1(CRLF) \\",
+                        "            .withEscape0('/') \\",
+                        "            .withIgnoreEmptyLines0()",
+                        "",
+                        "        with CSVParser.parse4(code, format) as parser:",
+                        "            records = parser.getRecords()",
+                        "            self.assertFalse(not records)",
+                        "",
+                        "            Utils.compare(\"\", res, records)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.459174871444702,
+                    "generation_timestamp": "2024-06-19T23:26:09.496697",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "118-158:testBackslashEscaping": {
                     "start": 118,
@@ -3956,11 +5033,56 @@
                         "    def testBackslashEscaping(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testBackslashEscaping(self) -> None:",
+                        "        ",
+                        "        code = (",
+                        "            \"one,two,three\\n\" ",
+                        "            + \"''\\n\" ",
+                        "            + \"'/',/\\n\" ",
+                        "            + \"'/',/'\\n\" ",
+                        "            + \"''''\\n\" ",
+                        "            + \"/,,/\\n\" ",
+                        "            + \"//,//\\n\" ",
+                        "            + \"'//',//\\n\" ",
+                        "            + \"   8   ,   \\\"quoted \\\"\\\" /\\\" // string\\\"   \\n\" ",
+                        "            + \"9,   /\\n   \\n\" ",
+                        "        )",
+                        "        res = [",
+                        "            [\"one\", \"two\", \"three\"], ",
+                        "            [\"\", \"\"], ",
+                        "            [\"'\", \"'\"], ",
+                        "            [\"'\", \"'\"], ",
+                        "            [\"'\", \"'\"], ",
+                        "            [\",\", \",\"], ",
+                        "            [\"/\", \"/\"], ",
+                        "            [\"/\", \"/\"], ",
+                        "            [\"   8   \", \"   \\\"quoted \\\"\\\" /\\\" / string\\\"   \"],",
+                        "            [\"9\", \"   \\n   \"],",
+                        "        ]",
+                        "",
+                        "        format = (",
+                        "            CSVFormat.newFormat(',')",
+                        "            .withQuote0('\\'')",
+                        "            .withRecordSeparator1(CRLF)",
+                        "            .withEscape0('/')",
+                        "            .withIgnoreEmptyLines0()",
+                        "        )",
+                        "",
+                        "        with CSVParser.parse4(code, format) as parser:",
+                        "            records = parser.getRecords()",
+                        "            assert records, \"Records are empty\"",
+                        "",
+                        "            Utils.compare(\"Records do not match expected result\", res, records)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.01886248588562,
+                    "generation_timestamp": "2024-06-19T23:26:30.571012",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1121-1192:validateRecordPosition": {
                     "start": 1121,
@@ -4115,11 +5237,75 @@
                         "    def __validateRecordPosition(self, lineSeparator: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __validateRecordPosition(self, lineSeparator: str) -> None:",
+                        "        ",
+                        "        nl = lineSeparator  # used as linebreak in values for better distinction",
+                        "",
+                        "        code = \"a,b,c\" + lineSeparator + \\",
+                        "               \"1,2,3\" + lineSeparator + \\",
+                        "               \"'A\" + nl + \\",
+                        "               \"A','B\" + nl + \\",
+                        "               \"B',CC\" + lineSeparator + \\",
+                        "               \"\\u00c4,\\u00d6,\\u00dc\" + lineSeparator + \\",
+                        "               \"EOF,EOF,EOF\"",
+                        "",
+                        "        format = CSVFormat.newFormat(',').withQuote0('\\'').withRecordSeparator1(lineSeparator)",
+                        "        parser = CSVParser.parse4(code, format)",
+                        "",
+                        "        record = None",
+                        "        self.assertEqual(0, parser.getRecordNumber())",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(1, record.getRecordNumber())",
+                        "        self.assertEqual(code.index('a'), record.getCharacterPosition())",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(2, record.getRecordNumber())",
+                        "        self.assertEqual(code.index('1'), record.getCharacterPosition())",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        positionRecord3 = record.getCharacterPosition()",
+                        "        self.assertEqual(3, record.getRecordNumber())",
+                        "        self.assertEqual(code.index(\"'A\"), record.getCharacterPosition())",
+                        "        self.assertEqual(\"A\" + lineSeparator + \"A\", record.get1(0))",
+                        "        self.assertEqual(\"B\" + lineSeparator + \"B\", record.get1(1))",
+                        "        self.assertEqual(\"CC\", record.get1(2))",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(4, record.getRecordNumber())",
+                        "        self.assertEqual(code.index('\\u00c4'), record.getCharacterPosition())",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(5, record.getRecordNumber())",
+                        "        self.assertEqual(code.index(\"EOF\"), record.getCharacterPosition())",
+                        "",
+                        "        parser.close()",
+                        "",
+                        "        parser = CSVParser(io.StringIO(code[positionRecord3:]), format, positionRecord3, 3)",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(3, record.getRecordNumber())",
+                        "        self.assertEqual(code.index(\"'A\"), record.getCharacterPosition())",
+                        "        self.assertEqual(\"A\" + lineSeparator + \"A\", record.get1(0))",
+                        "        self.assertEqual(\"B\" + lineSeparator + \"B\", record.get1(1))",
+                        "        self.assertEqual(\"CC\", record.get1(2))",
+                        "",
+                        "        self.assertIsNotNone(record = parser.nextRecord())",
+                        "        self.assertEqual(4, record.getRecordNumber())",
+                        "        self.assertEqual(code.index('\\u00c4'), record.getCharacterPosition())",
+                        "        self.assertEqual(\"\\u00c4\", record.get1(0))",
+                        "",
+                        "        parser.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 42.780298948287964,
+                    "generation_timestamp": "2024-06-19T23:27:13.391419",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1100-1119:validateRecordNumbers": {
                     "start": 1100,
@@ -4192,11 +5378,35 @@
                         "    def __validateRecordNumbers(self, lineSeparator: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __validateRecordNumbers(self, lineSeparator: str) -> None:",
+                        "        ",
+                        "        with CSVParser.parse4(",
+                        "                \"a\" + lineSeparator + \"b\" + lineSeparator + \"c\",",
+                        "                CSVFormat.DEFAULT.withRecordSeparator1(lineSeparator)) as parser:",
+                        "            ",
+                        "            record = None",
+                        "            self.assertEqual(0, parser.getRecordNumber())",
+                        "            self.assertIsNotNone(record = parser.nextRecord())",
+                        "            self.assertEqual(1, record.getRecordNumber())",
+                        "            self.assertEqual(1, parser.getRecordNumber())",
+                        "            self.assertIsNotNone(record = parser.nextRecord())",
+                        "            self.assertEqual(2, record.getRecordNumber())",
+                        "            self.assertEqual(2, parser.getRecordNumber())",
+                        "            self.assertIsNotNone(record = parser.nextRecord())",
+                        "            self.assertEqual(3, record.getRecordNumber())",
+                        "            self.assertEqual(3, parser.getRecordNumber())",
+                        "            self.assertIsNone(record = parser.nextRecord())",
+                        "            self.assertEqual(3, parser.getRecordNumber())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.66137981414795,
+                    "generation_timestamp": "2024-06-19T23:28:19.068908",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1083-1098:validateLineNumbers": {
                     "start": 1083,
@@ -4260,11 +5470,31 @@
                         "    def __validateLineNumbers(self, lineSeparator: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __validateLineNumbers(self, lineSeparator: str) -> None:",
+                        "        ",
+                        "        with CSVParser.parse4(",
+                        "                \"a\" + lineSeparator + \"b\" + lineSeparator + \"c\",",
+                        "                CSVFormat.DEFAULT.withRecordSeparator1(lineSeparator)) as parser:",
+                        "            ",
+                        "            assert parser.getCurrentLineNumber() == 0",
+                        "            assert parser.nextRecord() is not None",
+                        "            assert parser.getCurrentLineNumber() == 1",
+                        "            assert parser.nextRecord() is not None",
+                        "            assert parser.getCurrentLineNumber() == 2",
+                        "            assert parser.nextRecord() is not None",
+                        "            assert parser.getCurrentLineNumber() == 3",
+                        "            assert parser.nextRecord() is None",
+                        "            assert parser.getCurrentLineNumber() == 3"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.78135657310486,
+                    "generation_timestamp": "2024-06-19T23:28:51.391378",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "301-332:testCSV141Ok": {
                     "start": 301,
@@ -4344,11 +5574,50 @@
                         "    def __testCSV141Ok(self, format: CSVFormat) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __testCSV141Ok(self, format: CSVFormat) -> None:",
+                        "        ",
+                        "        path = pathlib.Path(\"src/test/resources/org/apache/commons/csv/CSV-141/csv-141.csv\")",
+                        "        ",
+                        "        with CSVParser.parse2(path, StandardCharsets.UTF_8.name, format) as parser:",
+                        "            record = parser.nextRecord()",
+                        "            assert record.get1(0) == \"1414770317901\"",
+                        "            assert record.get1(1) == \"android.widget.EditText\"",
+                        "            assert record.get1(2) == \"pass sem1 _84*|*\"",
+                        "            assert record.get1(3) == \"0\"",
+                        "            assert record.get1(4) == \"pass sem1 _8\"",
+                        "            assert record.size() == 5",
+                        "            ",
+                        "            record = parser.nextRecord()",
+                        "            assert record.get1(0) == \"1414770318470\"",
+                        "            assert record.get1(1) == \"android.widget.EditText\"",
+                        "            assert record.get1(2) == \"pass sem1 _84:|\"",
+                        "            assert record.get1(3) == \"0\"",
+                        "            assert record.get1(4) == \"pass sem1 _84:\\\\\"",
+                        "            assert record.size() == 5",
+                        "            ",
+                        "            record = parser.nextRecord()",
+                        "            assert record.get1(0) == \"1414770318327\"",
+                        "            assert record.get1(1) == \"android.widget.EditText\"",
+                        "            assert record.get1(2) == \"pass sem1\"",
+                        "            assert record.size() == 3",
+                        "            ",
+                        "            record = parser.nextRecord()",
+                        "            assert record.get1(0) == \"1414770318628\"",
+                        "            assert record.get1(1) == \"android.widget.EditText\"",
+                        "            assert record.get1(2) == \"pass sem1 _84*|*\"",
+                        "            assert record.get1(3) == \"0\"",
+                        "            assert record.get1(4) == \"pass sem1\"",
+                        "            assert record.size() == 5"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 34.10658121109009,
+                    "generation_timestamp": "2024-06-19T23:29:47.194663",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "272-299:testCSV141Failure": {
                     "start": 272,
@@ -4425,11 +5694,41 @@
                         "    def __testCSV141Failure(self, format: CSVFormat, failParseRecordNo: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __testCSV141Failure(self, format: CSVFormat, failParseRecordNo: int) -> None:",
+                        "        ",
+                        "        path = pathlib.Path(\"src/test/resources/org/apache/commons/csv/CSV-141/csv-141.csv\")",
+                        "        with path.open('r', encoding=StandardCharsets.UTF_8.name) as file:",
+                        "            parser = CSVParser.parse2(path, StandardCharsets.UTF_8.name, format)",
+                        "            record = self.parse(parser, failParseRecordNo)",
+                        "            if record is None:",
+                        "                return  # expected failure",
+                        "            assert record.get1(0) == \"1414770317901\"",
+                        "            assert record.get1(1) == \"android.widget.EditText\"",
+                        "            assert record.get1(2) == \"pass sem1 _84*|*\"",
+                        "            assert record.get1(3) == \"0\"",
+                        "            assert record.get1(4) == \"pass sem1 _8\"",
+                        "            assert record.size() == 5",
+                        "            record = self.parse(parser, failParseRecordNo)",
+                        "            if record is None:",
+                        "                return  # expected failure",
+                        "            assert record.get1(0) == \"1414770318470\"",
+                        "            assert record.get1(1) == \"android.widget.EditText\"",
+                        "            assert record.get1(2) == \"pass sem1 _84:|\"",
+                        "            assert record.get1(3) == \"0\"",
+                        "            assert record.get1(4) == \"pass sem1 _84:\\\\\"",
+                        "            assert record.size() == 5",
+                        "            with pytest.raises(IOException):",
+                        "                parser.nextRecord()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.235559940338135,
+                    "generation_timestamp": "2024-06-19T23:30:48.291264",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "113-115:parseFully": {
                     "start": 113,
@@ -4459,11 +5758,19 @@
                         "    def __parseFully(self, parser: CSVParser) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __parseFully(self, parser: CSVParser) -> None:",
+                        "         for record in parser:",
+                        "             assert record is not None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.02718186378479,
+                    "generation_timestamp": "2024-06-19T23:29:59.512583",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "105-111:parse": {
                     "start": 105,
@@ -4507,11 +5814,64 @@
                         "    def parse(self, parser: CSVParser, failParseRecordNo: int) -> CSVRecord:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def parse(self, parser: CSVParser, failParseRecordNo: int) -> CSVRecord:",
+                        "        ",
+                        "        result = None",
+                        "        parser._CSVParser__recordList.clear()",
+                        "        sb = None",
+                        "        startCharPosition = parser._CSVParser__lexer.getCharacterPosition() + parser._CSVParser__characterOffset",
+                        "        ",
+                        "        while True:",
+                        "            parser._CSVParser__reusableToken.reset()",
+                        "            parser._CSVParser__lexer.nextToken(parser._CSVParser__reusableToken)",
+                        "            ",
+                        "            if parser._CSVParser__reusableToken.type == TOKEN:",
+                        "                self.__addRecordValue(parser, False)",
+                        "            elif parser._CSVParser__reusableToken.type == EORECORD:",
+                        "                self.__addRecordValue(parser, True)",
+                        "            elif parser._CSVParser__reusableToken.type == EOF:",
+                        "                if parser._CSVParser__reusableToken.isReady:",
+                        "                    self.__addRecordValue(parser, True)",
+                        "                elif sb is not None:",
+                        "                    parser._CSVParser__trailerComment = sb.toString()",
+                        "            elif parser._CSVParser__reusableToken.type == INVALID:",
+                        "                raise IOException(",
+                        "                    \"(line \" + self.getCurrentLineNumber() + \") invalid parse sequence\")",
+                        "            elif parser._CSVParser__reusableToken.type == COMMENT: ",
+                        "                if sb is None: ",
+                        "                    sb = StringBuilder()",
+                        "                else:",
+                        "                    sb.append(Constants.LF)",
+                        "                sb.append(parser._CSVParser__reusableToken.content)",
+                        "                parser._CSVParser__reusableToken.type = TOKEN ",
+                        "            else:",
+                        "                raise IllegalStateException(",
+                        "                    \"Unexpected Token type: \" + parser._CSVParser__reusableToken.type)",
+                        "",
+                        "            if parser._CSVParser__reusableToken.type != TOKEN:",
+                        "                break",
+                        "",
+                        "        if parser._CSVParser__recordList:",
+                        "            parser._CSVParser__recordNumber += 1",
+                        "            comment = None if sb is None else sb.toString()",
+                        "            result = CSVRecord(",
+                        "                parser,",
+                        "                parser._CSVParser__recordList.toArray(Constants.EMPTY_STRING_ARRAY),",
+                        "                comment,",
+                        "                parser._CSVParser__recordNumber,",
+                        "                startCharPosition)",
+                        "",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 30.495046615600586,
+                    "generation_timestamp": "2024-06-19T23:30:30.037135",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -4543,12 +5903,27 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __CSV_INPUT_MULTILINE_HEADER_TRAILER_COMMENT: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __CSV_INPUT_MULTILINE_HEADER_TRAILER_COMMENT: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CSV_INPUT_MULTILINE_HEADER_TRAILER_COMMENT: str = \\",
+                        "    \"# multi-line\" + CRLF + \\",
+                        "    \"# header comment\" + CRLF + \\",
+                        "    \"A,B\" + CRLF + \\",
+                        "    \"1,2\" + CRLF + \\",
+                        "    \"# multi-line\" + CRLF + \\",
+                        "    \"# comment\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.924360275268555,
+                    "generation_timestamp": "2024-06-19T21:35:19.258130",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "89-90:CSV_INPUT_HEADER_TRAILER_COMMENT": {
                     "start": 89,
@@ -4568,12 +5943,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __CSV_INPUT_HEADER_TRAILER_COMMENT: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __CSV_INPUT_HEADER_TRAILER_COMMENT: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CSV_INPUT_HEADER_TRAILER_COMMENT: str = \"# header comment\" + CRLF + \"A,B\" + CRLF + \"1,2\" + CRLF + \"# comment\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.424057960510254,
+                    "generation_timestamp": "2024-06-19T21:35:24.703573",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "86-87:CSV_INPUT_HEADER_COMMENT": {
                     "start": 86,
@@ -4593,12 +5977,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __CSV_INPUT_HEADER_COMMENT: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __CSV_INPUT_HEADER_COMMENT: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CSV_INPUT_HEADER_COMMENT: str = \"# header comment\" + CRLF + \"A,B\" + CRLF + \"1,2\" + CRLF"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.6830854415893555,
+                    "generation_timestamp": "2024-06-19T21:35:30.400754",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "84-84:CSV_INPUT_NO_COMMENT": {
                     "start": 84,
@@ -4617,12 +6010,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __CSV_INPUT_NO_COMMENT: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __CSV_INPUT_NO_COMMENT: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CSV_INPUT_NO_COMMENT: str = \"A,B\" + CRLF + \"1,2\" + CRLF"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.923437118530273,
+                    "generation_timestamp": "2024-06-19T21:35:35.339100",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "77-82:RESULT": {
                     "start": 77,
@@ -4646,12 +6048,22 @@
                             "java.lang.String[][]"
                         ]
                     ],
-                    "partial_translation": "    __RESULT: typing.List[typing.List[str]] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __RESULT: typing.List[typing.List[str]] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __RESULT: typing.List[typing.List[str]] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:15:38.565677",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "75-75:CSV_INPUT_2": {
                     "start": 75,
@@ -4670,12 +6082,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __CSV_INPUT_2: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __CSV_INPUT_2: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CSV_INPUT_2: str = \"a,b,1 2\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.586315631866455,
+                    "generation_timestamp": "2024-06-19T21:15:40.166973",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "73-73:CSV_INPUT_1": {
                     "start": 73,
@@ -4694,12 +6115,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __CSV_INPUT_1: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __CSV_INPUT_1: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CSV_INPUT_1: str = \"a,b,c,d\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.676415205001831,
+                    "generation_timestamp": "2024-06-19T21:15:43.861753",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "67-71:CSV_INPUT": {
                     "start": 67,
@@ -4722,12 +6152,24 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __CSV_INPUT: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __CSV_INPUT: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CSV_INPUT: str = \"a,b,c,d\\n\" \\",
+                        "                    \" a , b , 1 2 \\n\" \\",
+                        "                    \"\\\"foo baar\\\", b,\\n\" \\",
+                        "                    \"   \\\"foo\\n,,\\n\\\"\\\",,\\n\\\"\\\"\\\",d,e\\n\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.70198392868042,
+                    "generation_timestamp": "2024-06-19T21:16:00.578970",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "65-65:UTF_8_NAME": {
                     "start": 65,
@@ -4746,12 +6188,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __UTF_8_NAME: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __UTF_8_NAME: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __UTF_8_NAME: str = StandardCharsets.UTF_8.name"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.687110662460327,
+                    "generation_timestamp": "2024-06-19T21:16:06.274237",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "63-63:UTF_8": {
                     "start": 63,
@@ -4770,15 +6221,24 @@
                             "java.nio.charset.Charset"
                         ]
                     ],
-                    "partial_translation": "    __UTF_8: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __UTF_8: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __UTF_8: str = StandardCharsets.UTF_8.name"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.11003565788269,
+                    "generation_timestamp": "2024-06-19T21:16:11.394109",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class CSVParserTest:\n\n"
+            "python_class_declaration": "class CSVParserTest(unittest.TestCase):\n\n"
         },
         "new Executable(...) { ... }": {
             "start": 107,
@@ -4829,11 +6289,14 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import pathlib",
         "import io",
         "import numbers",
         "import typing\nfrom typing import *",
         "import os",
+        "import unittest",
         "from src.main.org.apache.commons.csv.CSVFormat import *",
         "from src.main.org.apache.commons.csv.CSVParser import *",
         "from src.main.org.apache.commons.csv.CSVPrinter import *",

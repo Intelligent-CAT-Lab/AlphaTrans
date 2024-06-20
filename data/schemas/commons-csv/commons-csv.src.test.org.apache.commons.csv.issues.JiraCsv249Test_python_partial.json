@@ -163,15 +163,32 @@
                         "    def testJiraCsv249(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testJiraCsv249(self) -> None:",
+                        "        ",
+                        "        csv_format = CSVFormat.DEFAULT.builder().setEscape0('\\\\').build()",
+                        "        string_writer = io.StringIO()",
+                        "        with CSVPrinter(string_writer, csv_format) as printer:",
+                        "            printer.printRecord1([\"foo \\\\\", \"bar\"])",
+                        "        string_reader = io.StringIO(string_writer.getvalue())",
+                        "        with CSVParser.CSVParser1(string_reader, csv_format) as parser:",
+                        "            records = parser.getRecords()",
+                        "        for record in records:",
+                        "            self.assertEqual(\"foo \\\\\", record.get(0))",
+                        "            self.assertEqual(\"bar\", record.get(1))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.527581214904785,
+                    "generation_timestamp": "2024-06-19T22:39:08.783679",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class JiraCsv249Test:\n\n"
+            "python_class_declaration": "class JiraCsv249Test(unittest.TestCase):\n\n"
         },
         "new Consumer<CSVRecord>(...) { ... }": {
             "start": 48,
@@ -219,7 +236,10 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
+        "import unittest",
         "from src.main.org.apache.commons.csv.CSVFormat import *",
         "from src.main.org.apache.commons.csv.CSVParser import *",
         "from src.main.org.apache.commons.csv.CSVPrinter import *",
