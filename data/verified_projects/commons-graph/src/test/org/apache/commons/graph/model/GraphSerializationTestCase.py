@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
 from src.main.org.apache.commons.graph.builder.AbstractGraphConnection import *
@@ -24,15 +23,12 @@ import unittest
 import pickle
 from typing import *
 import os
-# Imports End
+
 
 class GraphSerializationTestCase(unittest.TestCase):
 
-    # Class Fields Begin
     __FILE_NAME: str = "target/serializedGraph.dat"
-    # Class Fields End
 
-    # Class Methods Begin
 
     @staticmethod
     def __buildGraphConnections() -> GraphConnection:
@@ -161,7 +157,6 @@ class GraphSerializationTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    # Class Methods End
 
 
 class GraphConnectionGraphSerializationTestCaseBuildGraphConnections(AbstractGraphConnection):

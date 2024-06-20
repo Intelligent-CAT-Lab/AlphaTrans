@@ -1,21 +1,15 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.utils.Objects import *
 from src.main.org.apache.commons.graph.utils.Assertions import *
 import typing
 from typing import *
 
-# Imports End
-
 
 class BaseLabeledEdge:
 
-    # Class Fields Begin
     __serialVersionUID: int = -4985890761880816592
-    # Class Fields End
 
-    # Class Methods Begin
     def __init__(self, label: str) -> None:
         self.__label = Assertions.checkNotNull(label, "Argument 'label' must not be null")
 
@@ -42,5 +36,3 @@ class BaseLabeledEdge:
     
     def toString(self) -> str:
         return f"{self.getLabel()}()"
-
-    # Class Methods End

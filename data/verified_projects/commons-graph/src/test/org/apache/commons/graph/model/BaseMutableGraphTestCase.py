@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.test.org.apache.commons.graph.utils.TestRunner import *
 from src.test.org.apache.commons.graph.utils.MultiThreadedTestRunner import *
 from src.test.org.apache.commons.graph.utils.GraphUtils import *
@@ -13,10 +12,9 @@ from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
 import threading
-from BaseLabeledVertex import BaseLabeledVertex
-from BaseLabeledEdge import BaseLabeledEdge
+from src.test.org.apache.commons.graph.model.BaseLabeledVertex import BaseLabeledVertex
+from src.test.org.apache.commons.graph.model.BaseLabeledEdge import BaseLabeledEdge
 
-# Imports End
 
 class BaseMutableGraphTestCase(unittest.TestCase):
 
@@ -293,5 +291,3 @@ class BaseMutableGraphTestCase(unittest.TestCase):
                 self.fail(str(ex))
             
             g.removeEdge(e)
-
-    # Class Methods End

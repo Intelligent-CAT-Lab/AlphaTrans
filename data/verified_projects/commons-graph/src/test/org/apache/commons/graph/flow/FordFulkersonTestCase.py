@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.test.org.apache.commons.graph.model.BaseLabeledWeightedEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -19,7 +18,8 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-# Imports End
+
+
 
 class FordFulkersonTestCase(unittest.TestCase):
 
@@ -116,7 +116,6 @@ class FordFulkersonTestCase(unittest.TestCase):
                 .to(None)\
                 .applyingFordFulkerson(IntegerWeightBaseOperations())
 
-    # Class Methods End
 
 
 class GraphConnectionFordFulkersonTestCaseTestFindMaxFlowAndVerify(AbstractGraphConnection):

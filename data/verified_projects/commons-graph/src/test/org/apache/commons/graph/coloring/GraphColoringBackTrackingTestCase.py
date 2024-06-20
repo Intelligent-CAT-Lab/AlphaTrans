@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -21,14 +20,11 @@ import logging
 from typing import *
 from io import StringIO
 from textwrap import dedent
-# Imports End
 
 class GraphColoringBackTrackingTestCase(AbstractColoringTest):
 
-    # Class Fields Begin
-    # Class Fields End
+    __test__ = True
 
-    # Class Methods Begin
     @pytest.mark.test
     def testCrawnGraph(self) -> None:
         g = UndirectedMutableGrap()
@@ -210,8 +206,6 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest):
             logger.debug(result)
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End
 
 
 class GraphConnectionGraphColoringBackTrackingTestCase(AbstractGraphConnection):

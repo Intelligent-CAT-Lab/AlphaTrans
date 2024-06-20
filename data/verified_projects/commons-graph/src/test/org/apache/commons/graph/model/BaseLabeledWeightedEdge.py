@@ -1,22 +1,19 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.utils.Objects import *
 from src.main.org.apache.commons.graph.utils.Assertions import *
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import BaseLabeledEdge
 import typing
 from typing import *
-# Imports End
 
 W = typing.TypeVar('W')
 
+
 class BaseLabeledWeightedEdge(BaseLabeledEdge, typing.Generic[W]):
 
-    # Class Fields Begin
     __serialVersionUID: int = 5935967858178091436
-    # Class Fields End
 
-    # Class Methods Begin
+    
     def __init__(self, label: str, weight: W) -> None:
         super().__init__(label)
         self.__weight = Assertions.checkNotNull(weight, "Argument 'weight' must not be null")
@@ -48,7 +45,3 @@ class BaseLabeledWeightedEdge(BaseLabeledEdge, typing.Generic[W]):
     
     def toString(self) -> str:
         return f"{self.getLabel()} ({self.__weight})"
-
-    # Class Methods End
-
-

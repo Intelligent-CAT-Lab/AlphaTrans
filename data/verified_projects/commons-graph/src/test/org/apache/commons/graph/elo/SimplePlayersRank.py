@@ -1,13 +1,11 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.elo.PlayersRank import *
 from typing import *
-# Imports End
+
 
 class SimplePlayersRank(PlayersRank):
 
-    # Class Methods Begin
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.__ranks = {}
@@ -25,7 +23,3 @@ class SimplePlayersRank(PlayersRank):
     
     def toString(self) -> str:
         return str(self.__ranks)
-
-    # Class Methods End
-
-

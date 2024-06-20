@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
@@ -15,7 +14,7 @@ from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 from src.test.org.apache.commons.graph.visit.NodeSequenceVisitor import NodeSequenceVisitor
 import unittest
-# Imports End
+
 
 class VisitTestCase(unittest.TestCase):
 

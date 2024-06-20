@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
 from src.main.org.apache.commons.graph.weight.Monoid import *
@@ -17,8 +16,6 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-
-# Imports End
 
 
 class BoruvkaTestCase(unittest.TestCase):
@@ -155,5 +152,3 @@ class BoruvkaTestCase(unittest.TestCase):
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
                 .fromArbitrarySource()\
                 .applyingBoruvkaAlgorithm(DoubleWeightBaseOperations())
-
-    # Class Methods End

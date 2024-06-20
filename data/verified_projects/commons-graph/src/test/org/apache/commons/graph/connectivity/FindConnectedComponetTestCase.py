@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
@@ -13,7 +12,7 @@ from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-# Imports End
+
 
 class FindConnectedComponetTestCase(unittest.TestCase):
 
@@ -124,8 +123,7 @@ class FindConnectedComponetTestCase(unittest.TestCase):
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findConnectedComponent(None)\
                 .includingAllVertices().applyingMinimumSpanningTreeAlgorithm()
-    
-    # Class Methods End
+
 
 
 class GraphConnectionFindConnectedComponetTestCaseTestVerifyConnectedComponents(AbstractGraphConnection):

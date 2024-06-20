@@ -5,13 +5,12 @@ from src.main.org.apache.commons.graph.model.BaseMutableGraph import *
 from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
 from src.main.org.apache.commons.graph.GraphException import *
-import unittest
 import typing
 from typing import *
 
 
 
-class GraphUtils(unittest.TestCase):
+class GraphUtils:
 
     def __init__(self) -> None:
         pass

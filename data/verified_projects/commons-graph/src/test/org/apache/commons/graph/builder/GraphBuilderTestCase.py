@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
 from src.main.org.apache.commons.graph.builder.AbstractGraphConnection import *
@@ -10,7 +9,7 @@ from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *
 from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-# Imports End
+
 
 class GraphBuilderTestCase(unittest.TestCase):
 

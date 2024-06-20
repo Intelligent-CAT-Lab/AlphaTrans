@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -13,9 +12,8 @@ from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-import typing
 from typing import *
-# Imports End
+
 
 class CheriyanMehlhornGabowTestCase(unittest.TestCase):
 
@@ -81,7 +79,6 @@ class CheriyanMehlhornGabowTestCase(unittest.TestCase):
         self.assertFalse(len(actual) == 0)
         self.assertEqual(expected, actual)
 
-    # Class Methods End
 
 
 class GraphConnectionCheriyanMehlhornGabowTestCaseTestSparse(AbstractGraphConnection):

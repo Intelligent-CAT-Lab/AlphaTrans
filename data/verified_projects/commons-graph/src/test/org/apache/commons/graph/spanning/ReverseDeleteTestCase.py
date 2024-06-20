@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
 from src.main.org.apache.commons.graph.weight.Monoid import *
@@ -17,7 +16,6 @@ from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
 
-# Imports End
 
 
 class ReverseDeleteTestCase(unittest.TestCase):

@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.test.org.apache.commons.graph.model.BaseLabeledWeightedEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -19,7 +18,7 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-# Imports End
+
 
 class EdmondsKarpTestCase(unittest.TestCase):
 
@@ -91,8 +90,6 @@ class EdmondsKarpTestCase(unittest.TestCase):
         
         self.assertEqual(expected, actual)
 
-
-    # Class Methods End
 
 
 class GraphConnectionEdmondsKarpTestCaseTestFindMaxFlowAndVerify(AbstractGraphConnection):

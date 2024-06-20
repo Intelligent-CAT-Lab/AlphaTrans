@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
 from src.main.org.apache.commons.graph.weight.Monoid import *
@@ -21,8 +20,7 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-import pathlib
-# Imports End
+
 
 class AStarTestCase(unittest.TestCase):
 
@@ -221,8 +219,3 @@ class HeuristicAStarTestCaseTestNullMonoid(Heuristic):
     def __init__(self, heuristics, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.heuristics = heuristics
-
-
-
-
-

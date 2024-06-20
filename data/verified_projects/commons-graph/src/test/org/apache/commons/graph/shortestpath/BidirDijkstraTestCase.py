@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
 from src.main.org.apache.commons.graph.builder.AbstractGraphConnection import *
@@ -27,12 +26,10 @@ from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
 import random
 from typing import *
-import pathlib
-# Imports End
+
 
 class BidirDijkstraTestCase(unittest.TestCase):
 
-    # Class Fields Begin
     __TIMES = 10
     __NODES = 5000
     __EDGES = 100000
@@ -41,9 +38,8 @@ class BidirDijkstraTestCase(unittest.TestCase):
     __graph = None
     __vertices = []
     __weightOperations = None
-    # Class Fields End
+    
 
-    # Class Methods Begin
     @classmethod
     def setUpClass(cls) -> None:
         BidirDijkstraTestCase.__weightOperations = DoubleWeightBaseOperations()
@@ -253,7 +249,7 @@ class BidirDijkstraTestCase(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    # Class Methods End
+
 
 
 class GraphConnectionBidirDijkstraTestCaseSetUp(AbstractGraphConnection):

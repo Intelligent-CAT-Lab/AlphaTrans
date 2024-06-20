@@ -1,21 +1,16 @@
 import pytest
 
-# Imports Begin
 from src.main.org.apache.commons.graph.utils.Objects import *
 from src.main.org.apache.commons.graph.utils.Assertions import *
 import typing
 from typing import *
 
-# Imports End
-
 
 class BaseLabeledVertex:
 
-    # Class Fields Begin
     __serialVersionUID: int = -5167021719818162490
-    # Class Fields End
 
-    # Class Methods Begin
+    
     def __init__(self, label: str) -> None:
         self.__label = Assertions.checkNotNull(label, "Argument 'label' must not be null")
 
@@ -42,5 +37,3 @@ class BaseLabeledVertex:
     
     def toString(self) -> str:
         return f"{{ {self.__label} }}"
-
-    # Class Methods End

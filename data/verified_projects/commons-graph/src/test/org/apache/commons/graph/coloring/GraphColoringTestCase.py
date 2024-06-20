@@ -1,6 +1,5 @@
 import pytest
 
-# Imports Begin
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -18,13 +17,19 @@ from src.main.org.apache.commons.graph.UndirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 from src.test.org.apache.commons.graph.coloring.AbstractColoringTest import AbstractColoringTest
 from typing import *
-# Imports End
+
+
+def createColorsList(colorNumber: int) -> typing.Set[int]:
+    colors = set()
+    for j in range(colorNumber):
+        colors.add(j)
+    return colors
+
 
 class GraphColoringTestCase(AbstractColoringTest):
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.__colors = self._createColorsList(11)
+    __test__ = True
+    __colors = createColorsList(11)
     
     
     @pytest.mark.test
@@ -134,8 +139,6 @@ class GraphColoringTestCase(AbstractColoringTest):
             self._checkColoring(g1, sudoku)
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End
 
 
 class GraphConnectionGraphColoringTestCaseTestCromaticNumber(AbstractGraphConnection):
