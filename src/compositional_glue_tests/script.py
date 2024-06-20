@@ -8,6 +8,10 @@ import xml.etree.ElementTree as ET
 from src.compositional_glue_tests.utils import default_type_value, write_to_file, pre_order_traversal, exception_handling, type_mapping
 from src.compositional_glue_tests.constants import *
 
+ERROR = "error"
+SUCCESS = "success"
+FAILURE = "failure"
+
 
 class Project:
     """
@@ -115,6 +119,9 @@ class Project:
                 
                 # add classes
                 for _class in schema_data['classes']:
+                    if 'new' in _class or '{' in _class: # skip "anonymous" classes
+                        continue
+            
                     # add declaration
                     class_declaration = schema_data['classes'][_class]['python_class_declaration']
                     
@@ -135,16 +142,8 @@ class Project:
                     class_declaration = class_declaration_prefix + class_declaration_suffix
                     python_file_contents.append(class_declaration)
                     
-                    # ----------------------------------------------------------------------------------------------------------------
-                    # add fields
-                    # for _field in schema_data['classes'][_class]['fields']:
-                    #     if schema_data['classes'][_class]['fields'][_field]['translation_status'] == "success":
-                    #         python_file_contents.append("\n".join(schema_data['classes'][_class]['fields'][_field]['translation']))
-                    #     else:
-                    #         pass # TODO: What do we do when the field was not translated successfully?
-                    # ----------------------------------------------------------------------------------------------------------------
-                    # On second thought, we will not add fields to the python file!
-                    # This should be taken care of by the sync() and revsync() methods.
+                    # we do not need to add "fields" because they are taken from the Java object
+                    # due to revsync()
                     
                     # add methods
                     for _method in schema_data['classes'][_class]['methods']:
@@ -294,6 +293,10 @@ class Project:
             }
         }
         """
+        # check for cases where test cannot be derived
+        if not CompositionalTest.can_derive(self, components):
+            return None    
+            
         return CompositionalTest(self, components, debug)
 
         
@@ -432,14 +435,15 @@ class CompositionalTest:
                 f.write(self.scheduled_writes[file_name]["new_content"])
                 
             # run the formatter
-            try:
-                subprocess.run([
-                    'java', '-jar', 
-                    self.project.script_dir + '/google-java-format-1.20.0-all-deps.jar', '--skip-removing-unused-imports', '-r', 
-                    file_name
-                ], check=True)
-            except Exception:
-                print(f"Error formatting {file_name}! This may be due to a syntax error.")
+            if file_name.endswith('.java'):
+                try:
+                    subprocess.run([
+                        'java', '-jar', 
+                        self.project.script_dir + '/google-java-format-1.20.0-all-deps.jar', '--skip-removing-unused-imports', '-r', 
+                        file_name
+                    ], check=True)
+                except Exception:
+                    print(f"Error formatting {file_name}! This may be due to a syntax error.")
                 
     def __revert_writes(self):
         """
@@ -513,6 +517,7 @@ class CompositionalTest:
                         not data['classes'][_class]['is_interface']
                         and not data['classes'][_class]['is_abstract']
                         and not '/test/' in data['path']
+                        and not ('new' in _class or '{' in _class) # skip "anonymous" classes
                 ):
                     class_to_map, import_to_add = self.__process_class_for_mapping(_class, data)
                     classes_to_map.append(class_to_map)
@@ -624,17 +629,13 @@ class CompositionalTest:
         failed_tests = self.__get_failed_tests_from_surefire()
         
         if failure_flag and not failed_tests:
-            # raise Exception("An error occurred while running the tests!")
-            
-            # for now, we will just return False (a potential false negative)
-            # so that the pipeline doesn't stop
             return {
-                "status": False,
+                "status": ERROR, # error in running the tests
                 "failed_tests": []
             }
         
         return {
-            "status": True if not failed_tests else False,
+            "status": SUCCESS if not failed_tests else FAILURE,
             "failed_tests": failed_tests
         }
     
@@ -656,6 +657,14 @@ class CompositionalTest:
                         failed_tests.append(test_case.attrib['classname'] + '.' + test_case.attrib['name'])
                         
         return failed_tests
+
+    @staticmethod
+    def can_derive(project: Project, components: dict[str, dict[str, list[str]]]):
+        """
+        Check if the compositional tests can be derived.
+        """
+        return True # TODO: Implement this    
+
 
 class SyncMethod:
     """
@@ -692,7 +701,7 @@ class SyncMethod:
             field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True)
             self.fields.append(f"{field_name} = ({formatted_field_type}) {field_from_python};")
         else:
-            self.fields.append(f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}));")
+            self.fields.append(f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}, idMap));")
     
     def get_body(self):
         fields_body = "\n".join(self.fields)
@@ -738,15 +747,19 @@ class Schema:
         self.__exceptions = []
         
     def add_class(self, class_name: str, class_schema_data: dict, methods_to_process: list[str] = None, dont_process: bool = False):
+        if 'new' in class_name or '{' in class_name:
+            return # skip "anonymous" classes
+        
         if not methods_to_process:
             methods_to_process = []
-            
-        is_interface = class_schema_data['is_interface']
         
         # create the class declaration
         with open(self.schema_data['path'], 'r') as f:
             lst = f.readlines()
         class_declaration = "".join(lst[class_schema_data['start']-1:class_schema_data['end']])
+        
+        is_interface = class_schema_data['is_interface']
+        is_enum = 'enum' in class_declaration
         
         # if the class is not public, make it public
         if 'public' not in class_declaration:
@@ -762,13 +775,23 @@ class Schema:
             "fields": [],
             "unitialized_fields": [],
             "methods": [],
-            "sync": SyncMethod(class_name) if not is_interface else None,
-            "revsync": SyncMethod(class_name, reverse=True) if not is_interface else None,
-            "nests": []
+            "sync": SyncMethod(class_name) if not (is_interface or is_enum) else None,
+            "revsync": SyncMethod(class_name, reverse=True) if not (is_interface or is_enum) else None,
+            "nests": [],
+            "is_interface": is_interface,
+            "is_enum": is_enum
         }
         
-        for _field in class_schema_data['fields']:
-            self.__add_field_to_class(class_obj, _field, class_schema_data['fields'][_field], dont_process=dont_process)
+        # we sort the fields to ensure that they are in the correct order
+        # since key-names are prefixed by line numbers
+        for _field in sorted(list(class_schema_data['fields'].keys()), key=lambda x: int(x.split('-')[0])):
+            self.__add_field_to_class(
+                class_obj, 
+                _field, 
+                class_schema_data['fields'][_field], 
+                dont_process=dont_process, 
+                field_of_enum=is_enum
+            )
             
         for _method in class_schema_data['methods']:
             if dont_process:
@@ -780,8 +803,8 @@ class Schema:
                     self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)
         
         # add graal-related members and a default constructor
-        # unless it is an interface
-        if not is_interface:
+        # unless it is an interface or an enum
+        if not (is_interface or is_enum):
             python_file_dir = self.subpackage.replace('.', '/')
             python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
             current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
@@ -857,26 +880,35 @@ class Schema:
         else:
             self.__classes.append(class_obj)
         
-    def __add_field_to_class(self, class_obj: dict, field_name: str, field_schema_data: dict, dont_process: bool = False):
+    def __add_field_to_class(self, class_obj: dict, field_name: str, field_schema_data: dict, dont_process: bool = False, field_of_enum=False):
         field_name = field_name.split(':')[1].strip()
         field_type = field_schema_data['types'][0][0]
         field_body = "".join(field_schema_data['body'])
+        
+        # if field is 'final', remove the 'final' keyword
+        if 'final' in field_schema_data['modifiers']:
+            field_body = field_body.replace(' final', '', 1)
+            
+        # if the field is from an enum, check that it is followed by a comma
+        # unless it is followed by a semi-colon
+        if field_of_enum:
+            if (field_body.strip()[-1] != ','
+                and field_body.strip()[-1] != ';'):
+                field_body += ','
+            
+        class_obj["fields"].append(field_body)
 
         # processing for creating sync and revsync methods (if the field is not static)
         if 'static' not in field_schema_data['modifiers']:
-            # if field is 'final', remove the 'final' keyword
-            if 'final' in field_schema_data['modifiers']:
-                field_body = field_body.replace(' final', '', 1)
-            
-            # add field to sync() and revsync() methods
-            class_obj["sync"].add_field(field_name, field_schema_data)
-            class_obj["revsync"].add_field(field_name, field_schema_data)      
+            # add field to sync() and revsync() methods if those methods exist
+            if class_obj["sync"] and class_obj["revsync"]:
+                class_obj["sync"].add_field(field_name, field_schema_data)
+                class_obj["revsync"].add_field(field_name, field_schema_data)
         
-        class_obj["fields"].append(field_body)
-        
-        # check if this field was not initialized
-        if '=' not in field_body:
-            class_obj["unitialized_fields"].append(f"{field_name} = {default_type_value[field_type]};")
+        # check if this field was not initialized (except for fields of enums)
+        if not field_of_enum:
+            if '=' not in field_body:
+                class_obj["unitialized_fields"].append(f"{field_name} = {default_type_value[field_type]};")
         
     def __add_method_to_unprocessed_class(self, class_obj: dict, method_name: str, method_schema_data: dict):
         method_body = "".join(method_schema_data['body'])
@@ -891,9 +923,14 @@ class Schema:
 
         method_signature = method_body[:method_body.find('{')+1]
         method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
+        is_constructor = method_schema_data['is_constructor']
         
         # if the method is not public, make it so
-        if 'public' not in method_signature:
+        # unless it is the constructor of an enum (cannot be public)
+        if (
+            'public' not in method_signature
+            and not (class_obj["is_enum"] and is_constructor)
+        ):
             # check if the method is marked as private or protected
             if 'private' in method_signature:
                 method_signature = method_signature.replace('private', 'public', 1)
@@ -917,9 +954,15 @@ class Schema:
         
         method_signature = method_body[:method_body.find('{')+1]
         method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
+        is_constructor = method_schema_data['is_constructor']
+        method_name = method_name.split(':', 1)[1].strip() if not is_constructor else "__init__"
         
         # if the method is not public, make it so
-        if 'public' not in method_signature:
+        # unless it is the constructor of an enum (cannot be public)
+        if (
+            'public' not in method_signature
+            and not (class_obj["is_enum"] and is_constructor)
+        ):
             # check if the method is marked as private or protected
             if 'private' in method_signature:
                 method_signature = method_signature.replace('private', 'public', 1)
@@ -932,9 +975,6 @@ class Schema:
         if dont_process:
             class_obj["methods"].append(f"{method_signature}\n{method_content}\n}}")
             return
-        
-        is_constructor = method_schema_data['is_constructor']
-        method_name = method_name.split(':', 1)[1].strip() if not is_constructor else "__init__"
         
         # if method is private, take mangling into account
         # except for constructors
@@ -976,6 +1016,10 @@ class Schema:
                 final_method_content += f"revsync();{python_call};sync();"
         else:
             return_type = method_schema_data['return_types'][0][0]
+            
+            # remove any <> in the return type
+            return_type = return_type.replace('<>', '').strip()
+            
             return_type_casted = type_mapping(python_call, return_type)
             
             final_method_content += "".join([

@@ -46,11 +46,11 @@ def write_to_file(file, content):
         f.write(content)
 
     # format java file
-    try:
-        subprocess.run(['java', '-jar', 'src/compositional_glue_tests/google-java-format-1.20.0-all-deps.jar', '--skip-removing-unused-imports', '-r', file], check=True)
-    except Exception as e:
-        print(f"Error formatting {file}: {e}")
-    return
+    if file.endswith(".java"):
+        try:
+            subprocess.run(['java', '-jar', 'src/compositional_glue_tests/google-java-format-1.20.0-all-deps.jar', '--skip-removing-unused-imports', '-r', file], check=True)
+        except Exception as e:
+            print(f"Error formatting {file}: {e}")
 
 def pre_order_traversal(relation: list[tuple[str, str | None]]) -> list[str]:
     """
