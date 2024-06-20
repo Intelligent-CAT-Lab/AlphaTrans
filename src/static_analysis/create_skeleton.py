@@ -137,7 +137,8 @@ def main(args):
         skeleton += '# Imports End\n\n'
 
         target_schema = schema.copy()
-
+        python_imports = []
+        python_imports.append('from __future__ import annotations')
         class_order = []
         while len(class_order) != len(schema['classes']):
             for class_ in schema['classes']:
@@ -188,10 +189,8 @@ def main(args):
                 schema['classes'][class_]['extends'] = [extracted_types[cls_name] if cls_name in extracted_types and cls_name not in class_path else cls_name for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [cls_name for cls_name in schema['classes'][class_]['extends'] if not any(substring in cls_name for substring in exceptional_superclasses) and cls_name != class_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
-                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
                     class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
                 else:
-                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends']) + '):\n\n'
                     class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends']) + '):\n\n'
             elif schema['classes'][class_]['implements'] != []:
                 schema['classes'][class_]['implements'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
@@ -199,19 +198,32 @@ def main(args):
                 schema['classes'][class_]['implements'] = [extracted_types[cls_name] if cls_name in extracted_types and cls_name not in class_path else cls_name for cls_name in schema['classes'][class_]['implements']]
                 schema['classes'][class_]['implements'] = [cls_name for cls_name in schema['classes'][class_]['implements'] if not any(substring in cls_name for substring in exceptional_superclasses) and cls_name != class_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
-                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
                     class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
                 else:
-                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements']) + '):\n\n'
                     class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements']) + '):\n\n'
             else:
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
-                    skeleton += 'class ' + class_name + '(ABC):\n\n'
                     class_declaration = 'class ' + class_name + '(ABC):\n\n'
                 else:
-                    skeleton += 'class ' + class_name + ':\n\n'
                     class_declaration = 'class ' + class_name + ':\n\n'
+
+            is_test_class = False
+            for method_ in schema['classes'][class_]['methods']:
+                if 'Test' in [x.split('(')[0] for x in schema['classes'][class_]['methods'][method_]['annotations']]:
+                    is_test_class = True
+                    break
+
+            if 'src.test' in schema_fname and is_test_class:
+                if '):' not in class_declaration:
+                    class_declaration = class_declaration.replace(':', '(unittest.TestCase):')
+                else:
+                    class_declaration = class_declaration.replace('):', ', unittest.TestCase):')
+            if 'src.test' in schema_fname and 'import unittest' not in python_imports:
+                python_imports.append('import unittest')
+                python_imports.append('import pytest')
             
+            skeleton += class_declaration
+
             target_schema['classes'][class_]['python_class_declaration'] = class_declaration
 
             is_empty_class = True
@@ -232,11 +244,28 @@ def main(args):
 
                 field_body = field_name + f': {field_type} = '
                 if '=' not in ''.join(schema['classes'][class_]['fields'][field]['body']):
-                    field_body += 'None\n'
+                    if field_type == 'str':
+                        field_body += "''\n"
+                    elif field_type == 'int':
+                        field_body += '0\n'
+                    elif field_type == 'float':
+                        field_body += '0.0\n'
+                    elif field_type == 'bool':
+                        field_body += 'False\n'
+                    elif field_type == 'List':
+                        field_body += '[]\n'
+                    elif field_type == 'Dict':
+                        field_body += '{}\n'
+                    else:
+                        field_body += 'None\n'
+                elif '=' in ''.join(schema['classes'][class_]['fields'][field]['body']) and (field_type.startswith('typing.List') or field_type.startswith('List')):
+                    field_body += '[]\n'
+                elif '=' in ''.join(schema['classes'][class_]['fields'][field]['body']) and (field_type.startswith('typing.Dict') or field_type.startswith('Dict')):
+                    field_body += '{}\n'
                 else:
                     field_body += '<placeholder>\n'
 
-                target_schema['classes'][class_]['fields'][field]['partial_translation'] = f'    {field_body}'
+                target_schema['classes'][class_]['fields'][field]['partial_translation'] = f'    {field_body}'.split('\n')
                 target_schema['classes'][class_]['fields'][field]['translation'] = []
                 target_schema['classes'][class_]['fields'][field]['translation_status'] = 'pending'
                 target_schema['classes'][class_]['fields'][field]['syntactical_validation_status'] = 'pending'
@@ -353,8 +382,6 @@ def main(args):
                       'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n', 'zoneinfo': 'import zoneinfo\n',
                       'urllib': 'import urllib\n', 'logging': 'import logging\n'}
 
-        python_imports = []
-        python_imports.append('from __future__ import annotations')
         for key in import_map:
             if key in skeleton and import_map[key] not in skeleton:
                 skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\n' + import_map[key])
