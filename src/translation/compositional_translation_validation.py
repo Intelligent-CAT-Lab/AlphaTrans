@@ -155,10 +155,10 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
 
     status, functionally_validated_members, feedback = l2_validation(syntactically_validated_members)
     
-    if status:
+    if status == 'success':
         print("PASSED!")
     else:
-        print("FAILED!")
+        print(status.upper())
         if not RECORD_ALL:
             if input("Do you want to interrupt? (no=Enter)"):
                 quit()
@@ -642,6 +642,6 @@ if __name__ == '__main__':
     
     SCHEMA_BREAK_PASSED, CLASS_BREAK_PASSED, METHOD_BREAK_PASSED = False, False, False
     
-    RECORD_ALL = True
+    RECORD_ALL = False
     
     main(args)
