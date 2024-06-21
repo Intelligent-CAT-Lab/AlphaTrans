@@ -232,7 +232,7 @@ def create_schema(args):
     
     for line in lines:
         res_row = line.split('|')[1:-1]
-        field_name, modifer, return_type, return_type_qualified_name, start, class_name = [x.strip() for x in res_row]
+        field_name, modifier, return_type, return_type_qualified_name, start, class_name = [x.strip() for x in res_row]
 
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
         path = projects_dir + path[path.find(project):]
@@ -262,8 +262,8 @@ def create_schema(args):
         if (return_type, return_type_qualified) not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["types"]:
             schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["types"].append((return_type, return_type_qualified))
 
-        if modifer not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"]:
-            schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"].append(modifer)
+        if modifier not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"] and modifier != 'null':
+            schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"].append(modifier)
 
     classes_query_out = f'data/query_outputs/{project}/{project}_superclasses.txt'
     lines = []
