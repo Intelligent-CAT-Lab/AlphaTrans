@@ -13,7 +13,7 @@ import io
 # Imports End
 
 
-class CSVRecord(Iterable):
+class CSVRecord:
 
     # Class Fields Begin
     __serialVersionUID: int = None

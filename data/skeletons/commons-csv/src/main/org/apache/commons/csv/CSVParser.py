@@ -22,7 +22,7 @@ import pathlib
 # Imports End
 
 
-class CSVRecordIterator(Iterator):
+class CSVRecordIterator:
 
     # Class Fields Begin
     __current: CSVRecord = None
@@ -60,7 +60,7 @@ class Headers:
     # Class Methods End
 
 
-class CSVParser(Iterable):
+class CSVParser:
 
     # Class Fields Begin
     __headerComment: str = None
