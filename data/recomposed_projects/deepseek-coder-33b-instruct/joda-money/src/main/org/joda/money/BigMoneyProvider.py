@@ -1,0 +1,11 @@
+from __future__ import annotations
+from abc import ABC
+import io
+from src.main.org.joda.money.BigMoney import *
+
+
+class BigMoneyProvider(ABC):
+
+    def toBigMoney(self) -> BigMoney:
+
+        pass

@@ -1,0 +1,25 @@
+from __future__ import annotations
+import io
+from src.main.org.joda.convert.FromString import *
+from src.main.org.joda.convert.ToString import *
+
+
+class DistanceMethodConstructorCharSequence:
+
+    amount: int = None
+
+    def toString(self) -> str:
+
+        return "Distance[" + str(self.amount) + "m]"
+
+    def print(self) -> str:
+
+        return str(self.amount) + "m"
+
+    def __init__(self, constructorId: int, amount1: str, amount: int) -> None:
+
+        if constructorId == 0:
+            amt = amount1[:-1]
+            self.amount = int(amt)
+        else:
+            self.amount = amount

@@ -1,0 +1,14 @@
+from __future__ import annotations
+from abc import ABC
+import io
+import typing
+from typing import *
+
+
+class ConnectivityAlgorithmsSelector(ABC):
+
+    def applyingMinimumSpanningTreeAlgorithm(
+        self,
+    ) -> typing.Collection[typing.List[typing.Any]]:
+
+        pass
