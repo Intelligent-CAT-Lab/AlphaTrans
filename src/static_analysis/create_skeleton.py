@@ -182,7 +182,7 @@ def main(args):
                 class_name = class_.split('(')[0].replace('new ', '').strip()
 
             class_declaration = ''
-            exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum'}
+            exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum', 'Iterator', 'Iterable'}
             if schema['classes'][class_]['extends'] != []:
                 schema['classes'][class_]['extends'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
