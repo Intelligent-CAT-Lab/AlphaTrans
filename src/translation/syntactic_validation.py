@@ -4,7 +4,7 @@ import ast
 
 def l0_validation(generation):
     generation = generation.replace('```python', '```')
-    pattern = r'```([^`]+)```'
+    pattern = r'```((?:[^`]|`[^`]|``[^`])*?)```'
     match = re.search(pattern, generation, re.DOTALL)
 
     if match:
