@@ -26,7 +26,10 @@ class Token:
 
     # Class Fields Begin
     __INITIAL_TOKEN_LENGTH: int = None
+    type: typing.Type = None
     content: str = None
+    isReady: bool = None
+    isQuoted: bool = None
     # Class Fields End
 
     # Class Methods Begin
