@@ -76,3 +76,13 @@ def pre_order_traversal(relation: list[tuple[str, str | None]]) -> list[str]:
         stack.extend(children[::-1])  # Add children in reverse order for pre-order
 
     return visited
+
+
+def get_java_class_declaration(schema_data: dict, class_name: str):
+    java_class_declaration = None
+    with open(schema_data['path'], 'r') as f:
+        lst = f.readlines()
+        start = schema_data['classes'][class_name]['start']
+        end = schema_data['classes'][class_name]['end']
+        java_class_declaration = "".join(lst[start-1:end])
+    return java_class_declaration

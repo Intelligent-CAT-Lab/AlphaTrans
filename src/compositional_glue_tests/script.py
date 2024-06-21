@@ -3,9 +3,10 @@ import os
 import subprocess
 import json
 import keyword
+import re
 import xml.etree.ElementTree as ET
  
-from src.compositional_glue_tests.utils import default_type_value, write_to_file, pre_order_traversal, exception_handling, type_mapping
+from src.compositional_glue_tests.utils import default_type_value, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
 from src.compositional_glue_tests.constants import *
 
 ERROR = "error"
@@ -125,6 +126,11 @@ class Project:
                     # add declaration
                     class_declaration = schema_data['classes'][_class]['python_class_declaration']
                     
+                    # get java class declaration
+                    java_class_declaration = get_java_class_declaration(schema_data, _class)
+                    is_static_class = 'static' in java_class_declaration
+                    is_nested_class = bool(schema_data['classes'][_class]['nested_inside'])
+                    
                     # the class should inherit from StaticFieldRedirector
                     class_declaration_prefix_pos = class_declaration.find(_class) + len(_class)
                     class_declaration_prefix = class_declaration[:class_declaration_prefix_pos]
@@ -157,13 +163,17 @@ class Project:
                     
                     # add other graal stuff
                     # load up the Java class
-                    subpackage = schema_object.subpackage
-                    # if the class is nested inside another class, add the parent class to the class name
-                    if schema_data['classes'][_class]['nested_inside']:
-                        outer_class_name = schema_data['classes'][_class]['nested_inside']
-                        python_file_contents.append(f"    javaClz = java.type(\"org.apache.{self.formatted_name}{subpackage}.{outer_class_name}\").{_class}")
-                    else:
-                        python_file_contents.append(f"    javaClz = java.type(\"org.apache.{self.formatted_name}{subpackage}.{_class}\")")
+                    # EXCEPTION: do not load the class if it is not static but nested (we do not support these)
+                    if not is_static_class and is_nested_class:
+                        python_file_contents.append(f"    javaClz = None")
+                    else:            
+                        subpackage = schema_object.subpackage
+                        # if the class is nested inside another class, add the parent class to the class name
+                        if schema_data['classes'][_class]['nested_inside']:
+                            outer_class_name = schema_data['classes'][_class]['nested_inside']
+                            python_file_contents.append(f"    javaClz = java.type(\"org.apache.{self.formatted_name}{subpackage}.{outer_class_name}\").{_class}")
+                        else:
+                            python_file_contents.append(f"    javaClz = java.type(\"org.apache.{self.formatted_name}{subpackage}.{_class}\")")
                     
                     # add default constructor
                     python_file_contents.append("\n".join([
@@ -293,11 +303,10 @@ class Project:
             }
         }
         """
-        # check for cases where test cannot be derived
-        if not CompositionalTest.can_derive(self, components):
-            return None    
-            
-        return CompositionalTest(self, components, debug)
+        try:
+            return CompositionalTest(self, components, debug)
+        except NotImplementedError as e:
+            return None
 
         
 class CompositionalTest:
@@ -363,6 +372,9 @@ class CompositionalTest:
                     # or no class or schema was provided to begin with
                     methods_to_process = list(schema_data['classes'][_class]['methods'].keys())
                 else:
+                    # first check if the class is supported for testing
+                    self.__check_if_supported_class(schema_data, _class)
+                    
                     methods_to_process = []
                     
                     _available_methods = []
@@ -375,6 +387,9 @@ class CompositionalTest:
                     for _method in components[schema_name][_class]:
                         for m in _available_methods:
                             if m[1] == _method:
+                                # check if the method is supported for testing
+                                self.__check_if_supported_method(schema_data['classes'][_class]['methods'][m[0]])
+                                
                                 methods_to_process.append(m[0])
                                 break
                         else:
@@ -406,7 +421,7 @@ class CompositionalTest:
                 nested_inside_relations.append((_class, None))
                 
         # sort the classes based on the nesting
-        return pre_order_traversal(nested_inside_relations)      
+        return pre_order_traversal(nested_inside_relations)
     
     def __log_write(self, file_name: str, content: str):
         """
@@ -513,9 +528,16 @@ class CompositionalTest:
                 data = json.load(f)
 
             for _class in data['classes']:
+                # create the class declaration
+                java_class_declaration = get_java_class_declaration(data, _class)
+                
+                # check if the class is an enum
+                is_enum = 'enum' in java_class_declaration 
+                
                 if (
                         not data['classes'][_class]['is_interface']
                         and not data['classes'][_class]['is_abstract']
+                        and not is_enum
                         and not '/test/' in data['path']
                         and not ('new' in _class or '{' in _class) # skip "anonymous" classes
                 ):
@@ -606,6 +628,12 @@ class CompositionalTest:
         Run the compositional tests.
         """
         self.__execute_writes()
+
+        if self.debug:
+            # create a snapshot of the project in logs/glue/
+            os.makedirs(f"{self.project.root_dir}/logs/glue/{self.project.name}/", exist_ok=True)
+            subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/{self.project.name}/"], check=True)
+
         failure_flag = False
         try:
             subprocess.run(
@@ -617,12 +645,7 @@ class CompositionalTest:
             )
         except Exception:
             failure_flag = True # check if the failure is due to the tests or something else
-            
-        if self.debug:
-            # create a snapshot of the project in logs/glue/
-            os.makedirs(f"{self.project.root_dir}/logs/glue/{self.project.name}/", exist_ok=True)
-            subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/{self.project.name}/"], check=True)
-        
+
         self.__revert_writes()
         
         # collect the results
@@ -659,11 +682,36 @@ class CompositionalTest:
         return failed_tests
 
     @staticmethod
-    def can_derive(project: Project, components: dict[str, dict[str, list[str]]]):
+    def  __check_if_supported_class(schema_data: dict, class_name: str):
         """
-        Check if the compositional tests can be derived.
+        Check if the class can be processed.
         """
-        return True # TODO: Implement this    
+        class_data = schema_data['classes'][class_name]
+        # get the class declaration
+        class_declaration = get_java_class_declaration(schema_data, class_name)
+        
+        # no support for non-static nested classes
+        if 'static' not in class_declaration and class_data['nested_inside']:
+            raise NotImplementedError("Static nested classes are not supported.")
+
+    @staticmethod
+    def __check_if_supported_method(method_data: dict):
+        """
+        Check if the method can be processed.
+        """
+        method_body = "".join(method_data['body'])
+        
+        # no support for methods with "try-catch" blocks
+        # Define regex patterns for the try-catch and try-finally
+        try_catch_pattern = r'try\s*\{[^}]*\}\s*catch\s*\([^)]+\)\s*\{[^}]*\}'
+        try_finally_pattern = r'try\s*\{[^}]*\}\s*finally\s*\{[^}]*\}'
+        
+        # Check for the presence of each block type
+        has_try_catch = re.search(try_catch_pattern, method_body, re.DOTALL) is not None
+        has_try_finally = re.search(try_finally_pattern, method_body, re.DOTALL) is not None
+        
+        if has_try_catch or has_try_finally:
+            raise NotImplementedError("Methods with exception handling are not supported.")
 
 
 class SyncMethod:
@@ -754,12 +802,12 @@ class Schema:
             methods_to_process = []
         
         # create the class declaration
-        with open(self.schema_data['path'], 'r') as f:
-            lst = f.readlines()
-        class_declaration = "".join(lst[class_schema_data['start']-1:class_schema_data['end']])
+        class_declaration = get_java_class_declaration(self.schema_data, class_name)
         
         is_interface = class_schema_data['is_interface']
         is_enum = 'enum' in class_declaration
+        is_static = 'static' in class_declaration
+        is_nested = bool(class_schema_data['nested_inside'])
         
         # if the class is not public, make it public
         if 'public' not in class_declaration:
@@ -782,28 +830,7 @@ class Schema:
             "is_enum": is_enum
         }
         
-        # we sort the fields to ensure that they are in the correct order
-        # since key-names are prefixed by line numbers
-        for _field in sorted(list(class_schema_data['fields'].keys()), key=lambda x: int(x.split('-')[0])):
-            self.__add_field_to_class(
-                class_obj, 
-                _field, 
-                class_schema_data['fields'][_field], 
-                dont_process=dont_process, 
-                field_of_enum=is_enum
-            )
-            
-        for _method in class_schema_data['methods']:
-            if dont_process:
-                self.__add_method_to_unprocessed_class(class_obj, _method, class_schema_data['methods'][_method])
-            else:
-                if _method in methods_to_process:
-                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method])
-                else:
-                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)
-        
-        # add graal-related members and a default constructor
-        # unless it is an interface or an enum
+        # add graal-related members (unless it is an interface or an enum)
         if not (is_interface or is_enum):
             python_file_dir = self.subpackage.replace('.', '/')
             python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
@@ -811,18 +838,17 @@ class Schema:
             python_file = f'{python_file_dir}/{current_file_name}.py'
             
             class_obj["fields"].extend([
-                f"private static Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");",
-                f"private Value obj = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\").invokeMember(\"getDefaultInstance\");"
+                (
+                    f"private static final Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");"
+                    if not (not is_static and is_nested) else
+                    # compromise for non-static nested classes (which we do not support)
+                    f"private final Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");"
+                 ),
+                
+                # 'transient' so that it is not part of serialization
+                f"private transient Value obj = clz.invokeMember(\"getDefaultInstance\");"
             ])
             unititialized_fields_body = "".join(class_obj["unitialized_fields"])
-            
-            # add Value constructor
-            class_obj["methods"].append(f"""
-                public {class_name}(Value obj) {{
-                    {unititialized_fields_body}
-                    this.obj = obj;
-                }}                            
-            """)
 
             # add getPythonObject() and setPythonObject() methods
             class_obj["methods"].append(f"""
@@ -854,21 +880,26 @@ class Schema:
                     class_obj["methods"].append(f"""public static {class_name} pythonFactory{constructor_definition} {{
                         return new {class_name}({args_buildup});
                         }}""")
-
-            # add a Default constructor if one does not exist already
-            # first check all the methods
-            for _method in class_schema_data['methods']:
-                if (class_schema_data['methods'][_method]['is_constructor']
-                    and not class_schema_data['methods'][_method]['parameters']):
-                    break
+                    
+        # we sort the fields to ensure that they are in the correct order
+        # since key-names are prefixed by line numbers
+        for _field in sorted(list(class_schema_data['fields'].keys()), key=lambda x: int(x.split('-')[0])):
+            self.__add_field_to_class(
+                class_obj, 
+                _field, 
+                class_schema_data['fields'][_field], 
+                dont_process=dont_process, 
+                field_of_enum=is_enum
+            )
+            
+        for _method in class_schema_data['methods']:
+            if dont_process:
+                self.__add_method_to_unprocessed_class(class_obj, _method, class_schema_data['methods'][_method])
             else:
-                # if no constructor was found, add a default constructor
-                class_obj["methods"].append(f"""
-                    public {class_name}() {{
-                        {unititialized_fields_body}
-                        this.obj = clz.newInstance();
-                    }}
-                """)
+                if _method in methods_to_process:
+                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method])
+                else:
+                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)
         
         # check if this class is nested inside another class
         if class_schema_data['nested_inside']:
@@ -885,9 +916,7 @@ class Schema:
         field_type = field_schema_data['types'][0][0]
         field_body = "".join(field_schema_data['body'])
         
-        # if field is 'final', remove the 'final' keyword
-        if 'final' in field_schema_data['modifiers']:
-            field_body = field_body.replace(' final', '', 1)
+        is_final = 'final' in field_schema_data['modifiers']
             
         # if the field is from an enum, check that it is followed by a comma
         # unless it is followed by a semi-colon
@@ -902,7 +931,8 @@ class Schema:
         if 'static' not in field_schema_data['modifiers']:
             # add field to sync() and revsync() methods if those methods exist
             if class_obj["sync"] and class_obj["revsync"]:
-                class_obj["sync"].add_field(field_name, field_schema_data)
+                if not is_final: # don't add final fields to sync
+                    class_obj["sync"].add_field(field_name, field_schema_data)
                 class_obj["revsync"].add_field(field_name, field_schema_data)
         
         # check if this field was not initialized (except for fields of enums)
@@ -956,6 +986,10 @@ class Schema:
         method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
         is_constructor = method_schema_data['is_constructor']
         method_name = method_name.split(':', 1)[1].strip() if not is_constructor else "__init__"
+        
+        # check if the method signature should have @Override
+        if 'Override' in method_schema_data['annotations']:
+            method_signature = '@Override\n' + method_signature
         
         # if the method is not public, make it so
         # unless it is the constructor of an enum (cannot be public)
