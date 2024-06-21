@@ -26,7 +26,8 @@ def main(args):
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_all_methods_3.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_all_methods.txt")
 
     if args.query_name == 'get_fields':
-        os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_fields.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_fields.txt")
+        os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_fields_1.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_fields.txt")
+        os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_fields_2.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_fields.txt")
 
     if args.query_name == 'get_interfaces':
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_interfaces_1.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_interfaces.txt")
