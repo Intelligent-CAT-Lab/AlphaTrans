@@ -86,11 +86,22 @@
                         "    def fileUpload199(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def fileUpload199(self) -> None:",
+                        "        ",
+                        "        parser = ParameterParser()",
+                        "        s = \"Content-Disposition: form-data; name=\\\"file\\\";\" + \" filename=\\\"=?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaXMgeW8=?=\" + \" =?ISO-8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?=\\\"\\r\\n\"",
+                        "        params = parser.parse0(s, [',', ';'])",
+                        "        self.assertEqual(\"If you can read this you understand the example.\", params.get(\"filename\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.407732009887695,
+                    "generation_timestamp": "2024-06-19T22:35:31.719658",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "90-103:testFileUpload139": {
                     "start": 90,
@@ -142,11 +153,30 @@
                         "    def testFileUpload139(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testFileUpload139(self) -> None:",
+                        "        ",
+                        "        parser = ParameterParser()",
+                        "        s = \"Content-type: multipart/form-data , boundary=AaB03x\"",
+                        "        params = parser.parse0(s, [',', ';'])",
+                        "        self.assertEqual(\"AaB03x\", params.get(\"boundary\"))",
+                        "",
+                        "        s = \"Content-type: multipart/form-data, boundary=AaB03x\"",
+                        "        params = parser.parse0(s, [';', ','])",
+                        "        self.assertEqual(\"AaB03x\", params.get(\"boundary\"))",
+                        "",
+                        "        s = \"Content-type: multipart/mixed, boundary=BbC04y\"",
+                        "        params = parser.parse0(s, [',', ';'])",
+                        "        self.assertEqual(\"BbC04y\", params.get(\"boundary\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.12533211708069,
+                    "generation_timestamp": "2024-06-19T22:35:47.847958",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "75-87:testParsingEscapedChars": {
                     "start": 75,
@@ -197,11 +227,29 @@
                         "    def testParsingEscapedChars(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParsingEscapedChars(self) -> None:",
+                        "        ",
+                        "        s = \"param = \\\"stuff\\\\\\\"; more stuff\\\"\"",
+                        "        parser = ParameterParser()",
+                        "        params = parser.parse1(s, ';')",
+                        "        self.assertEqual(1, len(params))",
+                        "        self.assertEqual(\"stuff\\\\\\\"; more stuff\", params.get(\"param\"))",
+                        "",
+                        "        s = \"param = \\\"stuff\\\\\\\\\\\"; anotherparam\"",
+                        "        params = parser.parse1(s, ';')",
+                        "        self.assertEqual(2, len(params))",
+                        "        self.assertEqual(\"stuff\\\\\\\\\", params.get(\"param\"))",
+                        "        self.assertIsNone(params.get(\"anotherparam\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.023783922195435,
+                    "generation_timestamp": "2024-06-19T22:36:01.877371",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-72:testContentTypeParsing": {
                     "start": 66,
@@ -251,11 +299,23 @@
                         "    def testContentTypeParsing(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testContentTypeParsing(self) -> None:",
+                        "        ",
+                        "        s = \"text/plain; Charset=UTF-8\"",
+                        "        parser = ParameterParser()",
+                        "        parser.setLowerCaseNames(True)",
+                        "        params = parser.parse1(s, ';')",
+                        "        self.assertEqual(\"UTF-8\", params.get(\"charset\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.934520959854126,
+                    "generation_timestamp": "2024-06-19T22:36:10.817897",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "30-63:testParsing": {
                     "start": 30,
@@ -332,21 +392,63 @@
                         "    def testParsing(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testParsing(self) -> None:",
+                        "        ",
+                        "        s = \"test; test1 =  stuff   ; test2 =  \\\"stuff; stuff\\\"; test3=\\\"stuff\"",
+                        "        parser = ParameterParser()",
+                        "        params = parser.parse1(s, ';')",
+                        "        self.assertEqual(None, params.get(\"test\"))",
+                        "        self.assertEqual(\"stuff\", params.get(\"test1\"))",
+                        "        self.assertEqual(\"stuff; stuff\", params.get(\"test2\"))",
+                        "        self.assertEqual(\"\\\"stuff\", params.get(\"test3\"))",
+                        "",
+                        "        params = parser.parse0(s, [',', ';'])",
+                        "        self.assertEqual(None, params.get(\"test\"))",
+                        "        self.assertEqual(\"stuff\", params.get(\"test1\"))",
+                        "        self.assertEqual(\"stuff; stuff\", params.get(\"test2\"))",
+                        "        self.assertEqual(\"\\\"stuff\", params.get(\"test3\"))",
+                        "",
+                        "        s = \"  test  , test1=stuff   ,  , test2=, test3, \"",
+                        "        params = parser.parse1(s, ',')",
+                        "        self.assertEqual(None, params.get(\"test\"))",
+                        "        self.assertEqual(\"stuff\", params.get(\"test1\"))",
+                        "        self.assertEqual(None, params.get(\"test2\"))",
+                        "        self.assertEqual(None, params.get(\"test3\"))",
+                        "",
+                        "        s = \"  test\"",
+                        "        params = parser.parse1(s, ';')",
+                        "        self.assertEqual(None, params.get(\"test\"))",
+                        "",
+                        "        s = \"  \"",
+                        "        params = parser.parse1(s, ';')",
+                        "        self.assertEqual(0, len(params))",
+                        "",
+                        "        s = \" = stuff \"",
+                        "        params = parser.parse1(s, ';')",
+                        "        self.assertEqual(0, len(params))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 24.999873399734497,
+                    "generation_timestamp": "2024-06-19T22:36:35.821450",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class ParameterParserTest:\n\n"
+            "python_class_declaration": "class ParameterParserTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.main.org.apache.commons.fileupload.ParameterParser import *"
     ]
 }

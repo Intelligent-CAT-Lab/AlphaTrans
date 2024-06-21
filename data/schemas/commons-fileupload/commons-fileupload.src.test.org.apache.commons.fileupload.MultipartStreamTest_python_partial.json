@@ -89,11 +89,24 @@
                         "    def testTwoParamConstructor(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testTwoParamConstructor(self) -> None:",
+                        "        ",
+                        "        strData = \"foobar\"",
+                        "        contents = strData.encode()",
+                        "        input = io.BytesIO(contents)",
+                        "        boundary = self.__BOUNDARY_TEXT.encode()",
+                        "        ms = MultipartStream.MultipartStream2(input, boundary, ProgressNotifier(None, len(contents)))",
+                        "        assert ms is not None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.292755603790283,
+                    "generation_timestamp": "2024-06-19T22:37:03.873962",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "48-59:testSmallBuffer": {
                     "start": 48,
@@ -114,7 +127,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = IllegalArgumentException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -143,11 +156,31 @@
                         "    def testSmallBuffer(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testSmallBuffer(self) -> None:",
+                        "        ",
+                        "        strData = \"foobar\"",
+                        "        contents = strData.encode()",
+                        "        input = io.BytesIO(contents)",
+                        "        boundary = self.__BOUNDARY_TEXT.encode()",
+                        "        iBufSize = 1",
+                        "        ",
+                        "        with pytest.raises(IllegalArgumentException):",
+                        "            MultipartStream(",
+                        "                input,",
+                        "                boundary,",
+                        "                iBufSize,",
+                        "                ProgressNotifier(None, len(contents))",
+                        "            )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.464871168136597,
+                    "generation_timestamp": "2024-06-19T22:37:13.344623",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "32-45:testThreeParamConstructor": {
                     "start": 32,
@@ -199,11 +232,26 @@
                         "    def testThreeParamConstructor(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testThreeParamConstructor(self) -> None:",
+                        "        ",
+                        "        strData = \"foobar\"",
+                        "        contents = strData.encode()",
+                        "        input = io.BytesIO(contents)",
+                        "        boundary = self.__BOUNDARY_TEXT.encode()",
+                        "        iBufSize = len(boundary) + len(MultipartStream._BOUNDARY_PREFIX) + 1",
+                        "        pNotifier = ProgressNotifier(None, len(contents))",
+                        "        ms = MultipartStream(input, boundary, iBufSize, pNotifier)",
+                        "        self.assertIsNotNone(ms)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.3972806930542,
+                    "generation_timestamp": "2024-06-19T22:37:21.747327",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -224,20 +272,32 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __BOUNDARY_TEXT: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BOUNDARY_TEXT: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BOUNDARY_TEXT: str = \"myboundary\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.2209126949310303,
+                    "generation_timestamp": "2024-06-19T21:14:53.141386",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class MultipartStreamTest:\n\n"
+            "python_class_declaration": "class MultipartStreamTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
+        "import unittest",
         "from src.main.org.apache.commons.fileupload.MultipartStream import *",
         "from src.main.org.apache.commons.fileupload.ProgressListener import *"
     ]
