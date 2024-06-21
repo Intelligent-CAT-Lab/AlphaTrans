@@ -118,8 +118,9 @@ class Project:
                 python_file_contents.append(f"from src.{paths[self.name]['main'].replace('/java/', '/').replace('/', '.')}java_handler import *")
                 python_file_contents.append(f"import sys") # for exception handling
                 
-                # add classes
-                for _class in schema_data['classes']:
+                class_order = schema_object.get_class_order()
+
+                for _class in class_order:
                     if 'new' in _class or '{' in _class: # skip "anonymous" classes
                         continue
             
@@ -232,7 +233,7 @@ class Project:
             caller = "self.javaObj"
             
         if is_constructor:
-            java_call = f"{caller}.pythonFactory({args_buildup})"
+            java_call = f"{caller}({args_buildup})"
         else:
             java_call = f"{caller}.{original_method_name}({args_buildup})"
             
@@ -606,10 +607,11 @@ class CompositionalTest:
         Process the given class for mapping and return the class
         identifier and the import to add.
         """
-        if schema_data['classes'][class_name]["nested_inside"]:
-            class_to_map =  f"{schema_data['classes'][class_name]['nested_inside']}.{class_name}"
-        else:
-            class_to_map = class_name
+        class_to_map = class_name
+        parent_class = schema_data['classes'][class_name]['nested_inside']
+        while parent_class:
+            class_to_map = f"{parent_class}.{class_to_map}"
+            parent_class = schema_data['classes'][parent_class]['nested_inside']
         
         # link subpackages (no need to import otherwise)
         import_to_make = None
@@ -808,15 +810,18 @@ class Schema:
         is_enum = 'enum' in class_declaration
         is_static = 'static' in class_declaration
         is_nested = bool(class_schema_data['nested_inside'])
+        is_abstract = class_schema_data['is_abstract']
         
         # if the class is not public, make it public
         if 'public' not in class_declaration:
-            # check if the class is marked as private
+            # check if the class is marked as private or protected
             if 'private' in class_declaration:
                 class_declaration = class_declaration.replace('private', 'public', 1)
+            elif 'protected' in class_declaration:
+                class_declaration = class_declaration.replace('protected', 'public', 1)
             else:
                 class_declaration = "public " + class_declaration
-        
+
         class_obj = {
             "name": class_name,
             "declaration": class_declaration,
@@ -862,24 +867,29 @@ class Schema:
                 }}
             """)
             
-            # add PythonFactory (if a constructor existed in the Java class)
-            # first search for the constructor
-            for _method in class_schema_data['methods']:
-                if (class_schema_data['methods'][_method]['is_constructor']):
-                    constructor_body = "".join(class_schema_data['methods'][_method]['body'])
+            # We don't need this anymore but we keep it for now
+            # -----------------------------------------------------------------------------------
+            # # add PythonFactory (if a constructor existed in the Java class)
+            # # first search for the constructor
+            # for _method in class_schema_data['methods']:
+            #     if (class_schema_data['methods'][_method]['is_constructor']):
+            #         constructor_body = "".join(class_schema_data['methods'][_method]['body'])
                                         
-                    # get the signature
-                    constructor_signature = constructor_body[:constructor_body.find('{')]
+            #         # get the signature
+            #         constructor_signature = constructor_body[:constructor_body.find('{')]
                     
-                    # get the definition-part of the constructor
-                    constructor_definition = constructor_signature[constructor_signature.find('('):]
+            #         # get the definition-part of the constructor
+            #         constructor_definition = constructor_signature[constructor_signature.find('('):]
                     
-                    args_buildup = ", ".join(class_schema_data['methods'][_method]['parameters'])
+            #         args_buildup = ", ".join(class_schema_data['methods'][_method]['parameters'])
                     
-                    # add the PythonFactory method
-                    class_obj["methods"].append(f"""public static {class_name} pythonFactory{constructor_definition} {{
-                        return new {class_name}({args_buildup});
-                        }}""")
+            #         # add the PythonFactory method (if the class is not abstract)
+            #         if not is_abstract:
+            #             class_obj["methods"].append(f"""public static {class_name} pythonFactory{constructor_definition} {{
+            #                 return new {class_name}({args_buildup});
+            #                 }}""")
+            # -----------------------------------------------------------------------------------
+                        
                     
         # we sort the fields to ensure that they are in the correct order
         # since key-names are prefixed by line numbers
@@ -900,17 +910,37 @@ class Schema:
                     self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method])
                 else:
                     self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)
-        
+
         # check if this class is nested inside another class
         if class_schema_data['nested_inside']:
             parent_class = class_schema_data['nested_inside']
-            for _class in self.__classes:
-                if _class['name'] == parent_class:
-                    _class["nests"].append(class_obj)
-                    break
+            parent_class_obj = self.__search_for_class(parent_class)
+            parent_class_obj["nests"].append(class_obj)
         else:
             self.__classes.append(class_obj)
+
+    def __search_for_class(self, class_name: str) -> dict:
+        """
+        Searches for a class in the schema and returns the class object.
+        """
+        for _class in self.__classes:
+            res = self.__search_for_class_recursively(_class, class_name)
+            if res:
+                return res
+            
+        return None            
         
+    def __search_for_class_recursively(self, class_obj: dict, class_name: str) -> dict:
+        if class_obj["name"] == class_name:
+            return class_obj
+        
+        for _class in class_obj["nests"]:
+            res =  self.__search_for_class_recursively(_class, class_name)
+            if res:
+                return res
+        
+        return None
+    
     def __add_field_to_class(self, class_obj: dict, field_name: str, field_schema_data: dict, dont_process: bool = False, field_of_enum=False):
         field_name = field_name.split(':')[1].strip()
         field_type = field_schema_data['types'][0][0]
@@ -1118,13 +1148,13 @@ class Schema:
         # class is provided as a dictionary
         return "".join([
             _class['declaration'],
+            "".join([
+                self.__get_class_body(nested_class) for nested_class in _class['nests']
+            ]),
             "".join(_class['fields']),
             "".join(_class['methods']),
             _class['sync'].get_body() if _class['sync'] else "",
             _class['revsync'].get_body() if _class['revsync'] else "",
-            "".join([
-                self.__get_class_body(nested_class) for nested_class in _class['nests']
-            ]),
             "}"
         ])
         
@@ -1144,6 +1174,32 @@ class Schema:
         
     def get_exceptions(self):
         return self.__exceptions
+    
+    def get_class_order(self):
+        """
+        Get the order of classes in the schema based on inheritance.
+        """
+        class_order = []
+        while len(class_order) != len(self.schema_data['classes']):
+            for class_ in self.schema_data['classes']:
+                if class_ in class_order:
+                    continue
+
+                if not set(self.schema_data['classes'][class_]['extends']).issubset(set(class_order)) and all([x in self.schema_data['classes'].keys() for x in self.schema_data['classes'][class_]['extends']]):
+                    continue
+                
+                if not set(self.schema_data['classes'][class_]['implements']).issubset(set(class_order)) and all([x in self.schema_data['classes'].keys() for x in self.schema_data['classes'][class_]['implements']]):
+                    continue                                                                                                                       
+                
+                if self.schema_data['classes'][class_]['nests'] == []:
+                    class_order.append(class_)
+                    continue
+
+                if all([x in class_order for x in self.schema_data['classes'][class_]['nests']]):
+                    class_order.append(class_)
+        
+        return class_order
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate glue code for Compositional Testing.')
