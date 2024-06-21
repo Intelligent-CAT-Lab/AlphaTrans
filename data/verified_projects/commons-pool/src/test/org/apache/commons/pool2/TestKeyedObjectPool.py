@@ -126,22 +126,14 @@ class TestKeyedObjectPool(unittest.TestCase, ABC):
     _KEY = "key"
 
     
-    @classmethod
-    def setUpClass(cls):
-        if cls == TestKeyedObjectPool:
-            "Tests shall only be executed in child classes"
-            raise unittest.SkipTest
+    __test__ = False
 
     
-    def __init__(self, methodName='runTest') -> None:
-        self.setUpClass()
-        super().__init__(methodName)
-        
-        self.__pool = None
+    __pool = None
 
-        self.__ZERO = int(0)
+    __ZERO = int(0)
 
-        self.__ONE = int(1)
+    __ONE = int(1)
 
     
     def __clear(self, factory, expectedMethods) -> None:

@@ -15,6 +15,8 @@ class TestLinkedBlockingDeque(unittest.TestCase):
     __TWO = 2
     __THREE = 3
 
+    deque = None
+
 
     def timeout(seconds):
         def decorator(func):
@@ -33,10 +35,6 @@ class TestLinkedBlockingDeque(unittest.TestCase):
 
             return wrapper
         return decorator
-
-    
-    def __init__(self) -> None:
-        self.deque = None
 
     
     def setUp(self) -> None:

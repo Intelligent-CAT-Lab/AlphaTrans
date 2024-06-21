@@ -22,8 +22,10 @@ class TestBaseObjectPool(TestObjectPool):
             pass
 
     
-    def __init__(self) -> None:
-        self.__pool = None
+    
+    __test__ = True
+    
+    __pool = None
 
     
     def _getNthObject(self, n: int) -> Any:
@@ -246,7 +248,7 @@ class TestBaseObjectPool(TestObjectPool):
     def testUnsupportedOperations(self) -> None:
         try:
             if self.__class__ != TestBaseObjectPool:
-                return  # skip redundant tests`
+                return  # skip redundant tests
             pool = TestBaseObjectPool.TestObjectPool()
             try:
                 self.assertTrue(pool.getNumIdle() < 0, "Negative expected.")

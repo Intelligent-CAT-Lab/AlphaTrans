@@ -11,16 +11,7 @@ class TestObjectPool(unittest.TestCase, ABC):
     _ONE = 1
 
     
-    @classmethod
-    def setUpClass(cls):
-        if cls == TestObjectPool:
-            "Tests shall only be executed in child classes"
-            raise unittest.SkipTest
-    
-
-    def __init__(self, methodName='runTest') -> None:
-        self.setUpClass()
-        super().__init__(methodName)
+    __test__ = False
 
     
     @staticmethod
@@ -47,5 +38,5 @@ class TestObjectPool(unittest.TestCase, ABC):
 
     
     @abstractmethod
-    def makeEmptyPool(self, factory) -> Any:
+    def _makeEmptyPool(self, factory) -> Any:
         pass

@@ -10,10 +10,7 @@ class PoolTest(unittest.TestCase):
     __COMMONS_POOL_EVICTIONS_TIMER_THREAD_NAME = "commons-pool-EvictionTimer"
     __EVICTION_PERIOD_IN_MILLIS = 100
 
-    @classmethod
-    def setUpClass(cls):
-        "This test class is disabled."
-        raise unittest.SkipTest
+    __test__ = False
 
     class Foo:
         pass

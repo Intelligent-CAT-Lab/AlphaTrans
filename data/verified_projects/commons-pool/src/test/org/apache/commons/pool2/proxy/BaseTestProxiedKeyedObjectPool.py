@@ -34,28 +34,17 @@ class BaseTestProxiedKeyedObjectPool(unittest.TestCase, ABC):
         def setData(self, data: str) -> None:
             self.__data = data
 
+    
     __KEY1 = "key1"
     __DATA1 = "data1"
     __ABANDONED_TIMEOUT_SECS = timedelta(seconds=3)
 
-    
-    @classmethod
-    def setUpClass(cls):
-        if cls == BaseTestProxiedKeyedObjectPool:
-            "Tests shall only be executed in child classes"
-            raise unittest.SkipTest
+    __pool = None
+    __log = None
 
     
-    def __init__(self, methodName='runTest') -> None:
-        self.setUpClass()
-        super().__init__(methodName)
-        self.__pool = None
-        self.__log = None
+    __test__ = False
 
-    
-    def setUp(self, pool = None, log = None) -> None:
-        self.__pool = pool
-        self.__log = log
 
 
     @abstractmethod

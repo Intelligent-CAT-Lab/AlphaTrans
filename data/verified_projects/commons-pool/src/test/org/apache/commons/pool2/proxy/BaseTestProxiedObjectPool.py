@@ -39,23 +39,11 @@ class BaseTestProxiedObjectPool(unittest.TestCase, ABC):
     __ABANDONED_TIMEOUT_SECS = timedelta(seconds=3)
 
 
-    @classmethod
-    def setUpClass(cls):
-        if cls == BaseTestProxiedObjectPool:
-            "Tests shall only be executed in child classes."
-            raise unittest.SkipTest
+    __test__ = False
 
-    
-    def __init__(self, methodName='runTest') -> None:
-        self.setUpClass()
-        super().__init__(methodName)
-        self.__pool = None
-        self.__log = None
+    __pool = None
+    __log = None
 
-    
-    def setUp(self, pool, log) -> None:
-        self.__pool = pool
-        self.__log = log
 
 
     @abstractmethod

@@ -10,8 +10,7 @@ class TestPooledSoftReference(unittest.TestCase):
     __REFERENT = "test"
     __REFERENT2 = "test2"
 
-    def __init__(self) -> None:
-        self.ref = None
+    ref = None
     
 
     def setUp(self) -> None:

@@ -6,6 +6,8 @@ from src.main.org.apache.commons.pool2.PooledObject import *
 
 class TestSynchronizedPooledObjectFactory(PooledObjectFactory):
 
+    __test__ = False
+
     def __init__(self, factory):
         try:
             if factory is None:

@@ -7,9 +7,7 @@ from io import StringIO
 
 class TestCallStack(unittest.TestCase):
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self.__writer = None
+    __writer = None
 
     
     def getWriter(self) -> StringIO:
