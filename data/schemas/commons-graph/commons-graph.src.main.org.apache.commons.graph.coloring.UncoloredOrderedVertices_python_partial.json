@@ -92,11 +92,18 @@
                         "    def size(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def size(self) -> int:",
+                        "         return len(self.__orderedVertices)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.13091778755188,
+                    "generation_timestamp": "2024-06-20T23:28:49.094775",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "53-91:iterator": {
                     "start": 53,
@@ -160,11 +167,47 @@
                         "    def iterator(self) -> typing.Iterator[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def iterator(self) -> typing.Iterator[typing.Any]:",
+                        "        ",
+                        "        class Iterator:",
+                        "            def __init__(self):",
+                        "                self.keys = iter(self.__orderedVertices.keys())",
+                        "                self.pending = None",
+                        "                self.next = None",
+                        "",
+                        "            def hasNext(self) -> bool:",
+                        "                if self.next is not None:",
+                        "                    return True",
+                        "",
+                        "                while (self.pending is None) or (not self.pending.hasNext()):",
+                        "                    if not self.keys.hasNext():",
+                        "                        return False",
+                        "                    self.pending = iter(self.__orderedVertices[next(self.keys)])",
+                        "",
+                        "                self.next = next(self.pending)",
+                        "                return True",
+                        "",
+                        "            def next(self) -> typing.Any:",
+                        "                if not self.hasNext():",
+                        "                    raise StopIteration",
+                        "                returned = self.next",
+                        "                self.next = None",
+                        "                return returned",
+                        "",
+                        "            def remove(self) -> None:",
+                        "                self.pending.remove()",
+                        "",
+                        "        return Iterator()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.932941913604736,
+                    "generation_timestamp": "2024-06-20T23:29:19.153255",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "49-51:compare": {
                     "start": 49,
@@ -195,11 +238,18 @@
                         "    def compare(self, o1: int, o2: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def compare(self, o1: int, o2: int) -> int:",
+                        "         return o2 - o1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.832489490509033,
+                    "generation_timestamp": "2024-06-20T23:29:23.990045",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "37-46:addVertexDegree": {
                     "start": 37,
@@ -237,11 +287,25 @@
                         "    def addVertexDegree(self, v: typing.Any, degree: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def addVertexDegree(self, v: typing.Any, degree: int) -> None:",
+                        "        ",
+                        "        vertices = self.__orderedVertices.get(degree)",
+                        "",
+                        "        if vertices is None:",
+                        "            vertices = set()",
+                        "",
+                        "        vertices.add(v)",
+                        "        self.__orderedVertices[degree] = vertices"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.618128538131714,
+                    "generation_timestamp": "2024-06-20T23:29:32.610996",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -261,12 +325,22 @@
                             "java.util.Map<Integer,Set<V>>"
                         ]
                     ],
-                    "partial_translation": "    __orderedVertices: typing.Dict[int, typing.Set[typing.Any]] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __orderedVertices: typing.Dict[int, typing.Set[typing.Any]] = {}",
+                        ""
+                    ],
+                    "translation": [
+                        "    __orderedVertices: typing.Dict[int, typing.Set[typing.Any]] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:35.738795",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class UncoloredOrderedVertices(Iterable):\n\n"

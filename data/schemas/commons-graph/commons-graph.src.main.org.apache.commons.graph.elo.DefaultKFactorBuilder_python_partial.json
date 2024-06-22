@@ -68,11 +68,22 @@
                         "    def withKFactor(self, kFactor: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def withKFactor(self, kFactor: int) -> None:",
+                        "        ",
+                        "        for player in self.__tournamentGraph.getVertices0():",
+                        "            for opponent in self.__tournamentGraph.getOutbound(player):",
+                        "                gameResult = self.__tournamentGraph.getEdge(player, opponent)",
+                        "                self.__evaluateMatch(player, gameResult, opponent, kFactor)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.453410387039185,
+                    "generation_timestamp": "2024-06-20T23:28:53.550268",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "88-90:withDefaultKFactor": {
                     "start": 88,
@@ -106,11 +117,22 @@
                         "    def withDefaultKFactor(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def withDefaultKFactor(self) -> None:",
+                        "        ",
+                        "        for player in self.__tournamentGraph.getVertices0():",
+                        "            for opponent in self.__tournamentGraph.getOutbound(player):",
+                        "                gameResult = self.__tournamentGraph.getEdge(player, opponent)",
+                        "                self.__evaluateMatch(player, gameResult, opponent, self.__DEFAULT_K_FACTOR)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.666137218475342,
+                    "generation_timestamp": "2024-06-20T23:28:58.218310",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "42-46:DefaultKFactorBuilder": {
                     "start": 42,
@@ -143,11 +165,20 @@
                         "    def __init__(self, tournamentGraph: DirectedGraph[typing.Any, GameResult], playerRanking: PlayersRank[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, tournamentGraph: DirectedGraph[typing.Any, GameResult], playerRanking: PlayersRank[typing.Any]) -> None:",
+                        "        ",
+                        "        self.__tournamentGraph = tournamentGraph",
+                        "        self.__playerRanking = playerRanking"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.384716033935547,
+                    "generation_timestamp": "2024-06-20T23:28:09.963770",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "83-86:updateRanking": {
                     "start": 83,
@@ -181,11 +212,20 @@
                         "    def __updateRanking(self, player: typing.Any, kFactor: float, sFactor: float, eFactor: float) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __updateRanking(self, player: typing.Any, kFactor: float, sFactor: float, eFactor: float) -> None:",
+                        "        ",
+                        "        newRanking = self.__playerRanking.getRanking(player) + (kFactor * (sFactor - eFactor))",
+                        "        self.__playerRanking.updateRanking(player, newRanking)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.098852634429932,
+                    "generation_timestamp": "2024-06-20T23:28:19.065256",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "53-81:evaluateMatch": {
                     "start": 53,
@@ -260,11 +300,36 @@
                         "    def __evaluateMatch(self, playerA: typing.Any, gameResult: GameResult, playerB: typing.Any, kFactor: int) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __evaluateMatch(self, playerA: typing.Any, gameResult: GameResult, playerB: typing.Any, kFactor: int) -> bool:",
+                        "        ",
+                        "        qA = self.__calculateQFactor(playerA)",
+                        "        qB = self.__calculateQFactor(playerB)",
+                        "",
+                        "        eA = self.__calculateEFactor(qA, qB)",
+                        "        eB = self.__calculateEFactor(qB, qA)",
+                        "",
+                        "        if gameResult == GameResult.WIN:",
+                        "            sA = 1",
+                        "            sB = 0",
+                        "        elif gameResult == GameResult.DRAW:",
+                        "            sA = 0.5",
+                        "            sB = 0.5",
+                        "        else:",
+                        "            raise IllegalArgumentException(\"Input GameResult not accepted\")",
+                        "",
+                        "        self.__updateRanking(playerA, kFactor, sA, eA)",
+                        "        self.__updateRanking(playerB, kFactor, sB, eB)",
+                        "        return True"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.616243600845337,
+                    "generation_timestamp": "2024-06-20T23:28:43.960394",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "48-51:calculateQFactor": {
                     "start": 48,
@@ -295,11 +360,20 @@
                         "    def __calculateQFactor(self, player: typing.Any) -> float:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __calculateQFactor(self, player: typing.Any) -> float:",
+                        "        ",
+                        "        ranking = self.__playerRanking.getRanking(player)",
+                        "        return pow(self.__DEFAULT_POW_BASE, ranking / self.__DEFAULT_DIVISOR)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.874972343444824,
+                    "generation_timestamp": "2024-06-20T23:28:24.942138",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "34-36:calculateEFactor": {
                     "start": 34,
@@ -332,11 +406,19 @@
                         "    def __calculateEFactor(qA: float, qB: float) -> float:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __calculateEFactor(qA: float, qB: float) -> float:",
+                        "         return qA / (qA + qB)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.3977150917053223,
+                    "generation_timestamp": "2024-06-20T23:28:26.341691",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -356,12 +438,22 @@
                             "PlayersRank<P>"
                         ]
                     ],
-                    "partial_translation": "    __playerRanking: PlayersRank[typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __playerRanking: PlayersRank[typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __playerRanking: PlayersRank[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:31.824952",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "38-38:tournamentGraph": {
                     "start": 38,
@@ -379,12 +471,22 @@
                             "DirectedGraph<P,GameResult>"
                         ]
                     ],
-                    "partial_translation": "    __tournamentGraph: DirectedGraph[typing.Any, GameResult] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __tournamentGraph: DirectedGraph[typing.Any, GameResult] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __tournamentGraph: DirectedGraph[typing.Any, GameResult] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:31.826185",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "32-32:DEFAULT_K_FACTOR": {
                     "start": 32,
@@ -403,12 +505,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __DEFAULT_K_FACTOR: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __DEFAULT_K_FACTOR: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __DEFAULT_K_FACTOR: int = 32"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.2444252967834473,
+                    "generation_timestamp": "2024-06-20T22:22:33.071880",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "30-30:DEFAULT_DIVISOR": {
                     "start": 30,
@@ -427,12 +538,21 @@
                             "double"
                         ]
                     ],
-                    "partial_translation": "    __DEFAULT_DIVISOR: float = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __DEFAULT_DIVISOR: float = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __DEFAULT_DIVISOR: float = 400.0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.4206888675689697,
+                    "generation_timestamp": "2024-06-20T22:22:34.494875",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "28-28:DEFAULT_POW_BASE": {
                     "start": 28,
@@ -451,12 +571,21 @@
                             "double"
                         ]
                     ],
-                    "partial_translation": "    __DEFAULT_POW_BASE: float = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __DEFAULT_POW_BASE: float = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __DEFAULT_POW_BASE: float = 10.0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.2386715412139893,
+                    "generation_timestamp": "2024-06-20T22:22:35.736330",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class DefaultKFactorBuilder(KFactorBuilder):\n\n"

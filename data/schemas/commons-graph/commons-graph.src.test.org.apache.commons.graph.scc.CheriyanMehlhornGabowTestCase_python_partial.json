@@ -203,11 +203,48 @@
                         "    def testVerifyHasStronglyConnectedComponents(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testVerifyHasStronglyConnectedComponents(self) -> None:",
+                        "        ",
+                        "        a = BaseLabeledVertex(\"A\")",
+                        "        b = BaseLabeledVertex(\"B\")",
+                        "        c = BaseLabeledVertex(\"C\")",
+                        "        d = BaseLabeledVertex(\"D\")",
+                        "        e = BaseLabeledVertex(\"E\")",
+                        "        f = BaseLabeledVertex(\"F\")",
+                        "        g = BaseLabeledVertex(\"G\")",
+                        "        h = BaseLabeledVertex(\"H\")",
+                        "",
+                        "        graph = CommonsGraph.newDirectedMutableGraph(",
+                        "            AbstractGraphConnection().addVertex(a).addVertex(b).addVertex(c).addVertex(d).addVertex(e).addVertex(f).addVertex(g).addVertex(h)",
+                        "            .addEdge(BaseLabeledEdge(\"A -> F\")).from_(a).to(f)",
+                        "            .addEdge(BaseLabeledEdge(\"A -> B\")).from_(a).to(b)",
+                        "            .addEdge(BaseLabeledEdge(\"B -> D\")).from_(b).to(d)",
+                        "            .addEdge(BaseLabeledEdge(\"C -> G\")).from_(c).to(g)",
+                        "            .addEdge(BaseLabeledEdge(\"D -> A\")).from_(d).to(a)",
+                        "            .addEdge(BaseLabeledEdge(\"D -> G\")).from_(d).to(g)",
+                        "            .addEdge(BaseLabeledEdge(\"E -> C\")).from_(e).to(c)",
+                        "            .addEdge(BaseLabeledEdge(\"E -> F\")).from_(e).to(f)",
+                        "            .addEdge(BaseLabeledEdge(\"F -> E\")).from_(f).to(e)",
+                        "            .addEdge(BaseLabeledEdge(\"G -> H\")).from_(g).to(h)",
+                        "            .addEdge(BaseLabeledEdge(\"H -> C\")).from_(h).to(c)",
+                        "        )",
+                        "",
+                        "        expected = set([frozenset([a, b, d]), frozenset([e, f]), frozenset([g, h, c])])",
+                        "",
+                        "        actual = CommonsGraph.findStronglyConnectedComponent(graph).applyingCheriyanMehlhornGabow()",
+                        "",
+                        "        self.assertFalse(not actual)",
+                        "        self.assertEqual(expected, actual)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 31.803113222122192,
+                    "generation_timestamp": "2024-06-20T23:40:34.218530",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "60-83:testSparse": {
                     "start": 60,
@@ -269,11 +306,33 @@
                         "    def testSparse(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testSparse(self) -> None:",
+                        "        ",
+                        "        graph = CommonsGraph.newDirectedMutableGraph(",
+                        "            AbstractGraphConnection[BaseLabeledVertex, BaseLabeledWeightedEdge[int]]()",
+                        "            .addVertex(BaseLabeledVertex(\"A\"))",
+                        "            .addVertex(BaseLabeledVertex(\"B\"))",
+                        "            .addVertex(BaseLabeledVertex(\"C\"))",
+                        "            .addVertex(BaseLabeledVertex(\"D\"))",
+                        "            .addVertex(BaseLabeledVertex(\"E\"))",
+                        "            .addVertex(BaseLabeledVertex(\"F\"))",
+                        "        )",
+                        "",
+                        "        expected = 6",
+                        "",
+                        "        actual = CommonsGraph.findStronglyConnectedComponent(graph).applyingCheriyanMehlhornGabow()",
+                        "",
+                        "        self.assertEqual(len(actual), expected)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.780491590499878,
+                    "generation_timestamp": "2024-06-20T23:40:46.002617",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "54-57:testNullGraph": {
                     "start": 54,
@@ -286,7 +345,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = NullPointerException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -310,11 +369,21 @@
                         "    def testNullGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNullGraph(self) -> None:",
+                        "        ",
+                        "        graph = None",
+                        "        with pytest.raises(NullPointerException):",
+                        "            CommonsGraph.findStronglyConnectedComponent(graph).applyingCheriyanMehlhornGabow()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.190608978271484,
+                    "generation_timestamp": "2024-06-20T23:40:53.196102",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "46-51:testEmptyGraph": {
                     "start": 46,
@@ -353,15 +422,25 @@
                         "    def testEmptyGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEmptyGraph(self) -> None:",
+                        "        ",
+                        "        graph = DirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[int]]()",
+                        "",
+                        "        CommonsGraph.findStronglyConnectedComponent(graph).applyingCheriyanMehlhornGabow()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.860511779785156,
+                    "generation_timestamp": "2024-06-20T23:40:58.059342",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class CheriyanMehlhornGabowTestCase:\n\n"
+            "python_class_declaration": "class CheriyanMehlhornGabowTestCase(unittest.TestCase):\n\n"
         },
         "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Integer>>(...) { ... }": {
             "start": 63,
@@ -515,7 +594,10 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
+        "import unittest",
         "from src.main.org.apache.commons.graph.CommonsGraph import *",
         "from src.main.org.apache.commons.graph.DirectedGraph import *",
         "from src.main.org.apache.commons.graph.builder.GraphConnection import *",

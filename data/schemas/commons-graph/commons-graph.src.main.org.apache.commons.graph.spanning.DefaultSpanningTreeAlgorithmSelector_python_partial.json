@@ -199,11 +199,49 @@
                         "    def applyingPrimAlgorithm(self, weightOperations: typing.Any) -> SpanningTree[typing.Any, typing.Any, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def applyingPrimAlgorithm(self, weightOperations: typing.Any) -> SpanningTree[typing.Any, typing.Any, typing.Any]:",
+                        "        ",
+                        "        Assertions.checkNotNull(",
+                        "            weightOperations,",
+                        "            \"The Prim algorithm cannot be calculated with null weight operations\"",
+                        "        )",
+                        "",
+                        "        shortestEdges = ShortestEdges(self.__graph, self.__source, weightOperations, self.__weightedEdges)",
+                        "",
+                        "        unsettledNodes = FibonacciHeap(shortestEdges)",
+                        "        unsettledNodes.add(self.__source)",
+                        "",
+                        "        settledEdges = set()",
+                        "",
+                        "        while not unsettledNodes.isEmpty():",
+                        "            vertex = unsettledNodes.remove()",
+                        "",
+                        "            for v in self.__graph.getConnectedVertices(vertex):",
+                        "                edge = self.__graph.getEdge(vertex, v)",
+                        "                weightLessThanCurrent = (",
+                        "                    not shortestEdges.hasWeight(v)",
+                        "                    or weightOperations.compare(",
+                        "                        self.__weightedEdges.map(edge), shortestEdges.getWeight(v)",
+                        "                    )",
+                        "                    < 0",
+                        "                )",
+                        "                if edge not in settledEdges and weightLessThanCurrent:",
+                        "                    if not unsettledNodes.contains(v):",
+                        "                        unsettledNodes.add(v)",
+                        "",
+                        "                    shortestEdges.addPredecessor(v, edge)",
+                        "",
+                        "        return shortestEdges.createSpanningTree()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 29.221994876861572,
+                    "generation_timestamp": "2024-06-20T22:55:21.552163",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "157-197:applyingKruskalAlgorithm": {
                     "start": 157,
@@ -277,11 +315,53 @@
                         "    def applyingKruskalAlgorithm(self, weightOperations: typing.Any) -> SpanningTree[typing.Any, typing.Any, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def applyingKruskalAlgorithm(self, weightOperations: typing.Any) -> SpanningTree[typing.Any, typing.Any, typing.Any]:",
+                        "        ",
+                        "        Assertions.checkNotNull(",
+                        "            weightOperations,",
+                        "            \"The Kruskal algorithm cannot be calculated with null weight operations\"",
+                        "        )",
+                        "        ",
+                        "        settledNodes = set()",
+                        "",
+                        "        orderedEdges = FibonacciHeap(",
+                        "            WeightedEdgesComparator(weightOperations, self.__weightedEdges)",
+                        "        )",
+                        "",
+                        "        for edge in self.__graph.getEdges():",
+                        "            orderedEdges.add(edge)",
+                        "",
+                        "        disjointSet = DisjointSet()",
+                        "",
+                        "        spanningTree = MutableSpanningTree(weightOperations, self.__weightedEdges)",
+                        "",
+                        "        for v in self.__graph.getVertices0():",
+                        "            spanningTree.addVertex(v)",
+                        "",
+                        "        while not orderedEdges.isEmpty() and len(settledNodes) < self.__graph.getOrder():",
+                        "            edge = orderedEdges.remove()",
+                        "",
+                        "            vertices = self.__graph.getVertices1(edge)",
+                        "            head = vertices.getHead()",
+                        "            tail = vertices.getTail()",
+                        "            settledNodes.add(head)",
+                        "            settledNodes.add(tail)",
+                        "",
+                        "            if disjointSet.find1(head) != disjointSet.find1(tail):",
+                        "                disjointSet.union(head, tail)",
+                        "                spanningTree.addEdge(head, edge, tail)",
+                        "",
+                        "        return spanningTree"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.711040496826172,
+                    "generation_timestamp": "2024-06-20T22:55:43.266191",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "74-154:applyingBoruvkaAlgorithm": {
                     "start": 74,
@@ -400,11 +480,67 @@
                         "    def applyingBoruvkaAlgorithm(self, weightOperations: typing.Any) -> SpanningTree[typing.Any, typing.Any, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def applyingBoruvkaAlgorithm(self, weightOperations: typing.Any) -> SpanningTree[typing.Any, typing.Any, typing.Any]:",
+                        "        ",
+                        "        Assertions.checkNotNull(",
+                        "            weightOperations,",
+                        "            \"The Boruvka algorithm cannot be calculated with null weight operations\"",
+                        "        )",
+                        "",
+                        "        spanningTree = MutableSpanningTree(weightOperations, self.__weightedEdges)",
+                        "",
+                        "        components = set()",
+                        "",
+                        "        mapping = dict()",
+                        "",
+                        "        for v in self.__graph.getVertices0():",
+                        "            sv = SuperVertex(v, self.__graph, WeightedEdgesComparator(weightOperations, self.__weightedEdges))",
+                        "",
+                        "            components.add(sv)",
+                        "",
+                        "            mapping[v] = sv",
+                        "",
+                        "            spanningTree.addVertex(v)",
+                        "",
+                        "        while len(components) > 1:",
+                        "            edges = []",
+                        "            for sv in components:",
+                        "                edge = sv.getMinimumWeightEdge()",
+                        "                if edge is not None:",
+                        "                    edges.append(edge)",
+                        "",
+                        "            Assertions.checkState(len(edges) > 0 or len(components) == 1, \"unconnected graph\")",
+                        "",
+                        "            for edge in edges:",
+                        "                pair = self.__graph.getVertices1(edge)",
+                        "                head = pair.getHead()",
+                        "                tail = pair.getTail()",
+                        "",
+                        "                headSv = mapping[head]",
+                        "                tailSv = mapping[tail]",
+                        "",
+                        "                if headSv != tailSv:",
+                        "                    headSv.merge(tailSv)",
+                        "",
+                        "                    for v in tailSv:",
+                        "                        mapping[v] = headSv",
+                        "",
+                        "                    components.remove(tailSv)",
+                        "",
+                        "                    if spanningTree.getVertices1(edge) is None:",
+                        "                        spanningTree.addEdge(head, edge, tail)",
+                        "",
+                        "        return spanningTree"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 23.49066710472107,
+                    "generation_timestamp": "2024-06-20T22:56:06.759276",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-71:DefaultSpanningTreeAlgorithmSelector": {
                     "start": 66,
@@ -439,11 +575,21 @@
                         "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any], source: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any], source: typing.Any) -> None:",
+                        "        ",
+                        "        self.__graph = graph",
+                        "        self.__weightedEdges = weightedEdges",
+                        "        self.__source = source"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.156721830368042,
+                    "generation_timestamp": "2024-06-20T22:56:11.917852",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -463,12 +609,22 @@
                             "V"
                         ]
                     ],
-                    "partial_translation": "    __source: typing.Any = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __source: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __source: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:05.475080",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "54-54:weightedEdges": {
                     "start": 54,
@@ -486,12 +642,22 @@
                             "Mapper<WE,W>"
                         ]
                     ],
-                    "partial_translation": "    __weightedEdges: Mapper[typing.Any, typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:05.477586",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "52-52:graph": {
                     "start": 52,
@@ -509,12 +675,22 @@
                             "Graph<V,WE>"
                         ]
                     ],
-                    "partial_translation": "    __graph: Graph[typing.Any, typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:05.479919",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class DefaultSpanningTreeAlgorithmSelector:\n\n"

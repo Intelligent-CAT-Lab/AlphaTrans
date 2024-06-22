@@ -175,11 +175,55 @@
                         "    def withHeuristic(self, heuristic: typing.Any) -> WeightedPath[typing.Any, typing.Any, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def withHeuristic(self, heuristic: typing.Any) -> WeightedPath[typing.Any, typing.Any, typing.Any]:",
+                        "        ",
+                        "        heuristic = Assertions.checkNotNull(heuristic, \"A* algorithm can not be applied using a null heuristic\", [])",
+                        "",
+                        "        gScores = ShortestDistances[typing.Any, typing.Any](self.__weightOperations)",
+                        "        gScores.setWeight(self.__start, self.__weightOperations.identity())",
+                        "",
+                        "        fScores = ShortestDistances[typing.Any, typing.Any](self.__weightOperations)",
+                        "        hScore = heuristic.applyHeuristic(self.__start, self.__goal)",
+                        "        fScores.setWeight(self.__start, hScore)",
+                        "",
+                        "        closedSet = set()",
+                        "",
+                        "        openSet = FibonacciHeap[typing.Any](fScores)",
+                        "        openSet.add(self.__start)",
+                        "",
+                        "        predecessors = PredecessorsList[typing.Any, typing.Any, typing.Any](self.__graph, self.__weightOperations, self.__weightedEdges)",
+                        "",
+                        "        while not openSet.isEmpty():",
+                        "            current = openSet.remove()",
+                        "",
+                        "            if self.__goal == current:",
+                        "                return predecessors.buildPath0(self.__start, self.__goal)",
+                        "",
+                        "            closedSet.add(current)",
+                        "",
+                        "            connected = self.__graph.getOutbound(current) if isinstance(self.__graph, DirectedGraph) else self.__graph.getConnectedVertices(current)",
+                        "            for v in connected:",
+                        "                if v not in closedSet:",
+                        "                    edge = self.__graph.getEdge(current, v)",
+                        "                    tentativeGScore = self.__weightOperations.append(gScores.getWeight(current), self.__weightedEdges.map(edge))",
+                        "",
+                        "                    if openSet.add(v) or self.__weightOperations.compare(tentativeGScore, gScores.getWeight(v)) < 0:",
+                        "                        predecessors.addPredecessor(v, current)",
+                        "                        gScores.setWeight(v, tentativeGScore)",
+                        "                        hScore = heuristic.applyHeuristic(v, self.__goal)",
+                        "                        fScores.setWeight(v, self.__weightOperations.append(gScores.getWeight(v), hScore))",
+                        "",
+                        "        raise PathNotFoundException(\"Path from '%s' to '%s' doesn't exist in Graph '%s'\", [self.__start, self.__goal, self.__graph])"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 31.733948945999146,
+                    "generation_timestamp": "2024-06-20T22:50:04.118954",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "47-58:DefaultHeuristicBuilder": {
                     "start": 47,
@@ -222,11 +266,23 @@
                         "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any], source: typing.Any, target: typing.Any, weightOperations: OrderedMonoid[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any], source: typing.Any, target: typing.Any, weightOperations: OrderedMonoid[typing.Any]) -> None:",
+                        "        ",
+                        "        self.__graph = graph",
+                        "        self.__weightedEdges = weightedEdges",
+                        "        self.__start = source",
+                        "        self.__goal = target",
+                        "        self.__weightOperations = weightOperations"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.583564519882202,
+                    "generation_timestamp": "2024-06-20T22:50:09.705302",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -246,12 +302,22 @@
                             "OrderedMonoid<W>"
                         ]
                     ],
-                    "partial_translation": "    __weightOperations: OrderedMonoid[typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __weightOperations: OrderedMonoid[typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __weightOperations: OrderedMonoid[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.497330",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "43-43:goal": {
                     "start": 43,
@@ -269,12 +335,22 @@
                             "V"
                         ]
                     ],
-                    "partial_translation": "    __goal: typing.Any = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __goal: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __goal: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.498425",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "41-41:start": {
                     "start": 41,
@@ -292,12 +368,22 @@
                             "V"
                         ]
                     ],
-                    "partial_translation": "    __start: typing.Any = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __start: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __start: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.499465",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "39-39:weightedEdges": {
                     "start": 39,
@@ -315,12 +401,22 @@
                             "Mapper<WE,W>"
                         ]
                     ],
-                    "partial_translation": "    __weightedEdges: Mapper[typing.Any, typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.500485",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "37-37:graph": {
                     "start": 37,
@@ -338,12 +434,22 @@
                             "Graph<V,WE>"
                         ]
                     ],
-                    "partial_translation": "    __graph: Graph[typing.Any, typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.501508",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class DefaultHeuristicBuilder(HeuristicBuilder):\n\n"
