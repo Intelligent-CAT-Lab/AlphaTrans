@@ -205,7 +205,16 @@
                     "start": 114,
                     "end": 114,
                     "body": [
-                        "    private static final byte[] DECODING_TABLE = new byte[Byte.MAX_VALUE - Byte.MIN_VALUE + 1];\n"
+                        "    private static final byte[] DECODING_TABLE = new byte[Byte.MAX_VALUE - Byte.MIN_VALUE + 1];\n",
+                        "static {",
+                        "for (int i = 0; i < DECODING_TABLE.length; i++) {",
+                        "     DECODING_TABLE[i] = INVALID_BYTE;",
+                        "}",
+                        " for (int i = 0; i < ENCODING_TABLE.length; i++) {",
+                        "     DECODING_TABLE[ENCODING_TABLE[i]] = (byte) i;",
+                        " }",
+                        " DECODING_TABLE[PADDING] = PAD_BYTE;",
+                        "}"
                     ],
                     "modifiers": [
                         "static",
