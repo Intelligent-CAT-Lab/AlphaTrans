@@ -108,11 +108,21 @@
                         "    def _tearDown(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _tearDown(self) -> None:",
+                        "        ",
+                        "        super().tearDown()",
+                        "        self._valid = None",
+                        "        self._routine = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.231068849563599,
+                    "generation_timestamp": "2024-06-20T15:22:43.553606",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "304-310:checkDigit": {
                     "start": 304,
@@ -146,11 +156,23 @@
                         "    def _checkDigit(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _checkDigit(self, code: str) -> str:",
+                        "        ",
+                        "        if code is None or len(code) <= self._checkDigitLth:",
+                        "            return \"\"",
+                        "        ",
+                        "        start = len(code) - self._checkDigitLth",
+                        "        return code[start:]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.993567705154419,
+                    "generation_timestamp": "2024-06-20T15:22:46.550150",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "291-296:removeCheckDigit": {
                     "start": 291,
@@ -183,11 +205,22 @@
                         "    def _removeCheckDigit(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _removeCheckDigit(self, code: str) -> str:",
+                        "        ",
+                        "        if code is None or len(code) <= self._checkDigitLth:",
+                        "            return None",
+                        "        ",
+                        "        return code[:-self._checkDigitLth]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.527590036392212,
+                    "generation_timestamp": "2024-06-20T15:22:49.080656",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "266-283:createInvalidCodes": {
                     "start": 266,
@@ -243,11 +276,29 @@
                         "    def _createInvalidCodes(self, codes: typing.List[str]) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _createInvalidCodes(self, codes: typing.List[str]) -> typing.List[str]:",
+                        "        ",
+                        "        list = []",
+                        "",
+                        "        for fullCode in codes:",
+                        "            code = self._removeCheckDigit(fullCode)",
+                        "            check = self._checkDigit(fullCode)",
+                        "            for j in range(len(self.__POSSIBLE_CHECK_DIGITS)):",
+                        "                curr = self.__POSSIBLE_CHECK_DIGITS[j]",
+                        "                if curr != check:",
+                        "                    list.append(code + curr)",
+                        "",
+                        "        return list"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.259064435958862,
+                    "generation_timestamp": "2024-06-20T15:22:55.343590",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "234-255:testSerialization": {
                     "start": 234,
@@ -294,11 +345,36 @@
                         "    def testSerialization(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testSerialization(self) -> None:",
+                        "        ",
+                        "        baos = io.BytesIO()",
+                        "        try:",
+                        "            oos = pickle.Pickler(baos)",
+                        "            oos.dump(self._routine)",
+                        "            oos.flush()",
+                        "            oos.clear()",
+                        "        except Exception as e:",
+                        "            self.fail(self._routine.__class__.__name__ + \" error during serialization: \" + str(e))",
+                        "",
+                        "        result = None",
+                        "        try:",
+                        "            bais = io.BytesIO(baos.getvalue())",
+                        "            ois = pickle.Unpickler(bais)",
+                        "            result = ois.load()",
+                        "            bais.close()",
+                        "        except Exception as e:",
+                        "            self.fail(self._routine.__class__.__name__ + \" error during deserialization: \" + str(e))",
+                        "        self.assertIsNotNone(result)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 33.98015761375427,
+                    "generation_timestamp": "2024-06-20T15:23:29.326676",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "221-231:testZeroSum": {
                     "start": 221,
@@ -345,11 +421,25 @@
                         "    def testZeroSum(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testZeroSum(self) -> None:",
+                        "        ",
+                        "        assert not self._routine.isValid(self._zeroSum), \"isValid() Zero Sum\"",
+                        "",
+                        "        try:",
+                        "            self._routine.calculate(self._zeroSum)",
+                        "            self.fail(\"Zero Sum - expected exception\")",
+                        "        except Exception as e:",
+                        "            self.assertEqual(str(e), \"Invalid code, sum is zero\", \"isValid() Zero Sum\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.294261932373047,
+                    "generation_timestamp": "2024-06-20T15:23:36.626660",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "197-218:testMissingCode": {
                     "start": 197,
@@ -407,11 +497,35 @@
                         "    def testMissingCode(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testMissingCode(self) -> None:",
+                        "        ",
+                        "        self.assertFalse(\"isValid() Null\", self._routine.isValid(None))",
+                        "",
+                        "        self.assertFalse(\"isValid() Zero Length\", self._routine.isValid(\"\"))",
+                        "",
+                        "        self.assertFalse(\"isValid() Length 1\", self._routine.isValid(\"9\"))",
+                        "",
+                        "        try:",
+                        "            self._routine.calculate(None)",
+                        "            self.fail(\"calculate() Null - expected exception\")",
+                        "        except Exception as e:",
+                        "            self.assertEqual(\"calculate() Null\", self._missingMessage, str(e))",
+                        "",
+                        "        try:",
+                        "            self._routine.calculate(\"\")",
+                        "            self.fail(\"calculate() Zero Length - expected exception\")",
+                        "        except Exception as e:",
+                        "            self.assertEqual(\"calculate() Zero Length\", self._missingMessage, str(e))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.4700288772583,
+                    "generation_timestamp": "2024-06-20T15:23:50.101205",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "165-194:testCalculateInvalid": {
                     "start": 165,
@@ -482,11 +596,40 @@
                         "    def testCalculateInvalid(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCalculateInvalid(self) -> None:",
+                        "        ",
+                        "        if self._log.isDebugEnabled():",
+                        "            self._log.debug(\"testCalculateInvalid() for \" + self._routine.__class__.__name__)",
+                        "",
+                        "        for i in range(len(self._invalid)):",
+                        "            try:",
+                        "                code = self._invalid[i]",
+                        "                if self._log.isDebugEnabled():",
+                        "                    self._log.debug(\"   \" + str(i) + \" Testing Invalid Check Digit, Code=[\" + code + \"]\")",
+                        "                expected = self._checkDigit(code)",
+                        "                actual = self._routine.calculate(self._removeCheckDigit(code))",
+                        "                if expected == actual:",
+                        "                    self.fail(",
+                        "                        \"Expected mismatch for \"",
+                        "                        + code",
+                        "                        + \" expected \"",
+                        "                        + expected",
+                        "                        + \" actual \"",
+                        "                        + actual)",
+                        "            except CheckDigitException as e:",
+                        "                self.assertTrue(",
+                        "                    \"Invalid Character[\" + str(i) + \"]=\" + e.getMessage(),",
+                        "                    e.getMessage().startswith(\"Invalid \"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.748150110244751,
+                    "generation_timestamp": "2024-06-20T15:24:05.856379",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "138-162:testCalculateValid": {
                     "start": 138,
@@ -552,11 +695,37 @@
                         "    def testCalculateValid(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCalculateValid(self) -> None:",
+                        "        ",
+                        "        if self._log.isDebugEnabled():",
+                        "            self._log.debug(\"testCalculateValid() for \" + self._routine.__class__.__name__)",
+                        "",
+                        "        for i in range(len(self._valid)):",
+                        "            code = self._removeCheckDigit(self._valid[i])",
+                        "            expected = self._checkDigit(self._valid[i])",
+                        "            try:",
+                        "                if self._log.isDebugEnabled():",
+                        "                    self._log.debug(",
+                        "                            \"   \"",
+                        "                                    + str(i)",
+                        "                                    + \" Testing Valid Check Digit, Code=[\"",
+                        "                                    + code",
+                        "                                    + \"] expected=[\"",
+                        "                                    + expected",
+                        "                                    + \"]\")",
+                        "                self.assertEqual(\"valid[\" + str(i) + \"]: \" + self._valid[i], expected, self._routine.calculate(code))",
+                        "            except Exception as e:",
+                        "                self.fail(\"valid[\" + str(i) + \"]=\" + self._valid[i] + \" threw \" + str(e))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.257216930389404,
+                    "generation_timestamp": "2024-06-20T15:24:21.120777",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "109-135:testIsValidFalse": {
                     "start": 109,
@@ -619,11 +788,28 @@
                         "    def testIsValidFalse(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testIsValidFalse(self) -> None:",
+                        "        ",
+                        "        for i in range(len(self._invalid)):",
+                        "            if self._log.isDebugEnabled():",
+                        "                self._log.debug(\"   \" + str(i) + \" Testing Invalid Code=[\" + self._invalid[i] + \"]\")",
+                        "            self.assertFalse(self._routine.isValid(self._invalid[i]), \"invalid[\" + str(i) + \"]: \" + self._invalid[i])",
+                        "",
+                        "        invalidCheckDigits = self._createInvalidCodes(self._valid)",
+                        "        for i in range(len(invalidCheckDigits)):",
+                        "            if self._log.isDebugEnabled():",
+                        "                self._log.debug(\"   \" + str(i) + \" Testing Invalid Check Digit, Code=[\" + invalidCheckDigits[i] + \"]\")",
+                        "            self.assertFalse(self._routine.isValid(invalidCheckDigits[i]), \"invalid check digit[\" + str(i) + \"]: \" + invalidCheckDigits[i])"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.977211475372314,
+                    "generation_timestamp": "2024-06-20T15:24:36.100161",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "95-106:testIsValidTrue": {
                     "start": 95,
@@ -666,11 +852,25 @@
                         "    def testIsValidTrue(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testIsValidTrue(self) -> None:",
+                        "        ",
+                        "        if self._log.isDebugEnabled():",
+                        "            self._log.debug(\"testIsValidTrue() for \" + self._routine.__class__.__name__)",
+                        "",
+                        "        for i in range(len(self._valid)):",
+                        "            if self._log.isDebugEnabled():",
+                        "                self._log.debug(\"   \" + str(i) + \" Testing Valid Code=[\" + self._valid[i] + \"]\")",
+                        "            self.assertTrue(self._routine.isValid(self._valid[i]), \"valid[\" + str(i) + \"]: \" + self._valid[i])"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.506783485412598,
+                    "generation_timestamp": "2024-06-20T15:24:45.610033",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "82-84:AbstractCheckDigitTest": {
                     "start": 82,
@@ -700,11 +900,27 @@
                         "    def __init__(self, name: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, name: str) -> None:",
+                        "        ",
+                        "        super().__init__(name)",
+                        "        self._missingMessage = \"Code is missing\"",
+                        "        self._zeroSum = \"0000000000\"",
+                        "        self._invalid = [\"12345678A\"]",
+                        "        self._valid = None",
+                        "        self._routine = None",
+                        "        self._checkDigitLth = 1",
+                        "        self._log = LogFactory.getLog(self.__class__)",
+                        "        self.__POSSIBLE_CHECK_DIGITS = \"0123456789 ABCDEFHIJKLMNOPQRSTUVWXYZ\\tabcdefghijklmnopqrstuvwxyz\u00a1\u00a2\u00a3\u00a4\u00a5\u00a6\u00a7\u00a8\u00a9\u00aa\u00ab\u00ac\u00ad\u00ae\u00af\u00b0\u00b1\u00b2\u00b3\u00b4\u00b5\u00b6\u00b7\u00b8\u00b9\u00ba\u00bb\u00bc\u00bd\u00be\u00bf\ufffd\ufffd\u00c2\u00c3\u00c4\u00c5\u00c6\u00c7\u00c8\u00c9\u00ca\u00cb\u00cc\u00cd\u00ce\u00cf\u00d0\u00d1\u00d2\u00d3\u00d4\u00d5\u00d6\u00d7\u00d8\u00d9\u00da\u00db\u00dc\u00dd\u00de\u00df\u00e0\u00e1\u00e2\u00e3\u00e4\u00e5\u00e6\u00e7\u00e8\u00e9\u00ea\u00eb\u00ec\u00ed\u00ee\u00ef\u00f0\u00f1\u00f2\u00f3\u00f4\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.256460189819336,
+                    "generation_timestamp": "2024-06-20T15:25:06.871627",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -723,12 +939,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    _missingMessage: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    _missingMessage: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _missingMessage: str = \"Code is missing\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.3608574867248535,
+                    "generation_timestamp": "2024-06-20T22:25:10.884814",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "72-72:zeroSum": {
                     "start": 72,
@@ -745,12 +970,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    _zeroSum: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    _zeroSum: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _zeroSum: str = \"0000000000\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.8900518417358398,
+                    "generation_timestamp": "2024-06-20T22:25:12.780065",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "69-69:invalid": {
                     "start": 69,
@@ -767,12 +1001,22 @@
                             "java.lang.String[]"
                         ]
                     ],
-                    "partial_translation": "    _invalid: typing.List[str] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    _invalid: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    _invalid: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:33:10.473480",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "57-57:valid": {
                     "start": 57,
@@ -789,12 +1033,22 @@
                             "java.lang.String[]"
                         ]
                     ],
-                    "partial_translation": "    _valid: typing.List[str] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    _valid: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    _valid: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:33:10.474781",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "46-46:routine": {
                     "start": 46,
@@ -811,12 +1065,22 @@
                             "CheckDigit"
                         ]
                     ],
-                    "partial_translation": "    _routine: CheckDigit = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    _routine: CheckDigit = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    _routine: CheckDigit = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:33:10.475977",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "43-43:checkDigitLth": {
                     "start": 43,
@@ -833,12 +1097,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    _checkDigitLth: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    _checkDigitLth: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _checkDigitLth: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.3192405700683594,
+                    "generation_timestamp": "2024-06-20T14:33:11.796407",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "40-40:log": {
                     "start": 40,
@@ -855,12 +1128,21 @@
                             "Log"
                         ]
                     ],
-                    "partial_translation": "    _log: logging.Logger = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    _log: logging.Logger = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _log: Log = LogFactory.getLog(getClass())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.622210025787354,
+                    "generation_timestamp": "2024-06-20T14:33:20.421211",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "257-258:POSSIBLE_CHECK_DIGITS": {
                     "start": 257,
@@ -880,12 +1162,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __POSSIBLE_CHECK_DIGITS: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __POSSIBLE_CHECK_DIGITS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __POSSIBLE_CHECK_DIGITS: str = \"0123456789 ABCDEFHIJKLMNOPQRSTUVWXYZ\\tabcdefghijklmnopqrstuvwxyz\u00a1\u00a2\u00a3\u00a4\u00a5\u00a6\u00a7\u00a8\u00a9\u00aa\u00ab\u00ac\u00ad\u00ae\u00af\u00b0\u00b1\u00b2\u00b3\u00b4\u00b5\u00b6\u00b7\u00b8\u00b9\u00ba\u00bb\u00bc\u00bd\u00be\u00bf\ufffd\ufffd\u00c2\u00c3\u00c4\u00c5\u00c6\u00c7\u00c8\u00c9\u00ca\u00cb\u00cc\u00cd\u00ce\u00cf\u00d0\u00d1\u00d2\u00d3\u00d4\u00d5\u00d6\u00d7\u00d8\u00d9\u00da\u00db\u00dc\u00dd\u00de\u00df\u00e0\u00e1\u00e2\u00e3\u00e4\u00e5\u00e6\u00e7\u00e8\u00e9\u00ea\u00eb\u00ec\u00ed\u00ee\u00ef\u00f0\u00f1\u00f2\u00f3\u00f4\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.0383882522583,
+                    "generation_timestamp": "2024-06-20T14:33:36.462133",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class AbstractCheckDigitTest(unittest.TestCase, ABC):\n\n"
@@ -893,10 +1184,13 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "from abc import ABC",
         "import io",
         "import typing\nfrom typing import *",
         "import unittest",
+        "import logging",
         "from src.main.org.apache.commons.logging.Log import *",
         "from src.main.org.apache.commons.logging.LogFactory import *",
         "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *",

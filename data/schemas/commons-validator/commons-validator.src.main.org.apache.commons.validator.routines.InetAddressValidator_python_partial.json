@@ -158,11 +158,78 @@
                         "    def isValidInet6Address(self, inet6Address: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def isValidInet6Address(self, inet6Address: str) -> bool:",
+                        "        ",
+                        "        parts = inet6Address.split(\"/\", -1)",
+                        "        if len(parts) > 2:",
+                        "            return False ",
+                        "        if len(parts) == 2:",
+                        "            if parts[1].isdigit(): ",
+                        "                bits = int(parts[1]) ",
+                        "                if bits < 0 or bits > 128:",
+                        "                    return False ",
+                        "            else:",
+                        "                return False ",
+                        "        parts = parts[0].split(\"%\", -1)",
+                        "        if len(parts) > 2:",
+                        "            return False",
+                        "        elif len(parts) == 2:",
+                        "            if not parts[1].isalnum():",
+                        "                return False ",
+                        "        inet6Address = parts[0]",
+                        "        containsCompressedZeroes = \"::\" in inet6Address",
+                        "        if containsCompressedZeroes and (inet6Address.count(\"::\") != 1):",
+                        "            return False",
+                        "        if ((inet6Address.startswith(\":\") and not inet6Address.startswith(\"::\"))",
+                        "                or (inet6Address.endswith(\":\") and not inet6Address.endswith(\"::\"))):",
+                        "            return False",
+                        "        octets = inet6Address.split(\":\")",
+                        "        if containsCompressedZeroes:",
+                        "            octetList = octets",
+                        "            if inet6Address.endswith(\"::\"):",
+                        "                octetList.append(\"\")",
+                        "            elif inet6Address.startswith(\"::\") and len(octetList) > 0:",
+                        "                octetList.pop(0)",
+                        "            octets = octetList",
+                        "        if len(octets) > self.__IPV6_MAX_HEX_GROUPS:",
+                        "            return False",
+                        "        validOctets = 0",
+                        "        emptyOctets = 0 ",
+                        "        for index, octet in enumerate(octets):",
+                        "            if len(octet) == 0:",
+                        "                emptyOctets += 1",
+                        "                if emptyOctets > 1:",
+                        "                    return False",
+                        "            else:",
+                        "                emptyOctets = 0",
+                        "                if index == len(octets) - 1 and \".\" in octet:",
+                        "                    if not self.isValidInet4Address(octet):",
+                        "                        return False",
+                        "                    validOctets += 2",
+                        "                    continue",
+                        "                if len(octet) > self.__IPV6_MAX_HEX_DIGITS_PER_GROUP:",
+                        "                    return False",
+                        "                octetInt = 0",
+                        "                try:",
+                        "                    octetInt = int(octet, self.__BASE_16)",
+                        "                except ValueError:",
+                        "                    return False",
+                        "                if octetInt < 0 or octetInt > self.__MAX_UNSIGNED_SHORT:",
+                        "                    return False",
+                        "            validOctets += 1",
+                        "        if validOctets > self.__IPV6_MAX_HEX_GROUPS or (validOctets < self.__IPV6_MAX_HEX_GROUPS and not containsCompressedZeroes):",
+                        "            return False",
+                        "        return True"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 44.55885863304138,
+                    "generation_timestamp": "2024-06-20T15:20:09.468363",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "83-113:isValidInet4Address": {
                     "start": 83,
@@ -226,11 +293,41 @@
                         "    def isValidInet4Address(self, inet4Address: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def isValidInet4Address(self, inet4Address: str) -> bool:",
+                        "        ",
+                        "        groups = self.__ipv4Validator.match(inet4Address)",
+                        "",
+                        "        if groups is None:",
+                        "            return False",
+                        "",
+                        "        for ipSegment in groups:",
+                        "            if ipSegment is None or len(ipSegment) == 0:",
+                        "                return False",
+                        "",
+                        "            iIpSegment = 0",
+                        "",
+                        "            try:",
+                        "                iIpSegment = int(ipSegment)",
+                        "            except ValueError:",
+                        "                return False",
+                        "",
+                        "            if iIpSegment > self.__IPV4_MAX_OCTET_VALUE:",
+                        "                return False",
+                        "",
+                        "            if len(ipSegment) > 1 and ipSegment.startswith(\"0\"):",
+                        "                return False",
+                        "",
+                        "        return True"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.358310222625732,
+                    "generation_timestamp": "2024-06-20T15:19:24.907704",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "73-75:isValid": {
                     "start": 73,
@@ -271,11 +368,19 @@
                         "    def isValid(self, inetAddress: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def isValid(self, inetAddress: str) -> bool:",
+                        "        ",
+                        "        return self.isValidInet4Address(inetAddress) or self.isValidInet6Address(inetAddress)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.27082896232605,
+                    "generation_timestamp": "2024-06-20T15:20:11.743834",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "63-65:getInstance": {
                     "start": 63,
@@ -305,11 +410,19 @@
                         "    def getInstance() -> InetAddressValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> InetAddressValidator:",
+                        "         return InetAddressValidator.__VALIDATOR"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.345224142074585,
+                    "generation_timestamp": "2024-06-20T15:20:22.092399",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -329,12 +442,21 @@
                             "RegexValidator"
                         ]
                     ],
-                    "partial_translation": "    __ipv4Validator: RegexValidator = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __ipv4Validator: RegexValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ipv4Validator: RegexValidator = RegexValidator.RegexValidator3(InetAddressValidator.__IPV4_REGEX)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.3346335887908936,
+                    "generation_timestamp": "2024-06-20T14:31:29.467683",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "53-53:VALIDATOR": {
                     "start": 53,
@@ -353,12 +475,21 @@
                             "InetAddressValidator"
                         ]
                     ],
-                    "partial_translation": "    __VALIDATOR: InetAddressValidator = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __VALIDATOR: InetAddressValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __VALIDATOR: InetAddressValidator = InetAddressValidator()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.184610605239868,
+                    "generation_timestamp": "2024-06-20T14:31:35.654334",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "50-50:IPV6_MAX_HEX_DIGITS_PER_GROUP": {
                     "start": 50,
@@ -377,12 +508,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __IPV6_MAX_HEX_DIGITS_PER_GROUP: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __IPV6_MAX_HEX_DIGITS_PER_GROUP: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __IPV6_MAX_HEX_DIGITS_PER_GROUP: int = 4"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.3864810466766357,
+                    "generation_timestamp": "2024-06-20T14:31:38.044207",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "48-48:IPV6_MAX_HEX_GROUPS": {
                     "start": 48,
@@ -401,12 +541,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __IPV6_MAX_HEX_GROUPS: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __IPV6_MAX_HEX_GROUPS: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __IPV6_MAX_HEX_GROUPS: int = 8"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.8919882774353027,
+                    "generation_timestamp": "2024-06-20T14:31:39.938175",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "46-46:IPV4_REGEX": {
                     "start": 46,
@@ -425,12 +574,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __IPV4_REGEX: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __IPV4_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __IPV4_REGEX: str = \"^(\\\\d{1,3})\\\\.(\\\\d{1,3})\\\\.(\\\\d{1,3})\\\\.(\\\\d{1,3})$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.0802061557769775,
+                    "generation_timestamp": "2024-06-20T14:31:44.020328",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "44-44:serialVersionUID": {
                     "start": 44,
@@ -449,12 +607,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -919201640201914789"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.040976047515869,
+                    "generation_timestamp": "2024-06-20T14:31:46.063300",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "42-42:BASE_16": {
                     "start": 42,
@@ -473,12 +640,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __BASE_16: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BASE_16: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BASE_16: int = 16"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.933516025543213,
+                    "generation_timestamp": "2024-06-20T14:31:59.998716",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "40-40:MAX_UNSIGNED_SHORT": {
                     "start": 40,
@@ -497,12 +673,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __MAX_UNSIGNED_SHORT: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __MAX_UNSIGNED_SHORT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MAX_UNSIGNED_SHORT: int = 0xffff"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.0445501804351807,
+                    "generation_timestamp": "2024-06-20T14:32:02.045073",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "38-38:IPV4_MAX_OCTET_VALUE": {
                     "start": 38,
@@ -521,12 +706,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __IPV4_MAX_OCTET_VALUE: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __IPV4_MAX_OCTET_VALUE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __IPV4_MAX_OCTET_VALUE: int = 255"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.7484562397003174,
+                    "generation_timestamp": "2024-06-20T14:32:03.795381",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class InetAddressValidator():\n\n"

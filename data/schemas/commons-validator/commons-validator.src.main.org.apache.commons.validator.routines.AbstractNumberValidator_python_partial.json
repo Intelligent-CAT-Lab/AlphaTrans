@@ -87,11 +87,19 @@
                         "    def _getFormat(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _getFormat(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:",
+                        "        ",
+                        "        return self._getFormat0(pattern, locale)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.0597150325775146,
+                    "generation_timestamp": "2024-06-20T15:08:16.988771",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "93-96:isValid3": {
                     "start": 93,
@@ -132,11 +140,20 @@
                         "    def isValid3(self, value: str, pattern: str, locale: typing.Any) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def isValid3(self, value: str, pattern: str, locale: typing.Any) -> bool:",
+                        "        ",
+                        "        parsedValue = self._parse(value, pattern, locale)",
+                        "        return parsedValue is not None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.087741851806641,
+                    "generation_timestamp": "2024-06-20T15:08:23.081233",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "239-268:getFormat1": {
                     "start": 239,
@@ -199,11 +216,39 @@
                         "    def _getFormat1(self, locale: typing.Any) -> typing.Union[str, datetime.datetime]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _getFormat1(self, locale: typing.Any) -> typing.Union[str, datetime.datetime]:",
+                        "        ",
+                        "        formatter = None",
+                        "",
+                        "        if self.__formatType == self.CURRENCY_FORMAT:",
+                        "            if locale is None:",
+                        "                formatter = NumberFormat.getCurrencyInstance()",
+                        "            else:",
+                        "                formatter = NumberFormat.getCurrencyInstance(locale)",
+                        "        elif self.__formatType == self.PERCENT_FORMAT:",
+                        "            if locale is None:",
+                        "                formatter = NumberFormat.getPercentInstance()",
+                        "            else:",
+                        "                formatter = NumberFormat.getPercentInstance(locale)",
+                        "        else:",
+                        "            if locale is None:",
+                        "                formatter = NumberFormat.getInstance()",
+                        "            else:",
+                        "                formatter = NumberFormat.getInstance(locale)",
+                        "            if not self.isAllowFractions():",
+                        "                formatter.setParseIntegerOnly(True)",
+                        "",
+                        "        return formatter"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.134902000427246,
+                    "generation_timestamp": "2024-06-20T15:07:33.999851",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "207-231:determineScale": {
                     "start": 207,
@@ -266,11 +311,36 @@
                         "    def _determineScale(self, format: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _determineScale(self, format: typing.Any) -> int:",
+                        "        ",
+                        "        if not self.isStrict():",
+                        "            return -1",
+                        "        if not self.isAllowFractions() or format.isParseIntegerOnly():",
+                        "            return 0",
+                        "        minimumFraction = format.getMinimumFractionDigits()",
+                        "        maximumFraction = format.getMaximumFractionDigits()",
+                        "        if minimumFraction != maximumFraction:",
+                        "            return -1",
+                        "        scale = minimumFraction",
+                        "        if isinstance(format, DecimalFormat):",
+                        "            multiplier = format.getMultiplier()",
+                        "            if multiplier == 100:",
+                        "                scale += 2",
+                        "            elif multiplier == 1000:",
+                        "                scale += 3",
+                        "        elif self.__formatType == self.PERCENT_FORMAT:",
+                        "            scale += 2",
+                        "        return scale"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.14985990524292,
+                    "generation_timestamp": "2024-06-20T15:07:47.157638",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "182-199:getFormat0": {
                     "start": 182,
@@ -327,11 +397,32 @@
                         "    def _getFormat0(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _getFormat0(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:",
+                        "        ",
+                        "        formatter = None",
+                        "        usePattern = (pattern is not None and len(pattern) > 0)",
+                        "        if not usePattern:",
+                        "            formatter = self._getFormat1(locale)",
+                        "        else:",
+                        "            if locale is None:",
+                        "                formatter = DecimalFormat(pattern)",
+                        "            else:",
+                        "                symbols = DecimalFormatSymbols(locale)",
+                        "                formatter = DecimalFormat(pattern, symbols)",
+                        "",
+                        "        if not self.isAllowFractions():",
+                        "            formatter.setParseIntegerOnly(True)",
+                        "        return formatter"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.490424394607544,
+                    "generation_timestamp": "2024-06-20T15:07:52.651116",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "147-155:parse": {
                     "start": 147,
@@ -380,11 +471,23 @@
                         "    def _parse(self, value: str, pattern: str, locale: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _parse(self, value: str, pattern: str, locale: typing.Any) -> typing.Any:",
+                        "        ",
+                        "        value = (None if value is None else value.strip())",
+                        "        if value is None or len(value) == 0:",
+                        "            return None",
+                        "        formatter = self._getFormat0(pattern, locale)",
+                        "        return self._parse(value, formatter)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.679734468460083,
+                    "generation_timestamp": "2024-06-20T15:07:58.334083",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "131-136:maxValue": {
                     "start": 131,
@@ -424,11 +527,20 @@
                         "    def maxValue(self, value: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def maxValue(self, value: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:",
+                        "         if self.isAllowFractions():",
+                        "             return (value.real <= max.real)",
+                        "         return (value.numerator <= max.numerator)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.368001222610474,
+                    "generation_timestamp": "2024-06-20T15:08:02.709094",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "117-122:minValue": {
                     "start": 117,
@@ -468,11 +580,20 @@
                         "    def minValue(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def minValue(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number]) -> bool:",
+                        "         if self.isAllowFractions():",
+                        "             return (value.real >= min.real)",
+                        "         return (value.numerator >= min.numerator)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.33760929107666,
+                    "generation_timestamp": "2024-06-20T15:08:07.053745",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "106-108:isInRange": {
                     "start": 106,
@@ -515,11 +636,18 @@
                         "    def isInRange(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def isInRange(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:",
+                        "         return (self.minValue(value, min) and self.maxValue(value, max))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.3889095783233643,
+                    "generation_timestamp": "2024-06-20T15:08:08.445683",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "79-81:getFormatType": {
                     "start": 79,
@@ -547,11 +675,18 @@
                         "    def getFormatType(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getFormatType(self) -> int:",
+                        "         return self.__formatType"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.7356071472167969,
+                    "generation_timestamp": "2024-06-20T15:07:09.848701",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "70-72:isAllowFractions": {
                     "start": 70,
@@ -579,11 +714,18 @@
                         "    def isAllowFractions(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def isAllowFractions(self) -> bool:",
+                        "         return self.__allowFractions"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.3738832473754883,
+                    "generation_timestamp": "2024-06-20T15:07:23.860307",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "58-62:AbstractNumberValidator": {
                     "start": 58,
@@ -623,11 +765,20 @@
                         "    def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:",
+                        "         super().__init__(strict)",
+                        "         self.__formatType = formatType",
+                        "         self.__allowFractions = allowFractions"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.476861476898193,
+                    "generation_timestamp": "2024-06-20T15:08:13.926331",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "166-166:processParsedValue": {
                     "start": 166,
@@ -657,11 +808,20 @@
                         "    def _processParsedValue(self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _processParsedValue(self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:",
+                        "        ",
+                        "        # Your implementation here",
+                        "        pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.641533851623535,
+                    "generation_timestamp": "2024-06-20T15:08:35.724350",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -682,12 +842,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    PERCENT_FORMAT: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    PERCENT_FORMAT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    PERCENT_FORMAT: int = 2"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.9463956356048584,
+                    "generation_timestamp": "2024-06-20T22:23:54.053631",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "41-41:CURRENCY_FORMAT": {
                     "start": 41,
@@ -706,12 +875,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    CURRENCY_FORMAT: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    CURRENCY_FORMAT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    CURRENCY_FORMAT: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.2153921127319336,
+                    "generation_timestamp": "2024-06-20T22:23:55.271784",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "38-38:STANDARD_FORMAT": {
                     "start": 38,
@@ -730,12 +908,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    STANDARD_FORMAT: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    STANDARD_FORMAT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    STANDARD_FORMAT: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.0503602027893066,
+                    "generation_timestamp": "2024-06-20T22:23:56.324903",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "47-47:formatType": {
                     "start": 47,
@@ -753,12 +940,22 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __formatType: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __formatType: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __formatType: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:29:23.863347",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "46-46:allowFractions": {
                     "start": 46,
@@ -776,12 +973,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __allowFractions: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __allowFractions: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __allowFractions: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:29:23.865347",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "35-35:serialVersionUID": {
                     "start": 35,
@@ -800,12 +1007,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -3088817875906765463"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.810139417648315,
+                    "generation_timestamp": "2024-06-20T14:29:28.677383",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class AbstractNumberValidator(AbstractFormatValidator, ABC):\n\n"

@@ -65,11 +65,19 @@
                         "    def _tearDown(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _tearDown(self) -> None:",
+                        "         super().tearDown()",
+                        "         self._validator = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1843619346618652,
+                    "generation_timestamp": "2024-06-20T20:07:24.609187",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "43-46:setUp": {
                     "start": 43,
@@ -106,11 +114,18 @@
                         "    def _setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _setUp(self) -> None:",
+                        "         self._validator = PercentValidator.PercentValidator1()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.3589630126953125,
+                    "generation_timestamp": "2024-06-20T20:07:27.970470",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "95-108:testInvalid": {
                     "start": 95,
@@ -170,11 +185,30 @@
                         "    def testInvalid(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testInvalid(self) -> None:",
+                        "        ",
+                        "        validator = PercentValidator.getInstance()",
+                        "",
+                        "        self.assertFalse(\"isValid() Null Value\", validator.isValid0(None))",
+                        "        self.assertFalse(\"isValid() Empty Value\", validator.isValid0(\"\"))",
+                        "        self.assertIsNone(\"validate() Null Value\", validator.validate0(None))",
+                        "        self.assertIsNone(\"validate() Empty Value\", validator.validate0(\"\"))",
+                        "",
+                        "        self.assertFalse(\"UK wrong symbol\", validator.isValid2(\"12@\", Locale.UK))",
+                        "        self.assertFalse(\"UK wrong negative\", validator.isValid2(\"(12%)\", Locale.UK))",
+                        "",
+                        "        self.assertFalse(\"US wrong symbol\", validator.isValid2(\"12@\", Locale.US))",
+                        "        self.assertFalse(\"US wrong negative\", validator.isValid2(\"(12%)\", Locale.US))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.312830448150635,
+                    "generation_timestamp": "2024-06-20T20:07:41.287058",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "69-92:testValid": {
                     "start": 69,
@@ -239,11 +273,40 @@
                         "    def testValid(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testValid(self) -> None:",
+                        "        ",
+                        "        orig_default = locale.getdefaultlocale()",
+                        "        locale.setlocale(locale.LC_ALL, 'en_GB.utf8')",
+                        "",
+                        "        validator = PercentValidator.getInstance()",
+                        "        expected = decimal.Decimal(\"0.12\")",
+                        "        negative = decimal.Decimal(\"-0.12\")",
+                        "        hundred = decimal.Decimal(\"1.00\")",
+                        "",
+                        "        self.assertEqual(\"Default locale\", expected, validator.validate0(\"12%\"))",
+                        "        self.assertEqual(\"Default negative\", negative, validator.validate0(\"-12%\"))",
+                        "",
+                        "        self.assertEqual(\"UK locale\", expected, validator.validate2(\"12%\", locale.UK))",
+                        "        self.assertEqual(\"UK negative\", negative, validator.validate2(\"-12%\", locale.UK))",
+                        "        self.assertEqual(\"UK No symbol\", expected, validator.validate2(\"12\", locale.UK))",
+                        "",
+                        "        self.assertEqual(\"US locale\", expected, validator.validate2(\"12%\", locale.US))",
+                        "        self.assertEqual(\"US negative\", negative, validator.validate2(\"-12%\", locale.US))",
+                        "        self.assertEqual(\"US No symbol\", expected, validator.validate2(\"12\", locale.US))",
+                        "",
+                        "        self.assertEqual(\"100%\", hundred, validator.validate0(\"100%\"))",
+                        "",
+                        "        locale.setlocale(locale.LC_ALL, orig_default)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 31.450594663619995,
+                    "generation_timestamp": "2024-06-20T20:08:12.740840",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "60-66:testFormatType": {
                     "start": 60,
@@ -286,11 +349,22 @@
                         "    def testFormatType(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testFormatType(self) -> None:",
+                        "         self.assertEqual(\"Format Type A\", 2, PercentValidator.getInstance().getFormatType())",
+                        "         self.assertEqual(",
+                        "             \"Format Type B\",",
+                        "             AbstractNumberValidator.PERCENT_FORMAT,",
+                        "             PercentValidator.getInstance().getFormatType())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.463574171066284,
+                    "generation_timestamp": "2024-06-20T20:08:33.207181",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "38-40:PercentValidatorTest": {
                     "start": 38,
@@ -320,11 +394,19 @@
                         "    def __init__(self, name: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, name: str) -> None:",
+                        "         super().__init__(name)",
+                        "         self._validator = PercentValidator.PercentValidator1()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.806183338165283,
+                    "generation_timestamp": "2024-06-20T20:08:38.015058",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -343,12 +425,22 @@
                             "PercentValidator"
                         ]
                     ],
-                    "partial_translation": "    _validator: PercentValidator = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    _validator: PercentValidator = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    _validator: PercentValidator = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:57:47.682513",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class PercentValidatorTest(unittest.TestCase):\n\n"
@@ -356,6 +448,8 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
         "import unittest",

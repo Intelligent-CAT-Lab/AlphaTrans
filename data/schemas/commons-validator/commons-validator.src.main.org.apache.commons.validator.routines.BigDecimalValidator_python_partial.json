@@ -92,11 +92,29 @@
                         "    def _processParsedValue(self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _processParsedValue(self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:",
+                        "        ",
+                        "        decimal_val = None",
+                        "        if isinstance(value, int):",
+                        "            decimal_val = decimal.Decimal(value)",
+                        "        else:",
+                        "            decimal_val = decimal.Decimal(str(value))",
+                        "",
+                        "        scale = self._determineScale(formatter)",
+                        "        if scale >= 0:",
+                        "            decimal_val = decimal_val.quantize(decimal.Decimal(10) ** -scale, decimal.ROUND_DOWN)",
+                        "",
+                        "        return decimal_val"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.249628782272339,
+                    "generation_timestamp": "2024-06-20T15:12:09.143420",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "199-201:maxValue": {
                     "start": 199,
@@ -127,11 +145,18 @@
                         "    def maxValue(self, value: decimal.Decimal, max: float) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def maxValue(self, value: decimal.Decimal, max: float) -> bool:",
+                        "         return value <= decimal.Decimal(max)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.663628339767456,
+                    "generation_timestamp": "2024-06-20T15:12:15.809977",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "188-190:minValue": {
                     "start": 188,
@@ -162,11 +187,18 @@
                         "    def minValue(self, value: decimal.Decimal, min: float) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def minValue(self, value: decimal.Decimal, min: float) -> bool:",
+                        "         return value.to_eng_string() >= str(min)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.079357624053955,
+                    "generation_timestamp": "2024-06-20T15:12:22.892161",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "177-179:isInRange": {
                     "start": 177,
@@ -198,11 +230,18 @@
                         "    def isInRange(self, value: decimal.Decimal, min: float, max: float) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def isInRange(self, value: decimal.Decimal, min: float, max: float) -> bool:",
+                        "         return value >= decimal.Decimal(min) and value <= decimal.Decimal(max)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.4443700313568115,
+                    "generation_timestamp": "2024-06-20T15:12:28.339500",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "165-167:validate3": {
                     "start": 165,
@@ -240,11 +279,23 @@
                         "    def validate3(self, value: str, pattern: str, locale: typing.Any) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def validate3(self, value: str, pattern: str, locale: typing.Any) -> decimal.Decimal:",
+                        "        ",
+                        "        value = (None if value is None else value.strip())",
+                        "        if value is None or len(value) == 0:",
+                        "            return None",
+                        "        formatter = self._getFormat0(pattern, locale)",
+                        "        return self._parse(value, formatter)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.133068561553955,
+                    "generation_timestamp": "2024-06-20T15:12:33.476396",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "151-153:validate2": {
                     "start": 151,
@@ -281,11 +332,23 @@
                         "    def validate2(self, value: str, locale: typing.Any) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def validate2(self, value: str, locale: typing.Any) -> decimal.Decimal:",
+                        "        ",
+                        "        value = (None if value is None else value.strip())",
+                        "        if value is None or len(value) == 0:",
+                        "            return None",
+                        "        formatter = self._getFormat0(None, locale)",
+                        "        return self._parse(value, formatter)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.925674200057983,
+                    "generation_timestamp": "2024-06-20T15:12:38.405979",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "140-142:validate1": {
                     "start": 140,
@@ -322,11 +385,23 @@
                         "    def validate1(self, value: str, pattern: str) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def validate1(self, value: str, pattern: str) -> decimal.Decimal:",
+                        "        ",
+                        "        value = (None if value is None else value.strip())",
+                        "        if value is None or len(value) == 0:",
+                        "            return None",
+                        "        formatter = self._getFormat0(pattern, None)",
+                        "        return self._parse(value, formatter)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.005366325378418,
+                    "generation_timestamp": "2024-06-20T15:12:43.416506",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "128-130:validate0": {
                     "start": 128,
@@ -362,11 +437,19 @@
                         "    def validate0(self, value: str) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def validate0(self, value: str) -> decimal.Decimal:",
+                        "        ",
+                        "        return self._parse(value, None, None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.04076862335205,
+                    "generation_timestamp": "2024-06-20T15:12:51.460349",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "91-93:BigDecimalValidator2": {
                     "start": 91,
@@ -402,11 +485,19 @@
                         "    def BigDecimalValidator2() -> BigDecimalValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def BigDecimalValidator2() -> BigDecimalValidator:",
+                        "         return BigDecimalValidator.BigDecimalValidator1(True)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.427255630493164,
+                    "generation_timestamp": "2024-06-20T15:13:02.018052",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "87-89:BigDecimalValidator1": {
                     "start": 87,
@@ -444,11 +535,19 @@
                         "    def BigDecimalValidator1(strict: bool) -> BigDecimalValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def BigDecimalValidator1(strict: bool) -> BigDecimalValidator:",
+                        "         return BigDecimalValidator(strict, BigDecimalValidator.STANDARD_FORMAT, True)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.003447771072388,
+                    "generation_timestamp": "2024-06-20T15:12:59.672533",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "83-85:BigDecimalValidator": {
                     "start": 83,
@@ -486,11 +585,20 @@
                         "    def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:",
+                        "         super().__init__(strict)",
+                        "         self.__formatType = formatType",
+                        "         self.__allowFractions = allowFractions"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.2009544372558594,
+                    "generation_timestamp": "2024-06-20T15:12:53.666836",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "78-80:getInstance": {
                     "start": 78,
@@ -520,11 +628,19 @@
                         "    def getInstance() -> BigDecimalValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> BigDecimalValidator:",
+                        "         return BigDecimalValidator.__VALIDATOR"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.9124736785888672,
+                    "generation_timestamp": "2024-06-20T15:13:00.587111",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -545,12 +661,21 @@
                             "BigDecimalValidator"
                         ]
                     ],
-                    "partial_translation": "    __VALIDATOR: BigDecimalValidator = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __VALIDATOR: BigDecimalValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __VALIDATOR: BigDecimalValidator = BigDecimalValidator.BigDecimalValidator2()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.857011079788208,
+                    "generation_timestamp": "2024-06-20T14:30:11.759620",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "69-69:serialVersionUID": {
                     "start": 69,
@@ -569,12 +694,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -670320911490506772"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.9695348739624023,
+                    "generation_timestamp": "2024-06-20T14:30:14.731194",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class BigDecimalValidator(AbstractNumberValidator):\n\n"

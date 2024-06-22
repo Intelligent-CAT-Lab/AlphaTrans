@@ -71,11 +71,26 @@
                         "    def calculate(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def calculate(self, code: str) -> str:",
+                        "        ",
+                        "        if code is None or len(code) < self.__MIN_CODE_LEN:",
+                        "            raise CheckDigitException.CheckDigitException1(",
+                        "                    \"Invalid Code length=\" + (str(0) if code is None else str(len(code))))",
+                        "        code = code[:2] + \"00\" + code[4:]",
+                        "        modulusResult = self.__calculateModulus(code)",
+                        "        charValue = (98 - modulusResult)",
+                        "        checkDigit = str(charValue)",
+                        "        return checkDigit if charValue > 9 else \"0\" + checkDigit"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.512066841125488,
+                    "generation_timestamp": "2024-06-20T15:15:08.689446",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-80:isValid": {
                     "start": 66,
@@ -125,11 +140,28 @@
                         "    def isValid(self, code: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def isValid(self, code: str) -> bool:",
+                        "        ",
+                        "        if code is None or len(code) < self.__MIN_CODE_LEN:",
+                        "            return False",
+                        "        check = code[2:4]",
+                        "        if check == \"00\" or check == \"01\" or check == \"99\":",
+                        "            return False",
+                        "        try:",
+                        "            modulusResult = self.__calculateModulus(code)",
+                        "            return (modulusResult == 1)",
+                        "        except CheckDigitException:",
+                        "            return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.094759225845337,
+                    "generation_timestamp": "2024-06-20T15:15:23.785844",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "57-57:IBANCheckDigit": {
                     "start": 57,
@@ -155,11 +187,24 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "        ",
+                        "        self.__MODULUS: int = 97",
+                        "        self.__MAX: int = 999999999",
+                        "        self.__MAX_ALPHANUMERIC_VALUE: int = 35  # Character.getNumericValue('Z')",
+                        "        self.__serialVersionUID: int = -3600191725934382801",
+                        "        self.__MIN_CODE_LEN: int = 5",
+                        "        self.IBAN_CHECK_DIGIT: CheckDigit = CheckDigit()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.241713285446167,
+                    "generation_timestamp": "2024-06-20T15:14:35.550188",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "113-131:calculateModulus": {
                     "start": 113,
@@ -211,11 +256,29 @@
                         "    def __calculateModulus(self, code: str) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __calculateModulus(self, code: str) -> int:",
+                        "        ",
+                        "        reformattedCode = code[4:] + code[:4]",
+                        "        total = 0",
+                        "        for i in range(len(reformattedCode)):",
+                        "            charValue = int(reformattedCode[i]) if reformattedCode[i].isdigit() else ord(reformattedCode[i]) - 55",
+                        "            if charValue < 0 or charValue > self.__MAX_ALPHANUMERIC_VALUE:",
+                        "                raise CheckDigitException.CheckDigitException1(",
+                        "                    \"Invalid Character[\" + str(i) + \"] = '\" + str(charValue) + \"'\")",
+                        "            total = (total * 100 if charValue > 9 else total * 10) + charValue",
+                        "            if total > self.__MAX:",
+                        "                total = total % self.__MODULUS",
+                        "        return total % self.__MODULUS"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.623602628707886,
+                    "generation_timestamp": "2024-06-20T15:14:56.175530",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -236,12 +299,26 @@
                             "CheckDigit"
                         ]
                     ],
-                    "partial_translation": "    IBAN_CHECK_DIGIT: CheckDigit = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    IBAN_CHECK_DIGIT: CheckDigit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MODULUS: int = 97",
+                        "    __MAX: int = 999999999",
+                        "    __MAX_ALPHANUMERIC_VALUE: int = 35  # Character.getNumericValue('Z')",
+                        "    __serialVersionUID: int = -3600191725934382801",
+                        "    __MIN_CODE_LEN: int = 5",
+                        "    IBAN_CHECK_DIGIT: CheckDigit = CheckDigit()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.17949366569519,
+                    "generation_timestamp": "2024-06-20T14:30:58.242695",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "54-54:MODULUS": {
                     "start": 54,
@@ -260,12 +337,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __MODULUS: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __MODULUS: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MODULUS: int = 97"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.3089308738708496,
+                    "generation_timestamp": "2024-06-20T14:30:59.553323",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "52-52:MAX": {
                     "start": 52,
@@ -284,12 +370,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __MAX: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __MAX: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MAX: int = 999999999"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.4680988788604736,
+                    "generation_timestamp": "2024-06-20T14:31:01.023116",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "47-47:MAX_ALPHANUMERIC_VALUE": {
                     "start": 47,
@@ -308,12 +403,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __MAX_ALPHANUMERIC_VALUE: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __MAX_ALPHANUMERIC_VALUE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MAX_ALPHANUMERIC_VALUE: int = 35  # Character.getNumericValue('Z')"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.680368423461914,
+                    "generation_timestamp": "2024-06-20T14:31:03.705601",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "45-45:serialVersionUID": {
                     "start": 45,
@@ -332,12 +436,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -3600191725934382801"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.0029592514038086,
+                    "generation_timestamp": "2024-06-20T14:31:06.710065",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "43-43:MIN_CODE_LEN": {
                     "start": 43,
@@ -356,12 +469,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __MIN_CODE_LEN: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __MIN_CODE_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MIN_CODE_LEN: int = 5"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.5021593570709229,
+                    "generation_timestamp": "2024-06-20T14:31:08.213745",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class IBANCheckDigit(CheckDigit):\n\n"
