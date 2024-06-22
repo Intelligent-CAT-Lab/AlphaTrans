@@ -140,11 +140,32 @@
                         "    def copyMap(map: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def copyMap(map: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:",
+                        "        ",
+                        "        results: typing.Dict[str, typing.Any] = {}",
+                        "",
+                        "        for key, value in map.items():",
+                        "            if isinstance(value, Msg):",
+                        "                results[key] = value.clone()",
+                        "            elif isinstance(value, Arg):",
+                        "                results[key] = value.clone()",
+                        "            elif isinstance(value, Var):",
+                        "                results[key] = value.clone()",
+                        "            else:",
+                        "                results[key] = value",
+                        "",
+                        "        return results"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.98500108718872,
+                    "generation_timestamp": "2024-06-20T15:02:14.345716",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "49-79:replace": {
                     "start": 49,
@@ -212,11 +233,41 @@
                         "    def replace(value: str, key: str, replaceValue: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def replace(value: str, key: str, replaceValue: str) -> str:",
+                        "        ",
+                        "        if value is None or key is None or replaceValue is None:",
+                        "            return value",
+                        "",
+                        "        pos = value.find(key)",
+                        "",
+                        "        if pos < 0:",
+                        "            return value",
+                        "",
+                        "        length = len(value)",
+                        "        start = pos",
+                        "        end = pos + len(key)",
+                        "",
+                        "        if length == len(key):",
+                        "            value = replaceValue",
+                        "",
+                        "        elif end == length:",
+                        "            value = value[:start] + replaceValue",
+                        "",
+                        "        else:",
+                        "            value = value[:start] + replaceValue + ValidatorUtils.replace(value[end:], key, replaceValue)",
+                        "",
+                        "        return value"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.955979347229004,
+                    "generation_timestamp": "2024-06-20T15:02:21.303095",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -237,12 +288,21 @@
                             "Log"
                         ]
                     ],
-                    "partial_translation": "    __LOG: logging.Logger = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __LOG: logging.Logger = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOG: logging.Logger = logging.getLogger(ValidatorUtils.__name__)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.3384242057800293,
+                    "generation_timestamp": "2024-06-20T14:28:08.459958",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class ValidatorUtils:\n\n"
@@ -252,6 +312,7 @@
         "from __future__ import annotations",
         "import io",
         "import typing\nfrom typing import *",
+        "import logging",
         "from src.main.org.apache.commons.logging.Log import *",
         "from src.main.org.apache.commons.logging.LogFactory import *",
         "from src.main.org.apache.commons.validator.Arg import *",

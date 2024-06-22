@@ -102,11 +102,37 @@
                         "    def extractFromEAN13(self, ean13: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def extractFromEAN13(self, ean13: str) -> str:",
+                        "        ",
+                        "        input = ean13.strip()",
+                        "        if len(input) != self.__EAN_ISSN_LEN:",
+                        "            raise ValueError(",
+                        "                \"Invalid length \" + str(len(input)) + \" for '\" + input + \"'\")",
+                        "        if not input.startswith(self.__ISSN_PREFIX):",
+                        "            raise ValueError(",
+                        "                \"Prefix must be \" + self.__ISSN_PREFIX + \" to contain an ISSN: '\" + ean13 + \"'\")",
+                        "        result = self.validateEan(input)",
+                        "        if result is None:",
+                        "            return None",
+                        "        input = str(result)",
+                        "        try:",
+                        "            issnBase = input[3:10] # TODO: how to derive these",
+                        "            checkDigit = ISSNCheckDigit.ISSN_CHECK_DIGIT.calculate(issnBase)",
+                        "            issn = issnBase + checkDigit",
+                        "            return issn",
+                        "        except CheckDigitException as e: # Should not happen",
+                        "            raise ValueError(",
+                        "                \"Check digit error for '\" + ean13 + \"' - \" + str(e))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 36.08004570007324,
+                    "generation_timestamp": "2024-06-20T16:35:12.746650",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "144-165:convertToEAN13": {
                     "start": 144,
@@ -167,11 +193,34 @@
                         "    def convertToEAN13(self, issn: str, suffix: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def convertToEAN13(self, issn: str, suffix: str) -> str:",
+                        "        ",
+                        "        if suffix is None or not re.match(\"\\\\d\\\\d\", suffix):",
+                        "            raise ValueError(\"Suffix must be two digits: '\" + suffix + \"'\")",
+                        "",
+                        "        result = self.validate(issn)",
+                        "        if result is None:",
+                        "            return None",
+                        "",
+                        "        input = result.toString()",
+                        "        ean13 = self.__ISSN_PREFIX + input[0:len(input) - 1] + suffix",
+                        "        try:",
+                        "            checkDigit = EAN13CheckDigit.EAN13_CHECK_DIGIT.calculate(ean13)",
+                        "            ean13 += checkDigit",
+                        "            return ean13",
+                        "        except CheckDigitException as e:  # Should not happen",
+                        "            raise ValueError(",
+                        "                \"Check digit error for '\" + ean13 + \"' - \" + str(e))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.83266544342041,
+                    "generation_timestamp": "2024-06-20T16:24:19.208569",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "130-132:validate": {
                     "start": 130,
@@ -208,10 +257,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "117-119:isValid": {
                     "start": 117,
@@ -248,10 +301,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "107-109:validateEan": {
                     "start": 107,
@@ -288,10 +345,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "94-96:getInstance": {
                     "start": 94,
@@ -321,11 +382,19 @@
                         "    def getInstance() -> ISSNValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> ISSNValidator:",
+                        "         return ISSNValidator.__ISSN_VALIDATOR"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.183962106704712,
+                    "generation_timestamp": "2024-06-20T16:35:19.932663",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -346,12 +415,31 @@
                             "ISSNValidator"
                         ]
                     ],
-                    "partial_translation": "    __ISSN_VALIDATOR: ISSNValidator = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __ISSN_VALIDATOR: ISSNValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EAN_VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(",
+                        "        EAN_ISSN_REGEX, EAN_ISSN_LEN, EAN13CheckDigit.EAN13_CHECK_DIGIT)",
+                        "    __VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(",
+                        "        ISSN_REGEX, ISSN_LEN, ISSNCheckDigit.ISSN_CHECK_DIGIT)",
+                        "    __EAN_ISSN_LEN: int = 13",
+                        "    __EAN_ISSN_REGEX: str = \"^(977)(?:(\\\\d{10}))$\"",
+                        "    __ISSN_PREFIX: str = \"977\"",
+                        "    __ISSN_LEN: int = 8",
+                        "    __ISSN_REGEX: str = \"(?:ISSN )?(\\\\d{4})-(\\\\d{3}[0-9X])$\"",
+                        "    __serialVersionUID: int = 4319515687976420405",
+                        "    __ISSN_VALIDATOR: ISSNValidator = ISSNValidator()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 22.5798978805542,
+                    "generation_timestamp": "2024-06-20T14:48:43.335966",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "82-84:EAN_VALIDATOR": {
                     "start": 82,
@@ -372,12 +460,22 @@
                             "CodeValidator"
                         ]
                     ],
-                    "partial_translation": "    __EAN_VALIDATOR: CodeValidator = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __EAN_VALIDATOR: CodeValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EAN_VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(",
+                        "        EAN_ISSN_REGEX, EAN_ISSN_LEN, EAN13CheckDigit.EAN13_CHECK_DIGIT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.182243347167969,
+                    "generation_timestamp": "2024-06-20T14:48:47.520314",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "79-80:VALIDATOR": {
                     "start": 79,
@@ -397,12 +495,22 @@
                             "CodeValidator"
                         ]
                     ],
-                    "partial_translation": "    __VALIDATOR: CodeValidator = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __VALIDATOR: CodeValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(",
+                        "        ISSN_REGEX, ISSN_LEN, ISSNCheckDigit.ISSN_CHECK_DIGIT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.56988263130188,
+                    "generation_timestamp": "2024-06-20T14:48:51.092303",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "77-77:EAN_ISSN_LEN": {
                     "start": 77,
@@ -421,12 +529,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __EAN_ISSN_LEN: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __EAN_ISSN_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EAN_ISSN_LEN: int = 13"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.9100520610809326,
+                    "generation_timestamp": "2024-06-20T14:48:53.005982",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "75-75:EAN_ISSN_REGEX": {
                     "start": 75,
@@ -445,12 +562,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __EAN_ISSN_REGEX: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __EAN_ISSN_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EAN_ISSN_REGEX: str = \"^(977)(?:(\\\\d{10}))$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.767139434814453,
+                    "generation_timestamp": "2024-06-20T14:48:55.775384",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "73-73:ISSN_PREFIX": {
                     "start": 73,
@@ -469,12 +595,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __ISSN_PREFIX: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __ISSN_PREFIX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISSN_PREFIX: str = \"977\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.7896454334259033,
+                    "generation_timestamp": "2024-06-20T14:48:57.567290",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "71-71:ISSN_LEN": {
                     "start": 71,
@@ -493,12 +628,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __ISSN_LEN: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __ISSN_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISSN_LEN: int = 8"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.5900118350982666,
+                    "generation_timestamp": "2024-06-20T14:48:59.159412",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "68-69:ISSN_REGEX": {
                     "start": 68,
@@ -518,12 +662,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __ISSN_REGEX: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __ISSN_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISSN_REGEX: str = \"(?:ISSN )?(\\\\d{4})-(\\\\d{3}[0-9X])$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.0721118450164795,
+                    "generation_timestamp": "2024-06-20T14:49:02.233527",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-66:serialVersionUID": {
                     "start": 66,
@@ -542,12 +695,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 4319515687976420405"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.385075092315674,
+                    "generation_timestamp": "2024-06-20T14:49:04.620546",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class ISSNValidator():\n\n"

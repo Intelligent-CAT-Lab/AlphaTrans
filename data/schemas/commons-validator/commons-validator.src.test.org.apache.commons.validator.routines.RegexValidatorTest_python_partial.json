@@ -57,11 +57,18 @@
                         "    def _tearDown(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _tearDown(self) -> None:",
+                        "         super().tearDown()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.0161676406860352,
+                    "generation_timestamp": "2024-06-20T18:20:20.572190",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "56-58:setUp": {
                     "start": 56,
@@ -91,11 +98,18 @@
                         "    def _setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _setUp(self) -> None:",
+                        "         super().setUp()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.4134438037872314,
+                    "generation_timestamp": "2024-06-20T18:20:23.990956",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "235-242:testToString": {
                     "start": 235,
@@ -144,11 +158,24 @@
                         "    def testToString(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testToString(self) -> None:",
+                        "        ",
+                        "        single = RegexValidator.RegexValidator3(self.__REGEX)",
+                        "        self.assertEqual(\"Single\", \"RegexValidator{\" + self.__REGEX + \"}\", single.toString())",
+                        "",
+                        "        multiple = RegexValidator.RegexValidator1([self.__REGEX, self.__REGEX])",
+                        "        self.assertEqual(",
+                        "            \"Multiple\", \"RegexValidator{\" + self.__REGEX + \",\" + self.__REGEX + \"}\", multiple.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.533937692642212,
+                    "generation_timestamp": "2024-06-20T18:20:32.532732",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "226-232:testExceptions": {
                     "start": 226,
@@ -186,11 +213,23 @@
                         "    def testExceptions(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testExceptions(self) -> None:",
+                        "        ",
+                        "        invalid_regex = \"^([abCD12]*$\"",
+                        "        try:",
+                        "            RegexValidator.RegexValidator3(invalid_regex)",
+                        "        except re.error:",
+                        "            pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.71626353263855,
+                    "generation_timestamp": "2024-06-20T18:20:39.255330",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "177-223:testMissingRegex": {
                     "start": 177,
@@ -273,11 +312,55 @@
                         "    def testMissingRegex(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testMissingRegex(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            RegexValidator.RegexValidator3(None)",
+                        "            self.fail(\"Single Null - expected ValueError\")",
+                        "        except ValueError as e:",
+                        "            self.assertEqual(\"Single Null\", \"Regular expression is missing\", str(e))",
+                        "",
+                        "        try:",
+                        "            RegexValidator.RegexValidator3(\"\")",
+                        "            self.fail(\"Single Zero Length - expected ValueError\")",
+                        "        except ValueError as e:",
+                        "            self.assertEqual(\"Single Zero Length\", \"Regular expression is missing\", str(e))",
+                        "",
+                        "        try:",
+                        "            RegexValidator.RegexValidator1(None)",
+                        "            self.fail(\"Null Array - expected ValueError\")",
+                        "        except ValueError as e:",
+                        "            self.assertEqual(\"Null Array\", \"Regular expressions are missing\", str(e))",
+                        "",
+                        "        try:",
+                        "            RegexValidator.RegexValidator1([])",
+                        "            self.fail(\"Zero Length Array - expected ValueError\")",
+                        "        except ValueError as e:",
+                        "            self.assertEqual(\"Zero Length Array\", \"Regular expressions are missing\", str(e))",
+                        "",
+                        "        expressions = [\"ABC\", None]",
+                        "        try:",
+                        "            RegexValidator.RegexValidator1(expressions)",
+                        "            self.fail(\"Array has Null - expected ValueError\")",
+                        "        except ValueError as e:",
+                        "            self.assertEqual(\"Array has Null\", \"Regular expression[1] is missing\", str(e))",
+                        "",
+                        "        expressions = [\"\", \"ABC\"]",
+                        "        try:",
+                        "            RegexValidator.RegexValidator1(expressions)",
+                        "            self.fail(\"Array has Zero Length - expected ValueError\")",
+                        "        except ValueError as e:",
+                        "            self.assertEqual(\"Array has Zero Length\", \"Regular expression[0] is missing\", str(e))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 27.75650429725647,
+                    "generation_timestamp": "2024-06-20T18:21:07.017113",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "168-174:testNullValue": {
                     "start": 168,
@@ -330,11 +413,22 @@
                         "    def testNullValue(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNullValue(self) -> None:",
+                        "        ",
+                        "        validator = RegexValidator.RegexValidator3(self.__REGEX)",
+                        "        self.assertEqual(\"Instance isValid()\", False, validator.isValid(None))",
+                        "        self.assertEqual(\"Instance validate()\", None, validator.validate(None))",
+                        "        self.assertEqual(\"Instance match()\", None, validator.match(None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.94749641418457,
+                    "generation_timestamp": "2024-06-20T18:21:15.973205",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "135-165:testMultipleInsensitive": {
                     "start": 135,
@@ -421,11 +515,46 @@
                         "    def testMultipleInsensitive(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testMultipleInsensitive(self) -> None:",
+                        "        ",
+                        "        multiple = RegexValidator(self.__MULTIPLE_REGEX, False)",
+                        "        single1 = RegexValidator.RegexValidator2(self.__REGEX_1, False)",
+                        "        single2 = RegexValidator.RegexValidator2(self.__REGEX_2, False)",
+                        "        single3 = RegexValidator.RegexValidator2(self.__REGEX_3, False)",
+                        "",
+                        "        value = \"AAC FDE 321\"",
+                        "        expect = \"AACFDE321\"",
+                        "        array = [\"AAC\", \"FDE\", \"321\"]",
+                        "",
+                        "        self.assertEqual(\"isValid() Multiple\", True, multiple.isValid(value))",
+                        "        self.assertEqual(\"isValid() 1st\", False, single1.isValid(value))",
+                        "        self.assertEqual(\"isValid() 2nd\", True, single2.isValid(value))",
+                        "        self.assertEqual(\"isValid() 3rd\", False, single3.isValid(value))",
+                        "",
+                        "        self.assertEqual(\"validate() Multiple\", expect, multiple.validate(value))",
+                        "        self.assertEqual(\"validate() 1st\", None, single1.validate(value))",
+                        "        self.assertEqual(\"validate() 2nd\", expect, single2.validate(value))",
+                        "        self.assertEqual(\"validate() 3rd\", None, single3.validate(value))",
+                        "",
+                        "        self.__checkArray(\"match() Multiple\", array, multiple.match(value))",
+                        "        self.__checkArray(\"match() 1st\", None, single1.match(value))",
+                        "        self.__checkArray(\"match() 2nd\", array, single2.match(value))",
+                        "        self.__checkArray(\"match() 3rd\", None, single3.match(value))",
+                        "",
+                        "        value = \"AAC*FDE*321\"",
+                        "        self.assertEqual(\"isValid() Invalid\", False, multiple.isValid(value))",
+                        "        self.assertEqual(\"validate() Invalid\", None, multiple.validate(value))",
+                        "        self.assertEqual(\"match() Multiple\", None, multiple.match(value))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 30.911576509475708,
+                    "generation_timestamp": "2024-06-20T18:22:05.826826",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "102-132:testMultipleSensitive": {
                     "start": 102,
@@ -512,11 +641,46 @@
                         "    def testMultipleSensitive(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testMultipleSensitive(self) -> None:",
+                        "        ",
+                        "        multiple = RegexValidator.RegexValidator1(self.__MULTIPLE_REGEX)",
+                        "        single1 = RegexValidator.RegexValidator3(self.__REGEX_1)",
+                        "        single2 = RegexValidator.RegexValidator3(self.__REGEX_2)",
+                        "        single3 = RegexValidator.RegexValidator3(self.__REGEX_3)",
+                        "",
+                        "        value = \"aac FDE 321\"",
+                        "        expect = \"aacFDE321\"",
+                        "        array = [\"aac\", \"FDE\", \"321\"]",
+                        "",
+                        "        self.assertEqual(\"Sensitive isValid() Multiple\", True, multiple.isValid(value))",
+                        "        self.assertEqual(\"Sensitive isValid() 1st\", False, single1.isValid(value))",
+                        "        self.assertEqual(\"Sensitive isValid() 2nd\", True, single2.isValid(value))",
+                        "        self.assertEqual(\"Sensitive isValid() 3rd\", False, single3.isValid(value))",
+                        "",
+                        "        self.assertEqual(\"Sensitive validate() Multiple\", expect, multiple.validate(value))",
+                        "        self.assertEqual(\"Sensitive validate() 1st\", None, single1.validate(value))",
+                        "        self.assertEqual(\"Sensitive validate() 2nd\", expect, single2.validate(value))",
+                        "        self.assertEqual(\"Sensitive validate() 3rd\", None, single3.validate(value))",
+                        "",
+                        "        self.__checkArray(\"Sensitive match() Multiple\", array, multiple.match(value))",
+                        "        self.__checkArray(\"Sensitive match() 1st\", None, single1.match(value))",
+                        "        self.__checkArray(\"Sensitive match() 2nd\", array, single2.match(value))",
+                        "        self.__checkArray(\"Sensitive match() 3rd\", None, single3.match(value))",
+                        "",
+                        "        value = \"AAC*FDE*321\"",
+                        "        self.assertEqual(\"isValid() Invalid\", False, multiple.isValid(value))",
+                        "        self.assertEqual(\"validate() Invalid\", None, multiple.validate(value))",
+                        "        self.assertEqual(\"match() Multiple\", None, multiple.match(value))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 33.30353093147278,
+                    "generation_timestamp": "2024-06-20T18:22:39.137004",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "67-99:testSingle": {
                     "start": 67,
@@ -605,11 +769,49 @@
                         "    def testSingle(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testSingle(self) -> None:",
+                        "        ",
+                        "        sensitive = RegexValidator.RegexValidator3(self.__REGEX)",
+                        "        insensitive = RegexValidator.RegexValidator2(self.__REGEX, False)",
+                        "",
+                        "        self.assertEqual(\"Sensitive isValid() valid\", True, sensitive.isValid(\"ac-DE-1\"))",
+                        "        self.assertEqual(\"Sensitive isValid() invalid\", False, sensitive.isValid(\"AB-de-1\"))",
+                        "        self.assertEqual(\"Insensitive isValid() valid\", True, insensitive.isValid(\"AB-de-1\"))",
+                        "        self.assertEqual(\"Insensitive isValid() invalid\", False, insensitive.isValid(\"ABd-de-1\"))",
+                        "",
+                        "        self.assertEqual(\"Sensitive validate() valid\", \"acDE1\", sensitive.validate(\"ac-DE-1\"))",
+                        "        self.assertEqual(\"Sensitive validate() invalid\", None, sensitive.validate(\"AB-de-1\"))",
+                        "        self.assertEqual(\"Insensitive validate() valid\", \"ABde1\", insensitive.validate(\"AB-de-1\"))",
+                        "        self.assertEqual(\"Insensitive validate() invalid\", None, insensitive.validate(\"ABd-de-1\"))",
+                        "",
+                        "        self.__checkArray(",
+                        "            \"Sensitive match() valid\",",
+                        "            [\"ac\", \"DE\", \"1\"],",
+                        "            sensitive.match(\"ac-DE-1\"))",
+                        "        self.__checkArray(\"Sensitive match() invalid\", None, sensitive.match(\"AB-de-1\"))",
+                        "        self.__checkArray(",
+                        "            \"Insensitive match() valid\",",
+                        "            [\"AB\", \"de\", \"1\"],",
+                        "            insensitive.match(\"AB-de-1\"))",
+                        "        self.__checkArray(\"Insensitive match() invalid\", None, insensitive.match(\"ABd-de-1\"))",
+                        "        self.assertEqual(",
+                        "            \"validate one\",",
+                        "            \"ABC\",",
+                        "            (RegexValidator.RegexValidator3(\"^([A-Z]*)$\")).validate(\"ABC\"))",
+                        "        self.__checkArray(",
+                        "            \"match one\",",
+                        "            [\"ABC\"],",
+                        "            (RegexValidator.RegexValidator3(\"^([A-Z]*)$\")).match(\"ABC\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 42.38686180114746,
+                    "generation_timestamp": "2024-06-20T18:23:21.533526",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "50-52:RegexValidatorTest": {
                     "start": 50,
@@ -639,11 +841,23 @@
                         "    def __init__(self, name: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, name: str) -> None:",
+                        "         super().__init__(name)",
+                        "         self.__MULTIPLE_REGEX = [self.__REGEX_1, self.__REGEX_2, self.__REGEX_3]",
+                        "         self.__setUp()",
+                        "",
+                        "    def __setUp(self) -> None:",
+                        "         super().setUp()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.198436975479126,
+                    "generation_timestamp": "2024-06-20T18:21:25.175174",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "251-269:checkArray": {
                     "start": 251,
@@ -691,11 +905,30 @@
                         "    def __checkArray(self, label: str, expect: typing.List[str], result: typing.List[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __checkArray(self, label: str, expect: typing.List[str], result: typing.List[str]) -> None:",
+                        "        ",
+                        "        if expect is None or result is None:",
+                        "            if expect is None and result is None:",
+                        "                return  # valid, both null",
+                        "            else:",
+                        "                self.fail(label + \" Null expect=\" + str(expect) + \" result=\" + str(result))",
+                        "            return  # not strictly necessary, but prevents possible NPE below",
+                        "",
+                        "        if len(expect) != len(result):",
+                        "            self.fail(label + \" Length expect=\" + str(len(expect)) + \" result=\" + str(len(result)))",
+                        "",
+                        "        for i in range(len(expect)):",
+                        "            self.assertEqual(expect[i], result[i], label + \" value[\" + str(i) + \"]\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.726165294647217,
+                    "generation_timestamp": "2024-06-20T18:21:34.905723",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -716,12 +949,22 @@
                             "java.lang.String[]"
                         ]
                     ],
-                    "partial_translation": "    __MULTIPLE_REGEX: typing.List[str] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __MULTIPLE_REGEX: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MULTIPLE_REGEX: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:54:59.044651",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "42-42:REGEX_3": {
                     "start": 42,
@@ -740,12 +983,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __REGEX_3: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __REGEX_3: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __REGEX_3: str = \"^\" + __COMPONENT_1 + __COMPONENT_2 + __COMPONENT_3 + \"$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 22.641862630844116,
+                    "generation_timestamp": "2024-06-20T14:55:21.688867",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "40-41:REGEX_2": {
                     "start": 40,
@@ -765,12 +1017,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __REGEX_2: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __REGEX_2: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __REGEX_2: str = \"^\" + __COMPONENT_1 + __SEPARATOR_2 + __COMPONENT_2 + __SEPARATOR_2 + __COMPONENT_3 + \"$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.470084428787231,
+                    "generation_timestamp": "2024-06-20T14:55:33.161794",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "38-39:REGEX_1": {
                     "start": 38,
@@ -790,12 +1051,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __REGEX_1: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __REGEX_1: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __REGEX_1: str = \"^\" + __COMPONENT_1 + __SEPARATOR_1 + __COMPONENT_2 + __SEPARATOR_1 + __COMPONENT_3 + \"$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.44174861907959,
+                    "generation_timestamp": "2024-06-20T14:55:45.606432",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "37-37:SEPARATOR_2": {
                     "start": 37,
@@ -814,12 +1084,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __SEPARATOR_2: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __SEPARATOR_2: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SEPARATOR_2: str = \"(?:\\\\s)\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.6343121528625488,
+                    "generation_timestamp": "2024-06-20T14:55:47.243779",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "36-36:SEPARATOR_1": {
                     "start": 36,
@@ -838,12 +1117,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __SEPARATOR_1: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __SEPARATOR_1: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SEPARATOR_1: str = \"(?:\\\\-)\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.622730493545532,
+                    "generation_timestamp": "2024-06-20T14:55:54.869552",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "35-35:COMPONENT_3": {
                     "start": 35,
@@ -862,12 +1150,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __COMPONENT_3: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __COMPONENT_3: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __COMPONENT_3: str = \"([123]{3})\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.0027430057525635,
+                    "generation_timestamp": "2024-06-20T14:56:00.875136",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "34-34:COMPONENT_2": {
                     "start": 34,
@@ -886,12 +1183,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __COMPONENT_2: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __COMPONENT_2: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __COMPONENT_2: str = \"([DEF]{3})\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.964761257171631,
+                    "generation_timestamp": "2024-06-20T14:56:05.842601",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "33-33:COMPONENT_1": {
                     "start": 33,
@@ -910,12 +1216,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __COMPONENT_1: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __COMPONENT_1: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __COMPONENT_1: str = \"([abc]{3})\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.7258405685424805,
+                    "generation_timestamp": "2024-06-20T14:56:11.571152",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "31-31:REGEX": {
                     "start": 31,
@@ -934,12 +1249,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __REGEX: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __REGEX: str = \"^([abc]*)(?:\\\\-)([DEF]*)(?:\\\\-)([123]*)$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.5583019256591797,
+                    "generation_timestamp": "2024-06-20T14:56:14.132164",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class RegexValidatorTest(unittest.TestCase):\n\n"
@@ -947,6 +1271,8 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
         "import unittest",

@@ -119,11 +119,19 @@
                         "    def formatCreditCard(value: str) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatCreditCard(value: str) -> int:",
+                        "         return int(value) if GenericValidator.isCreditCard(value) else None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.42828106880188,
+                    "generation_timestamp": "2024-06-20T21:35:32.546557",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "407-440:formatDate1": {
                     "start": 407,
@@ -185,14 +193,51 @@
                     "calls": [],
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def formatDate1(value: str, datePattern: str, strict: bool) -> typing.Union[datetime.date, datetime.datetime]:\n",
+                        "    def formatDate1(value: str, datePattern: str, strict: bool) -> typing.Union[datetime.datetime, datetime.date]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatDate1(value: str, datePattern: str, strict: bool) -> typing.Union[datetime.datetime, datetime.date]:",
+                        "        ",
+                        "        date = None",
+                        "",
+                        "        if value is None or datePattern is None or len(datePattern) == 0:",
+                        "            return None",
+                        "",
+                        "        try:",
+                        "            formatter = datetime.datetime.strptime(value, datePattern)",
+                        "",
+                        "            if strict and len(datePattern) != len(value):",
+                        "                date = None",
+                        "            else:",
+                        "                date = formatter",
+                        "",
+                        "        except ValueError as e:",
+                        "            if GenericTypeValidator.__LOG.isDebugEnabled():",
+                        "                GenericTypeValidator.__LOG.debug(",
+                        "                    \"Date parse failed value=[\"",
+                        "                    + value",
+                        "                    + \"], \"",
+                        "                    + \"pattern=[\"",
+                        "                    + datePattern",
+                        "                    + \"], \"",
+                        "                    + \"strict=[\"",
+                        "                    + str(strict)",
+                        "                    + \"] \"",
+                        "                    + str(e)",
+                        "                )",
+                        "",
+                        "        return date"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.98920464515686,
+                    "generation_timestamp": "2024-06-20T21:35:53.822701",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "351-392:formatDate0": {
                     "start": 351,
@@ -261,14 +306,57 @@
                     "calls": [],
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def formatDate0(value: str, locale: typing.Any) -> typing.Union[datetime.date, datetime.datetime]:\n",
+                        "    def formatDate0(value: str, locale: typing.Any) -> typing.Union[datetime.datetime, datetime.date]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatDate0(value: str, locale: typing.Any) -> typing.Union[datetime.datetime, datetime.date]:",
+                        "        ",
+                        "        date = None",
+                        "",
+                        "        if value is None:",
+                        "            return None",
+                        "",
+                        "        try:",
+                        "            formatterShort = None",
+                        "            formatterDefault = None",
+                        "            if locale is not None:",
+                        "                formatterShort = DateFormat.getDateInstance(DateFormat.SHORT, locale)",
+                        "                formatterDefault = DateFormat.getDateInstance(DateFormat.DEFAULT, locale)",
+                        "            else:",
+                        "                formatterShort = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault())",
+                        "                formatterDefault = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault())",
+                        "",
+                        "            formatterShort.setLenient(False)",
+                        "            formatterDefault.setLenient(False)",
+                        "",
+                        "            try:",
+                        "                date = formatterShort.parse(value)",
+                        "            except ParseException:",
+                        "                date = formatterDefault.parse(value)",
+                        "        except ParseException as e:",
+                        "            if GenericTypeValidator.__LOG.isDebugEnabled():",
+                        "                GenericTypeValidator.__LOG.debug(",
+                        "                    \"Date parse failed value=[\"",
+                        "                    + value",
+                        "                    + \"], \"",
+                        "                    + \"locale=[\"",
+                        "                    + str(locale)",
+                        "                    + \"] \"",
+                        "                    + str(e)",
+                        "                )",
+                        "",
+                        "        return date"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.07427453994751,
+                    "generation_timestamp": "2024-06-20T21:36:13.900450",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "317-339:formatDouble1": {
                     "start": 317,
@@ -321,11 +409,34 @@
                         "    def formatDouble1(value: str, locale: typing.Any) -> float:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatDouble1(value: str, locale: typing.Any) -> float:",
+                        "        ",
+                        "        result = None",
+                        "",
+                        "        if value is not None:",
+                        "            formatter = None",
+                        "            if locale is not None:",
+                        "                formatter = NumberFormat.getInstance(locale)",
+                        "            else:",
+                        "                formatter = NumberFormat.getInstance(Locale.getDefault())",
+                        "            pos = ParsePosition(0)",
+                        "            num = formatter.parse(value, pos)",
+                        "",
+                        "            if pos.getErrorIndex() == -1 and pos.getIndex() == len(value) and num.doubleValue() >= (float('-inf')) and num.doubleValue() <= float('inf'):",
+                        "                result = float(num.doubleValue())",
+                        "",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 60.31805682182312,
+                    "generation_timestamp": "2024-06-20T21:37:14.223214",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "298-308:formatDouble0": {
                     "start": 298,
@@ -365,11 +476,26 @@
                         "    def formatDouble0(value: str) -> float:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatDouble0(value: str) -> float:",
+                        "        ",
+                        "        if value is None:",
+                        "            return None",
+                        "",
+                        "        try:",
+                        "            return float(value)",
+                        "        except ValueError:",
+                        "            return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.369877099990845,
+                    "generation_timestamp": "2024-06-20T21:37:22.596616",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "268-290:formatFloat1": {
                     "start": 268,
@@ -422,11 +548,34 @@
                         "    def formatFloat1(value: str, locale: typing.Any) -> float:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatFloat1(value: str, locale: typing.Any) -> float:",
+                        "        ",
+                        "        result = None",
+                        "",
+                        "        if value is not None:",
+                        "            formatter = None",
+                        "            if locale is not None:",
+                        "                formatter = NumberFormat.getInstance(locale)",
+                        "            else:",
+                        "                formatter = NumberFormat.getInstance(Locale.getDefault())",
+                        "            pos = ParsePosition(0)",
+                        "            num = formatter.parse(value, pos)",
+                        "",
+                        "            if pos.getErrorIndex() == -1 and pos.getIndex() == len(value) and num.doubleValue() >= (float('-inf')) and num.doubleValue() <= float('inf'):",
+                        "                result = float(num.floatValue())",
+                        "",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 40.073649406433105,
+                    "generation_timestamp": "2024-06-20T21:38:08.290207",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "249-259:formatFloat0": {
                     "start": 249,
@@ -466,11 +615,26 @@
                         "    def formatFloat0(value: str) -> float:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatFloat0(value: str) -> float:",
+                        "        ",
+                        "        if value is None:",
+                        "            return None",
+                        "",
+                        "        try:",
+                        "            return float(value)",
+                        "        except ValueError:",
+                        "            return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.212167978286743,
+                    "generation_timestamp": "2024-06-20T21:38:14.507703",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "218-241:formatLong1": {
                     "start": 218,
@@ -524,11 +688,35 @@
                         "    def formatLong1(value: str, locale: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatLong1(value: str, locale: typing.Any) -> int:",
+                        "        ",
+                        "        result = None",
+                        "",
+                        "        if value is not None:",
+                        "            formatter = None",
+                        "            if locale is not None:",
+                        "                formatter = NumberFormat.getNumberInstance(locale)",
+                        "            else:",
+                        "                formatter = NumberFormat.getNumberInstance(Locale.getDefault())",
+                        "            formatter.setParseIntegerOnly(True)",
+                        "            pos = ParsePosition(0)",
+                        "            num = formatter.parse(value, pos)",
+                        "",
+                        "            if pos.getErrorIndex() == -1 and pos.getIndex() == len(value) and num.doubleValue() >= Long.MIN_VALUE and num.doubleValue() <= Long.MAX_VALUE:",
+                        "                result = Long.valueOf(num.longValue())",
+                        "",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 50.624614000320435,
+                    "generation_timestamp": "2024-06-20T21:39:24.989077",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "199-209:formatLong0": {
                     "start": 199,
@@ -568,11 +756,26 @@
                         "    def formatLong0(value: str) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatLong0(value: str) -> int:",
+                        "        ",
+                        "        if value is None:",
+                        "            return None",
+                        "",
+                        "        try:",
+                        "            return int(value)",
+                        "        except ValueError:",
+                        "            return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.622213125228882,
+                    "generation_timestamp": "2024-06-20T21:39:31.619678",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "168-191:formatInt1": {
                     "start": 168,
@@ -626,11 +829,35 @@
                         "    def formatInt1(value: str, locale: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatInt1(value: str, locale: typing.Any) -> int:",
+                        "        ",
+                        "        result = None",
+                        "",
+                        "        if value is not None:",
+                        "            formatter = None",
+                        "            if locale is not None:",
+                        "                formatter = NumberFormat.getNumberInstance(locale)",
+                        "            else:",
+                        "                formatter = NumberFormat.getNumberInstance(Locale.getDefault())",
+                        "            formatter.setParseIntegerOnly(True)",
+                        "            pos = ParsePosition(0)",
+                        "            num = formatter.parse(value, pos)",
+                        "",
+                        "            if pos.getErrorIndex() == -1 and pos.getIndex() == len(value) and num.doubleValue() >= Integer.MIN_VALUE and num.doubleValue() <= Integer.MAX_VALUE:",
+                        "                result = Integer.valueOf(num.intValue())",
+                        "",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.60414958000183,
+                    "generation_timestamp": "2024-06-20T21:39:53.066696",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "149-159:formatInt0": {
                     "start": 149,
@@ -670,11 +897,26 @@
                         "    def formatInt0(value: str) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatInt0(value: str) -> int:",
+                        "        ",
+                        "        if value is None:",
+                        "            return None",
+                        "",
+                        "        try:",
+                        "            return int(value)",
+                        "        except ValueError:",
+                        "            return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.403976678848267,
+                    "generation_timestamp": "2024-06-20T21:39:59.477008",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "118-141:formatShort1": {
                     "start": 118,
@@ -728,11 +970,35 @@
                         "    def formatShort1(value: str, locale: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatShort1(value: str, locale: typing.Any) -> int:",
+                        "        ",
+                        "        result = None",
+                        "",
+                        "        if value is not None:",
+                        "            formatter = None",
+                        "            if locale is not None:",
+                        "                formatter = NumberFormat.getNumberInstance(locale)",
+                        "            else:",
+                        "                formatter = NumberFormat.getNumberInstance(Locale.getDefault())",
+                        "            formatter.setParseIntegerOnly(True)",
+                        "            pos = ParsePosition(0)",
+                        "            num = formatter.parse(value, pos)",
+                        "",
+                        "            if pos.getErrorIndex() == -1 and pos.getIndex() == len(value) and num.doubleValue() >= Short.MIN_VALUE and num.doubleValue() <= Short.MAX_VALUE:",
+                        "                result = Short.valueOf(num.shortValue())",
+                        "",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.267301321029663,
+                    "generation_timestamp": "2024-06-20T21:40:21.088215",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "99-109:formatShort0": {
                     "start": 99,
@@ -772,11 +1038,26 @@
                         "    def formatShort0(value: str) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatShort0(value: str) -> int:",
+                        "        ",
+                        "        if value is None:",
+                        "            return None",
+                        "",
+                        "        try:",
+                        "            return int(value)",
+                        "        except ValueError:",
+                        "            return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.468674898147583,
+                    "generation_timestamp": "2024-06-20T21:40:27.562940",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "68-91:formatByte1": {
                     "start": 68,
@@ -830,11 +1111,35 @@
                         "    def formatByte1(value: str, locale: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatByte1(value: str, locale: typing.Any) -> int:",
+                        "        ",
+                        "        result = None",
+                        "",
+                        "        if value is not None:",
+                        "            formatter = None",
+                        "            if locale is not None:",
+                        "                formatter = NumberFormat.getNumberInstance(locale)",
+                        "            else:",
+                        "                formatter = NumberFormat.getNumberInstance(Locale.getDefault())",
+                        "            formatter.setParseIntegerOnly(True)",
+                        "            pos = ParsePosition(0)",
+                        "            num = formatter.parse(value, pos)",
+                        "",
+                        "            if pos.getErrorIndex() == -1 and pos.getIndex() == len(value) and num.doubleValue() >= Byte.MIN_VALUE and num.doubleValue() <= Byte.MAX_VALUE:",
+                        "                result = Byte.valueOf(num.byteValue())",
+                        "",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.596098184585571,
+                    "generation_timestamp": "2024-06-20T21:40:47.860367",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "49-59:formatByte0": {
                     "start": 49,
@@ -874,11 +1179,26 @@
                         "    def formatByte0(value: str) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def formatByte0(value: str) -> int:",
+                        "        ",
+                        "        if value is None:",
+                        "            return None",
+                        "",
+                        "        try:",
+                        "            return int(value)",
+                        "        except ValueError:",
+                        "            return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.238760948181152,
+                    "generation_timestamp": "2024-06-20T21:40:54.102508",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -899,12 +1219,22 @@
                             "Log"
                         ]
                     ],
-                    "partial_translation": "    __LOG: logging.Logger = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __LOG: logging.Logger = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 5487162314134261703",
+                        "    __LOG: Log = LogFactory.getLog(GenericTypeValidator.__class__)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.1086227893829346,
+                    "generation_timestamp": "2024-06-20T15:00:53.874613",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "39-39:serialVersionUID": {
                     "start": 39,
@@ -923,12 +1253,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 5487162314134261703"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.592865228652954,
+                    "generation_timestamp": "2024-06-20T15:00:55.472529",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class GenericTypeValidator():\n\n"
@@ -939,6 +1278,7 @@
         "import io",
         "import typing\nfrom typing import *",
         "import datetime",
+        "import logging",
         "from src.main.org.apache.commons.logging.Log import *",
         "from src.main.org.apache.commons.logging.LogFactory import *",
         "from src.main.org.apache.commons.validator.GenericValidator import *"

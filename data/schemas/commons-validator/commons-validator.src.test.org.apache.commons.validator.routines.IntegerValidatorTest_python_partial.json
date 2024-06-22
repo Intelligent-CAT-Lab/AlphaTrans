@@ -111,11 +111,49 @@
                         "    def _setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _setUp(self) -> None:",
+                        "        ",
+                        "        import locale",
+                        "        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')",
+                        "",
+                        "        self._validator = IntegerValidator(False, 0)",
+                        "        self._strictValidator = IntegerValidator.IntegerValidator1()",
+                        "",
+                        "        self._testPattern = \"#,###\"",
+                        "",
+                        "        self._max = int(2147483647)",
+                        "        self._maxPlusOne = self._max + 1",
+                        "        self._min = int(-2147483648)",
+                        "        self._minMinusOne = self._min - 1",
+                        "",
+                        "        self._invalidStrict = [None, \"\", \"X\", \"X12\", \"12X\", \"1X2\", \"1.2\", self.__INT_MAX_1, self.__INT_MIN_1]",
+                        "",
+                        "        self._invalid = [None, \"\", \"X\", \"X12\", self.__INT_MAX_1, self.__INT_MIN_1]",
+                        "",
+                        "        self._testNumber = int(1234)",
+                        "        self._testZero = int(0)",
+                        "        self._validStrict = [\"0\", \"1234\", \"1,234\", self.__INT_MAX, self.__INT_MIN]",
+                        "        self._validStrictCompare = [self._testZero, self._testNumber, self._testNumber, self.__INT_MAX_VAL, self.__INT_MIN_VAL]",
+                        "        self._valid = [\"0\", \"1234\", \"1,234\", \"1,234.5\", \"1234X\", self.__INT_MAX, self.__INT_MIN, self.__INT_MAX_0, self.__INT_MIN_0]",
+                        "        self._validCompare = [self._testZero, self._testNumber, self._testNumber, self._testNumber, self._testNumber, self.__INT_MAX_VAL, self.__INT_MIN_VAL, self.__INT_MAX_VAL, self.__INT_MIN_VAL]",
+                        "",
+                        "        self._testStringUS = \"1,234\"",
+                        "        self._testStringDE = \"1.234\"",
+                        "",
+                        "        self._localeValue = self._testStringDE",
+                        "        self._localePattern = \"#.###\"",
+                        "        self._testLocale = locale.GERMANY",
+                        "        self._localeExpected = self._testNumber"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 44.668264865875244,
+                    "generation_timestamp": "2024-06-20T18:38:42.961594",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "174-179:testMinMaxValues": {
                     "start": 174,
@@ -152,11 +190,22 @@
                         "    def testMinMaxValues(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testMinMaxValues(self) -> None:",
+                        "        ",
+                        "        assert self._validator.isValid0(\"2147483647\") == True, \"2147483647 is max integer\"",
+                        "        assert self._validator.isValid0(\"2147483648\") == False, \"2147483648 > max integer\"",
+                        "        assert self._validator.isValid0(\"-2147483648\") == True, \"-2147483648 is min integer\"",
+                        "        assert self._validator.isValid0(\"-2147483649\") == False, \"-2147483649 < min integer\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.655783891677856,
+                    "generation_timestamp": "2024-06-20T18:38:55.622619",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "150-172:testIntegerRangeMinMax": {
                     "start": 150,
@@ -225,11 +274,40 @@
                         "    def testIntegerRangeMinMax(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testIntegerRangeMinMax(self) -> None:",
+                        "        ",
+                        "        validator = self._strictValidator",
+                        "",
+                        "        number9 = validator.validate1(\"9\", \"#\")",
+                        "        number10 = validator.validate1(\"10\", \"#\")",
+                        "        number11 = validator.validate1(\"11\", \"#\")",
+                        "        number19 = validator.validate1(\"19\", \"#\")",
+                        "        number20 = validator.validate1(\"20\", \"#\")",
+                        "        number21 = validator.validate1(\"21\", \"#\")",
+                        "",
+                        "        self.assertFalse(validator.isInRange1(number9, 10, 20), \"isInRange() < min\")",
+                        "        self.assertTrue(validator.isInRange1(number10, 10, 20), \"isInRange() = min\")",
+                        "        self.assertTrue(validator.isInRange1(number11, 10, 20), \"isInRange() in range\")",
+                        "        self.assertTrue(validator.isInRange1(number20, 10, 20), \"isInRange() = max\")",
+                        "        self.assertFalse(validator.isInRange1(number21, 10, 20), \"isInRange() > max\")",
+                        "",
+                        "        self.assertFalse(validator.minValue1(number9, 10), \"minValue() < min\")",
+                        "        self.assertTrue(validator.minValue1(number10, 10), \"minValue() = min\")",
+                        "        self.assertTrue(validator.minValue1(number11, 10), \"minValue() > min\")",
+                        "",
+                        "        self.assertTrue(validator.maxValue1(number19, 20), \"maxValue() < max\")",
+                        "        self.assertTrue(validator.maxValue1(number20, 20), \"maxValue() = max\")",
+                        "        self.assertFalse(validator.maxValue1(number21, 20), \"maxValue() > max\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 41.45249581336975,
+                    "generation_timestamp": "2024-06-20T18:39:37.079585",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "99-147:testIntegerValidatorMethods": {
                     "start": 99,
@@ -350,10 +428,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "44-46:IntegerValidatorTest": {
                     "start": 44,
@@ -389,11 +471,24 @@
                         "    def __init__(self, name: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, name: str) -> None:",
+                        "        ",
+                        "        import locale",
+                        "        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')",
+                        "",
+                        "        super().__init__(name)",
+                        "",
+                        "        self._setUp()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.519146680831909,
+                    "generation_timestamp": "2024-06-20T18:44:49.430088",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -414,12 +509,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __INT_MIN_1: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __INT_MIN_1: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INT_MIN_1: str = \"-2147483649\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.737032413482666,
+                    "generation_timestamp": "2024-06-20T14:56:29.158299",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "35-36:INT_MIN_0": {
                     "start": 35,
@@ -439,12 +543,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __INT_MIN_0: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __INT_MIN_0: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INT_MIN_0: str = \"-2147483648.99999999999999999999999\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.1152069568634033,
+                    "generation_timestamp": "2024-06-20T14:56:32.275604",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "34-34:INT_MIN": {
                     "start": 34,
@@ -463,12 +576,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __INT_MIN: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __INT_MIN: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INT_MIN: str = \"-2147483648\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.6516778469085693,
+                    "generation_timestamp": "2024-06-20T14:56:33.929429",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "33-33:INT_MAX_1": {
                     "start": 33,
@@ -487,12 +609,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __INT_MAX_1: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __INT_MAX_1: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INT_MAX_1: str = \"2147483648\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.7509207725524902,
+                    "generation_timestamp": "2024-06-20T14:56:35.683142",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "31-32:INT_MAX_0": {
                     "start": 31,
@@ -512,12 +643,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __INT_MAX_0: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __INT_MAX_0: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INT_MAX_0: str = \"2147483647.99999999999999999999999\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.8110713958740234,
+                    "generation_timestamp": "2024-06-20T14:56:39.496993",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "30-30:INT_MAX": {
                     "start": 30,
@@ -536,12 +676,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __INT_MAX: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __INT_MAX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INT_MAX: str = \"2147483647\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.00563645362854,
+                    "generation_timestamp": "2024-06-20T14:56:41.504784",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "29-29:INT_MAX_VAL": {
                     "start": 29,
@@ -560,12 +709,21 @@
                             "java.lang.Integer"
                         ]
                     ],
-                    "partial_translation": "    __INT_MAX_VAL: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __INT_MAX_VAL: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INT_MAX_VAL: int = int(2147483647)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.611086368560791,
+                    "generation_timestamp": "2024-06-20T14:56:56.117771",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "28-28:INT_MIN_VAL": {
                     "start": 28,
@@ -584,12 +742,21 @@
                             "java.lang.Integer"
                         ]
                     ],
-                    "partial_translation": "    __INT_MIN_VAL: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __INT_MIN_VAL: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INT_MIN_VAL: int = int(-2147483648)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.632275104522705,
+                    "generation_timestamp": "2024-06-20T14:57:00.755139",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class IntegerValidatorTest(AbstractNumberValidatorTest):\n\n"
@@ -597,6 +764,8 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import numbers",
         "from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *",
