@@ -79,7 +79,7 @@ class Project:
         os.makedirs(os.path.dirname(java_handler_path), exist_ok=True)
         with open(f"{self.script_dir}/misc/java_handler.py") as f:
             write_to_file(
-                f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/src/{paths[self.name]['main'].replace('/java/', '/')}/java_handler.py",
+                java_handler_path,
                 f.read().format(
                     project = f"org.apache.{self.formatted_name}"
                 )
@@ -113,10 +113,14 @@ class Project:
                 python_file_contents = []
                 
                 # add imports
-                python_file_contents.extend(schema_data['python_imports'])
+                # filter out unnecessary imports
+                imports_from_schema = filter(
+                    lambda imp: not any(x in imp for x in ['commons.io', 'commons.logging', 'opentest4j', 'com.google']),
+                    schema_data['python_imports']
+                )
+                python_file_contents.extend(imports_from_schema)
                 python_file_contents.append("import java") # import the java module (from Polyglot)
                 python_file_contents.append(f"from src.{paths[self.name]['main'].replace('/java/', '/').replace('/', '.')}java_handler import *")
-                python_file_contents.append(f"import sys") # for exception handling
                 
                 class_order = schema_object.get_class_order()
 
@@ -424,14 +428,16 @@ class CompositionalTest:
         # sort the classes based on the nesting
         return pre_order_traversal(nested_inside_relations)
     
-    def __log_write(self, file_name: str, content: str):
+    def __log_write(self, file_name: str, content: str, priority: int = 0):
         """
         Log the write operation for the given file.
+        Higher priority values will be written first.
         """
         if file_name not in self.scheduled_writes:
             self.scheduled_writes[file_name] = {
                 "original_content": None,
-                "new_content": content
+                "new_content": content,
+                "priority": priority
             }
         else:
             self.scheduled_writes[file_name]["new_content"] = content
@@ -440,7 +446,7 @@ class CompositionalTest:
         """
         Execute the write operations.
         """
-        for file_name in self.scheduled_writes:
+        for file_name in sorted(self.scheduled_writes.keys(), key=lambda x: -self.scheduled_writes[x]["priority"]):
             if os.path.exists(file_name):
                 with open(file_name) as f:
                     self.scheduled_writes[file_name]["original_content"] = f.read()
@@ -505,7 +511,8 @@ class CompositionalTest:
                     package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/",
                     mappings = ctx_mappings # We shouldn't need these anymore due to IntegrationUtils.valueToObject
                                             # but sometimes we need this for implicitly handling null values
-                )
+                ),
+                priority = 1
             )
             
         # Add ExceptionHandler.java
@@ -517,7 +524,8 @@ class CompositionalTest:
                     project = f"org.apache.{self.project.formatted_name}",
                     imports = exp_imports,
                     mappings = exp_mappings
-                )
+                ),
+                priority = 1
             )
     
     def __make_ctx_mappings(self):
@@ -542,10 +550,14 @@ class CompositionalTest:
                         and not '/test/' in data['path']
                         and not ('new' in _class or '{' in _class) # skip "anonymous" classes
                 ):
-                    class_to_map, import_to_add = self.__process_class_for_mapping(_class, data)
+                    class_to_map = self.__process_class_for_ctx_mapping(_class, data)
                     classes_to_map.append(class_to_map)
-                    if import_to_add:
-                        imports.append(import_to_add)
+                    
+                    # Not importing anymore (we use fully qualified names)
+                    # -----------------------------------------------------
+                    # if import_to_add:
+                    #     imports.append(import_to_add)
+                    # -----------------------------------------------------
                         
         # code for the mappings
         mapping_code = "\n".join([
@@ -560,11 +572,15 @@ class CompositionalTest:
             for _class in classes_to_map
         ]) + "// TODO: Add other mappings"
         
-        # code for the imports
-        imports_code = "".join([
-            f"import org.apache.{self.project.formatted_name}{_import};"
-            for _import in imports
-        ])
+        # Not importing anymore (we use fully qualified names)
+        # ----------------------------------------------------------------
+        # # code for the imports
+        # imports_code = "".join([
+        #     f"import org.apache.{self.project.formatted_name}{_import};"
+        #     for _import in imports
+        # ])
+        # ----------------------------------------------------------------
+        imports_code = ""
         
         return mapping_code, imports_code
     
@@ -578,7 +594,7 @@ class CompositionalTest:
 
             for _class in data['classes']:
                 if _class.endswith('Exception'): # Assuming all exceptions have the suffix 'Exception'
-                    class_to_map, import_to_add = self.__process_class_for_mapping(_class, data)
+                    class_to_map, import_to_add = self.__process_class_for_exp_mapping(_class, data)
                     classes_to_map.append(class_to_map)
                     if import_to_add:
                         imports.append(import_to_add)
@@ -601,8 +617,33 @@ class CompositionalTest:
         ])
         
         return mapping_code, imports_code
+
+    def __process_class_for_ctx_mapping(self, class_name: str, schema_data: dict):
+        """
+        Process the given class for mapping and return the class
+        identifier and the import to add.
+        
+        Uses full class names for classes in subpackages to avoid conflicts
+        that may arise while importing from subpackages.
+        """
+        class_to_map = class_name
+        parent_class = schema_data['classes'][class_name]['nested_inside']
+        while parent_class:
+            class_to_map = f"{parent_class}.{class_to_map}"
+            parent_class = schema_data['classes'][parent_class]['nested_inside']
+        
+        # if class is from a subpackage, use the full class name
+        if paths[self.project.name]['main'] in schema_data['path']:
+            path_tail = schema_data['path'].split(paths[self.project.name]['main'])[-1]
+            if "/" in path_tail:
+                # remove the last segment
+                path_tail = path_tail[:path_tail.rfind('/')]
+                subproj_name = "." + path_tail.replace('/', '.')
+                class_to_map = f"org.apache.{self.project.formatted_name}{subproj_name}.{class_to_map}"
+                
+        return class_to_map
                   
-    def __process_class_for_mapping(self, class_name: str, schema_data: dict):
+    def __process_class_for_exp_mapping(self, class_name: str, schema_data: dict):
         """
         Process the given class for mapping and return the class
         identifier and the import to add.
@@ -735,9 +776,11 @@ class SyncMethod:
     def add_field(self, field_name: str, field_schema_data: dict):
         field_type = field_schema_data['types'][0][0].strip()
         
-        # if field_type has '<>' at the end, don't keep it in the formatted_field_type
-        if field_type.endswith('<>'):
-            formatted_field_type = field_type[:-2].strip()
+        # if field_type has any '<...>', don't keep it in the formatted_field_type
+        if '<' in field_type:
+            first_angle = field_type.find('<')
+            last_angle = field_type.rfind('>')
+            formatted_field_type = field_type[:first_angle].strip() + field_type[last_angle+1:].strip()
         else:
             formatted_field_type = field_type
         

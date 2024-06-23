@@ -85,4 +85,22 @@ def get_java_class_declaration(schema_data: dict, class_name: str):
         start = schema_data['classes'][class_name]['start']
         end = schema_data['classes'][class_name]['end']
         java_class_declaration = "".join(lst[start-1:end])
+        
+        # if the declaration does not contain a '{', look at more lines
+        # since the schema may not be correct
+        if "{" not in java_class_declaration:
+            # find the first line with '{'
+            extension = ""
+            for i in range(end, len(lst)):
+                if "{" in lst[i]:
+                    extension += lst[i][:lst[i].index("{")+1]
+                    break
+                extension += lst[i]
+            
+            java_class_declaration += extension
+        
+        # if the declaration ends in '}', remove it
+        if java_class_declaration.strip().endswith("}"):
+            java_class_declaration = java_class_declaration.strip()[0:-1]
+        
     return java_class_declaration
