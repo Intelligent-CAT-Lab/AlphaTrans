@@ -1,0 +1,718 @@
+
+/*
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ */
+
+package org.joda.convert;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import org.joda.convert.test1.Test1Class;
+import org.joda.convert.test2.Test2Class;
+import org.joda.convert.test2.Test2Interface;
+import org.joda.convert.test3.Test3Class;
+import org.joda.convert.test3.Test3SuperClass;
+import org.joda.convert.test4.Test4Class;
+import org.joda.convert.test4.Test4Interface;
+import org.junit.Test;
+
+import java.math.RoundingMode;
+import java.text.ParseException;
+
+/** Test StringConvert. */
+public class TestStringConvert {
+
+    @Test
+    public void test_constructor() {
+        StringConvert test = StringConvert.StringConvert1();
+        TypedStringConverter<?> conv = test.findTypedConverter(Integer.class);
+        assertEquals(true, conv instanceof JDKStringConverter);
+        assertEquals(Integer.class, conv.getEffectiveType());
+    }
+
+    @Test
+    public void test_constructor_true() {
+        StringConvert test = new StringConvert(true);
+        StringConverter<?> conv = test.findConverter(Integer.class);
+        assertEquals(true, conv instanceof JDKStringConverter);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_constructor_false() {
+        StringConvert test = new StringConvert(false);
+        StringConverter<?> conv = test.findConverter(Integer.class);
+        assertEquals(null, conv);
+    }
+
+    @Test
+    public void test_isConvertible() {
+        assertTrue(StringConvert.INSTANCE.isConvertible(Integer.class));
+        assertTrue(StringConvert.INSTANCE.isConvertible(String.class));
+        assertFalse(StringConvert.INSTANCE.isConvertible(Object.class));
+    }
+
+    @Test
+    public void test_convertToString() {
+        Integer i = 6;
+        assertEquals("6", StringConvert.INSTANCE.convertToString0(i));
+    }
+
+    @Test
+    public void test_convertToString_primitive() {
+        int i = 6;
+        assertEquals("6", StringConvert.INSTANCE.convertToString0(i));
+    }
+
+    @Test
+    public void test_convertToString_inherit() {
+        assertEquals("CEILING", StringConvert.INSTANCE.convertToString0(RoundingMode.CEILING));
+    }
+
+    @Test
+    public void test_convertToString_null() {
+        assertEquals(null, StringConvert.INSTANCE.convertToString0(null));
+    }
+
+    @Test
+    public void test_convertToString_withType() {
+        Integer i = 6;
+        assertEquals("6", StringConvert.INSTANCE.convertToString1(Integer.class, i));
+    }
+
+    @Test
+    public void test_convertToString_withType_noGenerics() {
+        Integer i = 6;
+        Class<?> cls = Integer.class;
+        assertEquals("6", StringConvert.INSTANCE.convertToString1(cls, i));
+    }
+
+    @Test
+    public void test_convertToString_withType_primitive1() {
+        int i = 6;
+        assertEquals("6", StringConvert.INSTANCE.convertToString1(Integer.class, i));
+    }
+
+    @Test
+    public void test_convertToString_withType_primitive2() {
+        int i = 6;
+        assertEquals("6", StringConvert.INSTANCE.convertToString1(Integer.TYPE, i));
+    }
+
+    @Test
+    public void test_convertToString_withType_inherit1() {
+        assertEquals(
+                "CEILING",
+                StringConvert.INSTANCE.convertToString1(RoundingMode.class, RoundingMode.CEILING));
+    }
+
+    @Test
+    public void test_convertToString_withType_null() {
+        assertEquals(null, StringConvert.INSTANCE.convertToString1(Integer.class, null));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_convertToString_withType_nullClass() {
+        assertEquals(null, StringConvert.INSTANCE.convertToString1(null, "6"));
+    }
+
+    @Test
+    public void test_convertFromString() {
+        assertEquals(
+                Integer.valueOf(6), StringConvert.INSTANCE.convertFromString(Integer.class, "6"));
+    }
+
+    @Test
+    public void test_convertFromString_primitiveInt() {
+        assertEquals(
+                Integer.valueOf(6), StringConvert.INSTANCE.convertFromString(Integer.TYPE, "6"));
+    }
+
+    @Test
+    public void test_convertFromString_primitiveBoolean() {
+        assertEquals(Boolean.TRUE, StringConvert.INSTANCE.convertFromString(Boolean.TYPE, "true"));
+    }
+
+    @Test
+    public void test_convertFromString_enumSubclass() {
+        assertEquals(
+                ValidityCheck.VALID,
+                StringConvert.INSTANCE.convertFromString(ValidityCheck.class, "VALID"));
+    }
+
+    @Test
+    public void test_convertFromString_inherit() {
+        assertEquals(
+                RoundingMode.CEILING,
+                StringConvert.INSTANCE.convertFromString(RoundingMode.class, "CEILING"));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void test_convertFromString_inheritNotSearchedFor() {
+        StringConvert.INSTANCE.convertFromString(AltCharSequence.class, "A");
+    }
+
+    @Test
+    public void test_convertFromString_null() {
+        assertEquals(null, StringConvert.INSTANCE.convertFromString(Integer.class, null));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_convertFromString_nullClass() {
+        assertNull(StringConvert.INSTANCE.convertFromString(null, "6"));
+    }
+
+    @Test
+    public void test_findConverter() {
+        Class<Integer> cls = Integer.class;
+        StringConverter<Integer> conv = StringConvert.INSTANCE.findConverter(cls);
+        assertEquals(Integer.valueOf(12), conv.convertFromString(cls, "12"));
+        assertEquals("12", conv.convertToString(12));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_findConverter_null() {
+        StringConvert.INSTANCE.findConverter(null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_findConverter_Object() {
+        StringConvert.INSTANCE.findConverter(Object.class);
+    }
+
+    @Test
+    public void test_findConverterNoGenerics() {
+        Class<?> cls = Integer.class;
+        StringConverter<Object> conv = StringConvert.INSTANCE.findConverterNoGenerics(cls);
+        assertEquals(Integer.valueOf(12), conv.convertFromString(cls, "12"));
+        assertEquals("12", conv.convertToString(12));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_findConverterNoGenerics_null() {
+        StringConvert.INSTANCE.findConverterNoGenerics(null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_findConverterNoGenerics_Object() {
+        StringConvert.INSTANCE.findConverterNoGenerics(Object.class);
+    }
+
+    @Test
+    public void test_convert_annotationMethodMethod() {
+        StringConvert test = StringConvert.StringConvert1();
+        DistanceMethodMethod d = new DistanceMethodMethod(25);
+        assertEquals("25m", test.convertToString0(d));
+        assertEquals(d.amount, test.convertFromString(DistanceMethodMethod.class, "25m").amount);
+        TypedStringConverter<DistanceMethodMethod> conv =
+                test.findTypedConverter(DistanceMethodMethod.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertSame(conv, test.findConverter(DistanceMethodMethod.class));
+        assertEquals(DistanceMethodMethod.class, conv.getEffectiveType());
+        assertEquals(true, conv.toString().startsWith("RefectionStringConverter"));
+    }
+
+    @Test
+    public void test_convert_annotationMethodMethodCharSequence() {
+        StringConvert test = StringConvert.StringConvert1();
+        DistanceMethodMethodCharSequence d = new DistanceMethodMethodCharSequence(25);
+        assertEquals("25m", test.convertToString0(d));
+        assertEquals(
+                d.amount,
+                test.convertFromString(DistanceMethodMethodCharSequence.class, "25m").amount);
+        TypedStringConverter<DistanceMethodMethodCharSequence> conv =
+                test.findTypedConverter(DistanceMethodMethodCharSequence.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertSame(conv, test.findConverter(DistanceMethodMethodCharSequence.class));
+        assertEquals(DistanceMethodMethodCharSequence.class, conv.getEffectiveType());
+        assertEquals(true, conv.toString().startsWith("RefectionStringConverter"));
+    }
+
+    @Test
+    public void test_convert_annotationMethodBridgeMethod() {
+        StringConvert test = StringConvert.StringConvert1();
+        HasCodeImpl d = new HasCodeImpl("CODE");
+        assertEquals("CODE", test.convertToString0(d));
+        assertEquals(d.code, test.convertFromString(HasCodeImpl.class, "CODE").code);
+        TypedStringConverter<HasCodeImpl> conv = test.findTypedConverter(HasCodeImpl.class);
+        assertFromStringConverter(conv, ConstructorFromStringConverter.class);
+        assertSame(conv, test.findConverter(HasCodeImpl.class));
+        assertEquals(HasCodeImpl.class, conv.getEffectiveType());
+        assertEquals(true, conv.toString().startsWith("RefectionStringConverter"));
+    }
+
+    @Test
+    public void test_convert_annotationSubMethodMethod() {
+        StringConvert test = StringConvert.StringConvert1();
+        SubMethodMethod d = new SubMethodMethod(25);
+        assertEquals("25m", test.convertToString0(d));
+        assertEquals(d.amount, test.convertFromString(SubMethodMethod.class, "25m").amount);
+        TypedStringConverter<SubMethodMethod> conv = test.findTypedConverter(SubMethodMethod.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertEquals(SubMethodMethod.class, conv.getEffectiveType());
+        assertSame(conv, test.findConverter(SubMethodMethod.class));
+    }
+
+    @Test
+    public void test_convert_annotationSubMethodConstructor() {
+        StringConvert test = StringConvert.StringConvert1();
+        SubMethodConstructor d = new SubMethodConstructor("25m");
+        assertEquals("25m", test.convertToString0(d));
+        assertEquals(d.amount, test.convertFromString(SubMethodConstructor.class, "25m").amount);
+        TypedStringConverter<SubMethodConstructor> conv =
+                test.findTypedConverter(SubMethodConstructor.class);
+        assertFromStringConverter(conv, ConstructorFromStringConverter.class);
+        assertEquals(SubMethodConstructor.class, conv.getEffectiveType());
+        assertSame(conv, test.findConverter(SubMethodConstructor.class));
+    }
+
+    @Test
+    public void test_convert_annotationSuperFactorySuper() {
+        StringConvert test = StringConvert.StringConvert1();
+        SuperFactorySuper d = new SuperFactorySuper(25);
+        assertEquals("25m", test.convertToString0(d));
+        assertEquals(d.amount, test.convertFromString(SuperFactorySuper.class, "25m").amount);
+        TypedStringConverter<SuperFactorySuper> conv =
+                test.findTypedConverter(SuperFactorySuper.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertEquals(SuperFactorySuper.class, conv.getEffectiveType());
+        assertSame(conv, test.findConverter(SuperFactorySuper.class));
+    }
+
+    @Test
+    public void test_convert_annotationSuperFactorySubViaSuper() {
+        StringConvert test = StringConvert.StringConvert1();
+        SuperFactorySub d = new SuperFactorySub(8);
+        assertEquals("8m", test.convertToString0(d));
+        SuperFactorySuper fromStr = test.convertFromString(SuperFactorySuper.class, "8m");
+        assertEquals(d.amount, fromStr.amount);
+        assertEquals(true, fromStr instanceof SuperFactorySub);
+        TypedStringConverter<SuperFactorySub> conv = test.findTypedConverter(SuperFactorySub.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertEquals(SuperFactorySuper.class, conv.getEffectiveType());
+        assertSame(conv, test.findConverter(SuperFactorySub.class));
+    }
+
+    @Test
+    public void test_convert_annotationSuperFactorySubViaSub1() {
+        StringConvert test = StringConvert.StringConvert1();
+        SuperFactorySub d = new SuperFactorySub(25);
+        assertEquals("25m", test.convertToString0(d));
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void test_convert_annotationSuperFactorySubViaSub2() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.convertFromString(SuperFactorySub.class, "25m");
+    }
+
+    @Test
+    public void test_convert_annotationToStringInvokeException() {
+        StringConvert test = StringConvert.StringConvert1();
+        DistanceToStringException d = new DistanceToStringException(25);
+        StringConverter<DistanceToStringException> conv =
+                test.findConverter(DistanceToStringException.class);
+        try {
+            conv.convertToString(d);
+            fail();
+        } catch (RuntimeException ex) {
+            assertEquals(ParseException.class, ex.getCause().getClass());
+        }
+    }
+
+    @Test
+    public void test_convert_annotationFromStringInvokeException() {
+        StringConvert test = StringConvert.StringConvert1();
+        StringConverter<DistanceFromStringException> conv =
+                test.findConverter(DistanceFromStringException.class);
+        try {
+            conv.convertFromString(DistanceFromStringException.class, "25m");
+            fail();
+        } catch (RuntimeException ex) {
+            assertEquals(ParseException.class, ex.getCause().getClass());
+        }
+    }
+
+    @Test
+    public void test_convert_annotationFactoryMethod() {
+        StringConvert test = StringConvert.StringConvert1();
+        DistanceWithFactory d = new DistanceWithFactory(25);
+        assertEquals("25m", test.convertToString0(d));
+        assertEquals(d.amount, test.convertFromString(DistanceWithFactory.class, "25m").amount);
+        TypedStringConverter<DistanceWithFactory> conv =
+                test.findTypedConverter(DistanceWithFactory.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertEquals(DistanceWithFactory.class, conv.getEffectiveType());
+        assertSame(conv, test.findConverter(DistanceWithFactory.class));
+        assertEquals(true, conv.toString().startsWith("RefectionStringConverter"));
+    }
+
+    @Test
+    public void test_convert_annotation_ToStringOnInterface() {
+        StringConvert test = StringConvert.StringConvert1();
+        Test1Class d = new Test1Class(25);
+        assertEquals("25g", test.convertToString0(d));
+        assertEquals(d.amount, test.convertFromString(Test1Class.class, "25g").amount);
+        TypedStringConverter<Test1Class> conv = test.findTypedConverter(Test1Class.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertEquals(Test1Class.class, conv.getEffectiveType());
+        assertSame(conv, test.findConverter(Test1Class.class));
+        assertEquals(true, conv.toString().startsWith("RefectionStringConverter"));
+    }
+
+    @Test
+    public void test_convert_annotation_FactoryAndToStringOnInterface() {
+        StringConvert test = StringConvert.StringConvert1();
+        Test2Class d = new Test2Class(25);
+        assertEquals("25g", test.convertToString0(d));
+        assertEquals(d.amount, test.convertFromString(Test2Class.class, "25g").amount);
+        TypedStringConverter<Test2Class> conv = test.findTypedConverter(Test2Class.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertEquals(Test2Interface.class, conv.getEffectiveType());
+        assertSame(conv, test.findConverter(Test2Class.class));
+        assertEquals(true, conv.toString().startsWith("RefectionStringConverter"));
+    }
+
+    @Test
+    public void test_convert_annotation_FactoryAndToStringOnInterface_usingInterface() {
+        StringConvert test = StringConvert.StringConvert1();
+        Test2Class d = new Test2Class(25);
+        assertEquals("25g", test.convertToString0(d));
+        assertEquals("25g", test.convertFromString(Test2Interface.class, "25g").print());
+        TypedStringConverter<Test2Interface> conv = test.findTypedConverter(Test2Interface.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertEquals(Test2Interface.class, conv.getEffectiveType());
+        assertSame(conv, test.findConverter(Test2Interface.class));
+        assertEquals(true, conv.toString().startsWith("RefectionStringConverter"));
+    }
+
+    @Test
+    public void test_convert_annotation_ToStringFromStringOnSuperClassBeatsInterface() {
+        StringConvert test = StringConvert.StringConvert1();
+        Test3Class d = new Test3Class(25);
+        assertEquals("25g", test.convertToString0(d));
+        assertEquals(d.amount, test.convertFromString(Test3Class.class, "25g").amount);
+        TypedStringConverter<Test3Class> conv = test.findTypedConverter(Test3Class.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertSame(conv, test.findConverter(Test3Class.class));
+        assertEquals(Test3SuperClass.class, conv.getEffectiveType());
+        assertEquals(true, conv.toString().startsWith("RefectionStringConverter"));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotation_FromStringFactoryClashingMethods_fromClass() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(Test4Class.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotation_FromStringFactoryClashingMethods_fromInterface() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(Test4Interface.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotationNoMethods() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceNoAnnotations.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedMethodAndConstructor() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceMethodAndConstructorAnnotations.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedTwoToString() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceTwoToStringAnnotations.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedToStringInvalidReturnType() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceToStringInvalidReturnType.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedToStringInvalidParameters() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceToStringInvalidParameters.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedFromStringInvalidReturnType() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceFromStringInvalidReturnType.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedFromStringInvalidParameter() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceFromStringInvalidParameter.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedFromStringInvalidParameterCount() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceFromStringInvalidParameterCount.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedFromStringConstructorInvalidParameter() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceFromStringConstructorInvalidParameter.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedFromStringConstructorInvalidParameterCount() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceFromStringConstructorInvalidParameterCount.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedToStringNoFromString() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceToStringNoFromString.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedFromStringNoToString() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceFromStringNoToString.class);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_convert_annotatedTwoFromStringMethod() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.findConverter(DistanceTwoFromStringMethodAnnotations.class);
+    }
+
+    @Test
+    public void test_convert_Enum_overrideDefaultWithConverter() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.register0(Validity.class, ValidityStringConverter.INSTANCE);
+        assertEquals("VALID", test.convertToString1(Validity.class, Validity.VALID));
+        assertEquals("INVALID", test.convertToString1(Validity.class, Validity.INVALID));
+        assertEquals(Validity.VALID, test.convertFromString(Validity.class, "VALID"));
+        assertEquals(Validity.INVALID, test.convertFromString(Validity.class, "INVALID"));
+        assertEquals(Validity.VALID, test.convertFromString(Validity.class, "OK"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_register_classNotNull() {
+        StringConvert.INSTANCE.register0(null, MockIntegerStringConverter.INSTANCE);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_register_converterNotNull() {
+        StringConvert.INSTANCE.register0(Integer.class, null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_register_notOnShared() {
+        StringConvert.INSTANCE.register0(Integer.class, MockIntegerStringConverter.INSTANCE);
+    }
+
+    @Test
+    public void test_register_classAlreadyRegistered() {
+        StringConvert.StringConvert1()
+                .register0(Integer.class, MockIntegerStringConverter.INSTANCE);
+    }
+
+    public void test_register_distance() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.register0(DistanceMethodMethod.class, MockDistanceStringConverter.INSTANCE);
+        assertSame(
+                MockDistanceStringConverter.INSTANCE,
+                test.findConverter(DistanceMethodMethod.class));
+    }
+
+    ToStringConverter<DistanceNoAnnotations> DISTANCE_TO_STRING_CONVERTER =
+            new ToStringConverter<DistanceNoAnnotations>() {
+                @Override
+                public String convertToString(DistanceNoAnnotations object) {
+                    return object.toString();
+                }
+            };
+    FromStringConverter<DistanceNoAnnotations> DISTANCE_FROM_STRING_CONVERTER =
+            new FromStringConverter<DistanceNoAnnotations>() {
+                @Override
+                public DistanceNoAnnotations convertFromString(
+                        Class<? extends DistanceNoAnnotations> cls, String str) {
+                    return DistanceNoAnnotations.parse(str);
+                }
+            };
+
+    @Test
+    public void test_register_FunctionalInterfaces() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.register1(
+                DistanceNoAnnotations.class,
+                DISTANCE_TO_STRING_CONVERTER,
+                DISTANCE_FROM_STRING_CONVERTER);
+        DistanceNoAnnotations d = new DistanceNoAnnotations(1, null, 25);
+        assertEquals("Distance[25m]", test.convertToString0(d));
+        assertEquals(d.amount, test.convertFromString(DistanceNoAnnotations.class, "25m").amount);
+        StringConverter<DistanceNoAnnotations> conv =
+                test.findConverter(DistanceNoAnnotations.class);
+        assertEquals(true, conv.getClass().getName().contains("$"));
+        assertSame(conv, test.findConverter(DistanceNoAnnotations.class));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_register_FunctionalInterfaces_nullClass() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.register1(null, DISTANCE_TO_STRING_CONVERTER, DISTANCE_FROM_STRING_CONVERTER);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_register_FunctionalInterfaces_nullToString() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.register1(DistanceNoAnnotations.class, null, DISTANCE_FROM_STRING_CONVERTER);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_register_FunctionalInterfaces_nullFromString() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.register1(DistanceNoAnnotations.class, DISTANCE_TO_STRING_CONVERTER, null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void test_registerFactory_cannotChangeSingleton() {
+        StringConvert.INSTANCE.register1(
+                DistanceNoAnnotations.class,
+                DISTANCE_TO_STRING_CONVERTER,
+                DISTANCE_FROM_STRING_CONVERTER);
+    }
+
+    @Test
+    public void test_registerMethods() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethods(DistanceNoAnnotations.class, "toString", "parse");
+        DistanceNoAnnotations d = new DistanceNoAnnotations(1, null, 25);
+        assertEquals("Distance[25m]", test.convertToString0(d));
+        assertEquals(d.amount, test.convertFromString(DistanceNoAnnotations.class, "25m").amount);
+        StringConverter<DistanceNoAnnotations> conv =
+                test.findConverter(DistanceNoAnnotations.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertSame(conv, test.findConverter(DistanceNoAnnotations.class));
+    }
+
+    @Test
+    public void test_registerMethodsCharSequence() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethods(DistanceNoAnnotationsCharSequence.class, "toString", "parse");
+        DistanceNoAnnotationsCharSequence d = new DistanceNoAnnotationsCharSequence(1, null, 25);
+        assertEquals("Distance[25m]", test.convertToString0(d));
+        assertEquals(
+                d.amount,
+                test.convertFromString(DistanceNoAnnotationsCharSequence.class, "25m").amount);
+        StringConverter<DistanceNoAnnotationsCharSequence> conv =
+                test.findConverter(DistanceNoAnnotationsCharSequence.class);
+        assertFromStringConverter(conv, MethodFromStringConverter.class);
+        assertSame(conv, test.findConverter(DistanceNoAnnotationsCharSequence.class));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_registerMethods_nullClass() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethods(null, "toString", "parse");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_registerMethods_nullToString() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethods(DistanceNoAnnotations.class, null, "parse");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_registerMethods_nullFromString() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethods(DistanceNoAnnotations.class, "toString", null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_registerMethods_noSuchToStringMethod() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethods(DistanceNoAnnotations.class, "rubbishName", "parse");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_registerMethods_invalidToStringMethod() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethods(Thread.class, "currentThread", "toString");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_registerMethods_noSuchFromStringMethod() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethods(DistanceNoAnnotations.class, "toString", "rubbishName");
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void ttest_registerMethods_cannotChangeSingleton() {
+        StringConvert.INSTANCE.registerMethods(
+                DistanceNoAnnotationsCharSequence.class, "toString", "parse");
+    }
+
+    @Test
+    public void test_registerMethods_classAlreadyRegistered() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethods(DistanceNoAnnotations.class, "toString", "parse");
+        test.registerMethods(DistanceNoAnnotations.class, "toString", "parse");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_registerMethodConstructor_nullClass() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethodConstructor(null, "toString");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_registerMethodConstructor_nullToString() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethodConstructor(DistanceNoAnnotations.class, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_registerMethodConstructor_noSuchConstructor() {
+        StringConvert test = StringConvert.StringConvert1();
+        test.registerMethodConstructor(Enum.class, "toString");
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void ttest_registerMethodConstructor_cannotChangeSingleton() {
+        StringConvert.INSTANCE.registerMethodConstructor(
+                DistanceNoAnnotationsCharSequence.class, "toString");
+    }
+
+    @Test
+    public void test_convert_toString() {
+        assertEquals("StringConvert", StringConvert.StringConvert1().toString());
+    }
+
+    private void assertFromStringConverter(StringConverter<?> conv, Class<?> expectedType) {
+        assertEquals(true, conv instanceof ReflectionStringConverter<?>);
+        Object obj = ((ReflectionStringConverter<?>) conv).fromString;
+        assertEquals(expectedType, obj.getClass());
+    }
+}
