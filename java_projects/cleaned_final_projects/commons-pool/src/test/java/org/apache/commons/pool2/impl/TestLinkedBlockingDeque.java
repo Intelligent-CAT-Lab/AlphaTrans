@@ -425,15 +425,15 @@ public class TestLinkedBlockingDeque {
     public void testToArray() {
         deque.add(ONE);
         deque.add(TWO);
-        Object[] arr = deque.toArray0();
+        Object[] arr = deque.toArray();
         assertEquals(Integer.valueOf(1), arr[0]);
         assertEquals(Integer.valueOf(2), arr[1]);
 
-        arr = deque.toArray1(new Integer[0]);
+        arr = deque.toArray(new Integer[0]);
         assertEquals(Integer.valueOf(1), arr[0]);
         assertEquals(Integer.valueOf(2), arr[1]);
 
-        arr = deque.toArray1(new Integer[0]);
+        arr = deque.toArray(new Integer[0]);
         assertEquals(Integer.valueOf(1), arr[0]);
         assertEquals(Integer.valueOf(2), arr[1]);
     }

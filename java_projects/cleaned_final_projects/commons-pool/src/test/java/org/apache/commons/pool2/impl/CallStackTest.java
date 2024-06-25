@@ -20,22 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.stream.Stream;
 
 public class CallStackTest {
 
-    public static Stream<Arguments> data() {
-        return Stream.of(
-                Arguments.arguments(new ThrowableCallStack("Test", false)),
-                Arguments.arguments(new ThrowableCallStack("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", true))
-        );
-    }
-    
     private final StringWriter writer = new StringWriter();
 
     @ParameterizedTest
