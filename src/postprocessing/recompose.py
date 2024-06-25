@@ -94,7 +94,7 @@ def main(args):
 
                 total_fragments += 1
                 if data['classes'][class_]['fields'][field]['translation'] == []:
-                    recomposed_file += '\n'.join([''] + data['classes'][class_]['fields'][field]['partial_translation'].split('\n')).replace('<placeholder>', 'None # LLM could not translate this field')
+                    recomposed_file += '\n'.join([''] + data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', 'None # LLM could not translate this field')
                     recomposed_file += '\n'
                     total_unsuccessful += 1
                     continue
@@ -133,14 +133,14 @@ def main(args):
                 if 'Ignore' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
                     recomposed_file += '\n    @pytest.mark.skip(reason="Ignore")\n'
 
-                if 'Test' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
-                    recomposed_file += '\n    @pytest.mark.test\n'
+                # if 'Test' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
+                #     recomposed_file += '\n    @pytest.mark.test\n'
                 
-                if 'Before' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
-                    recomposed_file += '\n    @pytest.mark.before\n'
+                # if 'Before' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
+                #     recomposed_file += '\n    @pytest.mark.before\n'
                 
-                if 'After' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
-                    recomposed_file += '\n    @pytest.mark.after\n'
+                # if 'After' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
+                #     recomposed_file += '\n    @pytest.mark.after\n'
 
                 if data['classes'][class_]['methods'][method]['translation'] == []:
                     recomposed_file += '\n'.join([''] + data['classes'][class_]['methods'][method]['partial_translation']).replace('pass', 'pass # LLM could not translate this method')
@@ -151,6 +151,10 @@ def main(args):
                 recomposed_file += '\n'.join(data['classes'][class_]['methods'][method]['translation'])
                 recomposed_file += '\n'
                 total_fragments += 1
+
+                if 'Test' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
+                    if 'test' not in method:
+                        recomposed_file = recomposed_file.replace(f'def {method.split(":")[1]}', f'def test{method.split(":")[1]}')
 
         for initialize_method in class_initialize_methods:
             recomposed_file += f'\n\n{initialize_method}'
@@ -198,10 +202,29 @@ def main(args):
             f.write('')
     
     with open(f'{args.output_dir}/{args.model_name}/{args.project_name}/pytest.ini', 'w') as f:
-        f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\nmarkers =\n    test: Custom marker for test functions\n\n# Add options to control the pytest output\naddopts = --tb=native --no-header --junit-xml=pytest-report.xml\n\n# Define directories to look for tests\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*')
+        f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=no --junitxml=pytest-report.xml\n\n# Define directories to look for tests\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*\n')
     
     with open(f'{args.output_dir}/{args.model_name}/{args.project_name}/run.sh', 'w') as f:
         f.write('python3 -m pytest\nxmllint --format pytest-report.xml -o pytest-report.xml')
+
+    with open(f'{args.output_dir}/{args.model_name}/{args.project_name}/conftest.py', 'w') as f:
+        f.write("""
+# conftest.py
+import pytest
+import inspect
+from abc import ABC
+
+def pytest_collection_modifyitems(config, items):
+    def is_abstract_class(item):
+        # Check if the class of the item is a subclass of ABC (abstract base class)
+        if inspect.isclass(item.cls):
+            # Check if the class is actually abstract
+            return ABC in item.cls.__bases__
+        return False
+
+    # Filter out items that belong to abstract classes
+    items[:] = [item for item in items if not is_abstract_class(item)]
+""")
 
     # print(f'total fragments: {total_fragments}, total unsuccessful: {total_unsuccessful}')
     # print(f'percentage unsuccessful: {total_unsuccessful / total_fragments * 100}%')
