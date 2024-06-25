@@ -64,11 +64,18 @@
                         "    def getEffectiveType(self) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getEffectiveType(self) -> typing.Type[typing.Any]:",
+                        "         return self.__fromString.__annotations__['return']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.784111738204956,
+                    "generation_timestamp": "2024-06-21T09:04:49.215296",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "59-72:convertFromString": {
                     "start": 59,
@@ -112,11 +119,22 @@
                         "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:",
+                        "        ",
+                        "        try:",
+                        "            return self.__fromString(str)",
+                        "        except Exception as ex:",
+                        "            raise RuntimeException(f\"Error while converting from string: {ex}\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.418992519378662,
+                    "generation_timestamp": "2024-06-21T09:04:56.635692",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "43-56:ConstructorFromStringConverter": {
                     "start": 43,
@@ -156,11 +174,28 @@
                         "    def __init__(self, cls: typing.Type[typing.Any], fromString: typing.Callable[..., typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, cls: typing.Type[typing.Any], fromString: typing.Callable[..., typing.Any]) -> None:",
+                        "        ",
+                        "        if (inspect.isabstract(cls) or",
+                        "            isinstance(cls, typing._SpecialForm) or",
+                        "            cls.__module__ == 'typing' or",
+                        "            cls.__module__ == 'builtins'):",
+                        "            raise ValueError(",
+                        "                \"FromString constructor must be on an instantiable class: \" + str(fromString))",
+                        "        if fromString.__qualname__.split('.')[0] != cls.__name__:",
+                        "            raise ValueError(",
+                        "                \"FromString constructor must be defined on specified class: \" + str(fromString))",
+                        "        self.__fromString = fromString"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.97996425628662,
+                    "generation_timestamp": "2024-06-21T09:05:18.617478",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -180,12 +215,22 @@
                             "java.lang.reflect.Constructor<T>"
                         ]
                     ],
-                    "partial_translation": "    __fromString: typing.Callable[..., typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __fromString: typing.Callable[..., typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __fromString: typing.Callable[..., typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-21T08:39:29.844620",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class ConstructorFromStringConverter(TypedFromStringConverter):\n\n"

@@ -149,11 +149,18 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return self.__class__.__name__"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.2336008548736572,
+                    "generation_timestamp": "2024-06-21T09:13:39.989089",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "583-594:findFromStringConverter": {
                     "start": 583,
@@ -174,7 +181,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "SuppressWarnings"
+                        "SuppressWarnings(\"unchecked\")"
                     ],
                     "modifiers": [
                         "public"
@@ -200,11 +207,29 @@
                         "    def findFromStringConverter(self, cls: typing.Type[typing.Any]) -> FromStringConverter[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def findFromStringConverter(self, cls: typing.Type[typing.Any]) -> FromStringConverter[typing.Any]:",
+                        "        ",
+                        "        converter = self.__findConverterQuiet(cls)",
+                        "        ",
+                        "        if converter is None:",
+                        "            fromStringConverter = typing.cast(FromStringConverter[typing.Any], self.__fromStrings.get(cls))",
+                        "            ",
+                        "            if fromStringConverter is None:",
+                        "                raise IllegalStateException(\"No registered converter found: \" + str(cls))",
+                        "            ",
+                        "            return fromStringConverter",
+                        "        ",
+                        "        return converter"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.521433353424072,
+                    "generation_timestamp": "2024-06-21T09:15:04.158273",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "561-567:findTypedConverterNoGenerics": {
                     "start": 561,
@@ -220,7 +245,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "SuppressWarnings"
+                        "SuppressWarnings(\"unchecked\")"
                     ],
                     "modifiers": [
                         "public"
@@ -246,11 +271,24 @@
                         "    def findTypedConverterNoGenerics(self, cls: typing.Type[typing.Any]) -> TypedStringConverter[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def findTypedConverterNoGenerics(self, cls: typing.Type[typing.Any]) -> TypedStringConverter[typing.Any]:",
+                        "        ",
+                        "        conv = typing.cast(TypedStringConverter[typing.Any], self.__findConverterQuiet(cls))",
+                        "        ",
+                        "        if conv is None:",
+                        "            raise IllegalStateException(\"No registered converter found: \" + cls.__name__)",
+                        "        ",
+                        "        return conv"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.427020788192749,
+                    "generation_timestamp": "2024-06-21T09:15:10.588941",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "635-643:lookupConverter": {
                     "start": 635,
@@ -268,7 +306,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "SuppressWarnings"
+                        "SuppressWarnings(\"unchecked\")"
                     ],
                     "modifiers": [
                         "private"
@@ -299,11 +337,23 @@
                         "    def __lookupConverter(self, cls: typing.Type[typing.Any]) -> TypedStringConverter[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __lookupConverter(self, cls: typing.Type[typing.Any]) -> TypedStringConverter[typing.Any]:",
+                        "        ",
+                        "        for factory in self.__factories:",
+                        "            factoryConv = typing.cast(StringConverter[typing.Any], factory.findConverter(cls))",
+                        "            if factoryConv is not None:",
+                        "                return TypedAdapter.adapt(cls, factoryConv)",
+                        "        return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.247945070266724,
+                    "generation_timestamp": "2024-06-21T09:14:00.242250",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "597-624:findConverterQuiet": {
                     "start": 597,
@@ -340,7 +390,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "SuppressWarnings"
+                        "SuppressWarnings(\"unchecked\")"
                     ],
                     "modifiers": [
                         "private"
@@ -371,11 +421,43 @@
                         "    def __findConverterQuiet(self, cls: typing.Type[typing.Any]) -> TypedStringConverter[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __findConverterQuiet(self, cls: typing.Type[typing.Any]) -> TypedStringConverter[typing.Any]:",
+                        "        ",
+                        "        if cls is None:",
+                        "            raise ValueError(\"Class must not be null\")",
+                        "        ",
+                        "        conv = typing.cast(TypedStringConverter[typing.Any], self.__registered.get(cls))",
+                        "        ",
+                        "        if conv == self.__CACHED_NULL:",
+                        "            return None",
+                        "        ",
+                        "        if conv is None:",
+                        "            try:",
+                        "                conv = self.__lookupConverter(cls)",
+                        "            except Exception as ex:",
+                        "                self.__registered.putIfAbsent(cls, self.__CACHED_NULL)",
+                        "                raise ex",
+                        "            ",
+                        "            if conv is None:",
+                        "                self.__registered.putIfAbsent(cls, self.__CACHED_NULL)",
+                        "                fromString = AnnotationStringConverterFactory.INSTANCE.findFromStringConverter(cls)",
+                        "                if fromString is not None:",
+                        "                    self.__fromStrings.put(cls, fromString)",
+                        "                return None",
+                        "            ",
+                        "            self.__registered.putIfAbsent(cls, conv)",
+                        "        ",
+                        "        return conv"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 51.381765604019165,
+                    "generation_timestamp": "2024-06-21T09:14:51.630999",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "879-888:loadType": {
                     "start": 879,
@@ -419,11 +501,27 @@
                         "    def loadType(fullName: str) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def loadType(fullName: str) -> typing.Type[typing.Any]:",
+                        "        ",
+                        "        try:",
+                        "            loader = Thread.currentThread().getContextClassLoader()",
+                        "            if loader is not None and not fullName.startswith(\"[\"):",
+                        "                return loader.loadClass(fullName)",
+                        "            else:",
+                        "                return Class.forName(fullName)",
+                        "        except ClassNotFoundException as ex:",
+                        "            return StringConvert.__loadPrimitiveType(fullName, ex)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.451778173446655,
+                    "generation_timestamp": "2024-06-21T09:16:49.611088",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "797-814:registerMethodConstructor": {
                     "start": 797,
@@ -480,11 +578,30 @@
                         "    def registerMethodConstructor(self, cls: typing.Type[typing.Any], toStringMethodName: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def registerMethodConstructor(self, cls: typing.Type[typing.Any], toStringMethodName: str) -> None:",
+                        "        ",
+                        "        if cls is None:",
+                        "            raise ValueError(\"Class must not be null\")",
+                        "        if toStringMethodName is None:",
+                        "            raise ValueError(\"Method name must not be null\")",
+                        "        if self == StringConvert.INSTANCE:",
+                        "            raise ValueError(\"Global singleton cannot be extended\")",
+                        "",
+                        "        toString = self.__findToStringMethod(cls, toStringMethodName)",
+                        "        fromString = self.__findFromStringConstructorByType(cls)",
+                        "        fromStringConverter = ConstructorFromStringConverter(cls, fromString)",
+                        "        converter = ReflectionStringConverter(cls, toString, fromStringConverter)",
+                        "        self.__registered[cls] = converter"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.318565607070923,
+                    "generation_timestamp": "2024-06-21T09:18:16.725580",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "759-777:registerMethods": {
                     "start": 759,
@@ -543,11 +660,32 @@
                         "    def registerMethods(self, cls: typing.Type[typing.Any], toStringMethodName: str, fromStringMethodName: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def registerMethods(self, cls: typing.Type[typing.Any], toStringMethodName: str, fromStringMethodName: str) -> None:",
+                        "        ",
+                        "        if cls is None:",
+                        "            raise IllegalArgumentException(\"Class must not be null\")",
+                        "        if toStringMethodName is None or fromStringMethodName is None:",
+                        "            raise IllegalArgumentException(\"Method names must not be null\")",
+                        "        if self == StringConvert.INSTANCE:",
+                        "            raise IllegalStateException(\"Global singleton cannot be extended\")",
+                        "",
+                        "        toString = self.__findToStringMethod(cls, toStringMethodName)",
+                        "        fromString = self.__findFromStringMethod(cls, fromStringMethodName)",
+                        "",
+                        "        fromStringConverter = MethodFromStringConverter(cls, fromString, cls)",
+                        "        converter = ReflectionStringConverter(cls, toString, fromStringConverter)",
+                        "",
+                        "        self.__registered[cls] = converter"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.307547330856323,
+                    "generation_timestamp": "2024-06-21T09:18:30.040244",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "714-739:register1": {
                     "start": 714,
@@ -608,11 +746,29 @@
                         "    def register1(self, cls: typing.Type[typing.Any], toString: ToStringConverter[typing.Any], fromString: FromStringConverter[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def register1(self, cls: typing.Type[typing.Any], toString: ToStringConverter[typing.Any], fromString: FromStringConverter[typing.Any]) -> None:",
+                        "        ",
+                        "        if toString is None or fromString is None:",
+                        "            raise ValueError(\"Converters must not be null\")",
+                        "        ",
+                        "        self.register0(",
+                        "            cls,",
+                        "            TypedStringConverter[typing.Any](",
+                        "                convertToString=lambda object: toString.convertToString(object),",
+                        "                convertFromString=lambda cls, str: fromString.convertFromString(cls, str),",
+                        "                getEffectiveType=lambda: cls",
+                        "            )",
+                        "        )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.07072901725769,
+                    "generation_timestamp": "2024-06-21T09:15:33.460404",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "679-690:register0": {
                     "start": 679,
@@ -658,11 +814,25 @@
                         "    def register0(self, cls: typing.Type[typing.Any], converter: StringConverter[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def register0(self, cls: typing.Type[typing.Any], converter: StringConverter[typing.Any]) -> None:",
+                        "        ",
+                        "        if cls is None:",
+                        "            raise ValueError(\"Class must not be null\")",
+                        "        if converter is None:",
+                        "            raise ValueError(\"StringConverter must not be null\")",
+                        "        if self == StringConvert.INSTANCE:",
+                        "            raise ValueError(\"Global singleton cannot be extended\")",
+                        "        self.__registered[cls] = TypedAdapter.adapt(cls, converter)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.788038492202759,
+                    "generation_timestamp": "2024-06-21T09:15:19.383719",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "656-664:registerFactory": {
                     "start": 656,
@@ -698,11 +868,23 @@
                         "    def registerFactory(self, factory: StringConverterFactory) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def registerFactory(self, factory: StringConverterFactory) -> None:",
+                        "        ",
+                        "        if factory is None:",
+                        "            raise ValueError(\"Factory must not be null\")",
+                        "        if self == StringConvert.INSTANCE:",
+                        "            raise ValueError(\"Global singleton cannot be extended\")",
+                        "        self.__factories.insert(0, factory)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.270695209503174,
+                    "generation_timestamp": "2024-06-21T09:15:41.736549",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "528-534:findTypedConverter": {
                     "start": 528,
@@ -742,11 +924,24 @@
                         "    def findTypedConverter(self, cls: typing.Type[typing.Any]) -> TypedStringConverter[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def findTypedConverter(self, cls: typing.Type[typing.Any]) -> TypedStringConverter[typing.Any]:",
+                        "        ",
+                        "        conv = self.__findConverterQuiet(cls)",
+                        "        ",
+                        "        if conv is None:",
+                        "            raise IllegalStateException(\"No registered converter found: \" + str(cls))",
+                        "        ",
+                        "        return conv"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.222654819488525,
+                    "generation_timestamp": "2024-06-21T09:15:48.965768",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "501-503:findConverterNoGenerics": {
                     "start": 501,
@@ -782,11 +977,24 @@
                         "    def findConverterNoGenerics(self, cls: typing.Type[typing.Any]) -> StringConverter[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def findConverterNoGenerics(self, cls: typing.Type[typing.Any]) -> StringConverter[typing.Any]:",
+                        "        ",
+                        "        conv = typing.cast(StringConverter[typing.Any], self.findTypedConverterNoGenerics(cls))",
+                        "        ",
+                        "        if conv is None:",
+                        "            raise Exception(\"No registered converter found: \" + cls.__name__)",
+                        "        ",
+                        "        return conv"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.643829107284546,
+                    "generation_timestamp": "2024-06-21T09:15:56.614650",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "480-482:findConverter": {
                     "start": 480,
@@ -822,11 +1030,19 @@
                         "    def findConverter(self, cls: typing.Type[typing.Any]) -> StringConverter[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def findConverter(self, cls: typing.Type[typing.Any]) -> StringConverter[typing.Any]:",
+                        "        ",
+                        "        return self.findTypedConverter(cls)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.4999706745147705,
+                    "generation_timestamp": "2024-06-21T09:16:03.119658",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "457-463:isConvertible": {
                     "start": 457,
@@ -866,11 +1082,22 @@
                         "    def isConvertible(self, cls: typing.Type[typing.Any]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def isConvertible(self, cls: typing.Type[typing.Any]) -> bool:",
+                        "        ",
+                        "        try:",
+                        "            return cls is not None and self.__findConverterQuiet(cls) is not None",
+                        "        except RuntimeError:",
+                        "            return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.553040504455566,
+                    "generation_timestamp": "2024-06-21T09:16:08.681304",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "437-443:convertFromString": {
                     "start": 437,
@@ -911,11 +1138,24 @@
                         "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:",
+                        "        ",
+                        "        if str is None:",
+                        "            return None",
+                        "        ",
+                        "        conv = self.findFromStringConverter(cls)",
+                        "        ",
+                        "        return conv.convertFromString(cls, str)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.07616662979126,
+                    "generation_timestamp": "2024-06-21T09:16:21.769213",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "418-424:convertToString1": {
                     "start": 418,
@@ -956,11 +1196,24 @@
                         "    def convertToString1(self, cls: typing.Type[typing.Any], object: typing.Any) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def convertToString1(self, cls: typing.Type[typing.Any], object: typing.Any) -> str:",
+                        "        ",
+                        "        if object is None:",
+                        "            return None",
+                        "        ",
+                        "        conv = typing.cast(StringConverter[typing.Any], self.findConverterNoGenerics(cls))",
+                        "        ",
+                        "        return conv.convertToString(object)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.6008174419403076,
+                    "generation_timestamp": "2024-06-21T09:16:25.376675",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "398-405:convertToString0": {
                     "start": 398,
@@ -1001,11 +1254,25 @@
                         "    def convertToString0(self, object: typing.Any) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def convertToString0(self, object: typing.Any) -> str:",
+                        "        ",
+                        "        if object is None:",
+                        "            return None",
+                        "        ",
+                        "        cls = type(object)",
+                        "        conv = self.findConverterNoGenerics(cls)",
+                        "        ",
+                        "        return conv.convertToString(object)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.8376920223236084,
+                    "generation_timestamp": "2024-06-21T09:16:29.223159",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "178-180:StringConvert1": {
                     "start": 178,
@@ -1041,11 +1308,19 @@
                         "    def StringConvert1() -> StringConvert:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def StringConvert1() -> StringConvert:",
+                        "         return StringConvert(True, [])"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.637941360473633,
+                    "generation_timestamp": "2024-06-21T09:21:23.317255",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "139-176:StringConvert": {
                     "start": 139,
@@ -1147,11 +1422,47 @@
                         "    def __init__(self, includeJdkConverters: bool, factories: typing.List[StringConverterFactory]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, includeJdkConverters: bool, factories: typing.List[StringConverterFactory]) -> None:",
+                        "        ",
+                        "        if factories is None:",
+                        "            raise ValueError(\"StringConverterFactory array must not be null\")",
+                        "        for i in range(len(factories)):",
+                        "            if factories[i] is None:",
+                        "                raise ValueError(\"StringConverterFactory array must not contain a null element\")",
+                        "",
+                        "        if includeJdkConverters:",
+                        "            for conv in JDKStringConverter:",
+                        "                self.__registered[conv.getType()] = conv",
+                        "            self.__registered[bool] = JDKStringConverter.BOOLEAN",
+                        "            self.__registered[int] = JDKStringConverter.INTEGER",
+                        "            self.__registered[long] = JDKStringConverter.LONG",
+                        "            self.__registered[float] = JDKStringConverter.FLOAT",
+                        "            self.__registered[double] = JDKStringConverter.DOUBLE",
+                        "            self.__registered[str] = JDKStringConverter.STRING",
+                        "            self.__registered[char] = JDKStringConverter.CHARACTER",
+                        "            self.__tryRegisterGuava()",
+                        "            self.__tryRegisterJava8Optionals()",
+                        "            self.__tryRegisterTimeZone()",
+                        "            self.__tryRegisterJava8()",
+                        "            self.__tryRegisterThreeTenBackport()",
+                        "            self.__tryRegisterThreeTenOld()",
+                        "",
+                        "        if len(factories) > 0:",
+                        "            self.__factories.extend(factories)",
+                        "        self.__factories.append(AnnotationStringConverterFactory.INSTANCE)",
+                        "        if includeJdkConverters:",
+                        "            self.__factories.append(EnumStringConverterFactory.INSTANCE)",
+                        "            self.__factories.append(TypeStringConverterFactory.INSTANCE)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 47.34206700325012,
+                    "generation_timestamp": "2024-06-21T09:21:11.349967",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "121-130:create": {
                     "start": 121,
@@ -1194,11 +1505,27 @@
                         "    def create() -> StringConvert:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def create() -> StringConvert:",
+                        "         return StringConvert(",
+                        "            True,",
+                        "            NumericArrayStringConverterFactory.INSTANCE,",
+                        "            NumericObjectArrayStringConverterFactory.INSTANCE,",
+                        "            CharObjectArrayStringConverterFactory.INSTANCE,",
+                        "            ByteObjectArrayStringConverterFactory.INSTANCE,",
+                        "            BooleanArrayStringConverterFactory.INSTANCE,",
+                        "            BooleanObjectArrayStringConverterFactory.INSTANCE",
+                        "        )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.098657131195068,
+                    "generation_timestamp": "2024-06-21T09:21:16.457061",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "890-912:loadPrimitiveType": {
                     "start": 890,
@@ -1251,11 +1578,39 @@
                         "    def __loadPrimitiveType(fullName: str, ex: typing.Union[ModuleNotFoundError, ImportError]) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __loadPrimitiveType(fullName: str, ex: typing.Union[ModuleNotFoundError, ImportError]) -> typing.Type[typing.Any]:",
+                        "        ",
+                        "        if fullName == \"int\":",
+                        "            return int",
+                        "        elif fullName == \"long\":",
+                        "            return int",
+                        "        elif fullName == \"double\":",
+                        "            return float",
+                        "        elif fullName == \"boolean\":",
+                        "            return bool",
+                        "        elif fullName == \"short\":",
+                        "            return int",
+                        "        elif fullName == \"byte\":",
+                        "            return int",
+                        "        elif fullName == \"char\":",
+                        "            return str",
+                        "        elif fullName == \"float\":",
+                        "            return float",
+                        "        elif fullName == \"void\":",
+                        "            return None",
+                        "        else:",
+                        "            raise ex"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.92346453666687,
+                    "generation_timestamp": "2024-06-21T09:16:40.153112",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "867-877:findFromStringConstructorByType": {
                     "start": 867,
@@ -1293,11 +1648,25 @@
                         "    def __findFromStringConstructorByType(self, cls: typing.Type[typing.Any]) -> typing.Callable[..., typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __findFromStringConstructorByType(self, cls: typing.Type[typing.Any]) -> typing.Callable[..., typing.Any]:",
+                        "        ",
+                        "        try:",
+                        "            return cls.__init_subclass__.__get__(cls, typing.Callable[..., typing.Any])",
+                        "        except AttributeError as ex:",
+                        "            try:",
+                        "                return cls.__init_subclass__.__get__(cls, typing.Callable[..., typing.Any])",
+                        "            except AttributeError as ex2:",
+                        "                raise ValueError(\"Constructor not found\") from ex2"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.914886236190796,
+                    "generation_timestamp": "2024-06-21T09:17:00.531690",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "843-858:findFromStringMethod": {
                     "start": 843,
@@ -1341,11 +1710,29 @@
                         "    def __findFromStringMethod(self, cls: typing.Type[typing.Any], methodName: str) -> typing.Union[inspect.Signature, typing.Callable]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __findFromStringMethod(self, cls: typing.Type[typing.Any], methodName: str) -> typing.Union[inspect.Signature, typing.Callable]:",
+                        "        ",
+                        "        try:",
+                        "            m = getattr(cls, methodName)",
+                        "            if not inspect.ismethod(m):",
+                        "                raise AttributeError",
+                        "        except AttributeError:",
+                        "            raise IllegalArgumentException(\"Method not found\")",
+                        "",
+                        "        if not inspect.isfunction(m) or not inspect.ismethod(m):",
+                        "            raise IllegalArgumentException(\"Method must be static: \" + methodName)",
+                        "",
+                        "        return inspect.signature(m)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.510683298110962,
+                    "generation_timestamp": "2024-06-21T09:17:44.279633",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "823-834:findToStringMethod": {
                     "start": 823,
@@ -1385,11 +1772,27 @@
                         "    def __findToStringMethod(self, cls: typing.Type[typing.Any], methodName: str) -> typing.Union[inspect.Signature, typing.Callable]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __findToStringMethod(self, cls: typing.Type[typing.Any], methodName: str) -> typing.Union[inspect.Signature, typing.Callable]:",
+                        "        ",
+                        "        try:",
+                        "            m = getattr(cls, methodName)",
+                        "        except AttributeError as ex:",
+                        "            raise ValueError(ex)",
+                        "",
+                        "        if inspect.isfunction(m) and not inspect.ismethod(m):",
+                        "            return m",
+                        "        else:",
+                        "            raise ValueError(\"Method must not be static: \" + methodName)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.263391017913818,
+                    "generation_timestamp": "2024-06-21T09:18:05.399829",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "383-387:tryRegister": {
                     "start": 383,
@@ -1433,11 +1836,20 @@
                         "    def __tryRegister(self, className: str, fromStringMethodName: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __tryRegister(self, className: str, fromStringMethodName: str) -> None:",
+                        "        ",
+                        "        cls = self.loadType(className)",
+                        "        self.registerMethods(cls, \"__str__\", fromStringMethodName)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.053937196731567,
+                    "generation_timestamp": "2024-06-21T09:18:36.101468",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "351-375:tryRegisterThreeTenOld": {
                     "start": 351,
@@ -1493,11 +1905,39 @@
                         "    def __tryRegisterThreeTenOld(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __tryRegisterThreeTenOld(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__tryRegister(\"javax.time.Instant\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.Duration\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.LocalDate\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.LocalTime\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.LocalDateTime\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.OffsetDate\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.OffsetTime\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.OffsetDateTime\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.ZonedDateTime\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.Year\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.YearMonth\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.MonthDay\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.Period\", \"parse\")",
+                        "            self.__tryRegister(\"javax.time.calendar.ZoneOffset\", \"of\")",
+                        "            self.__tryRegister(\"javax.time.calendar.ZoneId\", \"of\")",
+                        "            self.__tryRegister(\"javax.time.calendar.TimeZone\", \"of\")",
+                        "",
+                        "        except Exception as ex:",
+                        "            if self.LOG:",
+                        "                print(\"tryRegisterThreeTenOld: \" + str(ex))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.613568782806396,
+                    "generation_timestamp": "2024-06-21T09:18:53.723132",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "325-348:tryRegisterThreeTenBackport": {
                     "start": 325,
@@ -1552,11 +1992,38 @@
                         "    def __tryRegisterThreeTenBackport(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __tryRegisterThreeTenBackport(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__tryRegister(\"org.threeten.bp.Instant\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.Duration\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.LocalDate\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.LocalTime\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.LocalDateTime\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.OffsetTime\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.OffsetDateTime\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.ZonedDateTime\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.Year\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.YearMonth\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.MonthDay\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.Period\", \"parse\")",
+                        "            self.__tryRegister(\"org.threeten.bp.ZoneOffset\", \"of\")",
+                        "            self.__tryRegister(\"org.threeten.bp.ZoneId\", \"of\")",
+                        "            self.__tryRegister(\"org.threeten.bp.ZoneRegion\", \"of\")",
+                        "",
+                        "        except Exception as ex:",
+                        "            if self.LOG:",
+                        "                print(\"tryRegisterThreeTenBackport: \" + str(ex))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 24.613062143325806,
+                    "generation_timestamp": "2024-06-21T09:19:18.347929",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "299-322:tryRegisterJava8": {
                     "start": 299,
@@ -1611,11 +2078,38 @@
                         "    def __tryRegisterJava8(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __tryRegisterJava8(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__tryRegister(\"java.time.Instant\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.Duration\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.LocalDate\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.LocalTime\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.LocalDateTime\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.OffsetTime\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.OffsetDateTime\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.ZonedDateTime\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.Year\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.YearMonth\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.MonthDay\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.Period\", \"parse\")",
+                        "            self.__tryRegister(\"java.time.ZoneOffset\", \"of\")",
+                        "            self.__tryRegister(\"java.time.ZoneId\", \"of\")",
+                        "            self.__tryRegister(\"java.time.ZoneRegion\", \"of\")",
+                        "",
+                        "        except Exception as ex:",
+                        "            if self.LOG:",
+                        "                print(\"tryRegisterJava8: \" + str(ex))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.665005445480347,
+                    "generation_timestamp": "2024-06-21T09:19:33.019629",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "269-296:tryRegisterTimeZone": {
                     "start": 269,
@@ -1668,11 +2162,40 @@
                         "    def __tryRegisterTimeZone(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __tryRegisterTimeZone(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__registered[SimpleTimeZone] = JDKStringConverter.TIME_ZONE",
+                        "",
+                        "        except Exception as ex:",
+                        "            if self.LOG:",
+                        "                print(\"tryRegisterTimeZone1: \" + str(ex))",
+                        "",
+                        "        try:",
+                        "            zone = TimeZone.getDefault()",
+                        "            self.__registered[zone.__class__] = JDKStringConverter.TIME_ZONE",
+                        "",
+                        "        except Exception as ex:",
+                        "            if self.LOG:",
+                        "                print(\"tryRegisterTimeZone2: \" + str(ex))",
+                        "",
+                        "        try:",
+                        "            zone = TimeZone.getTimeZone(\"Europe/London\")",
+                        "            self.__registered[zone.__class__] = JDKStringConverter.TIME_ZONE",
+                        "",
+                        "        except Exception as ex:",
+                        "            if self.LOG:",
+                        "                print(\"tryRegisterTimeZone3: \" + str(ex))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.949204683303833,
+                    "generation_timestamp": "2024-06-21T09:19:44.974661",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "237-263:tryRegisterJava8Optionals": {
                     "start": 237,
@@ -1730,11 +2253,37 @@
                         "    def __tryRegisterJava8Optionals(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __tryRegisterJava8Optionals(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            optional_int_cls = self.loadType(\"java.util.OptionalInt\")",
+                        "            optional_int_converter_cls = self.loadType(\"org.joda.convert.OptionalIntStringConverter\")",
+                        "            optional_int_converter = optional_int_converter_cls()",
+                        "            self.__registered[optional_int_converter.getEffectiveType()] = optional_int_converter",
+                        "",
+                        "            optional_long_cls = self.loadType(\"java.util.OptionalLong\")",
+                        "            optional_long_converter_cls = self.loadType(\"org.joda.convert.OptionalLongStringConverter\")",
+                        "            optional_long_converter = optional_long_converter_cls()",
+                        "            self.__registered[optional_long_converter.getEffectiveType()] = optional_long_converter",
+                        "",
+                        "            optional_double_cls = self.loadType(\"java.util.OptionalDouble\")",
+                        "            optional_double_converter_cls = self.loadType(\"org.joda.convert.OptionalDoubleStringConverter\")",
+                        "            optional_double_converter = optional_double_converter_cls()",
+                        "            self.__registered[optional_double_converter.getEffectiveType()] = optional_double_converter",
+                        "",
+                        "        except Exception as ex:",
+                        "            if self.LOG:",
+                        "                print(\"tryRegisterOptionals: \" + str(ex))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.622579336166382,
+                    "generation_timestamp": "2024-06-21T09:20:06.606105",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "196-234:tryRegisterGuava": {
                     "start": 196,
@@ -1804,11 +2353,41 @@
                         "    def __tryRegisterGuava(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __tryRegisterGuava(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            module_class = type(self).__class__",
+                        "            convert_module = getattr(module_class, \"__module__\")",
+                        "            layer = getattr(convert_module, \"__layer__\", None)",
+                        "            if layer is not None:",
+                        "                opt_guava = getattr(layer, \"find_module\", lambda name: None)(layer, \"com.google.common\")",
+                        "                found = getattr(opt_guava, \"is_present\", lambda: False)()",
+                        "                if found:",
+                        "                    guava_module = getattr(opt_guava, \"get\", lambda: None)()",
+                        "                    getattr(module_class, \"add_reads\", lambda module: None)(convert_module, guava_module)",
+                        "",
+                        "        except Exception as ex:",
+                        "            if self.LOG:",
+                        "                print(\"tryRegisterGuava1: \" + str(ex))",
+                        "",
+                        "        try:",
+                        "            cls = self.loadType(\"com.google.common.reflect.TypeToken\")",
+                        "            conv = getattr(cls, \"__init__\", lambda: None)()",
+                        "            self.__registered[conv.getEffectiveType()] = conv",
+                        "",
+                        "        except Exception as ex:",
+                        "            if self.LOG:",
+                        "                print(\"tryRegisterGuava2: \" + str(ex))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.38042712211609,
+                    "generation_timestamp": "2024-06-21T09:20:23.993291",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1829,12 +2408,21 @@
                             "StringConvert"
                         ]
                     ],
-                    "partial_translation": "    INSTANCE: StringConvert = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    INSTANCE: StringConvert = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    INSTANCE: StringConvert = StringConvert.StringConvert1()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 24.354660511016846,
+                    "generation_timestamp": "2024-06-21T11:04:52.517952",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "49-49:LOG": {
                     "start": 49,
@@ -1852,12 +2440,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    LOG: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    LOG: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    LOG: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-21T08:46:45.852478",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "96-97:fromStrings": {
                     "start": 96,
@@ -1876,12 +2474,22 @@
                             "java.util.concurrent.ConcurrentMap<Class<?>,FromStringConverter<?>>"
                         ]
                     ],
-                    "partial_translation": "    __fromStrings: typing.Dict[typing.Type[typing.Any], FromStringConverter[typing.Any]] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __fromStrings: typing.Dict[typing.Type[typing.Any], FromStringConverter[typing.Any]] = {}",
+                        ""
+                    ],
+                    "translation": [
+                        "    __fromStrings: typing.Dict[typing.Type[typing.Any], FromStringConverter[typing.Any]] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-21T08:46:45.857335",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "92-93:registered": {
                     "start": 92,
@@ -1900,12 +2508,22 @@
                             "java.util.concurrent.ConcurrentMap<Class<?>,TypedStringConverter<?>>"
                         ]
                     ],
-                    "partial_translation": "    __registered: typing.Dict[typing.Type[typing.Any], TypedStringConverter[typing.Any]] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __registered: typing.Dict[typing.Type[typing.Any], TypedStringConverter[typing.Any]] = {}",
+                        ""
+                    ],
+                    "translation": [
+                        "    __registered: typing.Dict[typing.Type[typing.Any], TypedStringConverter[typing.Any]] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-21T08:46:45.862070",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "88-89:factories": {
                     "start": 88,
@@ -1924,12 +2542,22 @@
                             "java.util.concurrent.CopyOnWriteArrayList<StringConverterFactory>"
                         ]
                     ],
-                    "partial_translation": "    __factories: typing.List[StringConverterFactory] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __factories: typing.List[StringConverterFactory] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __factories: typing.List[StringConverterFactory] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-21T08:46:45.866761",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "61-77:CACHED_NULL": {
                     "start": 61,
@@ -1964,12 +2592,25 @@
                             "TypedStringConverter<?>"
                         ]
                     ],
-                    "partial_translation": "    __CACHED_NULL: TypedStringConverter[typing.Any] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __CACHED_NULL: TypedStringConverter[typing.Any] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CACHED_NULL: TypedStringConverter[typing.Any] = TypedStringConverter[typing.Any](",
+                        "    convertToString=lambda object: None,",
+                        "    convertFromString=lambda cls, str: None,",
+                        "    getEffectiveType=lambda: None",
+                        ")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.29089093208313,
+                    "generation_timestamp": "2024-06-21T08:46:54.162236",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class StringConvert:\n\n"
