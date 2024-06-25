@@ -625,6 +625,12 @@ if __name__ == '__main__':
     # parser_.add_argument('--use_bam', action='store_true', help='translate main files')
     # parser_.add_argument('--use_cuda', action='store_true', help='use cuda for translation')
     # parser_.add_argument('--dump_syntactically_validated_fragments', action='store_true', help='dump syntactically validated fragments')
+    
+    parser_.add_argument('--schema', type=str, dest='schema', default=None, required=False)
+    parser_.add_argument('--class', type=str, dest='class_', default=None, required=False)
+    parser_.add_argument('--method', type=str, dest='method', default=None, required=False)
+    parser_.add_argument('--record', action='store_true', help='record all')
+    
     args = parser_.parse_args()
     
     args.model_name = None
@@ -636,12 +642,12 @@ if __name__ == '__main__':
     args.include_call_graph = True
     args.dump_syntactically_validated_fragments = False
     
-    SCHEMA_BREAK = None
-    CLASS_BREAK = None
-    METHOD_BREAK = None
+    SCHEMA_BREAK = f'.{args.schema}_' if args.schema else None
+    CLASS_BREAK = args.class_
+    METHOD_BREAK = args.method
     
     SCHEMA_BREAK_PASSED, CLASS_BREAK_PASSED, METHOD_BREAK_PASSED = False, False, False
     
-    RECORD_ALL = False
+    RECORD_ALL = args.record
     
     main(args)
