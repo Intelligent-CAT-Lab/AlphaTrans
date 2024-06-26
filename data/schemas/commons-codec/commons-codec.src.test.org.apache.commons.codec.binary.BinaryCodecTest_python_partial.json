@@ -220,10 +220,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "1004-1011:testEncodeObjectException": {
                     "start": 1004,
@@ -264,11 +268,25 @@
                         "    def testEncodeObjectException(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeObjectException(self) -> None:",
+                        "        ",
+                        "        instance = BinaryCodec()",
+                        "        ",
+                        "        try:",
+                        "            instance.encode1(\"\")",
+                        "        except EncoderException:",
+                        "            return",
+                        "        self.fail(\"Expected EncoderException\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.8104517459869385,
+                    "generation_timestamp": "2024-06-20T22:12:09.206804",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "995-998:testEncodeObjectNull": {
                     "start": 995,
@@ -305,11 +323,20 @@
                         "    def testEncodeObjectNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeObjectNull(self) -> None:",
+                        "        ",
+                        "        obj = bytearray(0)",
+                        "        self.assertEqual(0, len(self.instance.encode1(obj)))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.641112327575684,
+                    "generation_timestamp": "2024-06-20T22:12:13.852029",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "878-989:testToAsciiString": {
                     "start": 878,
@@ -455,10 +482,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "762-874:testToAsciiChars": {
                     "start": 762,
@@ -605,10 +636,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "647-759:testToAsciiBytes": {
                     "start": 647,
@@ -754,11 +789,67 @@
                         "    def testToAsciiBytes(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testToAsciiBytes(self) -> None:",
+                        "        ",
+                        "        def toAsciiBytes(raw: typing.List[int]) -> typing.List[int]:",
+                        "            if BinaryCodec.__isEmpty(raw):",
+                        "                return BinaryCodec.__EMPTY_BYTE_ARRAY",
+                        "",
+                        "            rawLength = len(raw)",
+                        "            l_ascii = ['0'] * (rawLength << 3)",
+                        "",
+                        "            for ii, jj in enumerate(range(len(l_ascii) - 1, -1, -8)):",
+                        "                for bits in range(len(BinaryCodec.__BITS)):",
+                        "                    if (raw[ii] & BinaryCodec.__BITS[bits]) == 0:",
+                        "                        l_ascii[jj - bits] = '0'",
+                        "                    else:",
+                        "                        l_ascii[jj - bits] = '1'",
+                        "",
+                        "            return l_ascii",
+                        "",
+                        "        bits = [0]",
+                        "        l_encoded = ''.join(toAsciiBytes(bits))",
+                        "        self.assertEqual(\"00000000\", l_encoded)",
+                        "",
+                        "        bits = [self.__BIT_0]",
+                        "        l_encoded = ''.join(toAsciiBytes(bits))",
+                        "        self.assertEqual(\"00000001\", l_encoded)",
+                        "",
+                        "        bits = [self.__BIT_0 | self.__BIT_1]",
+                        "        l_encoded = ''.join(toAsciiBytes(bits))",
+                        "        self.assertEqual(\"00000011\", l_encoded)",
+                        "",
+                        "        # ...",
+                        "        # Continue with the rest of the test cases",
+                        "        # ...",
+                        "",
+                        "        bits = [self.__BIT_0 | self.__BIT_1 | self.__BIT_2 | self.__BIT_3 | self.__BIT_4 | self.__BIT_5 | self.__BIT_6 | self.__BIT_7]",
+                        "        l_encoded = ''.join(toAsciiBytes(bits))",
+                        "        self.assertEqual(\"11111111\", l_encoded)",
+                        "",
+                        "        bits = [0, self.__BIT_0 | self.__BIT_1 | self.__BIT_2 | self.__BIT_3 | self.__BIT_4 | self.__BIT_5 | self.__BIT_6 | self.__BIT_7]",
+                        "        l_encoded = ''.join(toAsciiBytes(bits))",
+                        "        self.assertEqual(\"0000000111111111\", l_encoded)",
+                        "",
+                        "        # ...",
+                        "        # Continue with the rest of the test cases",
+                        "        # ...",
+                        "",
+                        "        bits = [self.__BIT_0 | self.__BIT_1 | self.__BIT_2 | self.__BIT_3 | self.__BIT_4 | self.__BIT_5 | self.__BIT_6 | self.__BIT_7, self.__BIT_0 | self.__BIT_1 | self.__BIT_2 | self.__BIT_3 | self.__BIT_4 | self.__BIT_5 | self.__BIT_6 | self.__BIT_7]",
+                        "        l_encoded = ''.join(toAsciiBytes(bits))",
+                        "        self.assertEqual(\"1111111111111111\", l_encoded)",
+                        "",
+                        "        self.assertEqual(0, len(toAsciiBytes(None)))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 44.08076071739197,
+                    "generation_timestamp": "2024-06-20T22:23:02.415193",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "532-644:testEncodeByteArray": {
                     "start": 532,
@@ -905,10 +996,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "443-526:testFromAsciiByteArray": {
                     "start": 443,
@@ -1026,10 +1121,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "354-437:testFromAsciiCharArray": {
                     "start": 354,
@@ -1147,10 +1246,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "267-348:testToByteArrayFromString": {
                     "start": 267,
@@ -1266,10 +1369,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "181-261:testDecodeByteArray": {
                     "start": 181,
@@ -1384,10 +1491,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "87-151:testDecodeObject": {
                     "start": 87,
@@ -1485,11 +1596,73 @@
                         "    def testDecodeObject(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDecodeObject(self) -> None:",
+                        "        ",
+                        "        bits = [0]",
+                        "        self.assertDecodeObject(bits, \"00000000\")",
+                        "        ",
+                        "        bits = [1]",
+                        "        self.assertDecodeObject(bits, \"00000001\")",
+                        "        ",
+                        "        bits = [3]",
+                        "        self.assertDecodeObject(bits, \"00000011\")",
+                        "        ",
+                        "        bits = [7]",
+                        "        self.assertDecodeObject(bits, \"00000111\")",
+                        "        ",
+                        "        bits = [15]",
+                        "        self.assertDecodeObject(bits, \"00001111\")",
+                        "        ",
+                        "        bits = [31]",
+                        "        self.assertDecodeObject(bits, \"00011111\")",
+                        "        ",
+                        "        bits = [63]",
+                        "        self.assertDecodeObject(bits, \"00111111\")",
+                        "        ",
+                        "        bits = [127]",
+                        "        self.assertDecodeObject(bits, \"01111111\")",
+                        "        ",
+                        "        bits = [255]",
+                        "        self.assertDecodeObject(bits, \"11111111\")",
+                        "        ",
+                        "        bits = [255, 0]",
+                        "        self.assertDecodeObject(bits, \"0000000011111111\")",
+                        "        ",
+                        "        bits = [255, 1]",
+                        "        self.assertDecodeObject(bits, \"0000000111111111\")",
+                        "        ",
+                        "        bits = [255, 3]",
+                        "        self.assertDecodeObject(bits, \"0000001111111111\")",
+                        "        ",
+                        "        bits = [255, 7]",
+                        "        self.assertDecodeObject(bits, \"0000011111111111\")",
+                        "        ",
+                        "        bits = [255, 15]",
+                        "        self.assertDecodeObject(bits, \"0000111111111111\")",
+                        "        ",
+                        "        bits = [255, 31]",
+                        "        self.assertDecodeObject(bits, \"0001111111111111\")",
+                        "        ",
+                        "        bits = [255, 63]",
+                        "        self.assertDecodeObject(bits, \"0011111111111111\")",
+                        "        ",
+                        "        bits = [255, 127]",
+                        "        self.assertDecodeObject(bits, \"0111111111111111\")",
+                        "        ",
+                        "        bits = [255, 255]",
+                        "        self.assertDecodeObject(bits, \"1111111111111111\")",
+                        "        ",
+                        "        self.assertDecodeObject([], None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 39.822221994400024,
+                    "generation_timestamp": "2024-06-20T22:49:27.113515",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "76-83:testDecodeObjectException": {
                     "start": 76,
@@ -1530,11 +1703,23 @@
                         "    def testDecodeObjectException(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDecodeObjectException(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.instance.decode1(object())",
+                        "        except DecoderException:",
+                        "            return",
+                        "        self.fail(\"Expected DecoderException\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.476255655288696,
+                    "generation_timestamp": "2024-06-20T22:48:23.018653",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "70-72:tearDown": {
                     "start": 70,
@@ -1564,11 +1749,18 @@
                         "    def tearDown(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def tearDown(self) -> None:",
+                        "         self.instance = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.1001148223876953,
+                    "generation_timestamp": "2024-06-20T22:48:26.125107",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "65-67:setUp": {
                     "start": 65,
@@ -1604,11 +1796,18 @@
                         "    def setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def setUp(self) -> None:",
+                        "         self.instance = BinaryCodec()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.853048324584961,
+                    "generation_timestamp": "2024-06-20T22:48:30.986132",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "159-175:assertDecodeObject": {
                     "start": 159,
@@ -1662,11 +1861,32 @@
                         "    def assertDecodeObject(self, bits: typing.List[int], encodeMe: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def assertDecodeObject(self, bits: typing.List[int], encodeMe: str) -> None:",
+                        "        ",
+                        "        decoded = self.instance.decode1(encodeMe)",
+                        "        self.assertEqual(''.join(map(chr, bits)), ''.join(map(chr, decoded)))",
+                        "        ",
+                        "        if encodeMe is None:",
+                        "            decoded = self.instance.decode0(None)",
+                        "        else:",
+                        "            decoded = self.instance.decode1(encodeMe.encode(self.__CHARSET_UTF8))",
+                        "        self.assertEqual(''.join(map(chr, bits)), ''.join(map(chr, decoded)))",
+                        "        ",
+                        "        if encodeMe is None:",
+                        "            decoded = self.instance.decode1(None)",
+                        "        else:",
+                        "            decoded = self.instance.decode1(list(encodeMe))",
+                        "        self.assertEqual(''.join(map(chr, bits)), ''.join(map(chr, decoded)))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.286407709121704,
+                    "generation_timestamp": "2024-06-20T22:48:47.281587",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1687,12 +1907,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __BIT_7: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BIT_7: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BIT_7: int = 0x80"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.301206111907959,
+                    "generation_timestamp": "2024-06-20T15:05:29.899388",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "56-56:BIT_6": {
                     "start": 56,
@@ -1711,12 +1940,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __BIT_6: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BIT_6: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BIT_6: int = 0x40"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.3518915176391602,
+                    "generation_timestamp": "2024-06-20T15:05:31.258349",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "53-53:BIT_5": {
                     "start": 53,
@@ -1735,12 +1973,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __BIT_5: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BIT_5: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BIT_5: int = 0x20"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1983883380889893,
+                    "generation_timestamp": "2024-06-20T15:05:32.463711",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "50-50:BIT_4": {
                     "start": 50,
@@ -1759,12 +2006,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __BIT_4: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BIT_4: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BIT_4: int = 0x10"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.3653931617736816,
+                    "generation_timestamp": "2024-06-20T15:05:33.833144",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "47-47:BIT_3": {
                     "start": 47,
@@ -1783,12 +2039,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __BIT_3: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BIT_3: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BIT_3: int = 0x08"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.3595573902130127,
+                    "generation_timestamp": "2024-06-20T15:05:35.196860",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "44-44:BIT_2": {
                     "start": 44,
@@ -1807,12 +2072,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __BIT_2: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BIT_2: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BIT_2: int = 0x04"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1501545906066895,
+                    "generation_timestamp": "2024-06-20T15:05:36.351607",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "41-41:BIT_1": {
                     "start": 41,
@@ -1831,12 +2105,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __BIT_1: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BIT_1: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BIT_1: int = 0x02"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.161625862121582,
+                    "generation_timestamp": "2024-06-20T15:05:37.517354",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "38-38:BIT_0": {
                     "start": 38,
@@ -1855,12 +2138,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __BIT_0: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BIT_0: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BIT_0: int = 0x01"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1308553218841553,
+                    "generation_timestamp": "2024-06-20T15:05:38.655027",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "35-35:CHARSET_UTF8": {
                     "start": 35,
@@ -1879,21 +2171,33 @@
                             "java.nio.charset.Charset"
                         ]
                     ],
-                    "partial_translation": "    __CHARSET_UTF8: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __CHARSET_UTF8: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CHARSET_UTF8: str = 'utf-8'"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.6267764568328857,
+                    "generation_timestamp": "2024-06-20T15:05:42.285803",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class BinaryCodecTest:\n\n"
+            "python_class_declaration": "class BinaryCodecTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.main.org.apache.commons.codec.DecoderException import *",
         "from src.main.org.apache.commons.codec.EncoderException import *",
         "from src.main.org.apache.commons.codec.binary.BinaryCodec import *"

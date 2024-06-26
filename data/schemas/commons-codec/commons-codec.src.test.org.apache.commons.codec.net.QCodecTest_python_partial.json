@@ -131,11 +131,22 @@
                         "    def testLetUsMakeCloverHappy(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testLetUsMakeCloverHappy(self) -> None:",
+                        "         qcodec = QCodec.QCodec2()",
+                        "         qcodec.setEncodeBlanks(True)",
+                        "         self.assertTrue(qcodec.isEncodeBlanks())",
+                        "         qcodec.setEncodeBlanks(False)",
+                        "         self.assertFalse(qcodec.isEncodeBlanks())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.806375503540039,
+                    "generation_timestamp": "2024-06-20T23:15:41.162125",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "161-176:testEncodeDecodeBlanks": {
                     "start": 161,
@@ -199,11 +210,32 @@
                         "    def testEncodeDecodeBlanks(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeDecodeBlanks(self) -> None:",
+                        "        ",
+                        "        plain = \"Mind those pesky blanks\"",
+                        "        encoded1 = \"=?UTF-8?Q?Mind those pesky blanks?=\"",
+                        "        encoded2 = \"=?UTF-8?Q?Mind_those_pesky_blanks?=\"",
+                        "        qcodec = QCodec.QCodec2()",
+                        "        qcodec.setEncodeBlanks(False)",
+                        "        s = qcodec.encode2(plain)",
+                        "        self.assertEqual(\"Blanks encoding with the Q codec test\", encoded1, s)",
+                        "        qcodec.setEncodeBlanks(True)",
+                        "        s = qcodec.encode2(plain)",
+                        "        self.assertEqual(\"Blanks encoding with the Q codec test\", encoded2, s)",
+                        "        s = qcodec.decode0(encoded1)",
+                        "        self.assertEqual(\"Blanks decoding with the Q codec test\", plain, s)",
+                        "        s = qcodec.decode0(encoded2)",
+                        "        self.assertEqual(\"Blanks decoding with the Q codec test\", plain, s)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 25.08999490737915,
+                    "generation_timestamp": "2024-06-20T23:16:06.260381",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "143-158:testDecodeObjects": {
                     "start": 143,
@@ -257,11 +289,32 @@
                         "    def testDecodeObjects(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDecodeObjects(self) -> None:",
+                        "        ",
+                        "        qcodec = QCodec.QCodec2()",
+                        "        decoded = \"=?UTF-8?Q?1+1 =3D 2?=\"",
+                        "        plain = qcodec.decode1(decoded)",
+                        "        self.assertEqual(\"Basic Q decoding test\", \"1+1 = 2\", plain)",
+                        "",
+                        "        result = qcodec.decode1(None)",
+                        "        self.assertIsNone(result, \"Decoding a null Object should return null\")",
+                        "",
+                        "        try:",
+                        "            dObj = float(3.0)",
+                        "            qcodec.decode1(dObj)",
+                        "            self.fail(\"Trying to url encode a Double object should cause an exception.\")",
+                        "        except DecoderException:",
+                        "            pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 27.666691064834595,
+                    "generation_timestamp": "2024-06-20T23:16:33.933467",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "138-140:testInvalidEncoding": {
                     "start": 138,
@@ -273,7 +326,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = UnsupportedCharsetException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -297,11 +350,19 @@
                         "    def testInvalidEncoding(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testInvalidEncoding(self) -> None:",
+                        "         with pytest.raises(UnsupportedCharsetException):",
+                        "             QCodec.QCodec0(\"NONSENSE\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.301108121871948,
+                    "generation_timestamp": "2024-06-20T23:16:40.240287",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "120-135:testEncodeObjects": {
                     "start": 120,
@@ -355,11 +416,32 @@
                         "    def testEncodeObjects(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeObjects(self) -> None:",
+                        "        ",
+                        "        qcodec = QCodec.QCodec2()",
+                        "        plain = \"1+1 = 2\"",
+                        "        encoded = qcodec.encode3(plain)",
+                        "        self.assertEqual(\"Basic Q encoding test\", \"=?UTF-8?Q?1+1 =3D 2?=\", encoded)",
+                        "",
+                        "        result = qcodec.encode3(None)",
+                        "        self.assertIsNone(result, \"Encoding a null Object should return None\")",
+                        "",
+                        "        try:",
+                        "            dObj = float(3.0)",
+                        "            qcodec.encode3(dObj)",
+                        "            self.fail(\"Trying to url encode a Double object should cause an exception.\")",
+                        "        except EncoderException:",
+                        "            pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.829988718032837,
+                    "generation_timestamp": "2024-06-20T23:16:53.075198",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "112-117:testDecodeStringWithNull": {
                     "start": 112,
@@ -403,11 +485,22 @@
                         "    def testDecodeStringWithNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDecodeStringWithNull(self) -> None:",
+                        "        ",
+                        "        qcodec = QCodec.QCodec2()",
+                        "        test = None",
+                        "        result = qcodec.decode0(test)",
+                        "        self.assertIsNone(result, \"Result should be None\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.567827224731445,
+                    "generation_timestamp": "2024-06-20T23:17:00.647949",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "104-109:testEncodeStringWithNull": {
                     "start": 104,
@@ -451,11 +544,21 @@
                         "    def testEncodeStringWithNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeStringWithNull(self) -> None:",
+                        "         qcodec = QCodec.QCodec2()",
+                        "         test = None",
+                        "         result = qcodec.encode1(test, \"charset\")",
+                        "         self.assertIsNone(result, \"Result should be None\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.187146425247192,
+                    "generation_timestamp": "2024-06-20T23:17:09.877405",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "97-101:testEncodeDecodeNull": {
                     "start": 97,
@@ -503,11 +606,22 @@
                         "    def testEncodeDecodeNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeDecodeNull(self) -> None:",
+                        "        ",
+                        "        qcodec = QCodec.QCodec2()",
+                        "        ",
+                        "        self.assertIsNone(qcodec.encode2(None), \"Null string Q encoding test\")",
+                        "        self.assertIsNone(qcodec.decode0(None), \"Null string Q decoding test\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.264096975326538,
+                    "generation_timestamp": "2024-06-20T23:17:20.154868",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "88-94:testUnsafeEncodeDecode": {
                     "start": 88,
@@ -557,11 +671,23 @@
                         "    def testUnsafeEncodeDecode(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testUnsafeEncodeDecode(self) -> None:",
+                        "        ",
+                        "        qcodec = QCodec.QCodec2()",
+                        "        plain = \"?_=\\r\\n\"",
+                        "        encoded = qcodec.encode2(plain)",
+                        "        self.assertEqual(\"Unsafe chars Q encoding test\", \"=?UTF-8?Q?=3F=5F=3D=0D=0A?=\", encoded)",
+                        "        self.assertEqual(\"Unsafe chars Q decoding test\", plain, qcodec.decode0(encoded))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.200071334838867,
+                    "generation_timestamp": "2024-06-20T23:17:40.360816",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "79-85:testBasicEncodeDecode": {
                     "start": 79,
@@ -611,11 +737,23 @@
                         "    def testBasicEncodeDecode(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testBasicEncodeDecode(self) -> None:",
+                        "        ",
+                        "        qcodec = QCodec.QCodec2()",
+                        "        plain = \"= Hello there =\\r\\n\"",
+                        "        encoded = qcodec.encode2(plain)",
+                        "        self.assertEqual(\"Basic Q encoding test\", \"=?UTF-8?Q?=3D Hello there =3D=0D=0A?=\", encoded)",
+                        "        self.assertEqual(\"Basic Q decoding test\", plain, qcodec.decode0(encoded))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.407086372375488,
+                    "generation_timestamp": "2024-06-20T23:17:48.771457",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "62-76:testUTF8RoundTrip": {
                     "start": 62,
@@ -678,11 +816,30 @@
                         "    def testUTF8RoundTrip(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testUTF8RoundTrip(self) -> None:",
+                        "        ",
+                        "        ru_msg = self.__constructString(self.RUSSIAN_STUFF_UNICODE)",
+                        "        ch_msg = self.__constructString(self.SWISS_GERMAN_STUFF_UNICODE)",
+                        "",
+                        "        qcodec = QCodec.QCodec0(CharEncoding.UTF_8)",
+                        "",
+                        "        self.assertEqual(",
+                        "            \"=?UTF-8?Q?=D0=92=D1=81=D0=B5=D0=BC=5F=D0=BF=D1=80=D0=B8=D0=B2=D0=B5=D1=82?=\",",
+                        "            qcodec.encode2(ru_msg))",
+                        "        self.assertEqual(\"=?UTF-8?Q?Gr=C3=BCezi=5Fz=C3=A4m=C3=A4?=\", qcodec.encode2(ch_msg))",
+                        "",
+                        "        self.assertEqual(ru_msg, qcodec.decode0(qcodec.encode2(ru_msg)))",
+                        "        self.assertEqual(ch_msg, qcodec.decode0(qcodec.encode2(ch_msg)))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.32371687889099,
+                    "generation_timestamp": "2024-06-20T23:18:19.112271",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "55-59:testNullInput": {
                     "start": 55,
@@ -730,11 +887,21 @@
                         "    def testNullInput(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNullInput(self) -> None:",
+                        "        ",
+                        "        qcodec = QCodec.QCodec2()",
+                        "        self.assertIsNone(qcodec.doDecoding(None))",
+                        "        self.assertIsNone(qcodec.doEncoding(None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.599929094314575,
+                    "generation_timestamp": "2024-06-20T23:17:55.387082",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "44-52:constructString": {
                     "start": 44,
@@ -770,11 +937,23 @@
                         "    def __constructString(self, unicodeChars: typing.List[int]) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __constructString(self, unicodeChars: typing.List[int]) -> str:",
+                        "        ",
+                        "        buffer = []",
+                        "        if unicodeChars is not None:",
+                        "            for unicodeChar in unicodeChars:",
+                        "                buffer.append(chr(unicodeChar))",
+                        "        return ''.join(buffer)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.39126992225647,
+                    "generation_timestamp": "2024-06-20T23:18:00.784659",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -796,12 +975,22 @@
                             "int[]"
                         ]
                     ],
-                    "partial_translation": "    RUSSIAN_STUFF_UNICODE: typing.List[int] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    RUSSIAN_STUFF_UNICODE: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    RUSSIAN_STUFF_UNICODE: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:46.756290",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "36-38:SWISS_GERMAN_STUFF_UNICODE": {
                     "start": 36,
@@ -821,21 +1010,34 @@
                             "int[]"
                         ]
                     ],
-                    "partial_translation": "    SWISS_GERMAN_STUFF_UNICODE: typing.List[int] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    SWISS_GERMAN_STUFF_UNICODE: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    SWISS_GERMAN_STUFF_UNICODE: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:46.758140",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class QCodecTest:\n\n"
+            "python_class_declaration": "class QCodecTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.main.org.apache.commons.codec.CharEncoding import *",
         "from src.main.org.apache.commons.codec.DecoderException import *",
         "from src.main.org.apache.commons.codec.EncoderException import *",

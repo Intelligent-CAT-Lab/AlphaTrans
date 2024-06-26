@@ -131,11 +131,25 @@
                         "    def testDefaultEncoding(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDefaultEncoding(self) -> None:",
+                        "        ",
+                        "        plain = \"Hello there!\"",
+                        "        urlCodec = URLCodec(\"UnicodeBig\")",
+                        "        urlCodec.encode2(plain) ",
+                        "        encoded1 = urlCodec.encode1(plain, \"UnicodeBig\")",
+                        "        encoded2 = urlCodec.encode2(plain)",
+                        "        self.assertEqual(encoded1, encoded2)",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.890133619308472,
+                    "generation_timestamp": "2024-06-20T23:03:05.984941",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "243-264:testDecodeObjects": {
                     "start": 243,
@@ -200,11 +214,38 @@
                         "    def testDecodeObjects(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDecodeObjects(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        plain = \"Hello+there%21\"",
+                        "        decoded = urlCodec.decode3(plain)",
+                        "        self.assertEqual(\"Basic URL decoding test\", \"Hello there!\" , decoded)",
+                        "",
+                        "        plainBA = plain.encode(StandardCharsets.UTF_8)",
+                        "        decodedBA = urlCodec.decode3(plainBA)",
+                        "        decoded = decodedBA.decode(StandardCharsets.UTF_8)",
+                        "        self.assertEqual(\"Basic URL decoding test\", \"Hello there!\" , decoded)",
+                        "",
+                        "        result = urlCodec.decode3(None)",
+                        "        self.assertIsNone(result, \"Decoding a null Object should return null\")",
+                        "",
+                        "        try:",
+                        "            dObj = float(3.0)",
+                        "            urlCodec.decode3(dObj)",
+                        "            self.fail(\"Trying to url encode a Double object should cause an exception.\")",
+                        "        except DecoderException:",
+                        "            pass",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 31.637312412261963,
+                    "generation_timestamp": "2024-06-20T23:03:37.630942",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "226-240:testInvalidEncoding": {
                     "start": 226,
@@ -267,11 +308,34 @@
                         "    def testInvalidEncoding(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testInvalidEncoding(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec(\"NONSENSE\")",
+                        "        plain = \"Hello there!\"",
+                        "        ",
+                        "        try:",
+                        "            urlCodec.encode2(plain)",
+                        "            self.fail(\"We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.\")",
+                        "        except EncoderException as ee:",
+                        "            pass",
+                        "        ",
+                        "        try:",
+                        "            urlCodec.decode2(plain)",
+                        "            self.fail(\"We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.\")",
+                        "        except DecoderException as ee:",
+                        "            pass",
+                        "        ",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.803447961807251,
+                    "generation_timestamp": "2024-06-20T23:03:50.438315",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "202-223:testEncodeObjects": {
                     "start": 202,
@@ -336,11 +400,39 @@
                         "    def testEncodeObjects(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeObjects(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        plain = \"Hello there!\"",
+                        "        encoded = urlCodec.encode3(plain)",
+                        "        self.assertEqual(\"Basic URL encoding test\", \"Hello+there%21\", encoded)",
+                        "",
+                        "        plainBA = plain.encode(StandardCharsets.UTF_8)",
+                        "        encodedBA = urlCodec.encode3(plainBA)",
+                        "        encoded = encodedBA.decode()",
+                        "        self.assertEqual(\"Basic URL encoding test\", \"Hello+there%21\", encoded)",
+                        "",
+                        "        result = urlCodec.encode3(None)",
+                        "        self.assertIsNone(result, \"Encoding a null Object should return None\")",
+                        "",
+                        "        try:",
+                        "            dObj = float(3.0)",
+                        "            urlCodec.encode3(dObj)",
+                        "            self.fail(\"Trying to url encode a Double object should cause an exception.\")",
+                        "        except EncoderException:",
+                        "            pass",
+                        "",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.042277336120605,
+                    "generation_timestamp": "2024-06-20T23:04:08.494565",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "194-199:testDecodeStringWithNull": {
                     "start": 194,
@@ -384,11 +476,22 @@
                         "    def testDecodeStringWithNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDecodeStringWithNull(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        test = None",
+                        "        result = urlCodec.decode1(test, \"charset\")",
+                        "        self.assertIsNone(result, \"Result should be None\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.409822463989258,
+                    "generation_timestamp": "2024-06-20T23:02:29.461234",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "186-191:testEncodeStringWithNull": {
                     "start": 186,
@@ -432,11 +535,22 @@
                         "    def testEncodeStringWithNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeStringWithNull(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        test = None",
+                        "        result = urlCodec.encode1(test, \"charset\")",
+                        "        self.assertIsNone(result, \"Result should be None\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.653844118118286,
+                    "generation_timestamp": "2024-06-20T23:02:40.125008",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "179-183:testDecodeWithNullArray": {
                     "start": 179,
@@ -474,11 +588,21 @@
                         "    def testDecodeWithNullArray(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDecodeWithNullArray(self) -> None:",
+                        "        ",
+                        "        plain = None",
+                        "        result = URLCodec.decodeUrl(plain)",
+                        "        self.assertIsNone(result, \"Result should be None\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.7531983852386475,
+                    "generation_timestamp": "2024-06-20T23:02:46.888686",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "168-176:testEncodeUrlWithNullBitSet": {
                     "start": 168,
@@ -535,11 +659,25 @@
                         "    def testEncodeUrlWithNullBitSet(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeUrlWithNullBitSet(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        plain = \"Hello there!\"",
+                        "        encoded = URLCodec.encodeUrl(None, plain.encode('utf-8'))",
+                        "        encoded_str = ''.join(map(chr, encoded)) if encoded is not None else None",
+                        "        self.assertEqual(\"Basic URL encoding test\", \"Hello+there%21\", encoded_str)",
+                        "        self.assertEqual(\"Basic URL decoding test\", plain, urlCodec.decode2(encoded_str))",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.546506881713867,
+                    "generation_timestamp": "2024-06-20T23:04:24.051150",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "159-165:testEncodeNull": {
                     "start": 159,
@@ -589,11 +727,23 @@
                         "    def testEncodeNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeNull(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        plain = None",
+                        "        encoded = urlCodec.encode0(plain)",
+                        "        self.assertIsNone(encoded, \"Encoding a null string should return None\")",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.916510820388794,
+                    "generation_timestamp": "2024-06-20T23:04:37.976554",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "146-156:testDecodeInvalidContent": {
                     "start": 146,
@@ -652,11 +802,26 @@
                         "    def testDecodeInvalidContent(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDecodeInvalidContent(self) -> None:",
+                        "        ",
+                        "        ch_msg = self.__constructString(self.SWISS_GERMAN_STUFF_UNICODE)",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        input = ch_msg.encode(StandardCharsets.ISO_8859_1)",
+                        "        output = urlCodec.decode0(list(input))",
+                        "        self.assertEqual(len(input), len(output))",
+                        "        for i in range(len(input)):",
+                        "            self.assertEqual(input[i], output[i])",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.966346025466919,
+                    "generation_timestamp": "2024-06-20T23:04:48.952680",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "120-143:testDecodeInvalid": {
                     "start": 120,
@@ -723,11 +888,45 @@
                         "    def testDecodeInvalid(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDecodeInvalid(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        ",
+                        "        try:",
+                        "            urlCodec.decode2(\"%\")",
+                        "            self.fail(\"DecoderException should have been thrown\")",
+                        "        except DecoderException:",
+                        "            pass",
+                        "        ",
+                        "        try:",
+                        "            urlCodec.decode2(\"%A\")",
+                        "            self.fail(\"DecoderException should have been thrown\")",
+                        "        except DecoderException:",
+                        "            pass",
+                        "        ",
+                        "        try:",
+                        "            urlCodec.decode2(\"%WW\")",
+                        "            self.fail(\"DecoderException should have been thrown\")",
+                        "        except DecoderException:",
+                        "            pass",
+                        "        ",
+                        "        try:",
+                        "            urlCodec.decode2(\"%0W\")",
+                        "            self.fail(\"DecoderException should have been thrown\")",
+                        "        except DecoderException:",
+                        "            pass",
+                        "        ",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 24.695314407348633,
+                    "generation_timestamp": "2024-06-20T23:05:13.656925",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "112-117:testEncodeDecodeNull": {
                     "start": 112,
@@ -781,11 +980,22 @@
                         "    def testEncodeDecodeNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeDecodeNull(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        self.assertIsNone(urlCodec.encode2(None), \"Null string URL encoding test\")",
+                        "        self.assertIsNone(urlCodec.decode2(None), \"Null string URL decoding test\")",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 27.811760187149048,
+                    "generation_timestamp": "2024-06-20T23:05:41.478684",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "99-109:testUnsafeEncodeDecode": {
                     "start": 99,
@@ -844,11 +1054,27 @@
                         "    def testUnsafeEncodeDecode(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testUnsafeEncodeDecode(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        plain = \"~\uff01@#$%^&*()_+{}|:\\\";'<>?,./\\[]\"",
+                        "        encoded = urlCodec.encode2(plain)",
+                        "        self.assertEqual(",
+                        "            \"Unsafe chars URL encoding test\",",
+                        "            \"%7E%21%40%23%24%25%5E%26%28%29%2B%7B%7D%22%5C%3B%3A%60%2C%2F%5B%5D\",",
+                        "            encoded)",
+                        "        self.assertEqual(\"Unsafe chars URL decoding test\", plain, urlCodec.decode2(encoded))",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.782293796539307,
+                    "generation_timestamp": "2024-06-20T23:05:55.271001",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "89-96:testSafeCharEncodeDecode": {
                     "start": 89,
@@ -904,11 +1130,24 @@
                         "    def testSafeCharEncodeDecode(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testSafeCharEncodeDecode(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        plain = \"abc123_-.*\"",
+                        "        encoded = urlCodec.encode2(plain)",
+                        "        self.assertEqual(\"Safe chars URL encoding test\", plain, encoded)",
+                        "        self.assertEqual(\"Safe chars URL decoding test\", plain, urlCodec.decode2(encoded))",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.88117527961731,
+                    "generation_timestamp": "2024-06-20T23:06:04.159312",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "79-86:testBasicEncodeDecode": {
                     "start": 79,
@@ -964,11 +1203,24 @@
                         "    def testBasicEncodeDecode(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testBasicEncodeDecode(self) -> None:",
+                        "        ",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        plain = \"Hello there!\"",
+                        "        encoded = urlCodec.encode2(plain)",
+                        "        self.assertEqual(\"Basic URL encoding test\", \"Hello+there%21\", encoded)",
+                        "        self.assertEqual(\"Basic URL decoding test\", plain, urlCodec.decode2(encoded))",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.588233232498169,
+                    "generation_timestamp": "2024-06-20T23:06:14.757882",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "56-76:testUTF8RoundTrip": {
                     "start": 56,
@@ -1042,11 +1294,36 @@
                         "    def testUTF8RoundTrip(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testUTF8RoundTrip(self) -> None:",
+                        "        ",
+                        "        ru_msg = self.__constructString(self.RUSSIAN_STUFF_UNICODE)",
+                        "        ch_msg = self.__constructString(self.SWISS_GERMAN_STUFF_UNICODE)",
+                        "",
+                        "        urlCodec = URLCodec.URLCodec1()",
+                        "        self.__validateState(urlCodec)",
+                        "",
+                        "        self.assertEqual(",
+                        "            \"%D0%92%D1%81%D0%B5%D0%BC_%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82\",",
+                        "            urlCodec.encode1(ru_msg, CharEncoding.UTF_8))",
+                        "        self.assertEqual(\"Gr%C3%BCezi_z%C3%A4m%C3%A4\", urlCodec.encode1(ch_msg, CharEncoding.UTF_8))",
+                        "",
+                        "        self.assertEqual(",
+                        "            ru_msg,",
+                        "            urlCodec.decode1(urlCodec.encode1(ru_msg, CharEncoding.UTF_8), CharEncoding.UTF_8))",
+                        "        self.assertEqual(",
+                        "            ch_msg,",
+                        "            urlCodec.decode1(urlCodec.encode1(ch_msg, CharEncoding.UTF_8), CharEncoding.UTF_8))",
+                        "        self.__validateState(urlCodec)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.985280513763428,
+                    "generation_timestamp": "2024-06-20T23:06:35.753971",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "45-53:constructString": {
                     "start": 45,
@@ -1082,11 +1359,23 @@
                         "    def __constructString(self, unicodeChars: typing.List[int]) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __constructString(self, unicodeChars: typing.List[int]) -> str:",
+                        "        ",
+                        "        buffer = []",
+                        "        if unicodeChars is not None:",
+                        "            for unicodeChar in unicodeChars:",
+                        "                buffer.append(chr(unicodeChar))",
+                        "        return ''.join(buffer)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.58063268661499,
+                    "generation_timestamp": "2024-06-20T23:02:53.474722",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "43-43:validateState": {
                     "start": 43,
@@ -1114,11 +1403,18 @@
                         "    def __validateState(self, urlCodec: URLCodec) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __validateState(self, urlCodec: URLCodec) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.61115837097168,
+                    "generation_timestamp": "2024-06-20T23:02:58.090200",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1140,12 +1436,22 @@
                             "int[]"
                         ]
                     ],
-                    "partial_translation": "    RUSSIAN_STUFF_UNICODE: typing.List[int] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    RUSSIAN_STUFF_UNICODE: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    RUSSIAN_STUFF_UNICODE: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:46.736687",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "35-37:SWISS_GERMAN_STUFF_UNICODE": {
                     "start": 35,
@@ -1165,21 +1471,34 @@
                             "int[]"
                         ]
                     ],
-                    "partial_translation": "    SWISS_GERMAN_STUFF_UNICODE: typing.List[int] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    SWISS_GERMAN_STUFF_UNICODE: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    SWISS_GERMAN_STUFF_UNICODE: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:46.739170",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class URLCodecTest:\n\n"
+            "python_class_declaration": "class URLCodecTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.main.org.apache.commons.codec.CharEncoding import *",
         "from src.main.org.apache.commons.codec.DecoderException import *",
         "from src.main.org.apache.commons.codec.EncoderException import *",

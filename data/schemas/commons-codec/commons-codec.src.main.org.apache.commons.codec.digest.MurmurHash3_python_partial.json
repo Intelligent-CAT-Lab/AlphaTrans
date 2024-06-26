@@ -34,6 +34,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -65,11 +66,19 @@
                         "    def hash1282(data: typing.List[int], offset: int, length: int, seed: int) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash1282(data: typing.List[int], offset: int, length: int, seed: int) -> typing.List[int]:",
+                        "         return MurmurHash3.__hash128x64Internal(data, offset, length, seed)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.41497540473938,
+                    "generation_timestamp": "2024-06-20T16:10:38.370637",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "757-760:hash1281": {
                     "start": 757,
@@ -82,6 +91,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -115,11 +125,21 @@
                         "    def hash1281(data: str) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash1281(data: str) -> typing.List[int]:",
+                        "        ",
+                        "        bytes = StringUtils.getBytesUtf8(data)",
+                        "        return MurmurHash3.hash1282(bytes, 0, len(bytes), MurmurHash3.DEFAULT_SEED)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.620063543319702,
+                    "generation_timestamp": "2024-06-20T16:10:46.998462",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "648-691:hash645": {
                     "start": 648,
@@ -172,6 +192,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -208,11 +229,47 @@
                         "    def hash645(data: typing.List[int], offset: int, length: int, seed: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash645(data: typing.List[int], offset: int, length: int, seed: int) -> int:",
+                        "        ",
+                        "        hash = seed",
+                        "        nblocks = length >> 3",
+                        "",
+                        "        for i in range(nblocks):",
+                        "            index = offset + (i << 3)",
+                        "            k = MurmurHash3.__getLittleEndianLong(data, index)",
+                        "",
+                        "            k *= MurmurHash3.__C1",
+                        "            k = ((k << MurmurHash3.__R1) | (k >> (64 - MurmurHash3.__R1))) & 0xffffffffffffffff",
+                        "            k *= MurmurHash3.__C2",
+                        "            hash ^= k",
+                        "            hash = ((hash << MurmurHash3.__R2) | (hash >> (64 - MurmurHash3.__R2))) & 0xffffffffffffffff",
+                        "            hash = (hash * MurmurHash3.__M + MurmurHash3.__N1) & 0xffffffffffffffff",
+                        "",
+                        "        k1 = 0",
+                        "        index = offset + (nblocks << 3)",
+                        "        switch_case = offset + length - index",
+                        "        for case in range(switch_case, 0, -1):",
+                        "            k1 ^= ((data[index + case - 1] & 0xff) << ((case - 1) * 8))",
+                        "        k1 *= MurmurHash3.__C1",
+                        "        k1 = ((k1 << MurmurHash3.__R1) | (k1 >> (64 - MurmurHash3.__R1))) & 0xffffffffffffffff",
+                        "        k1 *= MurmurHash3.__C2",
+                        "        hash ^= k1",
+                        "",
+                        "        hash ^= length",
+                        "        hash = MurmurHash3.__fmix64(hash)",
+                        "",
+                        "        return hash"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 26.419215202331543,
+                    "generation_timestamp": "2024-06-20T16:09:31.345240",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "614-616:hash644": {
                     "start": 614,
@@ -224,6 +281,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -254,11 +312,20 @@
                         "    def hash644(data: typing.List[int], offset: int, length: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash644(data: typing.List[int], offset: int, length: int) -> int:",
+                        "        ",
+                        "        return MurmurHash3.hash645(data, offset, length, MurmurHash3.DEFAULT_SEED)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.49050760269165,
+                    "generation_timestamp": "2024-06-20T16:09:36.842567",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "582-584:hash643": {
                     "start": 582,
@@ -270,6 +337,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -298,11 +366,20 @@
                         "    def hash643(data: typing.List[int]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash643(data: typing.List[int]) -> int:",
+                        "        ",
+                        "        return MurmurHash3.hash645(data, 0, len(data), MurmurHash3.DEFAULT_SEED)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.182480096817017,
+                    "generation_timestamp": "2024-06-20T16:09:44.031905",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "540-553:hash642": {
                     "start": 540,
@@ -325,6 +402,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -353,11 +431,31 @@
                         "    def hash642(data: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash642(data: int) -> int:",
+                        "        ",
+                        "        hash = MurmurHash3.DEFAULT_SEED",
+                        "        k1 = 0",
+                        "        k1 ^= ((data & 0xff) << 8)",
+                        "        k1 ^= ((data & 0xFF00) >> 8) & 0xff",
+                        "        k1 *= MurmurHash3.__C1",
+                        "        k1 = (k1 << MurmurHash3.__R1) | (k1 >> (64 - MurmurHash3.__R1))",
+                        "        k1 *= MurmurHash3.__C2",
+                        "        hash ^= k1",
+                        "",
+                        "        hash ^= MurmurHash3.SHORT_BYTES",
+                        "        hash = MurmurHash3.__fmix64(hash)",
+                        "        return hash"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.912326335906982,
+                    "generation_timestamp": "2024-06-20T16:04:19.187186",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "498-509:hash641": {
                     "start": 498,
@@ -378,6 +476,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -406,11 +505,29 @@
                         "    def hash641(data: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash641(data: int) -> int:",
+                        "        ",
+                        "        k1 = int.from_bytes(data.to_bytes(4, 'big'), 'little')",
+                        "        length = MurmurHash3.INTEGER_BYTES",
+                        "        hash = MurmurHash3.DEFAULT_SEED",
+                        "        k1 *= MurmurHash3.__C1",
+                        "        k1 = ((k1 << 27) | (k1 >> (64 - 27))) & 0xffffffffffffffff",
+                        "        k1 *= MurmurHash3.__C2",
+                        "        hash ^= k1",
+                        "        hash ^= length",
+                        "        hash = MurmurHash3.__fmix64(hash)",
+                        "        return hash"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.188393592834473,
+                    "generation_timestamp": "2024-06-20T16:04:32.381788",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "455-467:hash640": {
                     "start": 455,
@@ -432,6 +549,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -460,11 +578,30 @@
                         "    def hash640(data: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash640(data: int) -> int:",
+                        "        ",
+                        "        hash = MurmurHash3.DEFAULT_SEED",
+                        "        k = int.from_bytes(data.to_bytes(8, 'big'), 'big')",
+                        "        k *= MurmurHash3.__C1",
+                        "        k = ((k << MurmurHash3.__R1) | (k >> (64 - MurmurHash3.__R1))) & 0xFFFFFFFFFFFFFFFF",
+                        "        k *= MurmurHash3.__C2",
+                        "        hash ^= k",
+                        "        hash = ((hash << MurmurHash3.__R2) | (hash >> (64 - MurmurHash3.__R2))) & 0xFFFFFFFFFFFFFFFF",
+                        "        hash = (hash * MurmurHash3.__M + MurmurHash3.__N1) & 0xFFFFFFFFFFFFFFFF",
+                        "        hash ^= MurmurHash3.LONG_BYTES",
+                        "        hash = MurmurHash3.__fmix64(hash)",
+                        "        return hash"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 19.0259952545166,
+                    "generation_timestamp": "2024-06-20T16:04:51.414055",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "332-361:hash328": {
                     "start": 332,
@@ -503,6 +640,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -544,11 +682,44 @@
                         "    def hash328(data: typing.List[int], offset: int, length: int, seed: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash328(data: typing.List[int], offset: int, length: int, seed: int) -> int:",
+                        "        ",
+                        "        hash = seed",
+                        "        nblocks = length >> 2",
+                        "",
+                        "        for i in range(nblocks):",
+                        "            index = offset + (i << 2)",
+                        "            k = MurmurHash3.__getLittleEndianInt(data, index)",
+                        "            hash = MurmurHash3.__mix32(k, hash)",
+                        "",
+                        "        index = offset + (nblocks << 2)",
+                        "        k1 = 0",
+                        "        switch_case = offset + length - index",
+                        "        if switch_case >= 1:",
+                        "            k1 ^= data[index]",
+                        "            if switch_case >= 2:",
+                        "                k1 ^= data[index + 1] << 8",
+                        "                if switch_case >= 3:",
+                        "                    k1 ^= data[index + 2] << 16",
+                        "",
+                        "            k1 *= MurmurHash3.__C1_32",
+                        "            k1 = ((k1 << MurmurHash3.__R1_32) | (k1 >> (32 - MurmurHash3.__R1_32))) & 0xFFFFFFFF",
+                        "            k1 *= MurmurHash3.__C2_32",
+                        "            hash ^= k1",
+                        "",
+                        "        hash ^= length",
+                        "        return MurmurHash3.__fmix32(hash)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.599032878875732,
+                    "generation_timestamp": "2024-06-20T16:07:54.511511",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "308-310:hash327": {
                     "start": 308,
@@ -560,6 +731,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -590,11 +762,20 @@
                         "    def hash327(data: typing.List[int], length: int, seed: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash327(data: typing.List[int], length: int, seed: int) -> int:",
+                        "        ",
+                        "        return MurmurHash3.hash328(data, 0, length, seed)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.8320066928863525,
+                    "generation_timestamp": "2024-06-20T16:07:59.355493",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "281-283:hash326": {
                     "start": 281,
@@ -606,6 +787,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -635,11 +817,20 @@
                         "    def hash326(data: typing.List[int], length: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash326(data: typing.List[int], length: int) -> int:",
+                        "        ",
+                        "        return MurmurHash3.hash327(data, length, MurmurHash3.DEFAULT_SEED)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.440490961074829,
+                    "generation_timestamp": "2024-06-20T16:08:06.808129",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "253-256:hash325": {
                     "start": 253,
@@ -652,6 +843,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -685,11 +877,21 @@
                         "    def hash325(data: str) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash325(data: str) -> int:",
+                        "        ",
+                        "        bytes = StringUtils.getBytesUtf8(data)",
+                        "        return MurmurHash3.hash328(bytes, 0, len(bytes), MurmurHash3.DEFAULT_SEED)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.956814527511597,
+                    "generation_timestamp": "2024-06-20T16:08:14.783450",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "222-224:hash324": {
                     "start": 222,
@@ -701,6 +903,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -729,11 +932,19 @@
                         "    def hash324(data: typing.List[int]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash324(data: typing.List[int]) -> int:",
+                        "         return MurmurHash3.hash328(data, 0, len(data), MurmurHash3.DEFAULT_SEED)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.658233404159546,
+                    "generation_timestamp": "2024-06-20T16:08:21.454255",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "800-803:hash128x641": {
                     "start": 800,
@@ -775,11 +986,19 @@
                         "    def hash128x641(data: typing.List[int], offset: int, length: int, seed: int) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash128x641(data: typing.List[int], offset: int, length: int, seed: int) -> typing.List[int]:",
+                        "         return MurmurHash3.__hash128x64Internal(data, offset, length, seed & 0xffffffff)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.212881326675415,
+                    "generation_timestamp": "2024-06-20T16:10:55.218330",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "729-731:hash128x640": {
                     "start": 729,
@@ -817,11 +1036,19 @@
                         "    def hash128x640(data: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash128x640(data: typing.List[int]) -> typing.List[int]:",
+                        "         return MurmurHash3.hash128x641(data, 0, len(data), 0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 26.70045518875122,
+                    "generation_timestamp": "2024-06-20T16:11:21.927979",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "710-712:hash1280": {
                     "start": 710,
@@ -859,11 +1086,19 @@
                         "    def hash1280(data: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash1280(data: typing.List[int]) -> typing.List[int]:",
+                        "         return MurmurHash3.hash1282(data, 0, len(data), MurmurHash3.DEFAULT_SEED)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.893720388412476,
+                    "generation_timestamp": "2024-06-20T16:11:29.830788",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "395-424:hash32x861": {
                     "start": 395,
@@ -941,11 +1176,44 @@
                         "    def hash32x861(data: typing.List[int], offset: int, length: int, seed: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash32x861(data: typing.List[int], offset: int, length: int, seed: int) -> int:",
+                        "        ",
+                        "        hash = seed",
+                        "        nblocks = length >> 2",
+                        "",
+                        "        for i in range(nblocks):",
+                        "            index = offset + (i << 2)",
+                        "            k = MurmurHash3.__getLittleEndianInt(data, index)",
+                        "            hash = MurmurHash3.__mix32(k, hash)",
+                        "",
+                        "        index = offset + (nblocks << 2)",
+                        "        k1 = 0",
+                        "        switch_case = offset + length - index",
+                        "        if switch_case >= 1:",
+                        "            k1 ^= (data[index] & 0xff)",
+                        "            if switch_case >= 2:",
+                        "                k1 ^= (data[index + 1] & 0xff) << 8",
+                        "                if switch_case >= 3:",
+                        "                    k1 ^= (data[index + 2] & 0xff) << 16",
+                        "",
+                        "            k1 *= MurmurHash3.__C1_32",
+                        "            k1 = ((k1 << MurmurHash3.__R1_32) | (k1 >> (32 - MurmurHash3.__R1_32))) & 0xFFFFFFFF",
+                        "            k1 *= MurmurHash3.__C2_32",
+                        "            hash ^= k1",
+                        "",
+                        "        hash ^= length",
+                        "        return MurmurHash3.__fmix32(hash)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.92482089996338,
+                    "generation_timestamp": "2024-06-20T16:08:42.393455",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "378-380:hash32x860": {
                     "start": 378,
@@ -983,11 +1251,20 @@
                         "    def hash32x860(data: typing.List[int]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash32x860(data: typing.List[int]) -> int:",
+                        "        ",
+                        "        return MurmurHash3.hash32x861(data, 0, len(data), 0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.420531511306763,
+                    "generation_timestamp": "2024-06-20T16:08:48.826009",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "189-198:hash323": {
                     "start": 189,
@@ -1038,11 +1315,27 @@
                         "    def hash323(data: int, seed: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash323(data: int, seed: int) -> int:",
+                        "        ",
+                        "        hash = seed",
+                        "        r0 = int.from_bytes(data.to_bytes(8, 'big'), 'little')",
+                        "",
+                        "        hash = MurmurHash3.__mix32(r0 & 0xFFFFFFFF, hash)",
+                        "        hash = MurmurHash3.__mix32((r0 >> 32) & 0xFFFFFFFF, hash)",
+                        "",
+                        "        hash ^= MurmurHash3.LONG_BYTES",
+                        "        return MurmurHash3.__fmix32(hash)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.89863896369934,
+                    "generation_timestamp": "2024-06-20T16:06:13.837160",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "169-171:hash322": {
                     "start": 169,
@@ -1080,11 +1373,20 @@
                         "    def hash322(data: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash322(data: int) -> int:",
+                        "        ",
+                        "        return MurmurHash3.hash323(data, MurmurHash3.DEFAULT_SEED)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.488358497619629,
+                    "generation_timestamp": "2024-06-20T16:06:17.337640",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "139-151:hash321": {
                     "start": 139,
@@ -1139,11 +1441,30 @@
                         "    def hash321(data1: int, data2: int, seed: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash321(data1: int, data2: int, seed: int) -> int:",
+                        "        ",
+                        "        hash = seed",
+                        "        r0 = int.from_bytes(data1.to_bytes(8, 'big'), 'big')",
+                        "        r1 = int.from_bytes(data2.to_bytes(8, 'big'), 'big')",
+                        "",
+                        "        hash = MurmurHash3.__mix32(r0, hash)",
+                        "        hash = MurmurHash3.__mix32(r0 >> 32, hash)",
+                        "        hash = MurmurHash3.__mix32(r1, hash)",
+                        "        hash = MurmurHash3.__mix32(r1 >> 32, hash)",
+                        "",
+                        "        hash ^= MurmurHash3.LONG_BYTES * 2",
+                        "        return MurmurHash3.__fmix32(hash)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.452292442321777,
+                    "generation_timestamp": "2024-06-20T16:06:31.797243",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "117-119:hash320": {
                     "start": 117,
@@ -1182,11 +1503,20 @@
                         "    def hash320(data1: int, data2: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def hash320(data1: int, data2: int) -> int:",
+                        "        ",
+                        "        return MurmurHash3.hash321(data1, data2, MurmurHash3.DEFAULT_SEED)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.376038074493408,
+                    "generation_timestamp": "2024-06-20T16:06:35.179784",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "974-981:fmix64": {
                     "start": 974,
@@ -1223,11 +1553,25 @@
                         "    def __fmix64(hash: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __fmix64(hash: int) -> int:",
+                        "        ",
+                        "        hash ^= (hash >> 33)",
+                        "        hash = (hash * 0xff51afd7ed558ccd) & 0xffffffffffffffff",
+                        "        hash ^= (hash >> 33)",
+                        "        hash = (hash * 0xc4ceb9fe1a85ec53) & 0xffffffffffffffff",
+                        "        hash ^= (hash >> 33)",
+                        "        return hash"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.234671592712402,
+                    "generation_timestamp": "2024-06-20T16:04:07.262232",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "958-965:fmix32": {
                     "start": 958,
@@ -1264,11 +1608,25 @@
                         "    def __fmix32(hash: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __fmix32(hash: int) -> int:",
+                        "        ",
+                        "        hash ^= (hash >> 16)",
+                        "        hash = (hash * 0x85ebca6b) & 0xFFFFFFFF",
+                        "        hash ^= (hash >> 13)",
+                        "        hash = (hash * 0xc2b2ae35) & 0xFFFFFFFF",
+                        "        hash ^= (hash >> 16)",
+                        "        return hash"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.429746866226196,
+                    "generation_timestamp": "2024-06-20T16:05:00.849501",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "944-950:mix32": {
                     "start": 944,
@@ -1305,11 +1663,24 @@
                         "    def __mix32(k: int, hash: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __mix32(k: int, hash: int) -> int:",
+                        "        ",
+                        "        k *= MurmurHash3.__C1_32",
+                        "        k = ((k << MurmurHash3.__R1_32) | (k >> (32 - MurmurHash3.__R1_32))) & 0xFFFFFFFF",
+                        "        k *= MurmurHash3.__C2_32",
+                        "        hash ^= k",
+                        "        return ((hash << MurmurHash3.__R2_32) | (hash >> (32 - MurmurHash3.__R2_32))) * MurmurHash3.__M_32 + MurmurHash3.__N_32"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.083537817001343,
+                    "generation_timestamp": "2024-06-20T16:05:42.131044",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "930-935:getLittleEndianInt": {
                     "start": 930,
@@ -1345,11 +1716,19 @@
                         "    def __getLittleEndianInt(data: typing.List[int], index: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __getLittleEndianInt(data: typing.List[int], index: int) -> int:",
+                        "         return (data[index] & 0xff) | ((data[index + 1] & 0xff) << 8) | ((data[index + 2] & 0xff) << 16) | ((data[index + 3] & 0xff) << 24)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.506614923477173,
+                    "generation_timestamp": "2024-06-20T16:06:47.696878",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "912-921:getLittleEndianLong": {
                     "start": 912,
@@ -1389,11 +1768,26 @@
                         "    def __getLittleEndianLong(data: typing.List[int], index: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __getLittleEndianLong(data: typing.List[int], index: int) -> int:",
+                        "         return (data[index] & 0xff) | \\",
+                        "                ((data[index + 1] & 0xff) << 8) | \\",
+                        "                ((data[index + 2] & 0xff) << 16) | \\",
+                        "                ((data[index + 3] & 0xff) << 24) | \\",
+                        "                ((data[index + 4] & 0xff) << 32) | \\",
+                        "                ((data[index + 5] & 0xff) << 40) | \\",
+                        "                ((data[index + 6] & 0xff) << 48) | \\",
+                        "                ((data[index + 7] & 0xff) << 56)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.075889825820923,
+                    "generation_timestamp": "2024-06-20T16:09:04.912659",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "817-903:hash128x64Internal": {
                     "start": 817,
@@ -1523,11 +1917,77 @@
                         "    def __hash128x64Internal(data: typing.List[int], offset: int, length: int, seed: int) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __hash128x64Internal(data: typing.List[int], offset: int, length: int, seed: int) -> typing.List[int]:",
+                        "        ",
+                        "        h1 = seed",
+                        "        h2 = seed",
+                        "        nblocks = length >> 4",
+                        "",
+                        "        for i in range(nblocks):",
+                        "            index = offset + (i << 4)",
+                        "            k1 = MurmurHash3.__getLittleEndianLong(data, index)",
+                        "            k2 = MurmurHash3.__getLittleEndianLong(data, index + 8)",
+                        "",
+                        "            k1 *= MurmurHash3.__C1",
+                        "            k1 = (k1 << MurmurHash3.__R1) | (k1 >> (64 - MurmurHash3.__R1))",
+                        "            k1 *= MurmurHash3.__C2",
+                        "            h1 ^= k1",
+                        "            h1 = (h1 << MurmurHash3.__R2) | (h1 >> (64 - MurmurHash3.__R2))",
+                        "            h1 += h2",
+                        "            h1 = (h1 * MurmurHash3.__M) + MurmurHash3.__N1",
+                        "",
+                        "            k2 *= MurmurHash3.__C2",
+                        "            k2 = (k2 << MurmurHash3.__R3) | (k2 >> (64 - MurmurHash3.__R3))",
+                        "            k2 *= MurmurHash3.__C1",
+                        "            h2 ^= k2",
+                        "            h2 = (h2 << MurmurHash3.__R1) | (h2 >> (64 - MurmurHash3.__R1))",
+                        "            h2 += h1",
+                        "            h2 = (h2 * MurmurHash3.__M) + MurmurHash3.__N2",
+                        "",
+                        "        k1 = 0",
+                        "        k2 = 0",
+                        "        index = offset + (nblocks << 4)",
+                        "        switch_case = offset + length - index",
+                        "        for case in range(switch_case, 0, -1):",
+                        "            if case >= 9:",
+                        "                k2 ^= ((data[index + 14 - case] & 0xff) << ((case - 9) * 8))",
+                        "            if case >= 1:",
+                        "                k1 ^= ((data[index + 7 - case] & 0xff) << ((case - 1) * 8))",
+                        "",
+                        "        k1 *= MurmurHash3.__C1",
+                        "        k1 = (k1 << MurmurHash3.__R1) | (k1 >> (64 - MurmurHash3.__R1))",
+                        "        k1 *= MurmurHash3.__C2",
+                        "        h1 ^= k1",
+                        "",
+                        "        k2 *= MurmurHash3.__C2",
+                        "        k2 = (k2 << MurmurHash3.__R3) | (k2 >> (64 - MurmurHash3.__R3))",
+                        "        k2 *= MurmurHash3.__C1",
+                        "        h2 ^= k2",
+                        "",
+                        "        h1 ^= length",
+                        "        h2 ^= length",
+                        "",
+                        "        h1 += h2",
+                        "        h2 += h1",
+                        "",
+                        "        h1 = MurmurHash3.__fmix64(h1)",
+                        "        h2 = MurmurHash3.__fmix64(h2)",
+                        "",
+                        "        h1 += h2",
+                        "        h2 += h1",
+                        "",
+                        "        return [h1, h2]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 48.90769338607788,
+                    "generation_timestamp": "2024-06-20T16:10:32.948729",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "97-97:MurmurHash3": {
                     "start": 97,
@@ -1553,11 +2013,37 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "        ",
+                        "        self.SHORT_BYTES = Short.SIZE // Byte.SIZE",
+                        "        self.INTEGER_BYTES = Integer.SIZE // Byte.SIZE",
+                        "        self.LONG_BYTES = Long.SIZE // Byte.SIZE",
+                        "        self.DEFAULT_SEED = 104729",
+                        "        self.NULL_HASHCODE = 2862933555777941757",
+                        "        self.__N2 = 0x38495ab5",
+                        "        self.__N1 = 0x52dce729",
+                        "        self.__M = 5",
+                        "        self.__R3 = 33",
+                        "        self.__R2 = 27",
+                        "        self.__R1 = 31",
+                        "        self.__C2 = 0x4cf5ad432745937f",
+                        "        self.__C1 = 0x87c37b91114253d5",
+                        "        self.__N_32 = 0xe6546b64",
+                        "        self.__M_32 = 5",
+                        "        self.__R2_32 = 13",
+                        "        self.__R1_32 = 15",
+                        "        self.__C2_32 = 0x1b873593",
+                        "        self.__C1_32 = 0xcc9e2d51"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.059417486190796,
+                    "generation_timestamp": "2024-06-20T16:11:49.901717",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1577,12 +2063,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    SHORT_BYTES: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    SHORT_BYTES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    SHORT_BYTES: int = Short.SIZE // Byte.SIZE"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.530553340911865,
+                    "generation_timestamp": "2024-06-21T08:36:39.955274",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "75-75:INTEGER_BYTES": {
                     "start": 75,
@@ -1600,12 +2095,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    INTEGER_BYTES: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    INTEGER_BYTES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    INTEGER_BYTES: int = Integer.SIZE // Byte.SIZE"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 23.04839015007019,
+                    "generation_timestamp": "2024-06-21T08:37:03.010125",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "72-72:LONG_BYTES": {
                     "start": 72,
@@ -1623,12 +2127,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    LONG_BYTES: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    LONG_BYTES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    LONG_BYTES: int = Long.SIZE // Byte.SIZE"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.638847589492798,
+                    "generation_timestamp": "2024-06-21T08:37:11.661091",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "69-69:DEFAULT_SEED": {
                     "start": 69,
@@ -1647,12 +2160,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    DEFAULT_SEED: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    DEFAULT_SEED: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    DEFAULT_SEED: int = 104729"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.2683007717132568,
+                    "generation_timestamp": "2024-06-21T08:37:12.938110",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-66:NULL_HASHCODE": {
                     "start": 66,
@@ -1671,12 +2193,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    NULL_HASHCODE: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    NULL_HASHCODE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    NULL_HASHCODE: int = 2862933555777941757"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.266756534576416,
+                    "generation_timestamp": "2024-06-21T08:37:15.216097",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "94-94:N2": {
                     "start": 94,
@@ -1695,12 +2226,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __N2: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __N2: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __N2: int = 0x38495ab5"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.4456875324249268,
+                    "generation_timestamp": "2024-06-21T08:37:16.668829",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "93-93:N1": {
                     "start": 93,
@@ -1719,12 +2259,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __N1: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __N1: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __N1: int = 0x52dce729"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.849560976028442,
+                    "generation_timestamp": "2024-06-21T08:37:27.527369",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "92-92:M": {
                     "start": 92,
@@ -1743,12 +2292,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __M: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __M: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __M: int = 5"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1806895732879639,
+                    "generation_timestamp": "2024-06-21T08:37:28.720574",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "91-91:R3": {
                     "start": 91,
@@ -1767,12 +2325,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __R3: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __R3: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __R3: int = 33"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.2541744709014893,
+                    "generation_timestamp": "2024-06-21T08:37:29.981610",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "90-90:R2": {
                     "start": 90,
@@ -1791,12 +2358,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __R2: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __R2: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __R2: int = 27"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.4202911853790283,
+                    "generation_timestamp": "2024-06-21T08:37:31.408687",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "89-89:R1": {
                     "start": 89,
@@ -1815,12 +2391,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __R1: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __R1: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __R1: int = 31"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.279949426651001,
+                    "generation_timestamp": "2024-06-21T08:37:32.695341",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "88-88:C2": {
                     "start": 88,
@@ -1839,12 +2424,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __C2: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __C2: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __C2: int = 0x4cf5ad432745937f"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.0615437030792236,
+                    "generation_timestamp": "2024-06-21T08:37:34.763467",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "87-87:C1": {
                     "start": 87,
@@ -1863,12 +2457,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __C1: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __C1: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __C1: int = 0x87c37b91114253d5"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.494055986404419,
+                    "generation_timestamp": "2024-06-21T08:37:37.265771",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "85-85:N_32": {
                     "start": 85,
@@ -1887,12 +2490,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __N_32: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __N_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __N_32: int = 0xe6546b64"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.8102757930755615,
+                    "generation_timestamp": "2024-06-21T08:37:39.085028",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "84-84:M_32": {
                     "start": 84,
@@ -1911,12 +2523,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __M_32: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __M_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __M_32: int = 5"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.9070608615875244,
+                    "generation_timestamp": "2024-06-21T08:37:41.999087",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "83-83:R2_32": {
                     "start": 83,
@@ -1935,12 +2556,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __R2_32: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __R2_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __R2_32: int = 13"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.5033035278320312,
+                    "generation_timestamp": "2024-06-21T08:37:43.508625",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "82-82:R1_32": {
                     "start": 82,
@@ -1959,12 +2589,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __R1_32: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __R1_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __R1_32: int = 15"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.6937549114227295,
+                    "generation_timestamp": "2024-06-21T08:37:45.208942",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "81-81:C2_32": {
                     "start": 81,
@@ -1983,12 +2622,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __C2_32: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __C2_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __C2_32: int = 0x1b873593"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.7608625888824463,
+                    "generation_timestamp": "2024-06-21T08:37:46.974396",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "80-80:C1_32": {
                     "start": 80,
@@ -2007,12 +2655,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __C1_32: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __C1_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __C1_32: int = 0xcc9e2d51"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.325117826461792,
+                    "generation_timestamp": "2024-06-21T08:37:49.305971",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class MurmurHash3:\n\n"
@@ -2085,11 +2742,35 @@
                         "    def finalise(self, hash: int, unprocessedLength: int, unprocessed: typing.List[int], totalLen: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def finalise(self, hash: int, unprocessedLength: int, unprocessed: typing.List[int], totalLen: int) -> int:",
+                        "        ",
+                        "        result = hash",
+                        "        k1 = 0",
+                        "        if unprocessedLength >= 1:",
+                        "            k1 ^= unprocessed[0]",
+                        "        if unprocessedLength >= 2:",
+                        "            k1 ^= unprocessed[1] << 8",
+                        "        if unprocessedLength >= 3:",
+                        "            k1 ^= unprocessed[2] << 16",
+                        "",
+                        "        if unprocessedLength >= 1:",
+                        "            k1 *= self.__C1_32",
+                        "            k1 = self.__rotateLeft(k1, self.__R1_32)",
+                        "            k1 *= self.__C2_32",
+                        "            result ^= k1",
+                        "",
+                        "        result ^= totalLen",
+                        "        return self.__fmix32(result)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.691251516342163,
+                    "generation_timestamp": "2024-06-20T16:05:26.037101",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
@@ -2138,11 +2819,18 @@
                         "    def end(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def end(self) -> int:",
+                        "         return self.finalise(self.__hash, self.__unprocessedLength, self.__unprocessed, self.__totalLen)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.779268741607666,
+                    "generation_timestamp": "2024-06-20T16:05:58.924907",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1026-1083:add": {
                     "start": 1026,
@@ -2246,11 +2934,58 @@
                         "    def add(self, data: typing.List[int], offset: int, length: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def add(self, data: typing.List[int], offset: int, length: int) -> None:",
+                        "        ",
+                        "        if length <= 0:",
+                        "            return",
+                        "        self.__totalLen += length",
+                        "",
+                        "        if self.__unprocessedLength + length - self.__BLOCK_SIZE < 0:",
+                        "            self.__unprocessed[self.__unprocessedLength:self.__unprocessedLength+length] = data[offset:offset+length]",
+                        "            self.__unprocessedLength += length",
+                        "            return",
+                        "",
+                        "        newOffset = None",
+                        "        newLength = None",
+                        "        if self.__unprocessedLength > 0:",
+                        "            k = None",
+                        "            if self.__unprocessedLength == 1:",
+                        "                k = self.__orBytes(self.__unprocessed[0], data[offset], data[offset + 1], data[offset + 2])",
+                        "            elif self.__unprocessedLength == 2:",
+                        "                k = self.__orBytes(self.__unprocessed[0], self.__unprocessed[1], data[offset], data[offset + 1])",
+                        "            elif self.__unprocessedLength == 3:",
+                        "                k = self.__orBytes(self.__unprocessed[0], self.__unprocessed[1], self.__unprocessed[2], data[offset])",
+                        "            else:",
+                        "                raise Exception(\"Unprocessed length should be 1, 2, or 3: \" + str(self.__unprocessedLength))",
+                        "            self.__hash = self.__mix32(k, self.__hash)",
+                        "            consumed = self.__BLOCK_SIZE - self.__unprocessedLength",
+                        "            newOffset = offset + consumed",
+                        "            newLength = length - consumed",
+                        "        else:",
+                        "            newOffset = offset",
+                        "            newLength = length",
+                        "",
+                        "        nblocks = newLength >> 2",
+                        "",
+                        "        for i in range(nblocks):",
+                        "            index = newOffset + (i << 2)",
+                        "            k = self.__getLittleEndianInt(data, index)",
+                        "            self.__hash = self.__mix32(k, self.__hash)",
+                        "",
+                        "        consumed = (nblocks << 2)",
+                        "        self.__unprocessedLength = newLength - consumed",
+                        "        if self.__unprocessedLength != 0:",
+                        "            self.__unprocessed[0:self.__unprocessedLength] = data[newOffset + consumed:newOffset + consumed + self.__unprocessedLength]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 48.18120622634888,
+                    "generation_timestamp": "2024-06-20T16:07:35.895088",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1014-1017:start": {
                     "start": 1014,
@@ -2282,11 +3017,20 @@
                         "    def start(self, seed: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def start(self, seed: int) -> None:",
+                        "        ",
+                        "        self.__unprocessedLength = self.__totalLen = 0",
+                        "        self.__hash = seed"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.718315839767456,
+                    "generation_timestamp": "2024-06-20T16:03:46.732413",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1140-1142:orBytes": {
                     "start": 1140,
@@ -2321,11 +3065,19 @@
                         "    def __orBytes(b1: int, b2: int, b3: int, b4: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __orBytes(b1: int, b2: int, b3: int, b4: int) -> int:",
+                        "         return (b1 & 0xff) | ((b2 & 0xff) << 8) | ((b3 & 0xff) << 16) | ((b4 & 0xff) << 24)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.280061960220337,
+                    "generation_timestamp": "2024-06-20T16:03:55.017788",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1105-1128:finalise": {
                     "start": 1105,
@@ -2383,11 +3135,34 @@
                         "    def finalise(self, hash: int, unprocessedLength: int, unprocessed: typing.List[int], totalLen: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def finalise(self, hash: int, unprocessedLength: int, unprocessed: typing.List[int], totalLen: int) -> int:",
+                        "        ",
+                        "        result = hash",
+                        "        k1 = 0",
+                        "        if unprocessedLength >= 1:",
+                        "            k1 ^= (unprocessed[0] & 0xff)",
+                        "        if unprocessedLength >= 2:",
+                        "            k1 ^= (unprocessed[1] & 0xff) << 8",
+                        "        if unprocessedLength >= 3:",
+                        "            k1 ^= (unprocessed[2] & 0xff) << 16",
+                        "",
+                        "        k1 *= self.__C1_32",
+                        "        k1 = self.__rotateLeft(k1, self.__R1_32)",
+                        "        k1 *= self.__C2_32",
+                        "        result ^= k1",
+                        "",
+                        "        result ^= totalLen",
+                        "        return self.__fmix32(result)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.482061862945557,
+                    "generation_timestamp": "2024-06-20T16:05:14.338863",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -2406,12 +3181,22 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __hash: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __hash: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __hash: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:41:37.551324",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1004-1004:totalLen": {
                     "start": 1004,
@@ -2428,12 +3213,22 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __totalLen: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __totalLen: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __totalLen: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:41:37.556758",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1001-1001:unprocessedLength": {
                     "start": 1001,
@@ -2450,12 +3245,22 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __unprocessedLength: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __unprocessedLength: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __unprocessedLength: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:41:37.562074",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "998-998:unprocessed": {
                     "start": 998,
@@ -2473,12 +3278,22 @@
                             "byte[]"
                         ]
                     ],
-                    "partial_translation": "    __unprocessed: typing.List[int] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __unprocessed: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __unprocessed: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:41:37.567357",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "995-995:BLOCK_SIZE": {
                     "start": 995,
@@ -2497,12 +3312,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __BLOCK_SIZE: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BLOCK_SIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BLOCK_SIZE: int = 4"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.218193531036377,
+                    "generation_timestamp": "2024-06-20T14:41:38.790913",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class IncrementalHash32x86:\n\n"

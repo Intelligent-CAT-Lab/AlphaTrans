@@ -88,7 +88,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(timeout = 10000L)"
                     ],
                     "modifiers": [
                         "public"
@@ -117,11 +117,32 @@
                         "    def testEncode(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncode(self) -> None:",
+                        "        ",
+                        "        engine = PhoneticEngine(self.__nameType, self.__ruleType, self.__concat, self.__maxPhonemes)",
+                        "",
+                        "        phoneticActual = engine.encode0(self.__name)",
+                        "",
+                        "        self.assertEqual(self.__phoneticExpected, phoneticActual)",
+                        "",
+                        "        if self.__concat:",
+                        "            split = phoneticActual.split(\"|\")",
+                        "            self.assertTrue(len(split) <= self.__maxPhonemes)",
+                        "        else:",
+                        "            words = phoneticActual.split(\"-\")",
+                        "            for word in words:",
+                        "                split = word.split(\"|\")",
+                        "                self.assertTrue(len(split) <= self.__maxPhonemes)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.516813039779663,
+                    "generation_timestamp": "2024-06-20T23:30:48.633394",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "41-102:data": {
                     "start": 41,
@@ -192,7 +213,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Parameters"
+                        "Parameterized.Parameters(name = \"{0}-{1}-{2}-{3}\")",
+                        "Parameterized.Parameters(name = \"{0}-{1}-{2}-{3}\")"
                     ],
                     "modifiers": [
                         "public",
@@ -212,11 +234,80 @@
                         "    def data() -> typing.List[typing.List[typing.Any]]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def data() -> typing.List[typing.List[typing.Any]]:",
+                        "        ",
+                        "        return [",
+                        "            [",
+                        "                \"Renault\",",
+                        "                \"rinD|rinDlt|rina|rinalt|rino|rinolt|rinu|rinult\",",
+                        "                NameType.GENERIC,",
+                        "                RuleType.APPROX,",
+                        "                True,",
+                        "                10",
+                        "            ],",
+                        "            [",
+                        "                \"Renault\",",
+                        "                \"rYnDlt|rYnalt|rYnult|rinDlt|rinalt|rinolt|rinult\",",
+                        "                NameType.ASHKENAZI,",
+                        "                RuleType.APPROX,",
+                        "                True,",
+                        "                10",
+                        "            ],",
+                        "            [",
+                        "                \"Renault\",",
+                        "                \"rinDlt\",",
+                        "                NameType.ASHKENAZI,",
+                        "                RuleType.APPROX,",
+                        "                True,",
+                        "                1",
+                        "            ],",
+                        "            [",
+                        "                \"Renault\", \"rinDlt\", NameType.SEPHARDIC, RuleType.APPROX, True, 10",
+                        "            ],",
+                        "            [",
+                        "                \"SntJohn-Smith\",",
+                        "                \"sntjonsmit\",",
+                        "                NameType.GENERIC,",
+                        "                RuleType.EXACT,",
+                        "                True,",
+                        "                10",
+                        "            ],",
+                        "            [",
+                        "                \"d'ortley\",",
+                        "                \"(ortlaj|ortlej)-(dortlaj|dortlej)\",",
+                        "                NameType.GENERIC,",
+                        "                RuleType.EXACT,",
+                        "                True,",
+                        "                10",
+                        "            ],",
+                        "            [",
+                        "                \"van helsing\",",
+                        "                \"(elSink|elsink|helSink|helsink|helzink|xelsink)-(banhelsink|fanhelsink|fanhelzink|vanhelsink|vanhelzink|vanjelsink)\",",
+                        "                NameType.GENERIC,",
+                        "                RuleType.EXACT,",
+                        "                False,",
+                        "                10",
+                        "            ],",
+                        "            [",
+                        "                \"Judenburg\",",
+                        "                \"iudnbYrk|iudnbirk|iudnburk|xudnbirk|xudnburk|zudnbirk|zudnburk\",",
+                        "                NameType.GENERIC,",
+                        "                RuleType.APPROX,",
+                        "                True,",
+                        "                10",
+                        "            ]",
+                        "        ]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 30.75272035598755,
+                    "generation_timestamp": "2024-06-20T20:37:33.785216",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "111-124:PhoneticEngineTest": {
                     "start": 111,
@@ -262,11 +353,24 @@
                         "    def __init__(self, name: str, phoneticExpected: str, nameType: NameType, ruleType: RuleType, concat: bool, maxPhonemes: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, name: str, phoneticExpected: str, nameType: NameType, ruleType: RuleType, concat: bool, maxPhonemes: int) -> None:",
+                        "        ",
+                        "        self.__name = name",
+                        "        self.__phoneticExpected = phoneticExpected",
+                        "        self.__nameType = nameType",
+                        "        self.__ruleType = ruleType",
+                        "        self.__concat = concat",
+                        "        self.__maxPhonemes = maxPhonemes"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.049776792526245,
+                    "generation_timestamp": "2024-06-20T20:37:39.838207",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -286,12 +390,22 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __maxPhonemes: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __maxPhonemes: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __maxPhonemes: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:04:41.873360",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "108-108:ruleType": {
                     "start": 108,
@@ -309,12 +423,22 @@
                             "RuleType"
                         ]
                     ],
-                    "partial_translation": "    __ruleType: RuleType = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __ruleType: RuleType = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ruleType: RuleType = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:04:41.874937",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "107-107:phoneticExpected": {
                     "start": 107,
@@ -332,12 +456,22 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __phoneticExpected: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __phoneticExpected: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __phoneticExpected: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:04:41.876453",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "106-106:nameType": {
                     "start": 106,
@@ -355,12 +489,22 @@
                             "NameType"
                         ]
                     ],
-                    "partial_translation": "    __nameType: NameType = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __nameType: NameType = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __nameType: NameType = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:04:41.878046",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "105-105:name": {
                     "start": 105,
@@ -378,12 +522,22 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __name: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __name: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __name: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:04:41.879569",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "104-104:concat": {
                     "start": 104,
@@ -401,12 +555,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __concat: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __concat: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __concat: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:04:41.881091",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "38-38:TEN": {
                     "start": 38,
@@ -425,21 +589,33 @@
                             "java.lang.Integer"
                         ]
                     ],
-                    "partial_translation": "    __TEN: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __TEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __TEN: int = 10"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.9997396469116211,
+                    "generation_timestamp": "2024-06-20T15:04:42.882336",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class PhoneticEngineTest:\n\n"
+            "python_class_declaration": "class PhoneticEngineTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.main.org.apache.commons.codec.language.bm.NameType import *",
         "from src.main.org.apache.commons.codec.language.bm.PhoneticEngine import *",
         "from src.main.org.apache.commons.codec.language.bm.RuleType import *"

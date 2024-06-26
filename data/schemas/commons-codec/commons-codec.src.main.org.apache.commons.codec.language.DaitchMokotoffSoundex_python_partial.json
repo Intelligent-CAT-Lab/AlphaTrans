@@ -142,11 +142,20 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         if self.__cachedString == '':",
+                        "             self.__cachedString = self.__builder",
+                        "         return self.__cachedString"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.697828769683838,
+                    "generation_timestamp": "2024-06-20T16:45:16.674375",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "117-119:hashCode": {
                     "start": 117,
@@ -182,11 +191,18 @@
                         "    def hashCode(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def hashCode(self) -> int:",
+                        "         return hash(self.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.655881881713867,
+                    "generation_timestamp": "2024-06-20T16:45:20.339630",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "97-106:equals": {
                     "start": 97,
@@ -231,11 +247,23 @@
                         "    def equals(self, other: typing.Any) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def equals(self, other: typing.Any) -> bool:",
+                        "         if self == other:",
+                        "             return True",
+                        "         if not isinstance(other, Branch):",
+                        "             return False",
+                        "",
+                        "         return self.toString() == other.toString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.5746450424194336,
+                    "generation_timestamp": "2024-06-20T16:45:22.918193",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "127-142:processNextReplacement": {
                     "start": 127,
@@ -279,11 +307,27 @@
                         "    def processNextReplacement(self, replacement: str, forceAppend: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def processNextReplacement(self, replacement: str, forceAppend: bool) -> None:",
+                        "        ",
+                        "        append = (self.__lastReplacement == '' or not self.__lastReplacement.endswith(replacement) or forceAppend)",
+                        "",
+                        "        if append and len(self.__builder) < MAX_LENGTH:",
+                        "            self.__builder += replacement",
+                        "            if len(self.__builder) > MAX_LENGTH:",
+                        "                self.__builder = self.__builder[:MAX_LENGTH]",
+                        "            self.__cachedString = ''",
+                        "",
+                        "        self.__lastReplacement = replacement"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.901662588119507,
+                    "generation_timestamp": "2024-06-20T16:45:29.827877",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "109-114:finish": {
                     "start": 109,
@@ -314,11 +358,21 @@
                         "    def finish(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def finish(self) -> None:",
+                        "        ",
+                        "        while len(self.__builder) < MAX_LENGTH:",
+                        "            self.__builder += '0'",
+                        "            self.__cachedString = ''"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.641841888427734,
+                    "generation_timestamp": "2024-06-20T16:45:35.474128",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "89-94:createBranch": {
                     "start": 89,
@@ -360,11 +414,21 @@
                         "    def createBranch(self) -> Branch:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def createBranch(self) -> Branch:",
+                        "         branch = Branch()",
+                        "         branch.__builder.write(self.toString())",
+                        "         branch.__lastReplacement = self.__lastReplacement",
+                        "         return branch"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.917959928512573,
+                    "generation_timestamp": "2024-06-20T16:45:57.127162",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "78-82:Branch": {
                     "start": 78,
@@ -394,11 +458,21 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "        ",
+                        "        self.__builder = io.StringIO()",
+                        "        self.__lastReplacement = ''",
+                        "        self.__cachedString = ''"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.725186586380005,
+                    "generation_timestamp": "2024-06-20T16:45:46.203697",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -417,12 +491,22 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __lastReplacement: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __lastReplacement: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __lastReplacement: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:45:47.891417",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "75-75:cachedString": {
                     "start": 75,
@@ -439,12 +523,22 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __cachedString: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __cachedString: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __cachedString: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:45:47.895127",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "74-74:builder": {
                     "start": 74,
@@ -462,12 +556,22 @@
                             "java.lang.StringBuilder"
                         ]
                     ],
-                    "partial_translation": "    __builder: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __builder: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __builder: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:45:47.898737",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class Branch:\n\n"
@@ -531,11 +635,27 @@
                         "    def soundex0(self, source: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def soundex0(self, source: str) -> str:",
+                        "        ",
+                        "        branches = self.__soundex1(source, True)",
+                        "        sb = []",
+                        "        index = 0",
+                        "        for branch in branches:",
+                        "            sb.append(branch)",
+                        "            if index < len(branches) - 1:",
+                        "                sb.append('|')",
+                        "            index += 1",
+                        "        return ''.join(sb)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.38758635520935,
+                    "generation_timestamp": "2024-06-20T16:47:45.243265",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "437-442:encode1": {
                     "start": 437,
@@ -574,11 +694,22 @@
                         "    def encode1(self, source: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def encode1(self, source: str) -> str:",
+                        "        ",
+                        "        if source is None:",
+                        "            return None",
+                        "",
+                        "        return self.__soundex1(source, False)[0]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.9834139347076416,
+                    "generation_timestamp": "2024-06-20T16:47:47.231794",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "414-422:encode0": {
                     "start": 414,
@@ -625,11 +756,24 @@
                         "    def encode0(self, obj: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def encode0(self, obj: typing.Any) -> typing.Any:",
+                        "        ",
+                        "        if not isinstance(obj, str):",
+                        "            raise EncoderException(",
+                        "                \"Parameter supplied to DaitchMokotoffSoundex encode is not of type\"",
+                        "                \" java.lang.String\",",
+                        "                None)",
+                        "        return self.encode1(obj)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.506194829940796,
+                    "generation_timestamp": "2024-06-20T16:47:56.743323",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "359-361:DaitchMokotoffSoundex1": {
                     "start": 359,
@@ -665,11 +809,20 @@
                         "    def DaitchMokotoffSoundex1() -> DaitchMokotoffSoundex:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def DaitchMokotoffSoundex1() -> DaitchMokotoffSoundex:",
+                        "        ",
+                        "        return DaitchMokotoffSoundex(True)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.5310423374176025,
+                    "generation_timestamp": "2024-06-20T16:46:45.239834",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "355-357:DaitchMokotoffSoundex": {
                     "start": 355,
@@ -699,11 +852,25 @@
                         "    def __init__(self, folding: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, folding: bool) -> None:",
+                        "        ",
+                        "        self.__folding = folding",
+                        "        self.__MAX_LENGTH = 6",
+                        "        self.__RESOURCE_FILE = \"org/apache/commons/codec/language/dmrules.txt\"",
+                        "        self.__MULTILINE_COMMENT_START = \"/*\"",
+                        "        self.__MULTILINE_COMMENT_END = \"*/\"",
+                        "        self.__DOUBLE_QUOTE = \"\\\"\"",
+                        "        self.__COMMENT = \"//\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.916785955429077,
+                    "generation_timestamp": "2024-06-20T16:46:38.699861",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "484-558:soundex1": {
                     "start": 484,
@@ -852,11 +1019,72 @@
                         "    def __soundex1(self, source: str, branching: bool) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __soundex1(self, source: str, branching: bool) -> typing.List[str]:",
+                        "        ",
+                        "        if source is None:",
+                        "            return None",
+                        "",
+                        "        input = self.__cleanup(source)",
+                        "",
+                        "        current_branches: typing.Set[Branch] = set()",
+                        "        current_branches.add(Branch())",
+                        "",
+                        "        last_char = '\\0'",
+                        "        for index in range(len(input)):",
+                        "            ch = input[index]",
+                        "",
+                        "            if ch.isspace():",
+                        "                continue",
+                        "",
+                        "            input_context = input[index:]",
+                        "            rules = self.__RULES.get(ch)",
+                        "            if rules is None:",
+                        "                continue",
+                        "",
+                        "            next_branches: typing.List[Branch] = [] if branching else []",
+                        "",
+                        "            for rule in rules:",
+                        "                if rule.matches(input_context):",
+                        "                    if branching:",
+                        "                        next_branches.clear()",
+                        "",
+                        "                    replacements = rule.getReplacements(input_context, last_char == '\\0')",
+                        "                    branching_required = len(replacements) > 1 and branching",
+                        "",
+                        "                    for branch in current_branches:",
+                        "                        for next_replacement in replacements:",
+                        "                            next_branch = branch.createBranch() if branching_required else branch",
+                        "",
+                        "                            force = (last_char == 'm' and ch == 'n') or (last_char == 'n' and ch == 'm')",
+                        "",
+                        "                            next_branch.processNextReplacement(next_replacement, force)",
+                        "",
+                        "                            if not branching:",
+                        "                                break",
+                        "                            next_branches.append(next_branch)",
+                        "",
+                        "                    if branching:",
+                        "                        current_branches.clear()",
+                        "                        current_branches.update(next_branches)",
+                        "",
+                        "                    index += rule.getPatternLength() - 1",
+                        "                    break",
+                        "",
+                        "            last_char = ch",
+                        "",
+                        "        result = [branch.toString() for branch in current_branches]",
+                        "",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 28.974234342575073,
+                    "generation_timestamp": "2024-06-20T16:47:22.176566",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "380-394:cleanup": {
                     "start": 380,
@@ -898,11 +1126,28 @@
                         "    def __cleanup(self, input: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __cleanup(self, input: str) -> str:",
+                        "        ",
+                        "        sb = []",
+                        "        for ch in input:",
+                        "            if ch.isspace():",
+                        "                continue",
+                        "",
+                        "            ch = ch.lower()",
+                        "            if self.__folding and ch in self.__FOLDINGS:",
+                        "                ch = self.__FOLDINGS[ch]",
+                        "            sb.append(ch)",
+                        "        return ''.join(sb)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.936252117156982,
+                    "generation_timestamp": "2024-06-20T16:46:53.184255",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "339-349:stripQuotes": {
                     "start": 339,
@@ -942,11 +1187,26 @@
                         "    def __stripQuotes(str: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __stripQuotes(str: str) -> str:",
+                        "        ",
+                        "        if str.startswith(DaitchMokotoffSoundex.__DOUBLE_QUOTE):",
+                        "            str = str[1:]",
+                        "",
+                        "        if str.endswith(DaitchMokotoffSoundex.__DOUBLE_QUOTE):",
+                        "            str = str[:-1]",
+                        "",
+                        "        return str"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.661648035049438,
+                    "generation_timestamp": "2024-06-20T16:47:30.846252",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "247-337:parseRules": {
                     "start": 247,
@@ -1080,11 +1340,92 @@
                         "    def __parseRules(scanner: typing.Any, location: str, ruleMapping: typing.Dict[str, typing.List[Rule]], asciiFoldings: typing.Dict[str, str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __parseRules(scanner: typing.Any, location: str, ruleMapping: typing.Dict[str, typing.List[Rule]], asciiFoldings: typing.Dict[str, str]) -> None:",
+                        "        ",
+                        "        currentLine = 0",
+                        "        inMultilineComment = False",
+                        "",
+                        "        while scanner.hasNextLine():",
+                        "            currentLine += 1",
+                        "            rawLine = scanner.nextLine()",
+                        "            line = rawLine",
+                        "",
+                        "            if inMultilineComment:",
+                        "                if line.endswith(DaitchMokotoffSoundex.__MULTILINE_COMMENT_END):",
+                        "                    inMultilineComment = False",
+                        "                continue",
+                        "",
+                        "            if line.startswith(DaitchMokotoffSoundex.__MULTILINE_COMMENT_START):",
+                        "                inMultilineComment = True",
+                        "            else:",
+                        "                cmtI = line.find(DaitchMokotoffSoundex.__COMMENT)",
+                        "                if cmtI >= 0:",
+                        "                    line = line[:cmtI]",
+                        "",
+                        "                line = line.strip()",
+                        "",
+                        "                if not line:",
+                        "                    continue ",
+                        "",
+                        "                if \"=\" in line:",
+                        "                    parts = line.split(\"=\")",
+                        "                    if len(parts) != 2:",
+                        "                        raise ValueError(",
+                        "                            \"Malformed folding statement split into \"",
+                        "                            + str(len(parts))",
+                        "                            + \" parts: \"",
+                        "                            + rawLine",
+                        "                            + \" in \"",
+                        "                            + location)",
+                        "                    leftCharacter = parts[0]",
+                        "                    rightCharacter = parts[1]",
+                        "",
+                        "                    if len(leftCharacter) != 1 or len(rightCharacter) != 1:",
+                        "                        raise ValueError(",
+                        "                            \"Malformed folding statement - \"",
+                        "                            + \"patterns are not single characters: \"",
+                        "                            + rawLine",
+                        "                            + \" in \"",
+                        "                            + location)",
+                        "",
+                        "                    asciiFoldings[leftCharacter[0]] = rightCharacter[0]",
+                        "                else:",
+                        "                    parts = line.split()",
+                        "                    if len(parts) != 4:",
+                        "                        raise ValueError(",
+                        "                            \"Malformed rule statement split into \"",
+                        "                            + str(len(parts))",
+                        "                            + \" parts: \"",
+                        "                            + rawLine",
+                        "                            + \" in \"",
+                        "                            + location)",
+                        "                    try:",
+                        "                        pattern = DaitchMokotoffSoundex.__stripQuotes(parts[0])",
+                        "                        replacement1 = DaitchMokotoffSoundex.__stripQuotes(parts[1])",
+                        "                        replacement2 = DaitchMokotoffSoundex.__stripQuotes(parts[2])",
+                        "                        replacement3 = DaitchMokotoffSoundex.__stripQuotes(parts[3])",
+                        "",
+                        "                        r = Rule(pattern, replacement1, replacement2, replacement3)",
+                        "                        patternKey = r.pattern[0]",
+                        "                        rules = ruleMapping.get(patternKey)",
+                        "                        if rules is None:",
+                        "                            rules = []",
+                        "                            ruleMapping[patternKey] = rules",
+                        "                        rules.append(r)",
+                        "                    except Exception as e:",
+                        "                        raise ValueError(",
+                        "                            \"Problem parsing line '\" + str(currentLine) + \"' in \" + location) from e"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 58.215301752090454,
+                    "generation_timestamp": "2024-06-20T16:48:54.963080",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1104,12 +1445,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __folding: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __folding: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __folding: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:45:47.902793",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "226-226:FOLDINGS": {
                     "start": 226,
@@ -1128,12 +1479,22 @@
                             "java.util.Map<Character,Character>"
                         ]
                     ],
-                    "partial_translation": "    __FOLDINGS: typing.Dict[str, str] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __FOLDINGS: typing.Dict[str, str] = {}",
+                        ""
+                    ],
+                    "translation": [
+                        "    __FOLDINGS: typing.Dict[str, str] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:45:47.906390",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "223-223:RULES": {
                     "start": 223,
@@ -1152,12 +1513,22 @@
                             "java.util.Map<Character,List<Rule>>"
                         ]
                     ],
-                    "partial_translation": "    __RULES: typing.Dict[str, typing.List[Rule]] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __RULES: typing.Dict[str, typing.List[Rule]] = {}",
+                        ""
+                    ],
+                    "translation": [
+                        "    __RULES: typing.Dict[str, typing.List[Rule]] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:45:47.909958",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "220-220:MAX_LENGTH": {
                     "start": 220,
@@ -1176,12 +1547,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __MAX_LENGTH: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __MAX_LENGTH: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MAX_LENGTH: int = 6"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.334911584854126,
+                    "generation_timestamp": "2024-06-21T08:39:32.328145",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "217-217:RESOURCE_FILE": {
                     "start": 217,
@@ -1200,12 +1580,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __RESOURCE_FILE: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __RESOURCE_FILE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __RESOURCE_FILE: str = \"org/apache/commons/codec/language/dmrules.txt\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.003152847290039,
+                    "generation_timestamp": "2024-06-21T08:39:34.336349",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "214-214:MULTILINE_COMMENT_START": {
                     "start": 214,
@@ -1224,12 +1613,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __MULTILINE_COMMENT_START: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __MULTILINE_COMMENT_START: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MULTILINE_COMMENT_START: str = \"/*\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.6147048473358154,
+                    "generation_timestamp": "2024-06-21T08:39:35.957110",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "212-212:MULTILINE_COMMENT_END": {
                     "start": 212,
@@ -1248,12 +1646,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __MULTILINE_COMMENT_END: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __MULTILINE_COMMENT_END: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MULTILINE_COMMENT_END: str = \"*/\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.9119586944580078,
+                    "generation_timestamp": "2024-06-21T08:39:37.879651",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "210-210:DOUBLE_QUOTE": {
                     "start": 210,
@@ -1272,12 +1679,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __DOUBLE_QUOTE: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __DOUBLE_QUOTE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __DOUBLE_QUOTE: str = \"\\\"\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.5555388927459717,
+                    "generation_timestamp": "2024-06-21T08:39:39.439695",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "209-209:COMMENT": {
                     "start": 209,
@@ -1296,12 +1712,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __COMMENT: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __COMMENT: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __COMMENT: str = \"//\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.0705151557922363,
+                    "generation_timestamp": "2024-06-21T08:39:40.514672",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class DaitchMokotoffSoundex(StringEncoder):\n\n"
@@ -1349,11 +1774,22 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return \"{}=({},{},{})\".format(",
+                        "            self.__pattern,",
+                        "            str(self.__replacementAtStart),",
+                        "            str(self.__replacementBeforeVowel),",
+                        "            str(self.__replacementDefault))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.325225830078125,
+                    "generation_timestamp": "2024-06-20T16:46:05.464388",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "194-196:matches": {
                     "start": 194,
@@ -1383,11 +1819,18 @@
                         "    def matches(self, context: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def matches(self, context: str) -> bool:",
+                        "         return context.startswith(self.__pattern)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.70214581489563,
+                    "generation_timestamp": "2024-06-20T16:46:10.176685",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "175-188:getReplacements": {
                     "start": 175,
@@ -1440,11 +1883,26 @@
                         "    def getReplacements(self, context: str, atStart: bool) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getReplacements(self, context: str, atStart: bool) -> typing.List[str]:",
+                        "         if atStart:",
+                        "             return self.__replacementAtStart",
+                        "",
+                        "         nextIndex = self.getPatternLength()",
+                        "         nextCharIsVowel = nextIndex < len(context) and self.__isVowel(context[nextIndex])",
+                        "         if nextCharIsVowel:",
+                        "             return self.__replacementBeforeVowel",
+                        "",
+                        "         return self.__replacementDefault"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.583842754364014,
+                    "generation_timestamp": "2024-06-20T16:46:25.773287",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "171-173:getPatternLength": {
                     "start": 171,
@@ -1472,11 +1930,18 @@
                         "    def getPatternLength(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getPatternLength(self) -> int:",
+                        "         return len(self.__pattern)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.9069197177886963,
+                    "generation_timestamp": "2024-06-20T16:46:11.088283",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "160-169:Rule": {
                     "start": 160,
@@ -1516,11 +1981,22 @@
                         "    def __init__(self, pattern: str, replacementAtStart: str, replacementBeforeVowel: str, replacementDefault: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, pattern: str, replacementAtStart: str, replacementBeforeVowel: str, replacementDefault: str) -> None:",
+                        "        ",
+                        "        self.__pattern = pattern",
+                        "        self.__replacementAtStart = replacementAtStart.split(\"|\")",
+                        "        self.__replacementBeforeVowel = replacementBeforeVowel.split(\"|\")",
+                        "        self.__replacementDefault = replacementDefault.split(\"|\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.453010082244873,
+                    "generation_timestamp": "2024-06-20T16:46:18.548981",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "190-192:isVowel": {
                     "start": 190,
@@ -1550,11 +2026,18 @@
                         "    def __isVowel(self, ch: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __isVowel(self, ch: str) -> bool:",
+                        "         return ch in ['a', 'e', 'i', 'o', 'u']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.624903678894043,
+                    "generation_timestamp": "2024-06-20T16:46:20.179292",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1574,12 +2057,22 @@
                             "java.lang.String[]"
                         ]
                     ],
-                    "partial_translation": "    __replacementDefault: typing.List[str] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __replacementDefault: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __replacementDefault: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:46:00.131036",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "157-157:replacementBeforeVowel": {
                     "start": 157,
@@ -1597,12 +2090,22 @@
                             "java.lang.String[]"
                         ]
                     ],
-                    "partial_translation": "    __replacementBeforeVowel: typing.List[str] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __replacementBeforeVowel: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __replacementBeforeVowel: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:46:00.135139",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "156-156:replacementAtStart": {
                     "start": 156,
@@ -1620,12 +2123,22 @@
                             "java.lang.String[]"
                         ]
                     ],
-                    "partial_translation": "    __replacementAtStart: typing.List[str] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __replacementAtStart: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __replacementAtStart: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:46:00.139114",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "155-155:pattern": {
                     "start": 155,
@@ -1643,12 +2156,22 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __pattern: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __pattern: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __pattern: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:46:00.143027",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class Rule:\n\n"
