@@ -650,4 +650,9 @@ if __name__ == '__main__':
     
     RECORD_ALL = args.record
     
+    # reset the stats file
+    if RECORD_ALL:
+        with open(f'{args.project_name}_stats.csv', 'w') as f:
+            f.write("")
+    
     main(args)
