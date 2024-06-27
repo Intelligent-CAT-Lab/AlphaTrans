@@ -398,10 +398,10 @@ def create_schema(args):
         with open(path, 'r') as f:
             static_initializer_body = f.readlines()[start_line-1:end_line]
 
-        schemas[path]["classes"][class_name].setdefault("static_initializers", {})                
-        schemas[path]["classes"][class_name]["static_initializers"].setdefault(f'{start_line}-{end_line}', {"start": start_line,
-                                                                                                            "end": end_line,
-                                                                                                            "body": static_initializer_body})
+        schemas[path]["classes"][class_name].setdefault("static_initializers", {})
+        schemas[path]["classes"][class_name]["static_initializers"].setdefault(f'{start_line}-{end_line}:run_static_init', {"start": start_line,
+                                                                                                                            "end": end_line,
+                                                                                                                            "body": static_initializer_body})
 
     nested_classes_query_out = f'data/query_outputs/{project}/{project}_nested_classes.txt'
     lines = []
