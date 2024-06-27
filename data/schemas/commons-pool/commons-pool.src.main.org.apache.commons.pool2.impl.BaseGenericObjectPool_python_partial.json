@@ -157,9 +157,7 @@
             "is_interface": false,
             "nested_inside": "BaseGenericObjectPool",
             "nests": [],
-            "implements": [
-                "Iterator"
-            ],
+            "implements": [],
             "extends": [],
             "methods": {
                 "97-99:remove": {
@@ -423,7 +421,7 @@
                     "include_implementation": false
                 }
             },
-            "python_class_declaration": "class EvictionIterator(Iterator):\n\n"
+            "python_class_declaration": "class EvictionIterator():\n\n"
         },
         "BaseGenericObjectPool": {
             "start": 51,
@@ -4848,6 +4846,33 @@
                     "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
+                },
+                "301-301:evictionIterator": {
+                    "start": 301,
+                    "end": 301,
+                    "body": [
+                        "    EvictionIterator evictionIterator; // @GuardedBy(\"evictionLock\")\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "EvictionIterator",
+                            "EvictionIterator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    evictionIterator: EvictionIterator = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 }
             },
             "python_class_declaration": "class BaseGenericObjectPool(BaseObject, ABC):\n\n"
@@ -5609,10 +5634,13 @@
             "implements": [],
             "extends": [],
             "methods": {
-                "381-390:accept": {
-                    "start": 381,
+                "378-390:accept": {
+                    "start": 378,
                     "end": 390,
                     "body": [
+                        "        allObjects\n",
+                        "                .values()\n",
+                        "                .forEach(\n",
                         "                        pooledObject -> {\n",
                         "                            synchronized (pooledObject) {\n",
                         "                                if (pooledObject.getState() == PooledObjectState.ALLOCATED\n",

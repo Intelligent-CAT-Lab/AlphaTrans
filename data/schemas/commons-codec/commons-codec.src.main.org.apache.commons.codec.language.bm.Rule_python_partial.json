@@ -862,10 +862,11 @@
                     ],
                     "calls": []
                 },
-                "91-91:": {
-                    "start": 91,
+                "90-91:": {
+                    "start": 90,
                     "end": 91,
                     "body": [
+                        "        public static final Comparator<Phoneme> COMPARATOR =\n",
                         "                new Comparator<Phoneme>() {\n"
                     ],
                     "is_constructor": false,
@@ -2457,6 +2458,53 @@
                         "    __DOUBLE_QUOTE: str = <placeholder>",
                         ""
                     ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "static_initializers": {
+                "241-269": {
+                    "start": 241,
+                    "end": 269,
+                    "body": [
+                        "    static {\n",
+                        "        for (final NameType s : NameType.values()) {\n",
+                        "            final Map<RuleType, Map<String, Map<String, List<Rule>>>> rts =\n",
+                        "                    new EnumMap<>(RuleType.class);\n",
+                        "\n",
+                        "            for (final RuleType rt : RuleType.values()) {\n",
+                        "                final Map<String, Map<String, List<Rule>>> rs = new HashMap<>();\n",
+                        "\n",
+                        "                final Languages ls = Languages.getInstance0(s);\n",
+                        "                for (final String l : ls.getLanguages()) {\n",
+                        "                    try (final Scanner scanner = createScanner0(s, rt, l)) {\n",
+                        "                        rs.put(l, parseRules(scanner, createResourceName(s, rt, l)));\n",
+                        "                    } catch (final IllegalStateException e) {\n",
+                        "                        throw new IllegalStateException(\n",
+                        "                                \"Problem processing \" + createResourceName(s, rt, l), e);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                if (!rt.equals(RuleType.RULES)) {\n",
+                        "                    try (final Scanner scanner = createScanner0(s, rt, \"common\")) {\n",
+                        "                        rs.put(\"common\", parseRules(scanner, createResourceName(s, rt, \"common\")));\n",
+                        "                    }\n",
+                        "                }\n",
+                        "\n",
+                        "                rts.put(rt, Collections.unmodifiableMap(rs));\n",
+                        "            }\n",
+                        "\n",
+                        "            RULES.put(s, Collections.unmodifiableMap(rts));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "partial_translation": [],
                     "translation": [],
                     "translation_status": "pending",
                     "syntactical_validation_status": "pending",

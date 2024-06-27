@@ -1933,6 +1933,50 @@
                     "include_implementation": false
                 }
             },
+            "static_initializers": {
+                "70-95": {
+                    "start": 70,
+                    "end": 95,
+                    "body": [
+                        "    static {\n",
+                        "        try {\n",
+                        "            try {\n",
+                        "                String clsName =\n",
+                        "                        System.getProperty(\n",
+                        "                                \"org.joda.money.CurrencyUnitDataProvider\",\n",
+                        "                                \"org.joda.money.DefaultCurrencyUnitDataProvider\");\n",
+                        "                Class<? extends CurrencyUnitDataProvider> cls =\n",
+                        "                        CurrencyUnit.class\n",
+                        "                                .getClassLoader()\n",
+                        "                                .loadClass(clsName)\n",
+                        "                                .asSubclass(CurrencyUnitDataProvider.class);\n",
+                        "                cls.getDeclaredConstructor().newInstance().registerCurrencies();\n",
+                        "            } catch (SecurityException ex) {\n",
+                        "                new DefaultCurrencyUnitDataProvider().registerCurrencies();\n",
+                        "            }\n",
+                        "        } catch (RuntimeException ex) {\n",
+                        "            System.err.println(\"ERROR: \" + ex.getMessage());\n",
+                        "            ex.printStackTrace();\n",
+                        "            throw ex;\n",
+                        "        } catch (Exception ex) {\n",
+                        "            System.err.println(\"ERROR: \" + ex.getMessage());\n",
+                        "            ex.printStackTrace();\n",
+                        "            throw new RuntimeException(ex.toString(), ex);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "partial_translation": [],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
             "python_class_declaration": "class CurrencyUnit():\n\n"
         }
     },
@@ -1942,12 +1986,12 @@
         "import typing\nfrom typing import *",
         "import decimal",
         "import pickle",
-        "from src.main.org.joda.convert.FromString import *",
-        "from src.main.org.joda.convert.ToString import *",
+        "# from src.main.org.joda.convert.FromString import *",
+        "# from src.main.org.joda.convert.ToString import *",
         "from src.main.org.joda.money.CurrencyUnitDataProvider import *",
         "from src.main.org.joda.money.DefaultCurrencyUnitDataProvider import *",
         "from src.main.org.joda.money.IllegalCurrencyException import *",
         "from src.main.org.joda.money.MoneyUtils import *",
-        "# src.main.org.joda.money.Ser"
+        "from src.main.org.joda.money.Ser import *"
     ]
 }
