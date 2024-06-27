@@ -1838,6 +1838,43 @@
                         ]
                     ]
                 }
+            },
+            "static_initializers": {
+                "241-269": {
+                    "start": 241,
+                    "end": 269,
+                    "body": [
+                        "    static {\n",
+                        "        for (final NameType s : NameType.values()) {\n",
+                        "            final Map<RuleType, Map<String, Map<String, List<Rule>>>> rts =\n",
+                        "                    new EnumMap<>(RuleType.class);\n",
+                        "\n",
+                        "            for (final RuleType rt : RuleType.values()) {\n",
+                        "                final Map<String, Map<String, List<Rule>>> rs = new HashMap<>();\n",
+                        "\n",
+                        "                final Languages ls = Languages.getInstance0(s);\n",
+                        "                for (final String l : ls.getLanguages()) {\n",
+                        "                    try (final Scanner scanner = createScanner0(s, rt, l)) {\n",
+                        "                        rs.put(l, parseRules(scanner, createResourceName(s, rt, l)));\n",
+                        "                    } catch (final IllegalStateException e) {\n",
+                        "                        throw new IllegalStateException(\n",
+                        "                                \"Problem processing \" + createResourceName(s, rt, l), e);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                if (!rt.equals(RuleType.RULES)) {\n",
+                        "                    try (final Scanner scanner = createScanner0(s, rt, \"common\")) {\n",
+                        "                        rs.put(\"common\", parseRules(scanner, createResourceName(s, rt, \"common\")));\n",
+                        "                    }\n",
+                        "                }\n",
+                        "\n",
+                        "                rts.put(rt, Collections.unmodifiableMap(rs));\n",
+                        "            }\n",
+                        "\n",
+                        "            RULES.put(s, Collections.unmodifiableMap(rts));\n",
+                        "        }\n",
+                        "    }\n"
+                    ]
+                }
             }
         },
         "new RPattern(...) { ... }": {

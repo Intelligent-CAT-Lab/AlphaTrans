@@ -1080,6 +1080,27 @@
                         ]
                     ]
                 }
+            },
+            "static_initializers": {
+                "420-432": {
+                    "start": 420,
+                    "end": 432,
+                    "body": [
+                        "        static {\n",
+                        "            Map<String, Method> builder = new LinkedHashMap<String, Method>();\n",
+                        "            for (Method method : TypeVariableImpl.class.getMethods()) {\n",
+                        "                if (method.getDeclaringClass().equals(TypeVariableImpl.class)) {\n",
+                        "                    try {\n",
+                        "                        method.setAccessible(true);\n",
+                        "                    } catch (AccessControlException e) {\n",
+                        "                    }\n",
+                        "                    builder.put(method.getName(), method);\n",
+                        "                }\n",
+                        "            }\n",
+                        "            typeVariableMethods = builder;\n",
+                        "        }\n"
+                    ]
+                }
             }
         },
         "WildcardTypeImpl": {
@@ -2658,6 +2679,29 @@
                             "JavaVersion",
                             "JavaVersion"
                         ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "676-690": {
+                    "start": 676,
+                    "end": 690,
+                    "body": [
+                        "        static {\n",
+                        "            if (AnnotatedElement.class.isAssignableFrom(TypeVariable.class)) {\n",
+                        "                if (new TypeCapture<Map.Entry<String, int[][]>>() {}.capture() // CSIGNORE\n",
+                        "                        .toString()\n",
+                        "                        .contains(\"java.util.Map.java.util.Map\")) {\n",
+                        "                    CURRENT = JAVA8;\n",
+                        "                } else {\n",
+                        "                    CURRENT = JAVA9;\n",
+                        "                }\n",
+                        "            } else if (new TypeCapture<int[]>() {}.capture() instanceof Class) { // CSIGNORE\n",
+                        "                CURRENT = JAVA7;\n",
+                        "            } else {\n",
+                        "                CURRENT = JAVA6;\n",
+                        "            }\n",
+                        "        }\n"
                     ]
                 }
             }

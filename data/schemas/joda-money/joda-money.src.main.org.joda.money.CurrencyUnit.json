@@ -1364,6 +1364,40 @@
                         ]
                     ]
                 }
+            },
+            "static_initializers": {
+                "70-95": {
+                    "start": 70,
+                    "end": 95,
+                    "body": [
+                        "    static {\n",
+                        "        try {\n",
+                        "            try {\n",
+                        "                String clsName =\n",
+                        "                        System.getProperty(\n",
+                        "                                \"org.joda.money.CurrencyUnitDataProvider\",\n",
+                        "                                \"org.joda.money.DefaultCurrencyUnitDataProvider\");\n",
+                        "                Class<? extends CurrencyUnitDataProvider> cls =\n",
+                        "                        CurrencyUnit.class\n",
+                        "                                .getClassLoader()\n",
+                        "                                .loadClass(clsName)\n",
+                        "                                .asSubclass(CurrencyUnitDataProvider.class);\n",
+                        "                cls.getDeclaredConstructor().newInstance().registerCurrencies();\n",
+                        "            } catch (SecurityException ex) {\n",
+                        "                new DefaultCurrencyUnitDataProvider().registerCurrencies();\n",
+                        "            }\n",
+                        "        } catch (RuntimeException ex) {\n",
+                        "            System.err.println(\"ERROR: \" + ex.getMessage());\n",
+                        "            ex.printStackTrace();\n",
+                        "            throw ex;\n",
+                        "        } catch (Exception ex) {\n",
+                        "            System.err.println(\"ERROR: \" + ex.getMessage());\n",
+                        "            ex.printStackTrace();\n",
+                        "            throw new RuntimeException(ex.toString(), ex);\n",
+                        "        }\n",
+                        "    }\n"
+                    ]
+                }
             }
         }
     }
