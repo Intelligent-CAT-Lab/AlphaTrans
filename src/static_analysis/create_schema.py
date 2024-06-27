@@ -6,6 +6,7 @@ import argparse
 def create_schema(args):
     project = args.project_name
     projects_dir = 'java_projects/cleaned_final_projects/'
+    # projects_dir = 'temp_dir/'
     os.makedirs(f'data/schemas/{project}', exist_ok=True)
     schemas = {}
 
@@ -60,10 +61,39 @@ def create_schema(args):
         class_start_line = int(class_location[class_location.find(':', class_location.find(':')+1)+1:].split(':')[0])
         class_end_line = int(class_location[class_location.find(':', class_location.find(':')+1)+1:].split(':')[2])
 
+        if 'new' not in class_name and '{' not in class_name:
+            class_declaration = ''
+            with open(path, 'r') as f:
+                class_declaration = f.readlines()[class_start_line-1:class_end_line]
+
+            if class_start_line == class_end_line:
+                changed = False
+                while '{' not in ''.join(class_declaration):
+                    class_declaration = ''
+                    with open(path, 'r') as f:
+                        class_declaration = f.readlines()[class_start_line-1:class_end_line]
+                    class_end_line += 1
+                    changed = True
+
+                if changed:
+                    class_end_line -= 1
+
         callable_body = ''
         with open(path, 'r') as f:
             callable_body = f.readlines()[start_line-1:end_line]
-
+        
+        # terminations = ['/*', '@', '}']
+        # while not any([''.join(callable_body).strip().startswith(x) for x in terminations]):
+        #     callable_body = ''
+        #     with open(path, 'r') as f:
+        #         callable_body = f.readlines()[start_line-1:end_line]
+        #     start_line -= 1
+        
+        # start_line += 2
+        # callable_body = ''
+        # with open(path, 'r') as f:
+        #     callable_body = f.readlines()[start_line-1:end_line]
+        
         if start == end:
             while ';' not in ''.join(callable_body) and '{' not in ''.join(callable_body):
                 callable_body = ''
@@ -172,7 +202,19 @@ def create_schema(args):
         callable_body = ''
         with open(path, 'r') as f:
             callable_body = f.readlines()[start_line-1:end_line]
+
+        # terminations = ['/*', '@', '}']
+        # while not any([''.join(callable_body).strip().startswith(x) for x in terminations]):
+        #     callable_body = ''
+        #     with open(path, 'r') as f:
+        #         callable_body = f.readlines()[start_line-1:end_line]
+        #     start_line -= 1
         
+        # start_line += 2
+        # callable_body = ''
+        # with open(path, 'r') as f:
+        #     callable_body = f.readlines()[start_line-1:end_line]
+
         if start == end:
             while ';' not in ''.join(callable_body) and '{' not in ''.join(callable_body):
                 callable_body = ''
@@ -327,7 +369,19 @@ def create_schema(args):
         callable_body = ''
         with open(path, 'r') as f:
             callable_body = f.readlines()[start_line-1:end_line]
+
+        # terminations = ['/*', '@', '}']
+        # while not any([''.join(callable_body).strip().startswith(x) for x in terminations]):
+        #     callable_body = ''
+        #     with open(path, 'r') as f:
+        #         callable_body = f.readlines()[start_line-1:end_line]
+        #     start_line -= 1
         
+        # start_line += 2
+        # callable_body = ''
+        # with open(path, 'r') as f:
+        #     callable_body = f.readlines()[start_line-1:end_line]
+
         if start == end:
             while ';' not in ''.join(callable_body) and '{' not in ''.join(callable_body):
                 callable_body = ''
