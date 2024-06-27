@@ -38,6 +38,7 @@ class NoOpBaseNCodec(BaseNCodec):
 class BaseNCodecTest(unittest.TestCase):
 
     # Class Fields Begin
+    codec: BaseNCodec = None
     # Class Fields End
 
     # Class Methods Begin

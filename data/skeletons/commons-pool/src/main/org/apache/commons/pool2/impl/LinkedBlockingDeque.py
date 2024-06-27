@@ -14,9 +14,11 @@ from abc import ABC
 # Imports End
 
 
-class AbstractItr(Iterator, ABC):
+class AbstractItr(ABC):
 
     # Class Fields Begin
+    next: Node[typing.Any] = None
+    nextItem: typing.Any = None
     __lastRet: Node[typing.Any] = None
     # Class Fields End
 
@@ -81,6 +83,9 @@ class Itr(AbstractItr):
 class Node:
 
     # Class Fields Begin
+    item: typing.Any = None
+    prev: Node = None
+    next: Node = None
     # Class Fields End
 
     # Class Methods Begin

@@ -19,6 +19,14 @@ from abc import ABC
 class Context:
 
     # Class Fields Begin
+    ibitWorkArea: int = None
+    lbitWorkArea: int = None
+    buffer: typing.List[int] = None
+    pos: int = None
+    readPos: int = None
+    eof: bool = None
+    currentLinePos: int = None
+    modulus: int = None
     # Class Fields End
 
     # Class Methods Begin

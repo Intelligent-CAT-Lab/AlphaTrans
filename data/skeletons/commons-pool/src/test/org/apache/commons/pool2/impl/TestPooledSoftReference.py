@@ -13,6 +13,7 @@ class TestPooledSoftReference(unittest.TestCase):
     # Class Fields Begin
     __REFERENT: str = None
     __REFERENT2: str = None
+    ref: PooledSoftReference[str] = None
     # Class Fields End
 
     # Class Methods Begin

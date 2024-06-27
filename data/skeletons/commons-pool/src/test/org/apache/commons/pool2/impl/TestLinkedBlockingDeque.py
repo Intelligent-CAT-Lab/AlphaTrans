@@ -19,6 +19,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
     __ONE: int = None
     __TWO: int = None
     __THREE: int = None
+    deque: LinkedBlockingDeque[int] = None
     # Class Fields End
 
     # Class Methods Begin

@@ -61,6 +61,8 @@ import io
 class TestStringConvert(unittest.TestCase):
 
     # Class Fields Begin
+    DISTANCE_TO_STRING_CONVERTER: ToStringConverter[DistanceNoAnnotations] = None
+    DISTANCE_FROM_STRING_CONVERTER: FromStringConverter[DistanceNoAnnotations] = None
     # Class Fields End
 
     # Class Methods Begin

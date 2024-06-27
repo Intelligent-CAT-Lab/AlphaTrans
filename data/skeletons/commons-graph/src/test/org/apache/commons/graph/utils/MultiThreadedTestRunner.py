@@ -14,6 +14,7 @@ class MultiThreadedTestRunner:
 
     # Class Fields Begin
     __th: typing.List[threading.Thread] = None
+    maxWait: int = None
     __exceptions: typing.List[BaseException] = None
     # Class Fields End
 

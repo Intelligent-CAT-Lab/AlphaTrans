@@ -24,6 +24,7 @@ class BinaryCodecTest(unittest.TestCase):
     __BIT_5: int = None
     __BIT_6: int = None
     __BIT_7: int = None
+    instance: BinaryCodec = None
     # Class Fields End
 
     # Class Methods Begin

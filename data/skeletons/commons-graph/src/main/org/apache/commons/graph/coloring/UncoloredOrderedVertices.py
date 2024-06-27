@@ -8,7 +8,7 @@ import io
 # Imports End
 
 
-class UncoloredOrderedVertices(Iterable):
+class UncoloredOrderedVertices:
 
     # Class Fields Begin
     __orderedVertices: typing.Dict[int, typing.Set[typing.Any]] = None

@@ -13,6 +13,7 @@ class Codec105ErrorInputStream:
 
     # Class Fields Begin
     __EOF: int = None
+    countdown: int = None
     # Class Fields End
 
     # Class Methods Begin
