@@ -5,14 +5,14 @@
             "start": 25,
             "end": 25,
             "body": [
-                "\n"
+                "import java.io.PrintWriter;\n"
             ]
         },
         "26-26:import StringWriter": {
             "start": 26,
             "end": 26,
             "body": [
-                "import java.io.PrintWriter;\n"
+                "import java.io.StringWriter;\n"
             ]
         },
         "22-22:import ParameterizedTest": {
@@ -26,7 +26,7 @@
             "start": 23,
             "end": 23,
             "body": [
-                "import org.junit.jupiter.params.provider.Arguments;\n"
+                "import org.junit.jupiter.params.provider.MethodSource;\n"
             ]
         },
         "19-19:import static Assertions.assertEquals": {
@@ -59,17 +59,17 @@
                     "start": 44,
                     "end": 49,
                     "body": [
+                        "    public void testPrintFilledStackTrace(final CallStack stack) {\n",
                         "        stack.fillInStackTrace();\n",
-                        "        stack.clear();\n",
                         "        stack.printStackTrace(new PrintWriter(writer));\n",
                         "        final String stackTrace = writer.toString();\n",
-                        "        assertEquals(\"\", stackTrace);\n",
+                        "        assertTrue(stackTrace.contains(getClass().getName()));\n",
                         "    }\n"
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "MethodSource(\"dat",
-                        "ublic void testPrint"
+                        "ParameterizedTest",
+                        "MethodSource(\"data\")"
                     ],
                     "modifiers": [
                         "public"
@@ -101,18 +101,18 @@
                     "start": 34,
                     "end": 40,
                     "body": [
-                        "                Arguments.arguments(new ThrowableCallStack(\"Test\", false)),\n",
-                        "                Arguments.arguments(new ThrowableCallStack(\"yyyy-MM-dd'T'HH:mm:ss.SSSXXX\", true))\n",
-                        "        );\n",
-                        "    }\n",
-                        "    \n",
-                        "    private final StringWriter writer = new StringWriter();\n",
-                        "\n"
+                        "    public void testPrintClearedStackTraceIsNoOp(final CallStack stack) {\n",
+                        "        stack.fillInStackTrace();\n",
+                        "        stack.clear();\n",
+                        "        stack.printStackTrace(new PrintWriter(writer));\n",
+                        "        final String stackTrace = writer.toString();\n",
+                        "        assertEquals(\"\", stackTrace);\n",
+                        "    }\n"
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "ublic static Stre",
-                        "   return Stream.of("
+                        "ParameterizedTest",
+                        "MethodSource(\"data\")"
                     ],
                     "modifiers": [
                         "public"
@@ -151,7 +151,7 @@
                     "start": 30,
                     "end": 30,
                     "body": [
-                        "public class CallStackTest {\n"
+                        "    private final StringWriter writer = new StringWriter();\n"
                     ],
                     "modifiers": [
                         "final",
