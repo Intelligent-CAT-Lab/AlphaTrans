@@ -182,7 +182,7 @@ def main(args):
                 class_name = class_.split('(')[0].replace('new ', '').strip()
 
             class_declaration = ''
-            exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum', 'Iterator', 'Iterable'}
+            exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum', 'Iterator', 'Iterable', 'scaffolding'}
             if schema['classes'][class_]['extends'] != []:
                 schema['classes'][class_]['extends'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
@@ -216,6 +216,8 @@ def main(args):
             if 'src.test' in schema_fname and is_test_class:
                 if '):' not in class_declaration:
                     class_declaration = class_declaration.replace(':', '(unittest.TestCase):')
+                elif '():' in class_declaration:
+                    class_declaration = class_declaration.replace('():', '(unittest.TestCase):')
                 else:
                     class_declaration = class_declaration.replace('):', ', unittest.TestCase):')
             if 'src.test' in schema_fname and 'import unittest' not in python_imports:
@@ -225,6 +227,19 @@ def main(args):
             skeleton += class_declaration
 
             target_schema['classes'][class_]['python_class_declaration'] = class_declaration
+
+            if 'static_initializers' in target_schema['classes'][class_]:
+                for static_initializer_se in target_schema['classes'][class_]['static_initializers']:
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['partial_translation'] = []
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['translation'] = []
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['translation_status'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['syntactical_validation_status'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['test_validation_status'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['graal_validation_status'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['elapsed_time'] = 0
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['generation_timestamp'] = 0
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['include_implementation'] = False
 
             is_empty_class = True
             skeleton += '\t# Class Fields Begin\n'
@@ -273,7 +288,7 @@ def main(args):
                 target_schema['classes'][class_]['fields'][field]['graal_validation_status'] = 'pending'
                 target_schema['classes'][class_]['fields'][field]['elapsed_time'] = 0
                 target_schema['classes'][class_]['fields'][field]['generation_timestamp'] = 0
-                target_schema['classes'][class_]['fields'][field]['model_name'] = 'deepseek-coder-33b-instruct'
+                target_schema['classes'][class_]['fields'][field]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
                 target_schema['classes'][class_]['fields'][field]['include_implementation'] = False
 
                 skeleton += f'\t{field_name}: {field_type} = None\n'
@@ -363,7 +378,7 @@ def main(args):
                 target_schema['classes'][class_]['methods'][method]['graal_validation_status'] = 'pending'
                 target_schema['classes'][class_]['methods'][method]['elapsed_time'] = 0
                 target_schema['classes'][class_]['methods'][method]['generation_timestamp'] = 0
-                target_schema['classes'][class_]['methods'][method]['model_name'] = 'deepseek-coder-33b-instruct'
+                target_schema['classes'][class_]['methods'][method]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
                 target_schema['classes'][class_]['methods'][method]['include_implementation'] = False
 
                 assert '<placeholder>' not in ''.join(current_method)
@@ -416,15 +431,16 @@ def main(args):
         skeleton_lines = skeleton.split('\n')
         for i in range(len(skeleton_lines)):
             current_line = skeleton_lines[i]
-            for exceptional_import in ['commons.io', 'commons.logging', 'opentest4j', 'com.google']:
+            for exceptional_import in ['commons.io', 'commons.logging', 'opentest4j', 'com.google', 'org.evosuite', 'scaffolding']:
                 if exceptional_import in current_line:
                     skeleton_lines[i] = f'# {current_line}'
-                    if f'from {exceptional_import} import *' in python_imports:
-                        python_imports[python_imports.index(f'from {path} import *')] = f'# {path}'
+                    if current_line in python_imports:
+                        python_imports[python_imports.index(current_line)] = f'# {current_line}'
                 if 'joda.convert' in current_line and args.project_name == 'joda-money': # resolving these dependencies later
                     skeleton_lines[i] = f'# {current_line}'
-                    if f'from {path} import *' in python_imports:
-                        python_imports[python_imports.index(f'from {path} import *')] = f'# {path}'
+                    for import_ in python_imports:
+                        if 'joda.convert' in import_ and '#' not in import_:
+                            python_imports[python_imports.index(import_)] = f'# {import_}'
 
         target_schema['python_imports'] = python_imports
 
@@ -473,6 +489,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a class skeleton')
     parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project')
+    parser.add_argument('--model_name', type=str, dest='model_name', help='name of the model')
     args = parser.parse_args()
     
     main(args)
