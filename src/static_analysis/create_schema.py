@@ -55,7 +55,7 @@ def create_schema(args):
 
         schemas.setdefault(path, {})
 
-        start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0])
+        start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0]) - 1
         end_line = int(end[end.find(':', end.find(':')+1)+1:].split(':')[2])
 
         class_start_line = int(class_location[class_location.find(':', class_location.find(':')+1)+1:].split(':')[0])
@@ -81,19 +81,39 @@ def create_schema(args):
         callable_body = ''
         with open(path, 'r') as f:
             callable_body = f.readlines()[start_line-1:end_line]
+
+        start_terminations = ['*/', '@', '}']
+        end_terminations = [';', '}', '*/', '{']
+        searched = False
+        while not (any([callable_body[0].strip().startswith(x) for x in start_terminations]) 
+                or any([callable_body[0].strip().endswith(x) for x in end_terminations])):
+
+            searched = True
+            
+            callable_body = ''
+            with open(path, 'r') as f:
+                callable_body = f.readlines()[start_line-1:end_line]
+            start_line -= 1
         
-        # terminations = ['/*', '@', '}']
-        # while not any([''.join(callable_body).strip().startswith(x) for x in terminations]):
-        #     callable_body = ''
-        #     with open(path, 'r') as f:
-        #         callable_body = f.readlines()[start_line-1:end_line]
-        #     start_line -= 1
-        
-        # start_line += 2
-        # callable_body = ''
-        # with open(path, 'r') as f:
-        #     callable_body = f.readlines()[start_line-1:end_line]
-        
+        if searched:
+            start_line += 2
+
+            callable_body = ''
+            with open(path, 'r') as f:
+                callable_body = f.readlines()[start_line-1:end_line]
+            
+            for i in range(len(callable_body)):
+                if callable_body[i].strip() == '':
+                    start_line += 1
+                if callable_body[i].strip() != '':
+                    break
+        else:
+            start_line += 1
+
+        callable_body = ''
+        with open(path, 'r') as f:
+            callable_body = f.readlines()[start_line-1:end_line]
+
         if start == end:
             while ';' not in ''.join(callable_body) and '{' not in ''.join(callable_body):
                 callable_body = ''
@@ -193,7 +213,7 @@ def create_schema(args):
 
         schemas.setdefault(path, {})
 
-        start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0])
+        start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0]) - 1
         end_line = int(end[end.find(':', end.find(':')+1)+1:].split(':')[2])
 
         interface_start_line = int(interface_loc[interface_loc.find(':', interface_loc.find(':')+1)+1:].split(':')[0])
@@ -203,17 +223,37 @@ def create_schema(args):
         with open(path, 'r') as f:
             callable_body = f.readlines()[start_line-1:end_line]
 
-        # terminations = ['/*', '@', '}']
-        # while not any([''.join(callable_body).strip().startswith(x) for x in terminations]):
-        #     callable_body = ''
-        #     with open(path, 'r') as f:
-        #         callable_body = f.readlines()[start_line-1:end_line]
-        #     start_line -= 1
+        start_terminations = ['*/', '@', '}']
+        end_terminations = [';', '}', '*/', '{']
+        searched = False
+        while not (any([callable_body[0].strip().startswith(x) for x in start_terminations]) 
+                or any([callable_body[0].strip().endswith(x) for x in end_terminations])):
+
+            searched = True
+            
+            callable_body = ''
+            with open(path, 'r') as f:
+                callable_body = f.readlines()[start_line-1:end_line]
+            start_line -= 1
         
-        # start_line += 2
-        # callable_body = ''
-        # with open(path, 'r') as f:
-        #     callable_body = f.readlines()[start_line-1:end_line]
+        if searched:
+            start_line += 2
+
+            callable_body = ''
+            with open(path, 'r') as f:
+                callable_body = f.readlines()[start_line-1:end_line]
+            
+            for i in range(len(callable_body)):
+                if callable_body[i].strip() == '':
+                    start_line += 1
+                if callable_body[i].strip() != '':
+                    break
+        else:
+            start_line += 1
+
+        callable_body = ''
+        with open(path, 'r') as f:
+            callable_body = f.readlines()[start_line-1:end_line]
 
         if start == end:
             while ';' not in ''.join(callable_body) and '{' not in ''.join(callable_body):
@@ -363,24 +403,44 @@ def create_schema(args):
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
         path = projects_dir + path[path.find(project):]
 
-        start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0])
+        start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0]) - 1
         end_line = int(end[end.find(':', end.find(':')+1)+1:].split(':')[2])
 
         callable_body = ''
         with open(path, 'r') as f:
             callable_body = f.readlines()[start_line-1:end_line]
 
-        # terminations = ['/*', '@', '}']
-        # while not any([''.join(callable_body).strip().startswith(x) for x in terminations]):
-        #     callable_body = ''
-        #     with open(path, 'r') as f:
-        #         callable_body = f.readlines()[start_line-1:end_line]
-        #     start_line -= 1
+        start_terminations = ['*/', '@', '}']
+        end_terminations = [';', '}', '*/', '{']
+        searched = False
+        while not (any([callable_body[0].strip().startswith(x) for x in start_terminations]) 
+                or any([callable_body[0].strip().endswith(x) for x in end_terminations])):
+
+            searched = True
+            
+            callable_body = ''
+            with open(path, 'r') as f:
+                callable_body = f.readlines()[start_line-1:end_line]
+            start_line -= 1
         
-        # start_line += 2
-        # callable_body = ''
-        # with open(path, 'r') as f:
-        #     callable_body = f.readlines()[start_line-1:end_line]
+        if searched:
+            start_line += 2
+
+            callable_body = ''
+            with open(path, 'r') as f:
+                callable_body = f.readlines()[start_line-1:end_line]
+            
+            for i in range(len(callable_body)):
+                if callable_body[i].strip() == '':
+                    start_line += 1
+                if callable_body[i].strip() != '':
+                    break
+        else:
+            start_line += 1
+
+        callable_body = ''
+        with open(path, 'r') as f:
+            callable_body = f.readlines()[start_line-1:end_line]
 
         if start == end:
             while ';' not in ''.join(callable_body) and '{' not in ''.join(callable_body):
