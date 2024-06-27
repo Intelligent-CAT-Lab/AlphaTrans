@@ -16,3 +16,4 @@ python3 execute_queries.py --project_name=$PROJECT_NAME --query_name=get_all_con
 python3 execute_queries.py --project_name=$PROJECT_NAME --query_name=get_method_call_graph --database_name=$PROJECT_NAME
 python3 execute_queries.py --project_name=$PROJECT_NAME --query_name=get_all_methods --database_name=$PROJECT_NAME
 python3 execute_queries.py --project_name=$PROJECT_NAME --query_name=get_overridden_methods --database_name=$PROJECT_NAME
+python3 execute_queries.py --project_name=$PROJECT_NAME --query_name=get_static_initializers --database_name=$PROJECT_NAME

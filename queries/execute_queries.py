@@ -62,6 +62,9 @@ def main(args):
     if args.query_name == 'get_overridden_methods':
         os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_overridden_methods.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_overridden_methods.txt")
 
+    if args.query_name == 'get_static_initializers':
+        os.system(f"codeql query run -d ../../databases/{args.database_name} -- get_static_initializers.ql | tail -n +3 >> ../../data/query_outputs/{args.project_name}/{args.project_name}_static_initializers.txt")
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='execute codeql queries')
