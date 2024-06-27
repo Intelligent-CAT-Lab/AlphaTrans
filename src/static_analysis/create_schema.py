@@ -133,6 +133,7 @@ def create_schema(args):
         schemas[path]["classes"][class_name].setdefault("nests", [])
         schemas[path]["classes"][class_name].setdefault("implements", [])
         schemas[path]["classes"][class_name].setdefault("extends", [])
+        # schemas[path]["classes"][class_name].setdefault("static_initializers", {})
         pos_callable_name = f'{start_line}-{end_line}:{callable_name}'
         schemas[path]["classes"][class_name].setdefault("methods", {})
 
@@ -205,6 +206,7 @@ def create_schema(args):
             schemas[path]["classes"][interface_name].setdefault("nests", [])        
             schemas[path]["classes"][interface_name].setdefault("implements", [])
             schemas[path]["classes"][interface_name].setdefault("extends", [])
+            # schemas[path]["classes"][interface_name].setdefault("static_initializers", {})
             schemas[path]["classes"][interface_name].setdefault("methods", {})
             continue
 
@@ -274,6 +276,7 @@ def create_schema(args):
         schemas[path]["classes"][interface_name].setdefault("nests", [])        
         schemas[path]["classes"][interface_name].setdefault("implements", [])
         schemas[path]["classes"][interface_name].setdefault("extends", [])
+        # schemas[path]["classes"][interface_name].setdefault("static_initializers", {})
         pos_callable_name = f'{start_line}-{end_line}:{callable_name}'
         schemas[path]["classes"][interface_name].setdefault("methods", {})
         schemas[path]["classes"][interface_name]["methods"].setdefault(pos_callable_name, {"start": start_line,
@@ -375,6 +378,30 @@ def create_schema(args):
             schemas[path]["classes"][class_name]["extends"].append(parent_class)
         elif 'implements' in class_declaration:
             schemas[path]["classes"][class_name]["implements"].append(parent_class)
+
+    static_initializers_query_out = f'data/query_outputs/{project}/{project}_static_initializers.txt'
+    lines = []
+    with open(static_initializers_query_out, 'r') as f:
+        lines = f.readlines()
+    
+    for line in lines:
+        res_row = line.split('|')[1:-1]
+        class_name, start = [x.strip() for x in res_row]
+
+        path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
+        path = projects_dir + path[path.find(project):]
+
+        start_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[0])
+        end_line = int(start[start.find(':', start.find(':')+1)+1:].split(':')[2])
+
+        static_initializer_body = ''
+        with open(path, 'r') as f:
+            static_initializer_body = f.readlines()[start_line-1:end_line]
+
+        schemas[path]["classes"][class_name].setdefault("static_initializers", {})                
+        schemas[path]["classes"][class_name]["static_initializers"].setdefault(f'{start_line}-{end_line}', {"start": start_line,
+                                                                                                            "end": end_line,
+                                                                                                            "body": static_initializer_body})
 
     nested_classes_query_out = f'data/query_outputs/{project}/{project}_nested_classes.txt'
     lines = []
