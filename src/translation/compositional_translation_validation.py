@@ -19,7 +19,7 @@ from functional_validation import l2_validation
 #     TextGenerationReturnOptions,
 # )
 
-subprocess.run(['git', 'checkout', 'data/schemas/'])
+# subprocess.run(['git', 'checkout', 'data/schemas/'])
 i = 0
 
 def translate(model, tokenizer, device, members_to_translate: list[list], dump_syntactically_validated_fragments, is_test):
@@ -355,9 +355,9 @@ def main(args):
                     data['classes'][class_]['fields'][field_]['translation_status'] = 'success'
                     data['classes'][class_]['fields'][field_]['model_name'] = args.model_name
 
-                    with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
-                        json.dump(data, f, indent=4)
-                    continue
+                    # with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
+                    #     json.dump(data, f, indent=4)
+                    # continue
 
                 translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'field', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': schema, 'class': class_, 'fragment': field_}], args.dump_syntactically_validated_fragments, 'src.test' in schema)
                 if translation is not None and args.dump_syntactically_validated_fragments:
@@ -372,8 +372,8 @@ def main(args):
                 data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 data['classes'][class_]['fields'][field_]['model_name'] = args.model_name
 
-                with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
-                    json.dump(data, f, indent=4)
+                # with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
+                #     json.dump(data, f, indent=4)
 
             pbar = tqdm.tqdm(data['classes'][class_]['methods'])
             for method_ in pbar:
@@ -420,8 +420,8 @@ def main(args):
                 data['classes'][class_]['methods'][method_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 data['classes'][class_]['methods'][method_]['model_name'] = args.model_name
 
-                with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
-                    json.dump(data, f, indent=4)
+                # with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
+                #     json.dump(data, f, indent=4)
 
                 # # check if a waiting fragment is now ready to be processed
                 # for waiting_fragment in list(waiting_queue.keys()):
