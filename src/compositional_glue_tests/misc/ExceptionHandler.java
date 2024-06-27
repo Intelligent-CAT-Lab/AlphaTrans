@@ -36,7 +36,7 @@ final public class ExceptionHandler {{
         {mappings}
         
         System.out.println("Unhandled exception type: " + exceptionType);
-        // System.out.println("The exception had the following message: " + exceptionMessage);
+        System.out.println("The exception had the following message: " + exceptionMessage);
         return new RuntimeException(exceptionMessage);
     }}
 }}
