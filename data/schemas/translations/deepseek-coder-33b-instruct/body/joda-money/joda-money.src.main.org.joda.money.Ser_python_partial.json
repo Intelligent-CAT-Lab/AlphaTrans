@@ -1,0 +1,794 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-money/src/main/java/org/joda/money/Ser.java",
+    "imports": {
+        "19-19:import IOException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "18-18:import Externalizable": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.io.Externalizable;\n"
+            ]
+        },
+        "22-22:import ObjectInput": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.ObjectInput;\n"
+            ]
+        },
+        "23-23:import ObjectOutput": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.ObjectOutput;\n"
+            ]
+        },
+        "20-20:import InvalidClassException": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.InvalidClassException;\n"
+            ]
+        },
+        "21-21:import InvalidObjectException": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.InvalidObjectException;\n"
+            ]
+        },
+        "24-24:import StreamCorruptedException": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.StreamCorruptedException;\n"
+            ]
+        },
+        "25-25:import BigDecimal": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.math.BigDecimal;\n"
+            ]
+        },
+        "26-26:import BigInteger": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.math.BigInteger;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Ser": {
+            "start": 33,
+            "end": 33,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "121-141:readExternal": {
+                    "start": 121,
+                    "end": 141,
+                    "body": [
+                        "    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {\n",
+                        "        type = in.readByte();\n",
+                        "        switch (type) {\n",
+                        "            case BIG_MONEY:\n",
+                        "                {\n",
+                        "                    object = readBigMoney(in);\n",
+                        "                    return;\n",
+                        "                }\n",
+                        "            case MONEY:\n",
+                        "                {\n",
+                        "                    object = new Money(0, readBigMoney(in));\n",
+                        "                    return;\n",
+                        "                }\n",
+                        "            case CURRENCY_UNIT:\n",
+                        "                {\n",
+                        "                    object = readCurrency(in);\n",
+                        "                    return;\n",
+                        "                }\n",
+                        "        }\n",
+                        "        throw new StreamCorruptedException(\"Serialization input has invalid type\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "readExternal(ObjectInput)",
+                    "parameters": [
+                        "in"
+                    ],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.Ser",
+                            "Ser",
+                            "143-150:readBigMoney"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.Money",
+                            "Money",
+                            "321-332:Money"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.Ser",
+                            "Ser",
+                            "152-164:readCurrency"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def readExternal(self, in_: pickle.Unpickler) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def readExternal(self, in_: pickle.Unpickler) -> None:",
+                        "        ",
+                        "        self.__type = in_.load()",
+                        "        if self.__type == self.BIG_MONEY:",
+                        "            self.__object = self.__readBigMoney(in_)",
+                        "        elif self.__type == self.MONEY:",
+                        "            self.__object = Money(0, self.__readBigMoney(in_))",
+                        "        elif self.__type == self.CURRENCY_UNIT:",
+                        "            self.__object = self.__readCurrency(in_)",
+                        "        else:",
+                        "            raise pickle.UnpicklingError(\"Serialization input has invalid type\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "75-98:writeExternal": {
+                    "start": 75,
+                    "end": 98,
+                    "body": [
+                        "    public void writeExternal(ObjectOutput out) throws IOException {\n",
+                        "        out.writeByte(type);\n",
+                        "        switch (type) {\n",
+                        "            case BIG_MONEY:\n",
+                        "                {\n",
+                        "                    BigMoney obj = (BigMoney) object;\n",
+                        "                    writeBigMoney(out, obj);\n",
+                        "                    return;\n",
+                        "                }\n",
+                        "            case MONEY:\n",
+                        "                {\n",
+                        "                    Money obj = (Money) object;\n",
+                        "                    writeBigMoney(out, obj.toBigMoney());\n",
+                        "                    return;\n",
+                        "                }\n",
+                        "            case CURRENCY_UNIT:\n",
+                        "                {\n",
+                        "                    CurrencyUnit obj = (CurrencyUnit) object;\n",
+                        "                    writeCurrency(out, obj);\n",
+                        "                    return;\n",
+                        "                }\n",
+                        "        }\n",
+                        "        throw new InvalidClassException(\"Joda-Money bug: Serialization broken\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "writeExternal(ObjectOutput)",
+                    "parameters": [
+                        "out"
+                    ],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.Ser",
+                            "Ser",
+                            "100-106:writeBigMoney"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.Money",
+                            "Money",
+                            "1151-1153:toBigMoney"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.Ser",
+                            "Ser",
+                            "108-112:writeCurrency"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def writeExternal(self, out: pickle.Pickler) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def writeExternal(self, out: pickle.Pickler) -> None:",
+                        "         out.dump(self.__type)",
+                        "         if self.__type == self.BIG_MONEY:",
+                        "             obj = typing.cast(BigMoney, self.__object)",
+                        "             self.__writeBigMoney(out, obj)",
+                        "         elif self.__type == self.MONEY:",
+                        "             obj = typing.cast(Money, self.__object)",
+                        "             self.__writeBigMoney(out, obj.toBigMoney())",
+                        "         elif self.__type == self.CURRENCY_UNIT:",
+                        "             obj = typing.cast(CurrencyUnit, self.__object)",
+                        "             self.__writeCurrency(out, obj)",
+                        "         else:",
+                        "             raise pickle.PicklingError(\"Joda-Money bug: Serialization broken\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "51-58:Ser": {
+                    "start": 51,
+                    "end": 58,
+                    "body": [
+                        "    public Ser(int constructorId, Object object, byte type) {\n",
+                        "        if (constructorId == 0) {\n",
+                        "\n",
+                        "            this.type = type;\n",
+                        "            this.object = object;\n",
+                        "        } else {\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Ser(int, Object, byte)",
+                    "parameters": [
+                        "constructorId",
+                        "object",
+                        "type"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, constructorId: int, object: typing.Any, type: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, constructorId: int, object: typing.Any, type: int) -> None:",
+                        "        ",
+                        "        if constructorId == 0:",
+                        "            self.__type = type",
+                        "            self.__object = object",
+                        "        else:",
+                        "            pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "171-173:readResolve": {
+                    "start": 171,
+                    "end": 173,
+                    "body": [
+                        "    private Object readResolve() {\n",
+                        "        return object;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "readResolve()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __readResolve(self) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __readResolve(self) -> typing.Any:",
+                        "         return self.__object"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "152-164:readCurrency": {
+                    "start": 152,
+                    "end": 164,
+                    "body": [
+                        "    private CurrencyUnit readCurrency(ObjectInput in) throws IOException {\n",
+                        "        String code = in.readUTF();\n",
+                        "        CurrencyUnit singletonCurrency = CurrencyUnit.of1(code);\n",
+                        "        if (singletonCurrency.getNumericCode() != in.readShort()) {\n",
+                        "            throw new InvalidObjectException(\n",
+                        "                    \"Deserialization found a mismatch in the numeric code for currency \" + code);\n",
+                        "        }\n",
+                        "        if (singletonCurrency.getDecimalPlaces() != in.readShort()) {\n",
+                        "            throw new InvalidObjectException(\n",
+                        "                    \"Deserialization found a mismatch in the decimal places for currency \" + code);\n",
+                        "        }\n",
+                        "        return singletonCurrency;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "CurrencyUnit",
+                            "CurrencyUnit"
+                        ]
+                    ],
+                    "signature": "readCurrency(ObjectInput)",
+                    "parameters": [
+                        "in"
+                    ],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.CurrencyUnit",
+                            "CurrencyUnit",
+                            "345-352:of1"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.CurrencyUnit",
+                            "CurrencyUnit",
+                            "491-493:getNumericCode"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.CurrencyUnit",
+                            "CurrencyUnit",
+                            "543-545:getDecimalPlaces"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def __readCurrency(self, in_: pickle.Unpickler) -> CurrencyUnit:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __readCurrency(self, in_: pickle.Unpickler) -> CurrencyUnit:",
+                        "         code = in_.load()",
+                        "         singletonCurrency = CurrencyUnit.of1(code)",
+                        "         if singletonCurrency.getNumericCode() != in_.load():",
+                        "             raise pickle.UnpicklingError(",
+                        "                     \"Deserialization found a mismatch in the numeric code for currency \" + code)",
+                        "         if singletonCurrency.getDecimalPlaces() != in_.load():",
+                        "             raise pickle.UnpicklingError(",
+                        "                     \"Deserialization found a mismatch in the decimal places for currency \" + code)",
+                        "         return singletonCurrency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "143-150:readBigMoney": {
+                    "start": 143,
+                    "end": 150,
+                    "body": [
+                        "    private BigMoney readBigMoney(ObjectInput in) throws IOException {\n",
+                        "        CurrencyUnit currency = readCurrency(in);\n",
+                        "        byte[] bytes = new byte[in.readInt()];\n",
+                        "        in.readFully(bytes);\n",
+                        "        BigDecimal bd = new BigDecimal(new BigInteger(bytes), in.readInt());\n",
+                        "        BigMoney bigMoney = new BigMoney(0, bd, currency);\n",
+                        "        return bigMoney;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "BigMoney",
+                            "BigMoney"
+                        ]
+                    ],
+                    "signature": "readBigMoney(ObjectInput)",
+                    "parameters": [
+                        "in"
+                    ],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.Ser",
+                            "Ser",
+                            "152-164:readCurrency"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.BigMoney",
+                            "BigMoney",
+                            "369-381:BigMoney"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def __readBigMoney(self, in_: pickle.Unpickler) -> BigMoney:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __readBigMoney(self, in_: pickle.Unpickler) -> BigMoney:",
+                        "        ",
+                        "        currency = self.__readCurrency(in_)",
+                        "        bytes_ = in_.load()",
+                        "        bd = decimal.Decimal(bytes_)",
+                        "        bigMoney = BigMoney(0, bd, currency)",
+                        "        return bigMoney"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "108-112:writeCurrency": {
+                    "start": 108,
+                    "end": 112,
+                    "body": [
+                        "    private void writeCurrency(ObjectOutput out, CurrencyUnit obj) throws IOException {\n",
+                        "        out.writeUTF(obj.getCode());\n",
+                        "        out.writeShort(obj.getNumericCode());\n",
+                        "        out.writeShort(obj.getDecimalPlaces());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "writeCurrency(ObjectOutput, CurrencyUnit)",
+                    "parameters": [
+                        "out",
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.CurrencyUnit",
+                            "CurrencyUnit",
+                            "480-482:getCode"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.CurrencyUnit",
+                            "CurrencyUnit",
+                            "491-493:getNumericCode"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.CurrencyUnit",
+                            "CurrencyUnit",
+                            "543-545:getDecimalPlaces"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def __writeCurrency(self, out: pickle.Pickler, obj: CurrencyUnit) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __writeCurrency(self, out: pickle.Pickler, obj: CurrencyUnit) -> None:",
+                        "         out.dump(obj.getCode())",
+                        "         out.dump(obj.getNumericCode())",
+                        "         out.dump(obj.getDecimalPlaces())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "100-106:writeBigMoney": {
+                    "start": 100,
+                    "end": 106,
+                    "body": [
+                        "    private void writeBigMoney(ObjectOutput out, BigMoney obj) throws IOException {\n",
+                        "        writeCurrency(out, obj.getCurrencyUnit());\n",
+                        "        byte[] bytes = obj.getAmount().unscaledValue().toByteArray();\n",
+                        "        out.writeInt(bytes.length);\n",
+                        "        out.write(bytes);\n",
+                        "        out.writeInt(obj.getScale());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "writeBigMoney(ObjectOutput, BigMoney)",
+                    "parameters": [
+                        "out",
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.BigMoney",
+                            "BigMoney",
+                            "563-565:getAmount"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.Ser",
+                            "Ser",
+                            "108-112:writeCurrency"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.BigMoney",
+                            "BigMoney",
+                            "429-431:getCurrencyUnit"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.BigMoney",
+                            "BigMoney",
+                            "463-465:getScale"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def __writeBigMoney(self, out: pickle.Pickler, obj: BigMoney) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __writeBigMoney(self, out: pickle.Pickler, obj: BigMoney) -> None:",
+                        "         self.__writeCurrency(out, obj.getCurrencyUnit())",
+                        "         bytes_ = obj.getAmount().as_tuple().digits",
+                        "         out.dump(len(bytes_))",
+                        "         for byte in bytes_:",
+                        "             out.dump(byte)",
+                        "         out.dump(obj.getScale())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "42-42:CURRENCY_UNIT": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    static final byte CURRENCY_UNIT = 'C'; // not in use yet\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    CURRENCY_UNIT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    CURRENCY_UNIT: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "39-39:MONEY": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    static final byte MONEY = 'M';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    MONEY: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    MONEY: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "36-36:BIG_MONEY": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    static final byte BIG_MONEY = 'B';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    BIG_MONEY: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    BIG_MONEY: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "48-48:object": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private Object object;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __object: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __object: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "45-45:type": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private byte type;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __type: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __type: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "python_class_declaration": "class Ser():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import pickle",
+        "from src.main.org.joda.money.BigMoney import *",
+        "from src.main.org.joda.money.CurrencyUnit import *",
+        "from src.main.org.joda.money.Money import *"
+    ]
+}

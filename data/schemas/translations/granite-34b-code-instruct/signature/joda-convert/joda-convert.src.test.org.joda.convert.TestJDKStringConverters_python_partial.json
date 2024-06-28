@@ -1,0 +1,3040 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-convert/src/test/java/org/joda/convert/TestJDKStringConverters.java",
+    "imports": {
+        "24-24:import File": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "29-29:import URI": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.net.URI;\n"
+            ]
+        },
+        "30-30:import URL": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.net.URL;\n"
+            ]
+        },
+        "36-36:import Locale": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "28-28:import InetAddress": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.net.InetAddress;\n"
+            ]
+        },
+        "25-25:import BigDecimal": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.math.BigDecimal;\n"
+            ]
+        },
+        "26-26:import BigInteger": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.math.BigInteger;\n"
+            ]
+        },
+        "27-27:import RoundingMode": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.math.RoundingMode;\n"
+            ]
+        },
+        "34-34:import Date": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import java.util.Date;\n"
+            ]
+        },
+        "37-37:import TimeZone": {
+            "start": 37,
+            "end": 37,
+            "body": [
+                "import java.util.TimeZone;\n"
+            ]
+        },
+        "32-32:import Calendar": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.util.Calendar;\n"
+            ]
+        },
+        "33-33:import Currency": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.util.Currency;\n"
+            ]
+        },
+        "31-31:import Arrays": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "35-35:import GregorianCalendar": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import java.util.GregorianCalendar;\n"
+            ]
+        },
+        "38-38:import UUID": {
+            "start": 38,
+            "end": 38,
+            "body": [
+                "import java.util.UUID;\n"
+            ]
+        },
+        "39-39:import AtomicBoolean": {
+            "start": 39,
+            "end": 39,
+            "body": [
+                "import java.util.concurrent.atomic.AtomicBoolean;\n"
+            ]
+        },
+        "40-40:import AtomicInteger": {
+            "start": 40,
+            "end": 40,
+            "body": [
+                "import java.util.concurrent.atomic.AtomicInteger;\n"
+            ]
+        },
+        "41-41:import AtomicLong": {
+            "start": 41,
+            "end": 41,
+            "body": [
+                "import java.util.concurrent.atomic.AtomicLong;\n"
+            ]
+        },
+        "22-22:import Test": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "18-18:import static Assert.assertEquals": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "19-19:import static Assert.assertTrue": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import static org.junit.Assert.assertTrue;\n"
+            ]
+        },
+        "20-20:import static Assert.fail": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.Assert.fail;\n"
+            ]
+        }
+    },
+    "classes": {
+        "TestJDKStringConverters": {
+            "start": 44,
+            "end": 44,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new Calendar(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "497-512:test_Enum_withRename": {
+                    "start": 497,
+                    "end": 512,
+                    "body": [
+                        "    public void test_Enum_withRename() {\n",
+                        "        TypedStringConverter<Status> test = StringConvert.create().findTypedConverter(Status.class);\n",
+                        "        assertEquals(\"VALID\", test.convertToString(Status.VALID));\n",
+                        "        assertEquals(\"INVALID\", test.convertToString(Status.INVALID));\n",
+                        "        assertEquals(Status.VALID, test.convertFromString(Status.class, \"VALID\"));\n",
+                        "        assertEquals(Status.INVALID, test.convertFromString(Status.class, \"INVALID\"));\n",
+                        "        try {\n",
+                        "            test.convertFromString(Status.class, \"OK\");\n",
+                        "            fail();\n",
+                        "        } catch (RuntimeException ex) {\n",
+                        "        }\n",
+                        "        RenameHandler.INSTANCE.renamedEnum(\"OK\", Status.VALID);\n",
+                        "        assertEquals(Status.VALID, test.convertFromString(Status.class, \"OK\"));\n",
+                        "        assertEquals(Status.VALID, test.convertFromString(Status.class, \"VALID\"));\n",
+                        "        assertEquals(Status.INVALID, test.convertFromString(Status.class, \"INVALID\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Enum_withRename()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.StringConvert",
+                            "StringConvert",
+                            "528-534:findTypedConverter"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.StringConvert",
+                            "StringConvert",
+                            "121-130:create"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.RenameHandler",
+                            "RenameHandler",
+                            "199-214:renamedEnum"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Enum_withRename(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "490-494:test_Enum_invalidConstant": {
+                    "start": 490,
+                    "end": 494,
+                    "body": [
+                        "    public void test_Enum_invalidConstant() {\n",
+                        "        TypedStringConverter<RoundingMode> test =\n",
+                        "                StringConvert.create().findTypedConverter(RoundingMode.class);\n",
+                        "        test.convertFromString(RoundingMode.class, \"RUBBISH\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = RuntimeException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Enum_invalidConstant()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.StringConvert",
+                            "StringConvert",
+                            "528-534:findTypedConverter"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.StringConvert",
+                            "StringConvert",
+                            "121-130:create"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Enum_invalidConstant(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "481-487:test_Enum": {
+                    "start": 481,
+                    "end": 487,
+                    "body": [
+                        "    public void test_Enum() {\n",
+                        "        TypedStringConverter<RoundingMode> test =\n",
+                        "                StringConvert.create().findTypedConverter(RoundingMode.class);\n",
+                        "        assertEquals(RoundingMode.class, test.getEffectiveType());\n",
+                        "        assertEquals(\"CEILING\", test.convertToString(RoundingMode.CEILING));\n",
+                        "        assertEquals(RoundingMode.CEILING, test.convertFromString(RoundingMode.class, \"CEILING\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Enum()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.StringConvert",
+                            "StringConvert",
+                            "528-534:findTypedConverter"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.StringConvert",
+                            "StringConvert",
+                            "121-130:create"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Enum(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "441-478:test_Calendar_notGregorian": {
+                    "start": 441,
+                    "end": 478,
+                    "body": [
+                        "    public void test_Calendar_notGregorian() {\n",
+                        "        JDKStringConverter.CALENDAR.convertToString(\n",
+                        "                new Calendar() {\n",
+                        "                    private static final long serialVersionUID = 1L;\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    public void roll(int field, boolean up) {}\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    public int getMinimum(int field) {\n",
+                        "                        return 0;\n",
+                        "                    }\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    public int getMaximum(int field) {\n",
+                        "                        return 0;\n",
+                        "                    }\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    public int getLeastMaximum(int field) {\n",
+                        "                        return 0;\n",
+                        "                    }\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    public int getGreatestMinimum(int field) {\n",
+                        "                        return 0;\n",
+                        "                    }\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    protected void computeTime() {}\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    protected void computeFields() {}\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    public void add(int field, int amount) {}\n",
+                        "                });\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = RuntimeException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Calendar_notGregorian()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Calendar_notGregorian(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "435-438:test_Calendar_invalidFormat": {
+                    "start": 435,
+                    "end": 438,
+                    "body": [
+                        "    public void test_Calendar_invalidFormat() {\n",
+                        "        JDKStringConverter.CALENDAR.convertFromString(\n",
+                        "                GregorianCalendar.class, \"2010-09-03XXX:34:05.000+02:00[Europe/London]\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = RuntimeException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Calendar_invalidFormat()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def test_Calendar_invalidFormat(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "430-432:test_Calendar_invalidLength": {
+                    "start": 430,
+                    "end": 432,
+                    "body": [
+                        "    public void test_Calendar_invalidLength() {\n",
+                        "        JDKStringConverter.CALENDAR.convertFromString(GregorianCalendar.class, \"2010-09-03\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = RuntimeException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Calendar_invalidLength()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def test_Calendar_invalidLength(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "416-427:test_Calendar": {
+                    "start": 416,
+                    "end": 427,
+                    "body": [
+                        "    public void test_Calendar() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.CALENDAR;\n",
+                        "        GregorianCalendar cal = new GregorianCalendar(TimeZone.getTimeZone(\"Europe/Paris\"));\n",
+                        "        cal.set(2010, 9 - 1, 3, 12, 34, 5);\n",
+                        "        cal.set(Calendar.MILLISECOND, 0);\n",
+                        "        doTest0(test, Calendar.class, cal, \"2010-09-03T12:34:05.000+02:00[Europe/Paris]\");\n",
+                        "\n",
+                        "        GregorianCalendar cal2 = new GregorianCalendar(TimeZone.getTimeZone(\"Europe/Paris\"));\n",
+                        "        cal2.set(2011, 1 - 1, 4, 12, 34, 5);\n",
+                        "        cal2.set(Calendar.MILLISECOND, 0);\n",
+                        "        doTest0(test, Calendar.class, cal2, \"2011-01-04T12:34:05.000+01:00[Europe/Paris]\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Calendar()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Calendar(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "411-413:test_Date_invalidFormat": {
+                    "start": 411,
+                    "end": 413,
+                    "body": [
+                        "    public void test_Date_invalidFormat() {\n",
+                        "        JDKStringConverter.DATE.convertFromString(Date.class, \"2010-09-03XXX:34:05.000+02:00\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = RuntimeException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Date_invalidFormat()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def test_Date_invalidFormat(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "406-408:test_Date_invalidLength": {
+                    "start": 406,
+                    "end": 408,
+                    "body": [
+                        "    public void test_Date_invalidLength() {\n",
+                        "        JDKStringConverter.DATE.convertFromString(Date.class, \"2010-09-03\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = RuntimeException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Date_invalidLength()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def test_Date_invalidLength(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "385-403:test_Date": {
+                    "start": 385,
+                    "end": 403,
+                    "body": [
+                        "    public void test_Date() {\n",
+                        "        TimeZone zone = TimeZone.getDefault();\n",
+                        "        try {\n",
+                        "            TimeZone.setDefault(TimeZone.getTimeZone(\"Europe/Paris\"));\n",
+                        "            JDKStringConverter test = JDKStringConverter.DATE;\n",
+                        "            doTest0(\n",
+                        "                    test,\n",
+                        "                    Date.class,\n",
+                        "                    new Date(2010 - 1900, 9 - 1, 3, 12, 34, 5),\n",
+                        "                    \"2010-09-03T12:34:05.000+02:00\");\n",
+                        "            doTest0(\n",
+                        "                    test,\n",
+                        "                    Date.class,\n",
+                        "                    new Date(2011 - 1900, 1 - 1, 4, 12, 34, 5),\n",
+                        "                    \"2011-01-04T12:34:05.000+01:00\");\n",
+                        "        } finally {\n",
+                        "            TimeZone.setDefault(zone);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "SuppressWarnings(\"deprecation\")",
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Date()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Date(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "377-381:test_File": {
+                    "start": 377,
+                    "end": 381,
+                    "body": [
+                        "    public void test_File() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.FILE;\n",
+                        "        File file = new File(\"/path/to/file\");\n",
+                        "        doTest0(test, File.class, file, file.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_File()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_File(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "360-374:test_InetAddress": {
+                    "start": 360,
+                    "end": 374,
+                    "body": [
+                        "    public void test_InetAddress() throws Exception {\n",
+                        "        JDKStringConverter test = JDKStringConverter.INET_ADDRESS;\n",
+                        "        doTest0(test, InetAddress.class, InetAddress.getByName(\"1.2.3.4\"), \"1.2.3.4\");\n",
+                        "\n",
+                        "        InetAddress obj = InetAddress.getByName(\"2001:0db8:85a3:0000:0000:8a2e:0370:7334\");\n",
+                        "        String str = test.convertToString(obj);\n",
+                        "        assertTrue(\n",
+                        "                str.equals(\"2001:db8:85a3:0:0:8a2e:370:7334\")\n",
+                        "                        || str.equals(\"2001:db8:85a3::8a2e:370:7334\"));\n",
+                        "        assertEquals(obj, test.convertFromString(InetAddress.class, str));\n",
+                        "        assertEquals(\n",
+                        "                obj, test.convertFromString(InetAddress.class, \"2001:db8:85a3:0:0:8a2e:370:7334\"));\n",
+                        "        assertEquals(\n",
+                        "                obj, test.convertFromString(InetAddress.class, \"2001:db8:85a3::8a2e:370:7334\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_InetAddress()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ],
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_InetAddress(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "347-357:test_URI": {
+                    "start": 347,
+                    "end": 357,
+                    "body": [
+                        "    public void test_URI() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.URI;\n",
+                        "        doTest0(\n",
+                        "                test,\n",
+                        "                URI.class,\n",
+                        "                URI.create(\"http://localhost:8080/my/test\"),\n",
+                        "                \"http://localhost:8080/my/test\");\n",
+                        "        doTest0(test, URI.class, URI.create(\"/my/test\"), \"/my/test\");\n",
+                        "        doTest0(test, URI.class, URI.create(\"/my/../test\"), \"/my/../test\");\n",
+                        "        doTest0(test, URI.class, URI.create(\"urn:hello\"), \"urn:hello\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_URI()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_URI(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "342-344:test_URL_invalidFormat": {
+                    "start": 342,
+                    "end": 344,
+                    "body": [
+                        "    public void test_URL_invalidFormat() {\n",
+                        "        JDKStringConverter.URL.convertFromString(URL.class, \"RUBBISH:RUBBISH\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = RuntimeException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_URL_invalidFormat()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def test_URL_invalidFormat(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "331-339:test_URL": {
+                    "start": 331,
+                    "end": 339,
+                    "body": [
+                        "    public void test_URL() throws Exception {\n",
+                        "        JDKStringConverter test = JDKStringConverter.URL;\n",
+                        "        doTest0(\n",
+                        "                test,\n",
+                        "                URL.class,\n",
+                        "                new URL(\"http://localhost:8080/my/test\"),\n",
+                        "                \"http://localhost:8080/my/test\");\n",
+                        "        doTest0(test, URL.class, new URL(null, \"ftp:world\"), \"ftp:world\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_URL()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_URL(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "324-328:test_UUID": {
+                    "start": 324,
+                    "end": 328,
+                    "body": [
+                        "    public void test_UUID() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.UUID;\n",
+                        "        UUID uuid = UUID.randomUUID();\n",
+                        "        doTest0(test, UUID.class, uuid, uuid.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_UUID()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_UUID(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "317-321:test_TimeZone": {
+                    "start": 317,
+                    "end": 321,
+                    "body": [
+                        "    public void test_TimeZone() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.TIME_ZONE;\n",
+                        "        doTest0(test, TimeZone.class, TimeZone.getTimeZone(\"Europe/London\"), \"Europe/London\");\n",
+                        "        doTest0(test, TimeZone.class, TimeZone.getTimeZone(\"America/New_York\"), \"America/New_York\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_TimeZone()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_TimeZone(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "310-314:test_Currency": {
+                    "start": 310,
+                    "end": 314,
+                    "body": [
+                        "    public void test_Currency() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.CURRENCY;\n",
+                        "        doTest0(test, Currency.class, Currency.getInstance(\"GBP\"), \"GBP\");\n",
+                        "        doTest0(test, Currency.class, Currency.getInstance(\"USD\"), \"USD\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Currency()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Currency(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "303-307:test_Package": {
+                    "start": 303,
+                    "end": 307,
+                    "body": [
+                        "    public void test_Package() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.PACKAGE;\n",
+                        "        doTest0(test, Package.class, Locale.class.getPackage(), \"java.util\");\n",
+                        "        doTest0(test, Package.class, FromString.class.getPackage(), \"org.joda.convert\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Package()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Package(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "290-300:test_Class_withRename": {
+                    "start": 290,
+                    "end": 300,
+                    "body": [
+                        "    public void test_Class_withRename() {\n",
+                        "        try {\n",
+                        "            JDKStringConverter.CLASS.convertFromString(Class.class, \"org.foo.StringConvert\");\n",
+                        "            fail();\n",
+                        "        } catch (RuntimeException ex) {\n",
+                        "        }\n",
+                        "        RenameHandler.INSTANCE.renamedType(\"org.foo.StringConvert\", StringConvert.class);\n",
+                        "        assertEquals(\n",
+                        "                StringConvert.class,\n",
+                        "                JDKStringConverter.CLASS.convertFromString(Class.class, \"org.foo.StringConvert\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Class_withRename()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.RenameHandler",
+                            "RenameHandler",
+                            "144-159:renamedType"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Class_withRename(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "285-287:test_Class_fail": {
+                    "start": 285,
+                    "end": 287,
+                    "body": [
+                        "    public void test_Class_fail() {\n",
+                        "        JDKStringConverter.CLASS.convertFromString(Class.class, \"RUBBISH\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = RuntimeException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Class_fail()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def test_Class_fail(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "277-282:test_Class_array": {
+                    "start": 277,
+                    "end": 282,
+                    "body": [
+                        "    public void test_Class_array() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.CLASS;\n",
+                        "        doTest0(test, Class.class, byte[].class, \"[B\");\n",
+                        "        doTest0(test, Class.class, FromString[].class, \"[Lorg.joda.convert.FromString;\");\n",
+                        "        doTest0(test, Class.class, FromString[][].class, \"[[Lorg.joda.convert.FromString;\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Class_array()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Class_array(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "263-274:test_Class_primitive": {
+                    "start": 263,
+                    "end": 274,
+                    "body": [
+                        "    public void test_Class_primitive() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.CLASS;\n",
+                        "        doTest0(test, Class.class, byte.class, \"byte\");\n",
+                        "        doTest0(test, Class.class, short.class, \"short\");\n",
+                        "        doTest0(test, Class.class, int.class, \"int\");\n",
+                        "        doTest0(test, Class.class, long.class, \"long\");\n",
+                        "        doTest0(test, Class.class, float.class, \"float\");\n",
+                        "        doTest0(test, Class.class, double.class, \"double\");\n",
+                        "        doTest0(test, Class.class, boolean.class, \"boolean\");\n",
+                        "        doTest0(test, Class.class, char.class, \"char\");\n",
+                        "        doTest0(test, Class.class, void.class, \"void\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Class_primitive()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Class_primitive(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "256-260:test_Class": {
+                    "start": 256,
+                    "end": 260,
+                    "body": [
+                        "    public void test_Class() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.CLASS;\n",
+                        "        doTest0(test, Class.class, Locale.class, \"java.util.Locale\");\n",
+                        "        doTest0(test, Class.class, FromString.class, \"org.joda.convert.FromString\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Class()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Class(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "248-253:test_Locale": {
+                    "start": 248,
+                    "end": 253,
+                    "body": [
+                        "    public void test_Locale() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.LOCALE;\n",
+                        "        doTest0(test, Locale.class, new Locale(\"en\"), \"en\");\n",
+                        "        doTest0(test, Locale.class, new Locale(\"en\", \"GB\"), \"en_GB\");\n",
+                        "        doTest0(test, Locale.class, new Locale(\"en\", \"GB\", \"VARIANT_B\"), \"en_GB_VARIANT_B\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Locale()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Locale(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "243-245:test_AtomicBoolean_fail": {
+                    "start": 243,
+                    "end": 245,
+                    "body": [
+                        "    public void test_AtomicBoolean_fail() {\n",
+                        "        JDKStringConverter.ATOMIC_BOOLEAN.convertFromString(AtomicBoolean.class, \"RUBBISH\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = IllegalArgumentException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_AtomicBoolean_fail()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def test_AtomicBoolean_fail(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "233-240:test_AtomicBoolean_false": {
+                    "start": 233,
+                    "end": 240,
+                    "body": [
+                        "    public void test_AtomicBoolean_false() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.ATOMIC_BOOLEAN;\n",
+                        "        AtomicBoolean obj = new AtomicBoolean(false);\n",
+                        "        assertEquals(AtomicBoolean.class, test.getType());\n",
+                        "        assertEquals(\"false\", test.convertToString(obj));\n",
+                        "        AtomicBoolean back = (AtomicBoolean) test.convertFromString(AtomicBoolean.class, \"false\");\n",
+                        "        assertEquals(false, back.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_AtomicBoolean_false()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_AtomicBoolean_false(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "223-230:test_AtomicBoolean_true": {
+                    "start": 223,
+                    "end": 230,
+                    "body": [
+                        "    public void test_AtomicBoolean_true() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.ATOMIC_BOOLEAN;\n",
+                        "        AtomicBoolean obj = new AtomicBoolean(true);\n",
+                        "        assertEquals(AtomicBoolean.class, test.getType());\n",
+                        "        assertEquals(\"true\", test.convertToString(obj));\n",
+                        "        AtomicBoolean back = (AtomicBoolean) test.convertFromString(AtomicBoolean.class, \"true\");\n",
+                        "        assertEquals(true, back.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_AtomicBoolean_true()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_AtomicBoolean_true(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "213-220:test_AtomicInteger": {
+                    "start": 213,
+                    "end": 220,
+                    "body": [
+                        "    public void test_AtomicInteger() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.ATOMIC_INTEGER;\n",
+                        "        AtomicInteger obj = new AtomicInteger(12);\n",
+                        "        assertEquals(AtomicInteger.class, test.getType());\n",
+                        "        assertEquals(\"12\", test.convertToString(obj));\n",
+                        "        AtomicInteger back = (AtomicInteger) test.convertFromString(AtomicInteger.class, \"12\");\n",
+                        "        assertEquals(12, back.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_AtomicInteger()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_AtomicInteger(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "203-210:test_AtomicLong": {
+                    "start": 203,
+                    "end": 210,
+                    "body": [
+                        "    public void test_AtomicLong() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.ATOMIC_LONG;\n",
+                        "        AtomicLong obj = new AtomicLong(12);\n",
+                        "        assertEquals(AtomicLong.class, test.getType());\n",
+                        "        assertEquals(\"12\", test.convertToString(obj));\n",
+                        "        AtomicLong back = (AtomicLong) test.convertFromString(AtomicLong.class, \"12\");\n",
+                        "        assertEquals(12, back.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_AtomicLong()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_AtomicLong(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "197-200:test_BigDecimal": {
+                    "start": 197,
+                    "end": 200,
+                    "body": [
+                        "    public void test_BigDecimal() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.BIG_DECIMAL;\n",
+                        "        doTest0(test, BigDecimal.class, BigDecimal.valueOf(12.23d), \"12.23\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_BigDecimal()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_BigDecimal(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "191-194:test_BigInteger": {
+                    "start": 191,
+                    "end": 194,
+                    "body": [
+                        "    public void test_BigInteger() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.BIG_INTEGER;\n",
+                        "        doTest0(test, BigInteger.class, BigInteger.valueOf(12L), \"12\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_BigInteger()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_BigInteger(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "185-188:test_Float": {
+                    "start": 185,
+                    "end": 188,
+                    "body": [
+                        "    public void test_Float() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.FLOAT;\n",
+                        "        doTest0(test, Float.class, Float.valueOf(12.2f), \"12.2\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Float()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Float(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "179-182:test_Double": {
+                    "start": 179,
+                    "end": 182,
+                    "body": [
+                        "    public void test_Double() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.DOUBLE;\n",
+                        "        doTest0(test, Double.class, Double.valueOf(12.4d), \"12.4\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Double()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Double(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "174-176:test_Boolean_fail": {
+                    "start": 174,
+                    "end": 176,
+                    "body": [
+                        "    public void test_Boolean_fail() {\n",
+                        "        JDKStringConverter.BOOLEAN.convertFromString(Boolean.class, \"RUBBISH\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = IllegalArgumentException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Boolean_fail()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def test_Boolean_fail(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "167-171:test_Boolean": {
+                    "start": 167,
+                    "end": 171,
+                    "body": [
+                        "    public void test_Boolean() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.BOOLEAN;\n",
+                        "        doTest0(test, Boolean.class, Boolean.TRUE, \"true\");\n",
+                        "        doTest0(test, Boolean.class, Boolean.FALSE, \"false\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Boolean()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Boolean(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "157-164:test_byteArray4": {
+                    "start": 157,
+                    "end": 164,
+                    "body": [
+                        "    public void test_byteArray4() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.BYTE_ARRAY;\n",
+                        "        byte[] array = new byte[] {73, 97, 112, 77};\n",
+                        "        String str = \"SWFwTQ==\";\n",
+                        "        assertEquals(byte[].class, test.getType());\n",
+                        "        assertEquals(str, test.convertToString(array));\n",
+                        "        assertTrue(Arrays.equals(array, (byte[]) test.convertFromString(byte[].class, str)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_byteArray4()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_byteArray4(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "147-154:test_byteArray3": {
+                    "start": 147,
+                    "end": 154,
+                    "body": [
+                        "    public void test_byteArray3() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.BYTE_ARRAY;\n",
+                        "        byte[] array = new byte[] {77};\n",
+                        "        String str = \"TQ==\";\n",
+                        "        assertEquals(byte[].class, test.getType());\n",
+                        "        assertEquals(str, test.convertToString(array));\n",
+                        "        assertTrue(Arrays.equals(array, (byte[]) test.convertFromString(byte[].class, str)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_byteArray3()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_byteArray3(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "137-144:test_byteArray2": {
+                    "start": 137,
+                    "end": 144,
+                    "body": [
+                        "    public void test_byteArray2() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.BYTE_ARRAY;\n",
+                        "        byte[] array = new byte[] {77, 97};\n",
+                        "        String str = \"TWE=\";\n",
+                        "        assertEquals(byte[].class, test.getType());\n",
+                        "        assertEquals(str, test.convertToString(array));\n",
+                        "        assertTrue(Arrays.equals(array, (byte[]) test.convertFromString(byte[].class, str)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_byteArray2()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_byteArray2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "127-134:test_byteArray1": {
+                    "start": 127,
+                    "end": 134,
+                    "body": [
+                        "    public void test_byteArray1() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.BYTE_ARRAY;\n",
+                        "        byte[] array = new byte[] {77, 97, 112};\n",
+                        "        String str = \"TWFw\";\n",
+                        "        assertEquals(byte[].class, test.getType());\n",
+                        "        assertEquals(str, test.convertToString(array));\n",
+                        "        assertTrue(Arrays.equals(array, (byte[]) test.convertFromString(byte[].class, str)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_byteArray1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_byteArray1(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "121-124:test_Byte": {
+                    "start": 121,
+                    "end": 124,
+                    "body": [
+                        "    public void test_Byte() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.BYTE;\n",
+                        "        doTest0(test, Byte.class, Byte.valueOf((byte) 12), \"12\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Byte()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Byte(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "111-118:test_charArray": {
+                    "start": 111,
+                    "end": 118,
+                    "body": [
+                        "    public void test_charArray() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.CHAR_ARRAY;\n",
+                        "        char[] array = new char[] {'M', 'a', 'p'};\n",
+                        "        String str = \"Map\";\n",
+                        "        assertEquals(char[].class, test.getType());\n",
+                        "        assertEquals(str, test.convertToString(array));\n",
+                        "        assertTrue(Arrays.equals(array, (char[]) test.convertFromString(char[].class, str)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_charArray()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_charArray(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "106-108:test_Character_fail": {
+                    "start": 106,
+                    "end": 108,
+                    "body": [
+                        "    public void test_Character_fail() {\n",
+                        "        JDKStringConverter.CHARACTER.convertFromString(Character.class, \"RUBBISH\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = IllegalArgumentException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Character_fail()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def test_Character_fail(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "99-103:test_Character": {
+                    "start": 99,
+                    "end": 103,
+                    "body": [
+                        "    public void test_Character() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.CHARACTER;\n",
+                        "        doTest0(test, Character.class, Character.valueOf('a'), \"a\");\n",
+                        "        doTest0(test, Character.class, Character.valueOf('z'), \"z\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Character()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Character(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "93-96:test_Short": {
+                    "start": 93,
+                    "end": 96,
+                    "body": [
+                        "    public void test_Short() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.SHORT;\n",
+                        "        doTest0(test, Short.class, Short.valueOf((byte) 12), \"12\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Short()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Short(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "87-90:test_Int": {
+                    "start": 87,
+                    "end": 90,
+                    "body": [
+                        "    public void test_Int() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.INTEGER;\n",
+                        "        doTest0(test, Integer.class, Integer.valueOf(12), \"12\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Int()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Int(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "81-84:test_Long": {
+                    "start": 81,
+                    "end": 84,
+                    "body": [
+                        "    public void test_Long() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.LONG;\n",
+                        "        doTest0(test, Long.class, Long.valueOf(12L), \"12\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_Long()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_Long(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "73-78:test_CharSequence": {
+                    "start": 73,
+                    "end": 78,
+                    "body": [
+                        "    public void test_CharSequence() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.CHAR_SEQUENCE;\n",
+                        "        doTest0(test, CharSequence.class, \"Hello\", \"Hello\");\n",
+                        "        doTest1(test, CharSequence.class, new StringBuffer(\"Hello\"), \"Hello\", \"Hello\");\n",
+                        "        doTest1(test, CharSequence.class, new StringBuilder(\"Hello\"), \"Hello\", \"Hello\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_CharSequence()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ],
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "518-523:doTest1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_CharSequence(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "63-70:test_StringBuilder": {
+                    "start": 63,
+                    "end": 70,
+                    "body": [
+                        "    public void test_StringBuilder() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.STRING_BUILDER;\n",
+                        "        Object obj = new StringBuilder(\"Hello\");\n",
+                        "        assertEquals(StringBuilder.class, test.getType());\n",
+                        "        assertEquals(\"Hello\", test.convertToString(obj));\n",
+                        "        StringBuilder back = (StringBuilder) test.convertFromString(StringBuilder.class, \"Hello\");\n",
+                        "        assertEquals(\"Hello\", back.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_StringBuilder()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_StringBuilder(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "53-60:test_StringBuffer": {
+                    "start": 53,
+                    "end": 60,
+                    "body": [
+                        "    public void test_StringBuffer() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.STRING_BUFFER;\n",
+                        "        Object obj = new StringBuffer(\"Hello\");\n",
+                        "        assertEquals(StringBuffer.class, test.getType());\n",
+                        "        assertEquals(\"Hello\", test.convertToString(obj));\n",
+                        "        StringBuffer back = (StringBuffer) test.convertFromString(StringBuffer.class, \"Hello\");\n",
+                        "        assertEquals(\"Hello\", back.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_StringBuffer()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_StringBuffer(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "47-50:test_String": {
+                    "start": 47,
+                    "end": 50,
+                    "body": [
+                        "    public void test_String() {\n",
+                        "        JDKStringConverter test = JDKStringConverter.STRING;\n",
+                        "        doTest0(test, String.class, \"Hello\", \"Hello\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test_String()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "514-516:doTest0"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def test_String(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "518-523:doTest1": {
+                    "start": 518,
+                    "end": 523,
+                    "body": [
+                        "    public void doTest1(\n",
+                        "            JDKStringConverter test, Class<?> cls, Object obj, String str, Object objFromStr) {\n",
+                        "        assertEquals(cls, test.getType());\n",
+                        "        assertEquals(str, test.convertToString(obj));\n",
+                        "        assertEquals(objFromStr, test.convertFromString(cls, str));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "doTest1(JDKStringConverter, Class<?>, Object, String, Object)",
+                    "parameters": [
+                        "test",
+                        "cls",
+                        "obj",
+                        "str",
+                        "objFromStr"
+                    ],
+                    "calls": [
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "402-404:getType"
+                        ],
+                        [
+                            "joda-convert.src.main.org.joda.convert.JDKStringConverter",
+                            "JDKStringConverter",
+                            "417-419:convertToString"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def doTest1(self, test: JDKStringConverter, cls: typing.Type[typing.Any], obj: typing.Any, str: str, objFromStr: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "514-516:doTest0": {
+                    "start": 514,
+                    "end": 516,
+                    "body": [
+                        "    public void doTest0(JDKStringConverter test, Class<?> cls, Object obj, String str) {\n",
+                        "        doTest1(test, cls, obj, str, obj);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "doTest0(JDKStringConverter, Class<?>, Object, String)",
+                    "parameters": [
+                        "test",
+                        "cls",
+                        "obj",
+                        "str"
+                    ],
+                    "calls": [
+                        [
+                            "joda-convert.src.test.org.joda.convert.TestJDKStringConverters",
+                            "TestJDKStringConverters",
+                            "518-523:doTest1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def doTest0(self, test: JDKStringConverter, cls: typing.Type[typing.Any], obj: typing.Any, str: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class TestJDKStringConverters(unittest.TestCase):\n\n"
+        },
+        "new Calendar(...) { ... }": {
+            "start": 443,
+            "end": 443,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TestJDKStringConverters",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "476-476:add": {
+                    "start": 476,
+                    "end": 476,
+                    "body": [
+                        "                    public void add(int field, int amount) {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "add(int, int)",
+                    "parameters": [
+                        "field",
+                        "amount"
+                    ],
+                    "calls": []
+                },
+                "473-473:computeFields": {
+                    "start": 473,
+                    "end": 473,
+                    "body": [
+                        "                    protected void computeFields() {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "computeFields()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "470-470:computeTime": {
+                    "start": 470,
+                    "end": 470,
+                    "body": [
+                        "                    protected void computeTime() {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "computeTime()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "465-467:getGreatestMinimum": {
+                    "start": 465,
+                    "end": 467,
+                    "body": [
+                        "                    public int getGreatestMinimum(int field) {\n",
+                        "                        return 0;\n",
+                        "                    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getGreatestMinimum(int)",
+                    "parameters": [
+                        "field"
+                    ],
+                    "calls": []
+                },
+                "460-462:getLeastMaximum": {
+                    "start": 460,
+                    "end": 462,
+                    "body": [
+                        "                    public int getLeastMaximum(int field) {\n",
+                        "                        return 0;\n",
+                        "                    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getLeastMaximum(int)",
+                    "parameters": [
+                        "field"
+                    ],
+                    "calls": []
+                },
+                "455-457:getMaximum": {
+                    "start": 455,
+                    "end": 457,
+                    "body": [
+                        "                    public int getMaximum(int field) {\n",
+                        "                        return 0;\n",
+                        "                    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getMaximum(int)",
+                    "parameters": [
+                        "field"
+                    ],
+                    "calls": []
+                },
+                "450-452:getMinimum": {
+                    "start": 450,
+                    "end": 452,
+                    "body": [
+                        "                    public int getMinimum(int field) {\n",
+                        "                        return 0;\n",
+                        "                    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getMinimum(int)",
+                    "parameters": [
+                        "field"
+                    ],
+                    "calls": []
+                },
+                "447-447:roll": {
+                    "start": 447,
+                    "end": 447,
+                    "body": [
+                        "                    public void roll(int field, boolean up) {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "roll(int, boolean)",
+                    "parameters": [
+                        "field",
+                        "up"
+                    ],
+                    "calls": []
+                },
+                "442-443:": {
+                    "start": 442,
+                    "end": 443,
+                    "body": [
+                        "        JDKStringConverter.CALENDAR.convertToString(\n",
+                        "                new Calendar() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "444-444:serialVersionUID": {
+                    "start": 444,
+                    "end": 444,
+                    "body": [
+                        "                    private static final long serialVersionUID = 1L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import unittest",
+        "from src.main.org.joda.convert.FromString import *",
+        "from src.main.org.joda.convert.JDKStringConverter import *",
+        "from src.main.org.joda.convert.RenameHandler import *",
+        "from src.test.org.joda.convert.Status import *",
+        "from src.main.org.joda.convert.StringConvert import *",
+        "from src.main.org.joda.convert.TypedStringConverter import *"
+    ]
+}

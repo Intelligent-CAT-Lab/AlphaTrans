@@ -1,0 +1,245 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-convert/src/main/java/org/joda/convert/ConstructorFromStringConverter.java",
+    "imports": {
+        "19-19:import InvocationTargetException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.lang.reflect.InvocationTargetException;\n"
+            ]
+        },
+        "18-18:import Constructor": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.lang.reflect.Constructor;\n"
+            ]
+        },
+        "20-20:import Modifier": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.lang.reflect.Modifier;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ConstructorFromStringConverter": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "TypedFromStringConverter"
+            ],
+            "extends": [],
+            "methods": {
+                "75-77:getEffectiveType": {
+                    "start": 75,
+                    "end": 77,
+                    "body": [
+                        "    public Class<?> getEffectiveType() {\n",
+                        "        return fromString.getDeclaringClass();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Class<?>",
+                            "java.lang.Class<?>"
+                        ]
+                    ],
+                    "signature": "getEffectiveType()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getEffectiveType(self) -> typing.Type[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def getEffectiveType(self) -> typing.Type[typing.Any]:",
+                        "         return self.__fromString.__annotations__['return']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "59-72:convertFromString": {
+                    "start": 59,
+                    "end": 72,
+                    "body": [
+                        "    public T convertFromString(Class<? extends T> cls, String str) {\n",
+                        "        try {\n",
+                        "            return fromString.newInstance(str);\n",
+                        "        } catch (IllegalAccessException ex) {\n",
+                        "            throw new IllegalStateException(\"Constructor is not accessible: \" + fromString);\n",
+                        "        } catch (InstantiationException ex) {\n",
+                        "            throw new IllegalStateException(\"Constructor is not valid: \" + fromString);\n",
+                        "        } catch (InvocationTargetException ex) {\n",
+                        "            if (ex.getCause() instanceof RuntimeException) {\n",
+                        "                throw (RuntimeException) ex.getCause();\n",
+                        "            }\n",
+                        "            throw new RuntimeException(ex.getMessage(), ex.getCause());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "T",
+                            "T"
+                        ]
+                    ],
+                    "signature": "convertFromString(Class<? extends T>, String)",
+                    "parameters": [
+                        "cls",
+                        "str"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:",
+                        "        ",
+                        "        try:",
+                        "            return self.__fromString(str)",
+                        "        except Exception as ex:",
+                        "            raise RuntimeException(f\"Error while converting from string: {ex}\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "43-56:ConstructorFromStringConverter": {
+                    "start": 43,
+                    "end": 56,
+                    "body": [
+                        "    ConstructorFromStringConverter(Class<T> cls, Constructor<T> fromString) {\n",
+                        "        if (cls.isInterface()\n",
+                        "                || Modifier.isAbstract(cls.getModifiers())\n",
+                        "                || cls.isLocalClass()\n",
+                        "                || cls.isMemberClass()) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"FromString constructor must be on an instantiable class: \" + fromString);\n",
+                        "        }\n",
+                        "        if (fromString.getDeclaringClass() != cls) {\n",
+                        "            throw new IllegalStateException(\n",
+                        "                    \"FromString constructor must be defined on specified class: \" + fromString);\n",
+                        "        }\n",
+                        "        this.fromString = fromString;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ConstructorFromStringConverter(Class<T>, Constructor<T>)",
+                    "parameters": [
+                        "cls",
+                        "fromString"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, cls: typing.Type[typing.Any], fromString: typing.Callable[..., typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, cls: typing.Type[typing.Any], fromString: typing.Callable[..., typing.Any]) -> None:",
+                        "        ",
+                        "        if (inspect.isabstract(cls) or",
+                        "            isinstance(cls, typing._SpecialForm) or",
+                        "            cls.__module__ == 'typing' or",
+                        "            cls.__module__ == 'builtins'):",
+                        "            raise ValueError(",
+                        "                \"FromString constructor must be on an instantiable class: \" + str(fromString))",
+                        "        if fromString.__qualname__.split('.')[0] != cls.__name__:",
+                        "            raise ValueError(",
+                        "                \"FromString constructor must be defined on specified class: \" + str(fromString))",
+                        "        self.__fromString = fromString"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "34-34:fromString": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private final Constructor<T> fromString;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Constructor<T>",
+                            "java.lang.reflect.Constructor<T>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __fromString: typing.Callable[..., typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __fromString: typing.Callable[..., typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "python_class_declaration": "class ConstructorFromStringConverter(TypedFromStringConverter):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.joda.convert.TypedFromStringConverter import *"
+    ]
+}

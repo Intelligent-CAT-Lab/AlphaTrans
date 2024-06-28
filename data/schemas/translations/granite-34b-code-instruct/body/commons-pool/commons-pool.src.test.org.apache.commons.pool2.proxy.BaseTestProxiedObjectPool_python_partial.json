@@ -1,0 +1,792 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-pool/src/test/java/org/apache/commons/pool2/proxy/BaseTestProxiedObjectPool.java",
+    "imports": {
+        "27-27:import StringWriter": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.io.StringWriter;\n"
+            ]
+        },
+        "28-28:import Duration": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "24-24:import ObjectPool": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.pool2.ObjectPool;\n"
+            ]
+        },
+        "25-25:import Test": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "19-19:import static Assertions.assertEquals": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        },
+        "21-21:import static Assertions.assertThrows": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertThrows;\n"
+            ]
+        },
+        "22-22:import static Assertions.assertTrue": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertTrue;\n"
+            ]
+        },
+        "20-20:import static Assertions.assertNotNull": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertNotNull;\n"
+            ]
+        }
+    },
+    "classes": {
+        "BaseTestProxiedObjectPool": {
+            "start": 30,
+            "end": 30,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "TestObjectImpl",
+                "new Executable(...) { ... }",
+                "new Executable(...) { ... }",
+                "new Executable(...) { ... }",
+                "TestObject"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "128-142:testUsageTracking": {
+                    "start": 128,
+                    "end": 142,
+                    "body": [
+                        "    public void testUsageTracking() throws Exception {\n",
+                        "        final TestObject obj = pool.borrowObject();\n",
+                        "        assertNotNull(obj);\n",
+                        "\n",
+                        "        obj.setData(DATA1);\n",
+                        "\n",
+                        "        Thread.sleep(ABANDONED_TIMEOUT_SECS.plusSeconds(2).toMillis());\n",
+                        "\n",
+                        "        pool.borrowObject();\n",
+                        "\n",
+                        "        final String logOutput = log.getBuffer().toString();\n",
+                        "\n",
+                        "        assertTrue(logOutput.contains(\"Pooled object created\"));\n",
+                        "        assertTrue(logOutput.contains(\"The last code to use this object was\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUsageTracking()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedObjectPool",
+                            "TestObject",
+                            "35-35:setData"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testUsageTracking(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                },
+                "121-125:testPassThroughMethods02": {
+                    "start": 121,
+                    "end": 125,
+                    "body": [
+                        "    public void testPassThroughMethods02() {\n",
+                        "        pool.close();\n",
+                        "\n",
+                        "        assertThrows(IllegalStateException.class, () -> pool.addObject());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPassThroughMethods02()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testPassThroughMethods02(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                },
+                "105-118:testPassThroughMethods01": {
+                    "start": 105,
+                    "end": 118,
+                    "body": [
+                        "    public void testPassThroughMethods01() throws Exception {\n",
+                        "        assertEquals(0, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "\n",
+                        "        pool.addObject();\n",
+                        "\n",
+                        "        assertEquals(0, pool.getNumActive());\n",
+                        "        assertEquals(1, pool.getNumIdle());\n",
+                        "\n",
+                        "        pool.clear();\n",
+                        "\n",
+                        "        assertEquals(0, pool.getNumActive());\n",
+                        "        assertEquals(0, pool.getNumIdle());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPassThroughMethods01()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def testPassThroughMethods01(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                },
+                "94-102:testBorrowObject": {
+                    "start": 94,
+                    "end": 102,
+                    "body": [
+                        "    public void testBorrowObject() throws Exception {\n",
+                        "        final TestObject obj = pool.borrowObject();\n",
+                        "        assertNotNull(obj);\n",
+                        "\n",
+                        "        obj.setData(DATA1);\n",
+                        "        assertEquals(DATA1, obj.getData());\n",
+                        "\n",
+                        "        pool.returnObject(obj);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBorrowObject()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedObjectPool",
+                            "TestObject",
+                            "35-35:setData"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedObjectPool",
+                            "TestObject",
+                            "33-33:getData"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testBorrowObject(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                },
+                "79-91:testAccessAfterReturn": {
+                    "start": 79,
+                    "end": 91,
+                    "body": [
+                        "    public void testAccessAfterReturn() throws Exception {\n",
+                        "        final TestObject obj = pool.borrowObject();\n",
+                        "        assertNotNull(obj);\n",
+                        "\n",
+                        "        obj.setData(DATA1);\n",
+                        "        assertEquals(DATA1, obj.getData());\n",
+                        "\n",
+                        "        pool.returnObject(obj);\n",
+                        "\n",
+                        "        assertNotNull(obj);\n",
+                        "\n",
+                        "        assertThrows(IllegalStateException.class, obj::getData);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testAccessAfterReturn()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedObjectPool",
+                            "TestObject",
+                            "35-35:setData"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedObjectPool",
+                            "TestObject",
+                            "33-33:getData"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testAccessAfterReturn(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                },
+                "64-76:testAccessAfterInvalidate": {
+                    "start": 64,
+                    "end": 76,
+                    "body": [
+                        "    public void testAccessAfterInvalidate() throws Exception {\n",
+                        "        final TestObject obj = pool.borrowObject();\n",
+                        "        assertNotNull(obj);\n",
+                        "\n",
+                        "        obj.setData(DATA1);\n",
+                        "        assertEquals(DATA1, obj.getData());\n",
+                        "\n",
+                        "        pool.invalidateObject0(obj);\n",
+                        "\n",
+                        "        assertNotNull(obj);\n",
+                        "\n",
+                        "        assertThrows(IllegalStateException.class, obj::getData);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testAccessAfterInvalidate()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedObjectPool",
+                            "TestObject",
+                            "35-35:setData"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.proxy.BaseTestProxiedObjectPool",
+                            "TestObject",
+                            "33-33:getData"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testAccessAfterInvalidate(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                },
+                "61-61:getproxySource": {
+                    "start": 61,
+                    "end": 61,
+                    "body": [
+                        "    protected abstract ProxySource<TestObject> getproxySource();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "ProxySource<TestObject>",
+                            "ProxySource<TestObject>"
+                        ]
+                    ],
+                    "signature": "getproxySource()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _getproxySource(self) -> ProxySource[TestObject]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "59-59:log": {
+                    "start": 59,
+                    "end": 59,
+                    "body": [
+                        "    private StringWriter log;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "StringWriter",
+                            "java.io.StringWriter"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __log: io.StringIO = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                },
+                "57-57:pool": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    private ObjectPool<TestObject> pool;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ObjectPool<TestObject>",
+                            "ObjectPool<TestObject>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __pool: typing.List[TestObject] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                },
+                "55-55:ABANDONED_TIMEOUT_SECS": {
+                    "start": 55,
+                    "end": 55,
+                    "body": [
+                        "    private static final Duration ABANDONED_TIMEOUT_SECS = Duration.ofSeconds(3);\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ABANDONED_TIMEOUT_SECS: datetime.timedelta = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                },
+                "53-53:DATA1": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    private static final String DATA1 = \"data1\";\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __DATA1: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                }
+            },
+            "python_class_declaration": "class BaseTestProxiedObjectPool(ABC, unittest.TestCase):\n\n"
+        },
+        "TestObjectImpl": {
+            "start": 38,
+            "end": 38,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "BaseTestProxiedObjectPool",
+            "nests": [],
+            "implements": [
+                "TestObject"
+            ],
+            "extends": [],
+            "methods": {
+                "48-50:setData": {
+                    "start": 48,
+                    "end": 50,
+                    "body": [
+                        "        public void setData(final String data) {\n",
+                        "            this.data = data;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setData(String)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def setData(self, data: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                },
+                "43-45:getData": {
+                    "start": 43,
+                    "end": 45,
+                    "body": [
+                        "        public String getData() {\n",
+                        "            return data;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getData()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getData(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "40-40:data": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "        private String data;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __data: str = ''",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                }
+            },
+            "python_class_declaration": "class TestObjectImpl(TestObject):\n\n"
+        },
+        "new Executable(...) { ... }": {
+            "start": 75,
+            "end": 75,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "BaseTestProxiedObjectPool",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {},
+            "fields": {}
+        },
+        "TestObject": {
+            "start": 32,
+            "end": 32,
+            "is_abstract": false,
+            "is_interface": true,
+            "nested_inside": "BaseTestProxiedObjectPool",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "35-35:setData": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "        void setData(String data);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setData(String)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def setData(self, data: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                },
+                "33-33:getData": {
+                    "start": 33,
+                    "end": 33,
+                    "body": [
+                        "        String getData();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getData()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def getData(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class TestObject(ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "from abc import ABC",
+        "from io import StringIO",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import datetime",
+        "import unittest",
+        "from src.main.org.apache.commons.pool2.ObjectPool import *",
+        "from src.main.org.apache.commons.pool2.proxy.ProxySource import *"
+    ]
+}

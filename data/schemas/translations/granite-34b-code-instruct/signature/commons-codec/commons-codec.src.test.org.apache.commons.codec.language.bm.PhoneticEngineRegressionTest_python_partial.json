@@ -1,0 +1,540 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-codec/src/test/java/org/apache/commons/codec/language/bm/PhoneticEngineRegressionTest.java",
+    "imports": {
+        "26-26:import Map": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "24-24:import Arrays": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "25-25:import HashSet": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "27-27:import TreeMap": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.TreeMap;\n"
+            ]
+        },
+        "22-22:import Test": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "20-20:import static Assert.*": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.Assert.*;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PhoneticEngineRegressionTest": {
+            "start": 34,
+            "end": 34,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "225-245:testCompatibilityWithOriginalVersion": {
+                    "start": 225,
+                    "end": 245,
+                    "body": [
+                        "    public void testCompatibilityWithOriginalVersion() {\n",
+                        "\n",
+                        "        final Map<String, String> args = new TreeMap<>();\n",
+                        "        args.put(\"nameType\", \"GENERIC\");\n",
+                        "        args.put(\"ruleType\", \"APPROX\");\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"abram\"),\n",
+                        "                \"Ybram|Ybrom|abram|abran|abrom|abron|avram|avrom|obram|obran|obrom|obron|ovram|ovrom\");\n",
+                        "        assertEquals(encode(args, true, \"Bendzin\"), \"bndzn|bntsn|bnzn|vndzn|vntsn\");\n",
+                        "\n",
+                        "        args.put(\"nameType\", \"ASHKENAZI\");\n",
+                        "        args.put(\"ruleType\", \"APPROX\");\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"abram\"),\n",
+                        "                \"Ybram|Ybrom|abram|abrom|avram|avrom|imbram|imbrom|obram|obrom|ombram|ombrom|ovram|ovrom\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"Halpern\"),\n",
+                        "                \"YlpYrn|Ylpirn|alpYrn|alpirn|olpYrn|olpirn|xalpirn|xolpirn\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCompatibilityWithOriginalVersion()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.language.bm.PhoneticEngineRegressionTest",
+                            "PhoneticEngineRegressionTest",
+                            "254-291:encode"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testCompatibilityWithOriginalVersion(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "160-222:testSolrSEPHARDIC": {
+                    "start": 160,
+                    "end": 222,
+                    "body": [
+                        "    public void testSolrSEPHARDIC() {\n",
+                        "        Map<String, String> args;\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        args.put(\"nameType\", \"SEPHARDIC\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"Angelo\"),\n",
+                        "                \"anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu\");\n",
+                        "        args.put(\"ruleType\", \"EXACT\");\n",
+                        "        assertEquals(encode(args, true, \"Angelo\"), \"anZelo|andZelo|anxelo\");\n",
+                        "        assertEquals(encode(args, true, \"D'Angelo\"), \"anZelo|andZelo|anxelo\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(encode(args, true, \"Angelo\"), \"andZelo|anxelo\");\n",
+                        "        assertEquals(encode(args, true, \"1234\"), \"\");\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        args.put(\"nameType\", \"SEPHARDIC\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"Angelo\"),\n",
+                        "                \"anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu\");\n",
+                        "        args.put(\"ruleType\", \"EXACT\");\n",
+                        "        assertEquals(encode(args, false, \"Angelo\"), \"anZelo|andZelo|anxelo\");\n",
+                        "        assertEquals(encode(args, false, \"D'Angelo\"), \"danZelo|dandZelo|danxelo\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(encode(args, false, \"Angelo\"), \"andZelo|anxelo\");\n",
+                        "        assertEquals(encode(args, false, \"1234\"), \"\");\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        args.put(\"nameType\", \"SEPHARDIC\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"Angelo\"),\n",
+                        "                \"anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu\");\n",
+                        "        args.put(\"ruleType\", \"APPROX\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"Angelo\"),\n",
+                        "                \"anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"D'Angelo\"),\n",
+                        "                \"anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"Angelo\"),\n",
+                        "                \"anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu\");\n",
+                        "        assertEquals(encode(args, true, \"1234\"), \"\");\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        args.put(\"nameType\", \"SEPHARDIC\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"Angelo\"),\n",
+                        "                \"anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu\");\n",
+                        "        args.put(\"ruleType\", \"APPROX\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"Angelo\"),\n",
+                        "                \"anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"D'Angelo\"),\n",
+                        "                \"danhila|danhilu|danzila|danzilu|nhila|nhilu|nzila|nzilu\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"Angelo\"),\n",
+                        "                \"anhila|anhilu|anzila|anzilu|nhila|nhilu|nzila|nzilu\");\n",
+                        "        assertEquals(encode(args, false, \"1234\"), \"\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSolrSEPHARDIC()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.language.bm.PhoneticEngineRegressionTest",
+                            "PhoneticEngineRegressionTest",
+                            "254-291:encode"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testSolrSEPHARDIC(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "99-157:testSolrASHKENAZI": {
+                    "start": 99,
+                    "end": 157,
+                    "body": [
+                        "    public void testSolrASHKENAZI() {\n",
+                        "        Map<String, String> args;\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        args.put(\"nameType\", \"ASHKENAZI\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo\");\n",
+                        "        args.put(\"ruleType\", \"EXACT\");\n",
+                        "        assertEquals(encode(args, true, \"Angelo\"), \"andZelo|angelo|anhelo|anxelo\");\n",
+                        "        assertEquals(encode(args, true, \"D'Angelo\"), \"dandZelo|dangelo|danhelo|danxelo\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(encode(args, true, \"Angelo\"), \"angelo|anxelo\");\n",
+                        "        assertEquals(encode(args, true, \"1234\"), \"\");\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        args.put(\"nameType\", \"ASHKENAZI\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo\");\n",
+                        "        args.put(\"ruleType\", \"EXACT\");\n",
+                        "        assertEquals(encode(args, false, \"Angelo\"), \"andZelo|angelo|anhelo|anxelo\");\n",
+                        "        assertEquals(encode(args, false, \"D'Angelo\"), \"dandZelo|dangelo|danhelo|danxelo\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(encode(args, false, \"Angelo\"), \"angelo|anxelo\");\n",
+                        "        assertEquals(encode(args, false, \"1234\"), \"\");\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        args.put(\"nameType\", \"ASHKENAZI\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo\");\n",
+                        "        args.put(\"ruleType\", \"APPROX\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"D'Angelo\"),\n",
+                        "                \"dYngYlo|dYngilo|dangYlo|dangilo|danilo|danxilo|danzilo|dongYlo|dongilo|donilo|donxilo|donzilo\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(encode(args, true, \"Angelo\"), \"angilo|anxilo|ongilo|onxilo\");\n",
+                        "        assertEquals(encode(args, true, \"1234\"), \"\");\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        args.put(\"nameType\", \"ASHKENAZI\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo\");\n",
+                        "        args.put(\"ruleType\", \"APPROX\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|angYlo|angilo|anilo|anxilo|anzilo|ongYlo|ongilo|onilo|onxilo|onzilo\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"D'Angelo\"),\n",
+                        "                \"dYngYlo|dYngilo|dangYlo|dangilo|danilo|danxilo|danzilo|dongYlo|dongilo|donilo|donxilo|donzilo\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(encode(args, false, \"Angelo\"), \"angilo|anxilo|ongilo|onxilo\");\n",
+                        "        assertEquals(encode(args, false, \"1234\"), \"\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSolrASHKENAZI()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.language.bm.PhoneticEngineRegressionTest",
+                            "PhoneticEngineRegressionTest",
+                            "254-291:encode"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testSolrASHKENAZI(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "37-96:testSolrGENERIC": {
+                    "start": 37,
+                    "end": 96,
+                    "body": [
+                        "    public void testSolrGENERIC() {\n",
+                        "        Map<String, String> args;\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        args.put(\"nameType\", \"GENERIC\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo\");\n",
+                        "        args.put(\"ruleType\", \"EXACT\");\n",
+                        "        assertEquals(encode(args, true, \"Angelo\"), \"anZelo|andZelo|angelo|anhelo|anjelo|anxelo\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"D'Angelo\"),\n",
+                        "                \"(anZelo|andZelo|angelo|anhelo|anjelo|anxelo)-(danZelo|dandZelo|dangelo|danhelo|danjelo|danxelo)\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(encode(args, true, \"Angelo\"), \"andZelo|angelo|anxelo\");\n",
+                        "        assertEquals(encode(args, true, \"1234\"), \"\");\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo\");\n",
+                        "        args.put(\"ruleType\", \"EXACT\");\n",
+                        "        assertEquals(encode(args, false, \"Angelo\"), \"anZelo|andZelo|angelo|anhelo|anjelo|anxelo\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"D'Angelo\"),\n",
+                        "                \"(anZelo|andZelo|angelo|anhelo|anjelo|anxelo)-(danZelo|dandZelo|dangelo|danhelo|danjelo|danxelo)\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(encode(args, false, \"Angelo\"), \"andZelo|angelo|anxelo\");\n",
+                        "        assertEquals(encode(args, false, \"1234\"), \"\");\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo\");\n",
+                        "        args.put(\"ruleType\", \"APPROX\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, true, \"D'Angelo\"),\n",
+                        "                \"(YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo)-(dYngYlo|dYngilo|dagilo|dangYlo|dangilo|daniilo|danilo|danxilo|danzilo|dogilo|dongYlo|dongilo|doniilo|donilo|donxilo|donzilo)\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(encode(args, true, \"Angelo\"), \"angilo|anxilo|anzilo|ongilo|onxilo|onzilo\");\n",
+                        "        assertEquals(encode(args, true, \"1234\"), \"\");\n",
+                        "\n",
+                        "        args = new TreeMap<>();\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo\");\n",
+                        "        args.put(\"ruleType\", \"APPROX\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"Angelo\"),\n",
+                        "                \"YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo\");\n",
+                        "        assertEquals(\n",
+                        "                encode(args, false, \"D'Angelo\"),\n",
+                        "                \"(YngYlo|Yngilo|agilo|angYlo|angilo|aniilo|anilo|anxilo|anzilo|ogilo|ongYlo|ongilo|oniilo|onilo|onxilo|onzilo)-(dYngYlo|dYngilo|dagilo|dangYlo|dangilo|daniilo|danilo|danxilo|danzilo|dogilo|dongYlo|dongilo|doniilo|donilo|donxilo|donzilo)\");\n",
+                        "        args.put(\"languageSet\", \"italian,greek,spanish\");\n",
+                        "        assertEquals(encode(args, false, \"Angelo\"), \"angilo|anxilo|anzilo|ongilo|onxilo|onzilo\");\n",
+                        "        assertEquals(encode(args, false, \"1234\"), \"\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSolrGENERIC()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.language.bm.PhoneticEngineRegressionTest",
+                            "PhoneticEngineRegressionTest",
+                            "254-291:encode"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testSolrGENERIC(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "254-291:encode": {
+                    "start": 254,
+                    "end": 291,
+                    "body": [
+                        "    private static String encode(\n",
+                        "            final Map<String, String> args, final boolean concat, final String input) {\n",
+                        "        final Languages.LanguageSet languageSet;\n",
+                        "        final PhoneticEngine engine;\n",
+                        "\n",
+                        "        final String nameTypeArg = args.get(\"nameType\");\n",
+                        "        final NameType nameType =\n",
+                        "                (nameTypeArg == null) ? NameType.GENERIC : NameType.valueOf(nameTypeArg);\n",
+                        "\n",
+                        "        final String ruleTypeArg = args.get(\"ruleType\");\n",
+                        "        final RuleType ruleType =\n",
+                        "                (ruleTypeArg == null) ? RuleType.APPROX : RuleType.valueOf(ruleTypeArg);\n",
+                        "\n",
+                        "        engine = PhoneticEngine.PhoneticEngine0(nameType, ruleType, concat);\n",
+                        "\n",
+                        "        final String languageSetArg = args.get(\"languageSet\");\n",
+                        "        if (languageSetArg == null || languageSetArg.equals(\"auto\")) {\n",
+                        "            languageSet = null;\n",
+                        "        } else {\n",
+                        "            languageSet =\n",
+                        "                    Languages.LanguageSet.from(\n",
+                        "                            new HashSet<>(Arrays.asList(languageSetArg.split(\",\"))));\n",
+                        "        }\n",
+                        "\n",
+                        "        /*\n",
+                        "            org/apache/lucene/analysis/phonetic/BeiderMorseFilter.java (lines 96-98) does this:\n",
+                        "\n",
+                        "            encoded = (languages == null)\n",
+                        "                ? engine.encode(termAtt.toString())\n",
+                        "                : engine.encode(termAtt.toString(), languages);\n",
+                        "\n",
+                        "            Hence our approach, below:\n",
+                        "        */\n",
+                        "        if (languageSet == null) {\n",
+                        "            return engine.encode0(input);\n",
+                        "        }\n",
+                        "        return engine.encode1(input, languageSet);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encode(Map<String,String>, boolean, String)",
+                    "parameters": [
+                        "args",
+                        "concat",
+                        "input"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.bm.PhoneticEngine",
+                            "PhoneticEngine",
+                            "306-309:PhoneticEngine0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.bm.Languages",
+                            "LanguageSet",
+                            "64-66:from"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.bm.PhoneticEngine",
+                            "PhoneticEngine",
+                            "391-394:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.bm.PhoneticEngine",
+                            "PhoneticEngine",
+                            "405-479:encode1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __encode(args: typing.Dict[str, str], concat: bool, input: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class PhoneticEngineRegressionTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import unittest",
+        "from src.main.org.apache.commons.codec.language.bm.Languages import *",
+        "from src.main.org.apache.commons.codec.language.bm.NameType import *",
+        "from src.main.org.apache.commons.codec.language.bm.PhoneticEngine import *",
+        "from src.main.org.apache.commons.codec.language.bm.RuleType import *"
+    ]
+}

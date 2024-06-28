@@ -1,0 +1,945 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-graph/src/test/java/org/apache/commons/graph/coloring/GraphColoringBackTrackingTestCase.java",
+    "imports": {
+        "39-39:import DecimalFormat": {
+            "start": 39,
+            "end": 39,
+            "body": [
+                "import java.text.DecimalFormat;\n"
+            ]
+        },
+        "40-40:import NumberFormat": {
+            "start": 40,
+            "end": 40,
+            "body": [
+                "import java.text.NumberFormat;\n"
+            ]
+        },
+        "41-41:import Logger": {
+            "start": 41,
+            "end": 41,
+            "body": [
+                "import java.util.logging.Logger;\n"
+            ]
+        },
+        "31-31:import UndirectedGraph": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.apache.commons.graph.UndirectedGraph;\n"
+            ]
+        },
+        "36-36:import UndirectedMutableGraph": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import org.apache.commons.graph.model.UndirectedMutableGraph;\n"
+            ]
+        },
+        "32-32:import AbstractGraphConnection": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.apache.commons.graph.builder.AbstractGraphConnection;\n"
+            ]
+        },
+        "37-37:import Test": {
+            "start": 37,
+            "end": 37,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "35-35:import BaseLabeledWeightedEdge": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledWeightedEdge;\n"
+            ]
+        },
+        "33-33:import BaseLabeledEdge": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledEdge;\n"
+            ]
+        },
+        "34-34:import BaseLabeledVertex": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledVertex;\n"
+            ]
+        },
+        "28-28:import static Assert.assertEquals": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "23-23:import static CommonsGraph.newUndirectedMutableGraph": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.newUndirectedMutableGraph;\n"
+            ]
+        },
+        "22-22:import static CommonsGraph.coloring": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.coloring;\n"
+            ]
+        },
+        "24-24:import static GraphUtils.buildBipartedGraph": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.apache.commons.graph.utils.GraphUtils.buildBipartedGraph;\n"
+            ]
+        },
+        "25-25:import static GraphUtils.buildCompleteGraph": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import static org.apache.commons.graph.utils.GraphUtils.buildCompleteGraph;\n"
+            ]
+        },
+        "26-26:import static GraphUtils.buildCrownGraph": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import static org.apache.commons.graph.utils.GraphUtils.buildCrownGraph;\n"
+            ]
+        },
+        "27-27:import static GraphUtils.buildSudokuGraph": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import static org.apache.commons.graph.utils.GraphUtils.buildSudokuGraph;\n"
+            ]
+        },
+        "29-29:import static Assert.assertNotNull": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import static org.junit.Assert.assertNotNull;\n"
+            ]
+        }
+    },
+    "classes": {
+        "GraphColoringBackTrackingTestCase": {
+            "start": 44,
+            "end": 44,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [
+                "AbstractColoringTest"
+            ],
+            "methods": {
+                "208-243:testSudokuWithConstraints": {
+                    "start": 208,
+                    "end": 243,
+                    "body": [
+                        "    public void testSudokuWithConstraints() throws Exception {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g1 =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge>();\n",
+                        "        BaseLabeledVertex[][] grid = buildSudokuGraph(g1);\n",
+                        "\n",
+                        "        ColoredVertices<BaseLabeledVertex, Integer> predefinedColor =\n",
+                        "                new ColoredVertices<BaseLabeledVertex, Integer>();\n",
+                        "        predefinedColor.addColor(grid[0][0], 1);\n",
+                        "        predefinedColor.addColor(grid[5][5], 8);\n",
+                        "        predefinedColor.addColor(grid[1][2], 5);\n",
+                        "\n",
+                        "        ColoredVertices<BaseLabeledVertex, Integer> sudoku =\n",
+                        "                coloring(g1)\n",
+                        "                        .withColors(createColorsList(9))\n",
+                        "                        .applyingBackTrackingAlgorithm1(predefinedColor);\n",
+                        "        assertNotNull(sudoku);\n",
+                        "        checkColoring(g1, sudoku);\n",
+                        "        assertEquals(9, sudoku.getRequiredColors());\n",
+                        "\n",
+                        "        assertEquals(new Integer(1), sudoku.getColor(grid[0][0]));\n",
+                        "        assertEquals(new Integer(8), sudoku.getColor(grid[5][5]));\n",
+                        "        assertEquals(new Integer(5), sudoku.getColor(grid[1][2]));\n",
+                        "\n",
+                        "        StringBuilder sb = new StringBuilder();\n",
+                        "        NumberFormat nf = new DecimalFormat(\"00\");\n",
+                        "        sb.append(\"\\n\");\n",
+                        "        for (int i = 0; i < 9; i++) {\n",
+                        "            for (int j = 0; j < 9; j++) {\n",
+                        "                sb.append(\"| \");\n",
+                        "                sb.append(nf.format(sudoku.getColor(grid[i][j])));\n",
+                        "                sb.append(\" | \");\n",
+                        "            }\n",
+                        "            sb.append(\"\\n\");\n",
+                        "        }\n",
+                        "        Logger.getAnonymousLogger().fine(sb.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSudokuWithConstraints()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.utils.GraphUtils",
+                            "GraphUtils",
+                            "134-205:buildSudokuGraph"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "64-67:coloring"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "78-84:createColorsList"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "45-56:checkColoring"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testSudokuWithConstraints(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "184-205:testSudoku": {
+                    "start": 184,
+                    "end": 205,
+                    "body": [
+                        "    public void testSudoku() throws Exception {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g1 =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge>();\n",
+                        "        BaseLabeledVertex[][] grid = buildSudokuGraph(g1);\n",
+                        "\n",
+                        "        ColoredVertices<BaseLabeledVertex, Integer> sudoku =\n",
+                        "                coloring(g1).withColors(createColorsList(9)).applyingBackTrackingAlgorithm0();\n",
+                        "        assertNotNull(sudoku);\n",
+                        "        checkColoring(g1, sudoku);\n",
+                        "        assertEquals(9, sudoku.getRequiredColors());\n",
+                        "\n",
+                        "        StringBuilder sb = new StringBuilder();\n",
+                        "        NumberFormat nf = new DecimalFormat(\"00\");\n",
+                        "        sb.append(\"\\n\");\n",
+                        "        for (int i = 0; i < 9; i++) {\n",
+                        "            for (int j = 0; j < 9; j++) {\n",
+                        "                sb.append(\"| \" + nf.format(sudoku.getColor(grid[i][j])) + \" | \");\n",
+                        "            }\n",
+                        "            sb.append(\"\\n\");\n",
+                        "        }\n",
+                        "        Logger.getAnonymousLogger().fine(sb.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSudoku()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.utils.GraphUtils",
+                            "GraphUtils",
+                            "134-205:buildSudokuGraph"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "64-67:coloring"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "78-84:createColorsList"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "45-56:checkColoring"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testSudoku(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "177-181:testNullGraph": {
+                    "start": 177,
+                    "end": 181,
+                    "body": [
+                        "    public void testNullGraph() {\n",
+                        "        coloring((UndirectedGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null)\n",
+                        "                .withColors(null)\n",
+                        "                .applyingBackTrackingAlgorithm0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NullPointerException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullGraph()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "64-67:coloring"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testNullGraph(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "170-174:testNullColorGraph": {
+                    "start": 170,
+                    "end": 174,
+                    "body": [
+                        "    public void testNullColorGraph() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge>();\n",
+                        "        coloring(g).withColors(null).applyingBackTrackingAlgorithm0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NullPointerException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullColorGraph()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "64-67:coloring"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testNullColorGraph(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "149-167:testNotEnoughtColorGraph": {
+                    "start": 149,
+                    "end": 167,
+                    "body": [
+                        "    public void testNotEnoughtColorGraph() throws NotEnoughColorsException {\n",
+                        "        final BaseLabeledVertex two = new BaseLabeledVertex(\"2\");\n",
+                        "\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex one = addVertex(new BaseLabeledVertex(\"1\"));\n",
+                        "                                addVertex(two);\n",
+                        "                                BaseLabeledVertex three = addVertex(new BaseLabeledVertex(\"3\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"1 -> 2\")).from(one).to(two);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"2 -> 3\")).from(two).to(three);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"3 -> 1\")).from(three).to(one);\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "        coloring(g).withColors(createColorsList(1)).applyingBackTrackingAlgorithm0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NotEnoughColorsException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNotEnoughtColorGraph()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "201-204:newUndirectedMutableGraph"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "64-67:coloring"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "78-84:createColorsList"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testNotEnoughtColorGraph(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "138-146:testEmptyGraph": {
+                    "start": 138,
+                    "end": 146,
+                    "body": [
+                        "    public void testEmptyGraph() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge>();\n",
+                        "\n",
+                        "        ColoredVertices<BaseLabeledVertex, Integer> coloredVertices =\n",
+                        "                coloring(g).withColors(createColorsList(1)).applyingBackTrackingAlgorithm0();\n",
+                        "        assertNotNull(coloredVertices);\n",
+                        "        assertEquals(0, coloredVertices.getRequiredColors());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyGraph()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "64-67:coloring"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "78-84:createColorsList"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testEmptyGraph(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "123-135:testCromaticNumberSparseGraph": {
+                    "start": 123,
+                    "end": 135,
+                    "body": [
+                        "    public void testCromaticNumberSparseGraph() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g1 =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge>();\n",
+                        "        for (int i = 0; i < 100; i++) {\n",
+                        "            g1.addVertex(new BaseLabeledVertex(String.valueOf(i)));\n",
+                        "        }\n",
+                        "\n",
+                        "        ColoredVertices<BaseLabeledVertex, Integer> coloredVertices =\n",
+                        "                coloring(g1).withColors(createColorsList(1)).applyingBackTrackingAlgorithm0();\n",
+                        "        assertNotNull(coloredVertices);\n",
+                        "        assertEquals(1, coloredVertices.getRequiredColors());\n",
+                        "        checkColoring(g1, coloredVertices);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCromaticNumberSparseGraph()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "64-67:coloring"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "78-84:createColorsList"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "45-56:checkColoring"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testCromaticNumberSparseGraph(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "109-120:testCromaticNumberComplete": {
+                    "start": 109,
+                    "end": 120,
+                    "body": [
+                        "    public void testCromaticNumberComplete() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g1 =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge>();\n",
+                        "\n",
+                        "        buildCompleteGraph(100, g1);\n",
+                        "\n",
+                        "        ColoredVertices<BaseLabeledVertex, Integer> coloredVertices =\n",
+                        "                coloring(g1).withColors(createColorsList(100)).applyingBackTrackingAlgorithm0();\n",
+                        "        assertNotNull(coloredVertices);\n",
+                        "        assertEquals(100, coloredVertices.getRequiredColors());\n",
+                        "        checkColoring(g1, coloredVertices);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCromaticNumberComplete()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "64-67:coloring"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "78-84:createColorsList"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.utils.GraphUtils",
+                            "GraphUtils",
+                            "87-104:buildCompleteGraph"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "45-56:checkColoring"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testCromaticNumberComplete(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "95-106:testCromaticNumberBiparted": {
+                    "start": 95,
+                    "end": 106,
+                    "body": [
+                        "    public void testCromaticNumberBiparted() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g1 =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge>();\n",
+                        "\n",
+                        "        buildBipartedGraph(100, g1);\n",
+                        "\n",
+                        "        ColoredVertices<BaseLabeledVertex, Integer> coloredVertices =\n",
+                        "                coloring(g1).withColors(createColorsList(2)).applyingBackTrackingAlgorithm0();\n",
+                        "        assertNotNull(coloredVertices);\n",
+                        "        assertEquals(2, coloredVertices.getRequiredColors());\n",
+                        "        checkColoring(g1, coloredVertices);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCromaticNumberBiparted()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "64-67:coloring"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "78-84:createColorsList"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.utils.GraphUtils",
+                            "GraphUtils",
+                            "43-79:buildBipartedGraph"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "45-56:checkColoring"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testCromaticNumberBiparted(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "62-92:testCromaticNumber": {
+                    "start": 62,
+                    "end": 92,
+                    "body": [
+                        "    public void testCromaticNumber() {\n",
+                        "        final BaseLabeledVertex two = new BaseLabeledVertex(\"2\");\n",
+                        "\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex one = addVertex(new BaseLabeledVertex(\"1\"));\n",
+                        "                                addVertex(two);\n",
+                        "                                BaseLabeledVertex three = addVertex(new BaseLabeledVertex(\"3\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"1 -> 2\")).from(one).to(two);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"2 -> 3\")).from(two).to(three);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"3 -> 1\")).from(three).to(one);\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "\n",
+                        "        ColoredVertices<BaseLabeledVertex, Integer> coloredVertex =\n",
+                        "                new ColoredVertices<BaseLabeledVertex, Integer>();\n",
+                        "        coloredVertex.addColor(two, 2);\n",
+                        "\n",
+                        "        ColoredVertices<BaseLabeledVertex, Integer> coloredVertices =\n",
+                        "                coloring(g)\n",
+                        "                        .withColors(createColorsList(3))\n",
+                        "                        .applyingBackTrackingAlgorithm1(coloredVertex);\n",
+                        "        assertNotNull(coloredVertices);\n",
+                        "        assertEquals(3, coloredVertices.getRequiredColors());\n",
+                        "        assertEquals(new Integer(2), coloredVertices.getColor(two));\n",
+                        "        checkColoring(g, coloredVertices);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCromaticNumber()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "201-204:newUndirectedMutableGraph"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "64-67:coloring"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "78-84:createColorsList"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "45-56:checkColoring"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testCromaticNumber(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "48-59:testCrawnGraph": {
+                    "start": 48,
+                    "end": 59,
+                    "body": [
+                        "    public void testCrawnGraph() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge>();\n",
+                        "\n",
+                        "        buildCrownGraph(6, g);\n",
+                        "\n",
+                        "        ColoredVertices<BaseLabeledVertex, Integer> coloredVertices =\n",
+                        "                coloring(g).withColors(createColorsList(2)).applyingBackTrackingAlgorithm0();\n",
+                        "        assertNotNull(coloredVertices);\n",
+                        "        assertEquals(2, coloredVertices.getRequiredColors());\n",
+                        "        checkColoring(g, coloredVertices);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCrawnGraph()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "64-67:coloring"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "78-84:createColorsList"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.utils.GraphUtils",
+                            "GraphUtils",
+                            "106-127:buildCrownGraph"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.coloring.AbstractColoringTest",
+                            "AbstractColoringTest",
+                            "45-56:checkColoring"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testCrawnGraph(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class GraphColoringBackTrackingTestCase(AbstractColoringTest, unittest.TestCase):\n\n"
+        },
+        "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }": {
+            "start": 67,
+            "end": 67,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "GraphColoringBackTrackingTestCase",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {},
+            "fields": {}
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import numbers",
+        "import unittest",
+        "from src.main.org.apache.commons.graph.CommonsGraph import *",
+        "from src.main.org.apache.commons.graph.UndirectedGraph import *",
+        "from src.main.org.apache.commons.graph.builder.GraphConnection import *",
+        "from src.test.org.apache.commons.graph.coloring.AbstractColoringTest import *",
+        "from src.main.org.apache.commons.graph.coloring.ColoredVertices import *",
+        "from src.main.org.apache.commons.graph.coloring.ColoringAlgorithmsSelector import *",
+        "from src.main.org.apache.commons.graph.coloring.ColorsBuilder import *",
+        "from src.main.org.apache.commons.graph.coloring.NotEnoughColorsException import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *",
+        "from src.main.org.apache.commons.graph.model.BaseMutableGraph import *",
+        "from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *",
+        "from src.test.org.apache.commons.graph.utils.GraphUtils import *",
+        "from src.main.org.apache.commons.graph.builder.AbstractGraphConnection import *",
+        "from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *",
+        "from src.main.org.apache.commons.graph.builder.TailVertexConnector import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *"
+    ]
+}

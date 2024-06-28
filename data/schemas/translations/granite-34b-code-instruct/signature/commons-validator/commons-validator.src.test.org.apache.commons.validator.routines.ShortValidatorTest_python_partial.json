@@ -1,0 +1,373 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-validator/src/test/java/org/apache/commons/validator/routines/ShortValidatorTest.java",
+    "imports": {
+        "19-19:import Locale": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ShortValidatorTest": {
+            "start": 26,
+            "end": 26,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "AbstractNumberValidatorTest"
+            ],
+            "methods": {
+                "38-69:setUp": {
+                    "start": 38,
+                    "end": 69,
+                    "body": [
+                        "    protected void setUp() throws Exception {\n",
+                        "        super.setUp();\n",
+                        "\n",
+                        "        validator = new ShortValidator(false, 0);\n",
+                        "        strictValidator = ShortValidator.ShortValidator1();\n",
+                        "\n",
+                        "        testPattern = \"#,###\";\n",
+                        "\n",
+                        "        max = Short.valueOf(Short.MAX_VALUE);\n",
+                        "        maxPlusOne = Long.valueOf(max.longValue() + 1);\n",
+                        "        min = Short.valueOf(Short.MIN_VALUE);\n",
+                        "        minMinusOne = Long.valueOf(min.longValue() - 1);\n",
+                        "\n",
+                        "        invalidStrict = new String[] {null, \"\", \"X\", \"X12\", \"12X\", \"1X2\", \"1.2\"};\n",
+                        "\n",
+                        "        invalid = new String[] {null, \"\", \"X\", \"X12\"};\n",
+                        "\n",
+                        "        testNumber = Short.valueOf((short) 1234);\n",
+                        "        testZero = Short.valueOf((short) 0);\n",
+                        "        validStrict = new String[] {\"0\", \"1234\", \"1,234\"};\n",
+                        "        validStrictCompare = new Number[] {testZero, testNumber, testNumber};\n",
+                        "        valid = new String[] {\"0\", \"1234\", \"1,234\", \"1,234.5\", \"1234X\"};\n",
+                        "        validCompare = new Number[] {testZero, testNumber, testNumber, testNumber, testNumber};\n",
+                        "\n",
+                        "        testStringUS = \"1,234\";\n",
+                        "        testStringDE = \"1.234\";\n",
+                        "\n",
+                        "        localeValue = testStringDE;\n",
+                        "        localePattern = \"#.###\";\n",
+                        "        testLocale = Locale.GERMANY;\n",
+                        "        localeExpected = testNumber;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setUp()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest",
+                            "AbstractNumberValidatorTest",
+                            "72-76:setUp"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ShortValidator",
+                            "ShortValidator",
+                            "79-81:ShortValidator"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ShortValidator",
+                            "ShortValidator",
+                            "83-85:ShortValidator1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def _setUp(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "122-146:testShortRangeMinMax": {
+                    "start": 122,
+                    "end": 146,
+                    "body": [
+                        "    public void testShortRangeMinMax() {\n",
+                        "        ShortValidator validator = (ShortValidator) strictValidator;\n",
+                        "        Short number9 = validator.validate1(\"9\", \"#\");\n",
+                        "        Short number10 = validator.validate1(\"10\", \"#\");\n",
+                        "        Short number11 = validator.validate1(\"11\", \"#\");\n",
+                        "        Short number19 = validator.validate1(\"19\", \"#\");\n",
+                        "        Short number20 = validator.validate1(\"20\", \"#\");\n",
+                        "        Short number21 = validator.validate1(\"21\", \"#\");\n",
+                        "        short min = (short) 10;\n",
+                        "        short max = (short) 20;\n",
+                        "\n",
+                        "        assertFalse(\"isInRange() < min\", validator.isInRange1(number9, min, max));\n",
+                        "        assertTrue(\"isInRange() = min\", validator.isInRange1(number10, min, max));\n",
+                        "        assertTrue(\"isInRange() in range\", validator.isInRange1(number11, min, max));\n",
+                        "        assertTrue(\"isInRange() = max\", validator.isInRange1(number20, min, max));\n",
+                        "        assertFalse(\"isInRange() > max\", validator.isInRange1(number21, min, max));\n",
+                        "\n",
+                        "        assertFalse(\"minValue() < min\", validator.minValue1(number9, min));\n",
+                        "        assertTrue(\"minValue() = min\", validator.minValue1(number10, min));\n",
+                        "        assertTrue(\"minValue() > min\", validator.minValue1(number11, min));\n",
+                        "\n",
+                        "        assertTrue(\"maxValue() < max\", validator.maxValue1(number19, max));\n",
+                        "        assertTrue(\"maxValue() = max\", validator.maxValue1(number20, max));\n",
+                        "        assertFalse(\"maxValue() > max\", validator.maxValue1(number21, max));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testShortRangeMinMax()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ShortValidator",
+                            "ShortValidator",
+                            "123-125:validate1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ShortValidator",
+                            "ShortValidator",
+                            "172-174:isInRange1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ShortValidator",
+                            "ShortValidator",
+                            "194-196:minValue1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ShortValidator",
+                            "ShortValidator",
+                            "216-218:maxValue1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testShortRangeMinMax(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "72-119:testShortValidatorMethods": {
+                    "start": 72,
+                    "end": 119,
+                    "body": [
+                        "    public void testShortValidatorMethods() {\n",
+                        "        Locale locale = Locale.GERMAN;\n",
+                        "        String pattern = \"0,00,00\";\n",
+                        "        String patternVal = \"1,23,45\";\n",
+                        "        String germanPatternVal = \"1.23.45\";\n",
+                        "        String localeVal = \"12.345\";\n",
+                        "        String defaultVal = \"12,345\";\n",
+                        "        String XXXX = \"XXXX\";\n",
+                        "        Short expected = Short.valueOf((short) 12345);\n",
+                        "        assertEquals(\n",
+                        "                \"validate(A) default\",\n",
+                        "                expected,\n",
+                        "                ShortValidator.getInstance().validate0(defaultVal));\n",
+                        "        assertEquals(\n",
+                        "                \"validate(A) locale \",\n",
+                        "                expected,\n",
+                        "                ShortValidator.getInstance().validate2(localeVal, locale));\n",
+                        "        assertEquals(\n",
+                        "                \"validate(A) pattern\",\n",
+                        "                expected,\n",
+                        "                ShortValidator.getInstance().validate1(patternVal, pattern));\n",
+                        "        assertEquals(\n",
+                        "                \"validate(A) both\",\n",
+                        "                expected,\n",
+                        "                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));\n",
+                        "\n",
+                        "        assertTrue(\"isValid(A) default\", ShortValidator.getInstance().isValid0(defaultVal));\n",
+                        "        assertTrue(\"isValid(A) locale \", ShortValidator.getInstance().isValid2(localeVal, locale));\n",
+                        "        assertTrue(\n",
+                        "                \"isValid(A) pattern\", ShortValidator.getInstance().isValid1(patternVal, pattern));\n",
+                        "        assertTrue(\n",
+                        "                \"isValid(A) both\",\n",
+                        "                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));\n",
+                        "\n",
+                        "        assertNull(\"validate(B) default\", ShortValidator.getInstance().validate0(XXXX));\n",
+                        "        assertNull(\"validate(B) locale \", ShortValidator.getInstance().validate2(XXXX, locale));\n",
+                        "        assertNull(\"validate(B) pattern\", ShortValidator.getInstance().validate1(XXXX, pattern));\n",
+                        "        assertNull(\n",
+                        "                \"validate(B) both\",\n",
+                        "                ShortValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));\n",
+                        "\n",
+                        "        assertFalse(\"isValid(B) default\", ShortValidator.getInstance().isValid0(XXXX));\n",
+                        "        assertFalse(\"isValid(B) locale \", ShortValidator.getInstance().isValid2(XXXX, locale));\n",
+                        "        assertFalse(\"isValid(B) pattern\", ShortValidator.getInstance().isValid1(XXXX, pattern));\n",
+                        "        assertFalse(\n",
+                        "                \"isValid(B) both\",\n",
+                        "                ShortValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testShortValidatorMethods()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ShortValidator",
+                            "ShortValidator",
+                            "112-114:validate0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ShortValidator",
+                            "ShortValidator",
+                            "74-76:getInstance"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ShortValidator",
+                            "ShortValidator",
+                            "134-136:validate2"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ShortValidator",
+                            "ShortValidator",
+                            "123-125:validate1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ShortValidator",
+                            "ShortValidator",
+                            "148-150:validate3"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "68-70:isValid0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "90-92:isValid2"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "79-81:isValid1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "93-96:isValid3"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testShortValidatorMethods(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                },
+                "33-35:ShortValidatorTest": {
+                    "start": 33,
+                    "end": 35,
+                    "body": [
+                        "    public ShortValidatorTest(String name) {\n",
+                        "        super(name);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ShortValidatorTest(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest",
+                            "AbstractNumberValidatorTest",
+                            "67-69:AbstractNumberValidatorTest"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def __init__(self, name: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "granite-34b-code-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "python_class_declaration": "class ShortValidatorTest(AbstractNumberValidatorTest):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import numbers",
+        "from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *",
+        "from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import *",
+        "from src.main.org.apache.commons.validator.routines.ShortValidator import *"
+    ]
+}

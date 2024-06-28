@@ -1,0 +1,438 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-graph/src/main/java/org/apache/commons/graph/scc/TarjanAlgorithm.java",
+    "imports": {
+        "28-28:import Map": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "29-29:import Set": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "26-26:import HashMap": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "27-27:import LinkedHashSet": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.LinkedHashSet;\n"
+            ]
+        },
+        "30-30:import Stack": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.util.Stack;\n"
+            ]
+        },
+        "24-24:import DirectedGraph": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.DirectedGraph;\n"
+            ]
+        },
+        "22-22:import static Math.min": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static java.lang.Math.min;\n"
+            ]
+        }
+    },
+    "classes": {
+        "TarjanAlgorithm": {
+            "start": 40,
+            "end": 40,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "SccAlgorithm"
+            ],
+            "extends": [],
+            "methods": {
+                "100-119:perform": {
+                    "start": 100,
+                    "end": 119,
+                    "body": [
+                        "    public Set<Set<V>> perform() {\n",
+                        "        final Map<V, TarjanVertexMetaInfo> verticesMetaInfo =\n",
+                        "                new HashMap<V, TarjanVertexMetaInfo>();\n",
+                        "        final Stack<V> s = new Stack<V>();\n",
+                        "        final Set<Set<V>> stronglyConnectedComponents = new LinkedHashSet<Set<V>>();\n",
+                        "        Integer index = 0;\n",
+                        "\n",
+                        "        for (V vertex : graph.getVertices0()) {\n",
+                        "            TarjanVertexMetaInfo vertexMetaInfo = getMetaInfo(vertex, verticesMetaInfo);\n",
+                        "            final Set<V> stronglyConnectedComponent = new LinkedHashSet<V>();\n",
+                        "\n",
+                        "            if (vertexMetaInfo.hasUndefinedIndex()) {\n",
+                        "                strongConnect(\n",
+                        "                        graph, vertex, verticesMetaInfo, s, stronglyConnectedComponent, index);\n",
+                        "                stronglyConnectedComponents.add(stronglyConnectedComponent);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return stronglyConnectedComponents;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Set<Set<V>>",
+                            "java.util.Set<Set<V>>"
+                        ]
+                    ],
+                    "signature": "perform()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanAlgorithm",
+                            "TarjanAlgorithm",
+                            "42-50:getMetaInfo"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "38-40:hasUndefinedIndex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanAlgorithm",
+                            "TarjanAlgorithm",
+                            "52-85:strongConnect"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def perform(self) -> typing.Set[typing.Set[typing.Any]]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def perform(self) -> typing.Set[typing.Set[typing.Any]]:",
+                        "        ",
+                        "        verticesMetaInfo: typing.Dict[typing.Any, TarjanVertexMetaInfo] = {}",
+                        "        s: typing.List[typing.Any] = []",
+                        "        stronglyConnectedComponents: typing.Set[typing.Set[typing.Any]] = set()",
+                        "        index: int = 0",
+                        "",
+                        "        for vertex in self.__graph.getVertices0():",
+                        "            vertexMetaInfo = self.__getMetaInfo(vertex, verticesMetaInfo)",
+                        "            stronglyConnectedComponent: typing.Set[typing.Any] = set()",
+                        "",
+                        "            if vertexMetaInfo.hasUndefinedIndex():",
+                        "                self.__strongConnect(self.__graph, vertex, verticesMetaInfo, s, stronglyConnectedComponent, index)",
+                        "                stronglyConnectedComponents.add(frozenset(stronglyConnectedComponent))",
+                        "",
+                        "        return stronglyConnectedComponents"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "90-92:TarjanAlgorithm": {
+                    "start": 90,
+                    "end": 92,
+                    "body": [
+                        "    public TarjanAlgorithm(DirectedGraph<V, E> graph) {\n",
+                        "        this.graph = graph;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "TarjanAlgorithm(DirectedGraph<V,E>)",
+                    "parameters": [
+                        "graph"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:",
+                        "         self.__graph = graph"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "52-85:strongConnect": {
+                    "start": 52,
+                    "end": 85,
+                    "body": [
+                        "    private static <V, E> void strongConnect(\n",
+                        "            DirectedGraph<V, E> graph,\n",
+                        "            V vertex,\n",
+                        "            Map<V, TarjanVertexMetaInfo> verticesMetaInfo,\n",
+                        "            Stack<V> s,\n",
+                        "            Set<V> stronglyConnectedComponent,\n",
+                        "            Integer index) {\n",
+                        "        TarjanVertexMetaInfo vertexMetaInfo = getMetaInfo(vertex, verticesMetaInfo);\n",
+                        "        vertexMetaInfo.setIndex(index);\n",
+                        "        vertexMetaInfo.setLowLink(index);\n",
+                        "        index++;\n",
+                        "        s.push(vertex);\n",
+                        "\n",
+                        "        for (V adjacent : graph.getOutbound(vertex)) {\n",
+                        "            TarjanVertexMetaInfo adjacentMetaInfo = getMetaInfo(adjacent, verticesMetaInfo);\n",
+                        "            if (adjacentMetaInfo.hasUndefinedIndex()) {\n",
+                        "                strongConnect(\n",
+                        "                        graph, adjacent, verticesMetaInfo, s, stronglyConnectedComponent, index);\n",
+                        "                vertexMetaInfo.setLowLink(\n",
+                        "                        min(vertexMetaInfo.getLowLink(), adjacentMetaInfo.getLowLink()));\n",
+                        "            } else if (s.contains(adjacent)) {\n",
+                        "                vertexMetaInfo.setLowLink(\n",
+                        "                        min(vertexMetaInfo.getLowLink(), adjacentMetaInfo.getIndex()));\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (vertexMetaInfo.getLowLink() == vertexMetaInfo.getIndex()) {\n",
+                        "            V v;\n",
+                        "            do {\n",
+                        "                v = s.pop();\n",
+                        "                stronglyConnectedComponent.add(v);\n",
+                        "            } while (!vertex.equals(v));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "strongConnect(DirectedGraph<V,E>, V, Map<V,TarjanVertexMetaInfo>, Stack<V>, Set<V>, Integer)",
+                    "parameters": [
+                        "graph",
+                        "vertex",
+                        "verticesMetaInfo",
+                        "s",
+                        "stronglyConnectedComponent",
+                        "index"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanAlgorithm",
+                            "TarjanAlgorithm",
+                            "42-50:getMetaInfo"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "42-44:setIndex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "46-48:setLowLink"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "38-40:hasUndefinedIndex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanAlgorithm",
+                            "TarjanAlgorithm",
+                            "52-85:strongConnect"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "34-36:getLowLink"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "30-32:getIndex"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __strongConnect(graph: DirectedGraph[typing.Any, typing.Any], vertex: typing.Any, verticesMetaInfo: typing.Dict[typing.Any, TarjanVertexMetaInfo], s: typing.List[typing.Any], stronglyConnectedComponent: typing.Set[typing.Any], index: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __strongConnect(graph: DirectedGraph[typing.Any, typing.Any], vertex: typing.Any, verticesMetaInfo: typing.Dict[typing.Any, TarjanVertexMetaInfo], s: typing.List[typing.Any], stronglyConnectedComponent: typing.Set[typing.Any], index: int) -> None:",
+                        "        ",
+                        "        vertexMetaInfo = TarjanAlgorithm.__getMetaInfo(vertex, verticesMetaInfo)",
+                        "        vertexMetaInfo.setIndex(index)",
+                        "        vertexMetaInfo.setLowLink(index)",
+                        "        index += 1",
+                        "        s.append(vertex)",
+                        "",
+                        "        for adjacent in graph.getOutbound(vertex):",
+                        "            adjacentMetaInfo = TarjanAlgorithm.__getMetaInfo(adjacent, verticesMetaInfo)",
+                        "            if adjacentMetaInfo.hasUndefinedIndex():",
+                        "                TarjanAlgorithm.__strongConnect(graph, adjacent, verticesMetaInfo, s, stronglyConnectedComponent, index)",
+                        "                vertexMetaInfo.setLowLink(min(vertexMetaInfo.getLowLink(), adjacentMetaInfo.getLowLink()))",
+                        "            elif adjacent in s:",
+                        "                vertexMetaInfo.setLowLink(min(vertexMetaInfo.getLowLink(), adjacentMetaInfo.getIndex()))",
+                        "",
+                        "        if vertexMetaInfo.getLowLink() == vertexMetaInfo.getIndex():",
+                        "            v = None",
+                        "            while v != vertex:",
+                        "                v = s.pop()",
+                        "                stronglyConnectedComponent.add(v)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "42-50:getMetaInfo": {
+                    "start": 42,
+                    "end": 50,
+                    "body": [
+                        "    private static <V> TarjanVertexMetaInfo getMetaInfo(\n",
+                        "            V vertex, Map<V, TarjanVertexMetaInfo> verticesMetaInfo) {\n",
+                        "        TarjanVertexMetaInfo vertexMetaInfo = verticesMetaInfo.get(vertex);\n",
+                        "        if (vertexMetaInfo == null) {\n",
+                        "            vertexMetaInfo = new TarjanVertexMetaInfo();\n",
+                        "            verticesMetaInfo.put(vertex, vertexMetaInfo);\n",
+                        "        }\n",
+                        "        return vertexMetaInfo;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo"
+                        ]
+                    ],
+                    "signature": "getMetaInfo(V, Map<V,TarjanVertexMetaInfo>)",
+                    "parameters": [
+                        "vertex",
+                        "verticesMetaInfo"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __getMetaInfo(vertex: typing.Any, verticesMetaInfo: typing.Dict[typing.Any, TarjanVertexMetaInfo]) -> TarjanVertexMetaInfo:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __getMetaInfo(vertex: typing.Any, verticesMetaInfo: typing.Dict[typing.Any, TarjanVertexMetaInfo]) -> TarjanVertexMetaInfo:",
+                        "        ",
+                        "        vertexMetaInfo = verticesMetaInfo.get(vertex)",
+                        "        if vertexMetaInfo is None:",
+                        "            vertexMetaInfo = TarjanVertexMetaInfo()",
+                        "            verticesMetaInfo[vertex] = vertexMetaInfo",
+                        "        return vertexMetaInfo"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "87-87:graph": {
+                    "start": 87,
+                    "end": 87,
+                    "body": [
+                        "    private final DirectedGraph<V, E> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "DirectedGraph<V,E>",
+                            "DirectedGraph<V,E>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __graph: DirectedGraph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __graph: DirectedGraph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "python_class_declaration": "class TarjanAlgorithm(SccAlgorithm):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.DirectedGraph import *",
+        "from src.main.org.apache.commons.graph.scc.SccAlgorithm import *",
+        "from src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo import *"
+    ]
+}
