@@ -239,7 +239,7 @@ def main(args):
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['elapsed_time'] = 0
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['generation_timestamp'] = 0
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
-                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['include_implementation'] = False
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['include_implementation'] = True if args.type == 'body' else False
 
             is_empty_class = True
             skeleton += '\t# Class Fields Begin\n'
@@ -259,7 +259,9 @@ def main(args):
 
                 field_body = field_name + f': {field_type} = '
                 if '=' not in ''.join(schema['classes'][class_]['fields'][field]['body']):
-                    if field_type == 'str':
+                    if field_type == 'str' and 'char' in [y for x in schema['classes'][class_]['fields'][field]['types'] for y in x]:
+                        field_body += "'\\u0000'\n"
+                    elif field_type == 'str':
                         field_body += "''\n"
                     elif field_type == 'int':
                         field_body += '0\n'
@@ -273,10 +275,25 @@ def main(args):
                         field_body += '{}\n'
                     else:
                         field_body += 'None\n'
+
                 elif '=' in ''.join(schema['classes'][class_]['fields'][field]['body']) and (field_type.startswith('typing.List') or field_type.startswith('List')):
-                    field_body += '[]\n'
+                    if 'new ArrayList' in ''.join(schema['classes'][class_]['fields'][field]['body']):
+                        field_body += '[]\n'
+                    elif 'new LinkedList' in ''.join(schema['classes'][class_]['fields'][field]['body']):
+                        field_body += '[]\n'
+                    else:
+                        field_body += '<placeholder>\n'
+
                 elif '=' in ''.join(schema['classes'][class_]['fields'][field]['body']) and (field_type.startswith('typing.Dict') or field_type.startswith('Dict')):
-                    field_body += '{}\n'
+                    if 'new LinkedHashMap' in ''.join(schema['classes'][class_]['fields'][field]['body']):
+                        field_body += '{}\n'
+                    elif 'new HashMap' in ''.join(schema['classes'][class_]['fields'][field]['body']):
+                        field_body += '{}\n'
+                    elif 'new EnumMap' in ''.join(schema['classes'][class_]['fields'][field]['body']):
+                        field_body += '{}\n'
+                    else:
+                        field_body += '<placeholder>\n'
+
                 else:
                     field_body += '<placeholder>\n'
 
@@ -289,7 +306,7 @@ def main(args):
                 target_schema['classes'][class_]['fields'][field]['elapsed_time'] = 0
                 target_schema['classes'][class_]['fields'][field]['generation_timestamp'] = 0
                 target_schema['classes'][class_]['fields'][field]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
-                target_schema['classes'][class_]['fields'][field]['include_implementation'] = False
+                target_schema['classes'][class_]['fields'][field]['include_implementation'] = True if args.type == 'body' else False
 
                 skeleton += f'\t{field_name}: {field_type} = None\n'
             skeleton += '\t# Class Fields End\n\n'
@@ -379,7 +396,7 @@ def main(args):
                 target_schema['classes'][class_]['methods'][method]['elapsed_time'] = 0
                 target_schema['classes'][class_]['methods'][method]['generation_timestamp'] = 0
                 target_schema['classes'][class_]['methods'][method]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
-                target_schema['classes'][class_]['methods'][method]['include_implementation'] = False
+                target_schema['classes'][class_]['methods'][method]['include_implementation'] = True if args.type == 'body' else False
 
                 assert '<placeholder>' not in ''.join(current_method)
 
@@ -452,7 +469,7 @@ def main(args):
         formatted_schema_fname = '.'.join(schema_fname.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
         os.makedirs(f'data/skeletons/{args.project_name}/{sub_dir}', exist_ok=True)
-        file_path = f"data/skeletons/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_translation', '')}.py"
+        file_path = f"data/skeletons/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1]}.py"
         with open(file_path, 'w') as f:
             f.write(skeleton)
         
@@ -469,7 +486,8 @@ def main(args):
         with open(fp, 'w') as f:
             f.write('')
 
-        with open(f'data/schemas/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
+        os.makedirs(f'data/schemas/translations/{args.model_name}/{args.type}/{args.project_name}', exist_ok=True)
+        with open(f'data/schemas/translations/{args.model_name}/{args.type}/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
             json.dump(target_schema, f, indent=4)
 
     # find all .py files in a given directory
@@ -490,6 +508,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a class skeleton')
     parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project')
     parser.add_argument('--model_name', type=str, dest='model_name', help='name of the model')
+    parser.add_argument('--type', type=str, dest='type', help='prompt type signature/body')
     args = parser.parse_args()
     
     main(args)
