@@ -184,10 +184,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testTwoCompleteOptions(self) -> None:",
                         "        ",
-                        "",
                         "        simple = OptionBuilder.withLongOpt(\"simple option\") \\",
                         "            .hasArg0() \\",
                         "            .isRequired0() \\",
@@ -196,32 +194,35 @@
                         "            .withDescription(\"this is a simple option\") \\",
                         "            .create1('s')",
                         "",
-                        "        assert simple.getOpt() == 's'",
-                        "        assert simple.getLongOpt() == 'simple option'",
-                        "        assert simple.getDescription() == 'this is a simple option'",
-                        "        assert simple.getType() == float",
-                        "        assert simple.hasArg()",
-                        "        assert simple.isRequired()",
-                        "        assert simple.hasArgs()",
+                        "        self.assertEqual(\"s\", simple.getOpt())",
+                        "        self.assertEqual(\"simple option\", simple.getLongOpt())",
+                        "        self.assertEqual(\"this is a simple option\", simple.getDescription())",
+                        "        self.assertEqual(simple.getType(), float)",
+                        "        self.assertTrue(simple.hasArg())",
+                        "        self.assertTrue(simple.isRequired())",
+                        "        self.assertTrue(simple.hasArgs())",
                         "",
                         "        simple = OptionBuilder.withLongOpt(\"dimple option\") \\",
                         "            .hasArg0() \\",
                         "            .withDescription(\"this is a dimple option\") \\",
                         "            .create1('d')",
                         "",
-                        "        assert simple.getOpt() == 'd'",
-                        "        assert simple.getLongOpt() == 'dimple option'",
-                        "        assert simple.getDescription() == 'this is a dimple option'",
-                        "        assert simple.getType() == str",
-                        "        assert simple.hasArg()",
-                        "        assert not simple.isRequired()",
-                        "        assert not simple.hasArgs()",
-                        ""
+                        "        self.assertEqual(\"d\", simple.getOpt())",
+                        "        self.assertEqual(\"dimple option\", simple.getLongOpt())",
+                        "        self.assertEqual(\"this is a dimple option\", simple.getDescription())",
+                        "        self.assertEqual(str, simple.getType())",
+                        "        self.assertTrue(simple.hasArg())",
+                        "        self.assertFalse(simple.isRequired())",
+                        "        self.assertFalse(simple.hasArgs())"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 9.97211241722107,
-                    "generation_timestamp": "2024-06-05T16:16:03.491051",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 26.420504808425903,
+                    "generation_timestamp": "2024-06-17T23:08:00.726337",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "125-137:testSpecialOptChars": {
                     "start": 125,
@@ -278,27 +279,25 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testSpecialOptChars(self) -> None:",
                         "        ",
-                        "",
                         "        opt1 = OptionBuilder.withDescription(\"help options\").create1('?')",
-                        "        assert opt1.getOpt() == \"?\"",
+                        "        self.assertEqual(\"?\", opt1.getOpt())",
                         "",
                         "        opt2 = OptionBuilder.withDescription(\"read from stdin\").create1('@')",
-                        "        assert opt2.getOpt() == \"@\"",
+                        "        self.assertEqual(\"@\", opt2.getOpt())",
                         "",
-                        "        try:",
-                        "            OptionBuilder.create1(' ')",
-                        "            assert False, \"IllegalArgumentException not caught\"",
-                        "        except IllegalArgumentException:",
-                        "            pass",
-                        ""
+                        "        with self.assertRaises(IllegalArgumentException):",
+                        "            OptionBuilder.create1(' ')"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 8.18229603767395,
-                    "generation_timestamp": "2024-06-05T16:16:11.678817",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.765246152877808,
+                    "generation_timestamp": "2024-06-17T23:08:06.503049",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "118-122:testOptionArgNumbers": {
                     "start": 118,
@@ -352,18 +351,19 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testOptionArgNumbers(self) -> None:",
                         "        ",
-                        "",
                         "        opt = OptionBuilder.withDescription(\"option description\").hasArgs1(2).create1('o')",
-                        "        assert opt.getArgs() == 2",
-                        ""
+                        "        self.assertEqual(2, opt.getArgs())"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.076997518539429,
-                    "generation_timestamp": "2024-06-05T16:16:16.761728",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.966053485870361,
+                    "generation_timestamp": "2024-06-17T23:08:14.481815",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "97-115:testIllegalOptions": {
                     "start": 97,
@@ -425,11 +425,15 @@
                         "    def testIllegalOptions(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": null,
-                    "translation_status": "failure",
-                    "elapsed_time": 25.02006196975708,
-                    "generation_timestamp": "2024-06-05T16:16:41.785160",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [],
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "failed",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "86-94:testCreateIncompleteOption": {
                     "start": 86,
@@ -482,21 +486,22 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testCreateIncompleteOption(self) -> None:",
                         "        ",
-                        "",
                         "        try:",
                         "            OptionBuilder.hasArg0().create0()",
                         "            self.fail(\"Incomplete option should be rejected\")",
-                        "        except IllegalArgumentException as e:",
-                        "            OptionBuilder.create2(\"opt\")",
-                        ""
+                        "        except IllegalArgumentException:",
+                        "            OptionBuilder.create2(\"opt\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.789115905761719,
-                    "generation_timestamp": "2024-06-05T16:16:46.577621",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.955493450164795,
+                    "generation_timestamp": "2024-06-17T23:09:11.834952",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-83:testCompleteOption": {
                     "start": 66,
@@ -613,10 +618,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testCompleteOption(self) -> None:",
                         "        ",
-                        "",
                         "        simple = OptionBuilder.withLongOpt(\"simple option\") \\",
                         "            .hasArg0() \\",
                         "            .isRequired0() \\",
@@ -625,19 +628,22 @@
                         "            .withDescription(\"this is a simple option\") \\",
                         "            .create1('s')",
                         "",
-                        "        assert simple.getOpt() == 's'",
-                        "        assert simple.getLongOpt() == 'simple option'",
-                        "        assert simple.getDescription() == 'this is a simple option'",
-                        "        assert simple.getType() == float",
-                        "        assert simple.hasArg()",
-                        "        assert simple.isRequired()",
-                        "        assert simple.hasArgs()",
-                        ""
+                        "        self.assertEqual(\"s\", simple.getOpt())",
+                        "        self.assertEqual(\"simple option\", simple.getLongOpt())",
+                        "        self.assertEqual(\"this is a simple option\", simple.getDescription())",
+                        "        self.assertEqual(simple.getType(), float)",
+                        "        self.assertTrue(simple.hasArg())",
+                        "        self.assertTrue(simple.isRequired())",
+                        "        self.assertTrue(simple.hasArgs())"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 7.501316070556641,
-                    "generation_timestamp": "2024-06-05T16:16:54.096141",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.461151838302612,
+                    "generation_timestamp": "2024-06-17T23:09:21.334694",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "49-63:testBuilderIsResettedAlways": {
                     "start": 49,
@@ -701,29 +707,24 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testBuilderIsResettedAlways(self) -> None:",
                         "        ",
-                        "",
-                        "        try:",
+                        "        with pytest.raises(IllegalArgumentException):",
                         "            OptionBuilder.withDescription(\"JUnit\").create1('\"')",
-                        "            self.fail(\"IllegalArgumentException expected\")",
-                        "        except IllegalArgumentException:",
-                        "            pass",
-                        "        self.assertIsNone(OptionBuilder.create1('x').getDescription(), \"we inherited a description\")",
+                        "        assert OptionBuilder.create1('x').getDescription() is None",
                         "",
-                        "        try:",
+                        "        with pytest.raises(IllegalArgumentException):",
                         "            OptionBuilder.withDescription(\"JUnit\").create0()",
-                        "            self.fail(\"IllegalArgumentException expected\")",
-                        "        except IllegalArgumentException:",
-                        "            pass",
-                        "        self.assertIsNone(OptionBuilder.create1('x').getDescription(), \"we inherited a description\")",
-                        ""
+                        "        assert OptionBuilder.create1('x').getDescription() is None"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 9.962249755859375,
-                    "generation_timestamp": "2024-06-05T16:17:04.065792",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.11062502861023,
+                    "generation_timestamp": "2024-06-17T23:09:29.459719",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "40-46:testBaseOptionStringOpt": {
                     "start": 40,
@@ -784,21 +785,22 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testBaseOptionStringOpt(self) -> None:",
                         "        ",
-                        "",
                         "        base = OptionBuilder.withDescription(\"option description\").create2(\"o\")",
                         "",
                         "        self.assertEqual(\"o\", base.getOpt())",
                         "        self.assertEqual(\"option description\", base.getDescription())",
-                        "        self.assertFalse(base.hasArg())",
-                        ""
+                        "        self.assertFalse(base.hasArg())"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 3.892402172088623,
-                    "generation_timestamp": "2024-06-05T16:17:07.967163",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.3513710498809814,
+                    "generation_timestamp": "2024-06-17T23:09:34.827986",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "31-37:testBaseOptionCharOpt": {
                     "start": 31,
@@ -859,29 +861,32 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testBaseOptionCharOpt(self) -> None:",
                         "        ",
-                        "",
                         "        base = OptionBuilder.withDescription(\"option description\").create1('o')",
                         "",
                         "        self.assertEqual(\"o\", base.getOpt())",
                         "        self.assertEqual(\"option description\", base.getDescription())",
-                        "        self.assertFalse(base.hasArg())",
-                        ""
+                        "        self.assertFalse(base.hasArg())"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 3.887860059738159,
-                    "generation_timestamp": "2024-06-05T16:17:11.862946",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.56752347946167,
+                    "generation_timestamp": "2024-06-17T23:09:41.412199",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class OptionBuilderTest:\n\n"
+            "python_class_declaration": "class OptionBuilderTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import numbers",
         "from src.main.org.apache.commons.cli.Option import *",

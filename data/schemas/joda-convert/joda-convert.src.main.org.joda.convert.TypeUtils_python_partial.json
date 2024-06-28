@@ -110,11 +110,24 @@
                         "    def parse(str: str) -> typing.Type:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def parse(str: str) -> typing.Type:",
+                        "         try:",
+                        "            return TypeUtils.__doParse(str)",
+                        "         except RuntimeError as ex:",
+                        "            raise ex",
+                        "         except Exception as ex:",
+                        "            raise RuntimeError(ex)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.9112770557403564,
+                    "generation_timestamp": "2024-06-21T09:17:50.196297",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "142-145:newParameterizedType": {
                     "start": 142,
@@ -154,11 +167,20 @@
                         "    def __newParameterizedType(base: typing.Type[typing.Any], args: typing.List[typing.Type]) -> typing.Generic[typing.TypeVar('T')]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __newParameterizedType(base: typing.Type[typing.Any], args: typing.List[typing.Type]) -> typing.Generic[typing.TypeVar('T')]:",
+                        "        ",
+                        "        return Types.newParameterizedType(base, args)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.106702089309692,
+                    "generation_timestamp": "2024-06-21T08:58:28.199914",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "138-140:wildSuperType": {
                     "start": 138,
@@ -196,11 +218,20 @@
                         "    def __wildSuperType(bound: typing.Type) -> typing.Type:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __wildSuperType(bound: typing.Type) -> typing.Type:",
+                        "        ",
+                        "        return Types.supertypeOf(bound)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.468631982803345,
+                    "generation_timestamp": "2024-06-21T08:58:34.679521",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "134-136:wildExtendsType": {
                     "start": 134,
@@ -238,11 +269,20 @@
                         "    def __wildExtendsType(bound: typing.Type) -> typing.Type:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __wildExtendsType(bound: typing.Type) -> typing.Type:",
+                        "        ",
+                        "        return Types.subtypeOf(bound)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.71379542350769,
+                    "generation_timestamp": "2024-06-21T08:58:39.397421",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "116-132:split": {
                     "start": 116,
@@ -288,11 +328,34 @@
                         "    def __split(str: str) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __split(str: str) -> typing.List[str]:",
+                        "        ",
+                        "        result: typing.List[str] = []",
+                        "        generic_count: int = 0",
+                        "        start_pos: int = 0",
+                        "        ",
+                        "        for i in range(len(str)):",
+                        "            if str[i] == ',' and generic_count == 0:",
+                        "                result.append(str[start_pos:i].strip())",
+                        "                start_pos = i + 1",
+                        "            elif str[i] == '<':",
+                        "                generic_count += 1",
+                        "            elif str[i] == '>':",
+                        "                generic_count -= 1",
+                        "                ",
+                        "        result.append(str[start_pos:].strip())",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.250440120697021,
+                    "generation_timestamp": "2024-06-21T08:58:47.649860",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "75-114:doParse": {
                     "start": 75,
@@ -392,11 +455,52 @@
                         "    def __doParse(str: str) -> typing.Type:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __doParse(str: str) -> typing.Type:",
+                        "        ",
+                        "        token = TypeUtils.__PRIMITIVES.get(str)",
+                        "        if token is not None:",
+                        "            return token",
+                        "        first = str.find('<')",
+                        "        if first < 0:",
+                        "            return StringConvert.loadType(str)",
+                        "        last = str.rfind('>')",
+                        "        baseStr = str[:first]",
+                        "        base = StringConvert.loadType(baseStr)",
+                        "        argsStr = str[first + 1:last]",
+                        "        splitArgs = TypeUtils.__split(argsStr)",
+                        "        types = []",
+                        "        for splitArg in splitArgs:",
+                        "            if splitArg.startswith(TypeUtils.__EXTENDS):",
+                        "                remainder = splitArg[len(TypeUtils.__EXTENDS):]",
+                        "                argType = TypeUtils.__wildExtendsType(TypeUtils.__doParse(remainder))",
+                        "            elif splitArg.startswith(TypeUtils.__SUPER):",
+                        "                remainder = splitArg[len(TypeUtils.__SUPER):]",
+                        "                argType = TypeUtils.__wildSuperType(TypeUtils.__doParse(remainder))",
+                        "            elif splitArg == \"?\":",
+                        "                argType = TypeUtils.__wildExtendsType(object)",
+                        "            elif splitArg.endswith(\"[]\"):",
+                        "                componentStr = splitArg[:-2]",
+                        "                componentCls = StringConvert.loadType(componentStr)",
+                        "                argType = Array.newInstance(componentCls, 0).__class__",
+                        "            elif splitArg.startswith(\"[L\") and splitArg.endswith(\";\"):",
+                        "                componentStr = splitArg[2:-1]",
+                        "                componentCls = StringConvert.loadType(componentStr)",
+                        "                argType = Array.newInstance(componentCls, 0).__class__",
+                        "            else:",
+                        "                argType = TypeUtils.__doParse(splitArg)",
+                        "            types.append(argType)",
+                        "        return TypeUtils.__newParameterizedType(base, types)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 28.22691583633423,
+                    "generation_timestamp": "2024-06-21T09:17:28.766752",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "57-57:TypeUtils": {
                     "start": 57,
@@ -422,11 +526,28 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "        ",
+                        "        self.__PRIMITIVES: Dict[str, Type[Any]] = {",
+                        "            \"boolean\": bool,",
+                        "            \"byte\": int,",
+                        "            \"short\": int,",
+                        "            \"int\": int,",
+                        "            \"long\": int,",
+                        "            \"float\": float,",
+                        "            \"double\": float,",
+                        "            \"char\": str",
+                        "        }"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.913578987121582,
+                    "generation_timestamp": "2024-06-21T08:58:59.565245",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -447,12 +568,22 @@
                             "java.util.Map<String,Class<?>>"
                         ]
                     ],
-                    "partial_translation": "    __PRIMITIVES: typing.Dict[str, typing.Type[typing.Any]] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __PRIMITIVES: typing.Dict[str, typing.Type[typing.Any]] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PRIMITIVES: typing.Dict[str, typing.Type[typing.Any]] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-21T08:39:27.508141",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "40-40:SUPER": {
                     "start": 40,
@@ -471,12 +602,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __SUPER: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __SUPER: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SUPER: str = \"? super \""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1483070850372314,
+                    "generation_timestamp": "2024-06-21T08:39:28.657927",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "38-38:EXTENDS": {
                     "start": 38,
@@ -495,12 +635,51 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __EXTENDS: str = <placeholder>\n",
+                    "partial_translation": [
+                        "    __EXTENDS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EXTENDS: str = \"? extends \""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.175734043121338,
+                    "generation_timestamp": "2024-06-21T08:39:29.835280",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "static_initializers": {
+                "44-55": {
+                    "start": 44,
+                    "end": 55,
+                    "body": [
+                        "    static {\n",
+                        "        Map<String, Class<?>> map = new HashMap<String, Class<?>>();\n",
+                        "        map.put(\"byte\", byte.class);\n",
+                        "        map.put(\"short\", short.class);\n",
+                        "        map.put(\"int\", int.class);\n",
+                        "        map.put(\"long\", long.class);\n",
+                        "        map.put(\"boolean\", boolean.class);\n",
+                        "        map.put(\"char\", char.class);\n",
+                        "        map.put(\"float\", float.class);\n",
+                        "        map.put(\"double\", double.class);\n",
+                        "        PRIMITIVES = Collections.unmodifiableMap(map);\n",
+                        "    }\n"
+                    ],
+                    "partial_translation": [],
                     "translation": [],
                     "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 }
             },
             "python_class_declaration": "class TypeUtils:\n\n"

@@ -110,7 +110,7 @@
     "classes": {
         "DefaultSpanningTreeSourceSelector": {
             "start": 48,
-            "end": 48,
+            "end": 49,
             "is_abstract": false,
             "is_interface": false,
             "nested_inside": [],
@@ -162,11 +162,21 @@
                         "    def fromSource(self, source: typing.Any) -> SpanningTreeAlgorithmSelector[typing.Any, typing.Any, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def fromSource(self, source: typing.Any) -> SpanningTreeAlgorithmSelector[typing.Any, typing.Any, typing.Any]:",
+                        "        ",
+                        "        source = Assertions.checkNotNull(source, \"Spanning tree cannot be calculated without expressing the source vertex\")",
+                        "        Assertions.checkState(self.__graph.containsVertex(source), \"Vertex %s does not exist in the Graph\", source)",
+                        "        return DefaultSpanningTreeAlgorithmSelector(self.__graph, self.__weightedEdges, source)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.732712984085083,
+                    "generation_timestamp": "2024-06-20T23:26:41.362914",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "116-119:fromArbitrarySource": {
                     "start": 116,
@@ -206,11 +216,20 @@
                         "    def fromArbitrarySource(self) -> SpanningTreeAlgorithmSelector[typing.Any, typing.Any, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def fromArbitrarySource(self) -> SpanningTreeAlgorithmSelector[typing.Any, typing.Any, typing.Any]:",
+                        "        ",
+                        "        Assertions.checkState(self.__graph.getOrder() > 0, \"Spanning tree cannot be calculated on an empty graph\")",
+                        "        return self.fromSource(next(iter(self.__graph.getVertices0())))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.074094772338867,
+                    "generation_timestamp": "2024-06-20T23:26:54.439423",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "61-113:applyingReverseDeleteAlgorithm": {
                     "start": 61,
@@ -301,11 +320,63 @@
                         "    def applyingReverseDeleteAlgorithm(self, weightOperations: typing.Any) -> SpanningTree[typing.Any, typing.Any, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def applyingReverseDeleteAlgorithm(self, weightOperations: typing.Any) -> SpanningTree[typing.Any, typing.Any, typing.Any]:",
+                        "        ",
+                        "        checkNotNull(",
+                        "            weightOperations,",
+                        "            \"The Reverse-Delete algorithm cannot be calulated with null weight operations\"",
+                        "        )",
+                        "",
+                        "        sortedEdge = PriorityQueue(",
+                        "            11,",
+                        "            reverseOrder(",
+                        "                WeightedEdgesComparator(",
+                        "                    weightOperations, self.__weightedEdges",
+                        "                )",
+                        "            )",
+                        "        )",
+                        "        visitedEdge = []",
+                        "",
+                        "        edges = self.__graph.getEdges()",
+                        "        for we in edges:",
+                        "            sortedEdge.offer(we)",
+                        "",
+                        "        tmpGraph = ReverseDeleteGraph(self.__graph, sortedEdge, visitedEdge)",
+                        "",
+                        "        while not sortedEdge.isEmpty():",
+                        "            we = sortedEdge.poll()",
+                        "",
+                        "            vertices = self.__graph.getVertices1(we)",
+                        "",
+                        "            try:",
+                        "                findShortestPath(tmpGraph) \\",
+                        "                    .whereEdgesHaveWeights(self.__weightedEdges) \\",
+                        "                    .from_(vertices.getHead()) \\",
+                        "                    .to_(vertices.getTail()) \\",
+                        "                    .applyingDijkstra(weightOperations)",
+                        "            except PathNotFoundException:",
+                        "                visitedEdge.append(we)",
+                        "",
+                        "        res = MutableSpanningTree(weightOperations, self.__weightedEdges)",
+                        "        for v in self.__graph.getVertices0():",
+                        "            res.addVertex(v)",
+                        "",
+                        "        for we in edges:",
+                        "            pair = tmpGraph.getVertices1(we)",
+                        "            if pair is not None:",
+                        "                res.addEdge(pair.getHead(), we, pair.getTail())",
+                        "",
+                        "        return res"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 27.517961502075195,
+                    "generation_timestamp": "2024-06-20T23:27:21.961655",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "55-58:DefaultSpanningTreeSourceSelector": {
                     "start": 55,
@@ -337,11 +408,20 @@
                         "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:",
+                        "        ",
+                        "        self.__graph = graph",
+                        "        self.__weightedEdges = weightedEdges"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.222405195236206,
+                    "generation_timestamp": "2024-06-20T23:27:28.188071",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -361,12 +441,22 @@
                             "Mapper<WE,W>"
                         ]
                     ],
-                    "partial_translation": "    __weightedEdges: Mapper[typing.Any, typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:31.817818",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "51-51:graph": {
                     "start": 51,
@@ -384,12 +474,22 @@
                             "Graph<V,WE>"
                         ]
                     ],
-                    "partial_translation": "    __graph: Graph[typing.Any, typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:31.819461",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class DefaultSpanningTreeSourceSelector:\n\n"

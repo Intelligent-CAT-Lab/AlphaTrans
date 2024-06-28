@@ -71,11 +71,20 @@
                         "    def crypt3(original: str, salt: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def crypt3(original: str, salt: str) -> str:",
+                        "        ",
+                        "        return UnixCrypt.crypt1(original.encode('utf-8'), salt)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.423323392868042,
+                    "generation_timestamp": "2024-06-20T23:28:38.185857",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "710-712:crypt2": {
                     "start": 710,
@@ -113,11 +122,20 @@
                         "    def crypt2(original: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def crypt2(original: str) -> str:",
+                        "        ",
+                        "        return UnixCrypt.crypt0(original.encode('utf-8'))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.690420150756836,
+                    "generation_timestamp": "2024-06-20T23:28:46.880126",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "644-698:crypt1": {
                     "start": 644,
@@ -218,11 +236,62 @@
                         "    def crypt1(original: typing.List[int], salt: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def crypt1(original: typing.List[int], salt: str) -> str:",
+                        "        ",
+                        "        if salt is None:",
+                        "            randomGenerator = random.SystemRandom()",
+                        "            numSaltChars = len(UnixCrypt.__SALT_CHARS)",
+                        "            salt = UnixCrypt.__SALT_CHARS[randomGenerator.randint(0, numSaltChars - 1)] + UnixCrypt.__SALT_CHARS[randomGenerator.randint(0, numSaltChars - 1)]",
+                        "        elif not re.match(\"^[\" + B64.B64T_STRING + \"]{2,}$\", salt):",
+                        "            raise ValueError(\"Invalid salt value: \" + salt)",
+                        "",
+                        "        buffer = [' '] * 13",
+                        "        charZero = salt[0]",
+                        "        charOne = salt[1]",
+                        "        buffer[0] = charZero",
+                        "        buffer[1] = charOne",
+                        "        eSwap0 = UnixCrypt.__CON_SALT[ord(charZero)]",
+                        "        eSwap1 = UnixCrypt.__CON_SALT[ord(charOne)] << 4",
+                        "        key = [0] * 8",
+                        "        originalLength = len(original)",
+                        "        for i in range(min(len(key), originalLength)):",
+                        "            iChar = original[i]",
+                        "            key[i] = (iChar << 1) & 0xff",
+                        "",
+                        "        schedule = UnixCrypt.__desSetKey(key)",
+                        "        out = UnixCrypt.__body(schedule, eSwap0, eSwap1)",
+                        "        b = [0] * 9",
+                        "        UnixCrypt.__intToFourBytes(out[0], b, 0)",
+                        "        UnixCrypt.__intToFourBytes(out[1], b, 4)",
+                        "        b[8] = 0",
+                        "        i = 2",
+                        "        y = 0",
+                        "        u = 128",
+                        "        for _ in range(i, 13):",
+                        "            j = 0",
+                        "            c = 0",
+                        "            for _ in range(j, 6):",
+                        "                c <<= 1",
+                        "                if (b[y] & u) != 0:",
+                        "                    c |= 0x1",
+                        "                u >>= 1",
+                        "                if u == 0:",
+                        "                    y += 1",
+                        "                    u = 128",
+                        "                buffer[i] = chr(UnixCrypt.__COV2CHAR[c])",
+                        "                i += 1",
+                        "        return ''.join(buffer)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 37.77848267555237,
+                    "generation_timestamp": "2024-06-20T23:28:11.101381",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "628-630:crypt0": {
                     "start": 628,
@@ -260,11 +329,20 @@
                         "    def crypt0(original: typing.List[int]) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def crypt0(original: typing.List[int]) -> str:",
+                        "        ",
+                        "        return UnixCrypt.crypt1(original, None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.810592412948608,
+                    "generation_timestamp": "2024-06-20T23:28:17.917183",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "864-870:permOp": {
                     "start": 864,
@@ -304,11 +382,24 @@
                         "    def __permOp(a: int, b: int, n: int, m: int, results: typing.List[int]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __permOp(a: int, b: int, n: int, m: int, results: typing.List[int]) -> None:",
+                        "        ",
+                        "        t = (a >> n ^ b) & m",
+                        "        a ^= t << n",
+                        "        b ^= t",
+                        "        results[0] = a",
+                        "        results[1] = b"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.094979286193848,
+                    "generation_timestamp": "2024-06-20T23:25:12.334596",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "857-862:intToFourBytes": {
                     "start": 857,
@@ -345,11 +436,26 @@
                         "    def __intToFourBytes(iValue: int, b: typing.List[int], offset: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __intToFourBytes(iValue: int, b: typing.List[int], offset: int) -> None:",
+                        "        ",
+                        "        b[offset] = iValue & 0xff",
+                        "        offset += 1",
+                        "        b[offset] = (iValue >> 8) & 0xff",
+                        "        offset += 1",
+                        "        b[offset] = (iValue >> 16) & 0xff",
+                        "        offset += 1",
+                        "        b[offset] = (iValue >> 24) & 0xff"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.582510232925415,
+                    "generation_timestamp": "2024-06-20T23:25:21.924474",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "851-855:hPermOp": {
                     "start": 851,
@@ -385,11 +491,22 @@
                         "    def __hPermOp(a: int, n: int, m: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __hPermOp(a: int, n: int, m: int) -> int:",
+                        "        ",
+                        "        t = (a << (16 - n) ^ a) & m",
+                        "        a = a ^ t ^ (t >> (16 - n))",
+                        "        return a"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.579980611801147,
+                    "generation_timestamp": "2024-06-20T23:25:37.508675",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "843-849:fourBytesToInt": {
                     "start": 843,
@@ -432,11 +549,27 @@
                         "    def __fourBytesToInt(b: typing.List[int], offset: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __fourBytesToInt(b: typing.List[int], offset: int) -> int:",
+                        "        ",
+                        "        value = UnixCrypt.__byteToUnsigned(b[offset])",
+                        "        offset += 1",
+                        "        value |= UnixCrypt.__byteToUnsigned(b[offset]) << 8",
+                        "        offset += 1",
+                        "        value |= UnixCrypt.__byteToUnsigned(b[offset]) << 16",
+                        "        offset += 1",
+                        "        value |= UnixCrypt.__byteToUnsigned(b[offset]) << 24",
+                        "        return value"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.12071180343628,
+                    "generation_timestamp": "2024-06-20T23:26:15.009773",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "792-841:desSetKey": {
                     "start": 792,
@@ -531,11 +664,58 @@
                         "    def __desSetKey(key: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __desSetKey(key: typing.List[int]) -> typing.List[int]:",
+                        "        ",
+                        "        schedule = [0] * 32",
+                        "        c = UnixCrypt.__fourBytesToInt(key, 0)",
+                        "        d = UnixCrypt.__fourBytesToInt(key, 4)",
+                        "        results = [0] * 2",
+                        "        UnixCrypt.__permOp(d, c, 4, 0xf0f0f0f, results)",
+                        "        d = results[0]",
+                        "        c = results[1]",
+                        "        c = UnixCrypt.__hPermOp(c, -2, 0xcccc0000)",
+                        "        d = UnixCrypt.__hPermOp(d, -2, 0xcccc0000)",
+                        "        UnixCrypt.__permOp(d, c, 1, 0x55555555, results)",
+                        "        d = results[0]",
+                        "        c = results[1]",
+                        "        UnixCrypt.__permOp(c, d, 8, 0xff00ff, results)",
+                        "        c = results[0]",
+                        "        d = results[1]",
+                        "        UnixCrypt.__permOp(d, c, 1, 0x55555555, results)",
+                        "        d = results[0]",
+                        "        c = results[1]",
+                        "        d = (d & 0xff) << 16 | d & 0xff00 | (d & 0xff0000) >> 16 | (c & 0xf0000000) >> 4",
+                        "        c &= 0xfffffff",
+                        "        j = 0",
+                        "        for i in range(16):",
+                        "            if UnixCrypt.__SHIFT2[i]:",
+                        "                c = c >> 2 | c << 26",
+                        "                d = d >> 2 | d << 26",
+                        "            else:",
+                        "                c = c >> 1 | c << 27",
+                        "                d = d >> 1 | d << 27",
+                        "            c &= 0xfffffff",
+                        "            d &= 0xfffffff",
+                        "            s = UnixCrypt.__SKB[0][c & 0x3f] | UnixCrypt.__SKB[1][c >> 6 & 0x3 | c >> 7 & 0x3c] | UnixCrypt.__SKB[2][c >> 13 & 0xf | c >> 14 & 0x30] | UnixCrypt.__SKB[3][c >> 20 & 0x1 | c >> 21 & 0x6 | c >> 22 & 0x38]",
+                        "            t = UnixCrypt.__SKB[4][d & 0x3f] | UnixCrypt.__SKB[5][d >> 7 & 0x3 | d >> 8 & 0x3c] | UnixCrypt.__SKB[6][d >> 15 & 0x3f] | UnixCrypt.__SKB[7][d >> 21 & 0xf | d >> 22 & 0x30]",
+                        "            schedule[j] = (t << 16 | s & 0xffff)",
+                        "            j += 1",
+                        "            s = s >> 16 | t & 0xffff0000",
+                        "            s = s << 4 | s >> 28",
+                        "            schedule[j] = s",
+                        "            j += 1",
+                        "        return schedule"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 52.407487630844116,
+                    "generation_timestamp": "2024-06-20T23:27:07.426152",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "772-790:dEncrypt": {
                     "start": 772,
@@ -588,11 +768,34 @@
                         "    def __dEncrypt(el: int, r: int, s: int, e0: int, e1: int, sArr: typing.List[int]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __dEncrypt(el: int, r: int, s: int, e0: int, e1: int, sArr: typing.List[int]) -> int:",
+                        "        ",
+                        "        v = r ^ r >> 16",
+                        "        u = v & e0",
+                        "        v &= e1",
+                        "        u = u ^ u << 16 ^ r ^ sArr[s]",
+                        "        t = v ^ v << 16 ^ r ^ sArr[s + 1]",
+                        "        t = t >> 4 | t << 28",
+                        "        el ^= (UnixCrypt.__SPTRANS[1][t & 0x3f]",
+                        "               | UnixCrypt.__SPTRANS[3][t >> 8 & 0x3f]",
+                        "               | UnixCrypt.__SPTRANS[5][t >> 16 & 0x3f]",
+                        "               | UnixCrypt.__SPTRANS[7][t >> 24 & 0x3f]",
+                        "               | UnixCrypt.__SPTRANS[0][u & 0x3f]",
+                        "               | UnixCrypt.__SPTRANS[2][u >> 8 & 0x3f]",
+                        "               | UnixCrypt.__SPTRANS[4][u >> 16 & 0x3f]",
+                        "               | UnixCrypt.__SPTRANS[6][u >> 24 & 0x3f])",
+                        "        return el"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 25.59496235847473,
+                    "generation_timestamp": "2024-06-20T23:26:03.111125",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "767-770:byteToUnsigned": {
                     "start": 767,
@@ -625,11 +828,21 @@
                         "    def __byteToUnsigned(b: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __byteToUnsigned(b: int) -> int:",
+                        "        ",
+                        "        value = b",
+                        "        return value if value >= 0 else value + 256"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.7662253379821777,
+                    "generation_timestamp": "2024-06-20T23:26:06.884450",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "728-765:body": {
                     "start": 728,
@@ -709,11 +922,52 @@
                         "    def __body(schedule: typing.List[int], eSwap0: int, eSwap1: int) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __body(schedule: typing.List[int], eSwap0: int, eSwap1: int) -> typing.List[int]:",
+                        "        ",
+                        "        left = 0",
+                        "        right = 0",
+                        "        t = 0",
+                        "        for j in range(25):",
+                        "            for i in range(0, 32, 4):",
+                        "                left = UnixCrypt.__dEncrypt(left, right, i, eSwap0, eSwap1, schedule)",
+                        "                right = UnixCrypt.__dEncrypt(right, left, i + 2, eSwap0, eSwap1, schedule)",
+                        "            t = left",
+                        "            left = right",
+                        "            right = t",
+                        "        t = right",
+                        "        right = (left >> 1) | (left << 31)",
+                        "        left = (t >> 1) | (t << 31)",
+                        "        results = [0, 0]",
+                        "        UnixCrypt.__permOp(right, left, 1, 0x55555555, results)",
+                        "        right = results[0]",
+                        "        left = results[1]",
+                        "        UnixCrypt.__permOp(left, right, 8, 0xff00ff, results)",
+                        "        left = results[0]",
+                        "        right = results[1]",
+                        "        UnixCrypt.__permOp(right, left, 2, 0x33333333, results)",
+                        "        right = results[0]",
+                        "        left = results[1]",
+                        "        UnixCrypt.__permOp(left, right, 16, 65535, results)",
+                        "        left = results[0]",
+                        "        right = results[1]",
+                        "        UnixCrypt.__permOp(right, left, 4, 0xf0f0f0f, results)",
+                        "        right = results[0]",
+                        "        left = results[1]",
+                        "        out = [0, 0]",
+                        "        out[0] = left",
+                        "        out[1] = right",
+                        "        return out"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 25.880873918533325,
+                    "generation_timestamp": "2024-06-20T23:27:33.315901",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1035,12 +1289,22 @@
                             "int[][]"
                         ]
                     ],
-                    "partial_translation": "    __SPTRANS: typing.List[typing.List[int]] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __SPTRANS: typing.List[typing.List[int]] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SPTRANS: typing.List[typing.List[int]] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:52.507730",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "65-313:SKB": {
                     "start": 65,
@@ -1307,12 +1571,22 @@
                             "int[][]"
                         ]
                     ],
-                    "partial_translation": "    __SKB: typing.List[typing.List[int]] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __SKB: typing.List[typing.List[int]] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SKB: typing.List[typing.List[int]] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:52.510322",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "60-63:SHIFT2": {
                     "start": 60,
@@ -1334,12 +1608,22 @@
                             "boolean[]"
                         ]
                     ],
-                    "partial_translation": "    __SHIFT2: typing.List[bool] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __SHIFT2: typing.List[bool] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SHIFT2: typing.List[bool] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:52.512831",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "57-58:SALT_CHARS": {
                     "start": 57,
@@ -1359,12 +1643,22 @@
                             "char[]"
                         ]
                     ],
-                    "partial_translation": "    __SALT_CHARS: typing.List[str] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __SALT_CHARS: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SALT_CHARS: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:52.515258",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "50-55:COV2CHAR": {
                     "start": 50,
@@ -1388,12 +1682,22 @@
                             "int[]"
                         ]
                     ],
-                    "partial_translation": "    __COV2CHAR: typing.List[int] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __COV2CHAR: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __COV2CHAR: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:52.517721",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "42-48:CON_SALT": {
                     "start": 42,
@@ -1418,12 +1722,22 @@
                             "int[]"
                         ]
                     ],
-                    "partial_translation": "    __CON_SALT: typing.List[int] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __CON_SALT: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CON_SALT: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:52.520156",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class UnixCrypt:\n\n"

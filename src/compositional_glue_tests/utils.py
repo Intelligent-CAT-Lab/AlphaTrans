@@ -21,17 +21,28 @@ class default_type_value_class(dict):
     
 default_type_value = default_type_value_class()
 
+IMMUTABLES =  ['int', 'double', 'float', 'long', 'boolean', 'char', 'String']
 
-def type_mapping(obj: str, target_type: str, include_idMap=False) -> str:
+
+def type_mapping(obj: str, target_type: str, include_idMap=False, calling_from_python=False) -> str:
     # handle arrays separately
     # TODO: This may not work in general
     if target_type.endswith("[]"):        
-        return f"IntegrationUtils.valueToArray({obj}, {target_type}.class)"
+        if calling_from_python:
+            return obj
+        else:
+            return f"IntegrationUtils.valueToArray({obj}, {target_type}.class)"
     
     if include_idMap:
-        return f"IntegrationUtils.valueToObject({obj}, \"{target_type}\", idMap)"
+        if calling_from_python:
+            return obj # TODO: include idMap
+        else:
+            return f"IntegrationUtils.valueToObject({obj}, \"{target_type}\", idMap)"
     
-    return f"IntegrationUtils.valueToObject({obj}, \"{target_type}\")"
+    if calling_from_python:
+        return f"JavaHandler.valueToObject({obj}, \"{target_type}\")"
+    else:
+        return f"IntegrationUtils.valueToObject({obj}, \"{target_type}\")"
 
 # load type handling information
 with open('src/compositional_glue_tests/type_handling.json') as f:
@@ -46,11 +57,11 @@ def write_to_file(file, content):
         f.write(content)
 
     # format java file
-    try:
-        subprocess.run(['java', '-jar', 'src/compositional_glue_tests/google-java-format-1.20.0-all-deps.jar', '--skip-removing-unused-imports', '-r', file], check=True)
-    except Exception as e:
-        print(f"Error formatting {file}: {e}")
-    return
+    if file.endswith(".java"):
+        try:
+            subprocess.run(['java', '-jar', 'src/compositional_glue_tests/google-java-format-1.20.0-all-deps.jar', '--skip-removing-unused-imports', '-r', file], check=True)
+        except Exception as e:
+            print(f"Error formatting {file}: {e}")
 
 def pre_order_traversal(relation: list[tuple[str, str | None]]) -> list[str]:
     """
@@ -76,3 +87,55 @@ def pre_order_traversal(relation: list[tuple[str, str | None]]) -> list[str]:
         stack.extend(children[::-1])  # Add children in reverse order for pre-order
 
     return visited
+
+
+def get_java_class_declaration(schema_data: dict, class_name: str):
+    java_class_declaration = None
+    with open(schema_data['path'], 'r') as f:
+        lst = f.readlines()
+        start = schema_data['classes'][class_name]['start']
+        end = schema_data['classes'][class_name]['end']
+        java_class_declaration = "".join(lst[start-1:end])
+        
+        # if the declaration does not contain a '{', look at more lines
+        # since the schema may not be correct
+        if "{" not in java_class_declaration:
+            # find the first line with '{'
+            extension = ""
+            for i in range(end, len(lst)):
+                if "{" in lst[i]:
+                    extension += lst[i][:lst[i].index("{")+1]
+                    break
+                extension += lst[i]
+            
+            java_class_declaration += extension
+        
+        # if the declaration ends in '}', remove it
+        if java_class_declaration.strip().endswith("}"):
+            java_class_declaration = java_class_declaration.strip()[0:-1]
+        
+    return java_class_declaration
+
+
+def get_method_parameter_types(method_schema_data: dict):
+    """
+    Returns a list of types of the method parameters.    
+    (Adapted from Ali's create_skeleton.py::split_with_nested_commas)
+    """
+    s = method_schema_data["signature"][method_schema_data["signature"].find('(')+1:method_schema_data["signature"].find(')')]
+    
+    result = []
+    stack = []
+    start = 0
+
+    for i, c in enumerate(s):
+        if c == ',' and not stack:
+            result.append(s[start:i].strip())
+            start = i + 1
+        elif c == '<':
+            stack.append(c)
+        elif c == '>':
+            stack.pop()
+
+    result.append(s[start:].strip())
+    return list(filter(None, result))

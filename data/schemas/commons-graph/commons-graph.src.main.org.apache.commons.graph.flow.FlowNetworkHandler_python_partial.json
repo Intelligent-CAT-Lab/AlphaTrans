@@ -96,7 +96,7 @@
     "classes": {
         "FlowNetworkHandler": {
             "start": 44,
-            "end": 44,
+            "end": 45,
             "is_abstract": false,
             "is_interface": false,
             "nested_inside": [],
@@ -132,11 +132,18 @@
                         "    def onCompleted(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def onCompleted(self) -> typing.Any:",
+                        "         return self.__maxFlow"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.8720064163208008,
+                    "generation_timestamp": "2024-06-20T22:50:38.242767",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "99-102:discoverGraph": {
                     "start": 99,
@@ -169,11 +176,20 @@
                         "    def discoverGraph(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def discoverGraph(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:",
+                        "        ",
+                        "        self.__predecessors = PredecessorsList[typing.Any, typing.Any, typing.Any](graph, self.__weightOperations, self.__weightedEdges)",
+                        "        self.__foundAugmentingPath = False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.143490552902222,
+                    "generation_timestamp": "2024-06-20T22:50:44.388597",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "88-95:discoverEdge": {
                     "start": 88,
@@ -212,11 +228,23 @@
                         "    def discoverEdge(self, head: typing.Any, edge: typing.Any, tail: typing.Any) -> VisitState:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def discoverEdge(self, head: typing.Any, edge: typing.Any, tail: typing.Any) -> VisitState:",
+                        "        ",
+                        "        residualEdgeCapacity = self.__residualEdgeCapacities.get(edge)",
+                        "        if self.__weightOperations.compare(residualEdgeCapacity, self.__weightOperations.identity()) <= 0:",
+                        "            return VisitState.SKIP",
+                        "        self.__predecessors.addPredecessor(tail, head)",
+                        "        return VisitState.CONTINUE"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.255802631378174,
+                    "generation_timestamp": "2024-06-20T22:50:50.646756",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "110-116:finishVertex": {
                     "start": 110,
@@ -250,11 +278,23 @@
                         "    def finishVertex(self, vertex: typing.Any) -> VisitState:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def finishVertex(self, vertex: typing.Any) -> VisitState:",
+                        "        ",
+                        "        if vertex == self.__target:",
+                        "            self.__foundAugmentingPath = True",
+                        "            return VisitState.ABORT",
+                        "        ",
+                        "        return VisitState.CONTINUE"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.097462892532349,
+                    "generation_timestamp": "2024-06-20T22:50:55.746603",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "105-107:discoverVertex": {
                     "start": 105,
@@ -290,11 +330,19 @@
                         "    def discoverVertex(self, vertex: typing.Any) -> VisitState:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def discoverVertex(self, vertex: typing.Any) -> VisitState:",
+                        "        ",
+                        "        return self.finishVertex(vertex)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.363531112670898,
+                    "generation_timestamp": "2024-06-20T22:51:02.112883",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "137-163:updateResidualNetworkWithCurrentAugmentingPath": {
                     "start": 137,
@@ -344,11 +392,35 @@
                         "    def updateResidualNetworkWithCurrentAugmentingPath(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def updateResidualNetworkWithCurrentAugmentingPath(self) -> None:",
+                        "        ",
+                        "        augmentingPath = self.__predecessors.buildPath0(self.__source, self.__target)",
+                        "",
+                        "        flowIncrement = None",
+                        "        for edge in augmentingPath.getEdges():",
+                        "            edgeCapacity = self.__residualEdgeCapacities.get(edge)",
+                        "            if flowIncrement is None or self.__weightOperations.compare(edgeCapacity, flowIncrement) < 0:",
+                        "                flowIncrement = edgeCapacity",
+                        "",
+                        "        self.__maxFlow = self.__weightOperations.append(self.__maxFlow, flowIncrement)",
+                        "        for edge in augmentingPath.getEdges():",
+                        "            directCapacity = self.__residualEdgeCapacities.get(edge)",
+                        "            self.__residualEdgeCapacities[edge] = self.__weightOperations.append(directCapacity, self.__weightOperations.inverse(flowIncrement))",
+                        "",
+                        "            vertexPair = self.__flowNetwork.getVertices1(edge)",
+                        "            inverseEdge = self.__flowNetwork.getEdge(vertexPair.getTail(), vertexPair.getHead())",
+                        "            inverseCapacity = self.__residualEdgeCapacities.get(inverseEdge)",
+                        "            self.__residualEdgeCapacities[inverseEdge] = self.__weightOperations.append(inverseCapacity, flowIncrement)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 27.820180654525757,
+                    "generation_timestamp": "2024-06-20T22:51:29.935494",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "124-126:hasAugmentingPath": {
                     "start": 124,
@@ -374,11 +446,18 @@
                         "    def hasAugmentingPath(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def hasAugmentingPath(self) -> bool:",
+                        "         return self.__foundAugmentingPath"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.5732579231262207,
+                    "generation_timestamp": "2024-06-20T22:51:32.512683",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "65-84:FlowNetworkHandler": {
                     "start": 65,
@@ -427,11 +506,30 @@
                         "    def __init__(self, flowNetwork: DirectedGraph[typing.Any, typing.Any], source: typing.Any, target: typing.Any, weightOperations: OrderedMonoid[typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, flowNetwork: DirectedGraph[typing.Any, typing.Any], source: typing.Any, target: typing.Any, weightOperations: OrderedMonoid[typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:",
+                        "        ",
+                        "        self.__flowNetwork = flowNetwork",
+                        "        self.__source = source",
+                        "        self.__target = target",
+                        "        self.__weightOperations = weightOperations",
+                        "        self.__weightedEdges = weightedEdges",
+                        "",
+                        "        self.__maxFlow = self.__weightOperations.identity()",
+                        "",
+                        "        for edge in self.__flowNetwork.getEdges():",
+                        "            self.__residualEdgeCapacities[edge] = self.__weightedEdges.map(edge)",
+                        "",
+                        "        self.__predecessors = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.557108879089355,
+                    "generation_timestamp": "2024-06-20T22:51:42.073737",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -450,12 +548,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __foundAugmentingPath: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __foundAugmentingPath: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __foundAugmentingPath: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.504705",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "61-61:predecessors": {
                     "start": 61,
@@ -472,12 +580,22 @@
                             "PredecessorsList<V,E,W>"
                         ]
                     ],
-                    "partial_translation": "    __predecessors: PredecessorsList[typing.Any, typing,Any, typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __predecessors: PredecessorsList[typing.Any, typing,Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __predecessors: PredecessorsList[typing.Any, typing,Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.506424",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "59-59:residualEdgeCapacities": {
                     "start": 59,
@@ -495,12 +613,22 @@
                             "java.util.Map<E,W>"
                         ]
                     ],
-                    "partial_translation": "    __residualEdgeCapacities: typing.Dict[typing.Any, typing.Any] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __residualEdgeCapacities: typing.Dict[typing.Any, typing.Any] = {}",
+                        ""
+                    ],
+                    "translation": [
+                        "    __residualEdgeCapacities: typing.Dict[typing.Any, typing.Any] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.508086",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "57-57:maxFlow": {
                     "start": 57,
@@ -517,12 +645,22 @@
                             "W"
                         ]
                     ],
-                    "partial_translation": "    __maxFlow: typing.Any = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __maxFlow: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __maxFlow: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.509743",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "55-55:weightedEdges": {
                     "start": 55,
@@ -540,12 +678,22 @@
                             "Mapper<E,W>"
                         ]
                     ],
-                    "partial_translation": "    __weightedEdges: Mapper[typing.Any, typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.511413",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "53-53:weightOperations": {
                     "start": 53,
@@ -563,12 +711,22 @@
                             "OrderedMonoid<W>"
                         ]
                     ],
-                    "partial_translation": "    __weightOperations: OrderedMonoid[typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __weightOperations: OrderedMonoid[typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __weightOperations: OrderedMonoid[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.513094",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "51-51:target": {
                     "start": 51,
@@ -586,12 +744,22 @@
                             "V"
                         ]
                     ],
-                    "partial_translation": "    __target: typing.Any = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __target: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __target: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.514736",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "49-49:source": {
                     "start": 49,
@@ -609,12 +777,22 @@
                             "V"
                         ]
                     ],
-                    "partial_translation": "    __source: typing.Any = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __source: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __source: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.516407",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "47-47:flowNetwork": {
                     "start": 47,
@@ -632,12 +810,22 @@
                             "DirectedGraph<V,E>"
                         ]
                     ],
-                    "partial_translation": "    __flowNetwork: DirectedGraph[typing.Any, typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __flowNetwork: DirectedGraph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __flowNetwork: DirectedGraph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:03.518104",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class FlowNetworkHandler:\n\n"

@@ -173,7 +173,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "ParameterizedTest"
+                        "ParameterizedTest",
+                        "MethodSource(\"generateData\")"
                     ],
                     "modifiers": [
                         "public"
@@ -249,11 +250,53 @@
                         "    def testCSVUrl(self, testFile: pathlib.Path) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCSVUrl(self, testFile: pathlib.Path) -> None:",
+                        "        ",
+                        "        with open(testFile, 'r') as fr:",
+                        "            testData = io.BufferedReader(fr)",
+                        "            line = self.__readTestData(testData)",
+                        "            assert line is not None, \"file must contain config line\"",
+                        "            split = line.split(\" \")",
+                        "            assert len(split) >= 1, f\"{testFile.name} require 1 param\"",
+                        "            format = CSVFormat.newFormat(',').withQuote0('\"')",
+                        "            checkComments = False",
+                        "            for i in range(1, len(split)):",
+                        "                option = split[i]",
+                        "                option_parts = option.split(\"=\", 1)",
+                        "                if \"IgnoreEmpty\".lower() == option_parts[0].lower():",
+                        "                    format = format.withIgnoreEmptyLines1(bool(option_parts[1]))",
+                        "                elif \"IgnoreSpaces\".lower() == option_parts[0].lower():",
+                        "                    format = format.withIgnoreSurroundingSpaces1(bool(option_parts[1]))",
+                        "                elif \"CommentStart\".lower() == option_parts[0].lower():",
+                        "                    format = format.withCommentMarker0(option_parts[1][0])",
+                        "                elif \"CheckComments\".lower() == option_parts[0].lower():",
+                        "                    checkComments = True",
+                        "                else:",
+                        "                    pytest.fail(f\"{testFile.name} unexpected option: {option}\")",
+                        "",
+                        "            line = self.__readTestData(testData)  # get string version of format",
+                        "            assert line == format.toString(), f\"{testFile.name} Expected format\"",
+                        "",
+                        "            resource = urllib.parse.urljoin(",
+                        "                'file:', urllib.request.pathname2url(str(self.__BASE_DIR / split[0])))",
+                        "            with CSVParser.parse5(resource, 'utf-8', format) as parser:",
+                        "                for record in parser:",
+                        "                    parsed = str(record.values())",
+                        "                    comment = record.getComment()",
+                        "                    if checkComments and comment is not None:",
+                        "                        parsed += \"#\" + comment.replace(\"\\n\", \"\\\\n\")",
+                        "                    count = record.size()",
+                        "                    assert self.__readTestData(testData) == f\"{count}:{parsed}\", testFile.name"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 27.164209604263306,
+                    "generation_timestamp": "2024-06-19T23:03:17.374691",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "60-103:testCSVFile": {
                     "start": 60,
@@ -306,7 +349,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "ParameterizedTest"
+                        "ParameterizedTest",
+                        "MethodSource(\"generateData\")"
                     ],
                     "modifiers": [
                         "public"
@@ -382,11 +426,50 @@
                         "    def testCSVFile(self, testFile: pathlib.Path) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCSVFile(self, testFile: pathlib.Path) -> None:",
+                        "        ",
+                        "        with open(testFile, 'r') as fr, io.BufferedReader(fr) as testData:",
+                        "            line = self.__readTestData(testData)",
+                        "            assert line is not None, \"file must contain config line\"",
+                        "            split = line.split(\" \")",
+                        "            assert len(split) >= 1, f\"{testFile.name} require 1 param\"",
+                        "            format = CSVFormat.newFormat(',').withQuote0('\"')",
+                        "            checkComments = False",
+                        "            for i in range(1, len(split)):",
+                        "                option = split[i]",
+                        "                option_parts = option.split(\"=\", 1)",
+                        "                if \"IgnoreEmpty\".lower() == option_parts[0].lower():",
+                        "                    format = format.withIgnoreEmptyLines1(bool(option_parts[1]))",
+                        "                elif \"IgnoreSpaces\".lower() == option_parts[0].lower():",
+                        "                    format = format.withIgnoreSurroundingSpaces1(bool(option_parts[1]))",
+                        "                elif \"CommentStart\".lower() == option_parts[0].lower():",
+                        "                    format = format.withCommentMarker0(option_parts[1][0])",
+                        "                elif \"CheckComments\".lower() == option_parts[0].lower():",
+                        "                    checkComments = True",
+                        "                else:",
+                        "                    pytest.fail(f\"{testFile.name} unexpected option: {option}\")",
+                        "",
+                        "            line = self.__readTestData(testData)  # get string version of format",
+                        "            assert line == format.toString(), f\"{testFile.name} Expected format\"",
+                        "",
+                        "            with CSVParser.parse0(pathlib.Path(self.__BASE_DIR, split[0]), 'utf-8', format) as parser:",
+                        "                for record in parser:",
+                        "                    parsed = str(record.values())",
+                        "                    comment = record.getComment()",
+                        "                    if checkComments and comment is not None:",
+                        "                        parsed += \"#\" + comment.replace(\"\\n\", \"\\\\n\")",
+                        "                    count = record.size()",
+                        "                    assert self.__readTestData(testData) == f\"{count}:{parsed}\", testFile.name"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 39.68550729751587,
+                    "generation_timestamp": "2024-06-19T23:03:57.107384",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "44-48:generateData": {
                     "start": 44,
@@ -418,11 +501,21 @@
                         "    def generateData() -> typing.Iterable[pathlib.Path]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def generateData() -> typing.Iterable[pathlib.Path]:",
+                        "        ",
+                        "        files = CSVFileParserTest.__BASE_DIR.glob('test*.txt')",
+                        "        return files"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.076332092285156,
+                    "generation_timestamp": "2024-06-19T23:02:03.813962",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "50-56:readTestData": {
                     "start": 50,
@@ -456,11 +549,22 @@
                         "    def __readTestData(self, reader: io.BufferedReader) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __readTestData(self, reader: io.BufferedReader) -> str:",
+                        "        ",
+                        "        line = reader.readline()",
+                        "        while line is not None and line.startswith(\"#\"):",
+                        "            line = reader.readline()",
+                        "        return line"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.529270887374878,
+                    "generation_timestamp": "2024-06-19T23:02:12.558227",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -482,12 +586,21 @@
                             "java.io.File"
                         ]
                     ],
-                    "partial_translation": "    __BASE_DIR: pathlib.Path = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BASE_DIR: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BASE_DIR: pathlib.Path = pathlib.Path(\"src/test/resources/org/apache/commons/csv/CSVFileParser\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.9764790534973145,
+                    "generation_timestamp": "2024-06-19T21:14:54.112832",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class CSVFileParserTest:\n\n"
@@ -502,10 +615,11 @@
             "implements": [],
             "extends": [],
             "methods": {
-                "46-46:accept": {
-                    "start": 46,
+                "45-46:accept": {
+                    "start": 45,
                     "end": 46,
                     "body": [
+                        "        final File[] files =\n",
                         "                BASE_DIR.listFiles((dir, name) -> name.startsWith(\"test\") && name.endsWith(\".txt\"));\n"
                     ],
                     "is_constructor": false,
@@ -530,6 +644,8 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import pathlib",
         "import io",
         "import typing",

@@ -132,11 +132,38 @@
                         "    def test_matchUsingConfigFile(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_matchUsingConfigFile(self) -> None:",
+                        "        ",
+                        "        original_err = sys.stderr",
+                        "        try:",
+                        "            baos = io.BytesIO()",
+                        "            ps = io.TextIOWrapper(baos, encoding='utf-8')",
+                        "            sys.stderr = ps",
+                        "            test = RenameHandler.create1(True)",
+                        "            sys.stderr.flush()",
+                        "            self.assertEqual(Status, test.lookupType(\"com.foo.Bar\"))",
+                        "            self.assertEqual(Status.VALID, test.lookupEnum(Status, \"YES\"))",
+                        "            self.assertEqual(DistanceMethodMethod, test.lookupType(\"com.foo.Foo\"))",
+                        "            self.assertEqual(Status.INVALID, test.lookupEnum(Status, \"NO\"))",
+                        "            logged = baos.getvalue().decode('utf-8')",
+                        "            self.assertTrue(logged.startswith(\"ERROR: Invalid Renamed.ini: \"))",
+                        "            self.assertTrue(\"org.joda.convert.ClassDoesNotExist\" in logged)",
+                        "            self.assertTrue(\"com.foo.convert.TestRenameHandlerBadInit\" in test.getTypeRenames())",
+                        "            self.assertTrue(Status.STRING_CONVERTIBLE)",
+                        "            self.assertFalse(BAD_INIT.get())",
+                        "",
+                        "        finally:",
+                        "            sys.stderr = original_err"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 32.49174952507019,
+                    "generation_timestamp": "2024-06-21T09:32:36.347473",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-71:test_locked": {
                     "start": 66,
@@ -151,7 +178,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = IllegalStateException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -185,11 +212,23 @@
                         "    def test_locked(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_locked(self) -> None:",
+                        "        ",
+                        "        test = RenameHandler.create0()",
+                        "        test.renamedType(\"com.foo.Bar\", TestRenameHandler)",
+                        "        test.lock()",
+                        "        with pytest.raises(IllegalStateException):",
+                        "            test.renamedType(\"com.foo.Foo\", TestRenameHandler)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.383226871490479,
+                    "generation_timestamp": "2024-06-21T09:32:46.735338",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "60-63:test_renameBlockedType3": {
                     "start": 60,
@@ -202,7 +241,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = IllegalArgumentException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -231,11 +270,21 @@
                         "    def test_renameBlockedType3(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_renameBlockedType3(self) -> None:",
+                        "        ",
+                        "        test = RenameHandler.create0()",
+                        "        with pytest.raises(ValueError):",
+                        "            test.renamedType(\"org.joda.foo.Bar\", TestRenameHandler)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.552571058273315,
+                    "generation_timestamp": "2024-06-21T09:32:54.291889",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "54-57:test_renameBlockedType2": {
                     "start": 54,
@@ -248,7 +297,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = IllegalArgumentException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -277,11 +326,21 @@
                         "    def test_renameBlockedType2(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_renameBlockedType2(self) -> None:",
+                        "        ",
+                        "        test = RenameHandler.create0()",
+                        "        with pytest.raises(ValueError):",
+                        "            test.renamedType(\"javax.foo.Bar\", TestRenameHandler)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.652757167816162,
+                    "generation_timestamp": "2024-06-21T09:33:01.948675",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "48-51:test_renameBlockedType1": {
                     "start": 48,
@@ -294,7 +353,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = IllegalArgumentException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -323,11 +382,21 @@
                         "    def test_renameBlockedType1(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_renameBlockedType1(self) -> None:",
+                        "        ",
+                        "        test = RenameHandler.create0()",
+                        "        with pytest.raises(ValueError):",
+                        "            test.renamedType(\"java.lang.String\", TestRenameHandler)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.158009052276611,
+                    "generation_timestamp": "2024-06-21T09:33:09.110678",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "42-45:test_noMatchType": {
                     "start": 42,
@@ -340,7 +409,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = ClassNotFoundException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -369,11 +438,22 @@
                         "    def test_noMatchType(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_noMatchType(self) -> None:",
+                        "        ",
+                        "        test = RenameHandler.create0()",
+                        "        ",
+                        "        with pytest.raises(ClassNotFoundException):",
+                        "            test.lookupType(\"com.foo.Foo\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.6209306716918945,
+                    "generation_timestamp": "2024-06-21T09:33:16.735287",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "34-39:test_matchRenamedType": {
                     "start": 34,
@@ -422,11 +502,22 @@
                         "    def test_matchRenamedType(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_matchRenamedType(self) -> None:",
+                        "        ",
+                        "        test = RenameHandler.create0()",
+                        "        test.renamedType(\"com.foo.Bar\", TestRenameHandler)",
+                        "        renamed = test.lookupType(\"com.foo.Bar\")",
+                        "        self.assertEqual(TestRenameHandler, renamed)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.734395742416382,
+                    "generation_timestamp": "2024-06-21T09:33:26.477724",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -446,21 +537,35 @@
                             "java.util.concurrent.atomic.AtomicBoolean"
                         ]
                     ],
-                    "partial_translation": "    BAD_INIT: bool = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    BAD_INIT: bool = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    from threading import Atomic",
+                        "",
+                        "BAD_INIT: Atomic = Atomic(False)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.118160009384155,
+                    "generation_timestamp": "2024-06-21T08:47:20.656259",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class TestRenameHandler:\n\n"
+            "python_class_declaration": "class TestRenameHandler(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.test.org.joda.convert.DistanceMethodMethod import *",
         "from src.main.org.joda.convert.RenameHandler import *",
         "from src.test.org.joda.convert.Status import *"

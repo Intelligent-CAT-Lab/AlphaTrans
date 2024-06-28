@@ -182,10 +182,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "52-57:GraphInsert": {
                     "start": 52,
@@ -220,11 +224,21 @@
                         "    def __init__(self, g: MutableGraph[BaseLabeledVertex, BaseLabeledEdge], start: int, end: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, g: MutableGraph[BaseLabeledVertex, BaseLabeledEdge], start: int, end: int) -> None:",
+                        "        ",
+                        "        self.__g = g",
+                        "        self.__start = start",
+                        "        self.__end = end"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.4705052375793457,
+                    "generation_timestamp": "2024-06-21T00:05:23.072787",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -243,12 +257,22 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __end: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __end: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __end: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:51.511001",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "48-48:start": {
                     "start": 48,
@@ -265,12 +289,22 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __start: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __start: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __start: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:51.514138",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "46-46:g": {
                     "start": 46,
@@ -287,12 +321,22 @@
                             "MutableGraph<BaseLabeledVertex,BaseLabeledEdge>"
                         ]
                     ],
-                    "partial_translation": "    __g: MutableGraph[BaseLabeledVertex, BaseLabeledEdge] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __g: MutableGraph[BaseLabeledVertex, BaseLabeledEdge] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __g: MutableGraph[BaseLabeledVertex, BaseLabeledEdge] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:51.517213",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class GraphInsert(TestRunner):\n\n"
@@ -330,7 +374,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = GraphException.class)",
+                        "Test(expected = GraphException.class)"
                     ],
                     "modifiers": [
                         "public",
@@ -360,11 +405,30 @@
                         "    def testUndirectedGraphRemoveEdgeNotExists(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testUndirectedGraphRemoveEdgeNotExists(self) -> None:",
+                        "        ",
+                        "        g = None",
+                        "        e = None",
+                        "        try:",
+                        "            g = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()",
+                        "            GraphUtils.buildCompleteGraph(10, g)",
+                        "",
+                        "            e = BaseLabeledEdge(\"NOT EXIST\")",
+                        "        except GraphException as ex:",
+                        "            self.fail(ex.getMessage())",
+                        "",
+                        "        with self.assertRaises(GraphException):",
+                        "            g.removeEdge(e)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 27.496334314346313,
+                    "generation_timestamp": "2024-06-21T00:05:50.573246",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "377-392:testUndirectedGraphRemoveEdge": {
                     "start": 377,
@@ -389,6 +453,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Test",
                         "Test"
                     ],
                     "modifiers": [
@@ -419,11 +484,31 @@
                         "    def testUndirectedGraphRemoveEdge(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testUndirectedGraphRemoveEdge(self) -> None:",
+                        "        ",
+                        "        g = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()",
+                        "",
+                        "        source = BaseLabeledVertex(str(1))",
+                        "        target = BaseLabeledVertex(str(2))",
+                        "",
+                        "        GraphUtils.buildCompleteGraph(10, g)",
+                        "",
+                        "        e = g.getEdge(source, target)",
+                        "        g.removeEdge(e)",
+                        "",
+                        "        edge = g.getEdge(source, target)",
+                        "",
+                        "        self.assertIsNone(edge)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.366378545761108,
+                    "generation_timestamp": "2024-06-21T00:05:59.945114",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "349-370:testMultiThreadUndirectGraph": {
                     "start": 349,
@@ -454,6 +539,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Test",
                         "Test"
                     ],
                     "modifiers": [
@@ -494,11 +580,33 @@
                         "    def testMultiThreadUndirectGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testMultiThreadUndirectGraph(self) -> None:",
+                        "        ",
+                        "        g = CommonsGraph.synchronize2(",
+                        "            UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]())",
+                        "",
+                        "        tr1 = GraphInsert(g, 0, 10)",
+                        "        tr2 = GraphInsert(g, 10, 20)",
+                        "        tr3 = GraphInsert(g, 20, 30)",
+                        "",
+                        "        trs = [tr1, tr2, tr3]",
+                        "        mttr = MultiThreadedTestRunner(trs)",
+                        "",
+                        "        mttr.runRunnables()",
+                        "",
+                        "        self.assertEqual(30, g.getOrder())",
+                        "",
+                        "        self.assertEqual((30 * (30 - 1) / 2), g.getSize())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.689496278762817,
+                    "generation_timestamp": "2024-06-21T00:06:17.641888",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "333-345:testGetNotExistsEdge": {
                     "start": 333,
@@ -520,6 +628,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Test",
                         "Test"
                     ],
                     "modifiers": [
@@ -545,11 +654,27 @@
                         "    def testGetNotExistsEdge(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetNotExistsEdge(self) -> None:",
+                        "        ",
+                        "        g = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()",
+                        "        for i in range(4):",
+                        "            v = BaseLabeledVertex(str(i))",
+                        "            g.addVertex(v)",
+                        "",
+                        "        source = BaseLabeledVertex(str(1))",
+                        "        target = BaseLabeledVertex(str(2))",
+                        "        edge = g.getEdge(source, target)",
+                        "        self.assertIsNone(edge)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.50334119796753,
+                    "generation_timestamp": "2024-06-21T00:06:29.151935",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "309-325:testGetEgdeNotExistsVertex_2": {
                     "start": 309,
@@ -575,7 +700,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = GraphException.class)",
+                        "Test(expected = GraphException.class)"
                     ],
                     "modifiers": [
                         "public",
@@ -605,11 +731,32 @@
                         "    def testGetEgdeNotExistsVertex_2(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetEgdeNotExistsVertex_2(self) -> None:",
+                        "        ",
+                        "        g = None",
+                        "        source = None",
+                        "        target = None",
+                        "        try:",
+                        "            g = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()",
+                        "            GraphUtils.buildCompleteGraph(10, g)",
+                        "",
+                        "            source = BaseLabeledVertex(str(1))",
+                        "            target = BaseLabeledVertex(str(200))",
+                        "        except GraphException as e:",
+                        "            self.fail(e.getMessage())",
+                        "",
+                        "        with self.assertRaises(GraphException):",
+                        "            g.getEdge(source, target)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.090743064880371,
+                    "generation_timestamp": "2024-06-21T00:06:41.248716",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "286-301:testGetEgdeNotExistsVertex": {
                     "start": 286,
@@ -634,7 +781,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = GraphException.class)",
+                        "Test(expected = GraphException.class)"
                     ],
                     "modifiers": [
                         "public",
@@ -664,11 +812,32 @@
                         "    def testGetEgdeNotExistsVertex(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetEgdeNotExistsVertex(self) -> None:",
+                        "        ",
+                        "        g = None",
+                        "        source = None",
+                        "        target = None",
+                        "        try:",
+                        "            g = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()",
+                        "            GraphUtils.buildCompleteGraph(10, g)",
+                        "",
+                        "            source = BaseLabeledVertex(str(100))",
+                        "            target = BaseLabeledVertex(str(2))",
+                        "        except GraphException as e:",
+                        "            self.fail(e.getMessage())",
+                        "",
+                        "        with self.assertRaises(GraphException):",
+                        "            g.getEdge(source, target)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 34.272289514541626,
+                    "generation_timestamp": "2024-06-21T00:07:15.528244",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "269-278:testGetEdge": {
                     "start": 269,
@@ -687,6 +856,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Test",
                         "Test"
                     ],
                     "modifiers": [
@@ -717,11 +887,25 @@
                         "    def testGetEdge(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetEdge(self) -> None:",
+                        "        ",
+                        "        g = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()",
+                        "        GraphUtils.buildCompleteGraph(10, g)",
+                        "",
+                        "        source = BaseLabeledVertex('1')",
+                        "        target = BaseLabeledVertex('2')",
+                        "        edge = g.getEdge(source, target)",
+                        "        self.assertIsNotNone(edge)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.60617756843567,
+                    "generation_timestamp": "2024-06-21T00:07:32.138595",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "242-261:testGetConnectedVerticesOnNotConnectedGraph": {
                     "start": 242,
@@ -750,6 +934,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Test",
                         "Test"
                     ],
                     "modifiers": [
@@ -775,11 +960,33 @@
                         "    def testGetConnectedVerticesOnNotConnectedGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetConnectedVerticesOnNotConnectedGraph(self) -> None:",
+                        "        ",
+                        "        g = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()",
+                        "",
+                        "        for i in range(4):",
+                        "            v = BaseLabeledVertex(str(i))",
+                        "            g.addVertex(v)",
+                        "",
+                        "        testVertex = BaseLabeledVertex(str(1))",
+                        "        connectedVertices = g.getConnectedVertices(testVertex)",
+                        "        assert connectedVertices is not None",
+                        "",
+                        "        v = []",
+                        "        for baseLabeledVertex in connectedVertices:",
+                        "            v.append(baseLabeledVertex)",
+                        "",
+                        "        assert len(v) == 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.39147162437439,
+                    "generation_timestamp": "2024-06-21T00:07:50.536721",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "223-235:testGetConnectedVerticesNPE": {
                     "start": 223,
@@ -801,7 +1008,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = GraphException.class)",
+                        "Test(expected = GraphException.class)"
                     ],
                     "modifiers": [
                         "public",
@@ -831,11 +1039,30 @@
                         "    def testGetConnectedVerticesNPE(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetConnectedVerticesNPE(self) -> None:",
+                        "        ",
+                        "        g = None",
+                        "        notExistsVertex = None",
+                        "        try:",
+                        "            g = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()",
+                        "            GraphUtils.buildCompleteGraph(10, g)",
+                        "",
+                        "            notExistsVertex = BaseLabeledVertex(str(1000))",
+                        "        except GraphException as e:",
+                        "            self.fail(e.getMessage())",
+                        "        ",
+                        "        with self.assertRaises(GraphException):",
+                        "            g.getConnectedVertices(notExistsVertex)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.799246072769165,
+                    "generation_timestamp": "2024-06-21T00:08:06.341674",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "200-216:testGetConnectedVertices": {
                     "start": 200,
@@ -861,6 +1088,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Test",
                         "Test"
                     ],
                     "modifiers": [
@@ -891,11 +1119,31 @@
                         "    def testGetConnectedVertices(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testGetConnectedVertices(self) -> None:",
+                        "        ",
+                        "        g = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()",
+                        "        GraphUtils.buildCompleteGraph(10, g)",
+                        "",
+                        "        testVertex = BaseLabeledVertex('1')",
+                        "        connectedVertices = g.getConnectedVertices(testVertex)",
+                        "        self.assertIsNotNone(connectedVertices)",
+                        "",
+                        "        v = []",
+                        "        for baseLabeledVertex in connectedVertices:",
+                        "            v.append(baseLabeledVertex)",
+                        "",
+                        "        self.assertEqual(len(v), 9)",
+                        "        self.assertNotIn(testVertex, v)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.858691930770874,
+                    "generation_timestamp": "2024-06-21T00:08:19.205992",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "173-193:testDirectedMultiTh": {
                     "start": 173,
@@ -925,6 +1173,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Test",
                         "Test"
                     ],
                     "modifiers": [
@@ -965,11 +1214,31 @@
                         "    def testDirectedMultiTh(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDirectedMultiTh(self) -> None:",
+                        "        ",
+                        "        g = CommonsGraph.synchronize2(DirectedMutableGraph())",
+                        "",
+                        "        tr1 = GraphInsert(g, 0, 10)",
+                        "        tr2 = GraphInsert(g, 10, 20)",
+                        "        tr3 = GraphInsert(g, 20, 30)",
+                        "",
+                        "        trs = [tr1, tr2, tr3]",
+                        "        mttr = MultiThreadedTestRunner(trs)",
+                        "        mttr.runRunnables()",
+                        "",
+                        "        self.assertEqual(30, g.getOrder())",
+                        "",
+                        "        self.assertEqual(30 * (30 - 1), g.getSize())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.325306415557861,
+                    "generation_timestamp": "2024-06-21T00:08:34.538584",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "156-169:testDirectedGraphRemoveEdgeNotExists": {
                     "start": 156,
@@ -992,7 +1261,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = GraphException.class)",
+                        "Test(expected = GraphException.class)"
                     ],
                     "modifiers": [
                         "public",
@@ -1022,11 +1292,30 @@
                         "    def testDirectedGraphRemoveEdgeNotExists(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDirectedGraphRemoveEdgeNotExists(self) -> None:",
+                        "        ",
+                        "        g = None",
+                        "        e = None",
+                        "        try:",
+                        "            g = DirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()",
+                        "            GraphUtils.buildCompleteGraph(10, g)",
+                        "",
+                        "            e = BaseLabeledEdge(\"NOT EXIST\")",
+                        "        except GraphException as ex:",
+                        "            self.fail(ex.getMessage())",
+                        "",
+                        "        with self.assertRaises(GraphException):",
+                        "            g.removeEdge(e)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.359094381332397,
+                    "generation_timestamp": "2024-06-21T00:08:50.903061",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "135-149:testDirectedGraphRemoveEdge": {
                     "start": 135,
@@ -1050,6 +1339,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Test",
                         "Test"
                     ],
                     "modifiers": [
@@ -1080,11 +1370,30 @@
                         "    def testDirectedGraphRemoveEdge(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testDirectedGraphRemoveEdge(self) -> None:",
+                        "        ",
+                        "        g = DirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()",
+                        "",
+                        "        source = BaseLabeledVertex(str(1))",
+                        "        target = BaseLabeledVertex(str(2))",
+                        "",
+                        "        GraphUtils.buildCompleteGraph(10, g)",
+                        "",
+                        "        e = g.getEdge(source, target)",
+                        "        g.removeEdge(e)",
+                        "",
+                        "        edge = g.getEdge(source, target)",
+                        "        self.assertIsNone(edge)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.518642902374268,
+                    "generation_timestamp": "2024-06-21T00:09:03.426983",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "87-128:testAddVertexAndEdge": {
                     "start": 87,
@@ -1135,6 +1444,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Test",
                         "Test"
                     ],
                     "modifiers": [
@@ -1171,19 +1481,26 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 }
             },
             "fields": {},
-            "python_class_declaration": "class BaseMutableGraphTestCase:\n\n"
+            "python_class_declaration": "class BaseMutableGraphTestCase(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
+        "import unittest",
         "from src.main.org.apache.commons.graph.CommonsGraph import *",
         "from src.main.org.apache.commons.graph.Graph import *",
         "from src.main.org.apache.commons.graph.GraphException import *",

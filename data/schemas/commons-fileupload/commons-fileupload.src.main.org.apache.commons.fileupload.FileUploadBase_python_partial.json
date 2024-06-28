@@ -81,6 +81,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -103,11 +104,18 @@
                         "    def _getHeader(self, headers: typing.Dict[str, str], name: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _getHeader(self, headers: typing.Dict[str, str], name: str) -> str:",
+                        "         return headers.get(name.lower())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1738874912261963,
+                    "generation_timestamp": "2024-06-20T08:31:10.222024",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "472-485:parseHeaders": {
                     "start": 472,
@@ -166,11 +174,30 @@
                         "    def _parseHeaders(self, headerPart: str) -> typing.Dict[str, str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _parseHeaders(self, headerPart: str) -> typing.Dict[str, str]:",
+                        "        ",
+                        "        headers = self._getParsedHeaders(headerPart)",
+                        "        result = {}",
+                        "        for headerName in headers.getHeaderNames():",
+                        "            iter2 = headers.getHeaders(headerName)",
+                        "            headerValue = next(iter2)",
+                        "            while True:",
+                        "                try:",
+                        "                    headerValue += \", \" + next(iter2)",
+                        "                except StopIteration:",
+                        "                    break",
+                        "            result[headerName] = headerValue",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.55868673324585,
+                    "generation_timestamp": "2024-06-20T08:32:44.805569",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "401-409:createItem": {
                     "start": 401,
@@ -235,11 +262,23 @@
                         "    def _createItem(self, headers: typing.Dict[str, str], isFormField: bool) -> FileItem:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _createItem(self, headers: typing.Dict[str, str], isFormField: bool) -> FileItem:",
+                        "         return self.getFileItemFactory().createItem(",
+                        "             self._getFieldName2(headers),",
+                        "             self._getHeader(headers, self.CONTENT_TYPE),",
+                        "             isFormField,",
+                        "             self._getFileName0(headers)",
+                        "         )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.131166458129883,
+                    "generation_timestamp": "2024-06-19T22:08:45.073602",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "386-388:getFieldName2": {
                     "start": 386,
@@ -282,11 +321,18 @@
                         "    def _getFieldName2(self, headers: typing.Dict[str, str]) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _getFieldName2(self, headers: typing.Dict[str, str]) -> str:",
+                        "         return self.__getFieldName1(self._getHeader(headers, self.CONTENT_DISPOSITION))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.664116144180298,
+                    "generation_timestamp": "2024-06-20T08:32:50.479890",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "306-308:getFileName0": {
                     "start": 306,
@@ -329,11 +375,18 @@
                         "    def _getFileName0(self, headers: typing.Dict[str, str]) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _getFileName0(self, headers: typing.Dict[str, str]) -> str:",
+                        "         return self.__getFileName2(self._getHeader(headers, self.CONTENT_DISPOSITION))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.277558326721191,
+                    "generation_timestamp": "2024-06-19T22:08:15.868337",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "974-976:setProgressListener": {
                     "start": 974,
@@ -363,11 +416,18 @@
                         "    def setProgressListener(self, pListener: ProgressListener) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def setProgressListener(self, pListener: ProgressListener) -> None:",
+                        "         self.__listener = pListener"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.007474422454834,
+                    "generation_timestamp": "2024-06-20T08:31:11.238799",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "965-967:getProgressListener": {
                     "start": 965,
@@ -395,11 +455,18 @@
                         "    def getProgressListener(self) -> ProgressListener:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getProgressListener(self) -> ProgressListener:",
+                        "         return self.__listener"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.9453685283660889,
+                    "generation_timestamp": "2024-06-20T08:31:12.192606",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "457-459:newFileItemHeaders": {
                     "start": 457,
@@ -433,11 +500,18 @@
                         "    def _newFileItemHeaders(self) -> FileItemHeadersImpl:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _newFileItemHeaders(self) -> FileItemHeadersImpl:",
+                        "         return FileItemHeadersImpl()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.9154770374298096,
+                    "generation_timestamp": "2024-06-20T08:31:13.116705",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "420-450:getParsedHeaders": {
                     "start": 420,
@@ -511,11 +585,41 @@
                         "    def _getParsedHeaders(self, headerPart: str) -> FileItemHeaders:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _getParsedHeaders(self, headerPart: str) -> FileItemHeaders:",
+                        "        ",
+                        "        len_ = len(headerPart)",
+                        "        headers = self._newFileItemHeaders()",
+                        "        start = 0",
+                        "        while True:",
+                        "            end = self.__parseEndOfLine(headerPart, start)",
+                        "            if start == end:",
+                        "                break",
+                        "            header = StringBuilder(headerPart[start:end])",
+                        "            start = end + 2",
+                        "            while start < len_:",
+                        "                nonWs = start",
+                        "                while nonWs < len_:",
+                        "                    c = headerPart[nonWs]",
+                        "                    if c != ' ' and c != '\\t':",
+                        "                        break",
+                        "                    nonWs += 1",
+                        "                if nonWs == start:",
+                        "                    break",
+                        "                end = self.__parseEndOfLine(headerPart, nonWs)",
+                        "                header.append(\" \").append(headerPart[nonWs:end])",
+                        "                start = end + 2",
+                        "            self.__parseHeaderLine(headers, header.toString())",
+                        "        return headers"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 19.56369137763977,
+                    "generation_timestamp": "2024-06-20T08:32:24.405650",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "353-355:getFieldName0": {
                     "start": 353,
@@ -556,11 +660,18 @@
                         "    def _getFieldName0(self, headers: FileItemHeaders) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _getFieldName0(self, headers: FileItemHeaders) -> str:",
+                        "         return self.__getFieldName1(headers.getHeader(self.CONTENT_DISPOSITION))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.277124643325806,
+                    "generation_timestamp": "2024-06-20T08:32:59.768848",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "316-318:getFileName1": {
                     "start": 316,
@@ -601,11 +712,18 @@
                         "    def _getFileName1(self, headers: FileItemHeaders) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _getFileName1(self, headers: FileItemHeaders) -> str:",
+                        "         return self.__getFileName2(headers.getHeader(self.CONTENT_DISPOSITION))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.257459878921509,
+                    "generation_timestamp": "2024-06-19T22:08:23.141070",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "280-296:getBoundary": {
                     "start": 280,
@@ -665,11 +783,30 @@
                         "    def _getBoundary(self, contentType: str) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _getBoundary(self, contentType: str) -> typing.List[int]:",
+                        "        ",
+                        "        parser = ParameterParser()",
+                        "        parser.setLowerCaseNames(True)",
+                        "        params = parser.parse0(contentType, [';', ','])",
+                        "        boundaryStr = params.get(\"boundary\")",
+                        "",
+                        "        if boundaryStr is None:",
+                        "            return None",
+                        "        try:",
+                        "            boundary = boundaryStr.encode(\"ISO-8859-1\")",
+                        "        except UnsupportedEncodingError:",
+                        "            boundary = boundaryStr.encode()  # Intentionally falls back to default charset",
+                        "        return list(boundary)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.404556035995483,
+                    "generation_timestamp": "2024-06-20T08:31:34.532122",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "222-224:setHeaderEncoding": {
                     "start": 222,
@@ -699,11 +836,18 @@
                         "    def setHeaderEncoding(self, encoding: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def setHeaderEncoding(self, encoding: str) -> None:",
+                        "         self.__headerEncoding = encoding"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.000504732131958,
+                    "generation_timestamp": "2024-06-20T08:31:35.546958",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "211-213:getHeaderEncoding": {
                     "start": 211,
@@ -731,11 +875,18 @@
                         "    def getHeaderEncoding(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getHeaderEncoding(self) -> str:",
+                        "         return self.__headerEncoding"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.244518756866455,
+                    "generation_timestamp": "2024-06-20T08:31:36.799986",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "200-202:setFileCountMax": {
                     "start": 200,
@@ -765,11 +916,18 @@
                         "    def setFileCountMax(self, fileCountMax: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def setFileCountMax(self, fileCountMax: int) -> None:",
+                        "         self.__fileCountMax = fileCountMax"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.075467586517334,
+                    "generation_timestamp": "2024-06-20T08:31:37.884037",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "191-193:getFileCountMax": {
                     "start": 191,
@@ -797,11 +955,18 @@
                         "    def getFileCountMax(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getFileCountMax(self) -> int:",
+                        "         return self.__fileCountMax"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.7534730434417725,
+                    "generation_timestamp": "2024-06-20T08:31:39.646088",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "182-184:setFileSizeMax": {
                     "start": 182,
@@ -831,11 +996,18 @@
                         "    def setFileSizeMax(self, fileSizeMax: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def setFileSizeMax(self, fileSizeMax: int) -> None:",
+                        "         self.__fileSizeMax = fileSizeMax"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.282170057296753,
+                    "generation_timestamp": "2024-06-20T08:31:40.936746",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "172-174:getFileSizeMax": {
                     "start": 172,
@@ -863,11 +1035,18 @@
                         "    def getFileSizeMax(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getFileSizeMax(self) -> int:",
+                        "         return self.__fileSizeMax"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.9904370307922363,
+                    "generation_timestamp": "2024-06-20T08:31:41.935682",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "161-163:setSizeMax": {
                     "start": 161,
@@ -897,11 +1076,18 @@
                         "    def setSizeMax(self, sizeMax: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def setSizeMax(self, sizeMax: int) -> None:",
+                        "         self.__sizeMax = sizeMax"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.009835958480835,
+                    "generation_timestamp": "2024-06-20T08:31:42.953978",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "149-151:getSizeMax": {
                     "start": 149,
@@ -929,11 +1115,18 @@
                         "    def getSizeMax(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getSizeMax(self) -> int:",
+                        "         return self.__sizeMax"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.8990154266357422,
+                    "generation_timestamp": "2024-06-20T08:31:43.861475",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "51-60:isMultipartContent": {
                     "start": 51,
@@ -979,11 +1172,24 @@
                         "    def isMultipartContent(ctx: RequestContext) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def isMultipartContent(ctx: RequestContext) -> bool:",
+                        "         contentType = ctx.getContentType()",
+                        "         if contentType is None:",
+                        "             return False",
+                        "         if contentType.lower().startswith(FileUploadBase.MULTIPART):",
+                        "             return True",
+                        "         return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.629205942153931,
+                    "generation_timestamp": "2024-06-20T08:31:49.499217",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "515-523:parseHeaderLine": {
                     "start": 515,
@@ -1026,11 +1232,24 @@
                         "    def __parseHeaderLine(self, headers: FileItemHeadersImpl, header: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __parseHeaderLine(self, headers: FileItemHeadersImpl, header: str) -> None:",
+                        "        ",
+                        "        colonOffset = header.find(':')",
+                        "        if colonOffset == -1:",
+                        "            return",
+                        "        headerName = header[:colonOffset].strip()",
+                        "        headerValue = header[colonOffset + 1:].strip()",
+                        "        headers.addHeader(headerName, headerValue)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.8168535232543945,
+                    "generation_timestamp": "2024-06-20T08:31:56.324739",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "494-507:parseEndOfLine": {
                     "start": 494,
@@ -1072,11 +1291,27 @@
                         "    def __parseEndOfLine(self, headerPart: str, end: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __parseEndOfLine(self, headerPart: str, end: int) -> int:",
+                        "        ",
+                        "        index = end",
+                        "        while True:",
+                        "            offset = headerPart.find('\\r', index)",
+                        "            if offset == -1 or offset + 1 >= len(headerPart):",
+                        "                raise IllegalStateException(",
+                        "                    \"Expected headers to be terminated by an empty line.\")",
+                        "            if headerPart[offset + 1] == '\\n':",
+                        "                return offset",
+                        "            index = offset + 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.497262239456177,
+                    "generation_timestamp": "2024-06-20T08:32:04.830193",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "363-376:getFieldName1": {
                     "start": 363,
@@ -1133,11 +1368,27 @@
                         "    def __getFieldName1(self, pContentDisposition: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __getFieldName1(self, pContentDisposition: str) -> str:",
+                        "        ",
+                        "        fieldName = None",
+                        "        if pContentDisposition is not None and pContentDisposition.lower().startswith(self.FORM_DATA):",
+                        "            parser = ParameterParser()",
+                        "            parser.setLowerCaseNames(True)",
+                        "            params = parser.parse1(pContentDisposition, ';')",
+                        "            fieldName = params.get(\"name\")",
+                        "            if fieldName is not None:",
+                        "                fieldName = fieldName.strip()",
+                        "        return fieldName"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.821578025817871,
+                    "generation_timestamp": "2024-06-20T08:32:36.237510",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "326-345:getFileName2": {
                     "start": 326,
@@ -1200,11 +1451,32 @@
                         "    def __getFileName2(self, pContentDisposition: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __getFileName2(self, pContentDisposition: str) -> str:",
+                        "        ",
+                        "        fileName = None",
+                        "        if pContentDisposition is not None:",
+                        "            cdl = pContentDisposition.lower()",
+                        "            if cdl.startswith(self.FORM_DATA) or cdl.startswith(self.ATTACHMENT):",
+                        "                parser = ParameterParser()",
+                        "                parser.setLowerCaseNames(True)",
+                        "                params = parser.parse1(pContentDisposition, ';')",
+                        "                if 'filename' in params:",
+                        "                    fileName = params['filename']",
+                        "                    if fileName is not None:",
+                        "                        fileName = fileName.strip()",
+                        "                    else:",
+                        "                        fileName = \"\"",
+                        "        return fileName"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.573216915130615,
+                    "generation_timestamp": "2024-06-19T22:08:08.579927",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "139-139:setFileItemFactory": {
                     "start": 139,
@@ -1233,11 +1505,18 @@
                         "    def setFileItemFactory(self, factory: FileItemFactory) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def setFileItemFactory(self, factory: FileItemFactory) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.072847843170166,
+                    "generation_timestamp": "2024-06-19T22:08:28.222321",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "132-132:getFileItemFactory": {
                     "start": 132,
@@ -1264,11 +1543,18 @@
                         "    def getFileItemFactory(self) -> FileItemFactory:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getFileItemFactory(self) -> FileItemFactory:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.688683032989502,
+                    "generation_timestamp": "2024-06-19T22:08:32.923255",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1289,12 +1575,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    MAX_HEADER_SIZE: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    MAX_HEADER_SIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    MAX_HEADER_SIZE: int = 1024"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.545332670211792,
+                    "generation_timestamp": "2024-06-19T21:27:42.278749",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "92-92:MULTIPART_MIXED": {
                     "start": 92,
@@ -1313,12 +1608,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    MULTIPART_MIXED: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    MULTIPART_MIXED: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    MULTIPART_MIXED: str = \"multipart/mixed\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.6711640357971191,
+                    "generation_timestamp": "2024-06-19T21:27:43.962946",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "89-89:MULTIPART_FORM_DATA": {
                     "start": 89,
@@ -1337,12 +1641,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    MULTIPART_FORM_DATA: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    MULTIPART_FORM_DATA: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    MULTIPART_FORM_DATA: str = \"multipart/form-data\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.6885199546813965,
+                    "generation_timestamp": "2024-06-19T21:27:45.660744",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "86-86:MULTIPART": {
                     "start": 86,
@@ -1361,12 +1674,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    MULTIPART: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    MULTIPART: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    MULTIPART: str = \"multipart/\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1521015167236328,
+                    "generation_timestamp": "2024-06-19T21:27:46.821358",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "83-83:ATTACHMENT": {
                     "start": 83,
@@ -1385,12 +1707,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    ATTACHMENT: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    ATTACHMENT: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    ATTACHMENT: str = \"attachment\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1870408058166504,
+                    "generation_timestamp": "2024-06-19T21:27:48.017577",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "80-80:FORM_DATA": {
                     "start": 80,
@@ -1409,12 +1740,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    FORM_DATA: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    FORM_DATA: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    FORM_DATA: str = \"form-data\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1435770988464355,
+                    "generation_timestamp": "2024-06-19T21:27:49.177919",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "77-77:CONTENT_LENGTH": {
                     "start": 77,
@@ -1433,12 +1773,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    CONTENT_LENGTH: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    CONTENT_LENGTH: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    CONTENT_LENGTH: str = \"Content-length\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.2362864017486572,
+                    "generation_timestamp": "2024-06-19T21:27:50.428024",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "74-74:CONTENT_DISPOSITION": {
                     "start": 74,
@@ -1457,12 +1806,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    CONTENT_DISPOSITION: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    CONTENT_DISPOSITION: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    CONTENT_DISPOSITION: str = \"Content-disposition\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.2860515117645264,
+                    "generation_timestamp": "2024-06-19T21:27:51.733439",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "71-71:CONTENT_TYPE": {
                     "start": 71,
@@ -1481,12 +1839,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    CONTENT_TYPE: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    CONTENT_TYPE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    CONTENT_TYPE: str = \"Content-type\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.5957767963409424,
+                    "generation_timestamp": "2024-06-19T21:27:53.338086",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "125-125:listener": {
                     "start": 125,
@@ -1503,12 +1870,22 @@
                             "ProgressListener"
                         ]
                     ],
-                    "partial_translation": "    __listener: ProgressListener = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __listener: ProgressListener = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __listener: ProgressListener = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:44.104295",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "122-122:headerEncoding": {
                     "start": 122,
@@ -1525,12 +1902,22 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __headerEncoding: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __headerEncoding: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __headerEncoding: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:44.124044",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "119-119:fileCountMax": {
                     "start": 119,
@@ -1547,12 +1934,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __fileCountMax: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __fileCountMax: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __fileCountMax: int = -1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.0530407428741455,
+                    "generation_timestamp": "2024-06-19T21:27:54.401612",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "113-113:fileSizeMax": {
                     "start": 113,
@@ -1569,12 +1965,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __fileSizeMax: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __fileSizeMax: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __fileSizeMax: int = -1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.004715919494629,
+                    "generation_timestamp": "2024-06-19T21:28:03.414695",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "107-107:sizeMax": {
                     "start": 107,
@@ -1591,12 +1996,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __sizeMax: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __sizeMax: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __sizeMax: int = -1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.8942484855651855,
+                    "generation_timestamp": "2024-06-19T21:28:07.316282",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class FileUploadBase(ABC):\n\n"
@@ -1639,11 +2053,18 @@
                         "    def getCause(self) -> BaseException:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getCause(self) -> BaseException:",
+                        "         return self.__cause"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.9108262062072754,
+                    "generation_timestamp": "2024-06-20T08:29:58.644939",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "716-718:FileUploadIOException": {
                     "start": 716,
@@ -1673,11 +2094,18 @@
                         "    def __init__(self, pCause: FileUploadException) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, pCause: FileUploadException) -> None:",
+                        "         self.__cause = pCause"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.5082640647888184,
+                    "generation_timestamp": "2024-06-20T08:30:00.163010",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1697,12 +2125,22 @@
                             "FileUploadException"
                         ]
                     ],
-                    "partial_translation": "    __cause: FileUploadException = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __cause: FileUploadException = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __cause: FileUploadException = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:47.409213",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "703-703:serialVersionUID": {
                     "start": 703,
@@ -1721,12 +2159,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -7047616958165584154"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.223949432373047,
+                    "generation_timestamp": "2024-06-19T21:28:09.548521",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class FileUploadIOException():\n\n"
@@ -1771,11 +2218,18 @@
                         "    def getCause(self) -> BaseException:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getCause(self) -> BaseException:",
+                        "         return self.__cause"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.409113883972168,
+                    "generation_timestamp": "2024-06-20T08:30:01.583194",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "776-779:IOFileUploadException": {
                     "start": 776,
@@ -1813,11 +2267,19 @@
                         "    def __init__(self, pMsg: str, pException: typing.Union[IOError, OSError]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, pMsg: str, pException: typing.Union[IOError, OSError]) -> None:",
+                        "         super().__init__(pMsg, None)",
+                        "         self.__cause = pException"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 19.380735635757446,
+                    "generation_timestamp": "2024-06-20T08:30:20.975029",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1837,12 +2299,22 @@
                             "java.io.IOException"
                         ]
                     ],
-                    "partial_translation": "    __cause: typing.Union[IOError, OSError] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __cause: typing.Union[IOError, OSError] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __cause: typing.Union[IOError, OSError] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:49.560631",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "762-762:serialVersionUID": {
                     "start": 762,
@@ -1861,12 +2333,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 1749796615868477269"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.9404382705688477,
+                    "generation_timestamp": "2024-06-19T21:28:11.499607",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class IOFileUploadException(FileUploadException):\n\n"
@@ -1893,6 +2374,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -1921,11 +2403,19 @@
                         "    def SizeLimitExceededException1(message: str) -> SizeLimitExceededException:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def SizeLimitExceededException1(message: str) -> SizeLimitExceededException:",
+                        "         return SizeLimitExceededException(message, 0, 0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.5029444694519043,
+                    "generation_timestamp": "2024-06-20T08:30:59.899604",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "873-875:SizeLimitExceededException0": {
                     "start": 873,
@@ -1937,6 +2427,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "Deprecated",
                         "Deprecated"
                     ],
                     "modifiers": [
@@ -1963,11 +2454,19 @@
                         "    def SizeLimitExceededException0() -> SizeLimitExceededException:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def SizeLimitExceededException0() -> SizeLimitExceededException:",
+                        "         return SizeLimitExceededException(None, 0, 0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.7933106422424316,
+                    "generation_timestamp": "2024-06-20T08:31:01.702076",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "894-896:SizeLimitExceededException": {
                     "start": 894,
@@ -2005,11 +2504,18 @@
                         "    def __init__(self, message: str, actual: int, permitted: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, message: str, actual: int, permitted: int) -> None:",
+                        "         super().__init__(message, actual, permitted)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.8051557540893555,
+                    "generation_timestamp": "2024-06-20T08:30:57.387713",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -2030,12 +2536,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -2474893167098052828"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.312999963760376,
+                    "generation_timestamp": "2024-06-19T21:28:13.823016",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class SizeLimitExceededException(SizeException):\n\n"
@@ -2078,11 +2593,18 @@
                         "    def setHeaders(self, pHeaders: FileItemHeaders) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def setHeaders(self, pHeaders: FileItemHeaders) -> None:",
+                        "         self.__headers = pHeaders"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.5124104022979736,
+                    "generation_timestamp": "2024-06-20T08:30:22.496294",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "620-622:getHeaders": {
                     "start": 620,
@@ -2110,11 +2632,18 @@
                         "    def getHeaders(self) -> FileItemHeaders:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getHeaders(self) -> FileItemHeaders:",
+                        "         return self.__headers"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.9349746704101562,
+                    "generation_timestamp": "2024-06-20T08:30:23.439012",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -2133,12 +2662,22 @@
                             "FileItemHeaders"
                         ]
                     ],
-                    "partial_translation": "    __headers: FileItemHeaders = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __headers: FileItemHeaders = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __headers: FileItemHeaders = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:52.881431",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "559-559:opened": {
                     "start": 559,
@@ -2155,12 +2694,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __opened: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __opened: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __opened: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:52.897912",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class FileItemStreamImpl:\n\n"
@@ -2215,11 +2764,21 @@
                         "    def __getContentLength(self, pHeaders: FileItemHeaders) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __getContentLength(self, pHeaders: FileItemHeaders) -> int:",
+                        "         try:",
+                        "             return int(pHeaders.getHeader(CONTENT_LENGTH))",
+                        "         except Exception:",
+                        "             return -1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.747000694274902,
+                    "generation_timestamp": "2024-06-20T08:30:28.194593",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -2238,12 +2797,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __eof: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __eof: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __eof: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:52.914857",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "650-650:itemValid": {
                     "start": 650,
@@ -2260,12 +2829,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __itemValid: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __itemValid: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __itemValid: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:52.931116",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "647-647:skipPreamble": {
                     "start": 647,
@@ -2282,12 +2861,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __skipPreamble: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __skipPreamble: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __skipPreamble: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:52.947753",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "644-644:currentFieldName": {
                     "start": 644,
@@ -2304,12 +2893,22 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __currentFieldName: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __currentFieldName: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __currentFieldName: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:52.965907",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "641-641:currentItem": {
                     "start": 641,
@@ -2326,12 +2925,22 @@
                             "FileItemStreamImpl"
                         ]
                     ],
-                    "partial_translation": "    __currentItem: FileItemStreamImpl = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __currentItem: FileItemStreamImpl = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __currentItem: FileItemStreamImpl = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:52.983453",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class FileItemIteratorImpl:\n\n"
@@ -2376,11 +2985,18 @@
                         "    def setFieldName(self, pFieldName: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def setFieldName(self, pFieldName: str) -> None:",
+                        "         self.__fieldName = pFieldName"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.9992694854736328,
+                    "generation_timestamp": "2024-06-20T08:31:02.710019",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "946-948:getFieldName": {
                     "start": 946,
@@ -2408,11 +3024,18 @@
                         "    def getFieldName(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getFieldName(self) -> str:",
+                        "         return self.__fieldName"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.0921342372894287,
+                    "generation_timestamp": "2024-06-20T08:31:03.810436",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "937-939:setFileName": {
                     "start": 937,
@@ -2442,11 +3065,18 @@
                         "    def setFileName(self, pFileName: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def setFileName(self, pFileName: str) -> None:",
+                        "         self.__fileName = pFileName"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.994981050491333,
+                    "generation_timestamp": "2024-06-20T08:31:04.813652",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "928-930:getFileName": {
                     "start": 928,
@@ -2474,11 +3104,18 @@
                         "    def getFileName(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getFileName(self) -> str:",
+                        "         return self.__fileName"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.7495627403259277,
+                    "generation_timestamp": "2024-06-20T08:31:05.571353",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "919-921:FileSizeLimitExceededException": {
                     "start": 919,
@@ -2516,11 +3153,18 @@
                         "    def __init__(self, message: str, actual: int, permitted: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, message: str, actual: int, permitted: int) -> None:",
+                        "         super().__init__(message, actual, permitted)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.458097457885742,
+                    "generation_timestamp": "2024-06-20T08:31:09.039800",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -2539,12 +3183,22 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __fieldName: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __fieldName: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __fieldName: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:53.000520",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "906-906:fileName": {
                     "start": 906,
@@ -2561,12 +3215,22 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __fileName: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __fileName: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __fileName: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:53.016784",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "903-903:serialVersionUID": {
                     "start": 903,
@@ -2585,12 +3249,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 8150776562029630058"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.8942458629608154,
+                    "generation_timestamp": "2024-06-19T21:28:15.727531",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class FileSizeLimitExceededException(SizeException):\n\n"
@@ -2633,11 +3306,18 @@
                         "    def getPermittedSize(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getPermittedSize(self) -> int:",
+                        "         return self.__permitted"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.769782304763794,
+                    "generation_timestamp": "2024-06-20T08:30:28.972775",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "823-825:getActualSize": {
                     "start": 823,
@@ -2665,11 +3345,18 @@
                         "    def getActualSize(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getActualSize(self) -> int:",
+                        "         return self.__actual"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.7271487712860107,
+                    "generation_timestamp": "2024-06-20T08:30:29.707843",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "811-815:SizeException": {
                     "start": 811,
@@ -2709,11 +3396,20 @@
                         "    def __init__(self, message: str, actual: int, permitted: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, message: str, actual: int, permitted: int) -> None:",
+                        "         super().__init__(message, None)",
+                        "         self.__actual = actual",
+                        "         self.__permitted = permitted"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.119428396224976,
+                    "generation_timestamp": "2024-06-20T08:30:41.835409",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -2733,12 +3429,22 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __permitted: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __permitted: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __permitted: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:55.302425",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "799-799:actual": {
                     "start": 799,
@@ -2756,12 +3462,22 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __actual: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __actual: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __actual: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:13:55.308602",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "796-796:serialVersionUID": {
                     "start": 796,
@@ -2780,12 +3496,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -8776225574705254126"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.7456004619598389,
+                    "generation_timestamp": "2024-06-19T21:13:57.066614",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class SizeException(FileUploadException, ABC):\n\n"
@@ -2837,11 +3562,18 @@
                         "    def __init__(self, msg: str, cause: BaseException) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, msg: str, cause: BaseException) -> None:",
+                        "         super().__init__(msg, cause)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.665938854217529,
+                    "generation_timestamp": "2024-06-20T08:30:47.509943",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -2862,12 +3594,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -9073026332015646668"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.978832483291626,
+                    "generation_timestamp": "2024-06-19T21:13:59.058745",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class InvalidContentTypeException(FileUploadException):\n\n"
@@ -2918,11 +3659,18 @@
                         "    def __init__(self, message: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, message: str) -> None:",
+                        "         super().__init__(message, None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.05109977722168,
+                    "generation_timestamp": "2024-06-20T08:30:55.570208",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -2943,12 +3691,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 7062279004812015273"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.2130703926086426,
+                    "generation_timestamp": "2024-06-19T21:14:01.286111",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class UnknownSizeException(FileUploadException):\n\n"

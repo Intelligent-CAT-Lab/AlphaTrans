@@ -730,10 +730,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "43-64:duplicateHeaderAllowsMissingColumnsNamesData": {
                     "start": 43,
@@ -787,11 +791,20 @@
                         "    def duplicateHeaderAllowsMissingColumnsNamesData() -> typing.Iterable[typing.List]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def duplicateHeaderAllowsMissingColumnsNamesData() -> typing.Iterable[typing.List]:",
+                        "        ",
+                        "        return filter(lambda arg: arg[1] == True and arg[2] == False, CSVDuplicateHeaderTest.duplicateHeaderData())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.495624542236328,
+                    "generation_timestamp": "2024-06-19T23:37:45.419834",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
@@ -807,10 +820,12 @@
             "implements": [],
             "extends": [],
             "methods": {
-                "46-48:test": {
-                    "start": 46,
+                "44-48:test": {
+                    "start": 44,
                     "end": 48,
                     "body": [
+                        "        return duplicateHeaderData()\n",
+                        "                .filter(\n",
                         "                        arg ->\n",
                         "                                Boolean.TRUE.equals(arg.get()[1])\n",
                         "                                        && Boolean.FALSE.equals(arg.get()[2]))\n"
@@ -843,10 +858,16 @@
             "implements": [],
             "extends": [],
             "methods": {
-                "50-63:apply": {
-                    "start": 50,
+                "44-63:apply": {
+                    "start": 44,
                     "end": 63,
                     "body": [
+                        "        return duplicateHeaderData()\n",
+                        "                .filter(\n",
+                        "                        arg ->\n",
+                        "                                Boolean.TRUE.equals(arg.get()[1])\n",
+                        "                                        && Boolean.FALSE.equals(arg.get()[2]))\n",
+                        "                .flatMap(\n",
                         "                        arg -> {\n",
                         "                            final Object[][] data = new Object[4][];\n",
                         "                            final Boolean[] flags = {Boolean.TRUE, Boolean.FALSE};\n",
@@ -917,6 +938,8 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
         "from src.main.org.apache.commons.csv.DuplicateHeaderMode import *"

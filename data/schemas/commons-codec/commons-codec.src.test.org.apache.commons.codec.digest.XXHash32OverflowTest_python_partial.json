@@ -88,20 +88,45 @@
                         "    def testIncrementalHashWithUnprocessedBytesAndHugeLengthArray(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testIncrementalHashWithUnprocessedBytesAndHugeLengthArray(self) -> None:",
+                        "        ",
+                        "        bufferSize = 16",
+                        "        unprocessedSize = bufferSize - 1",
+                        "        hugeLength = (2**31) - 1 - (unprocessedSize - 1)",
+                        "        assert unprocessedSize + hugeLength < bufferSize, \"This should overflow to negative\"",
+                        "",
+                        "        bytes = None",
+                        "        try:",
+                        "            bytes = bytearray(hugeLength)",
+                        "        except MemoryError:",
+                        "            pass",
+                        "        assert bytes is not None, \"Cannot allocate array of length \" + str(hugeLength)",
+                        "",
+                        "        inc = XXHash32.XXHash321()",
+                        "        inc.update1(bytes, 0, unprocessedSize)",
+                        "        inc.update1(bytes, 0, hugeLength)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 26.281173944473267,
+                    "generation_timestamp": "2024-06-20T20:34:39.396465",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class XXHash32OverflowTest:\n\n"
+            "python_class_declaration": "class XXHash32OverflowTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
+        "import unittest",
         "from src.main.org.apache.commons.codec.digest.XXHash32 import *"
     ]
 }

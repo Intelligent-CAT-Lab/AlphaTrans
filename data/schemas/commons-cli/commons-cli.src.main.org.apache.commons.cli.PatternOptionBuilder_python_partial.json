@@ -161,14 +161,12 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    @staticmethod",
                         "    def parsePattern(pattern: str) -> Options:",
                         "        ",
-                        "",
                         "        opt = ' '",
                         "        required = False",
-                        "        type = None",
+                        "        type_ = None",
                         "",
                         "        options = Options()",
                         "",
@@ -177,39 +175,33 @@
                         "",
                         "            if not PatternOptionBuilder.isValueCode(ch):",
                         "                if opt != ' ':",
-                        "                    option = Option.builder1(str(opt)) \\",
-                        "                        .hasArg1(type is not None) \\",
-                        "                        .required1(required) \\",
-                        "                        .type(type) \\",
-                        "                        .build()",
-                        "",
+                        "                    option = Option.builder1(str(opt)).hasArg1(type_ != None).required1(required).type(type_).build()",
                         "                    options.addOption0(option)",
                         "                    required = False",
-                        "                    type = None",
+                        "                    type_ = None",
                         "                    opt = ' '",
                         "",
                         "                opt = ch",
-                        "            elif ch == '1':",
-                        "                required = True",
                         "            else:",
-                        "                type = PatternOptionBuilder.getValueClass(ch)",
+                        "                if ch == '@':",
+                        "                    required = True",
+                        "                else:",
+                        "                    type_ = PatternOptionBuilder.getValueClass(ch)",
                         "",
                         "        if opt != ' ':",
-                        "            option = Option.builder1(str(opt)) \\",
-                        "                .hasArg1(type is not None) \\",
-                        "                .required1(required) \\",
-                        "                .type(type) \\",
-                        "                .build()",
-                        "",
+                        "            option = Option.builder1(str(opt)).hasArg1(type_ != None).required1(required).type(type_).build()",
                         "            options.addOption0(option)",
                         "",
-                        "        return options",
-                        ""
+                        "        return options"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 55.01685357093811,
-                    "generation_timestamp": "2024-06-09T13:55:53.029317",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 357.59215784072876,
+                    "generation_timestamp": "2024-06-17T20:41:46.951707",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "135-138:isValueCode": {
                     "start": 135,
@@ -243,18 +235,18 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    @staticmethod",
                         "    def isValueCode(ch: str) -> bool:",
-                        "        ",
-                        "",
-                        "        return ch == '@' or ch == ':' or ch == '%' or ch == '+' or ch == '#' or ch == '<' or ch == '>' or ch == '*' or ch == '/' or ch == '!'",
-                        ""
+                        "         return ch == '@' or ch == ':' or ch == '%' or ch == '+' or ch == '#' or ch == '<' or ch == '>' or ch == '*' or ch == '/' or ch == '!'"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 48.81363224983215,
-                    "generation_timestamp": "2024-06-09T13:54:03.927128",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.973865509033203,
+                    "generation_timestamp": "2024-06-17T20:35:41.116803",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "104-127:getValueClass": {
                     "start": 104,
@@ -308,11 +300,9 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    @staticmethod",
                         "    def getValueClass(ch: str) -> typing.Any:",
                         "        ",
-                        "",
                         "        if ch == '@':",
                         "            return PatternOptionBuilder.OBJECT_VALUE",
                         "        elif ch == ':':",
@@ -331,14 +321,17 @@
                         "            return PatternOptionBuilder.FILES_VALUE",
                         "        elif ch == '/':",
                         "            return PatternOptionBuilder.URL_VALUE",
-                        "",
-                        "        return None",
-                        ""
+                        "        else:",
+                        "            return None"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 54.054450273513794,
-                    "generation_timestamp": "2024-06-09T13:54:58.000817",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.2237708568573,
+                    "generation_timestamp": "2024-06-17T20:35:49.342190",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -359,16 +352,21 @@
                             "java.lang.Class<URL>"
                         ]
                     ],
-                    "partial_translation": "    URL_VALUE: typing.Type[typing.Union[urllib.parse.ParseResult, urllib.parse.SplitResult, urllib.parse.DefragResult, str]] = <placeholder>\n",
-                    "translation": [
-                        "",
-                        "    URL_VALUE: typing.Type[urllib.parse.ParseResult] = urllib.parse.ParseResult",
+                    "partial_translation": [
+                        "    URL_VALUE: typing.Type[typing.Union[urllib.parse.ParseResult, urllib.parse.SplitResult, urllib.parse.DefragResult, str]] = <placeholder>",
                         ""
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 4.022490739822388,
-                    "generation_timestamp": "2024-06-09T13:52:48.027121",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    URL_VALUE: typing.Type[urllib.parse.ParseResult] = urllib.parse.ParseResult"
+                    ],
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.094977855682373,
+                    "generation_timestamp": "2024-06-17T20:27:12.391780",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "93-93:FILES_VALUE": {
                     "start": 93,
@@ -387,16 +385,21 @@
                             "java.lang.Class<File[]>"
                         ]
                     ],
-                    "partial_translation": "    FILES_VALUE: typing.Type[typing.List[pathlib.Path]] = <placeholder>\n",
-                    "translation": [
-                        "",
-                        "    FILES_VALUE: typing.Type[typing.List[pathlib.Path]] = list",
+                    "partial_translation": [
+                        "    FILES_VALUE: typing.Type[typing.List[pathlib.Path]] = <placeholder>",
                         ""
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 4.831078290939331,
-                    "generation_timestamp": "2024-06-09T13:52:52.860733",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    FILES_VALUE: typing.Type[typing.List[pathlib.Path]] = list"
+                    ],
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.8412282466888428,
+                    "generation_timestamp": "2024-06-17T20:27:14.236053",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "90-90:FILE_VALUE": {
                     "start": 90,
@@ -415,16 +418,21 @@
                             "java.lang.Class<File>"
                         ]
                     ],
-                    "partial_translation": "    FILE_VALUE: typing.Type[pathlib.Path] = <placeholder>\n",
-                    "translation": [
-                        "",
-                        "    FILE_VALUE: typing.Type[pathlib.Path] = pathlib.Path",
+                    "partial_translation": [
+                        "    FILE_VALUE: typing.Type[pathlib.Path] = <placeholder>",
                         ""
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 2.33634090423584,
-                    "generation_timestamp": "2024-06-09T13:52:55.199532",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    FILE_VALUE: typing.Type[pathlib.Path] = pathlib.Path"
+                    ],
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.4400136470794678,
+                    "generation_timestamp": "2024-06-17T20:27:15.679098",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "87-87:EXISTING_FILE_VALUE": {
                     "start": 87,
@@ -443,16 +451,21 @@
                             "java.lang.Class<FileInputStream>"
                         ]
                     ],
-                    "partial_translation": "    EXISTING_FILE_VALUE: typing.Type[typing.Union[io.FileIO, io.BufferedReader]] = <placeholder>\n",
-                    "translation": [
-                        "",
-                        "    EXISTING_FILE_VALUE: typing.Type[typing.Union[io.FileIO, io.BufferedReader]] = io.FileIO",
+                    "partial_translation": [
+                        "    EXISTING_FILE_VALUE: typing.Type[typing.Union[io.FileIO, io.BufferedReader]] = <placeholder>",
                         ""
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 4.280133962631226,
-                    "generation_timestamp": "2024-06-09T13:52:59.481504",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    EXISTING_FILE_VALUE: typing.Type[typing.Union[io.FileIO, io.BufferedReader]] = io.FileIO"
+                    ],
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.9597184658050537,
+                    "generation_timestamp": "2024-06-17T20:27:17.641862",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "84-84:CLASS_VALUE": {
                     "start": 84,
@@ -471,16 +484,21 @@
                             "java.lang.Class<?>"
                         ]
                     ],
-                    "partial_translation": "    CLASS_VALUE: typing.Type[typing.Any] = <placeholder>\n",
-                    "translation": [
-                        "",
-                        "    CLASS_VALUE: typing.Type[typing.Any] = type",
+                    "partial_translation": [
+                        "    CLASS_VALUE: typing.Type[typing.Any] = <placeholder>",
                         ""
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 2.349344253540039,
-                    "generation_timestamp": "2024-06-09T13:53:01.832811",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    CLASS_VALUE: typing.Type[typing.Any] = type(None)"
+                    ],
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.0850930213928223,
+                    "generation_timestamp": "2024-06-17T20:27:20.730113",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "81-81:DATE_VALUE": {
                     "start": 81,
@@ -499,16 +517,21 @@
                             "java.lang.Class<Date>"
                         ]
                     ],
-                    "partial_translation": "    DATE_VALUE: typing.Type[typing.Union[datetime.date, datetime.datetime]] = <placeholder>\n",
-                    "translation": [
-                        "",
-                        "    DATE_VALUE: typing.Type[typing.Union[datetime.date, datetime.datetime]] = datetime.date",
+                    "partial_translation": [
+                        "    DATE_VALUE: typing.Type[typing.Union[datetime.date, datetime.datetime]] = <placeholder>",
                         ""
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 3.7868683338165283,
-                    "generation_timestamp": "2024-06-09T13:53:05.621504",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    DATE_VALUE: typing.Type[typing.Union[datetime.date, datetime.datetime]] = datetime.date"
+                    ],
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.6743254661560059,
+                    "generation_timestamp": "2024-06-17T20:27:22.407595",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "78-78:NUMBER_VALUE": {
                     "start": 78,
@@ -527,16 +550,21 @@
                             "java.lang.Class<Number>"
                         ]
                     ],
-                    "partial_translation": "    NUMBER_VALUE: typing.Type[typing.Union[int, float, numbers.Number]] = <placeholder>\n",
-                    "translation": [
-                        "",
-                        "    NUMBER_VALUE: typing.Type[typing.Union[int, float, numbers.Number]] = numbers.Number",
+                    "partial_translation": [
+                        "    NUMBER_VALUE: typing.Type[typing.Union[int, float, numbers.Number]] = <placeholder>",
                         ""
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 4.316592693328857,
-                    "generation_timestamp": "2024-06-09T13:53:09.940550",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    NUMBER_VALUE: typing.Type[typing.Union[int, float, numbers.Number]] = numbers.Number"
+                    ],
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.510031700134277,
+                    "generation_timestamp": "2024-06-17T20:27:33.920626",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "75-75:OBJECT_VALUE": {
                     "start": 75,
@@ -555,16 +583,21 @@
                             "java.lang.Class<Object>"
                         ]
                     ],
-                    "partial_translation": "    OBJECT_VALUE: typing.Type[typing.Any] = <placeholder>\n",
-                    "translation": [
-                        "",
-                        "    OBJECT_VALUE: typing.Type[typing.Any] = object",
+                    "partial_translation": [
+                        "    OBJECT_VALUE: typing.Type[typing.Any] = <placeholder>",
                         ""
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 2.7675886154174805,
-                    "generation_timestamp": "2024-06-09T13:53:12.710381",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    OBJECT_VALUE: typing.Type[typing.Any] = object"
+                    ],
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1969621181488037,
+                    "generation_timestamp": "2024-06-17T20:27:35.120301",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "72-72:STRING_VALUE": {
                     "start": 72,
@@ -583,16 +616,21 @@
                             "java.lang.Class<String>"
                         ]
                     ],
-                    "partial_translation": "    STRING_VALUE: typing.Type[str] = <placeholder>\n",
-                    "translation": [
-                        "",
-                        "    STRING_VALUE: typing.Type[str] = str",
+                    "partial_translation": [
+                        "    STRING_VALUE: typing.Type[str] = <placeholder>",
                         ""
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 2.3986291885375977,
-                    "generation_timestamp": "2024-06-09T13:53:15.110686",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    STRING_VALUE: typing.Type[str] = str"
+                    ],
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.4273018836975098,
+                    "generation_timestamp": "2024-06-17T20:27:36.550459",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class PatternOptionBuilder:\n\n"
@@ -605,6 +643,7 @@
         "import numbers",
         "import typing\nfrom typing import *",
         "import datetime",
+        "import urllib",
         "from src.main.org.apache.commons.cli.Option import *",
         "from src.main.org.apache.commons.cli.Options import *"
     ]

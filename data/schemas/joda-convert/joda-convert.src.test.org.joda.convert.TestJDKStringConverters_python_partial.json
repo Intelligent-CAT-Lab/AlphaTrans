@@ -226,11 +226,29 @@
                         "    def test_Enum_withRename(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Enum_withRename(self) -> None:",
+                        "        ",
+                        "        test = StringConvert.create().findTypedConverter(Status)",
+                        "        self.assertEqual(\"VALID\", test.convertToString(Status.VALID))",
+                        "        self.assertEqual(\"INVALID\", test.convertToString(Status.INVALID))",
+                        "        self.assertEqual(Status.VALID, test.convertFromString(Status, \"VALID\"))",
+                        "        self.assertEqual(Status.INVALID, test.convertFromString(Status, \"INVALID\"))",
+                        "        with self.assertRaises(RuntimeException):",
+                        "            test.convertFromString(Status, \"OK\")",
+                        "        RenameHandler.INSTANCE.renamedEnum(\"OK\", Status.VALID)",
+                        "        self.assertEqual(Status.VALID, test.convertFromString(Status, \"OK\"))",
+                        "        self.assertEqual(Status.VALID, test.convertFromString(Status, \"VALID\"))",
+                        "        self.assertEqual(Status.INVALID, test.convertFromString(Status, \"INVALID\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.718544721603394,
+                    "generation_timestamp": "2024-06-21T09:36:56.111254",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "490-494:test_Enum_invalidConstant": {
                     "start": 490,
@@ -244,7 +262,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = RuntimeException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -273,11 +291,22 @@
                         "    def test_Enum_invalidConstant(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Enum_invalidConstant(self) -> None:",
+                        "        ",
+                        "        test = StringConvert.create().findTypedConverter(RoundingMode)",
+                        "        ",
+                        "        with pytest.raises(RuntimeError):",
+                        "            test.convertFromString(RoundingMode, \"RUBBISH\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.54986310005188,
+                    "generation_timestamp": "2024-06-21T09:37:03.667876",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "481-487:test_Enum": {
                     "start": 481,
@@ -322,11 +351,22 @@
                         "    def test_Enum(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Enum(self) -> None:",
+                        "        ",
+                        "        test = StringConvert.create().findTypedConverter(RoundingMode)",
+                        "        self.assertEqual(RoundingMode, test.getEffectiveType())",
+                        "        self.assertEqual(\"CEILING\", test.convertToString(RoundingMode.CEILING))",
+                        "        self.assertEqual(RoundingMode.CEILING, test.convertFromString(RoundingMode, \"CEILING\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.735416412353516,
+                    "generation_timestamp": "2024-06-21T09:37:11.414106",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "441-478:test_Calendar_notGregorian": {
                     "start": 441,
@@ -373,7 +413,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = RuntimeException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -397,11 +437,45 @@
                         "    def test_Calendar_notGregorian(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Calendar_notGregorian(self) -> None:",
+                        "        ",
+                        "        class NotGregorianCalendar(Calendar):",
+                        "            def roll(self, field: int, up: bool) -> None:",
+                        "                pass",
+                        "",
+                        "            def getMinimum(self, field: int) -> int:",
+                        "                return 0",
+                        "",
+                        "            def getMaximum(self, field: int) -> int:",
+                        "                return 0",
+                        "",
+                        "            def getLeastMaximum(self, field: int) -> int:",
+                        "                return 0",
+                        "",
+                        "            def getGreatestMinimum(self, field: int) -> int:",
+                        "                return 0",
+                        "",
+                        "            def computeTime(self) -> None:",
+                        "                pass",
+                        "",
+                        "            def computeFields(self) -> None:",
+                        "                pass",
+                        "",
+                        "            def add(self, field: int, amount: int) -> None:",
+                        "                pass",
+                        "",
+                        "        with pytest.raises(RuntimeError):",
+                        "            JDKStringConverter.CALENDAR.convertToString(NotGregorianCalendar())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.752068519592285,
+                    "generation_timestamp": "2024-06-21T09:37:30.179929",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "435-438:test_Calendar_invalidFormat": {
                     "start": 435,
@@ -414,7 +488,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = RuntimeException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -432,11 +506,21 @@
                         "    def test_Calendar_invalidFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Calendar_invalidFormat(self) -> None:",
+                        "        ",
+                        "        with pytest.raises(RuntimeError):",
+                        "            JDKStringConverter.CALENDAR.convertFromString(",
+                        "                GregorianCalendar, \"2010-09-03XXX:34:05.000+02:00[Europe/London]\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.313340663909912,
+                    "generation_timestamp": "2024-06-21T09:37:39.499730",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "430-432:test_Calendar_invalidLength": {
                     "start": 430,
@@ -448,7 +532,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = RuntimeException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -466,11 +550,20 @@
                         "    def test_Calendar_invalidLength(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Calendar_invalidLength(self) -> None:",
+                        "        ",
+                        "        with pytest.raises(RuntimeError):",
+                        "            JDKStringConverter.CALENDAR.convertFromString(GregorianCalendar, \"2010-09-03\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.9164814949035645,
+                    "generation_timestamp": "2024-06-21T09:37:46.422753",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "416-427:test_Calendar": {
                     "start": 416,
@@ -515,11 +608,29 @@
                         "    def test_Calendar(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Calendar(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.CALENDAR",
+                        "        ",
+                        "        cal = GregorianCalendar(TimeZone.getTimeZone(\"Europe/Paris\"))",
+                        "        cal.set(2010, 9 - 1, 3, 12, 34, 5)",
+                        "        cal.set(Calendar.MILLISECOND, 0)",
+                        "        self.doTest0(test, Calendar, cal, \"2010-09-03T12:34:05.000+02:00[Europe/Paris]\")",
+                        "",
+                        "        cal2 = GregorianCalendar(TimeZone.getTimeZone(\"Europe/Paris\"))",
+                        "        cal2.set(2011, 1 - 1, 4, 12, 34, 5)",
+                        "        cal2.set(Calendar.MILLISECOND, 0)",
+                        "        self.doTest0(test, Calendar, cal2, \"2011-01-04T12:34:05.000+01:00[Europe/Paris]\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.16138458251953,
+                    "generation_timestamp": "2024-06-21T09:42:07.339436",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "411-413:test_Date_invalidFormat": {
                     "start": 411,
@@ -531,7 +642,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = RuntimeException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -549,11 +660,20 @@
                         "    def test_Date_invalidFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Date_invalidFormat(self) -> None:",
+                        "        ",
+                        "        with pytest.raises(RuntimeError):",
+                        "            JDKStringConverter.DATE.convertFromString(Date, \"2010-09-03XXX:34:05.000+02:00\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.636171102523804,
+                    "generation_timestamp": "2024-06-21T09:37:56.065978",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "406-408:test_Date_invalidLength": {
                     "start": 406,
@@ -565,7 +685,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = RuntimeException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -583,11 +703,20 @@
                         "    def test_Date_invalidLength(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Date_invalidLength(self) -> None:",
+                        "        ",
+                        "        with pytest.raises(RuntimeError):",
+                        "            JDKStringConverter.DATE.convertFromString(Date, \"2010-09-03\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.501317501068115,
+                    "generation_timestamp": "2024-06-21T09:38:04.577396",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "385-403:test_Date": {
                     "start": 385,
@@ -615,7 +744,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "SuppressWarnings"
+                        "SuppressWarnings(\"deprecation\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -639,11 +769,36 @@
                         "    def test_Date(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Date(self) -> None:",
+                        "        ",
+                        "        zone = time.tzset()",
+                        "        try:",
+                        "            time.tzset(\"Europe/Paris\")",
+                        "            test = JDKStringConverter.DATE",
+                        "            self.doTest0(",
+                        "                test,",
+                        "                datetime.date,",
+                        "                datetime.date(2010, 9, 3),",
+                        "                \"2010-09-03T12:34:05.000+02:00\"",
+                        "            )",
+                        "            self.doTest0(",
+                        "                test,",
+                        "                datetime.date,",
+                        "                datetime.date(2011, 1, 4),",
+                        "                \"2011-01-04T12:34:05.000+01:00\"",
+                        "            )",
+                        "        finally:",
+                        "            time.tzset(zone)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.435609340667725,
+                    "generation_timestamp": "2024-06-21T09:42:25.787910",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "377-381:test_File": {
                     "start": 377,
@@ -681,11 +836,21 @@
                         "    def test_File(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_File(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.FILE",
+                        "        file = File(\"/path/to/file\")",
+                        "        self.doTest0(test, File, file, str(file))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.836081266403198,
+                    "generation_timestamp": "2024-06-21T09:42:35.631680",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "360-374:test_InetAddress": {
                     "start": 360,
@@ -738,11 +903,31 @@
                         "    def test_InetAddress(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_InetAddress(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.INET_ADDRESS",
+                        "        self.doTest0(test, InetAddress, InetAddress.getByName(\"1.2.3.4\"), \"1.2.3.4\")",
+                        "",
+                        "        obj = InetAddress.getByName(\"2001:0db8:85a3:0000:0000:8a2e:0370:7334\")",
+                        "        str = test.convertToString(obj)",
+                        "        self.assertTrue(",
+                        "                str == \"2001:db8:85a3:0:0:8a2e:370:7334\"",
+                        "                or str == \"2001:db8:85a3::8a2e:370:7334\")",
+                        "        self.assertEqual(obj, test.convertFromString(InetAddress, str))",
+                        "        self.assertEqual(",
+                        "                obj, test.convertFromString(InetAddress, \"2001:db8:85a3:0:0:8a2e:370:7334\"))",
+                        "        self.assertEqual(",
+                        "                obj, test.convertFromString(InetAddress, \"2001:db8:85a3::8a2e:370:7334\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.674652338027954,
+                    "generation_timestamp": "2024-06-21T09:42:56.315302",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "347-357:test_URI": {
                     "start": 347,
@@ -786,11 +971,23 @@
                         "    def test_URI(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_URI(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.URI",
+                        "        self.doTest0(test, URI, URI.create(\"http://localhost:8080/my/test\"), \"http://localhost:8080/my/test\")",
+                        "        self.doTest0(test, URI, URI.create(\"/my/test\"), \"/my/test\")",
+                        "        self.doTest0(test, URI, URI.create(\"/my/../test\"), \"/my/../test\")",
+                        "        self.doTest0(test, URI, URI.create(\"urn:hello\"), \"urn:hello\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.83279538154602,
+                    "generation_timestamp": "2024-06-21T09:43:15.155935",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "342-344:test_URL_invalidFormat": {
                     "start": 342,
@@ -802,7 +999,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = RuntimeException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -821,10 +1018,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "331-339:test_URL": {
                     "start": 331,
@@ -866,11 +1067,21 @@
                         "    def test_URL(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_URL(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.URL",
+                        "        self.doTest0(test, URL, URL(\"http://localhost:8080/my/test\"), \"http://localhost:8080/my/test\")",
+                        "        self.doTest0(test, URL, URL(None, \"ftp:world\"), \"ftp:world\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.547675132751465,
+                    "generation_timestamp": "2024-06-21T09:43:23.711688",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "324-328:test_UUID": {
                     "start": 324,
@@ -908,11 +1119,21 @@
                         "    def test_UUID(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_UUID(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.UUID",
+                        "        uuid = uuid.uuid4()",
+                        "        self.doTest0(test, uuid.UUID, uuid, str(uuid))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.926259994506836,
+                    "generation_timestamp": "2024-06-21T09:43:30.648457",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "317-321:test_TimeZone": {
                     "start": 317,
@@ -950,11 +1171,21 @@
                         "    def test_TimeZone(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_TimeZone(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.TIME_ZONE",
+                        "        self.doTest0(test, TimeZone, TimeZone.getTimeZone(\"Europe/London\"), \"Europe/London\")",
+                        "        self.doTest0(test, TimeZone, TimeZone.getTimeZone(\"America/New_York\"), \"America/New_York\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.1228320598602295,
+                    "generation_timestamp": "2024-06-21T09:43:37.781557",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "310-314:test_Currency": {
                     "start": 310,
@@ -992,11 +1223,21 @@
                         "    def test_Currency(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Currency(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.CURRENCY",
+                        "        self.doTest0(test, Currency, Currency.getInstance(\"GBP\"), \"GBP\")",
+                        "        self.doTest0(test, Currency, Currency.getInstance(\"USD\"), \"USD\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.814923524856567,
+                    "generation_timestamp": "2024-06-21T09:43:46.610532",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "303-307:test_Package": {
                     "start": 303,
@@ -1035,10 +1276,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "290-300:test_Class_withRename": {
                     "start": 290,
@@ -1082,11 +1327,30 @@
                         "    def test_Class_withRename(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Class_withRename(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            JDKStringConverter.CLASS.convertFromString(Class, \"org.foo.StringConvert\")",
+                        "            self.fail()",
+                        "        except RuntimeError:",
+                        "            pass",
+                        "        ",
+                        "        RenameHandler.INSTANCE.renamedType(\"org.foo.StringConvert\", StringConvert)",
+                        "        ",
+                        "        self.assertEqual(",
+                        "            StringConvert,",
+                        "            JDKStringConverter.CLASS.convertFromString(Class, \"org.foo.StringConvert\")",
+                        "        )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.277162313461304,
+                    "generation_timestamp": "2024-06-21T09:39:12.425265",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "285-287:test_Class_fail": {
                     "start": 285,
@@ -1098,7 +1362,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = RuntimeException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -1116,11 +1380,20 @@
                         "    def test_Class_fail(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Class_fail(self) -> None:",
+                        "        ",
+                        "        with pytest.raises(RuntimeError):",
+                        "            JDKStringConverter.CLASS.convertFromString(Class, \"RUBBISH\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.775109767913818,
+                    "generation_timestamp": "2024-06-21T09:39:19.207082",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "277-282:test_Class_array": {
                     "start": 277,
@@ -1160,10 +1433,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "263-274:test_Class_primitive": {
                     "start": 263,
@@ -1208,11 +1485,28 @@
                         "    def test_Class_primitive(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Class_primitive(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.CLASS",
+                        "        self.doTest0(test, Class, byte, \"byte\")",
+                        "        self.doTest0(test, Class, short, \"short\")",
+                        "        self.doTest0(test, Class, int, \"int\")",
+                        "        self.doTest0(test, Class, long, \"long\")",
+                        "        self.doTest0(test, Class, float, \"float\")",
+                        "        self.doTest0(test, Class, double, \"double\")",
+                        "        self.doTest0(test, Class, bool, \"boolean\")",
+                        "        self.doTest0(test, Class, str, \"char\")",
+                        "        self.doTest0(test, Class, type(None), \"void\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.303284168243408,
+                    "generation_timestamp": "2024-06-21T09:45:26.206295",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "256-260:test_Class": {
                     "start": 256,
@@ -1250,11 +1544,21 @@
                         "    def test_Class(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Class(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.CLASS",
+                        "        self.doTest0(test, Class, Locale, \"java.util.Locale\")",
+                        "        self.doTest0(test, Class, FromString, \"org.joda.convert.FromString\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.107202768325806,
+                    "generation_timestamp": "2024-06-21T09:45:32.321366",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "248-253:test_Locale": {
                     "start": 248,
@@ -1293,11 +1597,22 @@
                         "    def test_Locale(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Locale(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.LOCALE",
+                        "        self.doTest0(test, Locale, Locale(\"en\"), \"en\")",
+                        "        self.doTest0(test, Locale, Locale(\"en\", \"GB\"), \"en_GB\")",
+                        "        self.doTest0(test, Locale, Locale(\"en\", \"GB\", \"VARIANT_B\"), \"en_GB_VARIANT_B\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.858537912368774,
+                    "generation_timestamp": "2024-06-21T09:45:41.187740",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "243-245:test_AtomicBoolean_fail": {
                     "start": 243,
@@ -1309,7 +1624,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = IllegalArgumentException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -1327,11 +1642,20 @@
                         "    def test_AtomicBoolean_fail(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_AtomicBoolean_fail(self) -> None:",
+                        "        ",
+                        "        with pytest.raises(IllegalArgumentException):",
+                        "            JDKStringConverter.ATOMIC_BOOLEAN.convertFromString(AtomicBoolean, \"RUBBISH\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.010350942611694,
+                    "generation_timestamp": "2024-06-21T09:39:24.230106",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "233-240:test_AtomicBoolean_false": {
                     "start": 233,
@@ -1377,11 +1701,24 @@
                         "    def test_AtomicBoolean_false(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_AtomicBoolean_false(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.ATOMIC_BOOLEAN",
+                        "        obj = AtomicBoolean(False)",
+                        "        self.assertEqual(AtomicBoolean, test.getType())",
+                        "        self.assertEqual(\"false\", test.convertToString(obj))",
+                        "        back = typing.cast(AtomicBoolean, test.convertFromString(AtomicBoolean, \"false\"))",
+                        "        self.assertEqual(False, back.get())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.641531229019165,
+                    "generation_timestamp": "2024-06-21T09:39:32.888354",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "223-230:test_AtomicBoolean_true": {
                     "start": 223,
@@ -1427,11 +1764,24 @@
                         "    def test_AtomicBoolean_true(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_AtomicBoolean_true(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.ATOMIC_BOOLEAN",
+                        "        obj = AtomicBoolean(True)",
+                        "        self.assertEqual(AtomicBoolean, test.getType())",
+                        "        self.assertEqual(\"True\", test.convertToString(obj))",
+                        "        back = typing.cast(AtomicBoolean, test.convertFromString(AtomicBoolean, \"True\"))",
+                        "        self.assertEqual(True, back.get())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.577444314956665,
+                    "generation_timestamp": "2024-06-21T09:39:41.481481",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "213-220:test_AtomicInteger": {
                     "start": 213,
@@ -1477,11 +1827,24 @@
                         "    def test_AtomicInteger(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_AtomicInteger(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.ATOMIC_INTEGER",
+                        "        obj = AtomicInteger(12)",
+                        "        self.assertEqual(AtomicInteger, test.getType())",
+                        "        self.assertEqual(\"12\", test.convertToString(obj))",
+                        "        back = typing.cast(AtomicInteger, test.convertFromString(AtomicInteger, \"12\"))",
+                        "        self.assertEqual(12, back.get())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.569519519805908,
+                    "generation_timestamp": "2024-06-21T09:39:50.067134",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "203-210:test_AtomicLong": {
                     "start": 203,
@@ -1527,11 +1890,24 @@
                         "    def test_AtomicLong(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_AtomicLong(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.ATOMIC_LONG",
+                        "        obj = AtomicLong(12)",
+                        "        self.assertEqual(AtomicLong, test.getType())",
+                        "        self.assertEqual(\"12\", test.convertToString(obj))",
+                        "        back = typing.cast(AtomicLong, test.convertFromString(AtomicLong, \"12\"))",
+                        "        self.assertEqual(12, back.get())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 19.742289781570435,
+                    "generation_timestamp": "2024-06-21T09:40:09.826292",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "197-200:test_BigDecimal": {
                     "start": 197,
@@ -1568,11 +1944,20 @@
                         "    def test_BigDecimal(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_BigDecimal(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.BIG_DECIMAL",
+                        "        self.doTest0(test, BigDecimal, BigDecimal.valueOf(12.23), \"12.23\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.488207578659058,
+                    "generation_timestamp": "2024-06-21T09:45:47.683758",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "191-194:test_BigInteger": {
                     "start": 191,
@@ -1609,11 +1994,20 @@
                         "    def test_BigInteger(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_BigInteger(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.BIG_INTEGER",
+                        "        self.doTest0(test, BigInteger, BigInteger.valueOf(12), \"12\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.832294940948486,
+                    "generation_timestamp": "2024-06-21T09:45:54.523929",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "185-188:test_Float": {
                     "start": 185,
@@ -1650,11 +2044,20 @@
                         "    def test_Float(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Float(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.FLOAT",
+                        "        self.doTest0(test, float, 12.2, \"12.2\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.3372838497161865,
+                    "generation_timestamp": "2024-06-21T09:46:01.869231",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "179-182:test_Double": {
                     "start": 179,
@@ -1691,11 +2094,20 @@
                         "    def test_Double(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Double(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.DOUBLE",
+                        "        self.doTest0(test, float, 12.4, \"12.4\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.191581964492798,
+                    "generation_timestamp": "2024-06-21T09:46:07.075095",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "174-176:test_Boolean_fail": {
                     "start": 174,
@@ -1707,7 +2119,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = IllegalArgumentException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -1725,11 +2137,20 @@
                         "    def test_Boolean_fail(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Boolean_fail(self) -> None:",
+                        "        ",
+                        "        with pytest.raises(IllegalArgumentException):",
+                        "            JDKStringConverter.BOOLEAN.convertFromString(Boolean, \"RUBBISH\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.683103084564209,
+                    "generation_timestamp": "2024-06-21T09:40:14.527622",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "167-171:test_Boolean": {
                     "start": 167,
@@ -1767,11 +2188,21 @@
                         "    def test_Boolean(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Boolean(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.BOOLEAN",
+                        "        self.doTest0(test, bool, True, \"true\")",
+                        "        self.doTest0(test, bool, False, \"false\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.4197399616241455,
+                    "generation_timestamp": "2024-06-21T09:46:13.504277",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "157-164:test_byteArray4": {
                     "start": 157,
@@ -1817,11 +2248,24 @@
                         "    def test_byteArray4(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_byteArray4(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.BYTE_ARRAY",
+                        "        array = bytearray([73, 97, 112, 77])",
+                        "        str_val = \"SWFwTQ==\"",
+                        "        self.assertEqual(bytearray, type(test.getType()))",
+                        "        self.assertEqual(str_val, test.convertToString(array))",
+                        "        self.assertTrue(array == bytearray(test.convertFromString(bytearray, str_val)))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.45410943031311,
+                    "generation_timestamp": "2024-06-21T09:40:26.991922",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "147-154:test_byteArray3": {
                     "start": 147,
@@ -1867,11 +2311,24 @@
                         "    def test_byteArray3(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_byteArray3(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.BYTE_ARRAY",
+                        "        array = bytearray([77])",
+                        "        str_val = \"TQ==\"",
+                        "        self.assertEqual(bytearray, test.getType())",
+                        "        self.assertEqual(str_val, test.convertToString(array))",
+                        "        self.assertTrue(array == bytearray(test.convertFromString(bytearray, str_val)))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.884610176086426,
+                    "generation_timestamp": "2024-06-21T09:40:36.886387",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "137-144:test_byteArray2": {
                     "start": 137,
@@ -1917,11 +2374,24 @@
                         "    def test_byteArray2(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_byteArray2(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.BYTE_ARRAY",
+                        "        array = bytearray([77, 97])",
+                        "        str_val = \"TWE=\"",
+                        "        self.assertEqual(bytearray, type(test.getType()))",
+                        "        self.assertEqual(str_val, test.convertToString(array))",
+                        "        self.assertTrue(array == bytearray(test.convertFromString(bytearray, str_val)))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.113821029663086,
+                    "generation_timestamp": "2024-06-21T09:40:46.017342",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "127-134:test_byteArray1": {
                     "start": 127,
@@ -1967,11 +2437,24 @@
                         "    def test_byteArray1(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_byteArray1(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.BYTE_ARRAY",
+                        "        array = bytearray([77, 97, 112])",
+                        "        str_val = \"TWFw\"",
+                        "        self.assertEqual(bytearray, type(test.getType()))",
+                        "        self.assertEqual(str_val, test.convertToString(array))",
+                        "        self.assertTrue(array == bytearray(test.convertFromString(bytearray, str_val)))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.686955213546753,
+                    "generation_timestamp": "2024-06-21T09:40:55.716251",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "121-124:test_Byte": {
                     "start": 121,
@@ -2008,11 +2491,20 @@
                         "    def test_Byte(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Byte(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.BYTE",
+                        "        self.doTest0(test, Byte, Byte(12), \"12\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.042124032974243,
+                    "generation_timestamp": "2024-06-21T09:46:18.563923",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "111-118:test_charArray": {
                     "start": 111,
@@ -2058,11 +2550,24 @@
                         "    def test_charArray(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_charArray(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.CHAR_ARRAY",
+                        "        array = ['M', 'a', 'p']",
+                        "        str_val = \"Map\"",
+                        "        self.assertEqual(list, type(test.getType()))",
+                        "        self.assertEqual(str_val, test.convertToString(array))",
+                        "        self.assertTrue(array == test.convertFromString(list, str_val))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.490264892578125,
+                    "generation_timestamp": "2024-06-21T09:41:06.216789",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "106-108:test_Character_fail": {
                     "start": 106,
@@ -2074,7 +2579,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = IllegalArgumentException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -2092,11 +2597,20 @@
                         "    def test_Character_fail(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Character_fail(self) -> None:",
+                        "        ",
+                        "        with pytest.raises(IllegalArgumentException):",
+                        "            JDKStringConverter.CHARACTER.convertFromString(Character, \"RUBBISH\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.50140643119812,
+                    "generation_timestamp": "2024-06-21T09:41:10.725373",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "99-103:test_Character": {
                     "start": 99,
@@ -2134,11 +2648,21 @@
                         "    def test_Character(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Character(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.CHARACTER",
+                        "        self.doTest0(test, Character, Character.valueOf('a'), \"a\")",
+                        "        self.doTest0(test, Character, Character.valueOf('z'), \"z\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.893615245819092,
+                    "generation_timestamp": "2024-06-21T09:46:30.470913",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "93-96:test_Short": {
                     "start": 93,
@@ -2175,11 +2699,20 @@
                         "    def test_Short(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Short(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.SHORT",
+                        "        self.doTest0(test, Short, Short.valueOf(12), \"12\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.5453736782073975,
+                    "generation_timestamp": "2024-06-21T09:46:37.029766",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "87-90:test_Int": {
                     "start": 87,
@@ -2216,11 +2749,20 @@
                         "    def test_Int(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Int(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.INTEGER",
+                        "        self.doTest0(test, int, 12, \"12\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.946125507354736,
+                    "generation_timestamp": "2024-06-21T09:46:42.986737",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "81-84:test_Long": {
                     "start": 81,
@@ -2257,11 +2799,20 @@
                         "    def test_Long(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_Long(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.LONG",
+                        "        self.doTest0(test, Long, 12, \"12\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.844460725784302,
+                    "generation_timestamp": "2024-06-21T09:46:49.839341",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "73-78:test_CharSequence": {
                     "start": 73,
@@ -2305,11 +2856,22 @@
                         "    def test_CharSequence(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_CharSequence(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.CHAR_SEQUENCE",
+                        "        self.doTest0(test, CharSequence, \"Hello\", \"Hello\")",
+                        "        self.doTest1(test, CharSequence, StringBuffer(\"Hello\"), \"Hello\", \"Hello\")",
+                        "        self.doTest1(test, CharSequence, StringBuilder(\"Hello\"), \"Hello\", \"Hello\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.9184205532073975,
+                    "generation_timestamp": "2024-06-21T09:46:56.767071",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "63-70:test_StringBuilder": {
                     "start": 63,
@@ -2355,11 +2917,24 @@
                         "    def test_StringBuilder(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_StringBuilder(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.STRING_BUILDER",
+                        "        obj = StringBuilder(\"Hello\")",
+                        "        self.assertEqual(StringBuilder, test.getType())",
+                        "        self.assertEqual(\"Hello\", test.convertToString(obj))",
+                        "        back = typing.cast(StringBuilder, test.convertFromString(StringBuilder, \"Hello\"))",
+                        "        self.assertEqual(\"Hello\", str(back))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.351311206817627,
+                    "generation_timestamp": "2024-06-21T09:41:23.089592",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "53-60:test_StringBuffer": {
                     "start": 53,
@@ -2405,11 +2980,24 @@
                         "    def test_StringBuffer(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_StringBuffer(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.STRING_BUFFER",
+                        "        obj = StringBuffer(\"Hello\")",
+                        "        self.assertEqual(StringBuffer, test.getType())",
+                        "        self.assertEqual(\"Hello\", test.convertToString(obj))",
+                        "        back = typing.cast(StringBuffer, test.convertFromString(StringBuffer, \"Hello\"))",
+                        "        self.assertEqual(\"Hello\", str(back))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.39293384552002,
+                    "generation_timestamp": "2024-06-21T09:41:39.490495",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "47-50:test_String": {
                     "start": 47,
@@ -2446,11 +3034,20 @@
                         "    def test_String(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def test_String(self) -> None:",
+                        "        ",
+                        "        test = JDKStringConverter.STRING",
+                        "        self.doTest0(test, str, \"Hello\", \"Hello\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.738086700439453,
+                    "generation_timestamp": "2024-06-21T09:47:00.513466",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "518-523:doTest1": {
                     "start": 518,
@@ -2498,11 +3095,21 @@
                         "    def doTest1(self, test: JDKStringConverter, cls: typing.Type[typing.Any], obj: typing.Any, str: str, objFromStr: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def doTest1(self, test: JDKStringConverter, cls: typing.Type[typing.Any], obj: typing.Any, str: str, objFromStr: typing.Any) -> None:",
+                        "        ",
+                        "        self.assertEqual(cls, test.getType())",
+                        "        self.assertEqual(str, test.convertToString(obj))",
+                        "        self.assertEqual(objFromStr, test.convertFromString(cls, str))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.038911581039429,
+                    "generation_timestamp": "2024-06-21T09:41:45.535944",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "514-516:doTest0": {
                     "start": 514,
@@ -2541,15 +3148,23 @@
                         "    def doTest0(self, test: JDKStringConverter, cls: typing.Type[typing.Any], obj: typing.Any, str: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def doTest0(self, test: JDKStringConverter, cls: typing.Type[typing.Any], obj: typing.Any, str: str) -> None:",
+                        "        ",
+                        "        self.doTest1(test, cls, obj, str, obj)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.6259794235229492,
+                    "generation_timestamp": "2024-06-21T09:41:47.170091",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class TestJDKStringConverters:\n\n"
+            "python_class_declaration": "class TestJDKStringConverters(unittest.TestCase):\n\n"
         },
         "new Calendar(...) { ... }": {
             "start": 443,
@@ -2767,10 +3382,11 @@
                     ],
                     "calls": []
                 },
-                "443-443:": {
-                    "start": 443,
+                "442-443:": {
+                    "start": 442,
                     "end": 443,
                     "body": [
+                        "        JDKStringConverter.CALENDAR.convertToString(\n",
                         "                new Calendar() {\n"
                     ],
                     "is_constructor": false,
@@ -2811,8 +3427,11 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.main.org.joda.convert.FromString import *",
         "from src.main.org.joda.convert.JDKStringConverter import *",
         "from src.main.org.joda.convert.RenameHandler import *",

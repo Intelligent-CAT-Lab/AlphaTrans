@@ -130,11 +130,48 @@
                         "    def isEncodeEquals(self, name1: str, name2: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def isEncodeEquals(self, name1: str, name2: str) -> bool:",
+                        "        ",
+                        "        if name1 is None or self.__EMPTY.lower() == name1.lower() or self.__SPACE.lower() == name1.lower():",
+                        "            return False",
+                        "        if name2 is None or self.__EMPTY.lower() == name2.lower() or self.__SPACE.lower() == name2.lower():",
+                        "            return False",
+                        "        if len(name1) == 1 or len(name2) == 1:",
+                        "            return False",
+                        "        if name1.lower() == name2.lower():",
+                        "            return True",
+                        "",
+                        "        name1 = self.cleanName(name1)",
+                        "        name2 = self.cleanName(name2)",
+                        "",
+                        "        name1 = self.removeVowels(name1)",
+                        "        name2 = self.removeVowels(name2)",
+                        "",
+                        "        name1 = self.removeDoubleConsonants(name1)",
+                        "        name2 = self.removeDoubleConsonants(name2)",
+                        "",
+                        "        name1 = self.getFirst3Last3(name1)",
+                        "        name2 = self.getFirst3Last3(name2)",
+                        "",
+                        "        if abs(len(name1) - len(name2)) >= 3:",
+                        "            return False",
+                        "",
+                        "        sumLength = abs(len(name1) + len(name2))",
+                        "        minRating = self.getMinRating(sumLength)",
+                        "",
+                        "        count = self.leftToRightThenRightToLeftProcessing(name1, name2)",
+                        "",
+                        "        return count >= minRating"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 25.86391830444336,
+                    "generation_timestamp": "2024-06-20T16:56:16.671273",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "137-154:encode1": {
                     "start": 137,
@@ -201,11 +238,30 @@
                         "    def encode1(self, name: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def encode1(self, name: str) -> str:",
+                        "        ",
+                        "        if name is None or self.__EMPTY.lower() == name.lower() or self.__SPACE.lower() == name.lower() or len(name) == 1:",
+                        "            return self.__EMPTY",
+                        "",
+                        "        name = self.cleanName(name)",
+                        "",
+                        "        name = self.removeVowels(name)",
+                        "",
+                        "        name = self.removeDoubleConsonants(name)",
+                        "",
+                        "        name = self.getFirst3Last3(name)",
+                        "",
+                        "        return name"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.600194692611694,
+                    "generation_timestamp": "2024-06-20T16:56:23.277529",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "116-124:encode0": {
                     "start": 116,
@@ -253,11 +309,25 @@
                         "    def encode0(self, pObject: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def encode0(self, pObject: typing.Any) -> typing.Any:",
+                        "        ",
+                        "        if not isinstance(pObject, str):",
+                        "            raise EncoderException(",
+                        "                \"Parameter supplied to Match Rating Approach encoder is not of type\"",
+                        "                + \" java.lang.String\",",
+                        "                None",
+                        "            )",
+                        "        return self.encode1(pObject)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.5736870765686035,
+                    "generation_timestamp": "2024-06-20T16:56:27.856353",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "385-400:removeVowels": {
                     "start": 385,
@@ -304,11 +374,31 @@
                         "    def removeVowels(self, name: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def removeVowels(self, name: str) -> str:",
+                        "        ",
+                        "        first_letter = name[0]",
+                        "",
+                        "        name = name.replace(\"A\", self.__EMPTY)",
+                        "        name = name.replace(\"E\", self.__EMPTY)",
+                        "        name = name.replace(\"I\", self.__EMPTY)",
+                        "        name = name.replace(\"O\", self.__EMPTY)",
+                        "        name = name.replace(\"U\", self.__EMPTY)",
+                        "",
+                        "        name = \" \".join(name.split())",
+                        "",
+                        "        if self.isVowel(first_letter):",
+                        "            return first_letter + name",
+                        "        return name"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.031391620635986,
+                    "generation_timestamp": "2024-06-20T16:55:27.790875",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "364-373:removeDoubleConsonants": {
                     "start": 364,
@@ -343,11 +433,24 @@
                         "    def removeDoubleConsonants(self, name: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def removeDoubleConsonants(self, name: str) -> str:",
+                        "        ",
+                        "        replacedName = name.upper()",
+                        "        for dc in self.__DOUBLE_CONSONANT:",
+                        "            if dc in replacedName:",
+                        "                singleLetter = dc[0]",
+                        "                replacedName = replacedName.replace(dc, singleLetter)",
+                        "        return replacedName"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.196542024612427,
+                    "generation_timestamp": "2024-06-20T16:54:20.502163",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "333-352:removeAccents": {
                     "start": 333,
@@ -392,11 +495,33 @@
                         "    def removeAccents(self, accentedWord: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def removeAccents(self, accentedWord: str) -> str:",
+                        "        ",
+                        "        if accentedWord is None:",
+                        "            return None",
+                        "",
+                        "        sb = []",
+                        "        n = len(accentedWord)",
+                        "",
+                        "        for i in range(n):",
+                        "            c = accentedWord[i]",
+                        "            pos = self.__UNICODE.find(c)",
+                        "            if pos > -1:",
+                        "                sb.append(self.__PLAIN_ASCII[pos])",
+                        "            else:",
+                        "                sb.append(c)",
+                        "",
+                        "        return ''.join(sb)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.991251468658447,
+                    "generation_timestamp": "2024-06-20T16:54:46.830441",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "282-324:leftToRightThenRightToLeftProcessing": {
                     "start": 282,
@@ -465,11 +590,54 @@
                         "    def leftToRightThenRightToLeftProcessing(self, name1: str, name2: str) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def leftToRightThenRightToLeftProcessing(self, name1: str, name2: str) -> int:",
+                        "        ",
+                        "        name1Char = list(name1)",
+                        "        name2Char = list(name2)",
+                        "",
+                        "        name1Size = len(name1) - 1",
+                        "        name2Size = len(name2) - 1",
+                        "",
+                        "        name1LtRStart = self.__EMPTY",
+                        "        name1LtREnd = self.__EMPTY",
+                        "",
+                        "        name2RtLStart = self.__EMPTY",
+                        "        name2RtLEnd = self.__EMPTY",
+                        "",
+                        "        for i in range(len(name1Char)):",
+                        "            if i > name2Size:",
+                        "                break",
+                        "",
+                        "            name1LtRStart = name1[i:i+1]",
+                        "            name1LtREnd = name1[name1Size - i:name1Size - i+1]",
+                        "",
+                        "            name2RtLStart = name2[i:i+1]",
+                        "            name2RtLEnd = name2[name2Size - i:name2Size - i+1]",
+                        "",
+                        "            if name1LtRStart == name2RtLStart:",
+                        "                name1Char[i] = ' '",
+                        "                name2Char[i] = ' '",
+                        "",
+                        "            if name1LtREnd == name2RtLEnd:",
+                        "                name1Char[name1Size - i] = ' '",
+                        "                name2Char[name2Size - i] = ' '",
+                        "",
+                        "        strA = ''.join(name1Char).replace(' ', '')",
+                        "        strB = ''.join(name2Char).replace(' ', '')",
+                        "",
+                        "        if len(strA) > len(strB):",
+                        "            return abs(6 - len(strA))",
+                        "        return abs(6 - len(strB))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 26.047422885894775,
+                    "generation_timestamp": "2024-06-20T16:55:12.882198",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "263-269:isVowel": {
                     "start": 263,
@@ -501,11 +669,18 @@
                         "    def isVowel(self, letter: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def isVowel(self, letter: str) -> bool:",
+                        "         return letter.upper() in [\"E\", \"A\", \"O\", \"I\", \"U\"]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.8689806461334229,
+                    "generation_timestamp": "2024-06-20T16:55:14.754591",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "189-205:getMinRating": {
                     "start": 189,
@@ -547,11 +722,32 @@
                         "    def getMinRating(self, sumLength: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getMinRating(self, sumLength: int) -> int:",
+                        "        ",
+                        "        minRating = 0",
+                        "",
+                        "        if sumLength <= 4:",
+                        "            minRating = 5",
+                        "        elif sumLength <= 7:",
+                        "            minRating = 4",
+                        "        elif sumLength <= 11:",
+                        "            minRating = 3",
+                        "        elif sumLength == 12:",
+                        "            minRating = 2",
+                        "        else:",
+                        "            minRating = 1",
+                        "",
+                        "        return minRating"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.095917701721191,
+                    "generation_timestamp": "2024-06-20T16:55:35.890958",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "167-176:getFirst3Last3": {
                     "start": 167,
@@ -586,11 +782,25 @@
                         "    def getFirst3Last3(self, name: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getFirst3Last3(self, name: str) -> str:",
+                        "        ",
+                        "        nameLength = len(name)",
+                        "",
+                        "        if nameLength > 6:",
+                        "            firstThree = name[:3]",
+                        "            lastThree = name[-3:]",
+                        "            return firstThree + lastThree",
+                        "        return name"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.7466788291931152,
+                    "generation_timestamp": "2024-06-20T16:55:39.642058",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "87-99:cleanName": {
                     "start": 87,
@@ -634,11 +844,28 @@
                         "    def cleanName(self, name: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def cleanName(self, name: str) -> str:",
+                        "        ",
+                        "        upperName = name.upper()",
+                        "",
+                        "        charsToTrim = [\"-\", \"&\", \"'\", \".\", \",\"]",
+                        "        for str in charsToTrim:",
+                        "            upperName = upperName.replace(str, self.__EMPTY)",
+                        "",
+                        "        upperName = self.removeAccents(upperName)",
+                        "        upperName = upperName.replace(self.__SPACE, self.__EMPTY)",
+                        "",
+                        "        return upperName"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.152119398117065,
+                    "generation_timestamp": "2024-06-20T16:55:50.799551",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -662,12 +889,22 @@
                             "java.lang.String[]"
                         ]
                     ],
-                    "partial_translation": "    __DOUBLE_CONSONANT: typing.List[str] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __DOUBLE_CONSONANT: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __DOUBLE_CONSONANT: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T14:46:12.229529",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "61-69:UNICODE": {
                     "start": 61,
@@ -694,12 +931,30 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __UNICODE: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __UNICODE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __UNICODE: str = (",
+                        "        \"\\u00C0\\u00E0\\u00C8\\u00E8\\u00CC\\u00EC\\u00D2\\u00F2\\u00D9\\u00F9\"",
+                        "        + \"\\u00C1\\u00E1\\u00C9\\u00E9\\u00CD\\u00ED\\u00D3\\u00F3\\u00DA\\u00FA\\u00DD\\u00FD\"",
+                        "        + \"\\u00C2\\u00E2\\u00CA\\u00EA\\u00CE\\u00EE\\u00D4\\u00F4\\u00DB\\u00FB\\u0176\\u0177\"",
+                        "        + \"\\u00C3\\u00E3\\u00D5\\u00F5\\u00D1\\u00F1\"",
+                        "        + \"\\u00C4\\u00E4\\u00CB\\u00EB\\u00CF\\u00EF\\u00D6\\u00F6\\u00DC\\u00FC\\u0178\\u00FF\"",
+                        "        + \"\\u00C5\\u00E5\"",
+                        "        + \"\\u00C7\\u00E7\"",
+                        "        + \"\\u0150\\u0151\\u0170\\u0171\"",
+                        "    )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 33.51570701599121,
+                    "generation_timestamp": "2024-06-20T14:46:45.747197",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "40-55:PLAIN_ASCII": {
                     "start": 40,
@@ -733,12 +988,30 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __PLAIN_ASCII: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __PLAIN_ASCII: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PLAIN_ASCII: str = (",
+                        "        \"AaEeIiOoUu\"",
+                        "        + \"AaEeIiOoUuYy\"",
+                        "        + \"AaEeIiOoUuYy\"",
+                        "        + \"AaOoNn\"",
+                        "        + \"AaEeIiOoUuYy\"",
+                        "        + \"Aa\"",
+                        "        + \"Cc\"",
+                        "        + \"OoUu\"",
+                        "    )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.797728538513184,
+                    "generation_timestamp": "2024-06-20T14:46:53.547426",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "37-37:EMPTY": {
                     "start": 37,
@@ -757,12 +1030,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __EMPTY: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __EMPTY: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EMPTY: str = \"\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.460167407989502,
+                    "generation_timestamp": "2024-06-20T14:46:55.009915",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "35-35:SPACE": {
                     "start": 35,
@@ -781,12 +1063,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __SPACE: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __SPACE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SPACE: str = \" \""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.3931772708892822,
+                    "generation_timestamp": "2024-06-20T14:46:56.405538",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class MatchRatingApproachEncoder(StringEncoder):\n\n"

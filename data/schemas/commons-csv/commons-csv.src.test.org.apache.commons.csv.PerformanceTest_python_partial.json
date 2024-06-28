@@ -126,7 +126,8 @@
                 "new CSVParserFactory(...) { ... }",
                 "new CSVParserFactory(...) { ... }",
                 "new CSVParserFactory(...) { ... }",
-                "new CSVParserFactory(...) { ... }"
+                "new CSVParserFactory(...) { ... }",
+                "CSVParserFactory"
             ],
             "implements": [],
             "extends": [],
@@ -269,11 +270,82 @@
                         "    def main(args: typing.List[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def main(args: typing.List[str]) -> None:",
+                        "        ",
+                        "        if PerformanceTest.__BIG_FILE.exists():",
+                        "            print(f\"Found test fixture {PerformanceTest.__BIG_FILE}: {PerformanceTest.__BIG_FILE.stat().st_size} bytes.\")",
+                        "        else:",
+                        "            print(f\"Decompressing test fixture to: {PerformanceTest.__BIG_FILE}...\")",
+                        "            try:",
+                        "                with gzip.open(io.BytesIO(pkgutil.get_data('org.apache.commons.csv.perf', 'worldcitiespop.txt.gz')), 'rb') as input, \\",
+                        "                        open(PerformanceTest.__BIG_FILE, 'wb') as output:",
+                        "                    shutil.copyfileobj(input, output)",
+                        "                    print(f\"Decompressed test fixture {PerformanceTest.__BIG_FILE}: {PerformanceTest.__BIG_FILE.stat().st_size} bytes.\")",
+                        "            except Exception as e:",
+                        "                print(f\"Error in main: {e}\")",
+                        "                return",
+                        "",
+                        "        argc = len(args)",
+                        "        if argc > 0:",
+                        "            PerformanceTest.__max = int(args[0])",
+                        "",
+                        "        if argc > 1:",
+                        "            tests = args[1:]",
+                        "        else:",
+                        "            tests = [",
+                        "                \"file\",",
+                        "                \"split\",",
+                        "                \"extb\",",
+                        "                \"exts\",",
+                        "                \"csv\",",
+                        "                \"csv-path\",",
+                        "                \"csv-path-db\",",
+                        "                \"csv-url\",",
+                        "                \"lexreset\",",
+                        "                \"lexnew\"",
+                        "            ]",
+                        "",
+                        "        for p in PerformanceTest.__PROPERTY_NAMES:",
+                        "            print(f\"{p}={platform.java_ver()[0]}\")",
+                        "",
+                        "        print(f\"Max count: {PerformanceTest.__max}\\n\")",
+                        "",
+                        "        for test in tests:",
+                        "            if test == \"file\":",
+                        "                PerformanceTest.__testReadBigFile(False)",
+                        "            elif test == \"split\":",
+                        "                PerformanceTest.__testReadBigFile(True)",
+                        "            elif test == \"csv\":",
+                        "                PerformanceTest.__testParseCommonsCSV()",
+                        "            elif test == \"csv-path\":",
+                        "                PerformanceTest.__testParsePath()",
+                        "            elif test == \"csv-path-db\":",
+                        "                PerformanceTest.__testParsePathDoubleBuffering()",
+                        "            elif test == \"csv-url\":",
+                        "                PerformanceTest.__testParseURL()",
+                        "            elif test == \"lexreset\":",
+                        "                PerformanceTest.__testCSVLexer(False, test)",
+                        "            elif test == \"lexnew\":",
+                        "                PerformanceTest.__testCSVLexer(True, test)",
+                        "            elif test.startswith(\"CSVLexer\"):",
+                        "                PerformanceTest.__testCSVLexer(False, test)",
+                        "            elif test == \"extb\":",
+                        "                PerformanceTest.__testExtendedBuffer(False)",
+                        "            elif test == \"exts\":",
+                        "                PerformanceTest.__testExtendedBuffer(True)",
+                        "            else:",
+                        "                print(f\"Invalid test name: {test}\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 32.95467567443848,
+                    "generation_timestamp": "2024-06-19T23:09:09.044194",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "348-359:testReadBigFile": {
                     "start": 348,
@@ -335,11 +407,28 @@
                         "    def __testReadBigFile(split: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __testReadBigFile(split: bool) -> None:",
+                        "        ",
+                        "        for i in range(PerformanceTest.__max):",
+                        "            startMillis = int(round(time.time() * 1000))",
+                        "            stats = PerformanceTest.__readAll(PerformanceTest.__createReader(), split)",
+                        "            PerformanceTest.__show1(",
+                        "                \"file+split\" if split else \"file\",",
+                        "                stats,",
+                        "                startMillis",
+                        "            )",
+                        "        PerformanceTest.__show0()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.209991216659546,
+                    "generation_timestamp": "2024-06-19T23:07:46.745512",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "340-346:testParseURL": {
                     "start": 340,
@@ -379,11 +468,24 @@
                         "    def __testParseURL() -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __testParseURL() -> None:",
+                        "        ",
+                        "        PerformanceTest.__testParser(",
+                        "            \"CSV-URL\",",
+                        "            lambda: CSVParser.parse5(",
+                        "                PerformanceTest.__BIG_FILE.as_uri(), \"ISO-8859-1\", PerformanceTest.__format)",
+                        "        )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.084306955337524,
+                    "generation_timestamp": "2024-06-19T23:07:12.712248",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "327-338:testParser": {
                     "start": 327,
@@ -446,11 +548,24 @@
                         "    def __testParser(msg: str, fac: CSVParserFactory) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __testParser(msg: str, fac: CSVParserFactory) -> None:",
+                        "        ",
+                        "        for i in range(PerformanceTest.__max):",
+                        "            startMillis = int(round(time.time() * 1000))",
+                        "            stats = PerformanceTest.__iterate(fac.createParser())",
+                        "            PerformanceTest.__show1(msg, stats, startMillis)",
+                        "        PerformanceTest.__show0()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.194999694824219,
+                    "generation_timestamp": "2024-06-19T23:06:36.293069",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "317-325:testParsePathDoubleBuffering": {
                     "start": 317,
@@ -492,11 +607,32 @@
                         "    def __testParsePathDoubleBuffering() -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __testParsePathDoubleBuffering() -> None:",
+                        "        ",
+                        "        PerformanceTest.__testParser(",
+                        "            \"CSV-PATH-DB\",",
+                        "            lambda: CSVParser.parse3(",
+                        "                ExtendedBufferedReader(",
+                        "                    io.open(",
+                        "                        PerformanceTest.__BIG_FILE,",
+                        "                        \"r\",",
+                        "                        encoding=\"ISO-8859-1\"",
+                        "                    )",
+                        "                ),",
+                        "                PerformanceTest.__format",
+                        "            )",
+                        "        )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.547611474990845,
+                    "generation_timestamp": "2024-06-19T23:06:45.849283",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "307-315:testParsePath": {
                     "start": 307,
@@ -538,11 +674,26 @@
                         "    def __testParsePath() -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __testParsePath() -> None:",
+                        "        ",
+                        "        PerformanceTest.__testParser(",
+                        "            \"CSV-PATH\",",
+                        "            lambda: CSVParser.parse1(",
+                        "                io.open(PerformanceTest.__BIG_FILE, 'r', encoding='ISO-8859-1'),",
+                        "                format=PerformanceTest.__format",
+                        "            )",
+                        "        )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.341313600540161,
+                    "generation_timestamp": "2024-06-19T23:06:54.194619",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "303-305:testParseCommonsCSV": {
                     "start": 303,
@@ -578,11 +729,20 @@
                         "    def __testParseCommonsCSV() -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __testParseCommonsCSV() -> None:",
+                        "        ",
+                        "        PerformanceTest.__testParser(\"CSV\", lambda: CSVParser.CSVParser1(PerformanceTest.__createReader(), PerformanceTest.__format))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.654905557632446,
+                    "generation_timestamp": "2024-06-19T23:06:59.853666",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "262-301:testExtendedBuffer": {
                     "start": 262,
@@ -682,11 +842,54 @@
                         "    def __testExtendedBuffer(makeString: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __testExtendedBuffer(makeString: bool) -> None:",
+                        "        ",
+                        "        for i in range(PerformanceTest.__max):",
+                        "            fields = 0",
+                        "            lines = 0",
+                        "            startMillis = int(round(time.time() * 1000))",
+                        "            try:",
+                        "                with ExtendedBufferedReader(PerformanceTest.__createReader()) as in_:",
+                        "                    if makeString:",
+                        "                        sb = \"\"",
+                        "                        while True:",
+                        "                            read = in_.read0()",
+                        "                            if read == -1:",
+                        "                                break",
+                        "                            sb += chr(read)",
+                        "                            if read == ord(','):  # count delimiters",
+                        "                                fields += 1",
+                        "                            elif read == ord('\\n'):",
+                        "                                lines += 1",
+                        "                    else:",
+                        "                        while True:",
+                        "                            read = in_.read0()",
+                        "                            if read == -1:",
+                        "                                break",
+                        "                            if read == ord(','):  # count delimiters",
+                        "                                fields += 1",
+                        "                            elif read == ord('\\n'):",
+                        "                                lines += 1",
+                        "            except Exception as e:",
+                        "                print(f\"Error in testExtendedBuffer: {e}\")",
+                        "                return",
+                        "            fields += lines  # EOL is a delimiter too",
+                        "            PerformanceTest.__show1(",
+                        "                \"Extended\" + (\" toString\" if makeString else \"\"),",
+                        "                Stats(lines, fields),",
+                        "                startMillis)",
+                        "        PerformanceTest.__show0()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.740541458129883,
+                    "generation_timestamp": "2024-06-19T23:08:05.493440",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "213-260:testCSVLexer": {
                     "start": 213,
@@ -810,11 +1013,60 @@
                         "    def __testCSVLexer(newToken: bool, test: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __testCSVLexer(newToken: bool, test: str) -> None:",
+                        "        ",
+                        "        token = Token()",
+                        "        dynamic = \"\"",
+                        "        for i in range(PerformanceTest.__max):",
+                        "            simpleName = \"\"",
+                        "            stats = None",
+                        "            startMillis = 0",
+                        "            try:",
+                        "                with ExtendedBufferedReader(PerformanceTest.__createReader()) as input, \\",
+                        "                        PerformanceTest.__createTestCSVLexer(test, input) as lexer:",
+                        "                    if test.startswith(\"CSVLexer\"):",
+                        "                        dynamic = \"!\"",
+                        "                    simpleName = lexer.getClass().getSimpleName()",
+                        "                    count = 0",
+                        "                    fields = 0",
+                        "                    startMillis = int(round(time.time() * 1000))",
+                        "                    while True:",
+                        "                        if newToken:",
+                        "                            token = Token()",
+                        "                        else:",
+                        "                            token.reset()",
+                        "                        lexer.nextToken(token)",
+                        "                        if token.type == Token.Type.EOF:",
+                        "                            break",
+                        "                        elif token.type == Token.Type.EORECORD:",
+                        "                            fields += 1",
+                        "                            count += 1",
+                        "                        elif token.type == Token.Type.INVALID:",
+                        "                            raise IOError(",
+                        "                                \"invalid parse sequence <\" + token.content + \">\")",
+                        "                        elif token.type == Token.Type.TOKEN:",
+                        "                            fields += 1",
+                        "                        elif token.type == Token.Type.COMMENT:",
+                        "                            pass",
+                        "                        else:",
+                        "                            raise Exception(\"Unexpected Token type: \" + token.type)",
+                        "                    stats = Stats(count, fields)",
+                        "            except Exception as e:",
+                        "                print(f\"Error in testCSVLexer: {e}\")",
+                        "                raise e",
+                        "            PerformanceTest.__show1(simpleName + dynamic + \" \" + (\"new\" if newToken else \"reset\"), stats, startMillis)",
+                        "        PerformanceTest.__show0()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 24.55982279777527,
+                    "generation_timestamp": "2024-06-19T23:08:30.063554",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "206-211:show1": {
                     "start": 206,
@@ -851,11 +1103,22 @@
                         "    def __show1(msg: str, s: Stats, start: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __show1(msg: str, s: Stats, start: int) -> None:",
+                        "         elapsed = int(round(time.time() * 1000)) - start",
+                        "         print(f\"{msg:<20s}: {elapsed}ms {s.count} lines {s.fields} fields\")",
+                        "         PerformanceTest.__ELAPSED_TIMES.append(elapsed)",
+                        "         PerformanceTest.__num += 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.795225620269775,
+                    "generation_timestamp": "2024-06-19T23:06:05.082544",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "195-204:show0": {
                     "start": 195,
@@ -892,11 +1155,25 @@
                         "    def __show0() -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __show0() -> None:",
+                        "        ",
+                        "        if PerformanceTest.__num > 1:",
+                        "            tot = 0",
+                        "            for i in range(1, PerformanceTest.__num):  # skip first test",
+                        "                tot += PerformanceTest.__ELAPSED_TIMES[i]",
+                        "            print(f\"%-20s: %5dms%n%n\" % (\"Average(not first)\", tot / (PerformanceTest.__num - 1)))",
+                        "        PerformanceTest.__num = 0  # ready for next set"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.773414134979248,
+                    "generation_timestamp": "2024-06-19T23:06:10.860296",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "184-193:readAll": {
                     "start": 184,
@@ -942,11 +1219,29 @@
                         "    def __readAll(in_: io.BufferedReader, split: bool) -> Stats:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __readAll(in_: io.BufferedReader, split: bool) -> Stats:",
+                        "        ",
+                        "        count = 0",
+                        "        fields = 0",
+                        "        record = in_.readline()",
+                        "        ",
+                        "        while record:",
+                        "            count += 1",
+                        "            fields += len(record.split(\",\")) if split else 1",
+                        "            record = in_.readline()",
+                        "        ",
+                        "        return Stats(count, fields)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.668527364730835,
+                    "generation_timestamp": "2024-06-19T23:06:19.536266",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "98-106:iterate": {
                     "start": 98,
@@ -995,11 +1290,24 @@
                         "    def __iterate(iterable: typing.Iterable[CSVRecord]) -> Stats:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __iterate(iterable: typing.Iterable[CSVRecord]) -> Stats:",
+                        "         count = 0",
+                        "         fields = 0",
+                        "         for record in iterable:",
+                        "             count += 1",
+                        "             fields += record.size()",
+                        "         return Stats(count, fields)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.541952610015869,
+                    "generation_timestamp": "2024-06-19T23:06:26.090087",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "92-96:getLexerCtor": {
                     "start": 92,
@@ -1033,11 +1341,21 @@
                         "    def __getLexerCtor(clazz: str) -> typing.Callable[..., Lexer]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __getLexerCtor(clazz: str) -> typing.Callable[..., Lexer]:",
+                        "        ",
+                        "        lexer = getattr(__import__('org.apache.commons.csv', fromlist=[clazz]), clazz)",
+                        "        return lexer.__init__"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.76572322845459,
+                    "generation_timestamp": "2024-06-19T23:07:06.623301",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "82-90:createTestCSVLexer": {
                     "start": 82,
@@ -1087,11 +1405,28 @@
                         "    def __createTestCSVLexer(test: str, input: ExtendedBufferedReader) -> Lexer:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __createTestCSVLexer(test: str, input: ExtendedBufferedReader) -> Lexer:",
+                        "        ",
+                        "        if test.startswith(\"CSVLexer\"):",
+                        "            try:",
+                        "                lexer_ctor = PerformanceTest.__getLexerCtor(test)",
+                        "                return lexer_ctor(PerformanceTest.__format, input)",
+                        "            except Exception as e:",
+                        "                print(f\"Error creating CSV Lexer: {e}\")",
+                        "                raise e",
+                        "        else:",
+                        "            return Lexer(PerformanceTest.__format, input)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 19.398248195648193,
+                    "generation_timestamp": "2024-06-19T23:07:32.118318",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "78-80:createReader": {
                     "start": 78,
@@ -1121,11 +1456,19 @@
                         "    def __createReader() -> typing.Union[io.TextIOWrapper, io.BufferedReader]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __createReader() -> typing.Union[io.TextIOWrapper, io.BufferedReader]:",
+                        "         return io.TextIOWrapper(io.FileIO(PerformanceTest.__BIG_FILE), encoding='ISO-8859-1')"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.405339241027832,
+                    "generation_timestamp": "2024-06-19T23:07:34.529248",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1147,12 +1490,21 @@
                             "java.io.File"
                         ]
                     ],
-                    "partial_translation": "    __BIG_FILE: pathlib.Path = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __BIG_FILE: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BIG_FILE: pathlib.Path = pathlib.Path(tempfile.gettempdir()) / \"worldcitiespop.txt\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.456830024719238,
+                    "generation_timestamp": "2024-06-19T21:35:02.308851",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "73-73:TEST_RESRC": {
                     "start": 73,
@@ -1171,12 +1523,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __TEST_RESRC: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __TEST_RESRC: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __TEST_RESRC: str = \"org/apache/commons/csv/perf/worldcitiespop.txt.gz\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.1541361808776855,
+                    "generation_timestamp": "2024-06-19T21:35:04.466982",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "71-71:format": {
                     "start": 71,
@@ -1195,12 +1556,21 @@
                             "CSVFormat"
                         ]
                     ],
-                    "partial_translation": "    __format: CSVFormat = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __format: CSVFormat = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __format: CSVFormat = CSVFormat.EXCEL"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.601767539978027,
+                    "generation_timestamp": "2024-06-19T21:35:09.072670",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "70-70:ELAPSED_TIMES": {
                     "start": 70,
@@ -1219,12 +1589,22 @@
                             "long[]"
                         ]
                     ],
-                    "partial_translation": "    __ELAPSED_TIMES: typing.List[int] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __ELAPSED_TIMES: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ELAPSED_TIMES: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:15:14.984431",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "68-68:num": {
                     "start": 68,
@@ -1242,12 +1622,22 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __num: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __num: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __num: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:15:14.996315",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-66:max": {
                     "start": 66,
@@ -1265,12 +1655,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __max: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __max: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __max: int = 11"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.2447516918182373,
+                    "generation_timestamp": "2024-06-19T21:35:10.321777",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "57-65:PROPERTY_NAMES": {
                     "start": 57,
@@ -1297,12 +1696,22 @@
                             "java.lang.String[]"
                         ]
                     ],
-                    "partial_translation": "    __PROPERTY_NAMES: typing.List[str] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __PROPERTY_NAMES: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PROPERTY_NAMES: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:15:17.049177",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class PerformanceTest:\n\n"
@@ -1345,11 +1754,19 @@
                         "    def __init__(self, c: int, f: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self, c: int, f: int) -> None:",
+                        "         self.count = c",
+                        "         self.fields = f"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1881749629974365,
+                    "generation_timestamp": "2024-06-19T23:05:43.288635",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1368,12 +1785,22 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    fields: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    fields: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    fields: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:15:17.054624",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "48-48:count": {
                     "start": 48,
@@ -1390,12 +1817,22 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    count: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    count: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    count: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-19T21:15:17.058938",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class Stats:\n\n"
@@ -1447,11 +1884,24 @@
                         "    def createParser(self) -> CSVParser:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def createParser(self) -> CSVParser:",
+                        "        ",
+                        "        # Here you need to implement the logic to create a CSVParser.",
+                        "        # Since the Java method is abstract and doesn't have any implementation,",
+                        "        # I can't provide a direct translation.",
+                        "        # You need to implement this method according to your requirements.",
+                        "",
+                        "        pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.111156463623047,
+                    "generation_timestamp": "2024-06-19T23:05:56.281227",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
@@ -1460,6 +1910,8 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "from abc import ABC",
         "import pathlib",
         "import io",
@@ -1470,6 +1922,6 @@
         "from src.main.org.apache.commons.csv.ExtendedBufferedReader import *",
         "from src.main.org.apache.commons.csv.Lexer import *",
         "from src.main.org.apache.commons.csv.Token import *",
-        "from src.main.org.apache.commons.io.IOUtils import *"
+        "# from src.main.org.apache.commons.io.IOUtils import *"
     ]
 }

@@ -128,11 +128,54 @@
                         "    def _decodeText(self, text: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _decodeText(self, text: str) -> str:",
+                        "        ",
+                        "        if text is None:",
+                        "            return None",
+                        "        ",
+                        "        if not text.startswith(self._PREFIX) or not text.endswith(self._POSTFIX):",
+                        "            raise DecoderException(\"RFC 1522 violation: malformed encoded content\", None)",
+                        "        ",
+                        "        terminator = len(text) - 2",
+                        "        from_ = 2",
+                        "        to = text.find(self._SEP, from_)",
+                        "        ",
+                        "        if to == terminator:",
+                        "            raise DecoderException(\"RFC 1522 violation: charset token not found\", None)",
+                        "        ",
+                        "        charset = text[from_:to]",
+                        "        ",
+                        "        if charset == \"\":",
+                        "            raise DecoderException(\"RFC 1522 violation: charset not specified\", None)",
+                        "        ",
+                        "        from_ = to + 1",
+                        "        to = text.find(self._SEP, from_)",
+                        "        ",
+                        "        if to == terminator:",
+                        "            raise DecoderException(\"RFC 1522 violation: encoding token not found\", None)",
+                        "        ",
+                        "        encoding = text[from_:to]",
+                        "        ",
+                        "        if not self._getEncoding().lower() == encoding.lower():",
+                        "            raise DecoderException(",
+                        "                \"This codec cannot decode \" + encoding + \" encoded content\", None)",
+                        "        ",
+                        "        from_ = to + 1",
+                        "        to = text.find(self._SEP, from_)",
+                        "        data = StringUtils.getBytesUsAscii(text[from_:to])",
+                        "        data = self._doDecoding(data)",
+                        "        ",
+                        "        return str(data, charset)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 22.663448333740234,
+                    "generation_timestamp": "2024-06-20T15:59:06.614776",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "99-105:encodeText1": {
                     "start": 99,
@@ -173,11 +216,20 @@
                         "    def _encodeText1(self, text: str, charsetName: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _encodeText1(self, text: str, charsetName: str) -> str:",
+                        "         if text is None:",
+                        "             return None",
+                        "         return self._encodeText0(text, charsetName)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.167230606079102,
+                    "generation_timestamp": "2024-06-20T15:59:45.223764",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "67-80:encodeText0": {
                     "start": 67,
@@ -235,11 +287,28 @@
                         "    def _encodeText0(self, text: str, charset: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _encodeText0(self, text: str, charset: str) -> str:",
+                        "         if text is None:",
+                        "             return None",
+                        "         buffer = io.StringIO()",
+                        "         buffer.write(self._PREFIX)",
+                        "         buffer.write(charset)",
+                        "         buffer.write(self._SEP)",
+                        "         buffer.write(self._getEncoding())",
+                        "         buffer.write(self._SEP)",
+                        "         buffer.write(StringUtils.newStringUsAscii(self._doEncoding(text.encode(charset))))",
+                        "         buffer.write(self._POSTFIX)",
+                        "         return buffer.getvalue()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 32.23573422431946,
+                    "generation_timestamp": "2024-06-20T15:59:38.855011",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "180-180:doDecoding": {
                     "start": 180,
@@ -268,11 +337,18 @@
                         "    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:",
+                        "         raise NotImplementedError(\"Subclass must implement abstract method\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.169840097427368,
+                    "generation_timestamp": "2024-06-20T15:58:27.723222",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "170-170:doEncoding": {
                     "start": 170,
@@ -301,11 +377,18 @@
                         "    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:",
+                        "         raise NotImplementedError(\"Subclass must implement abstract method\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.824208736419678,
+                    "generation_timestamp": "2024-06-20T15:58:34.549079",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "160-160:getEncoding": {
                     "start": 160,
@@ -332,11 +415,18 @@
                         "    def _getEncoding(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _getEncoding(self) -> str:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.397802829742432,
+                    "generation_timestamp": "2024-06-20T15:58:43.948506",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -357,12 +447,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    _PREFIX: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    _PREFIX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _PREFIX: str = \"=?\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1530513763427734,
+                    "generation_timestamp": "2024-06-20T14:40:28.901031",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "46-46:POSTFIX": {
                     "start": 46,
@@ -381,12 +480,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    _POSTFIX: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    _POSTFIX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _POSTFIX: str = \"?=\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.4836349487304688,
+                    "generation_timestamp": "2024-06-20T14:40:30.386461",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "43-43:SEP": {
                     "start": 43,
@@ -405,12 +513,21 @@
                             "char"
                         ]
                     ],
-                    "partial_translation": "    _SEP: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    _SEP: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _SEP: str = \"?\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.963027000427246,
+                    "generation_timestamp": "2024-06-20T14:40:32.351015",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class RFC1522Codec(ABC):\n\n"

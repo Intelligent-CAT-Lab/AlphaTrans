@@ -148,11 +148,36 @@
                         "    def testStrictDecoding(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testStrictDecoding(self) -> None:",
+                        "        ",
+                        "        for s in Base64Test.BASE64_IMPOSSIBLE_CASES:",
+                        "            encoded = StringUtils.getBytesUtf8(s)",
+                        "            bout = io.BytesIO()",
+                        "            out = Base64OutputStream.Base64OutputStream1(bout, False)",
+                        "            assert not out.isStrictDecoding()",
+                        "            out.write(encoded)",
+                        "            out.close()",
+                        "            assert bout.tell() > 0",
+                        "",
+                        "            bout = io.BytesIO()",
+                        "            out = Base64OutputStream(bout, False, 0, None, CodecPolicy.STRICT)",
+                        "            assert out.isStrictDecoding()",
+                        "            try:",
+                        "                out.write(encoded)",
+                        "                out.close()",
+                        "                self.fail()",
+                        "            except IllegalArgumentException:",
+                        "                pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.96423077583313,
+                    "generation_timestamp": "2024-06-20T21:39:47.124530",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "316-323:testWriteToNullCoverage": {
                     "start": 316,
@@ -198,11 +223,25 @@
                         "    def testWriteToNullCoverage(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testWriteToNullCoverage(self) -> None:",
+                        "        ",
+                        "        bout = io.BytesIO()",
+                        "        try:",
+                        "            out = Base64OutputStream.Base64OutputStream0(bout)",
+                        "            out.write0(None, 0, 0)",
+                        "            self.fail(\"Expcted Base64OutputStream.write(null) to throw a NullPointerException\")",
+                        "        except NullPointerException:",
+                        "            pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 24.7039315700531,
+                    "generation_timestamp": "2024-06-20T21:40:11.832422",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "271-308:testWriteOutOfBounds": {
                     "start": 271,
@@ -278,11 +317,53 @@
                         "    def testWriteOutOfBounds(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testWriteOutOfBounds(self) -> None:",
+                        "        ",
+                        "        buf = bytearray(1024)",
+                        "        bout = io.BytesIO()",
+                        "        with Base64OutputStream.Base64OutputStream0(bout) as out:",
+                        "",
+                        "            try:",
+                        "                out.write0(buf, -1, 1)",
+                        "                self.fail(",
+                        "                    \"Expected Base64OutputStream.write(buf, -1, 1) to throw a\"",
+                        "                    + \" IndexOutOfBoundsException\")",
+                        "            except IndexError:",
+                        "                pass",
+                        "",
+                        "            try:",
+                        "                out.write0(buf, 1, -1)",
+                        "                self.fail(",
+                        "                    \"Expected Base64OutputStream.write(buf, 1, -1) to throw a\"",
+                        "                    + \" IndexOutOfBoundsException\")",
+                        "            except IndexError:",
+                        "                pass",
+                        "",
+                        "            try:",
+                        "                out.write0(buf, len(buf) + 1, 0)",
+                        "                self.fail(",
+                        "                    \"Expected Base64OutputStream.write(buf, len(buf) + 1, 0) to throw a\"",
+                        "                    + \" IndexOutOfBoundsException\")",
+                        "            except IndexError:",
+                        "                pass",
+                        "",
+                        "            try:",
+                        "                out.write0(buf, len(buf) - 1, 2)",
+                        "                self.fail(",
+                        "                    \"Expected Base64OutputStream.write(buf, len(buf) - 1, 2) to throw a\"",
+                        "                    + \" IndexOutOfBoundsException\")",
+                        "            except IndexError:",
+                        "                pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 23.127930402755737,
+                    "generation_timestamp": "2024-06-20T21:40:34.965929",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "132-157:testBase64OutputStreamByteByByte": {
                     "start": 132,
@@ -356,11 +437,41 @@
                         "    def testBase64OutputStreamByteByByte(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testBase64OutputStreamByteByByte(self) -> None:",
+                        "        ",
+                        "        encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\")",
+                        "        decoded = StringUtils.getBytesUtf8(self.__STRING_FIXTURE)",
+                        "        self.__testByteByByte(encoded, decoded, 76, self.__CR_LF)",
+                        "",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\")",
+                        "        decoded = [0]",
+                        "        self.__testByteByByte(encoded, decoded, 76, self.__CR_LF)",
+                        "",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE)",
+                        "        decoded = BaseNTestData.DECODED",
+                        "        self.__testByteByByte(encoded, decoded, 64, self.__LF)",
+                        "",
+                        "        single_line = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\")",
+                        "        encoded = StringUtils.getBytesUtf8(single_line)",
+                        "        decoded = BaseNTestData.DECODED",
+                        "        self.__testByteByByte(encoded, decoded, 0, self.__LF)",
+                        "",
+                        "        codec = Base64.Base641(0, None, False)",
+                        "        for i in range(151):",
+                        "            random_data = BaseNTestData.randomData(codec, i)",
+                        "            encoded = random_data[1]",
+                        "            decoded = random_data[0]",
+                        "            self.__testByteByByte(encoded, decoded, 0, self.__LF)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 27.465715885162354,
+                    "generation_timestamp": "2024-06-20T21:41:41.732800",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "99-124:testBase64OutputStreamByChunk": {
                     "start": 99,
@@ -434,11 +545,41 @@
                         "    def testBase64OutputStreamByChunk(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testBase64OutputStreamByChunk(self) -> None:",
+                        "        ",
+                        "        encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\")",
+                        "        decoded = StringUtils.getBytesUtf8(self.__STRING_FIXTURE)",
+                        "        self.__testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, self.__CR_LF)",
+                        "",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\")",
+                        "        decoded = [0]",
+                        "        self.__testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, self.__CR_LF)",
+                        "",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE)",
+                        "        decoded = BaseNTestData.DECODED",
+                        "        self.__testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, self.__LF)",
+                        "",
+                        "        singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\")",
+                        "        encoded = StringUtils.getBytesUtf8(singleLine)",
+                        "        decoded = BaseNTestData.DECODED",
+                        "        self.__testByChunk(encoded, decoded, 0, self.__LF)",
+                        "",
+                        "        codec = Base64.Base641(0, None, False)",
+                        "        for i in range(151):",
+                        "            randomData = BaseNTestData.randomData(codec, i)",
+                        "            encoded = randomData[1]",
+                        "            decoded = randomData[0]",
+                        "            self.__testByChunk(encoded, decoded, 0, self.__LF)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 30.303823709487915,
+                    "generation_timestamp": "2024-06-20T21:42:29.982381",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "82-84:testBase64EmptyOutputStreamPemChunkSize": {
                     "start": 82,
@@ -474,11 +615,19 @@
                         "    def testBase64EmptyOutputStreamPemChunkSize(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testBase64EmptyOutputStreamPemChunkSize(self) -> None:",
+                        "        ",
+                        "        self.__testBase64EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.165057182312012,
+                    "generation_timestamp": "2024-06-20T21:42:52.842892",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "72-74:testBase64EmptyOutputStreamMimeChunkSize": {
                     "start": 72,
@@ -514,11 +663,19 @@
                         "    def testBase64EmptyOutputStreamMimeChunkSize(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testBase64EmptyOutputStreamMimeChunkSize(self) -> None:",
+                        "        ",
+                        "        self.__testBase64EmptyOutputStream(BaseNCodec.MIME_CHUNK_SIZE)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.8850321769714355,
+                    "generation_timestamp": "2024-06-20T21:42:58.731071",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "50-64:testCodec98NPE": {
                     "start": 50,
@@ -581,11 +738,29 @@
                         "    def testCodec98NPE(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCodec98NPE(self) -> None:",
+                        "        ",
+                        "        codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE)",
+                        "        codec98_1024 = [0] * 1024",
+                        "        codec98_1024[:len(codec98)] = codec98",
+                        "        data = io.BytesIO()",
+                        "        with Base64OutputStream.Base64OutputStream1(data, False) as stream:",
+                        "            stream.write0(codec98_1024, 0, 1024)",
+                        "",
+                        "        decodedBytes = data.getvalue()",
+                        "        decoded = StringUtils.newStringUtf8(decodedBytes)",
+                        "        self.assertEqual(",
+                        "            \"codec-98 NPE Base64OutputStream\", Base64TestData.CODEC_98_NPE_DECODED, decoded)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.036368370056152,
+                    "generation_timestamp": "2024-06-20T21:40:51.006125",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "217-263:testByteByByte": {
                     "start": 217,
@@ -673,11 +848,54 @@
                         "    def __testByteByByte(self, encoded: typing.List[int], decoded: typing.List[int], chunkSize: int, separator: typing.List[int]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __testByteByByte(self, encoded: typing.List[int], decoded: typing.List[int], chunkSize: int, separator: typing.List[int]) -> None:",
+                        "        ",
+                        "        byteOut = io.BytesIO()",
+                        "        out = Base64OutputStream.Base64OutputStream2(byteOut, True, chunkSize, separator)",
+                        "        for element in decoded:",
+                        "            out.write(element)",
+                        "        out.close()",
+                        "        output = byteOut.getvalue()",
+                        "        self.assertEqual(encoded, list(output))",
+                        "",
+                        "        byteOut = io.BytesIO()",
+                        "        out = Base64OutputStream.Base64OutputStream1(byteOut, False)",
+                        "        for element in encoded:",
+                        "            out.write(element)",
+                        "        out.close()",
+                        "        output = byteOut.getvalue()",
+                        "        self.assertEqual(decoded, list(output))",
+                        "",
+                        "        byteOut = io.BytesIO()",
+                        "        out = Base64OutputStream.Base64OutputStream1(byteOut, False)",
+                        "        for element in encoded:",
+                        "            out.write(element)",
+                        "            out.flush()",
+                        "        out.close()",
+                        "        output = byteOut.getvalue()",
+                        "        self.assertEqual(decoded, list(output))",
+                        "",
+                        "        byteOut = io.BytesIO()",
+                        "        out = byteOut",
+                        "        for i in range(10):",
+                        "            out = Base64OutputStream.Base64OutputStream1(out, False)",
+                        "            out = Base64OutputStream.Base64OutputStream2(out, True, chunkSize, separator)",
+                        "        for element in decoded:",
+                        "            out.write(element)",
+                        "        out.close()",
+                        "        output = byteOut.getvalue()",
+                        "",
+                        "        self.assertEqual(decoded, list(output))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 23.251534938812256,
+                    "generation_timestamp": "2024-06-20T21:41:14.261456",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "172-202:testByChunk": {
                     "start": 172,
@@ -749,11 +967,42 @@
                         "    def __testByChunk(self, encoded: typing.List[int], decoded: typing.List[int], chunkSize: int, separator: typing.List[int]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __testByChunk(self, encoded: typing.List[int], decoded: typing.List[int], chunkSize: int, separator: typing.List[int]) -> None:",
+                        "        ",
+                        "        byteOut = io.BytesIO()",
+                        "        out = Base64OutputStream.Base64OutputStream2(byteOut, True, chunkSize, separator)",
+                        "        out.write(bytes(decoded))",
+                        "        out.close()",
+                        "        output = byteOut.getvalue()",
+                        "        self.assertEqual(list(output), encoded)",
+                        "",
+                        "        byteOut = io.BytesIO()",
+                        "        out = Base64OutputStream.Base64OutputStream1(byteOut, False)",
+                        "        out.write(bytes(encoded))",
+                        "        out.close()",
+                        "        output = byteOut.getvalue()",
+                        "        self.assertEqual(list(output), decoded)",
+                        "",
+                        "        byteOut = io.BytesIO()",
+                        "        out = byteOut",
+                        "        for i in range(10):",
+                        "            out = Base64OutputStream.Base64OutputStream1(out, False)",
+                        "            out = Base64OutputStream.Base64OutputStream2(out, True, chunkSize, separator)",
+                        "        out.write(bytes(decoded))",
+                        "        out.close()",
+                        "        output = byteOut.getvalue()",
+                        "",
+                        "        self.assertEqual(list(output), decoded)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.932233333587646,
+                    "generation_timestamp": "2024-06-20T21:41:59.670539",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "86-91:testBase64EmptyOutputStream": {
                     "start": 86,
@@ -797,11 +1046,22 @@
                         "    def __testBase64EmptyOutputStream(self, chunkSize: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __testBase64EmptyOutputStream(self, chunkSize: int) -> None:",
+                        "        ",
+                        "        emptyEncoded = []",
+                        "        emptyDecoded = []",
+                        "        self.__testByteByByte(emptyEncoded, emptyDecoded, chunkSize, self.__CR_LF)",
+                        "        self.__testByChunk(emptyEncoded, emptyDecoded, chunkSize, self.__CR_LF)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.686145067214966,
+                    "generation_timestamp": "2024-06-20T21:42:38.673523",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -822,12 +1082,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __STRING_FIXTURE: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __STRING_FIXTURE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __STRING_FIXTURE: str = \"Hello World\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.5838422775268555,
+                    "generation_timestamp": "2024-06-21T08:46:19.827095",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "39-39:LF": {
                     "start": 39,
@@ -846,12 +1115,22 @@
                             "byte[]"
                         ]
                     ],
-                    "partial_translation": "    __LF: typing.List[int] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __LF: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LF: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:22.855755",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "37-37:CR_LF": {
                     "start": 37,
@@ -870,21 +1149,34 @@
                             "byte[]"
                         ]
                     ],
-                    "partial_translation": "    __CR_LF: typing.List[int] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __CR_LF: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CR_LF: typing.List[int] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T15:05:22.857742",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class Base64OutputStreamTest:\n\n"
+            "python_class_declaration": "class Base64OutputStreamTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.main.org.apache.commons.codec.CodecPolicy import *",
         "from src.main.org.apache.commons.codec.binary.Base64 import *",
         "from src.main.org.apache.commons.codec.binary.Base64OutputStream import *",

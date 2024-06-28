@@ -214,18 +214,81 @@
                         [
                             "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
                             "CommonsGraph",
-                            "155-161:findStronglyConnectedComponent"
+                            "154-161:findStronglyConnectedComponent"
                         ]
                     ],
                     "partial_translation": [
                         "    def testVerifyHasStronglyConnectedComponents(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testVerifyHasStronglyConnectedComponents(self) -> None:",
+                        "        ",
+                        "        a = BaseLabeledVertex(\"A\")",
+                        "        b = BaseLabeledVertex(\"B\")",
+                        "        c = BaseLabeledVertex(\"C\")",
+                        "        d = BaseLabeledVertex(\"D\")",
+                        "        e = BaseLabeledVertex(\"E\")",
+                        "        f = BaseLabeledVertex(\"F\")",
+                        "        g = BaseLabeledVertex(\"G\")",
+                        "        h = BaseLabeledVertex(\"H\")",
+                        "",
+                        "        graph = CommonsGraph.newDirectedMutableGraph(",
+                        "            AbstractGraphConnection(",
+                        "                lambda: [",
+                        "                    addVertex(a),",
+                        "                    addVertex(b),",
+                        "                    addVertex(c),",
+                        "                    addVertex(d),",
+                        "                    addVertex(e),",
+                        "                    addVertex(f),",
+                        "                    addVertex(g),",
+                        "                    addVertex(h),",
+                        "                    addEdge(BaseLabeledEdge(\"A -> F\")).from_(a).to(f),",
+                        "                    addEdge(BaseLabeledEdge(\"A -> B\")).from_(a).to(b),",
+                        "                    addEdge(BaseLabeledEdge(\"B -> D\")).from_(b).to(d),",
+                        "                    addEdge(BaseLabeledEdge(\"C -> G\")).from_(c).to(g),",
+                        "                    addEdge(BaseLabeledEdge(\"D -> A\")).from_(d).to(a),",
+                        "                    addEdge(BaseLabeledEdge(\"D -> G\")).from_(d).to(g),",
+                        "                    addEdge(BaseLabeledEdge(\"E -> C\")).from_(e).to(c),",
+                        "                    addEdge(BaseLabeledEdge(\"E -> F\")).from_(e).to(f),",
+                        "                    addEdge(BaseLabeledEdge(\"F -> E\")).from_(f).to(e),",
+                        "                    addEdge(BaseLabeledEdge(\"G -> H\")).from_(g).to(h),",
+                        "                    addEdge(BaseLabeledEdge(\"H -> C\")).from_(h).to(c),",
+                        "                ]",
+                        "            )",
+                        "        )",
+                        "",
+                        "        expected = {frozenset({a, b, d}), frozenset({e, f}), frozenset({g, h, c})}",
+                        "",
+                        "        actual = CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir0()",
+                        "",
+                        "        self.assertTrue(bool(actual))",
+                        "        self.assertEqual(expected, actual)",
+                        "",
+                        "        actualA = CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir1(a)",
+                        "",
+                        "        self.assertTrue(bool(actualA))",
+                        "        self.assertEqual(frozenset({a, b, d}), actualA)",
+                        "",
+                        "        actualE = CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir1(e)",
+                        "",
+                        "        self.assertTrue(bool(actualE))",
+                        "        self.assertEqual(frozenset({e, f}), actualE)",
+                        "",
+                        "        actualG = CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir1(g)",
+                        "",
+                        "        self.assertTrue(bool(actualG))",
+                        "        self.assertEqual(frozenset({g, h, c}), actualG)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 37.92380881309509,
+                    "generation_timestamp": "2024-06-20T23:39:01.318545",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "71-141:testUnconnectedGraph": {
                     "start": 71,
@@ -332,18 +395,68 @@
                         [
                             "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
                             "CommonsGraph",
-                            "155-161:findStronglyConnectedComponent"
+                            "154-161:findStronglyConnectedComponent"
                         ]
                     ],
                     "partial_translation": [
                         "    def testUnconnectedGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testUnconnectedGraph(self) -> None:",
+                        "        ",
+                        "        a = BaseLabeledVertex(\"A\")",
+                        "        b = BaseLabeledVertex(\"B\")",
+                        "        c = BaseLabeledVertex(\"C\")",
+                        "        d = BaseLabeledVertex(\"D\")",
+                        "        e = BaseLabeledVertex(\"E\")",
+                        "        f = BaseLabeledVertex(\"F\")",
+                        "        g = BaseLabeledVertex(\"G\")",
+                        "        h = BaseLabeledVertex(\"H\")",
+                        "",
+                        "        graph = CommonsGraph.newDirectedMutableGraph(",
+                        "            AbstractGraphConnection().addVertex(a).addVertex(b).addVertex(c).addVertex(d).addVertex(e).addVertex(f).addVertex(g).addVertex(h)",
+                        "            .addEdge(BaseLabeledEdge(\"A -> B\")).from_(a).to(b)",
+                        "            .addEdge(BaseLabeledEdge(\"B -> D\")).from_(b).to(d)",
+                        "            .addEdge(BaseLabeledEdge(\"C -> G\")).from_(c).to(g)",
+                        "            .addEdge(BaseLabeledEdge(\"D -> A\")).from_(d).to(a)",
+                        "            .addEdge(BaseLabeledEdge(\"E -> C\")).from_(e).to(c)",
+                        "            .addEdge(BaseLabeledEdge(\"E -> F\")).from_(e).to(f)",
+                        "            .addEdge(BaseLabeledEdge(\"F -> E\")).from_(f).to(e)",
+                        "            .addEdge(BaseLabeledEdge(\"G -> H\")).from_(g).to(h)",
+                        "            .addEdge(BaseLabeledEdge(\"H -> C\")).from_(h).to(c)",
+                        "        )",
+                        "",
+                        "        expected = {frozenset({a, b, d}), frozenset({e, f}), frozenset({g, h, c})}",
+                        "",
+                        "        actual = CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir0()",
+                        "",
+                        "        self.assertFalse(not actual)",
+                        "        self.assertEqual(expected, actual)",
+                        "",
+                        "        actualA = CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir1(a)",
+                        "",
+                        "        self.assertFalse(not actualA)",
+                        "        self.assertEqual(frozenset({a, b, d}), actualA)",
+                        "",
+                        "        actualE = CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir1(e)",
+                        "",
+                        "        self.assertFalse(not actualE)",
+                        "        self.assertEqual(frozenset({e, f}), actualE)",
+                        "",
+                        "        actualG = CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir1(g)",
+                        "",
+                        "        self.assertFalse(not actualG)",
+                        "        self.assertEqual(frozenset({g, h, c}), actualG)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 36.30912518501282,
+                    "generation_timestamp": "2024-06-20T23:39:37.631421",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "61-68:testNullVertices": {
                     "start": 61,
@@ -360,7 +473,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = NullPointerException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -377,18 +490,30 @@
                         [
                             "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
                             "CommonsGraph",
-                            "155-161:findStronglyConnectedComponent"
+                            "154-161:findStronglyConnectedComponent"
                         ]
                     ],
                     "partial_translation": [
                         "    def testNullVertices(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNullVertices(self) -> None:",
+                        "        ",
+                        "        a = None",
+                        "        graph = DirectedMutableGraph()",
+                        "",
+                        "        with pytest.raises(NullPointerException):",
+                        "            CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir1(a)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.776319265365601,
+                    "generation_timestamp": "2024-06-20T23:39:45.414324",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "55-58:testNullGraph": {
                     "start": 55,
@@ -401,7 +526,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = NullPointerException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -418,18 +543,28 @@
                         [
                             "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
                             "CommonsGraph",
-                            "155-161:findStronglyConnectedComponent"
+                            "154-161:findStronglyConnectedComponent"
                         ]
                     ],
                     "partial_translation": [
                         "    def testNullGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNullGraph(self) -> None:",
+                        "        ",
+                        "        graph = None",
+                        "        with pytest.raises(Exception):",
+                        "            CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir0()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.111825704574585,
+                    "generation_timestamp": "2024-06-20T23:39:52.529892",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "46-52:testNotExistVertex": {
                     "start": 46,
@@ -445,7 +580,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = IllegalStateException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -462,7 +597,7 @@
                         [
                             "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
                             "CommonsGraph",
-                            "155-161:findStronglyConnectedComponent"
+                            "154-161:findStronglyConnectedComponent"
                         ],
                         [
                             "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
@@ -474,15 +609,26 @@
                         "    def testNotExistVertex(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNotExistVertex(self) -> None:",
+                        "        ",
+                        "        graph = DirectedMutableGraph()",
+                        "",
+                        "        with pytest.raises(IllegalStateException):",
+                        "            CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir1(BaseLabeledVertex(\"NOT EXISTS\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.873644828796387,
+                    "generation_timestamp": "2024-06-20T23:40:02.407432",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class KosarajuSharirTestCase:\n\n"
+            "python_class_declaration": "class KosarajuSharirTestCase(unittest.TestCase):\n\n"
         },
         "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }": {
             "start": 83,
@@ -499,8 +645,11 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import os",
+        "import unittest",
         "from src.main.org.apache.commons.graph.CommonsGraph import *",
         "from src.main.org.apache.commons.graph.DirectedGraph import *",
         "from src.main.org.apache.commons.graph.builder.GraphConnection import *",

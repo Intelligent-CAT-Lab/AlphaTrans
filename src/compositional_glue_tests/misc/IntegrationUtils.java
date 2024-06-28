@@ -100,6 +100,10 @@ public final class IntegrationUtils {{
       if (classDescriptor.equals("char")) {{
         return value.as(char.class);
       }}
+      if (classDescriptor.equals("StringBuilder")) {{
+        String str = value.asString();
+        return new StringBuilder(str);
+      }}
     }}
 
     // handle other types
@@ -159,12 +163,7 @@ public final class IntegrationUtils {{
   }}
 
   public static Value mapToPython(Object obj, Value idMap) {{
-    System.out.println("mapping with idMap :: " + obj + " :: " + idMap);
     return JavaHandler.invokeMember("mapping", obj, idMap);
-  }}
-
-  public static void pyPrintAll(Object obj) {{
-    JavaHandler.invokeMember("printAllObjects", obj);
   }}
 
   public static int getIdentityHashCode(Object obj) {{
@@ -172,6 +171,6 @@ public final class IntegrationUtils {{
   }}
 
   public static Long getPythonObjectId(Value obj) {{
-    return JavaHandler.invokeMember("getObjectId", obj).asLong();
+    return JavaHandler.invokeMember("getPythonId", obj).asLong();
   }}
 }}

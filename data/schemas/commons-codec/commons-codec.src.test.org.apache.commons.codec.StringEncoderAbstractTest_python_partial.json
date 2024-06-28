@@ -102,11 +102,43 @@
                         "    def testLocaleIndependence(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testLocaleIndependence(self) -> None:",
+                        "        ",
+                        "        encoder = self.getStringEncoder()",
+                        "",
+                        "        data = [",
+                        "            \"I\", \"i\",",
+                        "        ]",
+                        "",
+                        "        orig = locale.getdefaultlocale()",
+                        "        locales = [locale.ENGLISH, locale.Locale(\"tr\"), locale.getdefaultlocale()]",
+                        "",
+                        "        try:",
+                        "            for element in data:",
+                        "                ref = None",
+                        "                for j in range(len(locales)):",
+                        "                    locale.setlocale(locale.LC_ALL, locales[j])",
+                        "                    if j <= 0:",
+                        "                        ref = encoder.encode(element)",
+                        "                    else:",
+                        "                        cur = None",
+                        "                        try:",
+                        "                            cur = encoder.encode(element)",
+                        "                        except Exception as e:",
+                        "                            self.fail(locale.getdefaultlocale().__str__() + \": \" + str(e))",
+                        "                        self.assertEqual(locale.getdefaultlocale().__str__() + \": \", ref, cur)",
+                        "        finally:",
+                        "            locale.setlocale(locale.LC_ALL, orig)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.35849142074585,
+                    "generation_timestamp": "2024-06-20T16:24:03.098757",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "71-82:testEncodeWithInvalidObject": {
                     "start": 71,
@@ -156,11 +188,28 @@
                         "    def testEncodeWithInvalidObject(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeWithInvalidObject(self) -> None:",
+                        "        ",
+                        "        exception_thrown = False",
+                        "        try:",
+                        "            encoder = self.getStringEncoder()",
+                        "            encoder.encode(3.4)",
+                        "        except Exception as e:",
+                        "            exception_thrown = True",
+                        "",
+                        "        self.assertTrue(",
+                        "            \"An exception was not thrown when we tried to encode \" + \"a Float object\",",
+                        "            exception_thrown)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.603919982910156,
+                    "generation_timestamp": "2024-06-20T16:24:10.705172",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "62-68:testEncodeNull": {
                     "start": 62,
@@ -205,11 +254,23 @@
                         "    def testEncodeNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeNull(self) -> None:",
+                        "        ",
+                        "        encoder = self.getStringEncoder()",
+                        "        try:",
+                        "            encoder.encode(None)",
+                        "        except EncoderException as ee:",
+                        "            pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.008131504058838,
+                    "generation_timestamp": "2024-06-20T16:24:17.715814",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "54-59:testEncodeEmpty": {
                     "start": 54,
@@ -253,11 +314,25 @@
                         "    def testEncodeEmpty(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testEncodeEmpty(self) -> None:",
+                        "        ",
+                        "        encoder = self.getStringEncoder()",
+                        "        try:",
+                        "            encoder.encode(\"\")",
+                        "            encoder.encode(\" \")",
+                        "            encoder.encode(\"\\t\")",
+                        "        except Exception as e:",
+                        "            pytest.fail(\"Unexpected exception: \" + str(e))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.779603481292725,
+                    "generation_timestamp": "2024-06-20T16:24:22.497986",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "49-51:getStringEncoder": {
                     "start": 49,
@@ -285,11 +360,18 @@
                         "    def getStringEncoder(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getStringEncoder(self) -> typing.Any:",
+                        "         return self._stringEncoder"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.301130056381226,
+                    "generation_timestamp": "2024-06-20T16:23:44.737657",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "40-45:checkEncodingVariations": {
                     "start": 40,
@@ -329,11 +411,20 @@
                         "    def _checkEncodingVariations(self, expected: str, data: typing.List[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _checkEncodingVariations(self, expected: str, data: typing.List[str]) -> None:",
+                        "        ",
+                        "        for element in data:",
+                        "            self.checkEncoding(expected, element)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.148216485977173,
+                    "generation_timestamp": "2024-06-20T16:24:33.256281",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "34-38:checkEncodings": {
                     "start": 34,
@@ -371,11 +462,20 @@
                         "    def _checkEncodings(self, data: typing.List[typing.List[str]]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _checkEncodings(self, data: typing.List[typing.List[str]]) -> None:",
+                        "        ",
+                        "        for element in data:",
+                        "            self.checkEncoding(element[1], element[0])"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.8629987239837646,
+                    "generation_timestamp": "2024-06-20T16:24:37.121718",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "30-32:checkEncoding": {
                     "start": 30,
@@ -417,11 +517,22 @@
                         "    def checkEncoding(self, expected: str, source: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def checkEncoding(self, expected: str, source: str) -> None:",
+                        "        ",
+                        "        try:",
+                        "            assert self.getStringEncoder().encode(source) == expected, \"Source: \" + source",
+                        "        except EncoderException as e:",
+                        "            pytest.fail(\"EncoderException: \" + str(e))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.6042160987854,
+                    "generation_timestamp": "2024-06-20T16:24:29.105572",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "47-47:createStringEncoder": {
                     "start": 47,
@@ -448,11 +559,18 @@
                         "    def _createStringEncoder(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def _createStringEncoder(self) -> typing.Any:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.986175060272217,
+                    "generation_timestamp": "2024-06-20T16:24:58.110193",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -471,22 +589,34 @@
                             "T"
                         ]
                     ],
-                    "partial_translation": "    _stringEncoder: typing.Any = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    _stringEncoder: typing.Any = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _stringEncoder: StringEncoder = self._createStringEncoder()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.464650630950928,
+                    "generation_timestamp": "2024-06-20T14:44:09.037592",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class StringEncoderAbstractTest(ABC):\n\n"
+            "python_class_declaration": "class StringEncoderAbstractTest(ABC, unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "from abc import ABC",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.main.org.apache.commons.codec.Encoder import *",
         "from src.main.org.apache.commons.codec.EncoderException import *",
         "from src.main.org.apache.commons.codec.StringEncoder import *"

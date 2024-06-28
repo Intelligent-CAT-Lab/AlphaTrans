@@ -245,11 +245,40 @@
                         "    def testVerifyTwoNodePath(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testVerifyTwoNodePath(self) -> None:",
+                        "        ",
+                        "        graph = DirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]]()",
+                        "",
+                        "        one = BaseLabeledVertex(\"1\")",
+                        "        two = BaseLabeledVertex(\"2\")",
+                        "",
+                        "        graph.addVertex(one)",
+                        "        graph.addVertex(two)",
+                        "",
+                        "        graph.addEdge(one, BaseLabeledWeightedEdge[float](\"1 -> 2\", 14.0), two)",
+                        "",
+                        "        expected = InMemoryWeightedPath[BaseLabeledVertex, BaseLabeledWeightedEdge[float], float](",
+                        "            one, two, DoubleWeightBaseOperations(), BaseWeightedEdge[float]())",
+                        "",
+                        "        expected.addConnectionInTail(one, BaseLabeledWeightedEdge[float](\"1 -> 2\", 14.0), two)",
+                        "",
+                        "        actual = CommonsGraph.findShortestPath(graph) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge[float]()) \\",
+                        "            .from_(one) \\",
+                        "            .to(two) \\",
+                        "            .applyingBidirectionalDijkstra(DoubleWeightBaseOperations())",
+                        "",
+                        "        self.assertEqual(expected, actual)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 24.77853560447693,
+                    "generation_timestamp": "2024-06-20T23:41:22.843408",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "254-285:testVerifyThreeNodePath": {
                     "start": 254,
@@ -324,11 +353,44 @@
                         "    def testVerifyThreeNodePath(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testVerifyThreeNodePath(self) -> None:",
+                        "        ",
+                        "        graph = DirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]]()",
+                        "",
+                        "        a = BaseLabeledVertex(\"a\")",
+                        "        b = BaseLabeledVertex(\"b\")",
+                        "        c = BaseLabeledVertex(\"c\")",
+                        "",
+                        "        graph.addVertex(a)",
+                        "        graph.addVertex(b)",
+                        "        graph.addVertex(c)",
+                        "",
+                        "        graph.addEdge(a, BaseLabeledWeightedEdge[float](\"a -> b\", 14.0), b)",
+                        "        graph.addEdge(b, BaseLabeledWeightedEdge[float](\"b -> c\", 10.0), c)",
+                        "",
+                        "        expected = InMemoryWeightedPath[BaseLabeledVertex, BaseLabeledWeightedEdge[float], float](",
+                        "            a, c, DoubleWeightBaseOperations(), BaseWeightedEdge[float]())",
+                        "",
+                        "        expected.addConnectionInTail(a, BaseLabeledWeightedEdge[float](\"a -> b\", 14.0), b)",
+                        "        expected.addConnectionInTail(b, BaseLabeledWeightedEdge[float](\"b -> c\", 10.0), c)",
+                        "",
+                        "        actual = CommonsGraph.findShortestPath(graph)\\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge[float]())\\",
+                        "            .from_(a)\\",
+                        "            .to(c)\\",
+                        "            .applyingBidirectionalDijkstra(DoubleWeightBaseOperations())",
+                        "",
+                        "        self.assertEqual(expected, actual)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.604183435440063,
+                    "generation_timestamp": "2024-06-20T23:41:44.453372",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "242-251:testNullVertices": {
                     "start": 242,
@@ -347,7 +409,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = NullPointerException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -376,11 +438,26 @@
                         "    def testNullVertices(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNullVertices(self) -> None:",
+                        "        ",
+                        "        graph = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]]()",
+                        "",
+                        "        with pytest.raises(NullPointerException):",
+                        "            CommonsGraph.findShortestPath(graph) \\",
+                        "                .whereEdgesHaveWeights(BaseWeightedEdge[float]()) \\",
+                        "                .from_(None) \\",
+                        "                .to_(None) \\",
+                        "                .applyingBidirectionalDijkstra(DoubleWeightBaseOperations())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.360767602920532,
+                    "generation_timestamp": "2024-06-20T23:41:54.818431",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "225-239:testNullMonoid": {
                     "start": 225,
@@ -404,7 +481,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = NullPointerException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -433,11 +510,31 @@
                         "    def testNullMonoid(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNullMonoid(self) -> None:",
+                        "        ",
+                        "        graph = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]]()",
+                        "",
+                        "        a = BaseLabeledVertex(\"a\")",
+                        "        b = BaseLabeledVertex(\"b\")",
+                        "        graph.addVertex(a)",
+                        "        graph.addVertex(b)",
+                        "",
+                        "        with pytest.raises(NullPointerException):",
+                        "            CommonsGraph.findShortestPath(graph) \\",
+                        "                .whereEdgesHaveWeights(BaseWeightedEdge[float]()) \\",
+                        "                .from_(a) \\",
+                        "                .to(b) \\",
+                        "                .applyingBidirectionalDijkstra(None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.353911876678467,
+                    "generation_timestamp": "2024-06-20T23:42:08.180108",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "216-222:testNullGraph": {
                     "start": 216,
@@ -453,7 +550,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = NullPointerException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -482,11 +579,24 @@
                         "    def testNullGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNullGraph(self) -> None:",
+                        "        ",
+                        "        with pytest.raises(NullPointerException):",
+                        "            CommonsGraph.findShortestPath(None) \\",
+                        "                .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "                .from_(None) \\",
+                        "                .to_(None) \\",
+                        "                .applyingBidirectionalDijkstra(DoubleWeightBaseOperations())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.255420923233032,
+                    "generation_timestamp": "2024-06-20T23:42:17.439875",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "199-213:testNotConnectGraph": {
                     "start": 199,
@@ -510,7 +620,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = PathNotFoundException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -544,11 +654,35 @@
                         "    def testNotConnectGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNotConnectGraph(self) -> None:",
+                        "        ",
+                        "        graph = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]]()",
+                        "",
+                        "        a = BaseLabeledVertex(\"a\")",
+                        "        b = BaseLabeledVertex(\"b\")",
+                        "        graph.addVertex(a)",
+                        "        graph.addVertex(b)",
+                        "",
+                        "        try:",
+                        "            CommonsGraph.findShortestPath(graph) \\",
+                        "                .whereEdgesHaveWeights(BaseWeightedEdge[float]()) \\",
+                        "                .from_(a) \\",
+                        "                .to(b) \\",
+                        "                .applyingBidirectionalDijkstra(DoubleWeightBaseOperations())",
+                        "        except PathNotFoundException:",
+                        "            pass",
+                        "        else:",
+                        "            raise AssertionError(\"Expected PathNotFoundException\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.803242683410645,
+                    "generation_timestamp": "2024-06-20T23:42:34.247789",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "145-196:testFindShortestPathAndVerify": {
                     "start": 145,
@@ -644,10 +778,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "110-138:testCompareToUnidirectional": {
                     "start": 110,
@@ -714,11 +852,43 @@
                         "    def testCompareToUnidirectional(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testCompareToUnidirectional(self) -> None:",
+                        "        ",
+                        "        r = random.Random()",
+                        "",
+                        "        for ii in range(self.__TIMES):",
+                        "            s = self.__vertices[r.randint(0, len(self.__vertices) - 1)]",
+                        "            t = None",
+                        "",
+                        "            while True:",
+                        "                t = self.__vertices[r.randint(0, len(self.__vertices) - 1)]",
+                        "                if not s.equals(t):",
+                        "                    break",
+                        "",
+                        "            pathUni = CommonsGraph.findShortestPath(self.__graph) \\",
+                        "                .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "                .from_(s) \\",
+                        "                .to(t) \\",
+                        "                .applyingDijkstra(self.__weightOperations)",
+                        "",
+                        "            pathBi = CommonsGraph.findShortestPath(self.__graph) \\",
+                        "                .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "                .from_(s) \\",
+                        "                .to(t) \\",
+                        "                .applyingBidirectionalDijkstra(self.__weightOperations)",
+                        "",
+                        "            self.assertEqual(pathUni.getSize(), pathBi.getSize())",
+                        "            self.assertAlmostEqual(pathUni.getWeight(), pathBi.getWeight(), delta=self.__EPSILON)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.417331218719482,
+                    "generation_timestamp": "2024-06-20T23:45:54.623426",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "62-107:setUp": {
                     "start": 62,
@@ -773,6 +943,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "BeforeClass",
                         "BeforeClass"
                     ],
                     "modifiers": [
@@ -805,10 +976,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 }
             },
             "fields": {
@@ -828,12 +1003,22 @@
                             "OrderedMonoid<Double>"
                         ]
                     ],
-                    "partial_translation": "    __weightOperations: OrderedMonoid[float] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __weightOperations: OrderedMonoid[float] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __weightOperations: OrderedMonoid[float] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:45.422146",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "57-57:vertices": {
                     "start": 57,
@@ -851,12 +1036,22 @@
                             "java.util.List<BaseLabeledVertex>"
                         ]
                     ],
-                    "partial_translation": "    __vertices: typing.List[BaseLabeledVertex] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __vertices: typing.List[BaseLabeledVertex] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __vertices: typing.List[BaseLabeledVertex] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:45.424603",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "55-55:graph": {
                     "start": 55,
@@ -874,12 +1069,22 @@
                             "DirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>"
                         ]
                     ],
-                    "partial_translation": "    __graph: DirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __graph: DirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __graph: DirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-20T22:22:45.427003",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "53-53:EPSILON": {
                     "start": 53,
@@ -898,12 +1103,21 @@
                             "double"
                         ]
                     ],
-                    "partial_translation": "    __EPSILON: float = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __EPSILON: float = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EPSILON: float = 1.0e-6"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.808046579360962,
+                    "generation_timestamp": "2024-06-20T22:22:47.237442",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "52-52:EDGES": {
                     "start": 52,
@@ -922,12 +1136,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __EDGES: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __EDGES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EDGES: int = 100000"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.4895939826965332,
+                    "generation_timestamp": "2024-06-20T22:22:48.730786",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "51-51:NODES": {
                     "start": 51,
@@ -946,12 +1169,21 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __NODES: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __NODES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __NODES: int = 5000"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.5704824924468994,
+                    "generation_timestamp": "2024-06-20T22:22:50.304736",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "50-50:TIMES": {
                     "start": 50,
@@ -970,15 +1202,24 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __TIMES: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __TIMES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __TIMES: int = 10"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.195300579071045,
+                    "generation_timestamp": "2024-06-20T22:22:51.503805",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class BidirDijkstraTestCase:\n\n"
+            "python_class_declaration": "class BidirDijkstraTestCase(unittest.TestCase):\n\n"
         },
         "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>(...) { ... }": {
             "start": 67,
@@ -1078,10 +1319,12 @@
                     ],
                     "calls": []
                 },
-                "67-68:": {
-                    "start": 67,
+                "65-68:": {
+                    "start": 65,
                     "end": 68,
                     "body": [
+                        "        graph =\n",
+                        "                newDirectedMutableGraph(\n",
                         "                        new AbstractGraphConnection<\n",
                         "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>() {\n"
                     ],
@@ -1099,14 +1342,32 @@
                     "calls": []
                 }
             },
-            "fields": {}
+            "fields": {
+                "69-69:r": {
+                    "start": 69,
+                    "end": 69,
+                    "body": [
+                        "                            Random r = new Random();\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "Random",
+                            "java.util.Random"
+                        ]
+                    ]
+                }
+            }
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import pathlib",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.main.org.apache.commons.graph.CommonsGraph import *",
         "from src.main.org.apache.commons.graph.Graph import *",
         "from src.main.org.apache.commons.graph.Mapper import *",

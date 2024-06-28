@@ -186,28 +186,29 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testWithRequiredOption(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-b\", \"file\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption3(\"a\", \"enable-a\", False, None)",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"bfile\").hasArg0().isRequired0().create1('b'))",
                         "",
-                        "        cl = DefaultParser().parse(options, args)",
+                        "        cl = CommandLineParser().parse0(options, args)",
                         "",
-                        "        assert cl.hasOption2(\"a\") == False, \"Confirm -a is NOT set\"",
-                        "        assert cl.hasOption2(\"b\") == True, \"Confirm -b is set\"",
+                        "        assert not cl.hasOption2(\"a\"), \"Confirm -a is NOT set\"",
+                        "        assert cl.hasOption2(\"b\"), \"Confirm -b is set\"",
                         "        assert cl.getOptionValue4(\"b\") == \"file\", \"Confirm arg of -b\"",
-                        "        assert len(cl.getArgList()) == 0, \"Confirm NO of extra args\"",
-                        ""
+                        "        assert not cl.getArgList(), \"Confirm NO of extra args\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 8.490662813186646,
-                    "generation_timestamp": "2024-06-05T13:03:00.677530",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.072956085205078,
+                    "generation_timestamp": "2024-06-17T22:22:54.419153",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "999-1008:testUnrecognizedOptionWithBursting": {
                     "start": 999,
@@ -256,23 +257,24 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUnrecognizedOptionWithBursting(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-adbtoast\", \"foo\", \"bar\"]",
                         "",
                         "        try:",
                         "            self._parser.parse0(self._options, args)",
-                        "            self.fail(\"UnrecognizedOptionException wasn't thrown\")",
+                        "            assert False, \"UnrecognizedOptionException wasn't thrown\"",
                         "        except UnrecognizedOptionException as e:",
-                        "            self.assertEqual(\"-adbtoast\", e.getOption())",
-                        ""
+                        "            assert e.getOption() == \"-adbtoast\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.196482181549072,
-                    "generation_timestamp": "2024-06-09T19:40:30.888017",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.261553764343262,
+                    "generation_timestamp": "2024-06-17T22:23:04.697939",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "987-996:testUnrecognizedOption": {
                     "start": 987,
@@ -321,23 +323,24 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUnrecognizedOption(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-a\", \"-d\", \"-b\", \"toast\", \"foo\", \"bar\"]",
                         "",
                         "        try:",
                         "            self._parser.parse0(self._options, args)",
-                        "            self.fail(\"UnrecognizedOptionException wasn't thrown\")",
+                        "            assert False, \"UnrecognizedOptionException wasn't thrown\"",
                         "        except UnrecognizedOptionException as e:",
-                        "            self.assertEqual(\"-d\", e.getOption())",
-                        ""
+                        "            assert e.getOption() == \"-d\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.116088151931763,
-                    "generation_timestamp": "2024-06-09T19:55:19.596022",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.72519063949585,
+                    "generation_timestamp": "2024-06-17T22:23:16.439322",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "971-984:testUnlimitedArgs": {
                     "start": 971,
@@ -415,28 +418,29 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUnlimitedArgs(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-e\", \"one\", \"two\", \"-f\", \"alpha\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption0(OptionBuilder.hasArgs0().create2(\"e\"))",
                         "        options.addOption0(OptionBuilder.hasArgs0().create2(\"f\"))",
                         "",
-                        "        cl = self._parser.parse0(options, args)",
+                        "        cl = CommandLineParser().parse0(options, args)",
                         "",
-                        "        assert cl.hasOption2(\"e\"), \"Confirm -e is set\"",
-                        "        assert len(cl.getOptionValues2(\"e\")) == 2, \"number of arg for -e\"",
-                        "        assert cl.hasOption2(\"f\"), \"Confirm -f is set\"",
-                        "        assert len(cl.getOptionValues2(\"f\")) == 1, \"number of arg for -f\"",
-                        ""
+                        "        assert cl.hasOption2(\"e\")",
+                        "        assert len(cl.getOptionValues2(\"e\")) == 2",
+                        "        assert cl.hasOption2(\"f\")",
+                        "        assert len(cl.getOptionValues2(\"f\")) == 1"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 8.613159656524658,
-                    "generation_timestamp": "2024-06-09T19:56:05.613306",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.716009855270386,
+                    "generation_timestamp": "2024-06-17T22:23:26.179051",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "957-968:testUnambiguousPartialLongOption4": {
                     "start": 957,
@@ -517,26 +521,27 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUnambiguousPartialLongOption4(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-ver=1\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"verbose\").hasOptionalArg().create0())",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"help\").create0())",
                         "",
-                        "        cl = DefaultParser().parse0(options, args)",
+                        "        cl = CommandLineParser().parse0(options, args)",
                         "",
-                        "        assert cl.hasOption2(\"verbose\"), \"Confirm --verbose is set\"",
-                        "        assert cl.getOptionValue4(\"verbose\") == \"1\", \"1\"",
-                        ""
+                        "        assert cl.hasOption2(\"verbose\")",
+                        "        assert cl.getOptionValue4(\"verbose\") == \"1\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 60.37184739112854,
-                    "generation_timestamp": "2024-06-09T19:57:05.999175",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.688903570175171,
+                    "generation_timestamp": "2024-06-17T22:23:33.890600",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "943-954:testUnambiguousPartialLongOption3": {
                     "start": 943,
@@ -617,26 +622,27 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUnambiguousPartialLongOption3(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--ver=1\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"verbose\").hasOptionalArg().create0())",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"help\").create0())",
                         "",
-                        "        cl = DefaultParser().parse0(options, args)",
+                        "        cl = CommandLineParser().parse0(options, args)",
                         "",
-                        "        assert cl.hasOption2(\"verbose\"), \"Confirm --verbose is set\"",
-                        "        assert cl.getOptionValue4(\"verbose\") == \"1\", \"1\"",
-                        ""
+                        "        assert cl.hasOption2(\"verbose\") == True, \"Confirm --verbose is set\"",
+                        "        assert cl.getOptionValue4(\"verbose\") == \"1\", \"1\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 60.41372513771057,
-                    "generation_timestamp": "2024-06-09T19:58:06.426739",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.603936672210693,
+                    "generation_timestamp": "2024-06-17T22:23:42.518663",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "930-940:testUnambiguousPartialLongOption2": {
                     "start": 930,
@@ -706,10 +712,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUnambiguousPartialLongOption2(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-ver\"]",
                         "",
                         "        options = Options()",
@@ -718,13 +722,16 @@
                         "",
                         "        cl = DefaultParser().parse0(options, args)",
                         "",
-                        "        assert cl.hasOption2(\"version\"), \"Confirm --version is set\"",
-                        ""
+                        "        assert cl.hasOption2(\"version\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.695632457733154,
-                    "generation_timestamp": "2024-06-09T19:58:12.134250",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 60.352694034576416,
+                    "generation_timestamp": "2024-06-17T22:24:42.894830",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "917-927:testUnambiguousPartialLongOption1": {
                     "start": 917,
@@ -794,25 +801,26 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUnambiguousPartialLongOption1(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--ver\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"version\").create0())",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"help\").create0())",
                         "",
-                        "        cl = DefaultParser().parse0(options, args)",
+                        "        cl = self._parser.parse0(options, args)",
                         "",
-                        "        assert cl.hasOption2(\"version\"), \"Confirm --version is set\"",
-                        ""
+                        "        assert cl.hasOption2(\"version\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.626612186431885,
-                    "generation_timestamp": "2024-06-09T19:58:17.773632",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.245945692062378,
+                    "generation_timestamp": "2024-06-17T22:24:50.162555",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "897-914:testStopBursting2": {
                     "start": 897,
@@ -856,7 +864,7 @@
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLineParser",
                             "CommandLineParser",
-                            "65-65:parse1"
+                            "65-67:parse1"
                         ],
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLine",
@@ -889,10 +897,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testStopBursting2(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-c\", \"foobar\", \"-btoast\"]",
                         "",
                         "        cl = self._parser.parse1(self._options, args, True)",
@@ -905,13 +911,16 @@
                         "        assert cl.hasOption2(\"b\"), \"Confirm -b is set\"",
                         "        assert cl.getOptionValue4(\"b\") == \"toast\", \"Confirm arg of -b\"",
                         "        assert len(cl.getArgList()) == 1, \"Confirm  1 extra arg: \" + str(len(cl.getArgList()))",
-                        "        assert cl.getArgList()[0] == \"foobar\", \"Confirm  value of extra arg: \" + cl.getArgList()[0]",
-                        ""
+                        "        assert cl.getArgList()[0] == \"foobar\", \"Confirm  value of extra arg: \" + cl.getArgList()[0]"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 9.329201459884644,
-                    "generation_timestamp": "2024-06-09T19:58:27.116445",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.369643211364746,
+                    "generation_timestamp": "2024-06-17T22:25:07.560885",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "885-894:testStopBursting": {
                     "start": 885,
@@ -947,7 +956,7 @@
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLineParser",
                             "CommandLineParser",
-                            "65-65:parse1"
+                            "65-67:parse1"
                         ],
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLine",
@@ -965,10 +974,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testStopBursting(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-azc\"]",
                         "",
                         "        cl = self._parser.parse1(self._options, args, True)",
@@ -976,13 +983,16 @@
                         "        assert not cl.hasOption2(\"c\"), \"Confirm -c is not set\"",
                         "",
                         "        assert len(cl.getArgList()) == 1, \"Confirm 1 extra arg: \" + str(len(cl.getArgList()))",
-                        "        assert \"zc\" in cl.getArgList(), \"Confirm zc is in arg list\"",
-                        ""
+                        "        assert \"zc\" in cl.getArgList(), \"Confirm zc is in arg list\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.856579303741455,
-                    "generation_timestamp": "2024-06-09T19:58:32.994258",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.061434030532837,
+                    "generation_timestamp": "2024-06-17T22:25:20.641477",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "876-882:testStopAtUnexpectedArg": {
                     "start": 876,
@@ -1015,7 +1025,7 @@
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLineParser",
                             "CommandLineParser",
-                            "65-65:parse1"
+                            "65-67:parse1"
                         ],
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLine",
@@ -1033,21 +1043,22 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testStopAtUnexpectedArg(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-c\", \"foober\", \"-b\", \"toast\"]",
                         "",
                         "        cl = self._parser.parse1(self._options, args, True)",
                         "        assert cl.hasOption2(\"c\"), \"Confirm -c is set\"",
-                        "        assert len(cl.getArgList()) == 3, \"Confirm 3 extra args: \" + str(len(cl.getArgList()))",
-                        ""
+                        "        assert len(cl.getArgList()) == 3, \"Confirm 3 extra args: \" + str(len(cl.getArgList()))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 7.635740280151367,
-                    "generation_timestamp": "2024-06-09T19:58:40.641762",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.27432656288147,
+                    "generation_timestamp": "2024-06-17T22:25:28.935731",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "867-873:testStopAtNonOptionShort": {
                     "start": 867,
@@ -1080,7 +1091,7 @@
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLineParser",
                             "CommandLineParser",
-                            "65-65:parse1"
+                            "65-67:parse1"
                         ],
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLine",
@@ -1098,21 +1109,22 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testStopAtNonOptionShort(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-z\", \"-a\", \"-btoast\"]",
                         "",
                         "        cl = self._parser.parse1(self._options, args, True)",
                         "        assert not cl.hasOption2(\"a\"), \"Confirm -a is not set\"",
-                        "        assert len(cl.getArgList()) == 3, \"Confirm 3 extra args: \" + str(len(cl.getArgList()))",
-                        ""
+                        "        assert len(cl.getArgList()) == 3, \"Confirm 3 extra args: \" + str(len(cl.getArgList()))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 7.804395437240601,
-                    "generation_timestamp": "2024-06-09T19:58:48.456752",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.795612335205078,
+                    "generation_timestamp": "2024-06-17T22:25:34.750704",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "856-864:testStopAtNonOptionLong": {
                     "start": 856,
@@ -1147,7 +1159,7 @@
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLineParser",
                             "CommandLineParser",
-                            "65-65:parse1"
+                            "65-67:parse1"
                         ],
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLine",
@@ -1165,23 +1177,24 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testStopAtNonOptionLong(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--zop==1\", \"-abtoast\", \"--b=bar\"]",
                         "",
                         "        cl = self._parser.parse1(self._options, args, True)",
                         "",
                         "        assert not cl.hasOption2(\"a\"), \"Confirm -a is not set\"",
                         "        assert not cl.hasOption2(\"b\"), \"Confirm -b is not set\"",
-                        "        assert len(cl.getArgList()) == 3, \"Confirm 3 extra args: \" + str(len(cl.getArgList()))",
-                        ""
+                        "        assert len(cl.getArgList()) == 3, \"Confirm 3 extra args: \" + str(len(cl.getArgList()))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.368555068969727,
-                    "generation_timestamp": "2024-06-09T19:58:53.839065",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.563388109207153,
+                    "generation_timestamp": "2024-06-17T22:25:41.335240",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "845-853:testStopAtExpectedArg": {
                     "start": 845,
@@ -1216,7 +1229,7 @@
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLineParser",
                             "CommandLineParser",
-                            "65-65:parse1"
+                            "65-67:parse1"
                         ],
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLine",
@@ -1239,23 +1252,24 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testStopAtExpectedArg(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-b\", \"foo\"]",
                         "",
                         "        cl = self._parser.parse1(self._options, args, True)",
                         "",
                         "        assert cl.hasOption0('b'), \"Confirm -b is set\"",
                         "        assert cl.getOptionValue0('b') == \"foo\", \"Confirm -b is set\"",
-                        "        assert not cl.getArgList(), \"Confirm no extra args: \" + str(len(cl.getArgList()))",
-                        ""
+                        "        assert not cl.getArgList(), \"Confirm no extra args: \" + str(len(cl.getArgList()))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 6.995837450027466,
-                    "generation_timestamp": "2024-06-09T19:59:00.846777",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.291315078735352,
+                    "generation_timestamp": "2024-06-17T22:25:47.647591",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "829-842:testSingleDash": {
                     "start": 829,
@@ -1318,10 +1332,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testSingleDash(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--copt\", \"-b\", \"-\", \"-a\", \"-\"]",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
@@ -1330,13 +1342,16 @@
                         "        assert cl.hasOption2(\"b\"), \"Confirm -b is set\"",
                         "        assert cl.getOptionValue4(\"b\") == \"-\", \"Confirm arg of -b\"",
                         "        assert len(cl.getArgList()) == 1, \"Confirm 1 extra arg: \" + str(len(cl.getArgList()))",
-                        "        assert cl.getArgList()[0] == \"-\", \"Confirm value of extra arg: \" + cl.getArgList()[0]",
-                        ""
+                        "        assert cl.getArgList()[0] == \"-\", \"Confirm value of extra arg: \" + cl.getArgList()[0]"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 9.022074222564697,
-                    "generation_timestamp": "2024-06-09T19:59:09.883888",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.827008485794067,
+                    "generation_timestamp": "2024-06-17T22:25:57.494800",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "817-826:testSimpleShort": {
                     "start": 817,
@@ -1395,10 +1410,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testSimpleShort(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-a\", \"-b\", \"toast\", \"foo\", \"bar\"]",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
@@ -1406,13 +1419,16 @@
                         "        assert cl.hasOption2(\"a\"), \"Confirm -a is set\"",
                         "        assert cl.hasOption2(\"b\"), \"Confirm -b is set\"",
                         "        assert cl.getOptionValue4(\"b\") == \"toast\", \"Confirm arg of -b\"",
-                        "        assert len(cl.getArgList()) == 2, \"Confirm size of extra args\"",
-                        ""
+                        "        assert len(cl.getArgList()) == 2, \"Confirm size of extra args\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 8.674466371536255,
-                    "generation_timestamp": "2024-06-09T19:59:18.573077",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 24.06014108657837,
+                    "generation_timestamp": "2024-06-17T22:26:21.575941",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "804-814:testSimpleLong": {
                     "start": 804,
@@ -1472,25 +1488,26 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testSimpleLong(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--enable-a\", \"--bfile\", \"toast\", \"foo\", \"bar\"]",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
                         "",
-                        "        assert cl.hasOption2(\"a\"), \"Confirm -a is set\"",
-                        "        assert cl.hasOption2(\"b\"), \"Confirm -b is set\"",
+                        "        assert cl.hasOption2(\"a\") == True, \"Confirm -a is set\"",
+                        "        assert cl.hasOption2(\"b\") == True, \"Confirm -b is set\"",
                         "        assert cl.getOptionValue4(\"b\") == \"toast\", \"Confirm arg of -b\"",
                         "        assert cl.getOptionValue4(\"bfile\") == \"toast\", \"Confirm arg of --bfile\"",
-                        "        assert len(cl.getArgList()) == 2, \"Confirm size of extra args\"",
-                        ""
+                        "        assert len(cl.getArgList()) == 2, \"Confirm size of extra args\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 7.673821687698364,
-                    "generation_timestamp": "2024-06-09T19:59:26.263955",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.010142087936401,
+                    "generation_timestamp": "2024-06-17T22:26:31.606555",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "787-801:testShortWithUnexpectedArgument": {
                     "start": 787,
@@ -1564,30 +1581,29 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testShortWithUnexpectedArgument(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-f=bar\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"foo\").create1('f'))",
                         "",
-                        "        parser = DefaultParser()",
-                        "",
                         "        try:",
-                        "            parser.parse0(options, args)",
+                        "            self._parser.parse0(options, args)",
                         "        except UnrecognizedOptionException as e:",
                         "            self.assertEqual(\"-f=bar\", e.getOption())",
                         "            return",
                         "",
-                        "        self.fail(\"UnrecognizedOptionException not thrown\")",
-                        ""
+                        "        self.fail(\"UnrecognizedOptionException not thrown\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.259390830993652,
-                    "generation_timestamp": "2024-06-09T19:59:31.538130",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.781920909881592,
+                    "generation_timestamp": "2024-06-17T22:26:47.409631",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "775-784:testShortWithoutEqual": {
                     "start": 775,
@@ -1661,24 +1677,25 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testShortWithoutEqual(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-fbar\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"foo\").hasArg0().create1('f'))",
                         "",
-                        "        cl = self._parser.parse0(options, args)",
+                        "        cl = CommandLineParser().parse0(options, args)",
                         "",
-                        "        assert \"bar\" == cl.getOptionValue4(\"foo\")",
-                        ""
+                        "        self.assertEqual(\"bar\", cl.getOptionValue4(\"foo\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 8.259526491165161,
-                    "generation_timestamp": "2024-06-09T19:59:39.815549",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.484317064285278,
+                    "generation_timestamp": "2024-06-17T22:26:52.904230",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "763-772:testShortWithEqual": {
                     "start": 763,
@@ -1752,10 +1769,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testShortWithEqual(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-f=bar\"]",
                         "",
                         "        options = Options()",
@@ -1763,13 +1778,16 @@
                         "",
                         "        cl = self._parser.parse0(options, args)",
                         "",
-                        "        assert \"bar\" == cl.getOptionValue4(\"foo\")",
-                        ""
+                        "        self.assertEqual(\"bar\", cl.getOptionValue4(\"foo\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 7.107029438018799,
-                    "generation_timestamp": "2024-06-09T19:59:46.936923",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 31.24866032600403,
+                    "generation_timestamp": "2024-06-17T22:27:24.175585",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "754-760:testShortOptionQuoteHandling": {
                     "start": 754,
@@ -1815,21 +1833,22 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testShortOptionQuoteHandling(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-b\", \"\\\"quoted string\\\"\"]",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
                         "",
-                        "        assert \"Confirm -b \\\"arg\\\" strips quotes\" == cl.getOptionValue4(\"b\"), \"quoted string\"",
-                        ""
+                        "        self.assertEqual(\"Confirm -b \\\"arg\\\" strips quotes\", \"quoted string\", cl.getOptionValue4(\"b\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.581486940383911,
-                    "generation_timestamp": "2024-06-09T19:59:52.531726",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.717677354812622,
+                    "generation_timestamp": "2024-06-17T22:27:28.911609",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "745-751:testShortOptionConcatenatedQuoteHandling": {
                     "start": 745,
@@ -1875,21 +1894,22 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testShortOptionConcatenatedQuoteHandling(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-b\\\"quoted string\\\"\"]",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
                         "",
-                        "        assert \"Confirm -b\\\"arg\\\" strips quotes\" == cl.getOptionValue4(\"b\"), \"quoted string\"",
-                        ""
+                        "        self.assertEqual(\"Confirm -b\\\"arg\\\" strips quotes\", \"quoted string\", cl.getOptionValue4(\"b\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.695247650146484,
-                    "generation_timestamp": "2024-06-09T19:59:57.237316",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.419691801071167,
+                    "generation_timestamp": "2024-06-17T22:27:32.349702",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "731-742:testReuseOptionsTwice": {
                     "start": 731,
@@ -1955,10 +1975,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testReuseOptionsTwice(self) -> None:",
                         "        ",
-                        "",
                         "        opts = Options()",
                         "        opts.addOption0(OptionBuilder.isRequired0().create1('v'))",
                         "",
@@ -1968,13 +1986,16 @@
                         "            self._parser.parse0(opts, [])",
                         "            self.fail(\"MissingOptionException not thrown\")",
                         "        except MissingOptionException:",
-                        "            pass",
-                        ""
+                        "            pass"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.197323322296143,
-                    "generation_timestamp": "2024-06-09T20:00:01.450492",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.231199502944946,
+                    "generation_timestamp": "2024-06-17T22:27:41.600733",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "712-728:testPropertyOverrideValues": {
                     "start": 712,
@@ -2060,31 +2081,32 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testPropertyOverrideValues(self) -> None:",
                         "        ",
-                        "",
                         "        opts = Options()",
                         "        opts.addOption0(OptionBuilder.hasOptionalArgs1(2).create1('i'))",
                         "        opts.addOption0(OptionBuilder.hasOptionalArgs0().create1('j'))",
                         "",
                         "        args = [\"-j\", \"found\", \"-i\", \"ink\"]",
                         "",
-                        "        properties = {}",
-                        "        properties[\"j\"] = \"seek\"",
+                        "        properties = configparser.ConfigParser()",
+                        "        properties.set('DEFAULT', 'j', 'seek')",
                         "",
                         "        cmd = self.__parse(self._parser, opts, args, properties)",
-                        "        assert cmd.hasOption2(\"j\")",
-                        "        assert cmd.getOptionValue4(\"j\") == \"found\"",
-                        "        assert cmd.hasOption2(\"i\")",
-                        "        assert cmd.getOptionValue4(\"i\") == \"ink\"",
-                        "        assert not cmd.hasOption2(\"fake\")",
-                        ""
+                        "        self.assertTrue(cmd.hasOption2(\"j\"))",
+                        "        self.assertEqual(\"found\", cmd.getOptionValue4(\"j\"))",
+                        "        self.assertTrue(cmd.hasOption2(\"i\"))",
+                        "        self.assertEqual(\"ink\", cmd.getOptionValue4(\"i\"))",
+                        "        self.assertFalse(cmd.hasOption2(\"fake\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 8.617661237716675,
-                    "generation_timestamp": "2024-06-09T20:05:03.825269",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.860234260559082,
+                    "generation_timestamp": "2024-06-17T22:34:02.716629",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "698-709:testPropertyOptionUnexpected": {
                     "start": 698,
@@ -2135,26 +2157,27 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testPropertyOptionUnexpected(self) -> None:",
                         "        ",
-                        "",
                         "        opts = Options()",
                         "",
                         "        properties = {}",
                         "        properties[\"f\"] = \"true\"",
                         "",
                         "        try:",
-                        "            self.__parse(self._parser, opts, None, properties)",
+                        "            self._parse(self._parser, opts, None, properties)",
                         "            self.fail(\"UnrecognizedOptionException expected\")",
                         "        except UnrecognizedOptionException:",
-                        "            pass",
-                        ""
+                        "            pass"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.1921563148498535,
-                    "generation_timestamp": "2024-06-09T20:05:08.038249",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.771878957748413,
+                    "generation_timestamp": "2024-06-17T22:34:14.511564",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "684-695:testPropertyOptionSingularValue": {
                     "start": 684,
@@ -2235,26 +2258,27 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testPropertyOptionSingularValue(self) -> None:",
                         "        ",
-                        "",
                         "        opts = Options()",
                         "        opts.addOption0(OptionBuilder.hasOptionalArgs1(2).withLongOpt(\"hide\").create0())",
                         "",
-                        "        properties = {}",
-                        "        properties[\"hide\"] = \"seek\"",
+                        "        properties = configparser.ConfigParser()",
+                        "        properties.set('DEFAULT', 'hide', 'seek')",
                         "",
                         "        cmd = self.__parse(self._parser, opts, None, properties)",
-                        "        assert cmd.hasOption2(\"hide\")",
-                        "        assert cmd.getOptionValue4(\"hide\") == \"seek\"",
-                        "        assert not cmd.hasOption2(\"fake\")",
-                        ""
+                        "        self.assertTrue(cmd.hasOption2(\"hide\"))",
+                        "        self.assertEqual(\"seek\", cmd.getOptionValue4(\"hide\"))",
+                        "        self.assertFalse(cmd.hasOption2(\"fake\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 10.390750169754028,
-                    "generation_timestamp": "2024-06-09T20:05:18.475596",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.346887111663818,
+                    "generation_timestamp": "2024-06-17T22:34:21.892656",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "672-681:testPropertyOptionRequired": {
                     "start": 672,
@@ -2323,24 +2347,25 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testPropertyOptionRequired(self) -> None:",
                         "        ",
-                        "",
                         "        opts = Options()",
                         "        opts.addOption0(OptionBuilder.isRequired0().create2(\"f\"))",
                         "",
-                        "        properties = {}",
-                        "        properties[\"f\"] = \"true\"",
+                        "        properties = configparser.ConfigParser()",
+                        "        properties.set('DEFAULT', 'f', 'true')",
                         "",
                         "        cmd = self.__parse(self._parser, opts, None, properties)",
-                        "        assert cmd.hasOption2(\"f\")",
-                        ""
+                        "        self.assertTrue(cmd.hasOption2(\"f\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 6.351919412612915,
-                    "generation_timestamp": "2024-06-09T20:05:24.860040",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.905348777770996,
+                    "generation_timestamp": "2024-06-17T22:34:31.821381",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "657-669:testPropertyOptionMultipleValues": {
                     "start": 657,
@@ -2422,27 +2447,28 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testPropertyOptionMultipleValues(self) -> None:",
                         "        ",
-                        "",
                         "        opts = Options()",
                         "        opts.addOption0(OptionBuilder.hasArgs0().withValueSeparator1(',').create1('k'))",
                         "",
-                        "        properties = {}",
-                        "        properties[\"k\"] = \"one,two\"",
+                        "        properties = configparser.ConfigParser()",
+                        "        properties.set('DEFAULT', 'k', 'one,two')",
                         "",
                         "        values = [\"one\", \"two\"]",
                         "",
                         "        cmd = self.__parse(self._parser, opts, None, properties)",
                         "        assert cmd.hasOption2(\"k\")",
-                        "        assert cmd.getOptionValues0('k') == values",
-                        ""
+                        "        assert cmd.getOptionValues0('k') == values"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 7.96119236946106,
-                    "generation_timestamp": "2024-06-09T20:05:32.856762",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.795499086380005,
+                    "generation_timestamp": "2024-06-17T22:34:39.641791",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "629-654:testPropertyOptionGroup": {
                     "start": 629,
@@ -2532,10 +2558,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testPropertyOptionGroup(self) -> None:",
                         "        ",
-                        "",
                         "        opts = Options()",
                         "",
                         "        group1 = OptionGroup()",
@@ -2559,13 +2583,16 @@
                         "        assert cmd.hasOption2(\"a\")",
                         "        assert not cmd.hasOption2(\"b\")",
                         "        assert cmd.hasOption2(\"x\")",
-                        "        assert not cmd.hasOption2(\"y\")",
-                        ""
+                        "        assert not cmd.hasOption2(\"y\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 10.903078079223633,
-                    "generation_timestamp": "2024-06-09T20:05:43.794673",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.534348726272583,
+                    "generation_timestamp": "2024-06-17T22:34:51.199705",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "574-626:testPropertyOptionFlags": {
                     "start": 574,
@@ -2687,67 +2714,68 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testPropertyOptionFlags(self) -> None:",
                         "        ",
-                        "",
                         "        opts = Options()",
                         "        opts.addOption1(\"a\", False, \"toggle -a\")",
                         "        opts.addOption3(\"c\", \"c\", False, \"toggle -c\")",
                         "        opts.addOption0(OptionBuilder.hasOptionalArg().create1('e'))",
                         "",
-                        "        properties = {}",
-                        "        properties[\"a\"] = \"true\"",
-                        "        properties[\"c\"] = \"yes\"",
-                        "        properties[\"e\"] = \"1\"",
+                        "        properties = configparser.ConfigParser()",
+                        "        properties.set(\"DEFAULT\", \"a\", \"true\")",
+                        "        properties.set(\"DEFAULT\", \"c\", \"yes\")",
+                        "        properties.set(\"DEFAULT\", \"e\", \"1\")",
                         "",
                         "        cmd = self.__parse(self._parser, opts, None, properties)",
-                        "        assert cmd.hasOption2(\"a\")",
-                        "        assert cmd.hasOption2(\"c\")",
-                        "        assert cmd.hasOption2(\"e\")",
+                        "        self.assertTrue(cmd.hasOption2(\"a\"))",
+                        "        self.assertTrue(cmd.hasOption2(\"c\"))",
+                        "        self.assertTrue(cmd.hasOption2(\"e\"))",
                         "",
-                        "        properties = {}",
-                        "        properties[\"a\"] = \"false\"",
-                        "        properties[\"c\"] = \"no\"",
-                        "        properties[\"e\"] = \"0\"",
-                        "",
-                        "        cmd = self.__parse(self._parser, opts, None, properties)",
-                        "        assert not cmd.hasOption2(\"a\")",
-                        "        assert not cmd.hasOption2(\"c\")",
-                        "        assert cmd.hasOption2(\"e\") ",
-                        "",
-                        "        properties = {}",
-                        "        properties[\"a\"] = \"TRUE\"",
-                        "        properties[\"c\"] = \"nO\"",
-                        "        properties[\"e\"] = \"TrUe\"",
+                        "        properties = configparser.ConfigParser()",
+                        "        properties.set(\"DEFAULT\", \"a\", \"false\")",
+                        "        properties.set(\"DEFAULT\", \"c\", \"no\")",
+                        "        properties.set(\"DEFAULT\", \"e\", \"0\")",
                         "",
                         "        cmd = self.__parse(self._parser, opts, None, properties)",
-                        "        assert cmd.hasOption2(\"a\")",
-                        "        assert not cmd.hasOption2(\"c\")",
-                        "        assert cmd.hasOption2(\"e\")",
+                        "        self.assertFalse(cmd.hasOption2(\"a\"))",
+                        "        self.assertFalse(cmd.hasOption2(\"c\"))",
+                        "        self.assertTrue(cmd.hasOption2(\"e\")) ",
                         "",
-                        "        properties = {}",
-                        "        properties[\"a\"] = \"just a string\"",
-                        "        properties[\"e\"] = \"\"",
-                        "",
-                        "        cmd = self.__parse(self._parser, opts, None, properties)",
-                        "        assert not cmd.hasOption2(\"a\")",
-                        "        assert not cmd.hasOption2(\"c\")",
-                        "        assert cmd.hasOption2(\"e\")",
-                        "",
-                        "        properties = {}",
-                        "        properties[\"a\"] = \"0\"",
-                        "        properties[\"c\"] = \"1\"",
+                        "        properties = configparser.ConfigParser()",
+                        "        properties.set(\"DEFAULT\", \"a\", \"TRUE\")",
+                        "        properties.set(\"DEFAULT\", \"c\", \"nO\")",
+                        "        properties.set(\"DEFAULT\", \"e\", \"TrUe\")",
                         "",
                         "        cmd = self.__parse(self._parser, opts, None, properties)",
-                        "        assert not cmd.hasOption2(\"a\")",
-                        "        assert cmd.hasOption2(\"c\")",
-                        ""
+                        "        self.assertTrue(cmd.hasOption2(\"a\"))",
+                        "        self.assertFalse(cmd.hasOption2(\"c\"))",
+                        "        self.assertTrue(cmd.hasOption2(\"e\"))",
+                        "",
+                        "        properties = configparser.ConfigParser()",
+                        "        properties.set(\"DEFAULT\", \"a\", \"just a string\")",
+                        "        properties.set(\"DEFAULT\", \"e\", \"\")",
+                        "",
+                        "        cmd = self.__parse(self._parser, opts, None, properties)",
+                        "        self.assertFalse(cmd.hasOption2(\"a\"))",
+                        "        self.assertFalse(cmd.hasOption2(\"c\"))",
+                        "        self.assertTrue(cmd.hasOption2(\"e\"))",
+                        "",
+                        "        properties = configparser.ConfigParser()",
+                        "        properties.set(\"DEFAULT\", \"a\", \"0\")",
+                        "        properties.set(\"DEFAULT\", \"c\", \"1\")",
+                        "",
+                        "        cmd = self.__parse(self._parser, opts, None, properties)",
+                        "        self.assertFalse(cmd.hasOption2(\"a\"))",
+                        "        self.assertTrue(cmd.hasOption2(\"c\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 60.54439449310303,
-                    "generation_timestamp": "2024-06-09T20:06:44.366807",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 35.029112815856934,
+                    "generation_timestamp": "2024-06-17T22:35:26.255228",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "555-571:testPropertiesOption2": {
                     "start": 555,
@@ -2833,16 +2861,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testPropertiesOption2(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-Dparam1\", \"-Dparam2=value2\", \"-D\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption0(OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D'))",
                         "",
-                        "        cl = DefaultParser().parse0(options, args)",
+                        "        cl = CommandLineParser().parse0(options, args)",
                         "",
                         "        props = cl.getOptionProperties1(\"D\")",
                         "        assert props is not None, \"null properties\"",
@@ -2851,13 +2877,16 @@
                         "        assert props.getProperty(\"param2\") == \"value2\", \"property 2\"",
                         "",
                         "        argsleft = cl.getArgList()",
-                        "        assert len(argsleft) == 0, \"Should be no arg left\"",
-                        ""
+                        "        assert len(argsleft) == 0, \"Should be no arg left\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 9.077066898345947,
-                    "generation_timestamp": "2024-06-09T20:00:10.546722",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.235372304916382,
+                    "generation_timestamp": "2024-06-17T22:27:50.860016",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "533-552:testPropertiesOption1": {
                     "start": 533,
@@ -2946,35 +2975,35 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testPropertiesOption1(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-Jsource=1.5\", \"-J\", \"target\", \"1.5\", \"foo\"]",
                         "",
-                        "        self._options = Options()",
-                        "        self._options.addOption0(OptionBuilder.withValueSeparator0().hasArgs1(2).create1('J'))",
+                        "        options = Options()",
+                        "        options.addOption0(OptionBuilder.withValueSeparator0().hasArgs1(2).create1('J'))",
                         "",
-                        "        self._parser = DefaultParser()",
-                        "        cl = self._parser.parse0(self._options, args)",
+                        "        cl = CommandLineParser().parse0(options, args)",
                         "",
                         "        values = cl.getOptionValues2(\"J\")",
                         "        assert values is not None, \"null values\"",
                         "        assert len(values) == 4, \"number of values\"",
                         "        assert values[0] == \"source\", \"value 1\"",
                         "        assert values[1] == \"1.5\", \"value 2\"",
-                        "        assert values[2] == \"target\", \"value 3\"",
+                        "        assert values[2] == \"target\", \"value 4\"",
                         "        assert values[3] == \"1.5\", \"value 4\"",
                         "",
                         "        argsleft = cl.getArgList()",
                         "        assert len(argsleft) == 1, \"Should be 1 arg left\"",
-                        "        assert argsleft[0] == \"foo\", \"Expecting foo\"",
-                        ""
+                        "        assert argsleft[0] == \"foo\", \"Expecting foo\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 10.525327682495117,
-                    "generation_timestamp": "2024-06-09T20:00:21.087319",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.155508279800415,
+                    "generation_timestamp": "2024-06-17T22:28:01.038663",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "519-530:testPartialLongOptionSingleDash": {
                     "start": 519,
@@ -3055,10 +3084,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testPartialLongOptionSingleDash(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-ver\"]",
                         "",
                         "        options = Options()",
@@ -3068,14 +3095,17 @@
                         "        parser = DefaultParser()",
                         "        cl = parser.parse0(options, args)",
                         "",
-                        "        assert cl.hasOption2(\"version\"), \"Confirm --version is set\"",
-                        "        assert not cl.hasOption2(\"v\"), \"Confirm -v is not set\"",
-                        ""
+                        "        self.assertTrue(cl.hasOption2(\"version\"))",
+                        "        self.assertFalse(cl.hasOption2(\"v\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.461717367172241,
-                    "generation_timestamp": "2024-06-09T20:00:26.562150",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.329959392547607,
+                    "generation_timestamp": "2024-06-17T22:28:14.393408",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "504-516:testOptionGroupLong": {
                     "start": 504,
@@ -3162,10 +3192,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testOptionGroupLong(self) -> None:",
                         "        ",
-                        "",
                         "        group = OptionGroup()",
                         "        group.addOption(OptionBuilder.withLongOpt(\"foo\").create0())",
                         "        group.addOption(OptionBuilder.withLongOpt(\"bar\").create0())",
@@ -3176,13 +3204,16 @@
                         "        cl = self._parser.parse0(options, [\"--bar\"])",
                         "",
                         "        assert cl.hasOption2(\"bar\")",
-                        "        assert \"selected option\" == \"bar\", group.getSelected()",
-                        ""
+                        "        assert \"selected option\" == \"bar\", group.getSelected()"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 7.7148277759552,
-                    "generation_timestamp": "2024-06-09T20:00:34.294168",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.73533034324646,
+                    "generation_timestamp": "2024-06-17T22:28:23.151250",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "490-501:testOptionGroup": {
                     "start": 490,
@@ -3257,11 +3288,28 @@
                         "    def testOptionGroup(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": null,
-                    "translation_status": "failure",
-                    "elapsed_time": 41.038740158081055,
-                    "generation_timestamp": "2024-06-05T15:34:12.557500",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testOptionGroup(self) -> None:",
+                        "        ",
+                        "        group = OptionGroup()",
+                        "        group.addOption(OptionBuilder.create2(\"a\"))",
+                        "        group.addOption(OptionBuilder.create2(\"b\"))",
+                        "",
+                        "        options = Options()",
+                        "        options.addOptionGroup(group)",
+                        "",
+                        "        self._parser.parse0(options, [\"b\"])",
+                        "",
+                        "        assert \"selected option\" == \"b\", group.getSelected()"
+                    ],
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.124675035476685,
+                    "generation_timestamp": "2024-06-17T22:28:28.297231",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "474-487:testOptionAndRequiredOption": {
                     "start": 474,
@@ -3359,28 +3407,29 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testOptionAndRequiredOption(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-a\", \"-b\", \"file\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption3(\"a\", \"enable-a\", False, None)",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"bfile\").hasArg0().isRequired0().create1('b'))",
                         "",
-                        "        cl = DefaultParser().parse0(options, args)",
+                        "        cl = CommandLineParser().parse0(options, args)",
                         "",
-                        "        assert cl.hasOption2(\"a\"), \"Confirm -a is set\"",
-                        "        assert cl.hasOption2(\"b\"), \"Confirm -b is set\"",
+                        "        assert cl.hasOption2(\"a\") == True, \"Confirm -a is set\"",
+                        "        assert cl.hasOption2(\"b\") == True, \"Confirm -b is set\"",
                         "        assert cl.getOptionValue4(\"b\") == \"file\", \"Confirm arg of -b\"",
-                        "        assert not cl.getArgList(), \"Confirm NO of extra args\"",
-                        ""
+                        "        assert cl.getArgList() == [], \"Confirm NO of extra args\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 6.61208438873291,
-                    "generation_timestamp": "2024-06-09T20:00:40.937740",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.227232694625854,
+                    "generation_timestamp": "2024-06-17T22:28:42.552103",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "464-471:testNegativeOption": {
                     "start": 464,
@@ -3432,22 +3481,23 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testNegativeOption(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-b\", \"-1\"]",
                         "",
                         "        self._options.addOption1(\"1\", False, None)",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
-                        "        assert \"-1\" == cl.getOptionValue4(\"b\")",
-                        ""
+                        "        self.assertEqual(\"-1\", cl.getOptionValue4(\"b\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 3.778397798538208,
-                    "generation_timestamp": "2024-06-09T20:00:44.732488",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.033938884735107,
+                    "generation_timestamp": "2024-06-17T22:28:46.606235",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "456-461:testNegativeArgument": {
                     "start": 456,
@@ -3492,20 +3542,21 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testNegativeArgument(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-b\", \"-1\"]",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
-                        "        assert \"-1\" == cl.getOptionValue4(\"b\")",
-                        ""
+                        "        self.assertEqual(\"-1\", cl.getOptionValue4(\"b\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 3.4372928142547607,
-                    "generation_timestamp": "2024-06-09T20:00:48.184424",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.116808176040649,
+                    "generation_timestamp": "2024-06-17T22:28:51.740560",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "436-453:testMultipleWithLong": {
                     "start": 436,
@@ -3549,7 +3600,7 @@
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLineParser",
                             "CommandLineParser",
-                            "65-65:parse1"
+                            "65-67:parse1"
                         ],
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLine",
@@ -3582,10 +3633,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testMultipleWithLong(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--copt\", \"foobar\", \"--bfile\", \"toast\"]",
                         "",
                         "        cl = self._parser.parse1(self._options, args, True)",
@@ -3598,13 +3647,16 @@
                         "        assert cl.hasOption2(\"b\"), \"Confirm -b is set\"",
                         "        assert cl.getOptionValue4(\"b\") == \"toast\", \"Confirm arg of -b\"",
                         "        assert len(cl.getArgList()) == 1, \"Confirm  1 extra arg: \" + str(len(cl.getArgList()))",
-                        "        assert cl.getArgList()[0] == \"foobar\", \"Confirm  value of extra arg: \" + cl.getArgList()[0]",
-                        ""
+                        "        assert cl.getArgList()[0] == \"foobar\", \"Confirm  value of extra arg: \" + cl.getArgList()[0]"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 9.335115432739258,
-                    "generation_timestamp": "2024-06-09T20:00:57.536718",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.166770696640015,
+                    "generation_timestamp": "2024-06-17T22:29:07.930416",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "416-433:testMultiple": {
                     "start": 416,
@@ -3648,7 +3700,7 @@
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLineParser",
                             "CommandLineParser",
-                            "65-65:parse1"
+                            "65-67:parse1"
                         ],
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLine",
@@ -3681,29 +3733,30 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testMultiple(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-c\", \"foobar\", \"-b\", \"toast\"]",
                         "",
                         "        cl = self._parser.parse1(self._options, args, True)",
                         "        assert cl.hasOption2(\"c\"), \"Confirm -c is set\"",
-                        "        assert cl.getArgList().size() == 3, \"Confirm  3 extra args: \" + str(cl.getArgList().size())",
+                        "        assert len(cl.getArgList()) == 3, \"Confirm  3 extra args: \" + str(len(cl.getArgList()))",
                         "",
                         "        cl = self._parser.parse0(self._options, cl.getArgs())",
                         "",
                         "        assert not cl.hasOption2(\"c\"), \"Confirm -c is not set\"",
                         "        assert cl.hasOption2(\"b\"), \"Confirm -b is set\"",
                         "        assert cl.getOptionValue4(\"b\") == \"toast\", \"Confirm arg of -b\"",
-                        "        assert cl.getArgList().size() == 1, \"Confirm  1 extra arg: \" + str(cl.getArgList().size())",
-                        "        assert cl.getArgList().get(0) == \"foobar\", \"Confirm  value of extra arg: \" + cl.getArgList().get(0)",
-                        ""
+                        "        assert len(cl.getArgList()) == 1, \"Confirm  1 extra arg: \" + str(len(cl.getArgList()))",
+                        "        assert cl.getArgList()[0] == \"foobar\", \"Confirm  value of extra arg: \" + cl.getArgList()[0]"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 10.153273582458496,
-                    "generation_timestamp": "2024-06-09T20:01:07.706901",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.990840673446655,
+                    "generation_timestamp": "2024-06-17T22:29:22.947069",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "392-413:testMissingRequiredOptions": {
                     "start": 392,
@@ -3799,10 +3852,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testMissingRequiredOptions(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-a\"]",
                         "",
                         "        options = Options()",
@@ -3810,8 +3861,10 @@
                         "        options.addOption0(OptionBuilder.withLongOpt(\"bfile\").hasArg0().isRequired0().create1('b'))",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"cfile\").hasArg0().isRequired0().create1('c'))",
                         "",
+                        "        parser = DefaultParser()",
+                        "",
                         "        try:",
-                        "            self._parser.parse0(options, args)",
+                        "            parser.parse0(options, args)",
                         "            self.fail(\"exception should have been thrown\")",
                         "        except MissingOptionException as e:",
                         "            self.assertEqual(",
@@ -3821,13 +3874,16 @@
                         "            self.assertTrue(\"b\" in e.getMissingOptions())",
                         "            self.assertTrue(\"c\" in e.getMissingOptions())",
                         "        except ParseException:",
-                        "            self.fail(\"expected to catch MissingOptionException\")",
-                        ""
+                        "            self.fail(\"expected to catch MissingOptionException\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 8.783775806427002,
-                    "generation_timestamp": "2024-06-09T20:01:16.511197",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.016578197479248,
+                    "generation_timestamp": "2024-06-17T22:29:42.987610",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "372-389:testMissingRequiredOption": {
                     "start": 372,
@@ -3919,10 +3975,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testMissingRequiredOption(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-a\"]",
                         "",
                         "        options = Options()",
@@ -3933,19 +3987,21 @@
                         "",
                         "        try:",
                         "            parser.parse0(options, args)",
-                        "            self.fail(\"exception should have been thrown\")",
+                        "            pytest.fail(\"exception should have been thrown\")",
                         "        except MissingOptionException as e:",
-                        "            self.assertEqual(",
-                        "                    \"Incorrect exception message\", \"Missing required option: b\", e.getMessage())",
-                        "            self.assertTrue(e.getMissingOptions().contains(\"b\"))",
-                        "        except ParseException as e:",
-                        "            self.fail(\"expected to catch MissingOptionException\")",
-                        ""
+                        "            assert e.getMessage() == \"Incorrect exception message\", \"Missing required option: b\"",
+                        "            assert \"b\" in e.getMissingOptions()",
+                        "        except ParseException:",
+                        "            pytest.fail(\"expected to catch MissingOptionException\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 8.666576862335205,
-                    "generation_timestamp": "2024-06-09T20:01:25.196792",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.33155369758606,
+                    "generation_timestamp": "2024-06-17T22:29:52.343719",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "350-369:testMissingRequiredGroup": {
                     "start": 350,
@@ -4044,10 +4100,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testMissingRequiredGroup(self) -> None:",
                         "        ",
-                        "",
                         "        group = OptionGroup()",
                         "        group.addOption(OptionBuilder.create2(\"a\"))",
                         "        group.addOption(OptionBuilder.create2(\"b\"))",
@@ -4064,13 +4118,16 @@
                         "            self.assertEqual(1, len(e.getMissingOptions()))",
                         "            self.assertTrue(isinstance(e.getMissingOptions()[0], OptionGroup))",
                         "        except ParseException:",
-                        "            self.fail(\"Expected to catch MissingOptionException\")",
-                        ""
+                        "            self.fail(\"Expected to catch MissingOptionException\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 9.369343757629395,
-                    "generation_timestamp": "2024-06-09T20:01:34.590280",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.659885883331299,
+                    "generation_timestamp": "2024-06-17T22:30:04.026987",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "334-347:testMissingArgWithBursting": {
                     "start": 334,
@@ -4128,10 +4185,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testMissingArgWithBursting(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-acb\"]",
                         "",
                         "        caught = False",
@@ -4142,13 +4197,16 @@
                         "            caught = True",
                         "            assert \"option missing an argument\" == \"b\", e.getOption().getOpt()",
                         "",
-                        "        assert caught == True, \"Confirm MissingArgumentException caught\"",
-                        ""
+                        "        assert caught == True, \"Confirm MissingArgumentException caught\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.545872449874878,
-                    "generation_timestamp": "2024-06-09T20:01:39.163686",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.876636981964111,
+                    "generation_timestamp": "2024-06-17T22:30:19.924527",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "318-331:testMissingArg": {
                     "start": 318,
@@ -4206,10 +4264,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testMissingArg(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-b\"]",
                         "",
                         "        caught = False",
@@ -4220,13 +4276,16 @@
                         "            caught = True",
                         "            assert \"option missing an argument\" == \"b\", e.getOption().getOpt()",
                         "",
-                        "        assert caught == True, \"Confirm MissingArgumentException caught\"",
-                        ""
+                        "        assert caught == True, \"Confirm MissingArgumentException caught\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.4865241050720215,
-                    "generation_timestamp": "2024-06-09T20:01:43.666275",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.46245288848877,
+                    "generation_timestamp": "2024-06-17T22:30:28.410678",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "301-315:testLongWithUnexpectedArgument2": {
                     "start": 301,
@@ -4300,10 +4359,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testLongWithUnexpectedArgument2(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-foobar\"]",
                         "",
                         "        options = Options()",
@@ -4315,13 +4372,16 @@
                         "            self.assertEqual(\"-foobar\", e.getOption())",
                         "            return",
                         "",
-                        "        self.fail(\"UnrecognizedOptionException not thrown\")",
-                        ""
+                        "        self.fail(\"UnrecognizedOptionException not thrown\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.362192153930664,
-                    "generation_timestamp": "2024-06-09T20:01:49.041005",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.430153846740723,
+                    "generation_timestamp": "2024-06-17T22:30:37.861852",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "284-298:testLongWithUnexpectedArgument1": {
                     "start": 284,
@@ -4395,10 +4455,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testLongWithUnexpectedArgument1(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--foo=bar\"]",
                         "",
                         "        options = Options()",
@@ -4410,13 +4468,16 @@
                         "            self.assertEqual(\"--foo=bar\", e.getOption())",
                         "            return",
                         "",
-                        "        self.fail(\"UnrecognizedOptionException not thrown\")",
-                        ""
+                        "        self.fail(\"UnrecognizedOptionException not thrown\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.330441236495972,
-                    "generation_timestamp": "2024-06-09T20:01:54.388318",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 20.345504999160767,
+                    "generation_timestamp": "2024-06-17T22:30:58.228369",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "272-281:testLongWithoutEqualSingleDash": {
                     "start": 272,
@@ -4490,25 +4551,25 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testLongWithoutEqualSingleDash(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-foobar\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"foo\").hasArg0().create1('f'))",
                         "",
-                        "        parser = DefaultParser()",
-                        "        cl = parser.parse0(options, args)",
+                        "        cl = self._parser.parse0(options, args)",
                         "",
-                        "        assert \"bar\" == cl.getOptionValue4(\"foo\")",
-                        ""
+                        "        self.assertEqual(\"bar\", cl.getOptionValue4(\"foo\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 7.6524481773376465,
-                    "generation_timestamp": "2024-06-09T20:02:02.056334",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 33.34321999549866,
+                    "generation_timestamp": "2024-06-17T22:31:31.594133",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "260-269:testLongWithoutEqualDoubleDash": {
                     "start": 260,
@@ -4549,7 +4610,7 @@
                         [
                             "commons-cli.src.main.org.apache.commons.cli.CommandLineParser",
                             "CommandLineParser",
-                            "65-65:parse1"
+                            "65-67:parse1"
                         ],
                         [
                             "commons-cli.src.main.org.apache.commons.cli.Options",
@@ -4582,10 +4643,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testLongWithoutEqualDoubleDash(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--foobar\"]",
                         "",
                         "        options = Options()",
@@ -4593,13 +4652,16 @@
                         "",
                         "        cl = DefaultParser().parse1(options, args, True)",
                         "",
-                        "        assert not cl.hasOption2(\"foo\")  # foo isn't expected to be recognized with a double dash",
-                        ""
+                        "        assert not cl.hasOption2(\"foo\")  # foo isn't expected to be recognized with a double dash"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 60.353265047073364,
-                    "generation_timestamp": "2024-06-09T20:03:02.424442",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.41001272201538,
+                    "generation_timestamp": "2024-06-17T22:31:45.026008",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "248-257:testLongWithEqualSingleDash": {
                     "start": 248,
@@ -4673,24 +4735,25 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testLongWithEqualSingleDash(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-foo=bar\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"foo\").hasArg0().create1('f'))",
                         "",
-                        "        cl = DefaultParser().parse0(options, args)",
+                        "        cl = self._parser.parse0(options, args)",
                         "",
-                        "        assert \"bar\" == cl.getOptionValue4(\"foo\")",
-                        ""
+                        "        self.assertEqual(\"bar\", cl.getOptionValue4(\"foo\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 12.200312614440918,
-                    "generation_timestamp": "2024-06-09T20:03:14.640969",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 26.346147537231445,
+                    "generation_timestamp": "2024-06-17T22:32:11.395190",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "236-245:testLongWithEqualDoubleDash": {
                     "start": 236,
@@ -4764,24 +4827,25 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testLongWithEqualDoubleDash(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--foo=bar\"]",
                         "",
                         "        options = Options()",
                         "        options.addOption0(OptionBuilder.withLongOpt(\"foo\").hasArg0().create1('f'))",
                         "",
-                        "        cl = DefaultParser().parse0(options, args)",
+                        "        cl = CommandLineParser().parse0(options, args)",
                         "",
-                        "        assert \"bar\" == cl.getOptionValue4(\"foo\")",
-                        ""
+                        "        assert \"bar\" == cl.getOptionValue4(\"foo\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 11.860349178314209,
-                    "generation_timestamp": "2024-06-09T20:03:26.518552",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.138104438781738,
+                    "generation_timestamp": "2024-06-17T22:32:16.556892",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "226-233:testLongOptionWithEqualsQuoteHandling": {
                     "start": 226,
@@ -4828,21 +4892,23 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testLongOptionWithEqualsQuoteHandling(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--bfile=\\\"quoted string\\\"\"]",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
                         "",
-                        "        assert cl.getOptionValue4(\"b\") == \"quoted string\", \"Confirm --bfile=\\\"arg\\\" strips quotes\"",
-                        ""
+                        "        self.assertEqual(",
+                        "            \"Confirm --bfile=\\\"arg\\\" strips quotes\", \"quoted string\", cl.getOptionValue4(\"b\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.880444288253784,
-                    "generation_timestamp": "2024-06-09T20:03:31.411649",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.391504764556885,
+                    "generation_timestamp": "2024-06-17T22:32:20.966760",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "216-223:testLongOptionQuoteHandling": {
                     "start": 216,
@@ -4889,21 +4955,23 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testLongOptionQuoteHandling(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--bfile\", \"\\\"quoted string\\\"\"]",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
                         "",
-                        "        assert cl.getOptionValue4(\"b\") == \"quoted string\", \"Confirm --bfile \\\"arg\\\" strips quotes\"",
-                        ""
+                        "        self.assertEqual(",
+                        "            \"Confirm --bfile \\\"arg\\\" strips quotes\", \"quoted string\", cl.getOptionValue4(\"b\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.766051292419434,
-                    "generation_timestamp": "2024-06-09T20:03:36.189935",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.59111762046814,
+                    "generation_timestamp": "2024-06-17T22:32:25.577651",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "201-213:testDoubleDash2": {
                     "start": 201,
@@ -4980,26 +5048,27 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testDoubleDash2(self) -> None:",
                         "        ",
-                        "",
                         "        options = Options()",
                         "        options.addOption0(OptionBuilder.hasArg0().create1('n'))",
                         "        options.addOption0(OptionBuilder.create1('m'))",
                         "",
                         "        try:",
-                        "            self._parser.parse0(options, ['-n', '--', '-m'])",
+                        "            self._parser.parse0(options, [\"-n\", \"--\", \"-m\"])",
                         "            self.fail(\"MissingArgumentException not thrown for option -n\")",
                         "        except MissingArgumentException as e:",
                         "            self.assertIsNotNone(e.getOption(), \"option null\")",
-                        "            self.assertEqual(\"n\", e.getOption().getOpt())",
-                        ""
+                        "            self.assertEqual(\"n\", e.getOption().getOpt())"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 5.411275625228882,
-                    "generation_timestamp": "2024-06-09T20:03:41.621353",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.576761245727539,
+                    "generation_timestamp": "2024-06-17T22:32:35.179043",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "190-198:testDoubleDash1": {
                     "start": 190,
@@ -5052,23 +5121,24 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testDoubleDash1(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--copt\", \"--\", \"-b\", \"toast\"]",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
                         "",
                         "        assert cl.hasOption2(\"c\"), \"Confirm -c is set\"",
                         "        assert not cl.hasOption2(\"b\"), \"Confirm -b is not set\"",
-                        "        assert len(cl.getArgList()) == 2, \"Confirm 2 extra args: \" + str(len(cl.getArgList()))",
-                        ""
+                        "        assert len(cl.getArgList()) == 2, \"Confirm 2 extra args: \" + str(len(cl.getArgList()))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 6.0046257972717285,
-                    "generation_timestamp": "2024-06-09T20:03:47.641192",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.246139764785767,
+                    "generation_timestamp": "2024-06-17T22:32:45.448060",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "177-187:testBursting": {
                     "start": 177,
@@ -5128,10 +5198,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testBursting(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-acbtoast\", \"foo\", \"bar\"]",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
@@ -5140,13 +5208,16 @@
                         "        assert cl.hasOption2(\"b\"), \"Confirm -b is set\"",
                         "        assert cl.hasOption2(\"c\"), \"Confirm -c is set\"",
                         "        assert cl.getOptionValue4(\"b\") == \"toast\", \"Confirm arg of -b\"",
-                        "        assert len(cl.getArgList()) == 2, \"Confirm size of extra args\"",
-                        ""
+                        "        assert len(cl.getArgList()) == 2, \"Confirm size of extra args\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 8.443179368972778,
-                    "generation_timestamp": "2024-06-09T20:03:56.101322",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.870916604995728,
+                    "generation_timestamp": "2024-06-17T22:32:55.339291",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "169-174:testArgumentStartingWithHyphen": {
                     "start": 169,
@@ -5191,20 +5262,21 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testArgumentStartingWithHyphen(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-b\", \"-foo\"]",
                         "",
                         "        cl = self._parser.parse0(self._options, args)",
-                        "        assert \"-foo\" == cl.getOptionValue4(\"b\")",
-                        ""
+                        "        self.assertEqual(\"-foo\", cl.getOptionValue4(\"b\"))"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 3.4386634826660156,
-                    "generation_timestamp": "2024-06-09T20:03:59.556165",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.2325439453125,
+                    "generation_timestamp": "2024-06-17T22:32:58.590563",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "147-166:testAmbiguousPartialLongOption4": {
                     "start": 147,
@@ -5293,10 +5365,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testAmbiguousPartialLongOption4(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-ver=1\"]",
                         "",
                         "        options = Options()",
@@ -5309,17 +5379,20 @@
                         "            self._parser.parse0(options, args)",
                         "        except AmbiguousOptionException as e:",
                         "            caught = True",
-                        "            assert e.getOption() == \"-ver\", \"Partial option\"",
-                        "            assert e.getMatchingOptions() is not None, \"Matching options null\"",
-                        "            assert len(e.getMatchingOptions()) == 2, \"Matching options size\"",
+                        "            assert e.getOption() == \"-ver\"",
+                        "            assert e.getMatchingOptions() is not None",
+                        "            assert len(e.getMatchingOptions()) == 2",
                         "",
-                        "        assert caught == True, \"Confirm MissingArgumentException caught\"",
-                        ""
+                        "        assert caught"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 7.502520561218262,
-                    "generation_timestamp": "2024-06-09T20:04:07.072488",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.655824422836304,
+                    "generation_timestamp": "2024-06-17T22:33:06.267331",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "125-144:testAmbiguousPartialLongOption3": {
                     "start": 125,
@@ -5408,10 +5481,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testAmbiguousPartialLongOption3(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--ver=1\"]",
                         "",
                         "        options = Options()",
@@ -5424,17 +5495,20 @@
                         "            self._parser.parse0(options, args)",
                         "        except AmbiguousOptionException as e:",
                         "            caught = True",
-                        "            assert \"--ver\" == e.getOption(), \"Partial option\"",
-                        "            assert e.getMatchingOptions() is not None, \"Matching options null\"",
-                        "            assert 2 == len(e.getMatchingOptions()), \"Matching options size\"",
+                        "            assert e.getOption() == \"--ver\"",
+                        "            assert e.getMatchingOptions() is not None",
+                        "            assert len(e.getMatchingOptions()) == 2",
                         "",
-                        "        assert caught, \"Confirm MissingArgumentException caught\"",
-                        ""
+                        "        assert caught"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 7.467392444610596,
-                    "generation_timestamp": "2024-06-09T20:04:14.555595",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.011228561401367,
+                    "generation_timestamp": "2024-06-17T22:33:14.300479",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "103-122:testAmbiguousPartialLongOption2": {
                     "start": 103,
@@ -5518,10 +5592,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testAmbiguousPartialLongOption2(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-ver\"]",
                         "",
                         "        options = Options()",
@@ -5534,17 +5606,20 @@
                         "            self._parser.parse0(options, args)",
                         "        except AmbiguousOptionException as e:",
                         "            caught = True",
-                        "            assert \"-ver\" == e.getOption(), \"Partial option\"",
-                        "            assert e.getMatchingOptions() is not None, \"Matching options null\"",
-                        "            assert 2 == len(e.getMatchingOptions()), \"Matching options size\"",
+                        "            assert e.getOption() == \"-ver\"",
+                        "            assert e.getMatchingOptions() is not None",
+                        "            assert len(e.getMatchingOptions()) == 2",
                         "",
-                        "        assert caught, \"Confirm MissingArgumentException caught\"",
-                        ""
+                        "        assert caught"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 10.338361024856567,
-                    "generation_timestamp": "2024-06-09T20:04:24.910729",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.249162197113037,
+                    "generation_timestamp": "2024-06-17T22:33:23.571266",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "81-100:testAmbiguousPartialLongOption1": {
                     "start": 81,
@@ -5628,10 +5703,8 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testAmbiguousPartialLongOption1(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"--ver\"]",
                         "",
                         "        options = Options()",
@@ -5644,17 +5717,20 @@
                         "            self._parser.parse0(options, args)",
                         "        except AmbiguousOptionException as e:",
                         "            caught = True",
-                        "            assert \"--ver\" == e.getOption(), \"Partial option\"",
-                        "            assert e.getMatchingOptions() is not None, \"Matching options null\"",
-                        "            assert 2 == len(e.getMatchingOptions()), \"Matching options size\"",
+                        "            assert e.getOption() == \"--ver\"",
+                        "            assert e.getMatchingOptions() is not None",
+                        "            assert len(e.getMatchingOptions()) == 2",
                         "",
-                        "        assert caught, \"Confirm MissingArgumentException caught\"",
-                        ""
+                        "        assert caught"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 9.52401351928711,
-                    "generation_timestamp": "2024-06-09T20:04:34.447403",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.631410837173462,
+                    "generation_timestamp": "2024-06-17T22:33:30.224961",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-78:testAmbiguousLongWithoutEqualSingleDash": {
                     "start": 66,
@@ -5736,27 +5812,28 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testAmbiguousLongWithoutEqualSingleDash(self) -> None:",
                         "        ",
-                        "",
                         "        args = [\"-b\", \"-foobar\"]",
                         "",
-                        "        self._options = Options()",
-                        "        self._options.addOption0(OptionBuilder.withLongOpt(\"foo\").hasOptionalArg().create1('f'))",
-                        "        self._options.addOption0(OptionBuilder.withLongOpt(\"bar\").hasOptionalArg().create1('b'))",
+                        "        options = Options()",
+                        "        options.addOption0(OptionBuilder.withLongOpt(\"foo\").hasOptionalArg().create1('f'))",
+                        "        options.addOption0(OptionBuilder.withLongOpt(\"bar\").hasOptionalArg().create1('b'))",
                         "",
-                        "        cl = self._parser.parse0(self._options, args)",
+                        "        cl = CommandLineParser().parse0(options, args)",
                         "",
                         "        assert cl.hasOption2(\"b\")",
                         "        assert cl.hasOption2(\"f\")",
-                        "        assert cl.getOptionValue4(\"foo\") == \"bar\"",
-                        ""
+                        "        assert cl.getOptionValue4(\"foo\") == \"bar\""
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 7.076309680938721,
-                    "generation_timestamp": "2024-06-09T20:04:41.539904",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.73151683807373,
+                    "generation_timestamp": "2024-06-17T22:33:39.980563",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "57-63:setUp": {
                     "start": 57,
@@ -5802,20 +5879,21 @@
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def setUp(self) -> None:",
                         "        ",
-                        "",
                         "        self._options = Options()",
-                        "        self._options.add_option(\"a\", \"enable-a\", action=\"store_true\", help=\"turn [a] on or off\")",
-                        "        self._options.add_option(\"b\", \"bfile\", action=\"store\", help=\"set the value of [b]\")",
-                        "        self._options.add_option(\"c\", \"copt\", action=\"store_true\", help=\"turn [c] on or off\")",
-                        ""
+                        "        self._options.addOption3(\"a\", \"enable-a\", False, \"turn [a] on or off\")",
+                        "        self._options.addOption3(\"b\", \"bfile\", True, \"set the value of [b]\")",
+                        "        self._options.addOption3(\"c\", \"copt\", False, \"turn [c] on or off\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 8.858779191970825,
-                    "generation_timestamp": "2024-06-09T20:04:50.411916",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.906854152679443,
+                    "generation_timestamp": "2024-06-17T22:33:47.905574",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "41-54:parse": {
                     "start": 41,
@@ -5838,7 +5916,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "SuppressWarnings"
+                        "SuppressWarnings(\"deprecation\")"
                     ],
                     "modifiers": [
                         "private"
@@ -5869,26 +5947,27 @@
                         ]
                     ],
                     "partial_translation": [
-                        "    def __parse(self, parser: CommandLineParser, opts: Options, args: typing.List[str], properties: typing.Union[configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict]) -> CommandLine:\n",
+                        "    def __parse(self, parser: CommandLineParser, opts: Options, args: typing.List[str], properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> CommandLine:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
-                        "    def __parse(self, parser: CommandLineParser, opts: Options, args: typing.List[str], properties: typing.Union[configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict]) -> CommandLine:",
+                        "    def __parse(self, parser: CommandLineParser, opts: Options, args: typing.List[str], properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> CommandLine:",
                         "        ",
-                        "",
                         "        if isinstance(parser, Parser):",
                         "            return parser.parse2(opts, args, properties)",
                         "        elif isinstance(parser, DefaultParser):",
                         "            return parser.parse2(opts, args, properties)",
                         "        else:",
-                        "            raise UnsupportedOperationException(\"Default options not supported by this parser\")",
-                        ""
+                        "            raise UnsupportedOperationException(\"Default options not supported by this parser\")"
                     ],
-                    "translation_status": "failure",
-                    "elapsed_time": 4.752660751342773,
-                    "generation_timestamp": "2024-06-09T20:04:55.178688",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.906243801116943,
+                    "generation_timestamp": "2024-06-17T22:33:53.830562",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -5907,15 +5986,22 @@
                             "Options"
                         ]
                     ],
-                    "partial_translation": "    _options: Options = None\n",
+                    "partial_translation": [
+                        "    _options: Options = None",
+                        ""
+                    ],
                     "translation": [
                         "    _options: Options = None",
                         ""
                     ],
-                    "translation_status": "success",
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "success",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-06-09T19:40:26.646993",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-17T22:14:59.419823",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "36-36:parser": {
                     "start": 36,
@@ -5932,15 +6018,22 @@
                             "CommandLineParser"
                         ]
                     ],
-                    "partial_translation": "    _parser: CommandLineParser = None\n",
+                    "partial_translation": [
+                        "    _parser: CommandLineParser = None",
+                        ""
+                    ],
                     "translation": [
                         "    _parser: CommandLineParser = None",
                         ""
                     ],
-                    "translation_status": "success",
+                    "translation_status": "processed",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "success",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-06-09T19:40:26.665323",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-17T22:14:59.424706",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class ParserTestCase(ABC):\n\n"
@@ -5948,6 +6041,8 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "from abc import ABC",
         "import io",
         "import typing\nfrom typing import *",

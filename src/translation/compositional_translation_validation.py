@@ -19,7 +19,7 @@ from functional_validation import l2_validation
 #     TextGenerationReturnOptions,
 # )
 
-subprocess.run(['git', 'checkout', 'data/schemas/'])
+# subprocess.run(['git', 'checkout', 'data/schemas/'])
 i = 0
 
 def translate(model, tokenizer, device, members_to_translate: list[list], dump_syntactically_validated_fragments, is_test):
@@ -155,10 +155,10 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
 
     status, functionally_validated_members, feedback = l2_validation(syntactically_validated_members)
     
-    if status:
+    if status == 'success':
         print("PASSED!")
     else:
-        print("FAILED!")
+        print(status.upper())
         if not RECORD_ALL:
             if input("Do you want to interrupt? (no=Enter)"):
                 quit()
@@ -355,9 +355,9 @@ def main(args):
                     data['classes'][class_]['fields'][field_]['translation_status'] = 'success'
                     data['classes'][class_]['fields'][field_]['model_name'] = args.model_name
 
-                    with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
-                        json.dump(data, f, indent=4)
-                    continue
+                    # with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
+                    #     json.dump(data, f, indent=4)
+                    # continue
 
                 translation, elapsed_time = translate(model, tokenizer, device, [{'prompt': prompt, 'fragment_type': 'field', 'use_bam': args.use_bam, 'project_name': args.project_name, 'schema': schema, 'class': class_, 'fragment': field_}], args.dump_syntactically_validated_fragments, 'src.test' in schema)
                 if translation is not None and args.dump_syntactically_validated_fragments:
@@ -372,8 +372,8 @@ def main(args):
                 data['classes'][class_]['fields'][field_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 data['classes'][class_]['fields'][field_]['model_name'] = args.model_name
 
-                with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
-                    json.dump(data, f, indent=4)
+                # with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
+                #     json.dump(data, f, indent=4)
 
             pbar = tqdm.tqdm(data['classes'][class_]['methods'])
             for method_ in pbar:
@@ -420,8 +420,8 @@ def main(args):
                 data['classes'][class_]['methods'][method_]['generation_timestamp'] = datetime.datetime.now().isoformat()
                 data['classes'][class_]['methods'][method_]['model_name'] = args.model_name
 
-                with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
-                    json.dump(data, f, indent=4)
+                # with open(f'data/schemas/{args.project_name}/{schema}', 'w') as f:
+                #     json.dump(data, f, indent=4)
 
                 # # check if a waiting fragment is now ready to be processed
                 # for waiting_fragment in list(waiting_queue.keys()):
@@ -625,6 +625,12 @@ if __name__ == '__main__':
     # parser_.add_argument('--use_bam', action='store_true', help='translate main files')
     # parser_.add_argument('--use_cuda', action='store_true', help='use cuda for translation')
     # parser_.add_argument('--dump_syntactically_validated_fragments', action='store_true', help='dump syntactically validated fragments')
+    
+    parser_.add_argument('--schema', type=str, dest='schema', default=None, required=False)
+    parser_.add_argument('--class', type=str, dest='class_', default=None, required=False)
+    parser_.add_argument('--method', type=str, dest='method', default=None, required=False)
+    parser_.add_argument('--record', action='store_true', help='record all')
+    
     args = parser_.parse_args()
     
     args.model_name = None
@@ -636,12 +642,17 @@ if __name__ == '__main__':
     args.include_call_graph = True
     args.dump_syntactically_validated_fragments = False
     
-    SCHEMA_BREAK = None
-    CLASS_BREAK = None
-    METHOD_BREAK = None
+    SCHEMA_BREAK = f'.{args.schema}_' if args.schema else None
+    CLASS_BREAK = args.class_
+    METHOD_BREAK = args.method
     
     SCHEMA_BREAK_PASSED, CLASS_BREAK_PASSED, METHOD_BREAK_PASSED = False, False, False
     
-    RECORD_ALL = True
+    RECORD_ALL = args.record
+    
+    # reset the stats file
+    if RECORD_ALL:
+        with open(f'{args.project_name}_stats.csv', 'w') as f:
+            f.write("")
     
     main(args)

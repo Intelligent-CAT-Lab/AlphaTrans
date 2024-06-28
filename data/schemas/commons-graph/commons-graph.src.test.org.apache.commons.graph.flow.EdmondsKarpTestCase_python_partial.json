@@ -162,18 +162,55 @@
                         [
                             "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
                             "CommonsGraph",
-                            "125-128:findMaxFlow"
+                            "124-128:findMaxFlow"
                         ]
                     ],
                     "partial_translation": [
                         "    def testSparse(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testSparse(self) -> None:",
+                        "        ",
+                        "        a = BaseLabeledVertex(\"A\")",
+                        "        g = BaseLabeledVertex(\"G\")",
+                        "",
+                        "        graph = CommonsGraph.newDirectedMutableGraph(",
+                        "            AbstractGraphConnection(",
+                        "                lambda: [",
+                        "                    a,",
+                        "                    BaseLabeledVertex(\"B\"),",
+                        "                    BaseLabeledVertex(\"C\"),",
+                        "                    BaseLabeledVertex(\"D\"),",
+                        "                    BaseLabeledVertex(\"E\"),",
+                        "                    BaseLabeledVertex(\"F\"),",
+                        "                    g",
+                        "                ],",
+                        "                lambda: [",
+                        "                    (a, BaseLabeledVertex(\"B\"), BaseLabeledEdge(\"A -> B\", 3)),",
+                        "                    (BaseLabeledVertex(\"B\"), BaseLabeledVertex(\"C\"), BaseLabeledEdge(\"B -> C\", 4))",
+                        "                ]",
+                        "            )",
+                        "        )",
+                        "",
+                        "        expected = 0",
+                        "",
+                        "        actual = CommonsGraph.findMaxFlow(graph) \\",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "            .from_(a) \\",
+                        "            .to(g) \\",
+                        "            .applyingEdmondsKarp(IntegerWeightBaseOperations())",
+                        "",
+                        "        self.assertEqual(actual, expected)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 49.63516092300415,
+                    "generation_timestamp": "2024-06-21T00:19:09.262336",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "122-135:testNullVertices": {
                     "start": 122,
@@ -196,7 +233,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = NullPointerException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -218,18 +255,36 @@
                         [
                             "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
                             "CommonsGraph",
-                            "125-128:findMaxFlow"
+                            "124-128:findMaxFlow"
                         ]
                     ],
                     "partial_translation": [
                         "    def testNullVertices(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNullVertices(self) -> None:",
+                        "        ",
+                        "        a = None",
+                        "        g = None",
+                        "",
+                        "        graph = DirectedMutableGraph()",
+                        "",
+                        "        with pytest.raises(NullPointerException):",
+                        "            CommonsGraph.findMaxFlow(graph) \\",
+                        "                .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "                .from_(a) \\",
+                        "                .to(g) \\",
+                        "                .applyingEdmondsKarp(IntegerWeightBaseOperations())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 29.66560387611389,
+                    "generation_timestamp": "2024-06-21T00:19:38.930607",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "108-119:testNullGraph": {
                     "start": 108,
@@ -250,7 +305,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = NullPointerException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -277,18 +332,36 @@
                         [
                             "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
                             "CommonsGraph",
-                            "125-128:findMaxFlow"
+                            "124-128:findMaxFlow"
                         ]
                     ],
                     "partial_translation": [
                         "    def testNullGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testNullGraph(self) -> None:",
+                        "        ",
+                        "        a = BaseLabeledVertex(\"A\")",
+                        "        g = BaseLabeledVertex(\"G\")",
+                        "",
+                        "        try:",
+                        "            CommonsGraph.findMaxFlow(None) \\",
+                        "                .whereEdgesHaveWeights(BaseWeightedEdge()) \\",
+                        "                .from_(a) \\",
+                        "                .to(g) \\",
+                        "                .applyingEdmondsKarp(IntegerWeightBaseOperations())",
+                        "        except Exception as e:",
+                        "            self.assertEqual(str(e), \"Max flow can not be calculated on null graph\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.875954627990723,
+                    "generation_timestamp": "2024-06-21T00:19:49.810342",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "41-105:testFindMaxFlowAndVerify": {
                     "start": 41,
@@ -394,22 +467,70 @@
                         [
                             "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
                             "CommonsGraph",
-                            "125-128:findMaxFlow"
+                            "124-128:findMaxFlow"
                         ]
                     ],
                     "partial_translation": [
                         "    def testFindMaxFlowAndVerify(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testFindMaxFlowAndVerify(self) -> None:",
+                        "        ",
+                        "        a = BaseLabeledVertex(\"A\")",
+                        "        g = BaseLabeledVertex(\"G\")",
+                        "",
+                        "        graph = CommonsGraph.newDirectedMutableGraph(",
+                        "            AbstractGraphConnection(",
+                        "                lambda: [",
+                        "                    a,",
+                        "                    BaseLabeledVertex(\"B\"),",
+                        "                    BaseLabeledVertex(\"C\"),",
+                        "                    BaseLabeledVertex(\"D\"),",
+                        "                    BaseLabeledVertex(\"E\"),",
+                        "                    BaseLabeledVertex(\"F\"),",
+                        "                    g,",
+                        "                ],",
+                        "                lambda: [",
+                        "                    BaseLabeledWeightedEdge(\"A -> B\", 3).from_(a).to(1),",
+                        "                    BaseLabeledWeightedEdge(\"A -> D\", 3).from_(a).to(3),",
+                        "                    BaseLabeledWeightedEdge(\"B -> C\", 4).from_(1).to(2),",
+                        "                    BaseLabeledWeightedEdge(\"C -> A\", 3).from_(2).to(0),",
+                        "                    BaseLabeledWeightedEdge(\"C -> D\", 1).from_(2).to(3),",
+                        "                    BaseLabeledWeightedEdge(\"C -> E\", 2).from_(2).to(4),",
+                        "                    BaseLabeledWeightedEdge(\"D -> E\", 2).from_(3).to(4),",
+                        "                    BaseLabeledWeightedEdge(\"D -> F\", 6).from_(3).to(5),",
+                        "                    BaseLabeledWeightedEdge(\"E -> B\", 1).from_(4).to(1),",
+                        "                    BaseLabeledWeightedEdge(\"E -> G\", 1).from_(4).to(6),",
+                        "                    BaseLabeledWeightedEdge(\"F -> G\", 9).from_(5).to(6),",
+                        "                ],",
+                        "            )",
+                        "        )",
+                        "",
+                        "        expected = 5",
+                        "",
+                        "        actual = (",
+                        "            CommonsGraph.findMaxFlow(graph)",
+                        "            .whereEdgesHaveWeights(BaseWeightedEdge())",
+                        "            .from_(a)",
+                        "            .to(g)",
+                        "            .applyingEdmondsKarp(IntegerWeightBaseOperations())",
+                        "        )",
+                        "",
+                        "        self.assertEqual(expected, actual)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 30.494725465774536,
+                    "generation_timestamp": "2024-06-21T00:20:20.308601",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class EdmondsKarpTestCase:\n\n"
+            "python_class_declaration": "class EdmondsKarpTestCase(unittest.TestCase):\n\n"
         },
         "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Integer>>(...) { ... }": {
             "start": 47,
@@ -426,7 +547,10 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
+        "import unittest",
         "from src.main.org.apache.commons.graph.CommonsGraph import *",
         "from src.main.org.apache.commons.graph.DirectedGraph import *",
         "from src.main.org.apache.commons.graph.Mapper import *",

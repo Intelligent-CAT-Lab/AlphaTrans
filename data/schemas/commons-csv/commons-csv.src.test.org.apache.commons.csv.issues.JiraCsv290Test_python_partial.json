@@ -112,11 +112,19 @@
                         "    def testPostgresqlText(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testPostgresqlText(self) -> None:",
+                        "        ",
+                        "        self.__testHelper(\"psql.tsv\", CSVFormat.POSTGRESQL_TEXT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.3286888599395752,
+                    "generation_timestamp": "2024-06-19T22:39:29.146688",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "65-67:testPostgresqlCsv": {
                     "start": 65,
@@ -152,11 +160,19 @@
                         "    def testPostgresqlCsv(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testPostgresqlCsv(self) -> None:",
+                        "        ",
+                        "        self.__testHelper(\"psql.csv\", CSVFormat.POSTGRESQL_CSV)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.3685948848724365,
+                    "generation_timestamp": "2024-06-19T22:39:30.517010",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "34-62:testHelper": {
                     "start": 34,
@@ -224,15 +240,40 @@
                         "    def __testHelper(self, filename: str, format: CSVFormat) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __testHelper(self, filename: str, format: CSVFormat) -> None:",
+                        "        ",
+                        "        content = []",
+                        "        with CSVParser.parse3(io.TextIOWrapper(io.BufferedReader(open(os.path.join(os.path.dirname(__file__), \"org\", \"apache\", \"commons\", \"csv\", \"CSV-290\", filename), 'r'))), format) as csvParser:",
+                        "            content = [record.toList() for record in csvParser.stream()]",
+                        "",
+                        "        assert len(content) == 3",
+                        "",
+                        "        assert content[0][0] == \"1\"",
+                        "        assert content[0][1] == \"abc\"",
+                        "        assert content[0][2] == \"test line 1\\ntest line 2\"  # new line",
+                        "        assert content[0][3] == None  # null",
+                        "        assert content[0][4] == \"\"",
+                        "",
+                        "        assert content[1][0] == \"2\"",
+                        "        assert content[1][2] == \"\\\\b:\\b \\\\t:\\t \\\\n:\\n \\\\r:\\r\"  # \\b, \\t, \\n, \\r",
+                        "",
+                        "        assert content[2][0] == \"3\"",
+                        "        assert content[2][2] == \"b,c,d\"  # value has comma",
+                        "        assert content[2][3] == \"\\\"quoted\\\"\"  # quoted"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 19.0219509601593,
+                    "generation_timestamp": "2024-06-19T22:39:27.816315",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class JiraCsv290Test:\n\n"
+            "python_class_declaration": "class JiraCsv290Test(unittest.TestCase):\n\n"
         },
         "new Function<CSVRecord,List<String>>(...) { ... }": {
             "start": 45,
@@ -244,10 +285,12 @@
             "implements": [],
             "extends": [],
             "methods": {
-                "45-45:apply": {
-                    "start": 45,
+                "43-45:apply": {
+                    "start": 43,
                     "end": 45,
                     "body": [
+                        "            content =\n",
+                        "                    csvParser.stream()\n",
                         "                            .collect(Collectors.mapping(CSVRecord::toList, Collectors.toList()));\n"
                     ],
                     "is_constructor": false,
@@ -271,8 +314,11 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import os",
+        "import unittest",
         "from src.main.org.apache.commons.csv.CSVFormat import *",
         "from src.main.org.apache.commons.csv.CSVParser import *",
         "from src.main.org.apache.commons.csv.CSVRecord import *"

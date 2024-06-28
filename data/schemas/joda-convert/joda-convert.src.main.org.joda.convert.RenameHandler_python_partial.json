@@ -132,11 +132,18 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return \"RenamedTypes\" + str(self.__typeRenames) + \",RenamedEnumConstants\" + str(self.__enumRenames)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.9045588970184326,
+                    "generation_timestamp": "2024-06-21T09:21:59.035951",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "276-279:lock": {
                     "start": 276,
@@ -171,11 +178,19 @@
                         "    def lock(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def lock(self) -> None:",
+                        "         self.__checkNotLocked()",
+                        "         self.__locked = True"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.566612958908081,
+                    "generation_timestamp": "2024-06-21T09:23:57.752135",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "255-268:lookupEnum": {
                     "start": 255,
@@ -223,11 +238,35 @@
                         "    def lookupEnum(self, type: typing.Type[typing.Any], name: str) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def lookupEnum(self, type: typing.Type[typing.Any], name: str) -> typing.Any:",
+                        "        ",
+                        "        if type is None:",
+                        "            raise ValueError(\"type must not be None\")",
+                        "        ",
+                        "        if name is None:",
+                        "            raise ValueError(\"name must not be None\")",
+                        "        ",
+                        "        map = self.__enumRenames.get(type)",
+                        "        ",
+                        "        if map is None:",
+                        "            return {}",
+                        "        ",
+                        "        value = map.get(name)",
+                        "        ",
+                        "        if value is not None:",
+                        "            return type(value)",
+                        "        ",
+                        "        return type[name]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.379026174545288,
+                    "generation_timestamp": "2024-06-21T09:23:04.749609",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "235-244:getEnumRenames": {
                     "start": 235,
@@ -264,11 +303,27 @@
                         "    def getEnumRenames(self, type: typing.Type[typing.Any]) -> typing.Dict[str, enum.Enum]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getEnumRenames(self, type: typing.Type[typing.Any]) -> typing.Dict[str, enum.Enum]:",
+                        "        ",
+                        "        if type is None:",
+                        "            raise ValueError(\"type must not be None\")",
+                        "        ",
+                        "        map = self.__enumRenames.get(type)",
+                        "        ",
+                        "        if map is None:",
+                        "            return {}",
+                        "        ",
+                        "        return dict(map)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 60.32594895362854,
+                    "generation_timestamp": "2024-06-21T09:22:59.365561",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "223-225:getEnumTypesWithRenames": {
                     "start": 223,
@@ -296,11 +351,18 @@
                         "    def getEnumTypesWithRenames(self) -> typing.Set[typing.Type[typing.Any]]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getEnumTypesWithRenames(self) -> typing.Set[typing.Type[typing.Any]]:",
+                        "         return set(self.__enumRenames.keys())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.47646427154541,
+                    "generation_timestamp": "2024-06-21T09:23:09.229279",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "199-214:renamedEnum": {
                     "start": 199,
@@ -350,11 +412,29 @@
                         "    def renamedEnum(self, oldName: str, currentValue: enum.Enum) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def renamedEnum(self, oldName: str, currentValue: enum.Enum) -> None:",
+                        "        ",
+                        "        if oldName is None:",
+                        "            raise ValueError(\"oldName must not be null\")",
+                        "        if currentValue is None:",
+                        "            raise ValueError(\"currentValue must not be null\")",
+                        "        self.__checkNotLocked()",
+                        "        enumType = type(currentValue)",
+                        "        perClass = self.__enumRenames.get(enumType)",
+                        "        if perClass is None:",
+                        "            self.__enumRenames[enumType] = {}",
+                        "            perClass = self.__enumRenames[enumType]",
+                        "        perClass[oldName] = currentValue"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.537862062454224,
+                    "generation_timestamp": "2024-06-21T09:24:09.293149",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "179-188:lookupType": {
                     "start": 179,
@@ -397,11 +477,27 @@
                         "    def lookupType(self, name: str) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def lookupType(self, name: str) -> typing.Type[typing.Any]:",
+                        "        ",
+                        "        if name is None:",
+                        "            raise IllegalArgumentException(\"name must not be null\")",
+                        "        ",
+                        "        type = self.__typeRenames.get(name)",
+                        "        ",
+                        "        if type is None:",
+                        "            type = StringConvert.loadType(name)",
+                        "        ",
+                        "        return type"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.865233898162842,
+                    "generation_timestamp": "2024-06-21T09:23:29.181511",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "168-170:getTypeRenames": {
                     "start": 168,
@@ -429,11 +525,18 @@
                         "    def getTypeRenames(self) -> typing.Dict[str, typing.Type[typing.Any]]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def getTypeRenames(self) -> typing.Dict[str, typing.Type[typing.Any]]:",
+                        "         return self.__typeRenames.copy()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.1842308044433594,
+                    "generation_timestamp": "2024-06-21T09:23:32.369001",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "144-159:renamedType": {
                     "start": 144,
@@ -483,11 +586,26 @@
                         "    def renamedType(self, oldName: str, currentValue: typing.Type[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def renamedType(self, oldName: str, currentValue: typing.Type[typing.Any]) -> None:",
+                        "        ",
+                        "        if oldName is None:",
+                        "            raise ValueError(\"oldName must not be null\")",
+                        "        if currentValue is None:",
+                        "            raise ValueError(\"currentValue must not be null\")",
+                        "        if oldName.startswith(\"java.\") or oldName.startswith(\"javax.\") or oldName.startswith(\"org.joda.\"):",
+                        "            raise ValueError(\"oldName must not be a java.*, javax.* or org.joda.* type\")",
+                        "        self.__checkNotLocked()",
+                        "        self.__typeRenames[oldName] = currentValue"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.34871244430542,
+                    "generation_timestamp": "2024-06-21T09:24:23.645227",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "125-131:create1": {
                     "start": 125,
@@ -534,11 +652,23 @@
                         "    def create1(loadFromClasspath: bool) -> RenameHandler:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def create1(loadFromClasspath: bool) -> RenameHandler:",
+                        "        ",
+                        "        handler = RenameHandler()",
+                        "        if loadFromClasspath:",
+                        "            handler.__loadFromClasspath()",
+                        "        return handler"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.9530918598175049,
+                    "generation_timestamp": "2024-06-21T09:25:59.805317",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "110-112:create0": {
                     "start": 110,
@@ -574,11 +704,24 @@
                         "    def create0() -> RenameHandler:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def create0() -> RenameHandler:",
+                        "        ",
+                        "        if RenameHandler.INSTANCE is not None:",
+                        "            raise Exception(\"This class is a singleton, use RenameHandler.INSTANCE to get the instance\")",
+                        "        else:",
+                        "            RenameHandler.INSTANCE = RenameHandler()",
+                        "            return RenameHandler.INSTANCE"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.7194879055023193,
+                    "generation_timestamp": "2024-06-21T09:26:02.530652",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "335-391:parseRenameFile": {
                     "start": 335,
@@ -679,11 +822,61 @@
                         "    def __parseRenameFile(self, lines: typing.List[str], url: typing.Union[urllib.parse.ParseResult, urllib.parse.SplitResult, urllib.parse.DefragResult, str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __parseRenameFile(self, lines: typing.List[str], url: typing.Union[urllib.parse.ParseResult, urllib.parse.SplitResult, urllib.parse.DefragResult, str]) -> None:",
+                        "        ",
+                        "        types = False",
+                        "        enums = False",
+                        "        for line in lines:",
+                        "            try:",
+                        "                if line.strip() == \"[types]\":",
+                        "                    types = True",
+                        "                    enums = False",
+                        "                elif line.strip() == \"[enums]\":",
+                        "                    types = False",
+                        "                    enums = True",
+                        "                elif types:",
+                        "                    equalsPos = line.find('=')",
+                        "                    if equalsPos < 0:",
+                        "                        raise ValueError(",
+                        "                            \"Renamed.ini type line must be formatted as 'oldClassName = newClassName'\")",
+                        "                    oldName = line[:equalsPos].strip()",
+                        "                    newName = line[equalsPos + 1:].strip()",
+                        "                    newClass = None",
+                        "                    try:",
+                        "                        newClass = StringConvert.loadType(newName)",
+                        "                    except Exception as ex:",
+                        "                        if self.__LOG:",
+                        "                            print(ex, file=sys.stderr)",
+                        "                        raise ValueError(",
+                        "                            f\"Class.forName({newName}) failed: {str(ex)}\")",
+                        "                    self.renamedType(oldName, newClass)",
+                        "                elif enums:",
+                        "                    equalsPos = line.find('=')",
+                        "                    lastDotPos = line.rfind('.')",
+                        "                    if equalsPos < 0 or lastDotPos < 0 or lastDotPos < equalsPos:",
+                        "                        raise ValueError(",
+                        "                            \"Renamed.ini enum line must be formatted as 'oldEnumConstantName = enumClassName.newEnumConstantName'\")",
+                        "                    oldName = line[:equalsPos].strip()",
+                        "                    enumClassName = line[equalsPos + 1:lastDotPos].strip()",
+                        "                    enumConstantName = line[lastDotPos + 1:].strip()",
+                        "                    enumClass = Class.forName(enumClassName).asSubclass(Enum)",
+                        "                    newEnum = Enum.valueOf(enumClass, enumConstantName)",
+                        "                    self.renamedEnum(oldName, newEnum)",
+                        "                else:",
+                        "                    raise ValueError(",
+                        "                        \"Renamed.ini must start with [types] or [enums]\")",
+                        "            except Exception as ex:",
+                        "                print(f\"ERROR: Invalid Renamed.ini: {url}: {str(ex)}\", file=sys.stderr)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 27.07160520553589,
+                    "generation_timestamp": "2024-06-21T09:24:50.724778",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "316-333:loadRenameFile": {
                     "start": 316,
@@ -728,11 +921,29 @@
                         "    def __loadRenameFile(self, url: typing.Union[urllib.parse.ParseResult, urllib.parse.SplitResult, urllib.parse.DefragResult, str]) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __loadRenameFile(self, url: typing.Union[urllib.parse.ParseResult, urllib.parse.SplitResult, urllib.parse.DefragResult, str]) -> typing.List[str]:",
+                        "        ",
+                        "        lines: typing.List[str] = []",
+                        "        reader = io.BufferedReader(io.TextIOWrapper(urllib.request.urlopen(url), encoding='utf-8'))",
+                        "        try:",
+                        "            line: str = ''",
+                        "            while (line := reader.readline()) != '':",
+                        "                trimmed: str = line.strip()",
+                        "                if not trimmed.startswith(\"#\") and trimmed != '':",
+                        "                    lines.append(trimmed)",
+                        "        finally:",
+                        "            reader.close()",
+                        "        return lines"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.60923147201538,
+                    "generation_timestamp": "2024-06-21T09:23:41.982359",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "288-314:loadFromClasspath": {
                     "start": 288,
@@ -796,10 +1007,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
                 },
                 "281-286:checkNotLocked": {
                     "start": 281,
@@ -830,11 +1045,20 @@
                         "    def __checkNotLocked(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __checkNotLocked(self) -> None:",
+                        "         if self.__locked:",
+                        "             raise IllegalStateException(",
+                        "                 \"RenameHandler has been locked and it cannot now be changed\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.196659088134766,
+                    "generation_timestamp": "2024-06-21T09:23:50.182127",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "134-134:RenameHandler": {
                     "start": 134,
@@ -860,11 +1084,27 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "        ",
+                        "        if RenameHandler.INSTANCE is not None:",
+                        "            raise Exception(\"This class is a singleton, use RenameHandler.INSTANCE to get the instance\")",
+                        "        else:",
+                        "            RenameHandler.INSTANCE = self",
+                        "",
+                        "        self.__enumRenames: Dict[Type[Any], Dict[str, Enum]] = {}",
+                        "        self.__typeRenames: Dict[str, Type[Any]] = {}",
+                        "        self.__locked: bool = False",
+                        "        self.__LOG: bool = StringConvert.LOG"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 15.280245542526245,
+                    "generation_timestamp": "2024-06-21T09:25:57.845431",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "77-90:createInstance": {
                     "start": 77,
@@ -916,11 +1156,30 @@
                         "    def __createInstance() -> RenameHandler:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __createInstance() -> RenameHandler:",
+                        "        ",
+                        "        instance = RenameHandler.create1(False)",
+                        "        try:",
+                        "            instance.__loadFromClasspath()",
+                        "",
+                        "        except IllegalStateException as ex:",
+                        "            print(\"ERROR: \" + str(ex))",
+                        "            traceback.print_exc()",
+                        "        except Exception as ex:",
+                        "            print(\"ERROR: Failed to load Renamed.ini files: \" + str(ex))",
+                        "            traceback.print_exc()",
+                        "        return instance"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.496224164962769,
+                    "generation_timestamp": "2024-06-21T09:26:11.030922",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -941,12 +1200,21 @@
                             "RenameHandler"
                         ]
                     ],
-                    "partial_translation": "    INSTANCE: RenameHandler = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    INSTANCE: RenameHandler = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    INSTANCE: RenameHandler = RenameHandler.__createInstance()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.2371087074279785,
+                    "generation_timestamp": "2024-06-21T11:05:08.368536",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "100-101:enumRenames": {
                     "start": 100,
@@ -965,12 +1233,22 @@
                             "java.util.concurrent.ConcurrentHashMap<Class<?>,Map<String,Enum<?>>>"
                         ]
                     ],
-                    "partial_translation": "    __enumRenames: typing.Dict[typing.Type[typing.Any], typing.Dict[str, enum.Enum]] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __enumRenames: typing.Dict[typing.Type[typing.Any], typing.Dict[str, enum.Enum]] = {}",
+                        ""
+                    ],
+                    "translation": [
+                        "    __enumRenames: typing.Dict[typing.Type[typing.Any], typing.Dict[str, enum.Enum]] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-21T08:47:08.403258",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "96-97:typeRenames": {
                     "start": 96,
@@ -989,12 +1267,22 @@
                             "java.util.concurrent.ConcurrentHashMap<String,Class<?>>"
                         ]
                     ],
-                    "partial_translation": "    __typeRenames: typing.Dict[str, typing.Type[typing.Any]] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __typeRenames: typing.Dict[str, typing.Type[typing.Any]] = {}",
+                        ""
+                    ],
+                    "translation": [
+                        "    __typeRenames: typing.Dict[str, typing.Type[typing.Any]] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-21T08:47:08.405851",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "93-93:locked": {
                     "start": 93,
@@ -1012,12 +1300,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __locked: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __locked: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __locked: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-06-21T08:47:08.408318",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "69-69:LOG": {
                     "start": 69,
@@ -1036,12 +1334,21 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __LOG: bool = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "partial_translation": [
+                        "    __LOG: bool = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOG: bool = StringConvert.LOG"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.080386400222778,
+                    "generation_timestamp": "2024-06-21T08:47:13.491053",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class RenameHandler:\n\n"
@@ -1052,6 +1359,7 @@
         "import io",
         "import enum",
         "import typing\nfrom typing import *",
+        "import urllib",
         "from src.main.org.joda.convert.StringConvert import *"
     ]
 }

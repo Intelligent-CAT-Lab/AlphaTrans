@@ -45,8 +45,13 @@ def l2_validation(members_to_validate: list[list]):
             components[schema_name] = {class_: [fragment_name]}
             
     print("Deriving compositional tests for the following components:", components)
+
     project.recompose_python_project(injected_translations)
+
     test = project.derive_compositional_tests(components, debug=True)
+    if test is None:
+        return "error", members_to_validate, []
+
     output = test.run()
     status = output['status']
     feedback = output['failed_tests']

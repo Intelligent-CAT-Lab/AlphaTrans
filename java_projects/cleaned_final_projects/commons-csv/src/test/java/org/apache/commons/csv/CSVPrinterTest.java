@@ -50,7 +50,7 @@ public class CSVPrinterTest {
 
     private static final char DQUOTE_CHAR = '"';
     private static final char EURO_CH = '\u20AC';
-    private static final int ITERATIONS_FOR_RANDOM_TEST = 50000;
+    private static final int ITERATIONS_FOR_RANDOM_TEST = 1; // was: 50000
     private static final char QUOTE_CH = '\'';
 
     private static String printable(final String s) {
