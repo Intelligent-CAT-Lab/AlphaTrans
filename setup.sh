@@ -125,41 +125,43 @@ function create_database_java() {
     mkdir -p databases;
     main=`pwd`;
     projects_dir=java_projects/original_projects;
+    # suffix=-evosuite;
+    suffix='';
 
     cd $projects_dir/commons-fileupload;
-    codeql database create ../../../databases/commons-fileupload --language=java --overwrite;
+    codeql database create ../../../databases/commons-fileupload$suffix --language=java --overwrite;
     cd $main;
 
     cd $projects_dir/commons-validator;
-    codeql database create ../../../databases/commons-validator --language=java --overwrite;
+    codeql database create ../../../databases/commons-validator$suffix --language=java --overwrite;
     cd $main;
 
     cd $projects_dir/commons-codec;
-    codeql database create ../../../databases/commons-codec --language=java --overwrite;
+    codeql database create ../../../databases/commons-codec$suffix --language=java --overwrite;
     cd $main;
 
     cd $projects_dir/commons-pool;
-    codeql database create ../../../databases/commons-pool --language=java --overwrite;
+    codeql database create ../../../databases/commons-pool$suffix --language=java --overwrite;
     cd $main;
 
     cd $projects_dir/commons-cli;
-    codeql database create ../../../databases/commons-cli --language=java --overwrite;
+    codeql database create ../../../databases/commons-cli$suffix --language=java --overwrite;
     cd $main;
 
     cd $projects_dir/commons-csv;
-    codeql database create ../../../databases/commons-csv --language=java --overwrite;
+    codeql database create ../../../databases/commons-csv$suffix --language=java --overwrite;
     cd $main;
 
     cd $projects_dir/commons-graph;
-    codeql database create ../../../databases/commons-graph --language=java --overwrite;
+    codeql database create ../../../databases/commons-graph$suffix --language=java --overwrite;
     cd $main;
 
     cd $projects_dir/joda-money;
-    codeql database create ../../../databases/joda-money --language=java --overwrite;
+    codeql database create ../../../databases/joda-money$suffix --language=java --overwrite;
     cd $main;
 
     cd $projects_dir/joda-convert;
-    codeql database create ../../../databases/joda-convert --language=java --overwrite;
+    codeql database create ../../../databases/joda-convert$suffix --language=java --overwrite;
     cd $main;
 }
 
