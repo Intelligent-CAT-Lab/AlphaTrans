@@ -2,7 +2,7 @@ import re
 import ast
 
 
-def l0_validation(generation):
+def l0_validation(generation, fragment):
     generation = generation.replace('```python', '```')
     pattern = r'```((?:[^`]|`[^`]|``[^`])*?)```'
     match = re.search(pattern, generation, re.DOTALL)
@@ -10,6 +10,13 @@ def l0_validation(generation):
     if match:
         try:
             output = match.group(1)
+
+            if fragment == 'field': # remove import lines from generation
+                generation_lines = output.strip().split('\n')
+                if generation_lines[0].strip().startswith('import') or generation_lines[0].strip().startswith('from'):
+                    generation_lines = generation_lines[1:]
+                output = '\n'.join(generation_lines)
+
             if not output.startswith('    '):
                 output = '    ' + output.strip()
             ast.parse('class dummy:\n' + output)
