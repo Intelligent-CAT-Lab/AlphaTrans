@@ -24,25 +24,34 @@ default_type_value = default_type_value_class()
 IMMUTABLES =  ['int', 'double', 'float', 'long', 'boolean', 'char', 'String']
 
 
-def type_mapping(obj: str, target_type: str, include_idMap=False, calling_from_python=False) -> str:
-    # handle arrays separately
-    # TODO: This may not work in general
+def type_mapping(obj: str, target_type: str, include_idMap=False, calling_from_python=False, target_object=None) -> str:
+    """
+    Return the code to convert a python Value to a Java object.
+    
+    obj: The python Value (expression) to be converted.
+    target_type: The target Java type.
+    include_idMap: If True, include idMap in the conversion.
+    calling_from_python: Whether this will be called from Python (so that the JavaHandler is used).
+    target_object: The target object which will receive the converted value.    
+    """
+    # handle arrays separately (TODO: This may not work in general)
     if target_type.endswith("[]"):        
         if calling_from_python:
             return obj
         else:
             return f"IntegrationUtils.valueToArray({obj}, {target_type}.class)"
     
-    if include_idMap:
-        if calling_from_python:
-            return obj # TODO: include idMap
-        else:
-            return f"IntegrationUtils.valueToObject({obj}, \"{target_type}\", idMap)"
+    caller = "JavaHandler.valueToObject" if calling_from_python else "IntegrationUtils.valueToObject"
     
-    if calling_from_python:
-        return f"JavaHandler.valueToObject({obj}, \"{target_type}\")"
-    else:
-        return f"IntegrationUtils.valueToObject({obj}, \"{target_type}\")"
+    # TODO FIXME: JavaHandler.valueToObject does not handle idMap!! 
+    return "{caller}({args})".format(
+        caller=caller,
+        args=", ".join([
+            obj,
+            f'"{target_type}"'
+        ] + (["idMap"] if include_idMap else [])
+        + ([target_object] if target_object else [])
+    ))
 
 # load type handling information
 with open('src/compositional_glue_tests/type_handling.json') as f:
