@@ -376,7 +376,7 @@ class CompositionalTest:
                                 break
                         else:
                             raise ValueError(f"Method {_method} not found in class {_class} of schema {schema}!")
-                    
+  
                 schema_object.add_class(_class, schema_data['classes'][_class], methods_to_process)
                 
                 self.__exceptions.extend(schema_object.get_exceptions())
@@ -462,7 +462,7 @@ class CompositionalTest:
         """   
         self.project_schemas = [file_name for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}') if (
             'src.test' not in file_name # ignore test schemas
-            # and not file_name.endswith('_python_partial.json') # ignore partial schemas
+            and file_name.endswith('_python_partial.json') # only consider partial schemas
         )]
         
         if not schemas_to_process:
@@ -488,6 +488,7 @@ class CompositionalTest:
                     package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/",
                     mappings = ctx_mappings # We shouldn't need these anymore due to IntegrationUtils.valueToObject
                                             # but sometimes we need this for implicitly handling null values
+                                            # TODO: Remove after type-mapping at callback Py-J boundary
                 ),
                 priority = 1
             )
@@ -765,7 +766,7 @@ class SyncMethod:
             python_field_name = field_name
         
         if not self.reverse:
-            field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True)
+            field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True, target_object=field_name)
             self.fields.append(f"{field_name} = ({formatted_field_type}) {field_from_python};")
         else:
             self.fields.append(f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}, idMap));")
