@@ -31,22 +31,19 @@ class JavaHandler:
         
         # Properties
         if hasattr(x, 'getProperty'):
-            return JavaHandler.properties_to_dict(x)
+            return JavaHandler.properties_to_dict(x, id_map)
 
         # Map
         if hasattr(x, 'keySet'):
-            obj = JavaHandler.map_to_dict(x, id_map)
-            return obj
+            return JavaHandler.map_to_dict(x, id_map)
 
         # List
         if hasattr(x, 'toArray'):
-            obj = JavaHandler.list_to_list(x, id_map)
-            return obj
+            return JavaHandler.list_to_list(x, id_map)
 
         # Array
         if hasattr(x, 'length'):
-            obj = JavaHandler.array_to_list(x, id_map)
-            return obj
+            return JavaHandler.array_to_list(x, id_map)
 
         # handle the 'Class' type
         # this is safe because Strings don't have the foreign type
@@ -69,23 +66,23 @@ class JavaHandler:
 
         # handle StringReader
         if x.getClass().getName() == "java.io.StringReader":
-            obj = JavaHandler.stringreader_to_stringio(x, id_map)
-            return obj
+            return JavaHandler.stringreader_to_stringio(x, id_map)
 
         # handle StringWriter
         if x.getClass().getName() == "java.io.StringWriter":
-            obj = JavaHandler.stringwriter_to_stringio(x, id_map)
-            return obj
+            return JavaHandler.stringwriter_to_stringio(x, id_map)
 
         raise ValueError("Unknown Java object type: " + repr(x))
 
-    def properties_to_dict(x):
+    def properties_to_dict(x, id_map):
         D = dict()
+        id = JavaHandler.getJavaId(x)
+        id_map[id] = D
         for key in x.propertyNames():
             D[key] = x.getProperty(key)
         return D
 
-    def map_to_dict(x, id_map=None):
+    def map_to_dict(x, id_map):
         D = dict()
         id = JavaHandler.getJavaId(x)
         id_map[id] = D
@@ -93,7 +90,7 @@ class JavaHandler:
             D[JavaHandler.mapping(key)] = JavaHandler.mapping(x.get(key), id_map)
         return D
     
-    def list_to_list(x, id_map=None):
+    def list_to_list(x, id_map):
         L = []
         id = JavaHandler.getJavaId(x)
         id_map[id] = L
@@ -101,7 +98,7 @@ class JavaHandler:
             L.append(JavaHandler.mapping(item, id_map))        
         return L
 
-    def array_to_list(x, id_map=None):
+    def array_to_list(x, id_map):
         L = []
         id = JavaHandler.getJavaId(x)
         id_map[id] = L
@@ -109,7 +106,7 @@ class JavaHandler:
             L.append(JavaHandler.mapping(x[i], id_map))
         return L
 
-    def stringreader_to_stringio(x, id_map=None):
+    def stringreader_to_stringio(x, id_map):
         S = io.StringIO()
         id = JavaHandler.getJavaId(x)
         id_map[id] = S
@@ -118,21 +115,26 @@ class JavaHandler:
         S.seek(0)
         return S
 
-    def stringwriter_to_stringio(x, id_map=None):
+    def stringwriter_to_stringio(x, id_map):
         S = io.StringIO()
         id = JavaHandler.getJavaId(x)
         id_map[id] = S
         S.write(x.toString())
         return S
     
-    def getJavaId(obj):
-        return java.type('{project}.IntegrationUtils').getIdentityHashCode(obj)
-
-    def valueToObject(obj, class_descriptor: str):
-        return java.type('{project}.IntegrationUtils').valueToObject(obj, class_descriptor)
-
     def getPythonId(obj):
         return id(obj)
+
+    IntegrationUtils = java.type('{project}.IntegrationUtils')
+
+    def getJavaId(obj):
+        return JavaHandler.IntegrationUtils.getIdentityHashCode(obj)
+
+    def valueToObject(obj, class_descriptor: str, idMap=None):
+        if not idMap:
+            return JavaHandler.IntegrationUtils.valueToObject(obj, class_descriptor)
+        
+        return JavaHandler.IntegrationUtils.valueToObject(obj, class_descriptor, idMap)
 
 
 class ExceptionHandler:

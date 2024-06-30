@@ -19,10 +19,14 @@ public final class IntegrationUtils {{
   }}
 
   public static Object valueToObject(Value value, String classDescriptor) {{
-    return valueToObject(value, classDescriptor, new HashMap<>());
+    return valueToObject(value, classDescriptor, new HashMap<>(), null);
   }}
 
   public static Object valueToObject(Value value, String classDescriptor, Map<Long, Object> idMap) {{
+    return valueToObject(value, classDescriptor, idMap, null);
+  }}
+
+  public static Object valueToObject(Value value, String classDescriptor, Map<Long, Object> idMap, Object targetObject) {{
     // Nullify
     if (value.isNull()) {{
       return null;
@@ -53,13 +57,20 @@ public final class IntegrationUtils {{
     String primaryClassName = classDescriptor.split("<")[0];
 
     // handle lists
-    if (value.hasArrayElements() && primaryClassName.equals("List")) {{
+    // need not check `primaryClassName.equals("List")` because arrays are handled separately
+    if (value.hasArrayElements()) {{
       String innerClassName = "";
       if (classDescriptor.contains("<")) {{
         innerClassName = classDescriptor.substring(
             classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
       }}
       List<Object> list = new ArrayList<>();
+
+      if (targetObject != null) {{        
+        list = (List<Object>) targetObject;
+        list.clear();
+      }}
+
       idMap.put(id, list);
       for (int i = 0; i < value.getArraySize(); i++) {{
         list.add(valueToObject(value.getArrayElement(i), innerClassName, idMap));
@@ -68,7 +79,8 @@ public final class IntegrationUtils {{
     }}
 
     // handle maps
-    if (value.hasHashEntries() && primaryClassName.equals("Map")) {{
+    // need not check `primaryClassName.equals("Map")` because there is no other case yet
+    if (value.hasHashEntries()) {{
       String keyClassName = "";
       String valueClassName = "";
       if (classDescriptor.contains("<")) {{
@@ -80,20 +92,23 @@ public final class IntegrationUtils {{
       }}
 
       Map<Object, Object> map = new LinkedHashMap<>();
+
+      if (targetObject != null) {{
+        map = (Map<Object, Object>) targetObject;
+        map.clear();
+      }}      
+
       idMap.put(id, map);
       for (Object key : value.getHashKeysIterator().as(Iterable.class)) {{
         map.put(
-            valueToObject(Value.asValue(key), keyClassName),
-            valueToObject(value.getHashValue(key), valueClassName));
+          valueToObject(Value.asValue(key), keyClassName, idMap),
+          valueToObject(value.getHashValue(key), valueClassName, idMap));
       }}
       return map;
     }}
 
     // handle strings and characters
     if (value.isString()) {{
-      if (classDescriptor.equals("String")) {{
-        return value.asString();
-      }}
       if (classDescriptor.equals("Character")) {{
         return value.as(Character.class);
       }}
@@ -104,6 +119,9 @@ public final class IntegrationUtils {{
         String str = value.asString();
         return new StringBuilder(str);
       }}
+
+      // Default to "String"
+      return value.asString();
     }}
 
     // handle other types
