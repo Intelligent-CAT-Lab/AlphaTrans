@@ -1,0 +1,696 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-validator/src/test/java/org/apache/commons/validator/routines/CurrencyValidatorTest.java",
+    "imports": {
+        "23-23:import Locale": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "21-21:import BigDecimal": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.math.BigDecimal;\n"
+            ]
+        },
+        "22-22:import DecimalFormatSymbols": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.text.DecimalFormatSymbols;\n"
+            ]
+        },
+        "19-19:import TestCase": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import junit.framework.TestCase;\n"
+            ]
+        }
+    },
+    "classes": {
+        "CurrencyValidatorTest": {
+            "start": 30,
+            "end": 30,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "unittest.TestCase"
+            ],
+            "methods": {
+                "59-61:tearDown": {
+                    "start": 59,
+                    "end": 61,
+                    "body": [
+                        "    protected void tearDown() throws Exception {\n",
+                        "        super.tearDown();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "tearDown()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _tearDown(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "47-51:setUp": {
+                    "start": 47,
+                    "end": 51,
+                    "body": [
+                        "    protected void setUp() throws Exception {\n",
+                        "        super.setUp();\n",
+                        "        US_DOLLAR = (new DecimalFormatSymbols(Locale.US)).getCurrencySymbol();\n",
+                        "        UK_POUND = (new DecimalFormatSymbols(Locale.UK)).getCurrencySymbol();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setUp()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def _setUp(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "168-202:testPattern": {
+                    "start": 168,
+                    "end": 202,
+                    "body": [
+                        "    public void testPattern() {\n",
+                        "        Locale origDefault = Locale.getDefault();\n",
+                        "        Locale.setDefault(Locale.UK);\n",
+                        "\n",
+                        "        BigDecimalValidator validator = CurrencyValidator.getInstance();\n",
+                        "        String basicPattern = CURRENCY_SYMBOL + \"#,##0.000\";\n",
+                        "        String pattern = basicPattern + \";[\" + basicPattern + \"]\";\n",
+                        "        BigDecimal expected = new BigDecimal(\"1234.567\");\n",
+                        "        BigDecimal negative = new BigDecimal(\"-1234.567\");\n",
+                        "\n",
+                        "        assertEquals(\"default\", expected, validator.validate1(UK_POUND + \"1,234.567\", pattern));\n",
+                        "        assertEquals(\n",
+                        "                \"negative\", negative, validator.validate1(\"[\" + UK_POUND + \"1,234.567]\", pattern));\n",
+                        "        assertEquals(\"no symbol +ve\", expected, validator.validate1(\"1,234.567\", pattern));\n",
+                        "        assertEquals(\"no symbol -ve\", negative, validator.validate1(\"[1,234.567]\", pattern));\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                \"default\",\n",
+                        "                expected,\n",
+                        "                validator.validate3(US_DOLLAR + \"1,234.567\", pattern, Locale.US));\n",
+                        "        assertEquals(\n",
+                        "                \"negative\",\n",
+                        "                negative,\n",
+                        "                validator.validate3(\"[\" + US_DOLLAR + \"1,234.567]\", pattern, Locale.US));\n",
+                        "        assertEquals(\n",
+                        "                \"no symbol +ve\", expected, validator.validate3(\"1,234.567\", pattern, Locale.US));\n",
+                        "        assertEquals(\n",
+                        "                \"no symbol -ve\", negative, validator.validate3(\"[1,234.567]\", pattern, Locale.US));\n",
+                        "\n",
+                        "        assertFalse(\"invalid symbol\", validator.isValid1(US_DOLLAR + \"1,234.567\", pattern));\n",
+                        "        assertFalse(\n",
+                        "                \"invalid symbol\", validator.isValid3(UK_POUND + \"1,234.567\", pattern, Locale.US));\n",
+                        "\n",
+                        "        Locale.setDefault(origDefault);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPattern()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                            "CurrencyValidator",
+                            "60-62:getInstance"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                            "BigDecimalValidator",
+                            "140-142:validate1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                            "BigDecimalValidator",
+                            "165-167:validate3"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "79-81:isValid1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "93-96:isValid3"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testPattern(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "157-165:testIntegerInvalid": {
+                    "start": 157,
+                    "end": 165,
+                    "body": [
+                        "    public void testIntegerInvalid() {\n",
+                        "        CurrencyValidator validator = new CurrencyValidator(true, false);\n",
+                        "\n",
+                        "        assertFalse(\"UK positive\", validator.isValid2(UK_POUND + \"1,234.56\", Locale.UK));\n",
+                        "        assertFalse(\"UK negative\", validator.isValid2(\"-\" + UK_POUND + \"1,234.56\", Locale.UK));\n",
+                        "\n",
+                        "        assertFalse(\"US positive\", validator.isValid2(US_DOLLAR + \"1,234.56\", Locale.US));\n",
+                        "        assertFalse(\"US negative\", validator.isValid2(\"(\" + US_DOLLAR + \"1,234.56)\", Locale.US));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testIntegerInvalid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                            "CurrencyValidator",
+                            "65-67:CurrencyValidator"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "90-92:isValid2"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testIntegerInvalid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "133-154:testIntegerValid": {
+                    "start": 133,
+                    "end": 154,
+                    "body": [
+                        "    public void testIntegerValid() {\n",
+                        "        Locale origDefault = Locale.getDefault();\n",
+                        "        Locale.setDefault(Locale.UK);\n",
+                        "\n",
+                        "        CurrencyValidator validator = CurrencyValidator.CurrencyValidator1();\n",
+                        "        BigDecimal expected = new BigDecimal(\"1234.00\");\n",
+                        "        BigDecimal negative = new BigDecimal(\"-1234.00\");\n",
+                        "\n",
+                        "        assertEquals(\"Default locale\", expected, validator.validate0(UK_POUND + \"1,234\"));\n",
+                        "\n",
+                        "        assertEquals(\"UK locale\", expected, validator.validate2(UK_POUND + \"1,234\", Locale.UK));\n",
+                        "        assertEquals(\n",
+                        "                \"UK negative\", negative, validator.validate2(\"-\" + UK_POUND + \"1,234\", Locale.UK));\n",
+                        "\n",
+                        "        assertEquals(\"US locale\", expected, validator.validate2(US_DOLLAR + \"1,234\", Locale.US));\n",
+                        "        assertEquals(\n",
+                        "                \"US negative\",\n",
+                        "                negative,\n",
+                        "                validator.validate2(\"(\" + US_DOLLAR + \"1,234)\", Locale.US));\n",
+                        "\n",
+                        "        Locale.setDefault(origDefault);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testIntegerValid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                            "CurrencyValidator",
+                            "69-71:CurrencyValidator1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                            "BigDecimalValidator",
+                            "128-130:validate0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                            "BigDecimalValidator",
+                            "151-153:validate2"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testIntegerValid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "115-130:testInvalid": {
+                    "start": 115,
+                    "end": 130,
+                    "body": [
+                        "    public void testInvalid() {\n",
+                        "        BigDecimalValidator validator = CurrencyValidator.getInstance();\n",
+                        "\n",
+                        "        assertFalse(\"isValid() Null Value\", validator.isValid0(null));\n",
+                        "        assertFalse(\"isValid() Empty Value\", validator.isValid0(\"\"));\n",
+                        "        assertNull(\"validate() Null Value\", validator.validate0(null));\n",
+                        "        assertNull(\"validate() Empty Value\", validator.validate0(\"\"));\n",
+                        "\n",
+                        "        assertFalse(\"UK wrong symbol\", validator.isValid2(US_DOLLAR + \"1,234.56\", Locale.UK));\n",
+                        "        assertFalse(\n",
+                        "                \"UK wrong negative\", validator.isValid2(\"(\" + UK_POUND + \"1,234.56)\", Locale.UK));\n",
+                        "\n",
+                        "        assertFalse(\"US wrong symbol\", validator.isValid2(UK_POUND + \"1,234.56\", Locale.US));\n",
+                        "        assertFalse(\n",
+                        "                \"US wrong negative\", validator.isValid2(\"-\" + US_DOLLAR + \"1,234.56\", Locale.US));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testInvalid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                            "CurrencyValidator",
+                            "60-62:getInstance"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "68-70:isValid0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                            "BigDecimalValidator",
+                            "128-130:validate0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "90-92:isValid2"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testInvalid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "73-112:testValid": {
+                    "start": 73,
+                    "end": 112,
+                    "body": [
+                        "    public void testValid() {\n",
+                        "        Locale origDefault = Locale.getDefault();\n",
+                        "        Locale.setDefault(Locale.UK);\n",
+                        "\n",
+                        "        BigDecimalValidator validator = CurrencyValidator.getInstance();\n",
+                        "        BigDecimal expected = new BigDecimal(\"1234.56\");\n",
+                        "        BigDecimal negative = new BigDecimal(\"-1234.56\");\n",
+                        "        BigDecimal noDecimal = new BigDecimal(\"1234.00\");\n",
+                        "        BigDecimal oneDecimal = new BigDecimal(\"1234.50\");\n",
+                        "\n",
+                        "        assertEquals(\"Default locale\", expected, validator.validate0(UK_POUND + \"1,234.56\"));\n",
+                        "\n",
+                        "        assertEquals(\"UK locale\", expected, validator.validate2(UK_POUND + \"1,234.56\", Locale.UK));\n",
+                        "        assertEquals(\n",
+                        "                \"UK negative\",\n",
+                        "                negative,\n",
+                        "                validator.validate2(\"-\" + UK_POUND + \"1,234.56\", Locale.UK));\n",
+                        "        assertEquals(\n",
+                        "                \"UK no decimal\", noDecimal, validator.validate2(UK_POUND + \"1,234\", Locale.UK));\n",
+                        "        assertEquals(\n",
+                        "                \"UK 1 decimal\", oneDecimal, validator.validate2(UK_POUND + \"1,234.5\", Locale.UK));\n",
+                        "        assertEquals(\n",
+                        "                \"UK 3 decimal\", expected, validator.validate2(UK_POUND + \"1,234.567\", Locale.UK));\n",
+                        "        assertEquals(\"UK no symbol\", expected, validator.validate2(\"1,234.56\", Locale.UK));\n",
+                        "\n",
+                        "        assertEquals(\"US locale\", expected, validator.validate2(US_DOLLAR + \"1,234.56\", Locale.US));\n",
+                        "        assertEquals(\n",
+                        "                \"US negative\",\n",
+                        "                negative,\n",
+                        "                validator.validate2(\"(\" + US_DOLLAR + \"1,234.56)\", Locale.US));\n",
+                        "        assertEquals(\n",
+                        "                \"US no decimal\", noDecimal, validator.validate2(US_DOLLAR + \"1,234\", Locale.US));\n",
+                        "        assertEquals(\n",
+                        "                \"US 1 decimal\", oneDecimal, validator.validate2(US_DOLLAR + \"1,234.5\", Locale.US));\n",
+                        "        assertEquals(\n",
+                        "                \"US 3 decimal\", expected, validator.validate2(US_DOLLAR + \"1,234.567\", Locale.US));\n",
+                        "        assertEquals(\"US no symbol\", expected, validator.validate2(\"1,234.56\", Locale.US));\n",
+                        "\n",
+                        "        Locale.setDefault(origDefault);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testValid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                            "CurrencyValidator",
+                            "60-62:getInstance"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                            "BigDecimalValidator",
+                            "128-130:validate0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                            "BigDecimalValidator",
+                            "151-153:validate2"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testValid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "64-70:testFormatType": {
+                    "start": 64,
+                    "end": 70,
+                    "body": [
+                        "    public void testFormatType() {\n",
+                        "        assertEquals(\"Format Type A\", 1, CurrencyValidator.getInstance().getFormatType());\n",
+                        "        assertEquals(\n",
+                        "                \"Format Type B\",\n",
+                        "                AbstractNumberValidator.CURRENCY_FORMAT,\n",
+                        "                CurrencyValidator.getInstance().getFormatType());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testFormatType()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "79-81:getFormatType"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                            "CurrencyValidator",
+                            "60-62:getInstance"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def testFormatType(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "42-44:CurrencyValidatorTest": {
+                    "start": 42,
+                    "end": 44,
+                    "body": [
+                        "    public CurrencyValidatorTest(String name) {\n",
+                        "        super(name);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "CurrencyValidatorTest(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, name: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "35-35:UK_POUND": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private String UK_POUND;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __UK_POUND: str = ''",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "34-34:US_DOLLAR": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private String US_DOLLAR;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __US_DOLLAR: str = ''",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "32-32:CURRENCY_SYMBOL": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    private static final char CURRENCY_SYMBOL = '\\u00A4';\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __CURRENCY_SYMBOL: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "python_class_declaration": "class CurrencyValidatorTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import unittest",
+        "from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *",
+        "from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *",
+        "from src.main.org.apache.commons.validator.routines.CurrencyValidator import *"
+    ]
+}

@@ -1,0 +1,634 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-money/src/main/java/org/joda/money/format/AmountPrinterParser.java",
+    "imports": {
+        "21-21:import Serializable": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "20-20:import IOException": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "22-22:import BigDecimal": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.math.BigDecimal;\n"
+            ]
+        },
+        "18-18:import BigMoney": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import org.joda.money.BigMoney;\n"
+            ]
+        }
+    },
+    "classes": {
+        "AmountPrinterParser": {
+            "start": 29,
+            "end": 29,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "MoneyParser",
+                "MoneyPrinter"
+            ],
+            "extends": [],
+            "methods": {
+                "187-189:toString": {
+                    "start": 187,
+                    "end": 189,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return \"${amount}\";\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "135-184:parse": {
+                    "start": 135,
+                    "end": 184,
+                    "body": [
+                        "    public void parse(MoneyParseContext context) {\n",
+                        "        final int len = context.getTextLength();\n",
+                        "        final MoneyAmountStyle activeStyle = style.localize(context.getLocale());\n",
+                        "        char[] buf = new char[len - context.getIndex()];\n",
+                        "        int bufPos = 0;\n",
+                        "        boolean dpSeen = false;\n",
+                        "        int pos = context.getIndex();\n",
+                        "        if (pos < len) {\n",
+                        "            char ch = context.getText().charAt(pos++);\n",
+                        "            if (ch == activeStyle.getNegativeSignCharacter()) {\n",
+                        "                buf[bufPos++] = '-';\n",
+                        "            } else if (ch == activeStyle.getPositiveSignCharacter()) {\n",
+                        "                buf[bufPos++] = '+';\n",
+                        "            } else if (ch >= activeStyle.getZeroCharacter()\n",
+                        "                    && ch < activeStyle.getZeroCharacter() + 10) {\n",
+                        "                buf[bufPos++] = (char) ('0' + ch - activeStyle.getZeroCharacter());\n",
+                        "            } else if (ch == activeStyle.getDecimalPointCharacter()) {\n",
+                        "                buf[bufPos++] = '.';\n",
+                        "                dpSeen = true;\n",
+                        "            } else {\n",
+                        "                context.setError();\n",
+                        "                return;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        boolean lastWasGroup = false;\n",
+                        "        for (; pos < len; pos++) {\n",
+                        "            char ch = context.getText().charAt(pos);\n",
+                        "            if (ch >= activeStyle.getZeroCharacter() && ch < activeStyle.getZeroCharacter() + 10) {\n",
+                        "                buf[bufPos++] = (char) ('0' + ch - activeStyle.getZeroCharacter());\n",
+                        "                lastWasGroup = false;\n",
+                        "            } else if (ch == activeStyle.getDecimalPointCharacter() && dpSeen == false) {\n",
+                        "                buf[bufPos++] = '.';\n",
+                        "                dpSeen = true;\n",
+                        "                lastWasGroup = false;\n",
+                        "            } else if (ch == activeStyle.getGroupingCharacter() && lastWasGroup == false) {\n",
+                        "                lastWasGroup = true;\n",
+                        "            } else {\n",
+                        "                break;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        if (lastWasGroup) {\n",
+                        "            pos--;\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            context.setAmount(new BigDecimal(buf, 0, bufPos));\n",
+                        "            context.setIndex(pos);\n",
+                        "        } catch (NumberFormatException ex) {\n",
+                        "            context.setError();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "parse(MoneyParseContext)",
+                    "parameters": [
+                        "context"
+                    ],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
+                            "MoneyParseContext",
+                            "136-138:getTextLength"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "212-245:localize"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
+                            "MoneyParseContext",
+                            "98-100:getLocale"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
+                            "MoneyParseContext",
+                            "156-158:getIndex"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
+                            "MoneyParseContext",
+                            "117-119:getText"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "373-375:getNegativeSignCharacter"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "336-338:getPositiveSignCharacter"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "294-296:getZeroCharacter"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "408-410:getDecimalPointCharacter"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
+                            "MoneyParseContext",
+                            "188-190:setError"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "443-445:getGroupingCharacter"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
+                            "MoneyParseContext",
+                            "224-226:setAmount"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
+                            "MoneyParseContext",
+                            "165-167:setIndex"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def parse(self, context: MoneyParseContext) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "47-115:print": {
+                    "start": 47,
+                    "end": 115,
+                    "body": [
+                        "    public void print(MoneyPrintContext context, Appendable appendable, BigMoney money)\n",
+                        "            throws IOException {\n",
+                        "        MoneyAmountStyle activeStyle = style.localize(context.getLocale());\n",
+                        "        String str;\n",
+                        "        if (money.isNegative()) {\n",
+                        "            if (!activeStyle.isAbsValue()) {\n",
+                        "                appendable.append(activeStyle.getNegativeSignCharacter());\n",
+                        "            }\n",
+                        "            str = money.negated().getAmount().toPlainString();\n",
+                        "        } else {\n",
+                        "            str = money.getAmount().toPlainString();\n",
+                        "        }\n",
+                        "        char zeroChar = activeStyle.getZeroCharacter();\n",
+                        "        if (zeroChar != '0') {\n",
+                        "            int diff = zeroChar - '0';\n",
+                        "            StringBuilder zeroConvert = new StringBuilder(str);\n",
+                        "            for (int i = 0; i < str.length(); i++) {\n",
+                        "                char ch = str.charAt(i);\n",
+                        "                if (ch >= '0' && ch <= '9') {\n",
+                        "                    zeroConvert.setCharAt(i, (char) (ch + diff));\n",
+                        "                }\n",
+                        "            }\n",
+                        "            str = zeroConvert.toString();\n",
+                        "        }\n",
+                        "        final int decPoint = str.indexOf('.');\n",
+                        "        final int afterDecPoint = decPoint + 1;\n",
+                        "        if (activeStyle.getGroupingStyle() == GroupingStyle.NONE) {\n",
+                        "            if (decPoint < 0) {\n",
+                        "                appendable.append(str);\n",
+                        "                if (activeStyle.isForcedDecimalPoint()) {\n",
+                        "                    appendable.append(activeStyle.getDecimalPointCharacter());\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                appendable\n",
+                        "                        .append(str.subSequence(0, decPoint))\n",
+                        "                        .append(activeStyle.getDecimalPointCharacter())\n",
+                        "                        .append(str.substring(afterDecPoint));\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            int groupingSize = activeStyle.getGroupingSize();\n",
+                        "            int extendedGroupingSize = activeStyle.getExtendedGroupingSize();\n",
+                        "            extendedGroupingSize = extendedGroupingSize == 0 ? groupingSize : extendedGroupingSize;\n",
+                        "            char groupingChar = activeStyle.getGroupingCharacter();\n",
+                        "            int pre = (decPoint < 0 ? str.length() : decPoint);\n",
+                        "            int post = (decPoint < 0 ? 0 : str.length() - decPoint - 1);\n",
+                        "            appendable.append(str.charAt(0));\n",
+                        "            for (int i = 1; i < pre; i++) {\n",
+                        "                if (isPreGroupingPoint(pre - i, groupingSize, extendedGroupingSize)) {\n",
+                        "                    appendable.append(groupingChar);\n",
+                        "                }\n",
+                        "                appendable.append(str.charAt(i));\n",
+                        "            }\n",
+                        "            if (decPoint >= 0 || activeStyle.isForcedDecimalPoint()) {\n",
+                        "                appendable.append(activeStyle.getDecimalPointCharacter());\n",
+                        "            }\n",
+                        "            if (activeStyle.getGroupingStyle() == GroupingStyle.BEFORE_DECIMAL_POINT) {\n",
+                        "                if (decPoint >= 0) {\n",
+                        "                    appendable.append(str.substring(afterDecPoint));\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                for (int i = 0; i < post; i++) {\n",
+                        "                    appendable.append(str.charAt(i + afterDecPoint));\n",
+                        "                    if (isPostGroupingPoint(i, post, groupingSize, extendedGroupingSize)) {\n",
+                        "                        appendable.append(groupingChar);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "print(MoneyPrintContext, Appendable, BigMoney)",
+                    "parameters": [
+                        "context",
+                        "appendable",
+                        "money"
+                    ],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "212-245:localize"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyPrintContext",
+                            "MoneyPrintContext",
+                            "46-48:getLocale"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "294-296:getZeroCharacter"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.BigMoney",
+                            "BigMoney",
+                            "710-712:isNegative"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "628-630:isAbsValue"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "373-375:getNegativeSignCharacter"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.BigMoney",
+                            "BigMoney",
+                            "563-565:getAmount"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.BigMoney",
+                            "BigMoney",
+                            "1383-1388:negated"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "559-561:getGroupingStyle"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "592-594:isForcedDecimalPoint"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "408-410:getDecimalPointCharacter"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "478-480:getGroupingSize"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "521-523:getExtendedGroupingSize"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyAmountStyle",
+                            "MoneyAmountStyle",
+                            "443-445:getGroupingCharacter"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.AmountPrinterParser",
+                            "AmountPrinterParser",
+                            "117-122:isPreGroupingPoint"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.AmountPrinterParser",
+                            "AmountPrinterParser",
+                            "124-132:isPostGroupingPoint"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def print(self, context: MoneyPrintContext, appendable: typing.Union[typing.List, io.TextIOBase], money: BigMoney) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "124-132:isPostGroupingPoint": {
+                    "start": 124,
+                    "end": 132,
+                    "body": [
+                        "    private boolean isPostGroupingPoint(\n",
+                        "            int i, int post, int groupingSize, int extendedGroupingSize) {\n",
+                        "        boolean atEnd = (i + 1) >= post;\n",
+                        "        if (i > groupingSize) {\n",
+                        "            return (i - groupingSize) % extendedGroupingSize == (extendedGroupingSize - 1)\n",
+                        "                    && !atEnd;\n",
+                        "        }\n",
+                        "        return i % groupingSize == (groupingSize - 1) && !atEnd;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isPostGroupingPoint(int, int, int, int)",
+                    "parameters": [
+                        "i",
+                        "post",
+                        "groupingSize",
+                        "extendedGroupingSize"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __isPostGroupingPoint(self, i: int, post: int, groupingSize: int, extendedGroupingSize: int) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "117-122:isPreGroupingPoint": {
+                    "start": 117,
+                    "end": 122,
+                    "body": [
+                        "    private boolean isPreGroupingPoint(int remaining, int groupingSize, int extendedGroupingSize) {\n",
+                        "        if (remaining >= groupingSize + extendedGroupingSize) {\n",
+                        "            return (remaining - groupingSize) % extendedGroupingSize == 0;\n",
+                        "        }\n",
+                        "        return remaining % groupingSize == 0;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isPreGroupingPoint(int, int, int)",
+                    "parameters": [
+                        "remaining",
+                        "groupingSize",
+                        "extendedGroupingSize"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __isPreGroupingPoint(self, remaining: int, groupingSize: int, extendedGroupingSize: int) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "42-44:AmountPrinterParser": {
+                    "start": 42,
+                    "end": 44,
+                    "body": [
+                        "    AmountPrinterParser(MoneyAmountStyle style) {\n",
+                        "        this.style = style;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "AmountPrinterParser(MoneyAmountStyle)",
+                    "parameters": [
+                        "style"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, style: MoneyAmountStyle) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "35-35:style": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private final MoneyAmountStyle style;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "MoneyAmountStyle",
+                            "MoneyAmountStyle"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __style: MoneyAmountStyle = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "32-32:serialVersionUID": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    private static final long serialVersionUID = 1L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "python_class_declaration": "class AmountPrinterParser(MoneyParser, MoneyPrinter):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import IOBase",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.org.joda.money.BigMoney import *",
+        "from src.main.org.joda.money.format.GroupingStyle import *",
+        "from src.main.org.joda.money.format.MoneyAmountStyle import *",
+        "from src.main.org.joda.money.format.MoneyParseContext import *",
+        "from src.main.org.joda.money.format.MoneyParser import *",
+        "from src.main.org.joda.money.format.MoneyPrintContext import *",
+        "from src.main.org.joda.money.format.MoneyPrinter import *"
+    ]
+}

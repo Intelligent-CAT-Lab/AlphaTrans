@@ -1,0 +1,484 @@
+{
+    "path": "java_projects/cleaned_final_projects/joda-money/src/main/java/org/joda/money/format/MultiPrinterParser.java",
+    "imports": {
+        "21-21:import Serializable": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "20-20:import IOException": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "22-22:import Arrays": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "18-18:import BigMoney": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import org.joda.money.BigMoney;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MultiPrinterParser": {
+            "start": 29,
+            "end": 29,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "MoneyParser",
+                "MoneyPrinter"
+            ],
+            "extends": [],
+            "methods": {
+                "83-107:toString": {
+                    "start": 83,
+                    "end": 107,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        StringBuilder buf1 = new StringBuilder();\n",
+                        "        if (isPrinter()) {\n",
+                        "            for (MoneyPrinter printer : printers) {\n",
+                        "                buf1.append(printer.toString());\n",
+                        "            }\n",
+                        "        }\n",
+                        "        StringBuilder buf2 = new StringBuilder();\n",
+                        "        if (isParser()) {\n",
+                        "            for (MoneyParser parser : parsers) {\n",
+                        "                buf2.append(parser.toString());\n",
+                        "            }\n",
+                        "        }\n",
+                        "        String str1 = buf1.toString();\n",
+                        "        String str2 = buf2.toString();\n",
+                        "        if (isPrinter() && isParser() == false) {\n",
+                        "            return str1;\n",
+                        "        } else if (isParser() && isPrinter() == false) {\n",
+                        "            return str2;\n",
+                        "        } else if (str1.equals(str2)) {\n",
+                        "            return str1;\n",
+                        "        } else {\n",
+                        "            return str1 + \":\" + str2;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.format.MultiPrinterParser",
+                            "MultiPrinterParser",
+                            "50-52:isPrinter"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MultiPrinterParser",
+                            "MultiPrinterParser",
+                            "54-56:isParser"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                },
+                "73-80:parse": {
+                    "start": 73,
+                    "end": 80,
+                    "body": [
+                        "    public void parse(MoneyParseContext context) {\n",
+                        "        for (MoneyParser parser : parsers) {\n",
+                        "            parser.parse(context);\n",
+                        "            if (context.isError()) {\n",
+                        "                break;\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "parse(MoneyParseContext)",
+                    "parameters": [
+                        "context"
+                    ],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyParser",
+                            "MoneyParser",
+                            "45-45:parse"
+                        ],
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyParseContext",
+                            "MoneyParseContext",
+                            "233-235:isError"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def parse(self, context: MoneyParseContext) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                },
+                "65-70:print": {
+                    "start": 65,
+                    "end": 70,
+                    "body": [
+                        "    public void print(MoneyPrintContext context, Appendable appendable, BigMoney money)\n",
+                        "            throws IOException {\n",
+                        "        for (MoneyPrinter printer : printers) {\n",
+                        "            printer.print(context, appendable, money);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "print(MoneyPrintContext, Appendable, BigMoney)",
+                    "parameters": [
+                        "context",
+                        "appendable",
+                        "money"
+                    ],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyPrinter",
+                            "MoneyPrinter",
+                            "49-49:print"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def print(self, context: MoneyPrintContext, appendable: typing.Union[typing.List, io.TextIOBase], money: BigMoney) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                },
+                "58-62:appendTo": {
+                    "start": 58,
+                    "end": 62,
+                    "body": [
+                        "    void appendTo(MoneyFormatterBuilder builder) {\n",
+                        "        for (int i = 0; i < printers.length; i++) {\n",
+                        "            builder.append1(printers[i], parsers[i]);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "appendTo(MoneyFormatterBuilder)",
+                    "parameters": [
+                        "builder"
+                    ],
+                    "calls": [
+                        [
+                            "joda-money.src.main.org.joda.money.format.MoneyFormatterBuilder",
+                            "MoneyFormatterBuilder",
+                            "177-179:append1"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    def appendTo(self, builder: MoneyFormatterBuilder) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                },
+                "54-56:isParser": {
+                    "start": 54,
+                    "end": 56,
+                    "body": [
+                        "    boolean isParser() {\n",
+                        "        return Arrays.asList(parsers).contains(null) == false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isParser()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isParser(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                },
+                "50-52:isPrinter": {
+                    "start": 50,
+                    "end": 52,
+                    "body": [
+                        "    boolean isPrinter() {\n",
+                        "        return Arrays.asList(printers).contains(null) == false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isPrinter()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def isPrinter(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                },
+                "45-48:MultiPrinterParser": {
+                    "start": 45,
+                    "end": 48,
+                    "body": [
+                        "    MultiPrinterParser(MoneyPrinter[] printers, MoneyParser[] parsers) {\n",
+                        "        this.printers = printers;\n",
+                        "        this.parsers = parsers;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "MultiPrinterParser(MoneyPrinter[], MoneyParser[])",
+                    "parameters": [
+                        "printers",
+                        "parsers"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "    def __init__(self, printers: typing.List[MoneyPrinter], parsers: typing.List[MoneyParser]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {
+                "38-38:parsers": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final MoneyParser[] parsers;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "MoneyParser[]",
+                            "MoneyParser[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __parsers: typing.List[MoneyParser] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                },
+                "35-35:printers": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private final MoneyPrinter[] printers;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "MoneyPrinter[]",
+                            "MoneyPrinter[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __printers: typing.List[MoneyPrinter] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                },
+                "32-32:serialVersionUID": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    private static final long serialVersionUID = 1L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "python_class_declaration": "class MultiPrinterParser(MoneyParser, MoneyPrinter):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import IOBase",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.joda.money.BigMoney import *",
+        "from src.main.org.joda.money.format.MoneyFormatterBuilder import *",
+        "from src.main.org.joda.money.format.MoneyParseContext import *",
+        "from src.main.org.joda.money.format.MoneyParser import *",
+        "from src.main.org.joda.money.format.MoneyPrintContext import *",
+        "from src.main.org.joda.money.format.MoneyPrinter import *"
+    ]
+}
