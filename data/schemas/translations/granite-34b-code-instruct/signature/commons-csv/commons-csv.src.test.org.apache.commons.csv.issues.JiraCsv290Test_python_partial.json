@@ -112,13 +112,16 @@
                         "    def testPostgresqlText(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testPostgresqlText(self) -> None:",
+                        "         self.__testHelper(\"psql.tsv\", POSTGRESQL_TEXT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.999182939529419,
+                    "generation_timestamp": "2024-06-29T03:19:52.091234",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -156,13 +159,16 @@
                         "    def testPostgresqlCsv(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testPostgresqlCsv(self) -> None:",
+                        "         self.__testHelper(\"psql.csv\", CSVFormat.POSTGRESQL_CSV)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0461993217468262,
+                    "generation_timestamp": "2024-06-29T03:19:53.139513",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -232,13 +238,30 @@
                         "    def __testHelper(self, filename: str, format: CSVFormat) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __testHelper(self, filename: str, format: CSVFormat) -> None:",
+                        "         content: typing.List[typing.List[str]] = []",
+                        "         with open(os.path.join(os.path.dirname(__file__), f\"CSV-290/{filename}\"), 'r') as file:",
+                        "             csvParser: CSVParser = CSVParser.parse3(file, format)",
+                        "             content = list(csvParser.stream())",
+                        "         self.assertEqual(3, len(content))",
+                        "         self.assertEqual(\"1\", content[0][0])",
+                        "         self.assertEqual(\"abc\", content[0][1])",
+                        "         self.assertEqual(\"test line 1\\ntest line 2\", content[0][2]) # new line",
+                        "         self.assertEqual(None, content[0][3]) # null",
+                        "         self.assertEqual(\"\", content[0][4])",
+                        "         self.assertEqual(\"2\", content[1][0])",
+                        "         self.assertEqual(\"\\\\b:\\b \\\\t:\\t \\\\n:\\n \\\\r:\\r\", content[1][2]) # \\b, \\t, \\n, \\r",
+                        "         self.assertEqual(\"3\", content[2][0])",
+                        "         self.assertEqual(\"b,c,d\", content[2][2]) # value has comma",
+                        "         self.assertEqual(\"\\\"quoted\\\"\", content[2][3]) # quoted"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.73712706565857,
+                    "generation_timestamp": "2024-06-29T03:19:51.090871",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

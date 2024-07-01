@@ -120,13 +120,28 @@
                         "    def readLine(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def readLine(self) -> str:",
+                        "         if self.lookAhead0() == END_OF_STREAM:",
+                        "             return None",
+                        "         buffer = StringBuilder()",
+                        "         while True:",
+                        "             current = self.read0()",
+                        "             if current == CR:",
+                        "                 next = self.lookAhead0()",
+                        "                 if next == LF:",
+                        "                     self.read0()",
+                        "             if current == END_OF_STREAM or current == LF or current == CR:",
+                        "                 break",
+                        "             buffer.append(chr(current))",
+                        "         return buffer.toString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.803389310836792,
+                    "generation_timestamp": "2024-06-29T03:04:04.087168",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -160,13 +175,18 @@
                         "    def close(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def close(self) -> None:",
+                        "         self.__closed = True",
+                        "         self.__lastChar = END_OF_STREAM",
+                        "         super().close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1210007667541504,
+                    "generation_timestamp": "2024-06-29T03:03:46.594874",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -226,13 +246,37 @@
                         "    def read1(self, buf: typing.List[str], offset: int, length: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def read1(self, buf: typing.List[str], offset: int, length: int) -> int:",
+                        "         if length == 0:",
+                        "             return 0",
+                        " ",
+                        "         len = super().read(buf, offset, length)",
+                        " ",
+                        "         if len > 0:",
+                        " ",
+                        "             for i in range(offset, offset + len):",
+                        "                 ch = buf[i]",
+                        "                 if ch == LF:",
+                        "                     if CR != (buf[i - 1] if i > offset else self.__lastChar):",
+                        "                         self.__eolCounter += 1",
+                        "                 elif ch == CR:",
+                        "                     self.__eolCounter += 1",
+                        " ",
+                        "             self.__lastChar = buf[offset + len - 1]",
+                        " ",
+                        "         elif len == -1:",
+                        "             self.__lastChar = END_OF_STREAM",
+                        " ",
+                        "         self.__position += len",
+                        "         return len"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.5831382274627686,
+                    "generation_timestamp": "2024-06-29T03:03:52.181984",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -273,13 +317,21 @@
                         "    def read0(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def read0(self) -> int:",
+                        "         current = super().read()",
+                        "         if current == CR or (current == LF and self.__lastChar != CR) or (current == END_OF_STREAM and self.__lastChar != CR and self.__lastChar != LF and self.__lastChar != END_OF_STREAM):",
+                        "             self.__eolCounter += 1",
+                        "         self.__lastChar = current",
+                        "         self.__position += 1",
+                        "         return self.__lastChar"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.579080104827881,
+                    "generation_timestamp": "2024-06-29T03:03:55.765027",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -309,13 +361,16 @@
                         "    def isClosed(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isClosed(self) -> bool:",
+                        "         return self.__closed"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7301251888275146,
+                    "generation_timestamp": "2024-06-29T03:03:56.498469",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -352,13 +407,17 @@
                         "    def lookAhead2(self, n: int) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def lookAhead2(self, n: int) -> typing.List[str]:",
+                        "         buf = [None] * n",
+                        "         return self.lookAhead1(buf)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0643455982208252,
+                    "generation_timestamp": "2024-06-29T03:03:59.107891",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -393,13 +452,23 @@
                         "    def lookAhead1(self, buf: typing.List[str]) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def lookAhead1(self, buf: typing.List[str]) -> typing.List[str]:",
+                        "        ",
+                        "",
+                        "        n = len(buf)",
+                        "        self.mark(n)",
+                        "        self.read(buf, 0, n)",
+                        "        self.reset()",
+                        "",
+                        "        return buf"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5363781452178955,
+                    "generation_timestamp": "2024-06-29T03:03:58.039200",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -431,13 +500,19 @@
                         "    def lookAhead0(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def lookAhead0(self) -> int:",
+                        "         self.mark(1)",
+                        "         c = self.read()",
+                        "         self.reset()",
+                        "         return c"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1710870265960693,
+                    "generation_timestamp": "2024-06-29T03:04:00.281282",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -465,13 +540,16 @@
                         "    def getPosition(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getPosition(self) -> int:",
+                        "         return self.__position"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.573530912399292,
+                    "generation_timestamp": "2024-06-29T03:04:04.663882",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -499,13 +577,16 @@
                         "    def getLastChar(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getLastChar(self) -> int:",
+                        "         return self.__lastChar"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7572221755981445,
+                    "generation_timestamp": "2024-06-29T03:04:05.423273",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -539,13 +620,18 @@
                         "    def getCurrentLineNumber(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getCurrentLineNumber(self) -> int:",
+                        "         if self.__lastChar == CR or self.__lastChar == LF or self.__lastChar == UNDEFINED or self.__lastChar == END_OF_STREAM:",
+                        "             return self.__eolCounter",
+                        "         return self.__eolCounter + 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.054243564605713,
+                    "generation_timestamp": "2024-06-29T03:04:07.481283",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -575,13 +661,16 @@
                         "    def __init__(self, reader: typing.Union[io.TextIOWrapper, io.BufferedReader]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, reader: typing.Union[io.TextIOWrapper, io.BufferedReader]) -> None:",
+                        "         super().__init__(reader)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2884037494659424,
+                    "generation_timestamp": "2024-06-29T03:04:08.771783",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -606,13 +695,16 @@
                         "    __closed: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __closed: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T03:01:48.013067",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -635,13 +727,16 @@
                         "    __position: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __position: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T03:01:48.014808",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -664,13 +759,16 @@
                         "    __eolCounter: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __eolCounter: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T03:01:48.016767",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -693,13 +791,15 @@
                         "    __lastChar: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __lastChar: int = UNDEFINED"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.87398362159729,
+                    "generation_timestamp": "2024-06-29T03:01:48.892691",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

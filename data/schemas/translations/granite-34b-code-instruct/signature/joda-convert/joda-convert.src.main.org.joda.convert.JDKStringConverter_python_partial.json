@@ -217,13 +217,16 @@
                         "    def convertToString(self, object: typing.Any) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def convertToString(self, object: typing.Any) -> str:",
+                        "         return object.toString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.951021671295166,
+                    "generation_timestamp": "2024-06-29T01:42:16.998330",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -255,13 +258,16 @@
                         "    def getEffectiveType(self) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getEffectiveType(self) -> typing.Type[typing.Any]:",
+                        "         return self.__type"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6397755146026611,
+                    "generation_timestamp": "2024-06-29T01:42:17.642297",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -321,13 +327,42 @@
                         "    def __parseBase64Binary(str: str) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __parseBase64Binary(str: str) -> typing.List[int]:",
+                        "         if len(str) % 4 != 0:",
+                        "             raise IllegalArgumentException(\"Invalid Base64 string\")",
+                        "         parsedLen = (len(str) * 3) // 4",
+                        "         decoded = [0] * parsedLen",
+                        "         inChars = list(str)",
+                        "         pos = 0",
+                        "         for i in range(0, len(inChars), 4):",
+                        "             bits = (JDKStringConverter.__base64Str.index(inChars[i]) & JDKStringConverter.__MASK_6BIT) << 18 | (",
+                        "                     JDKStringConverter.__base64Str.index(inChars[i + 1]) & JDKStringConverter.__MASK_6BIT) << 12 | (",
+                        "                     JDKStringConverter.__base64Str.index(inChars[i + 2]) & JDKStringConverter.__MASK_6BIT) << 6 | (",
+                        "                     JDKStringConverter.__base64Str.index(inChars[i + 3]) & JDKStringConverter.__MASK_6BIT)",
+                        "             decoded[pos] = (bits >> 16) & JDKStringConverter.__MASK_8BIT",
+                        "             pos += 1",
+                        "             decoded[pos] = (bits >> 8) & JDKStringConverter.__MASK_8BIT",
+                        "             pos += 1",
+                        "             decoded[pos] = bits & JDKStringConverter.__MASK_8BIT",
+                        "             pos += 1",
+                        "         if str.endswith(\"==\"):",
+                        "             result = [0] * (parsedLen - 2)",
+                        "             System.arraycopy(decoded, 0, result, 0, parsedLen - 2)",
+                        "             return result",
+                        "         elif str.endswith(\"=\"):",
+                        "             result = [0] * (parsedLen - 1)",
+                        "             System.arraycopy(decoded, 0, result, 0, parsedLen - 1)",
+                        "             return result",
+                        "         return decoded"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 13.148505687713623,
+                    "generation_timestamp": "2024-06-29T01:42:30.795073",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -389,13 +424,43 @@
                         "    def __printBase64Binary(array: typing.List[int]) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __printBase64Binary(array: typing.List[int]) -> str:",
+                        "         len = len(array)",
+                        "         buf = [' ' for _ in range(((len + 2) // 3) * 4)]",
+                        "         pos = 0",
+                        "         for i in range(0, len, 3):",
+                        "             remaining = len - i",
+                        "             if remaining >= 3:",
+                        "                 bits = (array[i] & JDKStringConverter.__MASK_8BIT) << 16 | (array[i + 1] & JDKStringConverter.__MASK_8BIT) << 8 | (array[i + 2] & JDKStringConverter.__MASK_8BIT)",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[(bits >> 18) & JDKStringConverter.__MASK_6BIT]",
+                        "                 buf[pos + 1] = JDKStringConverter.__base64Array[(bits >> 12) & JDKStringConverter.__MASK_6BIT]",
+                        "                 buf[pos + 2] = JDKStringConverter.__base64Array[(bits >> 6) & JDKStringConverter.__MASK_6BIT]",
+                        "                 buf[pos + 3] = JDKStringConverter.__base64Array[bits & JDKStringConverter.__MASK_6BIT]",
+                        "                 pos += 4",
+                        "             elif remaining == 2:",
+                        "                 bits = (array[i] & JDKStringConverter.__MASK_8BIT) << 16 | (array[i + 1] & JDKStringConverter.__MASK_8BIT) << 8",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[(bits >> 18) & JDKStringConverter.__MASK_6BIT]",
+                        "                 buf[pos + 1] = JDKStringConverter.__base64Array[(bits >> 12) & JDKStringConverter.__MASK_6BIT]",
+                        "                 buf[pos + 2] = JDKStringConverter.__base64Array[(bits >> 6) & JDKStringConverter.__MASK_6BIT]",
+                        "                 buf[pos + 3] = '='",
+                        "                 pos += 4",
+                        "             else:",
+                        "                 bits = (array[i] & JDKStringConverter.__MASK_8BIT) << 16",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[(bits >> 18) & JDKStringConverter.__MASK_6BIT]",
+                        "                 buf[pos + 1] = JDKStringConverter.__base64Array[(bits >> 12) & JDKStringConverter.__MASK_6BIT]",
+                        "                 buf[pos + 2] = '='",
+                        "                 buf[pos + 3] = '='",
+                        "                 pos += 4",
+                        "         return ''.join(buf)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 18.30931806564331,
+                    "generation_timestamp": "2024-06-29T01:42:49.112131",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -427,13 +492,16 @@
                         "    def __init__(self, type: typing.Type[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, type: typing.Type[typing.Any]) -> None:",
+                        "         self.__type = type"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6682472229003906,
+                    "generation_timestamp": "2024-06-29T01:42:49.787676",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -461,13 +529,16 @@
                         "    def getType(self) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getType(self) -> typing.Type[typing.Any]:",
+                        "         return self.__type"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6685099601745605,
+                    "generation_timestamp": "2024-06-29T01:42:50.463600",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -535,7 +606,7 @@
                         ""
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -587,7 +658,7 @@
                         ""
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -622,13 +693,16 @@
                         "    FILE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    FILE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:21.273031",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -667,13 +741,16 @@
                         "    INET_ADDRESS: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    INET_ADDRESS: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:21.280240",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -703,13 +780,16 @@
                         "    URI: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    URI: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:21.286192",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -743,13 +823,16 @@
                         "    URL: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    URL: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:21.291022",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -779,13 +862,16 @@
                         "    UUID: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    UUID: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:21.295197",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -820,13 +906,16 @@
                         "    TIME_ZONE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    TIME_ZONE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:21.300737",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -856,13 +945,16 @@
                         "    CURRENCY: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CURRENCY: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:21.307188",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -897,13 +989,16 @@
                         "    PACKAGE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    PACKAGE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:21.313549",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -942,13 +1037,16 @@
                         "    CLASS: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CLASS: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:21.318088",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -987,13 +1085,15 @@
                         "    LOCALE: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    LOCALE: JDKStringConverter = JDKStringConverter(Locale)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.3441667556762695,
+                    "generation_timestamp": "2024-06-30T11:56:12.710588",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1030,13 +1130,16 @@
                         "    ATOMIC_BOOLEAN: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ATOMIC_BOOLEAN: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:22.294150",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1068,7 +1171,7 @@
                         ""
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -1105,7 +1208,7 @@
                         ""
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -1140,13 +1243,16 @@
                         "    BIG_DECIMAL: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BIG_DECIMAL: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:34.049759",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1176,13 +1282,16 @@
                         "    BIG_INTEGER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BIG_INTEGER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:34.054230",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1212,13 +1321,16 @@
                         "    FLOAT: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    FLOAT: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:34.058805",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1248,13 +1360,16 @@
                         "    DOUBLE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    DOUBLE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:34.062032",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1291,13 +1406,16 @@
                         "    BOOLEAN: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BOOLEAN: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:34.064993",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1332,13 +1450,16 @@
                         "    CHAR_ARRAY: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CHAR_ARRAY: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:34.067892",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1372,7 +1493,7 @@
                         ""
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -1412,13 +1533,16 @@
                         "    BYTE_ARRAY: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BYTE_ARRAY: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:39.133914",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1448,13 +1572,16 @@
                         "    BYTE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BYTE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:39.139168",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1484,13 +1611,16 @@
                         "    SHORT: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    SHORT: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:39.143561",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1520,13 +1650,16 @@
                         "    INTEGER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    INTEGER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:39.147309",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1556,13 +1689,16 @@
                         "    LONG: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    LONG: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:39.150168",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1592,13 +1728,16 @@
                         "    STRING_BUILDER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    STRING_BUILDER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:39.153025",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1628,13 +1767,16 @@
                         "    STRING_BUFFER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    STRING_BUFFER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:39.155830",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1664,13 +1806,16 @@
                         "    CHAR_SEQUENCE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CHAR_SEQUENCE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:39.157820",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1700,13 +1845,16 @@
                         "    STRING: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    STRING: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:39.159713",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1731,13 +1879,15 @@
                         "    __MASK_6BIT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MASK_6BIT: int = 0x3f"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.924477815628052,
+                    "generation_timestamp": "2024-06-30T11:58:15.327538",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1762,13 +1912,15 @@
                         "    __MASK_8BIT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MASK_8BIT: int = 0xff"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.037697076797485,
+                    "generation_timestamp": "2024-06-30T11:58:20.372736",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1792,13 +1944,15 @@
                         "    __base64Array: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __base64Array: typing.List[str] = list(__base64Str)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.033226013183594,
+                    "generation_timestamp": "2024-06-30T11:58:30.413428",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1823,13 +1977,15 @@
                         "    __base64Str: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __base64Str: str = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 12.537756443023682,
+                    "generation_timestamp": "2024-06-30T11:58:42.958700",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1852,13 +2008,16 @@
                         "    __type: typing.Type[typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __type: typing.Type[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:36:43.820182",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

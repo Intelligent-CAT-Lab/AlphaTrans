@@ -71,13 +71,23 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         buffer = io.StringIO()",
+                        "         buffer.write(\"RegexValidator{\")",
+                        "         for i in range(len(self.__patterns)):",
+                        "             if i > 0:",
+                        "                 buffer.write(\",\")",
+                        "             buffer.write(self.__patterns[i].pattern)",
+                        "         buffer.write(\"}\")",
+                        "         return buffer.getvalue()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.5599145889282227,
+                    "generation_timestamp": "2024-06-28T23:55:17.442436",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -129,13 +139,30 @@
                         "    def validate(self, value: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def validate(self, value: str) -> str:",
+                        "         if value is None:",
+                        "             return None",
+                        "         for pattern in self.__patterns:",
+                        "             matcher = pattern.matcher(value)",
+                        "             if matcher.matches():",
+                        "                 count = matcher.groupCount()",
+                        "                 if count == 1:",
+                        "                     return matcher.group(1)",
+                        "                 buffer = io.StringIO()",
+                        "                 for j in range(count):",
+                        "                     component = matcher.group(j + 1)",
+                        "                     if component is not None:",
+                        "                         buffer.write(component)",
+                        "                 return buffer.getvalue()",
+                        "         return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.8541879653930664,
+                    "generation_timestamp": "2024-06-28T23:55:21.299467",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -182,7 +209,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -228,7 +255,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -273,13 +300,17 @@
                         "    def RegexValidator3(regex: str) -> RegexValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def RegexValidator3(regex: str) -> RegexValidator:",
+                        "         return RegexValidator.RegexValidator2(regex, True)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8656642436981201,
+                    "generation_timestamp": "2024-06-28T23:55:50.759805",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -320,13 +351,17 @@
                         "    def RegexValidator2(regex: str, caseSensitive: bool) -> RegexValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def RegexValidator2(regex: str, caseSensitive: bool) -> RegexValidator:",
+                        "         return RegexValidator([regex], caseSensitive)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8103690147399902,
+                    "generation_timestamp": "2024-06-28T23:55:46.785096",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -366,13 +401,17 @@
                         "    def RegexValidator1(regexs: typing.List[str]) -> RegexValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def RegexValidator1(regexs: typing.List[str]) -> RegexValidator:",
+                        "         return RegexValidator(regexs, True)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7505044937133789,
+                    "generation_timestamp": "2024-06-28T23:55:47.538518",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -416,13 +455,25 @@
                         "    def __init__(self, regexs: typing.List[str], caseSensitive: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, regexs: typing.List[str], caseSensitive: bool) -> None:",
+                        "        ",
+                        "",
+                        "        if (regexs is None) or (len(regexs) == 0):",
+                        "            raise ValueError(\"Regular expressions are missing\")",
+                        "        self.__patterns = []",
+                        "        flags = (re.IGNORECASE if not caseSensitive else 0)",
+                        "        for i, regex in enumerate(regexs):",
+                        "            if (regex is None) or (len(regex) == 0):",
+                        "                raise ValueError(f\"Regular expression[{i}] is missing\")",
+                        "            self.__patterns.append(re.compile(regex, flags))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.121938943862915,
+                    "generation_timestamp": "2024-06-28T23:55:45.973031",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -448,13 +499,16 @@
                         "    __patterns: typing.List[re.Pattern] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __patterns: typing.List[re.Pattern] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:21:19.426443",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -479,13 +533,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = -8832409930574867162"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3350541591644287,
+                    "generation_timestamp": "2024-06-28T23:21:20.762720",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

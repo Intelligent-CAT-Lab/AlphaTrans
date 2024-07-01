@@ -132,13 +132,16 @@
                         "    def onCompleted(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def onCompleted(self) -> typing.Any:",
+                        "         return self.__maxFlow"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6116602420806885,
+                    "generation_timestamp": "2024-06-29T04:27:57.729148",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -173,13 +176,17 @@
                         "    def discoverGraph(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def discoverGraph(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:",
+                        "         self.__predecessors = PredecessorsList(graph, self.__weightOperations, self.__weightedEdges)",
+                        "         self.__foundAugmentingPath = False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5336647033691406,
+                    "generation_timestamp": "2024-06-29T04:27:59.265940",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -220,13 +227,20 @@
                         "    def discoverEdge(self, head: typing.Any, edge: typing.Any, tail: typing.Any) -> VisitState:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def discoverEdge(self, head: typing.Any, edge: typing.Any, tail: typing.Any) -> VisitState:",
+                        "         residualEdgeCapacity = self.__residualEdgeCapacities.get(edge)",
+                        "         if self.__weightOperations.compare(residualEdgeCapacity, self.__weightOperations.identity()) <= 0:",
+                        "             return SKIP",
+                        "         self.__predecessors.addPredecessor(tail, head)",
+                        "         return CONTINUE"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.4335107803344727,
+                    "generation_timestamp": "2024-06-29T04:28:01.703733",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -262,13 +276,19 @@
                         "    def finishVertex(self, vertex: typing.Any) -> VisitState:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def finishVertex(self, vertex: typing.Any) -> VisitState:",
+                        "         if vertex.equals(self.__target):",
+                        "             self.__foundAugmentingPath = True",
+                        "             return ABORT",
+                        "         return CONTINUE"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3094909191131592,
+                    "generation_timestamp": "2024-06-29T04:28:03.017413",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -306,13 +326,16 @@
                         "    def discoverVertex(self, vertex: typing.Any) -> VisitState:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def discoverVertex(self, vertex: typing.Any) -> VisitState:",
+                        "         return self.finishVertex(vertex)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7282369136810303,
+                    "generation_timestamp": "2024-06-29T04:28:03.750457",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -364,13 +387,34 @@
                         "    def updateResidualNetworkWithCurrentAugmentingPath(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def updateResidualNetworkWithCurrentAugmentingPath(self) -> None:",
+                        "        ",
+                        "",
+                        "        augmentingPath = self.__predecessors.buildPath0(self.__source, self.__target)",
+                        "",
+                        "        flowIncrement = None",
+                        "        for edge in augmentingPath.getEdges():",
+                        "            edgeCapacity = self.__residualEdgeCapacities.get(edge)",
+                        "            if flowIncrement is None or self.__weightOperations.compare(edgeCapacity, flowIncrement) < 0:",
+                        "                flowIncrement = edgeCapacity",
+                        "",
+                        "        self.__maxFlow = self.__weightOperations.append(self.__maxFlow, flowIncrement)",
+                        "        for edge in augmentingPath.getEdges():",
+                        "            directCapacity = self.__residualEdgeCapacities.get(edge)",
+                        "            self.__residualEdgeCapacities.put(edge, self.__weightOperations.append(directCapacity, self.__weightOperations.inverse(flowIncrement)))",
+                        "",
+                        "            vertexPair = self.__flowNetwork.getVertices1(edge)",
+                        "            inverseEdge = self.__flowNetwork.getEdge(vertexPair.getTail(), vertexPair.getHead())",
+                        "            inverseCapacity = self.__residualEdgeCapacities.get(inverseEdge)",
+                        "            self.__residualEdgeCapacities.put(inverseEdge, self.__weightOperations.append(inverseCapacity, flowIncrement))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.289175271987915,
+                    "generation_timestamp": "2024-06-29T04:28:12.043839",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -398,13 +442,16 @@
                         "    def hasAugmentingPath(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def hasAugmentingPath(self) -> bool:",
+                        "         return self.__foundAugmentingPath"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6982614994049072,
+                    "generation_timestamp": "2024-06-29T04:28:12.745660",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -455,13 +502,33 @@
                         "    def __init__(self, flowNetwork: DirectedGraph[typing.Any, typing.Any], source: typing.Any, target: typing.Any, weightOperations: OrderedMonoid[typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, flowNetwork: DirectedGraph[typing.Any, typing.Any], source: typing.Any, target: typing.Any, weightOperations: OrderedMonoid[typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:",
+                        "        ",
+                        "",
+                        "        self.__flowNetwork = flowNetwork",
+                        "",
+                        "        self.__source = source",
+                        "",
+                        "        self.__target = target",
+                        "",
+                        "        self.__weightOperations = weightOperations",
+                        "",
+                        "        self.__weightedEdges = weightedEdges",
+                        "",
+                        "        self.__maxFlow = weightOperations.identity()",
+                        "",
+                        "        for edge in flowNetwork.getEdges():",
+                        "            self.__residualEdgeCapacities[edge] = weightedEdges.map(edge)",
+                        "",
+                        "        self.__predecessors = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.1500072479248047,
+                    "generation_timestamp": "2024-06-29T04:28:15.899596",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -486,13 +553,16 @@
                         "    __foundAugmentingPath: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __foundAugmentingPath: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T04:19:26.122713",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -515,13 +585,16 @@
                         "    __predecessors: PredecessorsList[typing.Any, typing,Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __predecessors: PredecessorsList[typing.Any, typing,Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T04:19:26.124299",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -545,13 +618,16 @@
                         "    __residualEdgeCapacities: typing.Dict[typing.Any, typing.Any] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __residualEdgeCapacities: typing.Dict[typing.Any, typing.Any] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T04:19:26.125277",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -574,13 +650,16 @@
                         "    __maxFlow: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __maxFlow: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T04:19:26.126151",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -604,13 +683,16 @@
                         "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T04:19:26.127021",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -634,13 +716,16 @@
                         "    __weightOperations: OrderedMonoid[typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __weightOperations: OrderedMonoid[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T04:19:26.127898",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -664,13 +749,16 @@
                         "    __target: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __target: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T04:19:26.128781",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -694,13 +782,16 @@
                         "    __source: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __source: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T04:19:26.129698",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -724,13 +815,16 @@
                         "    __flowNetwork: DirectedGraph[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __flowNetwork: DirectedGraph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T04:19:26.130577",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

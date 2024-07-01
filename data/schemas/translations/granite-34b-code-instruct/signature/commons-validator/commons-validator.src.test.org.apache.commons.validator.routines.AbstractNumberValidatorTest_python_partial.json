@@ -101,13 +101,18 @@
                         "    def _tearDown(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _tearDown(self) -> None:",
+                        "         super().tearDown()",
+                        "         self._validator = None",
+                        "         self._strictValidator = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1651194095611572,
+                    "generation_timestamp": "2024-06-29T00:04:38.742273",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -141,13 +146,20 @@
                         "    def _setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _setUp(self) -> None:",
+                        "        ",
+                        "",
+                        "        super().setUp()",
+                        "",
+                        "        Locale.setDefault(Locale.US)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9402360916137695,
+                    "generation_timestamp": "2024-06-29T00:04:39.689229",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -196,13 +208,35 @@
                         "    def testSerialization(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testSerialization(self) -> None:",
+                        "        ",
+                        "",
+                        "        baos = io.BytesIO()",
+                        "        try:",
+                        "            oos = io.ObjectOutputStream(baos)",
+                        "            oos.writeObject(self._validator)",
+                        "            oos.flush()",
+                        "            oos.close()",
+                        "        except Exception as e:",
+                        "            self.fail(self._validator.getClass().getName() + \" error during serialization: \" + str(e))",
+                        "",
+                        "        result = None",
+                        "        try:",
+                        "            bais = io.BytesIO(baos.toByteArray())",
+                        "            ois = io.ObjectInputStream(bais)",
+                        "            result = ois.readObject()",
+                        "            bais.close()",
+                        "        except Exception as e:",
+                        "            self.fail(self._validator.getClass().getName() + \" error during deserialization: \" + str(e))",
+                        "        self.assertNotNull(result)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.815138339996338,
+                    "generation_timestamp": "2024-06-29T00:04:46.508186",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -267,13 +301,35 @@
                         "    def testRangeMinMax(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testRangeMinMax(self) -> None:",
+                        "         number9 = 9",
+                        "         number10 = 10",
+                        "         number11 = 11",
+                        "         number19 = 19",
+                        "         number20 = 20",
+                        "         number21 = 21",
+                        "",
+                        "         self.assertFalse(self._strictValidator.isInRange(number9, number10, number20))",
+                        "         self.assertTrue(self._strictValidator.isInRange(number10, number10, number20))",
+                        "         self.assertTrue(self._strictValidator.isInRange(number11, number10, number20))",
+                        "         self.assertTrue(self._strictValidator.isInRange(number20, number10, number20))",
+                        "         self.assertFalse(self._strictValidator.isInRange(number21, number10, number20))",
+                        "",
+                        "         self.assertFalse(self._strictValidator.minValue(number9, number10))",
+                        "         self.assertTrue(self._strictValidator.minValue(number10, number10))",
+                        "         self.assertTrue(self._strictValidator.minValue(number11, number10))",
+                        "",
+                        "         self.assertTrue(self._strictValidator.maxValue(number19, number20))",
+                        "         self.assertTrue(self._strictValidator.maxValue(number20, number20))",
+                        "         self.assertFalse(self._strictValidator.maxValue(number21, number20))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.34549880027771,
+                    "generation_timestamp": "2024-06-29T00:04:56.864484",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -318,13 +374,19 @@
                         "    def testFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testFormat(self) -> None:",
+                        "         number: numbers.Number = numbers.BigDecimal(\"1234.5\")",
+                        "         self.assertEqual(\"US Locale, US Format\", \"1,234.5\", self._strictValidator.format2(number, locales.Locale.US))",
+                        "         self.assertEqual(\"DE Locale, DE Format\", \"1.234,5\", self._strictValidator.format2(number, locales.Locale.GERMAN))",
+                        "         self.assertEqual(\"Pattern #,#0.00\", \"12,34.50\", self._strictValidator.format1(number, \"#,#0.00\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.67797064781189,
+                    "generation_timestamp": "2024-06-29T00:05:01.547439",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -378,13 +440,35 @@
                         "    def testValidateLocale(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testValidateLocale(self) -> None:",
+                        "        ",
+                        "",
+                        "        self.assertEqual(",
+                        "            \"US Locale, US Format\",",
+                        "            self._testNumber,",
+                        "            self._strictValidator.parse(self._testStringUS, None, Locale.US))",
+                        "        self.assertIsNone(\"US Locale, DE Format\", self._strictValidator.parse(self._testStringDE, None, Locale.US))",
+                        "",
+                        "        self.assertEqual(",
+                        "            \"DE Locale, DE Format\",",
+                        "            self._testNumber,",
+                        "            self._strictValidator.parse(self._testStringDE, None, Locale.GERMAN))",
+                        "        self.assertIsNone(",
+                        "            \"DE Locale, US Format\", self._strictValidator.parse(self._testStringUS, None, Locale.GERMAN))",
+                        "",
+                        "        self.assertEqual(",
+                        "            \"Default Locale, US Format\",",
+                        "            self._testNumber,",
+                        "            self._strictValidator.parse(self._testStringUS, None, None))",
+                        "        self.assertIsNone(\"Default Locale, DE Format\", self._strictValidator.parse(self._testStringDE, None, None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.308346271514893,
+                    "generation_timestamp": "2024-06-29T00:05:08.860454",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -433,13 +517,23 @@
                         "    def testValidNotStrict(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testValidNotStrict(self) -> None:",
+                        "         for i in range(len(self._valid)):",
+                        "            text = \"idx=[\" + str(i) + \"] value=[\" + str(self._validCompare[i]) + \"]\"",
+                        "            self.assertEqual(",
+                        "                    \"(A) \" + text, self._validCompare[i], self._validator._parse(self._valid[i], None, Locale.US))",
+                        "            self.assertTrue(\"(B) \" + text, self._validator.isValid3(self._valid[i], None, Locale.US))",
+                        "            self.assertEqual(",
+                        "                    \"(C) \" + text, self._validCompare[i], self._validator._parse(self._valid[i], self._testPattern, None))",
+                        "            self.assertTrue(\"(D) \" + text, self._validator.isValid3(self._valid[i], self._testPattern, None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.179947853088379,
+                    "generation_timestamp": "2024-06-29T00:05:15.045661",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -492,13 +586,27 @@
                         "    def testValidStrict(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testValidStrict(self) -> None:",
+                        "         for i in range(len(self._validStrict)):",
+                        "            text = \"idx=[\" + str(i) + \"] value=[\" + str(self._validStrictCompare[i]) + \"]\"",
+                        "            self.assertEqual(",
+                        "                    \"(A) \" + text,",
+                        "                    self._validStrictCompare[i],",
+                        "                    self._strictValidator._parse(self._validStrict[i], None, Locale.US))",
+                        "            self.assertTrue(\"(B) \" + text, self._strictValidator.isValid3(self._validStrict[i], None, Locale.US))",
+                        "            self.assertEqual(",
+                        "                    \"(C) \" + text,",
+                        "                    self._validStrictCompare[i],",
+                        "                    self._strictValidator._parse(self._validStrict[i], self._testPattern, None))",
+                        "            self.assertTrue(\"(D) \" + text, self._strictValidator.isValid3(self._validStrict[i], self._testPattern, None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.091334342956543,
+                    "generation_timestamp": "2024-06-29T00:05:22.142284",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -545,13 +653,21 @@
                         "    def testInvalidNotStrict(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testInvalidNotStrict(self) -> None:",
+                        "         for i in range(len(self._invalid)):",
+                        "            text = \"idx=[\" + str(i) + \"] value=[\" + self._invalid[i] + \"]\"",
+                        "            self.assertIsNone(\"(A) \" + text, self._validator._parse(self._invalid[i], None, Locale.US))",
+                        "            self.assertFalse(\"(B) \" + text, self._validator.isValid3(self._invalid[i], None, Locale.US))",
+                        "            self.assertIsNone(\"(C) \" + text, self._validator._parse(self._invalid[i], self._testPattern, None))",
+                        "            self.assertFalse(\"(D) \" + text, self._validator.isValid3(self._invalid[i], self._testPattern, None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.597482681274414,
+                    "generation_timestamp": "2024-06-29T00:05:27.745089",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -599,13 +715,21 @@
                         "    def testInvalidStrict(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testInvalidStrict(self) -> None:",
+                        "         for i in range(len(self._invalidStrict)):",
+                        "            text = \"idx=[\" + str(i) + \"] value=[\" + self._invalidStrict[i] + \"]\"",
+                        "            self.assertIsNone(\"(A) \" + text, self._strictValidator._parse(self._invalidStrict[i], None, Locale.US))",
+                        "            self.assertFalse(\"(B) \" + text, self._strictValidator.isValid3(self._invalidStrict[i], None, Locale.US))",
+                        "            self.assertIsNone(\"(C) \" + text, self._strictValidator._parse(self._invalidStrict[i], self._testPattern, None))",
+                        "            self.assertFalse(\"(D) \" + text, self._strictValidator.isValid3(self._invalidStrict[i], self._testPattern, None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.922366619110107,
+                    "generation_timestamp": "2024-06-29T00:05:33.672719",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -647,13 +771,21 @@
                         "    def testValidateMinMax(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testValidateMinMax(self) -> None:",
+                        "         fmt = DecimalFormat(\"#\")",
+                        "         if self._max is not None:",
+                        "             self.assertEqual(self._max, self._validator.parse(fmt.format(self._max), \"#\", None))",
+                        "             self.assertIsNone(self._validator.parse(fmt.format(self._maxPlusOne), \"#\", None))",
+                        "             self.assertEqual(self._min, self._validator.parse(fmt.format(self._min), \"#\", None))",
+                        "             self.assertIsNone(self._validator.parse(fmt.format(self._minMinusOne), \"#\", None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.4203691482543945,
+                    "generation_timestamp": "2024-06-29T00:05:38.101324",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -693,13 +825,17 @@
                         "    def testFormatType(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testFormatType(self) -> None:",
+                        "         self.assertEqual(\"Format Type A\", 0, self._validator.getFormatType())",
+                        "         self.assertEqual(\"Format Type B\", AbstractNumberValidator.STANDARD_FORMAT, self._validator.getFormatType())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0488593578338623,
+                    "generation_timestamp": "2024-06-29T00:05:40.154728",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -731,13 +867,16 @@
                         "    def __init__(self, name: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, name: str) -> None:",
+                        "         super().__init__(name)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7308428287506104,
+                    "generation_timestamp": "2024-06-29T00:05:40.889335",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -762,13 +901,16 @@
                         "    _localeExpected: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _localeExpected: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.400527",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -791,13 +933,16 @@
                         "    _testLocale: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testLocale: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.403298",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -820,13 +965,16 @@
                         "    _localePattern: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _localePattern: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.405976",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -849,13 +997,16 @@
                         "    _localeValue: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _localeValue: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.408624",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -878,13 +1029,16 @@
                         "    _testStringDE: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testStringDE: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.411268",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -907,13 +1061,16 @@
                         "    _testStringUS: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testStringUS: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.413926",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -936,13 +1093,16 @@
                         "    _testZero: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testZero: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.416597",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -965,13 +1125,16 @@
                         "    _testNumber: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testNumber: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.419259",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -994,13 +1157,16 @@
                         "    _testPattern: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testPattern: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.422016",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1023,13 +1189,16 @@
                         "    _validStrictCompare: typing.List[typing.Union[int, float, numbers.Number]] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _validStrictCompare: typing.List[typing.Union[int, float, numbers.Number]] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.424840",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1052,13 +1221,16 @@
                         "    _validStrict: typing.List[str] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _validStrict: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.430071",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1081,13 +1253,16 @@
                         "    _invalidStrict: typing.List[str] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _invalidStrict: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.435186",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1110,13 +1285,16 @@
                         "    _validCompare: typing.List[typing.Union[int, float, numbers.Number]] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _validCompare: typing.List[typing.Union[int, float, numbers.Number]] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.440126",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1139,13 +1317,16 @@
                         "    _valid: typing.List[str] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _valid: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.443570",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1168,13 +1349,16 @@
                         "    _invalid: typing.List[str] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _invalid: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.446980",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1197,13 +1381,16 @@
                         "    _minMinusOne: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _minMinusOne: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.449994",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1226,13 +1413,16 @@
                         "    _min: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _min: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.452291",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1255,13 +1445,16 @@
                         "    _maxPlusOne: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _maxPlusOne: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.454592",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1284,13 +1477,16 @@
                         "    _max: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _max: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.456896",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1313,13 +1509,16 @@
                         "    _strictValidator: AbstractNumberValidator = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _strictValidator: AbstractNumberValidator = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.459179",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1342,13 +1541,16 @@
                         "    _validator: AbstractNumberValidator = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _validator: AbstractNumberValidator = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:27:36.462140",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

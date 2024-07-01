@@ -97,13 +97,24 @@
                         "    def run(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def run(self) -> None:",
+                        "         with EvictionTimer.class_lock:",
+                        "             for entry in taskMap.copy().items():",
+                        "                 if entry.key.get() is None:",
+                        "                     executor.remove(entry.value)",
+                        "                     taskMap.remove(entry.key)",
+                        "             if taskMap.is_empty() and executor is not None:",
+                        "                 executor.shutdown()",
+                        "                 executor.set_core_pool_size(0)",
+                        "                 executor = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.409419536590576,
+                    "generation_timestamp": "2024-06-28T23:17:36.401218",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -154,13 +165,18 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         builder = StringBuilder()",
+                        "         builder.append(\"EvictionTimer []\")",
+                        "         return builder.toString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1022017002105713,
+                    "generation_timestamp": "2024-06-28T23:17:39.948756",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -192,13 +208,17 @@
                         "    def getNumTasks() -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getNumTasks() -> int:",
+                        "         return len(EvictionTimer.__taskMap)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7999203205108643,
+                    "generation_timestamp": "2024-06-28T23:17:40.750534",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -255,13 +275,27 @@
                         "    def cancel(evictor: Evictor[typing.Any], timeout: datetime.timedelta, restarting: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def cancel(evictor: Evictor[typing.Any], timeout: datetime.timedelta, restarting: bool) -> None:",
+                        "         if evictor is not None:",
+                        "             evictor.cancel()",
+                        "             EvictionTimer.__remove(evictor)",
+                        "         if not restarting and EvictionTimer.__executor is not None and len(EvictionTimer.__taskMap) == 0:",
+                        "             EvictionTimer.__executor.shutdown()",
+                        "             try:",
+                        "                 EvictionTimer.__executor.await_termination(timeout.total_seconds() * 1000, TimeUnit.MILLISECONDS)",
+                        "             except InterruptedException as e:",
+                        "                 pass",
+                        "             EvictionTimer.__executor.set_core_pool_size(0)",
+                        "             EvictionTimer.__executor = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.529179811477661,
+                    "generation_timestamp": "2024-06-28T23:17:49.963100",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -290,7 +324,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -335,13 +369,21 @@
                         "    def __remove(evictor: Evictor[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __remove(evictor: Evictor[typing.Any]) -> None:",
+                        "         for entry in EvictionTimer.__taskMap.items():",
+                        "             if entry[0].get() == evictor:",
+                        "                 EvictionTimer.__executor.remove(entry[1])",
+                        "                 EvictionTimer.__taskMap.remove(entry[0])",
+                        "                 break"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.197251558303833,
+                    "generation_timestamp": "2024-06-28T23:17:45.430551",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -369,13 +411,16 @@
                         "    __taskMap: typing.Dict[weakref.ref, weakRunner] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __taskMap: typing.Dict[weakref.ref, weakRunner] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T22:46:18.811752",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -399,13 +444,16 @@
                         "    __executor: typing.Union[concurrent.futures.ThreadPoolExecutor, concurrent.futures.Future] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __executor: typing.Union[concurrent.futures.ThreadPoolExecutor, concurrent.futures.Future] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T22:46:18.812989",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -458,13 +506,21 @@
                         "    def run(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def run(self) -> None:",
+                        "         task = self.__ref.get()",
+                        "         if task is not None:",
+                        "             task.run()",
+                        "         else:",
+                        "             executor.remove(self)",
+                        "             taskMap.remove(self.__ref)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.808607816696167,
+                    "generation_timestamp": "2024-06-28T23:17:38.213680",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -496,13 +552,16 @@
                         "    def __init__(self, ref: weakref.ref) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, ref: weakref.ref) -> None:",
+                        "         self.__ref = ref"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6289749145507812,
+                    "generation_timestamp": "2024-06-28T23:17:38.844397",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -528,13 +587,16 @@
                         "    __ref: weakref.ref = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ref: weakref.ref = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T22:46:18.814462",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

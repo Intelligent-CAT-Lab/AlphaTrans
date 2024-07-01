@@ -217,13 +217,16 @@
                         "    def convertToString(self, object: typing.Any) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def convertToString(self, object: typing.Any) -> str:",
+                        "         return str(object)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.4206948280334473,
+                    "generation_timestamp": "2024-06-28T20:47:32.716282",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -255,13 +258,16 @@
                         "    def getEffectiveType(self) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getEffectiveType(self) -> typing.Type[typing.Any]:",
+                        "         return self.__type"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6621630191802979,
+                    "generation_timestamp": "2024-06-28T20:47:33.384918",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -321,13 +327,38 @@
                         "    def __parseBase64Binary(str: str) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __parseBase64Binary(str: str) -> typing.List[int]:",
+                        "        ",
+                        "        MASK_6BIT = 0x3f",
+                        "        MASK_8BIT = 0xff",
+                        "        base64Str = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\"",
+                        "",
+                        "        if len(str) % 4 != 0:",
+                        "            raise ValueError(\"Invalid Base64 string\")",
+                        "        parsedLen = (len(str) * 3) // 4",
+                        "        decoded = [0] * parsedLen",
+                        "        inChars = list(str)",
+                        "        pos = 0",
+                        "        for i in range(0, len(inChars), 4):",
+                        "            bits = (base64Str.index(inChars[i]) & MASK_6BIT) << 18 | (base64Str.index(inChars[i+1]) & MASK_6BIT) << 12 | (base64Str.index(inChars[i+2]) & MASK_6BIT) << 6 | (base64Str.index(inChars[i+3]) & MASK_6BIT)",
+                        "            decoded[pos] = (bits >> 16) & MASK_8BIT",
+                        "            decoded[pos+1] = (bits >> 8) & MASK_8BIT",
+                        "            decoded[pos+2] = bits & MASK_8BIT",
+                        "            pos += 3",
+                        "        if str.endswith(\"==\"):",
+                        "            return decoded[:-2]",
+                        "        elif str.endswith(\"=\"):",
+                        "            return decoded[:-1]",
+                        "        return decoded"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.005540132522583,
+                    "generation_timestamp": "2024-06-28T20:47:55.394875",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -389,13 +420,53 @@
                         "    def __printBase64Binary(array: typing.List[int]) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __printBase64Binary(array: typing.List[int]) -> str:",
+                        "        ",
+                        "        len_ = len(array)",
+                        "        buf = [''] * (((len_ + 2) // 3) * 4)",
+                        "        pos = 0",
+                        "        for i in range(0, len_, 3):",
+                        "            remaining = len_ - i",
+                        "            if remaining >= 3:",
+                        "                bits = (array[i] & JDKStringConverter.__MASK_8BIT) << 16 | (array[i + 1] & JDKStringConverter.__MASK_8BIT) << 8 | (array[i + 2] & JDKStringConverter.__MASK_8BIT)",
+                        "                buf[pos] = JDKStringConverter.__base64Array[(bits >> 18) & JDKStringConverter.__MASK_6BIT]",
+                        "                pos += 1",
+                        "                buf[pos] = JDKStringConverter.__base64Array[(bits >> 12) & JDKStringConverter.__MASK_6BIT]",
+                        "                pos += 1",
+                        "                buf[pos] = JDKStringConverter.__base64Array[(bits >> 6) & JDKStringConverter.__MASK_6BIT]",
+                        "                pos += 1",
+                        "                buf[pos] = JDKStringConverter.__base64Array[bits & JDKStringConverter.__MASK_6BIT]",
+                        "                pos += 1",
+                        "            elif remaining == 2:",
+                        "                bits = (array[i] & JDKStringConverter.__MASK_8BIT) << 16 | (array[i + 1] & JDKStringConverter.__MASK_8BIT) << 8",
+                        "                buf[pos] = JDKStringConverter.__base64Array[(bits >> 18) & JDKStringConverter.__MASK_6BIT]",
+                        "                pos += 1",
+                        "                buf[pos] = JDKStringConverter.__base64Array[(bits >> 12) & JDKStringConverter.__MASK_6BIT]",
+                        "                pos += 1",
+                        "                buf[pos] = JDKStringConverter.__base64Array[(bits >> 6) & JDKStringConverter.__MASK_6BIT]",
+                        "                pos += 1",
+                        "                buf[pos] = '='",
+                        "                pos += 1",
+                        "            else:",
+                        "                bits = (array[i] & JDKStringConverter.__MASK_8BIT) << 16",
+                        "                buf[pos] = JDKStringConverter.__base64Array[(bits >> 18) & JDKStringConverter.__MASK_6BIT]",
+                        "                pos += 1",
+                        "                buf[pos] = JDKStringConverter.__base64Array[(bits >> 12) & JDKStringConverter.__MASK_6BIT]",
+                        "                pos += 1",
+                        "                buf[pos] = '='",
+                        "                pos += 1",
+                        "                buf[pos] = '='",
+                        "                pos += 1",
+                        "        return ''.join(buf)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 35.360694885253906,
+                    "generation_timestamp": "2024-06-28T20:48:30.759914",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -427,13 +498,16 @@
                         "    def __init__(self, type: typing.Type[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, type: typing.Type[typing.Any]) -> None:",
+                        "         self.__type = type"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7991361618041992,
+                    "generation_timestamp": "2024-06-28T20:48:31.564552",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -461,13 +535,16 @@
                         "    def getType(self) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getType(self) -> typing.Type[typing.Any]:",
+                        "         return self.__type"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.323072910308838,
+                    "generation_timestamp": "2024-06-28T20:48:32.891827",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -534,13 +611,18 @@
                         "    CALENDAR: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CALENDAR: JDKStringConverter = JDKStringConverter(",
+                        "        lambda object: self.convertToString(object),",
+                        "        lambda cls, str: self.convertFromString(cls, str)",
+                        "    )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.364841938018799,
+                    "generation_timestamp": "2024-06-28T22:17:03.494010",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -586,13 +668,15 @@
                         "    DATE: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    DATE: JDKStringConverter = JDKStringConverter(Date)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.819223642349243,
+                    "generation_timestamp": "2024-06-28T22:17:10.319016",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -622,13 +706,16 @@
                         "    FILE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    FILE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:33.501195",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -667,13 +754,16 @@
                         "    INET_ADDRESS: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    INET_ADDRESS: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:33.507811",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -703,13 +793,16 @@
                         "    URI: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    URI: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:33.512784",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -743,13 +836,16 @@
                         "    URL: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    URL: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:33.517135",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -779,13 +875,16 @@
                         "    UUID: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    UUID: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:33.521032",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -820,13 +919,16 @@
                         "    TIME_ZONE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    TIME_ZONE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:33.523913",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -856,13 +958,16 @@
                         "    CURRENCY: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CURRENCY: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:33.526805",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -897,13 +1002,16 @@
                         "    PACKAGE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    PACKAGE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:33.529706",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -942,13 +1050,16 @@
                         "    CLASS: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CLASS: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:33.531879",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -987,13 +1098,20 @@
                         "    LOCALE: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    LOCALE: JDKStringConverter = JDKStringConverter(",
+                        "        cls=Locale,",
+                        "        convert_from_string=lambda cls, str: cls(",
+                        "            *str.split(\"_\", 2)",
+                        "        )",
+                        "    )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.333992004394531,
+                    "generation_timestamp": "2024-06-28T22:17:15.658850",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1030,13 +1148,16 @@
                         "    ATOMIC_BOOLEAN: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ATOMIC_BOOLEAN: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:38.923556",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1067,13 +1188,15 @@
                         "    ATOMIC_INTEGER: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ATOMIC_INTEGER: JDKStringConverter = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 13.92738389968872,
+                    "generation_timestamp": "2024-06-28T22:17:29.594273",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1104,13 +1227,15 @@
                         "    ATOMIC_LONG: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ATOMIC_LONG: JDKStringConverter = JDKStringConverter(AtomicLong)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.1983482837677,
+                    "generation_timestamp": "2024-06-28T22:17:33.800427",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1140,13 +1265,16 @@
                         "    BIG_DECIMAL: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BIG_DECIMAL: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:44.421950",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1176,13 +1304,16 @@
                         "    BIG_INTEGER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BIG_INTEGER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:44.425721",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1212,13 +1343,16 @@
                         "    FLOAT: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    FLOAT: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:44.431173",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1248,13 +1382,16 @@
                         "    DOUBLE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    DOUBLE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:44.434745",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1291,13 +1428,16 @@
                         "    BOOLEAN: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BOOLEAN: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:44.437336",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1332,13 +1472,16 @@
                         "    CHAR_ARRAY: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CHAR_ARRAY: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:44.440700",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1371,13 +1514,15 @@
                         "    CHARACTER: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CHARACTER: JDKStringConverter = JDKStringConverter(Character)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.481274127960205,
+                    "generation_timestamp": "2024-06-28T22:17:39.288128",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1412,13 +1557,16 @@
                         "    BYTE_ARRAY: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BYTE_ARRAY: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:51.154646",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1448,13 +1596,16 @@
                         "    BYTE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BYTE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:51.160638",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1484,13 +1635,16 @@
                         "    SHORT: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    SHORT: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:51.164804",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1520,13 +1674,16 @@
                         "    INTEGER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    INTEGER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:51.168897",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1556,13 +1713,16 @@
                         "    LONG: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    LONG: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:51.172185",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1592,13 +1752,16 @@
                         "    STRING_BUILDER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    STRING_BUILDER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:51.174830",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1628,13 +1791,16 @@
                         "    STRING_BUFFER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    STRING_BUFFER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:51.177496",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1664,13 +1830,16 @@
                         "    CHAR_SEQUENCE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CHAR_SEQUENCE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:51.180103",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1700,13 +1869,16 @@
                         "    STRING: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    STRING: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:51.182135",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1731,13 +1903,15 @@
                         "    __MASK_6BIT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MASK_6BIT: int = 0x3f"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1352298259735107,
+                    "generation_timestamp": "2024-06-28T22:17:40.432217",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1762,13 +1936,15 @@
                         "    __MASK_8BIT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MASK_8BIT: int = 0xff"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.161794662475586,
+                    "generation_timestamp": "2024-06-28T22:17:41.598349",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1792,13 +1968,15 @@
                         "    __base64Array: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __base64Array: List[str] = list(base64Str)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2140047550201416,
+                    "generation_timestamp": "2024-06-28T22:17:42.816454",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1823,13 +2001,15 @@
                         "    __base64Str: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __base64Str: str = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.5933618545532227,
+                    "generation_timestamp": "2024-06-28T22:17:45.413909",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1852,13 +2032,16 @@
                         "    __type: typing.Type[typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __type: typing.Type[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:29:57.748554",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }

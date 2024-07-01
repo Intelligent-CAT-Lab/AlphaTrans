@@ -108,13 +108,18 @@
                         "    def _tearDown(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _tearDown(self) -> None:",
+                        "         super().tearDown()",
+                        "         self._valid = None",
+                        "         self._routine = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1464459896087646,
+                    "generation_timestamp": "2024-06-29T00:01:32.873463",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -150,13 +155,19 @@
                         "    def _checkDigit(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _checkDigit(self, code: str) -> str:",
+                        "         if code is None or len(code) <= self._checkDigitLth:",
+                        "             return \"\"",
+                        "         start = len(code) - self._checkDigitLth",
+                        "         return code[start:]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7404041290283203,
+                    "generation_timestamp": "2024-06-29T00:01:34.616896",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -191,13 +202,18 @@
                         "    def _removeCheckDigit(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _removeCheckDigit(self, code: str) -> str:",
+                        "         if code is None or len(code) <= self._checkDigitLth:",
+                        "             return None",
+                        "         return code[0:len(code) - self._checkDigitLth]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0905871391296387,
+                    "generation_timestamp": "2024-06-29T00:01:36.709334",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -255,13 +271,24 @@
                         "    def _createInvalidCodes(self, codes: typing.List[str]) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _createInvalidCodes(self, codes: typing.List[str]) -> typing.List[str]:",
+                        "         list: List[str] = []",
+                        "         for full_code in codes:",
+                        "             code: str = self._removeCheckDigit(full_code)",
+                        "             check: str = self._checkDigit(full_code)",
+                        "             for j in range(len(self.__POSSIBLE_CHECK_DIGITS)):",
+                        "                 curr: str = self.__POSSIBLE_CHECK_DIGITS[j:j + 1]",
+                        "                 if not curr == check:",
+                        "                     list.append(code + curr)",
+                        "         return list"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.154788017272949,
+                    "generation_timestamp": "2024-06-29T00:01:40.868341",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -310,13 +337,32 @@
                         "    def testSerialization(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testSerialization(self) -> None:",
+                        "        ",
+                        "",
+                        "        baos = io.BytesIO()",
+                        "        try:",
+                        "            oos = pickle.Pickler(baos)",
+                        "            oos.dump(self._routine)",
+                        "        except Exception as e:",
+                        "            self.fail(self._routine.getClass().getName() + \" error during serialization: \" + str(e))",
+                        "",
+                        "        result = None",
+                        "        try:",
+                        "            bais = io.BytesIO(baos.getbuffer())",
+                        "            ois = pickle.Unpickler(bais)",
+                        "            result = ois.load()",
+                        "        except Exception as e:",
+                        "            self.fail(self._routine.getClass().getName() + \" error during deserialization: \" + str(e))",
+                        "        self.assertIsNotNone(result)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.268014669418335,
+                    "generation_timestamp": "2024-06-29T00:01:46.140476",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -365,13 +411,22 @@
                         "    def testZeroSum(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testZeroSum(self) -> None:",
+                        "        ",
+                        "",
+                        "        self.assertFalse(\"isValid() Zero Sum\", self._routine.isValid(self._zeroSum))",
+                        "",
+                        "        with self.assertRaises(Exception) as context:",
+                        "            self._routine.calculate(self._zeroSum)",
+                        "        self.assertEqual(\"isValid() Zero Sum\", \"Invalid code, sum is zero\", context.exception.message)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.994866132736206,
+                    "generation_timestamp": "2024-06-29T00:01:49.137544",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -431,13 +486,28 @@
                         "    def testMissingCode(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testMissingCode(self) -> None:",
+                        "        ",
+                        "",
+                        "        self.assertFalse(\"isValid() Null\", self._routine.isValid(None))",
+                        "",
+                        "        self.assertFalse(\"isValid() Zero Length\", self._routine.isValid(\"\"))",
+                        "",
+                        "        self.assertFalse(\"isValid() Length 1\", self._routine.isValid(\"9\"))",
+                        "",
+                        "        with pytest.raises(CheckDigitException, match=self._missingMessage):",
+                        "            self._routine.calculate(None)",
+                        "",
+                        "        with pytest.raises(CheckDigitException, match=self._missingMessage):",
+                        "            self._routine.calculate(\"\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.9389901161193848,
+                    "generation_timestamp": "2024-06-29T00:01:53.081170",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -510,13 +580,30 @@
                         "    def testCalculateInvalid(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testCalculateInvalid(self) -> None:",
+                        "        ",
+                        "",
+                        "        if self._log.isEnabledFor(logging.DEBUG):",
+                        "            self._log.debug(f\"testCalculateInvalid() for {type(self._routine).__name__}\")",
+                        "",
+                        "        for i, code in enumerate(self._invalid):",
+                        "            try:",
+                        "                if self._log.isEnabledFor(logging.DEBUG):",
+                        "                    self._log.debug(f\"   {i} Testing Invalid Check Digit, Code=[{code}]\")",
+                        "                expected = self._checkDigit(code)",
+                        "                actual = self._routine.calculate(self._removeCheckDigit(code))",
+                        "                if expected == actual:",
+                        "                    pytest.fail(f\"Expected mismatch for {code} expected {expected} actual {actual}\")",
+                        "            except CheckDigitException as e:",
+                        "                assert e.message.startswith(\"Invalid \"), f\"Invalid Character[{i}]={e.message}\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.212392091751099,
+                    "generation_timestamp": "2024-06-29T00:01:59.298052",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -585,7 +672,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -656,7 +743,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -707,7 +794,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -744,13 +831,16 @@
                         "    def __init__(self, name: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, name: str) -> None:",
+                        "         super().__init__(name)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7284047603607178,
+                    "generation_timestamp": "2024-06-29T00:03:30.821181",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -775,13 +865,15 @@
                         "    _missingMessage: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _missingMessage: str = \"Code is missing\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.608822822570801,
+                    "generation_timestamp": "2024-06-30T10:56:51.315822",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -804,13 +896,15 @@
                         "    _zeroSum: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _zeroSum: str = \"0000000000\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.76643967628479,
+                    "generation_timestamp": "2024-06-30T10:57:02.085258",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -833,13 +927,15 @@
                         "    _invalid: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _invalid: typing.List[str] = [\"12345678A\"]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.592507362365723,
+                    "generation_timestamp": "2024-06-30T10:57:08.682832",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -862,13 +958,16 @@
                         "    _valid: typing.List[str] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _valid: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:26:36.100669",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -891,13 +990,16 @@
                         "    _routine: CheckDigit = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _routine: CheckDigit = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:26:36.104632",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -920,13 +1022,15 @@
                         "    _checkDigitLth: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _checkDigitLth: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3397481441497803,
+                    "generation_timestamp": "2024-06-28T23:26:37.447417",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -949,13 +1053,15 @@
                         "    _log: logging.Logger = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _log: logging.Logger = logging.getLogger(type(self).__name__)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.106327772140503,
+                    "generation_timestamp": "2024-06-28T23:26:38.561286",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -981,13 +1087,15 @@
                         "    __POSSIBLE_CHECK_DIGITS: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __POSSIBLE_CHECK_DIGITS: str = \"0123456789 ABCDEFHIJKLMNOPQRSTUVWXYZ\\tabcdefghijklmnopqrstuvwxyz!@\u00a3$%^&*()_+\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.275521755218506,
+                    "generation_timestamp": "2024-06-28T23:26:40.841129",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

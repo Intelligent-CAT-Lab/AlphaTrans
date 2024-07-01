@@ -101,13 +101,19 @@
                         "    def _tearDown(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _tearDown(self) -> None:",
+                        "        ",
+                        "        super().tearDown()",
+                        "        self._validator = None",
+                        "        self._strictValidator = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.436621427536011,
+                    "generation_timestamp": "2024-06-28T21:39:50.095734",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -141,13 +147,20 @@
                         "    def _setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _setUp(self) -> None:",
+                        "        ",
+                        "        super()._setUp()",
+                        "",
+                        "        import locale",
+                        "        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.197230100631714,
+                    "generation_timestamp": "2024-06-28T21:39:56.296741",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -196,13 +209,34 @@
                         "    def testSerialization(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testSerialization(self) -> None:",
+                        "        ",
+                        "        baos = io.BytesIO()",
+                        "        try:",
+                        "            oos = io.BufferedWriter(baos)",
+                        "            oos.write(str(self._validator).encode())",
+                        "            oos.flush()",
+                        "            oos.close()",
+                        "        except Exception as e:",
+                        "            self.fail(self._validator.__class__.__name__ + \" error during serialization: \" + str(e))",
+                        "",
+                        "        result = None",
+                        "        try:",
+                        "            bais = io.BytesIO(baos.getvalue())",
+                        "            ois = io.BufferedReader(bais)",
+                        "            result = ois.read()",
+                        "            bais.close()",
+                        "        except Exception as e:",
+                        "            self.fail(self._validator.__class__.__name__ + \" error during deserialization: \" + str(e))",
+                        "        self.assertIsNotNone(result)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 12.876718997955322,
+                    "generation_timestamp": "2024-06-28T21:40:09.177596",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -267,13 +301,36 @@
                         "    def testRangeMinMax(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testRangeMinMax(self) -> None:",
+                        "        ",
+                        "        number9 = Number(9)",
+                        "        number10 = Number(10)",
+                        "        number11 = Number(11)",
+                        "        number19 = Number(19)",
+                        "        number20 = Number(20)",
+                        "        number21 = Number(21)",
+                        "",
+                        "        assert not self._strictValidator.isInRange(number9, number10, number20), \"isInRange() < min\"",
+                        "        assert self._strictValidator.isInRange(number10, number10, number20), \"isInRange() = min\"",
+                        "        assert self._strictValidator.isInRange(number11, number10, number20), \"isInRange() in range\"",
+                        "        assert self._strictValidator.isInRange(number20, number10, number20), \"isInRange() = max\"",
+                        "        assert not self._strictValidator.isInRange(number21, number10, number20), \"isInRange() > max\"",
+                        "",
+                        "        assert not self._strictValidator.minValue(number9, number10), \"minValue() < min\"",
+                        "        assert self._strictValidator.minValue(number10, number10), \"minValue() = min\"",
+                        "        assert self._strictValidator.minValue(number11, number10), \"minValue() > min\"",
+                        "",
+                        "        assert self._strictValidator.maxValue(number19, number20), \"maxValue() < max\"",
+                        "        assert self._strictValidator.maxValue(number20, number20), \"maxValue() = max\"",
+                        "        assert not self._strictValidator.maxValue(number21, number20), \"maxValue() > max\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 16.448474407196045,
+                    "generation_timestamp": "2024-06-28T21:40:25.631044",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -318,13 +375,20 @@
                         "    def testFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testFormat(self) -> None:",
+                        "        ",
+                        "        number = Decimal(\"1234.5\")",
+                        "        self.assertEqual(\"US Locale, US Format\", \"1,234.5\", self._strictValidator.format2(number, Locale.US))",
+                        "        self.assertEqual(\"DE Locale, DE Format\", \"1.234,5\", self._strictValidator.format2(number, Locale.GERMAN))",
+                        "        self.assertEqual(\"Pattern #,#0.00\", \"12,34.50\", self._strictValidator.format1(number, \"#,#0.00\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.486312627792358,
+                    "generation_timestamp": "2024-06-28T21:40:32.122472",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -378,13 +442,36 @@
                         "    def testValidateLocale(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testValidateLocale(self) -> None:",
+                        "        ",
+                        "        self.assertEqual(",
+                        "            \"US Locale, US Format\",",
+                        "            self._testNumber,",
+                        "            self._strictValidator._parse(self._testStringUS, None, Locale.US))",
+                        "        self.assertIsNone(",
+                        "            \"US Locale, DE Format\", self._strictValidator._parse(self._testStringDE, None, Locale.US))",
+                        "",
+                        "        self.assertEqual(",
+                        "            \"DE Locale, DE Format\",",
+                        "            self._testNumber,",
+                        "            self._strictValidator._parse(self._testStringDE, None, Locale.GERMAN))",
+                        "        self.assertIsNone(",
+                        "            \"DE Locale, US Format\", self._strictValidator._parse(self._testStringUS, None, Locale.GERMAN))",
+                        "",
+                        "        self.assertEqual(",
+                        "            \"Default Locale, US Format\",",
+                        "            self._testNumber,",
+                        "            self._strictValidator._parse(self._testStringUS, None, None))",
+                        "        self.assertIsNone(",
+                        "            \"Default Locale, DE Format\", self._strictValidator._parse(self._testStringDE, None, None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 11.712193012237549,
+                    "generation_timestamp": "2024-06-28T21:40:43.843038",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -433,13 +520,24 @@
                         "    def testValidNotStrict(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testValidNotStrict(self) -> None:",
+                        "        ",
+                        "        for i in range(len(self._valid)):",
+                        "            text = \"idx=[\" + str(i) + \"] value=[\" + str(self._validCompare[i]) + \"]\"",
+                        "            self.assertEqual(",
+                        "                \"(A) \" + text, self._validCompare[i], self._validator._parse(self._valid[i], None, None))",
+                        "            self.assertTrue(\"(B) \" + text, self._validator.isValid3(self._valid[i], None, None))",
+                        "            self.assertEqual(",
+                        "                \"(C) \" + text, self._validCompare[i], self._validator._parse(self._valid[i], self._testPattern, None))",
+                        "            self.assertTrue(\"(D) \" + text, self._validator.isValid3(self._valid[i], self._testPattern, None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.710939645767212,
+                    "generation_timestamp": "2024-06-28T21:40:52.559233",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -492,13 +590,28 @@
                         "    def testValidStrict(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testValidStrict(self) -> None:",
+                        "        ",
+                        "        for i in range(len(self._validStrict)):",
+                        "            text = \"idx=[\" + str(i) + \"] value=[\" + str(self._validStrictCompare[i]) + \"]\"",
+                        "            self.assertEqual(",
+                        "                \"(A) \" + text,",
+                        "                self._validStrictCompare[i],",
+                        "                self._strictValidator._parse(self._validStrict[i], None, 'US'))",
+                        "            self.assertTrue(\"(B) \" + text, self._strictValidator.isValid3(self._validStrict[i], None, 'US'))",
+                        "            self.assertEqual(",
+                        "                \"(C) \" + text,",
+                        "                self._validStrictCompare[i],",
+                        "                self._strictValidator._parse(self._validStrict[i], self._testPattern, None))",
+                        "            self.assertTrue(\"(D) \" + text, self._strictValidator.isValid3(self._validStrict[i], self._testPattern, None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 12.965787887573242,
+                    "generation_timestamp": "2024-06-28T21:41:05.532312",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -545,13 +658,22 @@
                         "    def testInvalidNotStrict(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testInvalidNotStrict(self) -> None:",
+                        "        ",
+                        "        for i in range(len(self._invalid)):",
+                        "            text = \"idx=[\" + str(i) + \"] value=[\" + self._invalid[i] + \"]\"",
+                        "            self.assertIsNone(self._validator._parse(self._invalid[i], None, 'US'), \"(A) \" + text)",
+                        "            self.assertFalse(self._validator.isValid3(self._invalid[i], None, 'US'), \"(B) \" + text)",
+                        "            self.assertIsNone(self._validator._parse(self._invalid[i], self._testPattern, None), \"(C) \" + text)",
+                        "            self.assertFalse(self._validator.isValid3(self._invalid[i], self._testPattern, None), \"(D) \" + text)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.18609070777893,
+                    "generation_timestamp": "2024-06-28T21:41:13.723858",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -599,13 +721,22 @@
                         "    def testInvalidStrict(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testInvalidStrict(self) -> None:",
+                        "        ",
+                        "        for i in range(len(self._invalidStrict)):",
+                        "            text = \"idx=[\" + str(i) + \"] value=[\" + self._invalidStrict[i] + \"]\"",
+                        "            self.assertIsNone(self._strictValidator._parse(self._invalidStrict[i], None, 'US'), \"(A) \" + text)",
+                        "            self.assertFalse(self._strictValidator.isValid3(self._invalidStrict[i], None, 'US'), \"(B) \" + text)",
+                        "            self.assertIsNone(self._strictValidator._parse(self._invalidStrict[i], self._testPattern, None), \"(C) \" + text)",
+                        "            self.assertFalse(self._strictValidator.isValid3(self._invalidStrict[i], self._testPattern, None), \"(D) \" + text)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.940339088439941,
+                    "generation_timestamp": "2024-06-28T21:41:24.669408",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -647,13 +778,21 @@
                         "    def testValidateMinMax(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testValidateMinMax(self) -> None:",
+                        "        ",
+                        "        if self._max is not None:",
+                        "            self.assertEqual(\"Test Max\", self._max, self._validator._parse(str(self._max), \"#\", None))",
+                        "            self.assertIsNone(\"Test Max + 1\", self._validator._parse(str(self._maxPlusOne), \"#\", None))",
+                        "            self.assertEqual(\"Test Min\", self._min, self._validator._parse(str(self._min), \"#\", None))",
+                        "            self.assertIsNone(\"Test min - 1\", self._validator._parse(str(self._minMinusOne), \"#\", None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.9696044921875,
+                    "generation_timestamp": "2024-06-28T21:41:31.645093",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -693,13 +832,22 @@
                         "    def testFormatType(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testFormatType(self) -> None:",
+                        "        ",
+                        "        self.assertEqual(\"Format Type A\", 0, self._validator.getFormatType())",
+                        "        self.assertEqual(",
+                        "            \"Format Type B\",",
+                        "            AbstractNumberValidator.STANDARD_FORMAT,",
+                        "            self._validator.getFormatType()",
+                        "        )"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.570990324020386,
+                    "generation_timestamp": "2024-06-28T21:41:37.220620",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -731,13 +879,16 @@
                         "    def __init__(self, name: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, name: str) -> None:",
+                        "         super().__init__(name)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7754275798797607,
+                    "generation_timestamp": "2024-06-28T21:41:38.002832",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -762,13 +913,16 @@
                         "    _localeExpected: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _localeExpected: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.079664",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -791,13 +945,16 @@
                         "    _testLocale: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testLocale: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.083512",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -820,13 +977,16 @@
                         "    _localePattern: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _localePattern: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.087204",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -849,13 +1009,16 @@
                         "    _localeValue: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _localeValue: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.090911",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -878,13 +1041,16 @@
                         "    _testStringDE: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testStringDE: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.094591",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -907,13 +1073,16 @@
                         "    _testStringUS: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testStringUS: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.098266",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -936,13 +1105,16 @@
                         "    _testZero: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testZero: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.101927",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -965,13 +1137,16 @@
                         "    _testNumber: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testNumber: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.105501",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -994,13 +1169,16 @@
                         "    _testPattern: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _testPattern: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.109228",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1023,13 +1201,16 @@
                         "    _validStrictCompare: typing.List[typing.Union[int, float, numbers.Number]] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _validStrictCompare: typing.List[typing.Union[int, float, numbers.Number]] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.112916",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1052,13 +1233,16 @@
                         "    _validStrict: typing.List[str] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _validStrict: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.116571",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1081,13 +1265,16 @@
                         "    _invalidStrict: typing.List[str] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _invalidStrict: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.120182",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1110,13 +1297,16 @@
                         "    _validCompare: typing.List[typing.Union[int, float, numbers.Number]] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _validCompare: typing.List[typing.Union[int, float, numbers.Number]] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.123848",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1139,13 +1329,16 @@
                         "    _valid: typing.List[str] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _valid: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.127409",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1168,13 +1361,16 @@
                         "    _invalid: typing.List[str] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _invalid: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.131008",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1197,13 +1393,16 @@
                         "    _minMinusOne: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _minMinusOne: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.134687",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1226,13 +1425,16 @@
                         "    _min: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _min: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.138267",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1255,13 +1457,16 @@
                         "    _maxPlusOne: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _maxPlusOne: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.141882",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1284,13 +1489,16 @@
                         "    _max: typing.Union[int, float, numbers.Number] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _max: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.145411",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1313,13 +1521,16 @@
                         "    _strictValidator: AbstractNumberValidator = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _strictValidator: AbstractNumberValidator = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.148706",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1342,13 +1553,16 @@
                         "    _validator: AbstractNumberValidator = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _validator: AbstractNumberValidator = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:21.154690",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }

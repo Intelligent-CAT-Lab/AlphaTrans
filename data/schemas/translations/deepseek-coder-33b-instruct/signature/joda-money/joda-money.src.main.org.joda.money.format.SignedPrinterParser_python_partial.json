@@ -72,13 +72,16 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return \"PositiveZeroNegative(\" + str(self.__whenPositive) + \",\" + str(self.__whenZero) + \",\" + str(self.__whenNegative) + \")\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.456440210342407,
+                    "generation_timestamp": "2024-06-28T20:45:41.739036",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -191,13 +194,43 @@
                         "    def parse(self, context: MoneyParseContext) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parse(self, context: MoneyParseContext) -> None:",
+                        "        ",
+                        "        positive_context = context.createChild()",
+                        "        self.__whenPositive.getPrinterParser().parse(positive_context)",
+                        "        ",
+                        "        zero_context = context.createChild()",
+                        "        self.__whenZero.getPrinterParser().parse(zero_context)",
+                        "        ",
+                        "        negative_context = context.createChild()",
+                        "        self.__whenNegative.getPrinterParser().parse(negative_context)",
+                        "        ",
+                        "        best = None",
+                        "        if not positive_context.isError():",
+                        "            best = positive_context",
+                        "        if not zero_context.isError():",
+                        "            if best is None or zero_context.getIndex() > best.getIndex():",
+                        "                best = zero_context",
+                        "        if not negative_context.isError():",
+                        "            if best is None or negative_context.getIndex() > best.getIndex():",
+                        "                best = negative_context",
+                        "        if best is None:",
+                        "            context.setError()",
+                        "        else:",
+                        "            context.mergeChild(best)",
+                        "            if best == zero_context:",
+                        "                if context.getAmount() is None or context.getAmount() != BigDecimal.ZERO:",
+                        "                    context.setAmount(BigDecimal.ZERO)",
+                        "            elif best == negative_context and context.getAmount() > BigDecimal.ZERO:",
+                        "                context.setAmount(context.getAmount().negate())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 13.675551414489746,
+                    "generation_timestamp": "2024-06-28T20:45:55.425704",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -257,13 +290,18 @@
                         "    def print(self, context: MoneyPrintContext, appendable: typing.Union[typing.List, io.TextIOBase], money: BigMoney) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def print(self, context: MoneyPrintContext, appendable: typing.Union[typing.List, io.TextIOBase], money: BigMoney) -> None:",
+                        "        ",
+                        "        fmt = self.whenZero if money.isZero() else self.whenPositive if money.isPositive() else self.whenNegative",
+                        "        fmt.getPrinterParser().print(context, appendable, money)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.9180428981781006,
+                    "generation_timestamp": "2024-06-28T20:45:58.360550",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -298,13 +336,18 @@
                         "    def __init__(self, whenPositive: MoneyFormatter, whenZero: MoneyFormatter, whenNegative: MoneyFormatter) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, whenPositive: MoneyFormatter, whenZero: MoneyFormatter, whenNegative: MoneyFormatter) -> None:",
+                        "         self.__whenPositive = whenPositive",
+                        "         self.__whenZero = whenZero",
+                        "         self.__whenNegative = whenNegative"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.925068616867065,
+                    "generation_timestamp": "2024-06-28T20:46:04.288204",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -330,13 +373,16 @@
                         "    __whenNegative: MoneyFormatter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __whenNegative: MoneyFormatter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:28:12.710689",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -360,13 +406,16 @@
                         "    __whenZero: MoneyFormatter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __whenZero: MoneyFormatter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:28:12.711887",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -390,13 +439,16 @@
                         "    __whenPositive: MoneyFormatter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __whenPositive: MoneyFormatter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:28:12.712996",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -421,13 +473,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.276209831237793,
+                    "generation_timestamp": "2024-06-28T20:28:13.990303",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }

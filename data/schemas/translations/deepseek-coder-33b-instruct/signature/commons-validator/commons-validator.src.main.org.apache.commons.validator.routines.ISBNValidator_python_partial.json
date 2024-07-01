@@ -99,13 +99,32 @@
                         "    def convertToISBN13(self, isbn10: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def convertToISBN13(self, isbn10: str) -> str:",
+                        "        ",
+                        "        if isbn10 is None:",
+                        "            return None",
+                        "",
+                        "        input = isbn10.strip()",
+                        "        if len(input) != self.__ISBN_10_LEN:",
+                        "            raise ValueError(",
+                        "                f\"Invalid length {len(input)} for '{input}'\")",
+                        "",
+                        "        isbn13 = \"978\" + input[:-1]",
+                        "        try:",
+                        "            checkDigit = self.__isbn13Validator.getCheckDigit().calculate(isbn13)",
+                        "            isbn13 += checkDigit",
+                        "            return isbn13",
+                        "        except CheckDigitException as e:",
+                        "            raise ValueError(",
+                        "                f\"Check digit error for '{input}' - {str(e)}\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.26508092880249,
+                    "generation_timestamp": "2024-06-28T22:12:58.931281",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -144,13 +163,18 @@
                         "    def validateISBN13(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def validateISBN13(self, code: str) -> str:",
+                        "        ",
+                        "        result = self.__isbn13Validator.validate(code)",
+                        "        return None if result is None else str(result)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 14.650633096694946,
+                    "generation_timestamp": "2024-06-28T22:13:13.585474",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -189,13 +213,18 @@
                         "    def validateISBN10(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def validateISBN10(self, code: str) -> str:",
+                        "        ",
+                        "        result = self.__isbn10Validator.validate(code)",
+                        "        return None if result is None else str(result)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.99151611328125,
+                    "generation_timestamp": "2024-06-28T22:13:18.583181",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -250,13 +279,22 @@
                         "    def validate(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def validate(self, code: str) -> str:",
+                        "        ",
+                        "        result = self.validateISBN13(code)",
+                        "        if result is None:",
+                        "            result = self.validateISBN10(code)",
+                        "            if result is not None and self.__convert:",
+                        "                result = self.convertToISBN13(result)",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.484126091003418,
+                    "generation_timestamp": "2024-06-28T22:13:24.071507",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -294,13 +332,16 @@
                         "    def isValidISBN13(self, code: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValidISBN13(self, code: str) -> bool:",
+                        "         return self.__isbn13Validator.isValid(code)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.7216169834136963,
+                    "generation_timestamp": "2024-06-28T22:13:26.796846",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -338,13 +379,16 @@
                         "    def isValidISBN10(self, code: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValidISBN10(self, code: str) -> bool:",
+                        "         return self.__isbn10Validator.isValid(code)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3186969757080078,
+                    "generation_timestamp": "2024-06-28T22:13:28.119163",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -387,13 +431,16 @@
                         "    def isValid(self, code: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValid(self, code: str) -> bool:",
+                        "         return self.isValidISBN13(code) or self.isValidISBN10(code)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.21758508682251,
+                    "generation_timestamp": "2024-06-28T22:13:32.340510",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -431,13 +478,17 @@
                         "    def ISBNValidator1() -> ISBNValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ISBNValidator1() -> ISBNValidator:",
+                        "         return ISBNValidator(True)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8043091297149658,
+                    "generation_timestamp": "2024-06-28T22:13:35.181390",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -469,13 +520,16 @@
                         "    def __init__(self, convert: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, convert: bool) -> None:",
+                        "         self.__convert = convert"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0279970169067383,
+                    "generation_timestamp": "2024-06-28T22:13:34.371580",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -509,13 +563,17 @@
                         "    def getInstance1(convert: bool) -> ISBNValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance1(convert: bool) -> ISBNValidator:",
+                        "         return ISBNValidator.__ISBN_VALIDATOR if convert else ISBNValidator.__ISBN_VALIDATOR_NO_CONVERT"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6565630435943604,
+                    "generation_timestamp": "2024-06-28T22:13:36.843612",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -547,13 +605,17 @@
                         "    def getInstance0() -> ISBNValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance0() -> ISBNValidator:",
+                        "         return ISBNValidator.__ISBN_VALIDATOR"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8825678825378418,
+                    "generation_timestamp": "2024-06-28T22:13:37.728648",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -588,13 +650,15 @@
                         "    ISBN13_REGEX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ISBN13_REGEX: str = \"^(978|979)(?:(\\\\d{10})|(?:\" + __SEP + __GROUP + __SEP + __PUBLISHER + __SEP + __TITLE + __SEP + \"([0-9])))$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.625011682510376,
+                    "generation_timestamp": "2024-06-30T10:38:53.643129",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -619,13 +683,15 @@
                         "    ISBN10_REGEX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ISBN10_REGEX: str = \"^(?:(\\\\d{9}[0-9X])|(?:\" + __GROUP + __SEP + __PUBLISHER + __SEP + __TITLE + __SEP + \"([0-9X])))$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.404345989227295,
+                    "generation_timestamp": "2024-06-30T10:38:56.052588",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -649,13 +715,16 @@
                         "    __convert: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __convert: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:52:57.602858",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -680,13 +749,16 @@
                         "    __isbn13Validator: CodeValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ISBN13_REGEX: str = r\"^(978|979)(?:\\d{10}|(?:\\d{3}-\\d{1}-\\d{4}-\\d{4}-\\d))$\"",
+                        "    __isbn13Validator: CodeValidator = CodeValidator.CodeValidator4(ISBN13_REGEX, 13, EAN13CheckDigit.EAN13_CHECK_DIGIT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 14.257004261016846,
+                    "generation_timestamp": "2024-06-28T20:53:11.862125",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -711,13 +783,16 @@
                         "    __isbn10Validator: CodeValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ISBN10_REGEX: str = r\"^(?:(\\d{9}[0-9X])|(?:\" + GROUP + SEP + PUBLISHER + SEP + TITLE + SEP + \"([0-9X])))$\"",
+                        "    __isbn10Validator: CodeValidator = CodeValidator.CodeValidator4(ISBN10_REGEX, 10, ISBN10CheckDigit.ISBN10_CHECK_DIGIT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.32550573348999,
+                    "generation_timestamp": "2024-06-28T20:53:21.190387",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -742,13 +817,15 @@
                         "    __ISBN_VALIDATOR_NO_CONVERT: ISBNValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ISBN_VALIDATOR_NO_CONVERT: ISBNValidator = ISBNValidator(False)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.783963441848755,
+                    "generation_timestamp": "2024-06-28T20:53:25.977097",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -773,13 +850,15 @@
                         "    __ISBN_VALIDATOR: ISBNValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ISBN_VALIDATOR: ISBNValidator = ISBNValidator.ISBNValidator1()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5320954322814941,
+                    "generation_timestamp": "2024-06-28T20:53:27.511915",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -804,13 +883,15 @@
                         "    __TITLE: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __TITLE: str = \"(\\\\d{1,6})\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3773980140686035,
+                    "generation_timestamp": "2024-06-28T20:53:28.891927",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -835,13 +916,15 @@
                         "    __PUBLISHER: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PUBLISHER: str = \"(\\\\d{1,7})\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3550212383270264,
+                    "generation_timestamp": "2024-06-28T20:53:30.249831",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -866,13 +949,15 @@
                         "    __GROUP: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __GROUP: str = \"(\\\\d{1,5})\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.412339210510254,
+                    "generation_timestamp": "2024-06-28T20:53:31.664880",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -897,13 +982,15 @@
                         "    __SEP: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __SEP: str = \"(?:\\\\-|\\\\s)\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.546588659286499,
+                    "generation_timestamp": "2024-06-28T20:53:33.215823",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -928,13 +1015,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 4319515687976420405"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.890458345413208,
+                    "generation_timestamp": "2024-06-28T20:53:35.108689",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -959,13 +1048,15 @@
                         "    __ISBN_10_LEN: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ISBN_10_LEN: int = 10"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.387411117553711,
+                    "generation_timestamp": "2024-06-28T20:53:36.500444",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }

@@ -95,13 +95,34 @@
                         "    def _parse(self, value: str, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _parse(self, value: str, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        parsedValue = super()._parse(value, formatter)",
+                        "        if parsedValue is not None or not isinstance(formatter, str):",
+                        "            return parsedValue",
+                        "",
+                        "        decimalFormat = formatter",
+                        "        pattern = decimalFormat",
+                        "        if pattern.find(self.__PERCENT_SYMBOL) >= 0:",
+                        "            buffer = io.StringIO()",
+                        "            for i in range(len(pattern)):",
+                        "                if pattern[i] != self.__PERCENT_SYMBOL:",
+                        "                    buffer.write(pattern[i])",
+                        "            decimalFormat = buffer.getvalue()",
+                        "            parsedValue = super()._parse(value, decimalFormat)",
+                        "",
+                        "            if parsedValue is not None:",
+                        "                parsedValue = parsedValue.multiply(self.__POINT_ZERO_ONE)",
+                        "        return parsedValue"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.741507291793823,
+                    "generation_timestamp": "2024-06-29T00:15:31.230540",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -139,13 +160,17 @@
                         "    def PercentValidator1() -> PercentValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def PercentValidator1() -> PercentValidator:",
+                        "         return PercentValidator(True)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6476280689239502,
+                    "generation_timestamp": "2024-06-29T00:15:32.925982",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -183,13 +208,16 @@
                         "    def __init__(self, strict: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, strict: bool) -> None:",
+                        "         super().__init__(strict, BigDecimalValidator.PERCENT_FORMAT, True)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0421414375305176,
+                    "generation_timestamp": "2024-06-29T00:15:32.276350",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -221,13 +249,17 @@
                         "    def getInstance() -> BigDecimalValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> BigDecimalValidator:",
+                        "         return PercentValidator.__VALIDATOR"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6492605209350586,
+                    "generation_timestamp": "2024-06-29T00:15:33.577070",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -254,13 +286,15 @@
                         "    __POINT_ZERO_ONE: decimal.Decimal = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __POINT_ZERO_ONE: decimal.Decimal = decimal.Decimal(\"0.01\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2499868869781494,
+                    "generation_timestamp": "2024-06-28T23:34:17.979542",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -285,13 +319,15 @@
                         "    __PERCENT_SYMBOL: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PERCENT_SYMBOL: str = '%'"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7781093120574951,
+                    "generation_timestamp": "2024-06-28T23:34:18.759178",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -316,13 +352,15 @@
                         "    __VALIDATOR: PercentValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __VALIDATOR: PercentValidator = PercentValidator.PercentValidator1()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9615120887756348,
+                    "generation_timestamp": "2024-06-28T23:34:19.722259",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -347,13 +385,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = -3508241924961535772"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3252537250518799,
+                    "generation_timestamp": "2024-06-28T23:34:21.048832",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

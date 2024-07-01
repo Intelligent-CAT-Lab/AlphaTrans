@@ -73,13 +73,20 @@
                         "    def calculate(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def calculate(self, code: str) -> str:",
+                        "         if code is None or len(code) == 0:",
+                        "             raise CheckDigitException.CheckDigitException1(\"Code is missing\")",
+                        "         modulusResult = self._calculateModulus(code, False)",
+                        "         charValue = (self.__modulus - modulusResult) % self.__modulus",
+                        "         return self._toCheckDigit(charValue)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.8436567783355713,
+                    "generation_timestamp": "2024-07-01T10:21:26.989182",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -127,13 +134,22 @@
                         "    def isValid(self, code: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValid(self, code: str) -> bool:",
+                        "         if code is None or len(code) == 0:",
+                        "             return False",
+                        "         try:",
+                        "             modulusResult = self._calculateModulus(code, True)",
+                        "             return modulusResult == 0",
+                        "         except CheckDigitException:",
+                        "             return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1895859241485596,
+                    "generation_timestamp": "2024-07-01T10:21:29.181847",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -173,13 +189,22 @@
                         "    def sumDigits(number: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def sumDigits(number: int) -> int:",
+                        "         total = 0",
+                        "         todo = number",
+                        "         while todo > 0:",
+                        "             total += todo % 10",
+                        "             todo = todo // 10",
+                        "         return total"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.545590877532959,
+                    "generation_timestamp": "2024-07-01T10:21:13.678624",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -220,13 +245,18 @@
                         "    def _toCheckDigit(self, charValue: int) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _toCheckDigit(self, charValue: int) -> str:",
+                        "         if 0 <= charValue <= 9:",
+                        "             return str(charValue)",
+                        "         raise CheckDigitException.CheckDigitException1(f\"Invalid Check Digit Value = {charValue}\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7587556838989258,
+                    "generation_timestamp": "2024-07-01T10:21:15.441225",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -270,13 +300,19 @@
                         "    def _toInt(self, character: str, leftPos: int, rightPos: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _toInt(self, character: str, leftPos: int, rightPos: int) -> int:",
+                        "         if character.isdigit():",
+                        "             return int(character)",
+                        "         raise CheckDigitException.CheckDigitException1(",
+                        "                \"Invalid Character[\" + str(leftPos) + \"] = '\" + character + \"'\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.8260166645050049,
+                    "generation_timestamp": "2024-07-01T10:21:17.269447",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -337,13 +373,25 @@
                         "    def _calculateModulus(self, code: str, includesCheckDigit: bool) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _calculateModulus(self, code: str, includesCheckDigit: bool) -> int:",
+                        "         total = 0",
+                        "         for i in range(len(code)):",
+                        "             lth = len(code) + (1 if includesCheckDigit else 0)",
+                        "             leftPos = i + 1",
+                        "             rightPos = lth - i",
+                        "             charValue = self._toInt(code[i], leftPos, rightPos)",
+                        "             total += self._weightedValue(charValue, leftPos, rightPos)",
+                        "         if total == 0:",
+                        "             raise CheckDigitException.CheckDigitException1(\"Invalid code, sum is zero\")",
+                        "         return total % self.__modulus"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.272385835647583,
+                    "generation_timestamp": "2024-07-01T10:21:23.494713",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -373,13 +421,16 @@
                         "    def getModulus(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getModulus(self) -> int:",
+                        "         return self.__modulus"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.5832269191741943,
+                    "generation_timestamp": "2024-07-01T10:21:17.854713",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -411,13 +462,16 @@
                         "    def __init__(self, modulus: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, modulus: int) -> None:",
+                        "         self.__modulus = modulus"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6531453132629395,
+                    "generation_timestamp": "2024-07-01T10:21:18.509567",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -451,13 +505,16 @@
                         "    def _weightedValue(self, charValue: int, leftPos: int, rightPos: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _weightedValue(self, charValue: int, leftPos: int, rightPos: int) -> int:",
+                        "         raise CheckDigitException(\"Not implemented\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7070834636688232,
+                    "generation_timestamp": "2024-07-01T10:21:19.218324",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }
@@ -483,13 +540,16 @@
                         "    __modulus: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __modulus: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T09:46:40.105738",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -514,13 +574,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 2948962251251528941"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.341871738433838,
+                    "generation_timestamp": "2024-07-01T09:46:41.449068",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }

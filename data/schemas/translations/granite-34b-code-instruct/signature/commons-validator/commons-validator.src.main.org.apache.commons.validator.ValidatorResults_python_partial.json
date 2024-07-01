@@ -113,13 +113,27 @@
                         "    def getResultValueMap(self) -> typing.Dict[str, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getResultValueMap(self) -> typing.Dict[str, typing.Any]:",
+                        "         results: typing.Dict[str, typing.Any] = {}",
+                        "",
+                        "         for propertyKey in self._hResults.keys():",
+                        "             vr: ValidatorResult = self.getValidatorResult(propertyKey)",
+                        "",
+                        "             for actionKey in vr.getActions():",
+                        "                 result: typing.Any = vr.getResult(actionKey)",
+                        "",
+                        "                 if result is not None and not isinstance(result, bool):",
+                        "                     results[propertyKey] = result",
+                        "",
+                        "         return results"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.406672716140747,
+                    "generation_timestamp": "2024-06-29T00:16:25.435637",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -149,13 +163,16 @@
                         "    def getPropertyNames(self) -> typing.Set[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getPropertyNames(self) -> typing.Set[str]:",
+                        "         return frozenset(self._hResults.keys())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8682703971862793,
+                    "generation_timestamp": "2024-06-29T00:16:21.217837",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -187,13 +204,16 @@
                         "    def getValidatorResult(self, key: str) -> ValidatorResult:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getValidatorResult(self, key: str) -> ValidatorResult:",
+                        "         return self._hResults.get(key)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8064064979553223,
+                    "generation_timestamp": "2024-06-29T00:16:22.026206",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -223,13 +243,16 @@
                         "    def isEmpty(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isEmpty(self) -> bool:",
+                        "         return self._hResults.isEmpty()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7323243618011475,
+                    "generation_timestamp": "2024-06-29T00:16:26.170409",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -259,13 +282,16 @@
                         "    def clear(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def clear(self) -> None:",
+                        "         self._hResults.clear()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6706035137176514,
+                    "generation_timestamp": "2024-06-29T00:16:26.844260",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -329,13 +355,24 @@
                         "    def add1(self, field: typing.Any, validatorName: str, result: bool, value: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def add1(self, field: typing.Any, validatorName: str, result: bool, value: typing.Any) -> None:",
+                        "        ",
+                        "",
+                        "        validatorResult = self.getValidatorResult(field.getKey())",
+                        "",
+                        "        if validatorResult is None:",
+                        "            validatorResult = ValidatorResult(field)",
+                        "            self._hResults[field.getKey()] = validatorResult",
+                        "",
+                        "        validatorResult.add1(validatorName, result, value)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.4375674724578857,
+                    "generation_timestamp": "2024-06-29T00:16:29.286436",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -375,13 +412,16 @@
                         "    def add0(self, field: typing.Any, validatorName: str, result: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def add0(self, field: typing.Any, validatorName: str, result: bool) -> None:",
+                        "         self.add1(field, validatorName, result, None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8983561992645264,
+                    "generation_timestamp": "2024-06-29T00:16:30.188377",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -413,13 +453,16 @@
                         "    def merge(self, results: ValidatorResults) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def merge(self, results: ValidatorResults) -> None:",
+                        "         self._hResults.update(results._hResults)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8342759609222412,
+                    "generation_timestamp": "2024-06-29T00:16:31.027361",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -444,13 +487,16 @@
                         "    _hResults: typing.Dict[str, ValidatorResult] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _hResults: typing.Dict[str, ValidatorResult] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:34:28.027641",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -475,13 +521,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = -2709911078904924839"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.954908847808838,
+                    "generation_timestamp": "2024-06-28T23:34:29.984298",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

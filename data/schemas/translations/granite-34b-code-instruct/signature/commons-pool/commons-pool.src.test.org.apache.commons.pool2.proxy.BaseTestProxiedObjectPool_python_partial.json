@@ -121,13 +121,28 @@
                         "    def testUsageTracking(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testUsageTracking(self) -> None:",
+                        "         obj = self.pool.borrowObject()",
+                        "         self.assertIsNotNone(obj)",
+                        "",
+                        "         obj.setData(self.__DATA1)",
+                        "",
+                        "         time.sleep(self.__ABANDONED_TIMEOUT_SECS.total_seconds() + 2)",
+                        "",
+                        "         self.pool.borrowObject()",
+                        "",
+                        "         log_output = self.__log.getvalue()",
+                        "",
+                        "         self.assertTrue(log_output.find(\"Pooled object created\") > 0)",
+                        "         self.assertTrue(log_output.find(\"The last code to use this object was\") > 0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.4945244789123535,
+                    "generation_timestamp": "2024-06-28T23:10:48.769871",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -161,13 +176,19 @@
                         "    def testPassThroughMethods02(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testPassThroughMethods02(self) -> None:",
+                        "         self.__pool.close()",
+                        " ",
+                        "         with pytest.raises(IllegalStateException):",
+                        "             self.__pool.addObject()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2665255069732666,
+                    "generation_timestamp": "2024-06-28T23:10:50.040588",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -210,13 +231,27 @@
                         "    def testPassThroughMethods01(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testPassThroughMethods01(self) -> None:",
+                        "         self.assertEqual(0, self.__pool.getNumActive())",
+                        "         self.assertEqual(0, self.__pool.getNumIdle())",
+                        " ",
+                        "         self.__pool.addObject()",
+                        " ",
+                        "         self.assertEqual(0, self.__pool.getNumActive())",
+                        "         self.assertEqual(1, self.__pool.getNumIdle())",
+                        " ",
+                        "         self.__pool.clear()",
+                        " ",
+                        "         self.assertEqual(0, self.__pool.getNumActive())",
+                        "         self.assertEqual(0, self.__pool.getNumIdle())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.805497407913208,
+                    "generation_timestamp": "2024-06-28T23:10:53.849345",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -265,13 +300,22 @@
                         "    def testBorrowObject(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testBorrowObject(self) -> None:",
+                        "         obj = self.pool.borrowObject()",
+                        "         self.assertIsNotNone(obj)",
+                        "",
+                        "         obj.setData(self.DATA1)",
+                        "         self.assertEqual(self.DATA1, obj.getData())",
+                        "",
+                        "         self.pool.returnObject(obj)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1372220516204834,
+                    "generation_timestamp": "2024-06-28T23:10:55.990640",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -324,13 +368,27 @@
                         "    def testAccessAfterReturn(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testAccessAfterReturn(self) -> None:",
+                        "         obj = self.pool.borrowObject()",
+                        "         self.assertIsNotNone(obj)",
+                        "",
+                        "         obj.setData(self.DATA1)",
+                        "         self.assertEqual(self.DATA1, obj.getData())",
+                        "",
+                        "         self.pool.returnObject(obj)",
+                        "",
+                        "         self.assertIsNotNone(obj)",
+                        "",
+                        "         with self.assertRaises(IllegalStateException):",
+                        "             obj.getData()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.84479284286499,
+                    "generation_timestamp": "2024-06-28T23:11:00.840259",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -383,13 +441,27 @@
                         "    def testAccessAfterInvalidate(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testAccessAfterInvalidate(self) -> None:",
+                        "         obj = self.pool.borrowObject()",
+                        "         self.assertIsNotNone(obj)",
+                        "",
+                        "         obj.setData(self.DATA1)",
+                        "         self.assertEqual(self.DATA1, obj.getData())",
+                        "",
+                        "         self.pool.invalidateObject0(obj)",
+                        "",
+                        "         self.assertIsNotNone(obj)",
+                        "",
+                        "         with self.assertRaises(IllegalStateException):",
+                        "             obj.getData()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.929328203201294,
+                    "generation_timestamp": "2024-06-28T23:11:03.774215",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -419,7 +491,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -449,13 +521,16 @@
                         "    __log: io.StringIO = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __log: io.StringIO = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T22:46:02.895757",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -478,13 +553,16 @@
                         "    __pool: typing.List[TestObject] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __pool: typing.List[TestObject] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T22:46:02.897498",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -509,13 +587,15 @@
                         "    __ABANDONED_TIMEOUT_SECS: datetime.timedelta = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ABANDONED_TIMEOUT_SECS: datetime.timedelta = datetime.timedelta(seconds=3)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 12.4758460521698,
+                    "generation_timestamp": "2024-06-30T10:45:01.975840",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -540,13 +620,15 @@
                         "    __DATA1: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __DATA1: str = \"data1\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.499630451202393,
+                    "generation_timestamp": "2024-06-30T10:45:08.479341",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -595,13 +677,16 @@
                         "    def setData(self, data: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setData(self, data: str) -> None:",
+                        "         self.__data = data"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6248738765716553,
+                    "generation_timestamp": "2024-06-28T23:10:43.666230",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -633,13 +718,16 @@
                         "    def getData(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getData(self) -> str:",
+                        "         return self.__data"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6015615463256836,
+                    "generation_timestamp": "2024-06-28T23:10:44.270804",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -664,13 +752,16 @@
                         "    __data: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __data: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T22:46:05.204614",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -726,13 +817,16 @@
                         "    def setData(self, data: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setData(self, data: str) -> None:",
+                        "         self.data = data"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6892597675323486,
+                    "generation_timestamp": "2024-06-28T23:10:40.640444",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -762,7 +856,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",

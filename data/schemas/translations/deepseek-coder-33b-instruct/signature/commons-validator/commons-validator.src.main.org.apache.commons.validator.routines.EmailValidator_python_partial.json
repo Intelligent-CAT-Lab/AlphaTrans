@@ -67,13 +67,20 @@
                         "    def _isValidUser(self, user: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _isValidUser(self, user: str) -> bool:",
+                        "        ",
+                        "        if user is None or len(user) > self.__MAX_USERNAME_LEN:",
+                        "            return False",
+                        "",
+                        "        return bool(self.__USER_PATTERN.match(user))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.694610357284546,
+                    "generation_timestamp": "2024-06-28T21:42:37.535233",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -137,13 +144,25 @@
                         "    def _isValidDomain(self, domain: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _isValidDomain(self, domain: str) -> bool:",
+                        "        ",
+                        "        ip_domain_matcher = re.match(self.__IP_DOMAIN_REGEX, domain)",
+                        "",
+                        "        if ip_domain_matcher:",
+                        "            inet_address_validator = InetAddressValidator.getInstance()",
+                        "            return inet_address_validator.isValid(ip_domain_matcher.group(1))",
+                        "        if self.__allowTld:",
+                        "            return self.__domainValidator.isValid(domain) or (not domain.startswith(\".\") and self.__domainValidator.isValidTld(domain))",
+                        "        else:",
+                        "            return self.__domainValidator.isValid(domain)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.494405746459961,
+                    "generation_timestamp": "2024-06-28T21:42:47.036961",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -207,13 +226,33 @@
                         "    def isValid(self, email: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValid(self, email: str) -> bool:",
+                        "        ",
+                        "        if email is None:",
+                        "            return False",
+                        "",
+                        "        if email.endswith(\".\"):  # check this first - it's cheap",
+                        "            return False",
+                        "",
+                        "        email_matcher = self.__EMAIL_PATTERN.match(email)",
+                        "        if not email_matcher:",
+                        "            return False",
+                        "",
+                        "        if not self._isValidUser(email_matcher.group(1)):",
+                        "            return False",
+                        "",
+                        "        if not self._isValidDomain(email_matcher.group(2)):",
+                        "            return False",
+                        "",
+                        "        return True"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.45166826248169,
+                    "generation_timestamp": "2024-06-28T21:42:55.492480",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -253,13 +292,17 @@
                         "    def EmailValidator0(allowLocal: bool) -> EmailValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def EmailValidator0(allowLocal: bool) -> EmailValidator:",
+                        "         return EmailValidator(1, allowLocal, False, None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0094513893127441,
+                    "generation_timestamp": "2024-06-28T21:43:05.183558",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -324,13 +367,27 @@
                         "    def __init__(self, constructorId: int, allowLocal: bool, allowTld: bool, domainValidator: DomainValidator) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, allowLocal: bool, allowTld: bool, domainValidator: DomainValidator) -> None:",
+                        "        ",
+                        "        self.__allowTld = allowTld",
+                        "        ",
+                        "        if constructorId == 0:",
+                        "            if domainValidator is None:",
+                        "                raise ValueError(\"DomainValidator cannot be null\")",
+                        "            elif domainValidator.isAllowLocal() != allowLocal:",
+                        "                raise ValueError(\"DomainValidator must agree with allowLocal setting\")",
+                        "            else:",
+                        "                self.__domainValidator = domainValidator",
+                        "        else:",
+                        "            self.__domainValidator = DomainValidator.getInstance1(allowLocal)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.667327404022217,
+                    "generation_timestamp": "2024-06-28T21:43:04.170818",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -370,13 +427,17 @@
                         "    def getInstance2(allowLocal: bool) -> EmailValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance2(allowLocal: bool) -> EmailValidator:",
+                        "         return EmailValidator.getInstance1(allowLocal, False)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.510556221008301,
+                    "generation_timestamp": "2024-06-28T21:43:16.652584",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -423,13 +484,27 @@
                         "    def getInstance1(allowLocal: bool, allowTld: bool) -> EmailValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance1(allowLocal: bool, allowTld: bool) -> EmailValidator:",
+                        "        ",
+                        "        if allowLocal:",
+                        "            if allowTld:",
+                        "                return EmailValidator.__EMAIL_VALIDATOR_WITH_LOCAL_WITH_TLD",
+                        "            else:",
+                        "                return EmailValidator.__EMAIL_VALIDATOR_WITH_LOCAL",
+                        "        else:",
+                        "            if allowTld:",
+                        "                return EmailValidator.__EMAIL_VALIDATOR_WITH_TLD",
+                        "            else:",
+                        "                return EmailValidator.__EMAIL_VALIDATOR"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.950556755065918,
+                    "generation_timestamp": "2024-06-28T21:43:13.136452",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -461,13 +536,19 @@
                         "    def getInstance0() -> EmailValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance0() -> EmailValidator:",
+                        "         if EmailValidator.__EMAIL_VALIDATOR is None:",
+                        "            EmailValidator.__EMAIL_VALIDATOR = EmailValidator(1, False, False, None)",
+                        "         return EmailValidator.__EMAIL_VALIDATOR"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.254497766494751,
+                    "generation_timestamp": "2024-06-28T21:43:21.910140",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -493,13 +574,16 @@
                         "    __domainValidator: DomainValidator = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __domainValidator: DomainValidator = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:40:04.531403",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -525,13 +609,15 @@
                         "    __EMAIL_VALIDATOR_WITH_LOCAL_WITH_TLD: EmailValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_VALIDATOR_WITH_LOCAL_WITH_TLD: EmailValidator = EmailValidator(1, True, True, None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.01438570022583,
+                    "generation_timestamp": "2024-06-30T10:32:39.650628",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -557,13 +643,15 @@
                         "    __EMAIL_VALIDATOR_WITH_LOCAL: EmailValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_VALIDATOR_WITH_LOCAL: EmailValidator = EmailValidator(1, True, False, None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.179580211639404,
+                    "generation_timestamp": "2024-06-30T10:32:44.833213",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -589,13 +677,15 @@
                         "    __EMAIL_VALIDATOR_WITH_TLD: EmailValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_VALIDATOR_WITH_TLD: EmailValidator = EmailValidator(1, False, True, None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.1633217334747314,
+                    "generation_timestamp": "2024-06-30T10:32:48.999465",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -620,13 +710,15 @@
                         "    __EMAIL_VALIDATOR: EmailValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_VALIDATOR: EmailValidator = EmailValidator(1, False, False, None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.08590292930603,
+                    "generation_timestamp": "2024-06-30T10:32:53.089471",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -650,13 +742,16 @@
                         "    __allowTld: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __allowTld: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:40:26.653485",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -681,13 +776,15 @@
                         "    __MAX_USERNAME_LEN: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MAX_USERNAME_LEN: int = 64"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0209224224090576,
+                    "generation_timestamp": "2024-06-28T20:40:27.677535",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -712,13 +809,16 @@
                         "    __USER_PATTERN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __USER_REGEX: str = \"^\" + WORD + \"(\\\\.\" + WORD + \")*$\"",
+                        "__USER_PATTERN: re.Pattern = re.compile(__USER_REGEX)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.767021656036377,
+                    "generation_timestamp": "2024-06-28T20:40:30.448355",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -743,13 +843,16 @@
                         "    __IP_DOMAIN_PATTERN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __IP_DOMAIN_REGEX: str = \"^\\\\[(.*)\\\\]$\"",
+                        "    __IP_DOMAIN_PATTERN: re.Pattern = re.compile(__IP_DOMAIN_REGEX)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.5160813331604004,
+                    "generation_timestamp": "2024-06-28T20:40:32.968228",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -774,13 +877,16 @@
                         "    __EMAIL_PATTERN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_REGEX: str = \"^(.+)@(\\\\S+)$\"",
+                        "    __EMAIL_PATTERN: re.Pattern = re.compile(__EMAIL_REGEX)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.4310929775238037,
+                    "generation_timestamp": "2024-06-28T20:40:36.403143",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -805,13 +911,15 @@
                         "    __USER_REGEX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __USER_REGEX: str = \"^\" + EmailValidator.__WORD + \"(\\\\.\" + EmailValidator.__WORD + \")*$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.053152322769165,
+                    "generation_timestamp": "2024-06-28T20:40:44.460100",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -836,13 +944,15 @@
                         "    __IP_DOMAIN_REGEX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __IP_DOMAIN_REGEX: str = \"^\\\\[(.*)\\\\]$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2870817184448242,
+                    "generation_timestamp": "2024-06-28T20:40:45.751008",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -867,13 +977,15 @@
                         "    __EMAIL_REGEX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_REGEX: str = \"^(.+)@(\\\\S+)$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.35361909866333,
+                    "generation_timestamp": "2024-06-28T20:40:47.107567",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -898,13 +1010,15 @@
                         "    __WORD: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __WORD: str = \"((\" + EmailValidator.__VALID_CHARS + \"|')+|\" + EmailValidator.__QUOTED_USER + \")\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.033005714416504,
+                    "generation_timestamp": "2024-06-28T20:40:49.144424",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -929,13 +1043,15 @@
                         "    __QUOTED_USER: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __QUOTED_USER: str = r'(\\\"(\\\\\\\\\\\"|[^\\\"])*\\\")'"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.620227336883545,
+                    "generation_timestamp": "2024-06-28T20:40:52.768260",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -960,13 +1076,15 @@
                         "    __VALID_CHARS: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __VALID_CHARS: str = \"(\\\\\\\\.)|[^\\\\s\\\\\\\\p{Cntrl}\\\\(\\\\)<>@,;:'\\\\\\\\\\\\\\\"\\\\.\\\\[\\\\]]\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.152897834777832,
+                    "generation_timestamp": "2024-06-28T20:40:54.924505",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -991,13 +1109,15 @@
                         "    __SPECIAL_CHARS: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __SPECIAL_CHARS: str = \"\\\\p{Cntrl}\\\\(\\\\)<>@,;:'\\\\\\\\\\\\\\\"\\\\.\\\\[\\\\]\";"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.12443208694458,
+                    "generation_timestamp": "2024-06-28T20:40:57.052386",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1022,13 +1142,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 1705927040799295880"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5790889263153076,
+                    "generation_timestamp": "2024-06-28T20:40:58.634177",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }

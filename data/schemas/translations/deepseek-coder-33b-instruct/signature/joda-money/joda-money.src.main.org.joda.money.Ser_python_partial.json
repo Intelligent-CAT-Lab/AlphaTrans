@@ -140,13 +140,26 @@
                         "    def readExternal(self, in_: pickle.Unpickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def readExternal(self, in_: pickle.Unpickler) -> None:",
+                        "        ",
+                        "        self.__type = in_.read(1)[0]",
+                        "        ",
+                        "        if self.__type == self.BIG_MONEY:",
+                        "            self.__object = self.__readBigMoney(in_)",
+                        "        elif self.__type == self.MONEY:",
+                        "            self.__object = Money(0, self.__readBigMoney(in_))",
+                        "        elif self.__type == self.CURRENCY_UNIT:",
+                        "            self.__object = self.__readCurrency(in_)",
+                        "        else:",
+                        "            raise EOFError(\"Serialization input has invalid type\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.923704624176025,
+                    "generation_timestamp": "2024-06-28T23:05:58.431085",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -217,13 +230,30 @@
                         "    def writeExternal(self, out: pickle.Pickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def writeExternal(self, out: pickle.Pickler) -> None:",
+                        "        ",
+                        "        out.write(self.__type)",
+                        "        if self.__type == self.BIG_MONEY:",
+                        "            obj = typing.cast(BigMoney, self.__object)",
+                        "            self.__writeBigMoney(out, obj)",
+                        "            return",
+                        "        elif self.__type == self.MONEY:",
+                        "            obj = typing.cast(Money, self.__object)",
+                        "            self.__writeBigMoney(out, obj.toBigMoney())",
+                        "            return",
+                        "        elif self.__type == self.CURRENCY_UNIT:",
+                        "            obj = typing.cast(CurrencyUnit, self.__object)",
+                        "            self.__writeCurrency(out, obj)",
+                        "            return",
+                        "        raise InvalidClassException(\"Joda-Money bug: Serialization broken\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.952504873275757,
+                    "generation_timestamp": "2024-06-28T23:06:15.650115",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -262,13 +292,19 @@
                         "    def __init__(self, constructorId: int, object: typing.Any, type: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, object: typing.Any, type: int) -> None:",
+                        "        ",
+                        "        if constructorId == 0:",
+                        "            self.__type = type",
+                        "            self.__object = object"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.729729175567627,
+                    "generation_timestamp": "2024-06-28T23:05:26.082091",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -298,13 +334,16 @@
                         "    def __readResolve(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __readResolve(self) -> typing.Any:",
+                        "         return self.__object"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6212530136108398,
+                    "generation_timestamp": "2024-06-28T23:05:33.772250",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -362,13 +401,25 @@
                         "    def __readCurrency(self, in_: pickle.Unpickler) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __readCurrency(self, in_: pickle.Unpickler) -> CurrencyUnit:",
+                        "        ",
+                        "        code = in_.load()",
+                        "        singletonCurrency = CurrencyUnit.of1(code)",
+                        "        if singletonCurrency.getNumericCode() != in_.load():",
+                        "            raise pickle.UnpicklingError(",
+                        "                    \"Deserialization found a mismatch in the numeric code for currency \" + code)",
+                        "        if singletonCurrency.getDecimalPlaces() != in_.load():",
+                        "            raise pickle.UnpicklingError(",
+                        "                    \"Deserialization found a mismatch in the decimal places for currency \" + code)",
+                        "        return singletonCurrency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.576379776000977,
+                    "generation_timestamp": "2024-06-28T23:05:44.357464",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -416,13 +467,21 @@
                         "    def __readBigMoney(self, in_: pickle.Unpickler) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __readBigMoney(self, in_: pickle.Unpickler) -> BigMoney:",
+                        "        ",
+                        "        currency = self.__readCurrency(in_)",
+                        "        bytes_ = in_.load()",
+                        "        bd = decimal.Decimal(bytes_)",
+                        "        bigMoney = BigMoney(0, bd, currency)",
+                        "        return bigMoney"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.131597518920898,
+                    "generation_timestamp": "2024-06-28T23:05:50.500721",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -473,13 +532,18 @@
                         "    def __writeCurrency(self, out: pickle.Pickler, obj: CurrencyUnit) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __writeCurrency(self, out: pickle.Pickler, obj: CurrencyUnit) -> None:",
+                        "         out.writeUTF(obj.getCode())",
+                        "         out.writeShort(obj.getNumericCode())",
+                        "         out.writeShort(obj.getDecimalPlaces())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.6655590534210205,
+                    "generation_timestamp": "2024-06-28T23:06:03.102893",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -537,13 +601,23 @@
                         "    def __writeBigMoney(self, out: pickle.Pickler, obj: BigMoney) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __writeBigMoney(self, out: pickle.Pickler, obj: BigMoney) -> None:",
+                        "        ",
+                        "        self.__writeCurrency(out, obj.getCurrencyUnit())",
+                        "        ",
+                        "        bytes_ = obj.getAmount().unscaledValue().to_bytes()",
+                        "        ",
+                        "        out.writeInt(len(bytes_))",
+                        "        out.write(bytes_)",
+                        "        out.writeInt(obj.getScale())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.567934274673462,
+                    "generation_timestamp": "2024-06-28T23:06:08.692100",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -569,13 +643,15 @@
                         "    CURRENCY_UNIT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CURRENCY_UNIT: int = ord('C')"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.7203028202056885,
+                    "generation_timestamp": "2024-06-30T10:32:33.111623",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -599,13 +675,15 @@
                         "    MONEY: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    MONEY: int = ord('M')"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.4948065280914307,
+                    "generation_timestamp": "2024-06-30T10:32:35.608605",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -629,13 +707,15 @@
                         "    BIG_MONEY: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BIG_MONEY: int = ord('B')"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0080692768096924,
+                    "generation_timestamp": "2024-06-30T10:32:36.618911",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -658,13 +738,16 @@
                         "    __object: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __object: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:26.441055",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -687,13 +770,16 @@
                         "    __type: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __type: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:37:26.442576",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }

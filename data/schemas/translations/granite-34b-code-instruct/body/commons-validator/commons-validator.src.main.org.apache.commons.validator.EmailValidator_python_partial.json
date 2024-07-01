@@ -70,13 +70,26 @@
                         "    def _stripComments(self, emailStr: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _stripComments(self, emailStr: str) -> str:",
+                        "        ",
+                        "",
+                        "        result = emailStr",
+                        "        commentPat = (",
+                        "            \"^((?:[^\\\"\\\\\\\\]|\\\\\\\\.)*(?:\\\"(?:[^\\\"\\\\\\\\]|\\\\\\\\.)*\\\"(?:[^\\\"\\\\\\\\]|\\111111\\\\\\\\.)*)*)\\\\((?:[^()\\\\\\\\]|\\\\\\\\.)*\\\\)/\"",
+                        "        )",
+                        "        commentMatcher = re.compile(commentPat)",
+                        "",
+                        "        while commentMatcher.match(result):",
+                        "            result = re.sub(commentPat, \"\\1 \", result, 1)",
+                        "        return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.8290209770202637,
+                    "generation_timestamp": "2024-07-01T10:31:32.316709",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -138,13 +151,22 @@
                         "    def _isValidSymbolicDomain(self, domain: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _isValidSymbolicDomain(self, domain: str) -> bool:",
+                        "         domain_segments = domain.split('.')",
+                        "         if len(domain_segments) < 2:",
+                        "             return False",
+                        "         tld = domain_segments[-1]",
+                        "         if not self.__TLD_PATTERN.match(tld):",
+                        "             return False",
+                        "         return True"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.2342441082000732,
+                    "generation_timestamp": "2024-07-01T10:31:34.557781",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -195,13 +217,33 @@
                         "    def _isValidIpAddress(self, ipAddress: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _isValidIpAddress(self, ipAddress: str) -> bool:",
+                        "        ",
+                        "",
+                        "        matcher: re.Match = self.__IP_DOMAIN_PATTERN.match(ipAddress)",
+                        "        for i in range(1, 5): # CHECKSTYLE IGNORE MagicNumber",
+                        "            ipSegment: str = matcher.group(i)",
+                        "            if ipSegment is None or len(ipSegment) <= 0:",
+                        "                return False",
+                        "",
+                        "            iIpSegment: int = 0",
+                        "",
+                        "            try:",
+                        "                iIpSegment = int(ipSegment)",
+                        "            except ValueError:",
+                        "                return False",
+                        "",
+                        "            if iIpSegment > 255: # CHECKSTYLE IGNORE MagicNumber",
+                        "                return False",
+                        "        return True"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.408066749572754,
+                    "generation_timestamp": "2024-07-01T10:31:38.971169",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -233,13 +275,16 @@
                         "    def _isValidUser(self, user: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _isValidUser(self, user: str) -> bool:",
+                        "         return self.__USER_PATTERN.matcher(user).matches()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9097516536712646,
+                    "generation_timestamp": "2024-07-01T10:31:39.885602",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -308,13 +353,33 @@
                         "    def _isValidDomain(self, domain: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _isValidDomain(self, domain: str) -> bool:",
+                        "         symbolic = False",
+                        "",
+                        "         ip_domain_matcher = self.__IP_DOMAIN_PATTERN.match(domain)",
+                        "",
+                        "         if ip_domain_matcher:",
+                        "             inet_address_validator = InetAddressValidator.getInstance()",
+                        "             if inet_address_validator.isValid(ip_domain_matcher.group(1)):",
+                        "                 return True",
+                        "         else:",
+                        "             symbolic = self.__DOMAIN_PATTERN.match(domain)",
+                        "",
+                        "         if symbolic:",
+                        "             if not self._isValidSymbolicDomain(domain):",
+                        "                 return False",
+                        "         else:",
+                        "             return False",
+                        "",
+                        "         return True"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.065137147903442,
+                    "generation_timestamp": "2024-07-01T10:31:43.958140",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -357,13 +422,32 @@
                         "    def isValid(self, email: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValid(self, email: str) -> bool:",
+                        "         if email is None:",
+                        "             return False",
+                        "",
+                        "         if email.endswith(\".\"):  # check this first - it's cheap!",
+                        "             return False",
+                        "",
+                        "         emailMatcher = self.__EMAIL_PATTERN.matcher(email)",
+                        "         if not emailMatcher.matches():",
+                        "             return False",
+                        "",
+                        "         if not self._isValidUser(emailMatcher.group(1)):",
+                        "             return False",
+                        "",
+                        "         if not self._isValidDomain(emailMatcher.group(2)):",
+                        "             return False",
+                        "",
+                        "         return True"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.5487475395202637,
+                    "generation_timestamp": "2024-07-01T10:32:08.921404",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -393,13 +477,16 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "         super()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.5091249942779541,
+                    "generation_timestamp": "2024-07-01T10:31:44.470420",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -431,13 +518,17 @@
                         "    def getInstance() -> EmailValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> EmailValidator:",
+                        "         return EmailValidator.__EMAIL_VALIDATOR"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7073831558227539,
+                    "generation_timestamp": "2024-07-01T10:31:45.180254",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }
@@ -464,13 +555,15 @@
                         "    __EMAIL_VALIDATOR: EmailValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_VALIDATOR: EmailValidator = EmailValidator()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8937201499938965,
+                    "generation_timestamp": "2024-07-01T09:52:26.299064",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -495,13 +588,16 @@
                         "    __ATOM_PATTERN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ATOM: str = VALID_CHARS + '+'",
+                        "    __ATOM_PATTERN: re.Pattern = re.compile(f\"({__ATOM})\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.8992540836334229,
+                    "generation_timestamp": "2024-07-01T09:52:28.202485",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -527,13 +623,17 @@
                         "    __DOMAIN_PATTERN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ATOM: str = VALID_CHARS + '+'",
+                        "",
+                        "    __DOMAIN_PATTERN: re.Pattern = re.compile(\"^\" + __ATOM + \"(\\\\.\" + __ATOM + \")*\\\\s*$\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.8934156894683838,
+                    "generation_timestamp": "2024-07-01T09:52:30.098347",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -559,13 +659,16 @@
                         "    __USER_PATTERN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __WORD: str = \"((\" + VALID_CHARS + \"|')+|\" + QUOTED_USER + \")\"",
+                        "    __USER_PATTERN: re.Pattern = re.compile(\"^\\\\s*\" + __WORD + \"(\\\\.\" + __WORD + \")*$\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.3564071655273438,
+                    "generation_timestamp": "2024-07-01T09:52:32.457106",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -590,13 +693,15 @@
                         "    __TLD_PATTERN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __TLD_PATTERN: re.Pattern = re.compile(\"^([a-zA-Z]+)$\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2320172786712646,
+                    "generation_timestamp": "2024-07-01T09:52:33.690606",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -621,13 +726,15 @@
                         "    __IP_DOMAIN_PATTERN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __IP_DOMAIN_PATTERN: re.Pattern = re.compile(\"^\\\\[(.*)\\\\]$\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2151157855987549,
+                    "generation_timestamp": "2024-07-01T09:52:34.910268",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -652,13 +759,15 @@
                         "    __WORD: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __WORD: str = \"((\" + __VALID_CHARS + \"|')+|\" + __QUOTED_USER + \")\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3147671222686768,
+                    "generation_timestamp": "2024-07-01T09:52:36.227571",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -683,13 +792,15 @@
                         "    __ATOM: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ATOM: str = f\"[^\\\\s{EmailValidator.__VALID_CHARS}]+\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.285837173461914,
+                    "generation_timestamp": "2024-07-01T09:52:37.515872",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -714,13 +825,15 @@
                         "    __QUOTED_USER: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __QUOTED_USER: str = \"(\\\"[^\\\"]*\\\")\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9730489253997803,
+                    "generation_timestamp": "2024-07-01T09:52:38.490986",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -745,13 +858,16 @@
                         "    __VALID_CHARS: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __SPECIAL_CHARS: str = r\"\\p{Cntrl}\\(\\)<>@,;:'\\\"\\\\.[]\"",
+                        "    __VALID_CHARS: str = f\"[^\\\\s{__SPECIAL_CHARS}]\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.8902130126953125,
+                    "generation_timestamp": "2024-07-01T09:52:40.384927",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -776,13 +892,15 @@
                         "    __SPECIAL_CHARS: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __SPECIAL_CHARS: str = r\"\\p{Cntrl}\\(\\)<>@,;:'\\\"\\\\.[]\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.252899408340454,
+                    "generation_timestamp": "2024-07-01T09:52:41.639957",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }

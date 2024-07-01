@@ -89,13 +89,16 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return self.__printerParser.toString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9325087070465088,
+                    "generation_timestamp": "2024-06-28T20:38:07.136401",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -160,13 +163,25 @@
                         "    def parse(self, text: str, startIndex: int) -> MoneyParseContext:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parse(self, text: str, startIndex: int) -> MoneyParseContext:",
+                        "        ",
+                        "        self.checkNotNull(text, \"Text must not be null\")",
+                        "        if startIndex < 0 or startIndex > len(text):",
+                        "            raise IndexError(\"Invalid start index: \" + str(startIndex))",
+                        "        if self.isParser() == False:",
+                        "            raise Exception(",
+                        "                    \"MoneyFomatter has not been configured to be able to parse\")",
+                        "        context = MoneyParseContext(1, text, startIndex, self.locale, None, 0, None)",
+                        "        self.printerParser.parse(context)",
+                        "        return context"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.870287895202637,
+                    "generation_timestamp": "2024-06-28T20:42:01.646311",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -209,13 +224,16 @@
                         "    def parseMoney(self, text: str) -> Money:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parseMoney(self, text: str) -> Money:",
+                        "         return self.parseBigMoney(text).toMoney0()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.4190125465393066,
+                    "generation_timestamp": "2024-06-28T21:05:24.137905",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -311,13 +329,33 @@
                         "    def parseBigMoney(self, text: str) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parseBigMoney(self, text: str) -> BigMoney:",
+                        "        ",
+                        "        self.checkNotNull(text, \"Text must not be null\")",
+                        "        result = self.parse(text, 0)",
+                        "        ",
+                        "        if result.isError() or result.isFullyParsed() == False or result.isComplete() == False:",
+                        "            str = (text[:64] + \"...\") if len(text) > 64 else text",
+                        "            ",
+                        "            if result.isError():",
+                        "                raise MoneyFormatException.MoneyFormatException1(",
+                        "                    \"Text could not be parsed at index \" + str(result.getErrorIndex()) + \": \" + str)",
+                        "            elif result.isFullyParsed() == False:",
+                        "                raise MoneyFormatException.MoneyFormatException1(",
+                        "                    \"Unparsed text found at index \" + str(result.getIndex()) + \": \" + str)",
+                        "            else:",
+                        "                raise MoneyFormatException.MoneyFormatException1(",
+                        "                    \"Parsing did not find both currency and amount: \" + str)",
+                        "        ",
+                        "        return result.toBigMoney()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 13.627970457077026,
+                    "generation_timestamp": "2024-06-28T20:52:31.869729",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -384,13 +422,24 @@
                         "    def printIO(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def printIO(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:",
+                        "        ",
+                        "        self.checkNotNull(moneyProvider, \"BigMoneyProvider must not be null\")",
+                        "        if self.isPrinter() == False:",
+                        "            raise UnsupportedOperationException(",
+                        "                    \"MoneyFomatter has not been configured to be able to print\")",
+                        "",
+                        "        money = BigMoney.of2(moneyProvider)",
+                        "        context = MoneyPrintContext(self.locale)",
+                        "        self.printerParser.print(context, appendable, money)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.325675964355469,
+                    "generation_timestamp": "2024-06-28T20:52:37.204702",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -438,13 +487,19 @@
                         "    def print1(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def print1(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:",
+                        "         try:",
+                        "             self.printIO(appendable, moneyProvider)",
+                        "         except IOError as ex:",
+                        "             raise MoneyFormatException(ex.args[0], ex)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.450098514556885,
+                    "generation_timestamp": "2024-06-28T20:52:43.657730",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -484,13 +539,19 @@
                         "    def print0(self, moneyProvider: BigMoneyProvider) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def print0(self, moneyProvider: BigMoneyProvider) -> str:",
+                        "        ",
+                        "        buf = io.StringIO()",
+                        "        self.print1(buf, moneyProvider)",
+                        "        return buf.getvalue()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.9107139110565186,
+                    "generation_timestamp": "2024-06-28T20:52:48.571121",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -526,13 +587,16 @@
                         "    def isParser(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isParser(self) -> bool:",
+                        "         return self.__printerParser.isParser()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1653735637664795,
+                    "generation_timestamp": "2024-06-28T20:38:08.305720",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -568,13 +632,16 @@
                         "    def isPrinter(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isPrinter(self) -> bool:",
+                        "         return self.__printerParser.isPrinter()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0089573860168457,
+                    "generation_timestamp": "2024-06-28T20:38:09.317465",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -618,13 +685,18 @@
                         "    def withLocale(self, locale: typing.Any) -> MoneyFormatter:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withLocale(self, locale: typing.Any) -> MoneyFormatter:",
+                        "        ",
+                        "        self.checkNotNull(locale, \"Locale must not be null\")",
+                        "        return MoneyFormatter(1, locale, None, None, self.__printerParser)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.206091403961182,
+                    "generation_timestamp": "2024-06-28T20:38:40.765919",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -654,13 +726,16 @@
                         "    def getLocale(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getLocale(self) -> typing.Any:",
+                        "         return self.__locale"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7802579402923584,
+                    "generation_timestamp": "2024-06-28T20:38:10.101895",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -728,13 +803,29 @@
                         "    def __init__(self, constructorId: int, locale: typing.Any, parsers: typing.List[MoneyParser], printers: typing.List[MoneyPrinter], printerParser: MultiPrinterParser) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, locale: typing.Any, parsers: typing.List[MoneyParser], printers: typing.List[MoneyPrinter], printerParser: MultiPrinterParser) -> None:",
+                        "        ",
+                        "        if constructorId == 0:",
+                        "            MoneyFormatter.checkNotNull(locale, \"Locale must not be null\")",
+                        "            MoneyFormatter.checkNotNull(printers, \"Printers must not be null\")",
+                        "            MoneyFormatter.checkNotNull(parsers, \"Parsers must not be null\")",
+                        "            if len(printers) != len(parsers):",
+                        "                raise ValueError(\"Printers and parsers must match\")",
+                        "            self.__locale = locale",
+                        "            self.__printerParser = MultiPrinterParser(printers, parsers)",
+                        "        else:",
+                        "            MoneyFormatter.checkNotNull(locale, \"Locale must not be null\")",
+                        "            MoneyFormatter.checkNotNull(printerParser, \"PrinterParser must not be null\")",
+                        "            self.__locale = locale",
+                        "            self.__printerParser = printerParser"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 13.556030750274658,
+                    "generation_timestamp": "2024-06-28T20:38:34.660779",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -770,13 +861,18 @@
                         "    def checkNotNull(object: typing.Any, message: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def checkNotNull(object: typing.Any, message: str) -> None:",
+                        "         if object is None:",
+                        "            raise ValueError(message)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.5918562412261963,
+                    "generation_timestamp": "2024-06-28T20:38:13.696116",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -804,13 +900,16 @@
                         "    def getPrinterParser(self) -> MultiPrinterParser:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getPrinterParser(self) -> MultiPrinterParser:",
+                        "         return self.__printerParser"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8938052654266357,
+                    "generation_timestamp": "2024-06-28T20:38:35.556927",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -836,13 +935,16 @@
                         "    __printerParser: MultiPrinterParser = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __printerParser: MultiPrinterParser = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:25:53.621811",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -866,13 +968,16 @@
                         "    __locale: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __locale: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:25:53.627856",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -897,13 +1002,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 2385346258"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6367135047912598,
+                    "generation_timestamp": "2024-06-28T20:25:55.269065",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }

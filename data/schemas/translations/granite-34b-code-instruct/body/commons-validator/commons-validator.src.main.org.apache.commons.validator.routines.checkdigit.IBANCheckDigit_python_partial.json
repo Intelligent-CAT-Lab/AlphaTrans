@@ -71,13 +71,22 @@
                         "    def calculate(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def calculate(self, code: str) -> str:",
+                        "         if code is None or len(code) < self.__MIN_CODE_LEN:",
+                        "             raise CheckDigitException.CheckDigitException1(f\"Invalid Code length={len(code)}\")",
+                        "         code = code[:2] + \"00\" + code[4:]",
+                        "         modulus_result = self.__calculateModulus(code)",
+                        "         char_value = (98 - modulus_result)",
+                        "         check_digit = str(char_value)",
+                        "         return check_digit if char_value > 9 else \"0\" + check_digit"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.46150803565979,
+                    "generation_timestamp": "2024-07-01T10:24:00.446321",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -129,13 +138,25 @@
                         "    def isValid(self, code: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValid(self, code: str) -> bool:",
+                        "         if code is None or len(code) < self.__MIN_CODE_LEN:",
+                        "             return False",
+                        "         check = code[2:4]",
+                        "         if check == \"00\" or check == \"01\" or check == \"99\":",
+                        "             return False",
+                        "         try:",
+                        "             modulus_result = self.__calculateModulus(code)",
+                        "             return modulus_result == 1",
+                        "         except CheckDigitException as ex:",
+                        "             return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.4833714962005615,
+                    "generation_timestamp": "2024-07-01T10:24:03.931785",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -163,13 +184,16 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.48672056198120117,
+                    "generation_timestamp": "2024-07-01T10:23:50.409696",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -223,13 +247,25 @@
                         "    def __calculateModulus(self, code: str) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __calculateModulus(self, code: str) -> int:",
+                        "         reformatted_code = code[4:] + code[:4]",
+                        "         total = 0",
+                        "         for i, char in enumerate(reformatted_code):",
+                        "             char_value = ord(char) - ord('0')",
+                        "             if char_value < 0 or char_value > self.__MAX_ALPHANUMERIC_VALUE:",
+                        "                 raise CheckDigitException.CheckDigitException1(f\"Invalid Character[{i}] = '{char_value}'\")",
+                        "             total = (total * (100 if char_value > 9 else 10)) + char_value",
+                        "             if total > self.__MAX:",
+                        "                 total = total % self.__MODULUS",
+                        "         return total % self.__MODULUS"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.57144832611084,
+                    "generation_timestamp": "2024-07-01T10:23:55.982975",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }
@@ -256,13 +292,15 @@
                         "    IBAN_CHECK_DIGIT: CheckDigit = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    IBAN_CHECK_DIGIT: CheckDigit = IBANCheckDigit()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9942691326141357,
+                    "generation_timestamp": "2024-07-01T09:47:26.511334",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -287,13 +325,15 @@
                         "    __MODULUS: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MODULUS: int = 97"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8481807708740234,
+                    "generation_timestamp": "2024-07-01T09:47:27.361338",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -318,13 +358,15 @@
                         "    __MAX: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MAX: int = 999999999"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.011101484298706,
+                    "generation_timestamp": "2024-07-01T09:47:28.374196",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -349,13 +391,15 @@
                         "    __MAX_ALPHANUMERIC_VALUE: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MAX_ALPHANUMERIC_VALUE: int = 35"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0225226879119873,
+                    "generation_timestamp": "2024-07-01T09:47:29.398539",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -380,13 +424,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = -3600191725934382801"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3751680850982666,
+                    "generation_timestamp": "2024-07-01T09:47:30.775150",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -411,13 +457,15 @@
                         "    __MIN_CODE_LEN: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MIN_CODE_LEN: int = 5"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8911633491516113,
+                    "generation_timestamp": "2024-07-01T09:47:31.667858",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }

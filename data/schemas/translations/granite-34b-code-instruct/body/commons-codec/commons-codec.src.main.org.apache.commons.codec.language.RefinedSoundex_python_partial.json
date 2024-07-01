@@ -95,13 +95,31 @@
                         "    def soundex(self, str: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def soundex(self, str: str) -> str:",
+                        "         if str is None:",
+                        "             return None",
+                        "         str = SoundexUtils.clean(str)",
+                        "         if not str:",
+                        "             return str",
+                        "         s_buf = []",
+                        "         s_buf.append(str[0])",
+                        "         last = '*'",
+                        "         for i in range(len(str)):",
+                        "             current = self.getMappingCode(str[i])",
+                        "             if current == last:",
+                        "                 continue",
+                        "             if current != '0':",
+                        "                 s_buf.append(current)",
+                        "             last = current",
+                        "         return ''.join(s_buf)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 31.514432907104492,
+                    "generation_timestamp": "2024-07-01T15:17:07.682584",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -139,13 +157,16 @@
                         "    def encode1(self, str: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode1(self, str: str) -> str:",
+                        "         return self.soundex(str)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.373309850692749,
+                    "generation_timestamp": "2024-07-01T15:17:09.057822",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -193,13 +214,20 @@
                         "    def encode0(self, obj: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode0(self, obj: typing.Any) -> typing.Any:",
+                        "         if not isinstance(obj, str):",
+                        "             raise EncoderException(",
+                        "                     \"Parameter supplied to RefinedSoundex encode is not of type java.lang.String\",",
+                        "                     None)",
+                        "         return self.soundex(obj)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 14.69208288192749,
+                    "generation_timestamp": "2024-07-01T15:17:23.751865",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -238,13 +266,27 @@
                         "    def difference(self, s1: str, s2: str) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def difference(self, s1: str, s2: str) -> int:",
+                        "        ",
+                        "",
+                        "        if s1 is None or s2 is None:",
+                        "            return 0",
+                        "        es1 = self.encode(s1)",
+                        "        es2 = self.encode(s2)",
+                        "        lengthToMatch = min(len(es1), len(es2))",
+                        "        diff = 0",
+                        "        for i in range(lengthToMatch):",
+                        "            if es1[i] == es2[i]:",
+                        "                diff += 1",
+                        "        return diff"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 27.604301691055298,
+                    "generation_timestamp": "2024-07-01T15:16:21.473053",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -284,13 +326,21 @@
                         "    def __init__(self, constructorId: int, mapping: str, mapping1: typing.List[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, mapping: str, mapping1: typing.List[str]) -> None:",
+                        "         if constructorId == 0:",
+                        "             self.__soundexMapping = list(mapping)",
+                        "         elif constructorId == 1:",
+                        "             self.__soundexMapping = mapping1.copy()",
+                        "         else:",
+                        "             self.__soundexMapping = RefinedSoundex.__US_ENGLISH_MAPPING.copy()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 11.278033256530762,
+                    "generation_timestamp": "2024-07-01T15:16:32.755373",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -323,13 +373,18 @@
                         "    def getMappingCode(self, c: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getMappingCode(self, c: str) -> str:",
+                        "         if not c.isalpha():",
+                        "             return '0'",
+                        "         return self.__soundexMapping[ord(c.upper()) - ord('A')]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.4061648845672607,
+                    "generation_timestamp": "2024-07-01T15:16:36.164525",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }
@@ -356,13 +411,15 @@
                         "    US_ENGLISH: RefinedSoundex = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    US_ENGLISH: RefinedSoundex = RefinedSoundex(2, None, None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9516983032226562,
+                    "generation_timestamp": "2024-07-01T13:47:57.675953",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -387,13 +444,15 @@
                         "    US_ENGLISH_MAPPING_STRING: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    US_ENGLISH_MAPPING_STRING: str = \"01360240043788015936020505\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.20267915725708,
+                    "generation_timestamp": "2024-07-01T13:48:06.880617",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -417,13 +476,16 @@
                         "    __soundexMapping: typing.List[str] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __soundexMapping: typing.List[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T10:28:28.519230",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -448,13 +510,15 @@
                         "    __US_ENGLISH_MAPPING: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __US_ENGLISH_MAPPING: typing.List[str] = list(RefinedSoundex.US_ENGLISH_MAPPING_STRING)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6141457557678223,
+                    "generation_timestamp": "2024-07-01T10:28:30.135482",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }

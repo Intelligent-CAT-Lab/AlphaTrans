@@ -95,13 +95,16 @@
                         "    def getDependencyList(self) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getDependencyList(self) -> typing.List[str]:",
+                        "         return typing.cast(typing.Final[typing.List[str]], self.__dependencyList)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1017446517944336,
+                    "generation_timestamp": "2024-07-01T10:19:45.853641",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -133,13 +136,16 @@
                         "    def isDependency(self, validatorName: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isDependency(self, validatorName: str) -> bool:",
+                        "         return self.__dependencyList.contains(validatorName)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8290672302246094,
+                    "generation_timestamp": "2024-07-01T10:19:46.690350",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -179,13 +185,19 @@
                         "    def generateKey(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def generateKey(self) -> None:",
+                        "         if self.isIndexed():",
+                        "             self._key = self._indexedListProperty + self.TOKEN_INDEXED + \".\" + self._property",
+                        "         else:",
+                        "             self._key = self._property"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7500882148742676,
+                    "generation_timestamp": "2024-07-01T10:19:49.873788",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -215,13 +227,16 @@
                         "    def isIndexed(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isIndexed(self) -> bool:",
+                        "         return (self._indexedListProperty is not None and len(self._indexedListProperty) > 0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4175047874450684,
+                    "generation_timestamp": "2024-07-01T10:19:48.115797",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -253,13 +268,16 @@
                         "    def setKey(self, key: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setKey(self, key: str) -> None:",
+                        "         self._key = key"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6118237972259521,
+                    "generation_timestamp": "2024-07-01T10:19:50.489951",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -299,13 +317,18 @@
                         "    def getKey(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getKey(self) -> str:",
+                        "         if self._key is None:",
+                        "             self.generateKey()",
+                        "         return self._key"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1001825332641602,
+                    "generation_timestamp": "2024-07-01T10:19:51.595148",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -529,13 +552,27 @@
                         "    def addArg(self, arg: Arg) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def addArg(self, arg: Arg) -> None:",
+                        "         if arg is None or arg.getKey() is None or len(arg.getKey()) == 0:",
+                        "             return",
+                        "         self.__determineArgPosition(arg)",
+                        "         self.__ensureArgsCapacity(arg)",
+                        "         argMap = self._args[arg.getPosition()]",
+                        "         if argMap is None:",
+                        "             argMap = {}",
+                        "             self._args[arg.getPosition()] = argMap",
+                        "         if arg.getName() is None:",
+                        "             argMap[Field.__DEFAULT_ARG] = arg",
+                        "         else:",
+                        "             argMap[arg.getName()] = arg"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.327962398529053,
+                    "generation_timestamp": "2024-07-01T10:20:19.484130",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -567,13 +604,16 @@
                         "    def setClientValidation(self, clientValidation: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setClientValidation(self, clientValidation: bool) -> None:",
+                        "         self._clientValidation = clientValidation"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6442880630493164,
+                    "generation_timestamp": "2024-07-01T10:19:52.244936",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -603,13 +643,16 @@
                         "    def isClientValidation(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isClientValidation(self) -> bool:",
+                        "         return self._clientValidation"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6063680648803711,
+                    "generation_timestamp": "2024-07-01T10:19:52.855548",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -652,13 +695,25 @@
                         "    def setDepends(self, depends: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setDepends(self, depends: str) -> None:",
+                        "         self._depends = depends",
+                        "",
+                        "         self.__dependencyList.clear()",
+                        "",
+                        "         st = io.StringIO(depends)",
+                        "         while st.hasMoreTokens():",
+                        "             depend = st.nextToken().strip()",
+                        "",
+                        "             if depend is not None and len(depend) > 0:",
+                        "                 self.__dependencyList.append(depend)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.519331693649292,
+                    "generation_timestamp": "2024-07-01T10:19:55.379092",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -688,13 +743,16 @@
                         "    def getDepends(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getDepends(self) -> str:",
+                        "         return self._depends"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.5732948780059814,
+                    "generation_timestamp": "2024-07-01T10:19:55.956549",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -726,13 +784,16 @@
                         "    def setIndexedListProperty(self, indexedListProperty: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setIndexedListProperty(self, indexedListProperty: str) -> None:",
+                        "         self._indexedListProperty = indexedListProperty"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.737384557723999,
+                    "generation_timestamp": "2024-07-01T10:19:56.698126",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -762,13 +823,16 @@
                         "    def getIndexedListProperty(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getIndexedListProperty(self) -> str:",
+                        "         return self._indexedListProperty"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6534204483032227,
+                    "generation_timestamp": "2024-07-01T10:19:57.355781",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -800,13 +864,16 @@
                         "    def setIndexedProperty(self, indexedProperty: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setIndexedProperty(self, indexedProperty: str) -> None:",
+                        "         self._indexedProperty = indexedProperty"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6970357894897461,
+                    "generation_timestamp": "2024-07-01T10:19:58.057220",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -836,13 +903,16 @@
                         "    def getIndexedProperty(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getIndexedProperty(self) -> str:",
+                        "         return self._indexedProperty"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6383605003356934,
+                    "generation_timestamp": "2024-07-01T10:19:58.699838",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -874,13 +944,16 @@
                         "    def setProperty(self, property: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setProperty(self, property: str) -> None:",
+                        "         self._property = property"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6338484287261963,
+                    "generation_timestamp": "2024-07-01T10:19:59.337929",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -910,13 +983,16 @@
                         "    def getProperty(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getProperty(self) -> str:",
+                        "         return self._property"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6121242046356201,
+                    "generation_timestamp": "2024-07-01T10:19:59.954488",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -948,13 +1024,16 @@
                         "    def setFieldOrder(self, fieldOrder: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setFieldOrder(self, fieldOrder: int) -> None:",
+                        "         self._fieldOrder = fieldOrder"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6974353790283203,
+                    "generation_timestamp": "2024-07-01T10:20:00.656357",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -984,13 +1063,16 @@
                         "    def getFieldOrder(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getFieldOrder(self) -> int:",
+                        "         return self._fieldOrder"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6129879951477051,
+                    "generation_timestamp": "2024-07-01T10:20:01.271973",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1022,13 +1104,16 @@
                         "    def setPage(self, page: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setPage(self, page: int) -> None:",
+                        "         self._page = page"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6416826248168945,
+                    "generation_timestamp": "2024-07-01T10:20:01.916343",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1058,13 +1143,16 @@
                         "    def getPage(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getPage(self) -> int:",
+                        "         return self._page"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.587965726852417,
+                    "generation_timestamp": "2024-07-01T10:20:02.511720",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1108,13 +1196,17 @@
                         "    def __handleMissingAction(self, name: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __handleMissingAction(self, name: str) -> None:",
+                        "         raise ValidatorException(",
+                        "                \"No ValidatorAction named \" + name + \" found for field \" + self.getProperty())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2619924545288086,
+                    "generation_timestamp": "2024-07-01T10:20:03.782764",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1178,13 +1270,27 @@
                         "    def __processArg(self, key: str, replaceValue: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __processArg(self, key: str, replaceValue: str) -> None:",
+                        "         for i in range(len(self._args)):",
+                        "",
+                        "            argMap = self._args[i]",
+                        "            if argMap is None:",
+                        "                continue",
+                        "",
+                        "            iter = argMap.values().iterator()",
+                        "            while iter.hasNext():",
+                        "                arg = iter.next()",
+                        "",
+                        "                if arg is not None:",
+                        "                    arg.setKey(ValidatorUtils.replace(arg.getKey(), key, replaceValue))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.1093406677246094,
+                    "generation_timestamp": "2024-07-01T10:20:06.902032",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1227,13 +1333,19 @@
                         "    def __ensureArgsCapacity(self, arg: Arg) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __ensureArgsCapacity(self, arg: Arg) -> None:",
+                        "         if arg.getPosition() >= len(self._args):",
+                        "             new_args = [{} for _ in range(arg.getPosition() + 1)]",
+                        "             new_args[:len(self._args)] = self._args",
+                        "             self._args = new_args"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.2963948249816895,
+                    "generation_timestamp": "2024-07-01T10:20:09.203011",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1309,13 +1421,32 @@
                         "    def __determineArgPosition(self, arg: Arg) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __determineArgPosition(self, arg: Arg) -> None:",
+                        "         position = arg.getPosition()",
+                        "         if position >= 0:",
+                        "             return",
+                        "         if self._args is None or len(self._args) == 0:",
+                        "             arg.setPosition(0)",
+                        "             return",
+                        "         keyName = arg.getName() if arg.getName() is not None else Field.__DEFAULT_ARG",
+                        "         lastPosition = -1",
+                        "         lastDefault = -1",
+                        "         for i in range(len(self._args)):",
+                        "             if self._args[i] is not None and keyName in self._args[i]:",
+                        "                 lastPosition = i",
+                        "             if self._args[i] is not None and Field.__DEFAULT_ARG in self._args[i]:",
+                        "                 lastDefault = i",
+                        "         if lastPosition < 0:",
+                        "             lastPosition = lastDefault",
+                        "         arg.setPosition(lastPosition + 1)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.924123287200928,
+                    "generation_timestamp": "2024-07-01T10:20:15.140044",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }
@@ -1341,13 +1472,15 @@
                         "    _args: typing.List[typing.Dict[str, Arg]] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _args: typing.List[typing.Dict[str, Arg]] = []"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.511341094970703,
+                    "generation_timestamp": "2024-07-01T13:46:51.742766",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1370,13 +1503,15 @@
                         "    _fieldOrder: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _fieldOrder: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7270722389221191,
+                    "generation_timestamp": "2024-07-01T13:46:53.474353",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1399,13 +1534,15 @@
                         "    _clientValidation: bool = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _clientValidation: bool = True"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7769374847412109,
+                    "generation_timestamp": "2024-07-01T13:46:54.259558",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1428,13 +1565,15 @@
                         "    _page: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _page: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.812856912612915,
+                    "generation_timestamp": "2024-07-01T13:46:56.084703",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1457,13 +1596,15 @@
                         "    _depends: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _depends: str = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.903843641281128,
+                    "generation_timestamp": "2024-07-01T13:46:58.996656",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1486,13 +1627,15 @@
                         "    _key: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _key: str = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5274512767791748,
+                    "generation_timestamp": "2024-07-01T13:47:00.529113",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1515,13 +1658,15 @@
                         "    _indexedListProperty: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _indexedListProperty: str = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2837464809417725,
+                    "generation_timestamp": "2024-07-01T13:47:01.817471",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1544,13 +1689,15 @@
                         "    _indexedProperty: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _indexedProperty: str = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1952178478240967,
+                    "generation_timestamp": "2024-07-01T13:47:04.017260",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1573,13 +1720,15 @@
                         "    _property: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _property: str = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.271287202835083,
+                    "generation_timestamp": "2024-07-01T13:47:06.293240",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1604,13 +1753,15 @@
                         "    _TOKEN_VAR: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _TOKEN_VAR: str = \"var:\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.7357566356658936,
+                    "generation_timestamp": "2024-07-01T13:47:09.037092",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1635,13 +1786,15 @@
                         "    _TOKEN_END: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _TOKEN_END: str = \"}\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7416136264801025,
+                    "generation_timestamp": "2024-07-01T13:47:09.783386",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1666,13 +1819,15 @@
                         "    _TOKEN_START: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _TOKEN_START: str = \"${\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.376443386077881,
+                    "generation_timestamp": "2024-07-01T13:47:12.164455",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1697,13 +1852,15 @@
                         "    TOKEN_INDEXED: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    TOKEN_INDEXED: str = \"[]\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.49281907081604,
+                    "generation_timestamp": "2024-07-01T13:47:13.661731",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1728,13 +1885,16 @@
                         "    __dependencyList: typing.List[str] = []",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __dependencyList: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T09:46:22.274213",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1759,13 +1919,15 @@
                         "    __DEFAULT_ARG: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __DEFAULT_ARG: str = \"org.apache.commons.validator.Field.DEFAULT\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2504849433898926,
+                    "generation_timestamp": "2024-07-01T09:46:23.528170",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1790,13 +1952,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = -8502647722530192185"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3360159397125244,
+                    "generation_timestamp": "2024-07-01T09:46:24.871420",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }

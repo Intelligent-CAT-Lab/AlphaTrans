@@ -57,13 +57,16 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return \"RefectionStringConverter[\" + self.__cls.getSimpleName() + \"]\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9952859878540039,
+                    "generation_timestamp": "2024-06-29T01:40:30.598401",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -95,13 +98,16 @@
                         "    def getEffectiveType(self) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getEffectiveType(self) -> typing.Type[typing.Any]:",
+                        "         return self.fromString.getEffectiveType()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7445113658905029,
+                    "generation_timestamp": "2024-06-29T01:40:31.344388",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -136,13 +142,16 @@
                         "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def convertFromString(self, cls: typing.Type[typing.Any], str: str) -> typing.Any:",
+                        "         return self.fromString.convertFromString(cls, str)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8655805587768555,
+                    "generation_timestamp": "2024-06-29T01:40:32.210992",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -185,13 +194,23 @@
                         "    def convertToString(self, object: typing.Any) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def convertToString(self, object: typing.Any) -> str:",
+                        "         try:",
+                        "             return self.__toString(object)",
+                        "         except IllegalAccessException as ex:",
+                        "             raise IllegalStateException(\"Method is not accessible: \" + self.__toString) from ex",
+                        "         except InvocationTargetException as ex:",
+                        "             if isinstance(ex.getCause(), RuntimeException):",
+                        "                 raise ex.getCause() from ex",
+                        "             raise RuntimeException(ex.getMessage(), ex.getCause()) from ex"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.8848657608032227,
+                    "generation_timestamp": "2024-06-29T01:40:35.097246",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -232,13 +251,22 @@
                         "    def __init__(self, cls: typing.Type[typing.Any], toString: typing.Union[inspect.Signature, typing.Callable], fromString: TypedStringConverter[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, cls: typing.Type[typing.Any], toString: typing.Union[inspect.Signature, typing.Callable], fromString: TypedStringConverter[typing.Any]) -> None:",
+                        "         if len(inspect.signature(toString).parameters) != 0:",
+                        "             raise IllegalStateException(f\"ToString method must have no parameters: {toString}\")",
+                        "         if inspect.signature(toString).return_annotation != str:",
+                        "             raise IllegalStateException(f\"ToString method must return a String: {toString}\")",
+                        "         self.__cls = cls",
+                        "         self.__toString = toString",
+                        "         self.fromString = fromString"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.2717318534851074,
+                    "generation_timestamp": "2024-06-29T01:40:38.370267",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -263,13 +291,16 @@
                         "    fromString: TypedStringConverter[typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    fromString: TypedStringConverter[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:35:31.162896",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -293,13 +324,16 @@
                         "    __toString: typing.Union[inspect.Signature, typing.Callable] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __toString: typing.Union[inspect.Signature, typing.Callable] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:35:31.164781",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -323,13 +357,16 @@
                         "    __cls: typing.Type[typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __cls: typing.Type[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T01:35:31.166571",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

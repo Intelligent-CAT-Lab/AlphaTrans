@@ -130,7 +130,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -173,13 +173,16 @@
                         "    def hashCode(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def hashCode(self) -> int:",
+                        "         return self.currency.hashCode() ^ self.amount.hashCode()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3331871032714844,
+                    "generation_timestamp": "2024-06-29T02:11:52.562702",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -233,7 +236,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -297,13 +300,19 @@
                         "    def compareTo(self, other: BigMoneyProvider) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def compareTo(self, other: BigMoneyProvider) -> int:",
+                        "         otherMoney = BigMoney.of2(other)",
+                        "         if self.currency.equals(otherMoney.currency) == False:",
+                        "             raise CurrencyMismatchException(self.getCurrencyUnit(), otherMoney.getCurrencyUnit())",
+                        "         return self.amount.compareTo(otherMoney.amount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.4569363594055176,
+                    "generation_timestamp": "2024-06-29T02:20:26.741329",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -335,13 +344,16 @@
                         "    def toBigMoney(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toBigMoney(self) -> BigMoney:",
+                        "         return self"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.5493888854980469,
+                    "generation_timestamp": "2024-06-29T02:11:53.128246",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -387,13 +399,25 @@
                         "    def __init__(self, constructorId: int, amount: decimal.Decimal, currency: CurrencyUnit) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, amount: decimal.Decimal, currency: CurrencyUnit) -> None:",
+                        "         if constructorId == 0:",
+                        "",
+                        "            assert currency is not None, \"Joda-Money bug: Currency must not be None\"",
+                        "            assert amount is not None, \"Joda-Money bug: Amount must not be None\"",
+                        "            self.__currency = currency",
+                        "            self.__amount = amount if amount.scale < 0 else amount.setScale(0)",
+                        "         else:",
+                        "",
+                        "            self.__currency = None",
+                        "            self.__amount = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.742725372314453,
+                    "generation_timestamp": "2024-06-29T02:11:56.886819",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -459,13 +483,29 @@
                         "    def parse(moneyStr: str) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def parse(moneyStr: str) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(moneyStr, \"Money must not be null\")",
+                        "        if len(moneyStr) < 4:",
+                        "            raise ValueError(f\"Money '{moneyStr}' cannot be parsed\")",
+                        "        currStr = moneyStr[:3]",
+                        "        amountStart = 3",
+                        "        while amountStart < len(moneyStr) and moneyStr[amountStart] == \" \":",
+                        "            amountStart += 1",
+                        "        amountStr = moneyStr[amountStart:]",
+                        "        if not BigMoney.__PARSE_REGEX.match(amountStr):",
+                        "            raise ValueError(f\"Money amount '{moneyStr}' cannot be parsed\")",
+                        "        return BigMoney.of0(CurrencyUnit.of1(currStr), decimal.Decimal(amountStr))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.6922290325164795,
+                    "generation_timestamp": "2024-06-29T02:20:32.454316",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -503,13 +543,16 @@
                         "    def isLessThanOrEqual(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isLessThanOrEqual(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) <= 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8039917945861816,
+                    "generation_timestamp": "2024-06-29T02:20:33.276294",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -547,13 +590,16 @@
                         "    def isLessThan(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isLessThan(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) < 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8034977912902832,
+                    "generation_timestamp": "2024-06-29T02:20:34.099361",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -591,13 +637,16 @@
                         "    def isGreaterThanOrEqual(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isGreaterThanOrEqual(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) >= 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8098349571228027,
+                    "generation_timestamp": "2024-06-29T02:20:34.926926",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -635,13 +684,16 @@
                         "    def isGreaterThan(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isGreaterThan(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) > 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8356881141662598,
+                    "generation_timestamp": "2024-06-29T02:20:35.781212",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -679,13 +731,16 @@
                         "    def isEqual(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isEqual(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) == 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8029389381408691,
+                    "generation_timestamp": "2024-06-29T02:20:36.602609",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -733,13 +788,16 @@
                         "    def isSameCurrency(self, money: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isSameCurrency(self, money: BigMoneyProvider) -> bool:",
+                        "         return (self.__currency.equals(BigMoney.of2(money).getCurrencyUnit()))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.185408353805542,
+                    "generation_timestamp": "2024-06-29T02:20:37.811288",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -777,13 +835,16 @@
                         "    def toMoney1(self, roundingMode: typing.Any) -> Money:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toMoney1(self, roundingMode: typing.Any) -> Money:",
+                        "         return Money.of5(self, roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8502187728881836,
+                    "generation_timestamp": "2024-06-29T02:24:09.775104",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -819,13 +880,16 @@
                         "    def toMoney0(self) -> Money:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toMoney0(self) -> Money:",
+                        "         return Money.of4(self)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1245832443237305,
+                    "generation_timestamp": "2024-06-29T02:24:10.915669",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -876,13 +940,16 @@
                         "    def convertRetainScale(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def convertRetainScale(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "         return self.convertedTo(currency, conversionMultipler).withScale1(self.getScale(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3834402561187744,
+                    "generation_timestamp": "2024-06-29T02:23:03.642029",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -939,13 +1006,27 @@
                         "    def convertedTo(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def convertedTo(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(currency, \"CurrencyUnit must not be null\")",
+                        "        MoneyUtils.checkNotNull(conversionMultipler, \"Multiplier must not be null\")",
+                        "        if self.currency == currency:",
+                        "            if conversionMultipler.compareTo(decimal.Decimal(\"1\")) == 0:",
+                        "                return self",
+                        "            raise ValueError(\"Cannot convert to the same currency\")",
+                        "        if conversionMultipler.compareTo(decimal.Decimal(\"0\")) < 0:",
+                        "            raise ValueError(\"Cannot convert using a negative conversion multiplier\")",
+                        "        newAmount = self.amount.multiply(conversionMultipler)",
+                        "        return BigMoney.of0(currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.0626654624938965,
+                    "generation_timestamp": "2024-06-29T02:20:42.892923",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1000,13 +1081,23 @@
                         "    def rounded(self, scale: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def rounded(self, scale: int, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        if scale >= self.getScale():",
+                        "            return self",
+                        "        currentScale = self.__amount.scale",
+                        "        newAmount = self.__amount.setScale(scale, roundingMode).setScale(currentScale)",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.9573299884796143,
+                    "generation_timestamp": "2024-06-29T02:20:45.870110",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1047,13 +1138,16 @@
                         "    def abs(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def abs(self) -> BigMoney:",
+                        "         return (self.negated() if self.isNegative() else self)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2510526180267334,
+                    "generation_timestamp": "2024-06-29T02:23:04.912404",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1097,13 +1191,18 @@
                         "    def negated(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def negated(self) -> BigMoney:",
+                        "         if self.isZero():",
+                        "             return self",
+                        "         return BigMoney.of0(self.__currency, self.__amount.negate())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4062554836273193,
+                    "generation_timestamp": "2024-06-29T02:20:47.296806",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1146,13 +1245,19 @@
                         "    def dividedBy2(self, valueToDivideBy: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def dividedBy2(self, valueToDivideBy: int, roundingMode: typing.Any) -> BigMoney:",
+                        "         if valueToDivideBy == 1:",
+                        "             return self",
+                        "         newAmount = self.__amount.divide(decimal.Decimal(valueToDivideBy), roundingMode)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0861358642578125,
+                    "generation_timestamp": "2024-06-29T02:20:49.402150",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1201,13 +1306,22 @@
                         "    def dividedBy1(self, valueToDivideBy: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def dividedBy1(self, valueToDivideBy: float, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        if valueToDivideBy == 1:",
+                        "            return self",
+                        "        newAmount = self.__amount.divide(decimal.Decimal(valueToDivideBy), roundingMode)",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.02901291847229,
+                    "generation_timestamp": "2024-06-29T02:20:52.450996",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1257,13 +1371,23 @@
                         "    def dividedBy0(self, valueToDivideBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def dividedBy0(self, valueToDivideBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(valueToDivideBy, \"Divisor must not be null\")",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        if valueToDivideBy.compareTo(decimal.Decimal(\"1\")) == 0:",
+                        "            return self",
+                        "        newAmount = self.__amount.divide(valueToDivideBy, roundingMode)",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.4068095684051514,
+                    "generation_timestamp": "2024-06-29T02:20:55.878025",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1302,13 +1426,16 @@
                         "    def multiplyRetainScale1(self, valueToMultiplyBy: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def multiplyRetainScale1(self, valueToMultiplyBy: float, roundingMode: typing.Any) -> BigMoney:",
+                        "         return self.multiplyRetainScale0(decimal.Decimal(valueToMultiplyBy), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1769752502441406,
+                    "generation_timestamp": "2024-06-29T02:23:06.108344",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1364,13 +1491,24 @@
                         "    def multiplyRetainScale0(self, valueToMultiplyBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def multiplyRetainScale0(self, valueToMultiplyBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(valueToMultiplyBy, \"Multiplier must not be null\")",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        if valueToMultiplyBy.compare(decimal.Decimal(1)) == 0:",
+                        "            return self",
+                        "        newAmount = self.__amount.multiply(valueToMultiplyBy)",
+                        "        newAmount = newAmount.setScale(self.getScale(), roundingMode)",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.9202027320861816,
+                    "generation_timestamp": "2024-06-29T02:20:59.820310",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1412,13 +1550,19 @@
                         "    def multipliedBy2(self, valueToMultiplyBy: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def multipliedBy2(self, valueToMultiplyBy: int) -> BigMoney:",
+                        "         if valueToMultiplyBy == 1:",
+                        "             return self",
+                        "         newAmount = self.__amount.multiply(decimal.Decimal(valueToMultiplyBy))",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9820234775543213,
+                    "generation_timestamp": "2024-06-29T02:21:01.820510",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1460,13 +1604,19 @@
                         "    def multipliedBy1(self, valueToMultiplyBy: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def multipliedBy1(self, valueToMultiplyBy: float) -> BigMoney:",
+                        "         if valueToMultiplyBy == 1:",
+                        "             return self",
+                        "         newAmount = self.__amount.multiply(decimal.Decimal.valueOf(valueToMultiplyBy))",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.3852288722991943,
+                    "generation_timestamp": "2024-06-29T02:21:04.217169",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1514,13 +1664,22 @@
                         "    def multipliedBy0(self, valueToMultiplyBy: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def multipliedBy0(self, valueToMultiplyBy: decimal.Decimal) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(valueToMultiplyBy, \"Multiplier must not be null\")",
+                        "        if valueToMultiplyBy.compareTo(decimal.Decimal(\"1\")) == 0:",
+                        "            return self",
+                        "        newAmount = self.__amount.multiply(valueToMultiplyBy)",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.7791833877563477,
+                    "generation_timestamp": "2024-06-29T02:21:07.015980",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1569,13 +1728,20 @@
                         "    def minusRetainScale2(self, amountToSubtract: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minusRetainScale2(self, amountToSubtract: float, roundingMode: typing.Any) -> BigMoney:",
+                        "         if amountToSubtract == 0:",
+                        "             return self",
+                        "         newAmount = self.__amount.subtract(decimal.Decimal(amountToSubtract))",
+                        "         newAmount = newAmount.quantize(decimal.Decimal(f'1.{\"0\" * self.getScale()}'), rounding=roundingMode)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.2671706676483154,
+                    "generation_timestamp": "2024-06-29T02:21:10.296519",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1630,13 +1796,23 @@
                         "    def minusRetainScale1(self, amountToSubtract: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minusRetainScale1(self, amountToSubtract: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(amountToSubtract, \"Amount must not be null\")",
+                        "        if amountToSubtract.compare(decimal.Decimal(0)) == 0:",
+                        "            return self",
+                        "        newAmount = self.__amount.subtract(amountToSubtract)",
+                        "        newAmount = newAmount.setScale(self.getScale(), roundingMode)",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.5984034538269043,
+                    "generation_timestamp": "2024-06-29T02:21:13.915135",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1686,13 +1862,17 @@
                         "    def minusRetainScale0(self, moneyToSubtract: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minusRetainScale0(self, moneyToSubtract: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:",
+                        "         toSubtract = self.__checkCurrencyEqual(moneyToSubtract)",
+                        "         return self.minusRetainScale1(toSubtract.getAmount(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7036223411560059,
+                    "generation_timestamp": "2024-06-29T02:23:07.827243",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1740,13 +1920,19 @@
                         "    def minusMinor(self, amountToSubtract: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minusMinor(self, amountToSubtract: int) -> BigMoney:",
+                        "         if amountToSubtract == 0:",
+                        "             return self",
+                        "         newAmount = amount.subtract(decimal.Decimal(amountToSubtract).scaleb(-self.currency.getDecimalPlaces()))",
+                        "         return BigMoney.of0(self.currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.2278761863708496,
+                    "generation_timestamp": "2024-06-29T02:21:16.164036",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1788,13 +1974,19 @@
                         "    def minusMajor(self, amountToSubtract: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minusMajor(self, amountToSubtract: int) -> BigMoney:",
+                        "         if amountToSubtract == 0:",
+                        "             return self",
+                        "         newAmount = self.__amount.subtract(decimal.Decimal(amountToSubtract))",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.2701222896575928,
+                    "generation_timestamp": "2024-06-29T02:21:18.453585",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1836,13 +2028,19 @@
                         "    def minus3(self, amountToSubtract: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minus3(self, amountToSubtract: float) -> BigMoney:",
+                        "         if amountToSubtract == 0:",
+                        "             return self",
+                        "         newAmount = self.__amount.subtract(decimal.Decimal(amountToSubtract))",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9150421619415283,
+                    "generation_timestamp": "2024-06-29T02:21:20.386762",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1890,13 +2088,22 @@
                         "    def minus2(self, amountToSubtract: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minus2(self, amountToSubtract: decimal.Decimal) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(amountToSubtract, \"Amount must not be null\")",
+                        "        if amountToSubtract.compare(decimal.Decimal(0)) == 0:",
+                        "            return self",
+                        "        newAmount = self.__amount.subtract(amountToSubtract)",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.0051987171173096,
+                    "generation_timestamp": "2024-06-29T02:21:23.407430",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1945,13 +2152,17 @@
                         "    def minus1(self, moneyToSubtract: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minus1(self, moneyToSubtract: BigMoneyProvider) -> BigMoney:",
+                        "         toSubtract = self.__checkCurrencyEqual(moneyToSubtract)",
+                        "         return self.minus2(toSubtract.getAmount())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.447084903717041,
+                    "generation_timestamp": "2024-06-29T02:23:09.288714",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -1999,13 +2210,20 @@
                         "    def minus0(self, moniesToSubtract: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minus0(self, moniesToSubtract: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "         total = self.__amount",
+                        "         for moneyProvider in moniesToSubtract:",
+                        "             money = self.__checkCurrencyEqual(moneyProvider)",
+                        "             total = total.subtract(money.amount)",
+                        "         return self.__with(total)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.4252877235412598,
+                    "generation_timestamp": "2024-06-29T02:23:11.734829",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2054,13 +2272,20 @@
                         "    def plusRetainScale2(self, amountToAdd: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plusRetainScale2(self, amountToAdd: float, roundingMode: typing.Any) -> BigMoney:",
+                        "         if amountToAdd == 0:",
+                        "             return self",
+                        "         newAmount = self.__amount.add(decimal.Decimal(amountToAdd))",
+                        "         newAmount = newAmount.quantize(decimal.Decimal(f'1.{\"0\" * self.getScale()}'), rounding=roundingMode)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.930742025375366,
+                    "generation_timestamp": "2024-06-29T02:21:26.358493",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2115,13 +2340,23 @@
                         "    def plusRetainScale1(self, amountToAdd: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plusRetainScale1(self, amountToAdd: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(amountToAdd, \"Amount must not be null\")",
+                        "        if amountToAdd.compare(decimal.Decimal(0)) == 0:",
+                        "            return self",
+                        "        newAmount = self.__amount.add(amountToAdd)",
+                        "        newAmount = newAmount.quantize(decimal.Decimal(f\"1.{'0' * self.getScale()}\"), rounding=roundingMode)",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.9954733848571777,
+                    "generation_timestamp": "2024-06-29T02:21:30.373385",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2171,13 +2406,17 @@
                         "    def plusRetainScale0(self, moneyToAdd: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plusRetainScale0(self, moneyToAdd: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:",
+                        "         toAdd = self.__checkCurrencyEqual(moneyToAdd)",
+                        "         return self.plusRetainScale1(toAdd.getAmount(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.528768539428711,
+                    "generation_timestamp": "2024-06-29T02:23:13.280603",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2225,13 +2464,19 @@
                         "    def plusMinor(self, amountToAdd: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plusMinor(self, amountToAdd: int) -> BigMoney:",
+                        "         if amountToAdd == 0:",
+                        "             return self",
+                        "         newAmount = amount.add(decimal.Decimal(amountToAdd).scaleb(-self.currency.getDecimalPlaces()))",
+                        "         return BigMoney.of0(self.currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.168682098388672,
+                    "generation_timestamp": "2024-06-29T02:21:32.563581",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2273,13 +2518,19 @@
                         "    def plusMajor(self, amountToAdd: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plusMajor(self, amountToAdd: int) -> BigMoney:",
+                        "         if amountToAdd == 0:",
+                        "             return self",
+                        "         newAmount = self.__amount.add(decimal.Decimal(amountToAdd))",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.182785987854004,
+                    "generation_timestamp": "2024-06-29T02:21:34.762420",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2321,13 +2572,19 @@
                         "    def plus3(self, amountToAdd: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plus3(self, amountToAdd: float) -> BigMoney:",
+                        "         if amountToAdd == 0:",
+                        "             return self",
+                        "         newAmount = self.__amount.add(decimal.Decimal(amountToAdd))",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.8534126281738281,
+                    "generation_timestamp": "2024-06-29T02:21:36.636313",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2375,13 +2632,22 @@
                         "    def plus2(self, amountToAdd: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plus2(self, amountToAdd: decimal.Decimal) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(amountToAdd, \"Amount must not be null\")",
+                        "        if amountToAdd.compare(decimal.Decimal(0)) == 0:",
+                        "            return self",
+                        "        newAmount = self.__amount.add(amountToAdd)",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.94765567779541,
+                    "generation_timestamp": "2024-06-29T02:21:39.603810",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2430,13 +2696,17 @@
                         "    def plus1(self, moneyToAdd: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plus1(self, moneyToAdd: BigMoneyProvider) -> BigMoney:",
+                        "         toAdd = self.__checkCurrencyEqual(moneyToAdd)",
+                        "         return self.plus2(toAdd.getAmount())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5337135791778564,
+                    "generation_timestamp": "2024-06-29T02:23:14.829385",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2484,13 +2754,20 @@
                         "    def plus0(self, moniesToAdd: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plus0(self, moniesToAdd: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "         total = self.__amount",
+                        "         for moneyProvider in moniesToAdd:",
+                        "             money = self.__checkCurrencyEqual(moneyProvider)",
+                        "             total = total.add(money.amount)",
+                        "         return self.__with(total)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0353660583496094,
+                    "generation_timestamp": "2024-06-29T02:23:16.887644",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2528,13 +2805,16 @@
                         "    def withAmount1(self, amount: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withAmount1(self, amount: float) -> BigMoney:",
+                        "         return self.withAmount0(decimal.Decimal(amount))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8773720264434814,
+                    "generation_timestamp": "2024-06-29T02:23:17.777526",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2581,13 +2861,19 @@
                         "    def withAmount0(self, amount: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withAmount0(self, amount: decimal.Decimal) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(amount, \"Amount must not be null\")",
+                        "         if self.__amount.equals(amount):",
+                        "             return self",
+                        "         return BigMoney.of0(self.__currency, amount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.835859775543213,
+                    "generation_timestamp": "2024-06-29T02:21:41.460649",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2617,13 +2903,16 @@
                         "    def isNegativeOrZero(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isNegativeOrZero(self) -> bool:",
+                        "         return self.__amount.compare(decimal.Decimal.zero) <= 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9916720390319824,
+                    "generation_timestamp": "2024-06-29T02:11:57.899498",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2653,13 +2942,16 @@
                         "    def isNegative(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isNegative(self) -> bool:",
+                        "         return self.__amount.compare(decimal.Decimal.from_float(0)) < 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1200740337371826,
+                    "generation_timestamp": "2024-06-29T02:11:59.033566",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2689,13 +2981,16 @@
                         "    def isPositiveOrZero(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isPositiveOrZero(self) -> bool:",
+                        "         return self.__amount.compare(decimal.Decimal.zero) >= 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0695865154266357,
+                    "generation_timestamp": "2024-06-29T02:12:00.117048",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2725,13 +3020,16 @@
                         "    def isPositive(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isPositive(self) -> bool:",
+                        "         return self.__amount.compare(decimal.Decimal.from_float(0)) > 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.516416072845459,
+                    "generation_timestamp": "2024-06-29T02:12:01.648627",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2761,13 +3059,16 @@
                         "    def isZero(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isZero(self) -> bool:",
+                        "         return self.__amount.compare(decimal.Decimal.from_float(0)) == 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1352386474609375,
+                    "generation_timestamp": "2024-06-29T02:12:02.798992",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2812,13 +3113,17 @@
                         "    def getMinorPart(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getMinorPart(self) -> int:",
+                        "         cdp = self.getCurrencyUnit().getDecimalPlaces()",
+                        "         return self.amount.quantize(decimal.Decimal(f'1.{\"0\" * cdp}'), rounding=decimal.ROUND_DOWN).remainder(decimal.Decimal(1)).scaleb(cdp).to_integral_value()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.6385951042175293,
+                    "generation_timestamp": "2024-06-29T02:12:24.884142",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2854,13 +3159,16 @@
                         "    def getAmountMinorInt(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMinorInt(self) -> int:",
+                        "         return self.getAmountMinor().to_integral_value()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9083197116851807,
+                    "generation_timestamp": "2024-06-29T02:12:28.888640",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2896,13 +3204,16 @@
                         "    def getAmountMinorLong(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMinorLong(self) -> int:",
+                        "         return self.getAmountMinor().to_integral_value()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.871506929397583,
+                    "generation_timestamp": "2024-06-29T02:12:29.778013",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2944,13 +3255,17 @@
                         "    def getAmountMinor(self) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMinor(self) -> decimal.Decimal:",
+                        "         cdp = self.getCurrencyUnit().getDecimalPlaces()",
+                        "         return self.amount.setScale(cdp, decimal.RoundingMode.DOWN).movePointRight(cdp)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7541780471801758,
+                    "generation_timestamp": "2024-06-29T02:12:26.657495",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -2986,13 +3301,16 @@
                         "    def getAmountMajorInt(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMajorInt(self) -> int:",
+                        "         return self.getAmountMajor().to_integral_value()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9971342086791992,
+                    "generation_timestamp": "2024-06-29T02:12:05.121115",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3028,13 +3346,16 @@
                         "    def getAmountMajorLong(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMajorLong(self) -> int:",
+                        "         return self.getAmountMajor().to_integral_value()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.918705940246582,
+                    "generation_timestamp": "2024-06-29T02:12:06.058813",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3064,13 +3385,16 @@
                         "    def getAmountMajor(self) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMajor(self) -> decimal.Decimal:",
+                        "         return self.__amount.quantize(decimal.Decimal('1.00'), rounding=decimal.ROUND_DOWN)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2887787818908691,
+                    "generation_timestamp": "2024-06-29T02:12:04.104221",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3100,13 +3424,16 @@
                         "    def getAmount(self) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmount(self) -> decimal.Decimal:",
+                        "         return self.__amount"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.5942940711975098,
+                    "generation_timestamp": "2024-06-29T02:12:06.667462",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3149,13 +3476,16 @@
                         "    def withCurrencyScale1(self, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withCurrencyScale1(self, roundingMode: typing.Any) -> BigMoney:",
+                        "         return self.withScale1(self.currency.getDecimalPlaces(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2197332382202148,
+                    "generation_timestamp": "2024-06-29T02:23:19.017622",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3196,13 +3526,16 @@
                         "    def withCurrencyScale0(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withCurrencyScale0(self) -> BigMoney:",
+                        "         return self.withScale1(self.__currency.getDecimalPlaces(), RoundingMode.UNNECESSARY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.315183162689209,
+                    "generation_timestamp": "2024-06-29T02:23:20.345992",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3250,13 +3583,21 @@
                         "    def withScale1(self, scale: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withScale1(self, scale: int, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        if scale == self.__amount.scale():",
+                        "            return self",
+                        "        return BigMoney.of0(self.__currency, self.__amount.setScale(scale, roundingMode))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.598466634750366,
+                    "generation_timestamp": "2024-06-29T02:21:44.080334",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3294,13 +3635,16 @@
                         "    def withScale0(self, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withScale0(self, scale: int) -> BigMoney:",
+                        "         return self.withScale1(scale, RoundingMode.UNNECESSARY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.065603494644165,
+                    "generation_timestamp": "2024-06-29T02:21:45.158254",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3336,13 +3680,16 @@
                         "    def isCurrencyScale(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isCurrencyScale(self) -> bool:",
+                        "         return self.__amount.scale() == self.__currency.getDecimalPlaces()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0347034931182861,
+                    "generation_timestamp": "2024-06-29T02:12:07.719066",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3372,13 +3719,16 @@
                         "    def getScale(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getScale(self) -> int:",
+                        "         return self.__amount.scale()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7817330360412598,
+                    "generation_timestamp": "2024-06-29T02:12:08.515683",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3425,13 +3775,19 @@
                         "    def withCurrencyUnit(self, currency: CurrencyUnit) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withCurrencyUnit(self, currency: CurrencyUnit) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(currency, \"CurrencyUnit must not be null\")",
+                        "         if self.currency == currency:",
+                        "             return self",
+                        "         return BigMoney(0, self.amount, currency)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.171309232711792,
+                    "generation_timestamp": "2024-06-29T02:19:36.616477",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3461,13 +3817,16 @@
                         "    def getCurrencyUnit(self) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getCurrencyUnit(self) -> CurrencyUnit:",
+                        "         return self.__currency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7390902042388916,
+                    "generation_timestamp": "2024-06-29T02:12:09.269231",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3514,13 +3873,17 @@
                         "    def total3(currency: CurrencyUnit, monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total3(currency: CurrencyUnit, monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "         return BigMoney.zero0(currency).plus0(monies)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0986993312835693,
+                    "generation_timestamp": "2024-06-29T02:23:21.458022",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3566,13 +3929,17 @@
                         "    def total2(currency: CurrencyUnit, monies: typing.List[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total2(currency: CurrencyUnit, monies: typing.List[BigMoneyProvider]) -> BigMoney:",
+                        "         return BigMoney.zero0(currency).plus0(monies)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9494338035583496,
+                    "generation_timestamp": "2024-06-29T02:23:22.420332",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3632,13 +3999,27 @@
                         "    def total1(monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total1(monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(monies, \"Money iterator must not be null\")",
+                        "        it = monies.iterator()",
+                        "        if it.hasNext() == False:",
+                        "            raise IllegalArgumentException(\"Money iterator must not be empty\")",
+                        "        total = BigMoney.of2(it.next())",
+                        "        MoneyUtils.checkNotNull(total, \"Money iterator must not contain null entries\")",
+                        "        while it.hasNext():",
+                        "            total = total.plus1(it.next())",
+                        "        return total"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.315820217132568,
+                    "generation_timestamp": "2024-06-29T02:23:26.746395",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3697,13 +4078,26 @@
                         "    def total0(monies: typing.List[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total0(monies: typing.List[BigMoneyProvider]) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(monies, \"Money array must not be null\")",
+                        "        if len(monies) == 0:",
+                        "            raise ValueError(\"Money array must not be empty\")",
+                        "        total = BigMoney.of2(monies[0])",
+                        "        MoneyUtils.checkNotNull(total, \"Money array must not contain null entries\")",
+                        "        for i in range(1, len(monies)):",
+                        "            total = total.plus1(BigMoney.of2(monies[i]))",
+                        "        return total"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.133212089538574,
+                    "generation_timestamp": "2024-06-29T02:23:30.900783",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3751,13 +4145,22 @@
                         "    def of2(moneyProvider: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def of2(moneyProvider: BigMoneyProvider) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyUtils.checkNotNull(moneyProvider, \"BigMoneyProvider must not be null\")",
+                        "        money = moneyProvider.toBigMoney()",
+                        "        MoneyUtils.checkNotNull(money, \"BigMoneyProvider must not return null\")",
+                        "        return money"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0600736141204834,
+                    "generation_timestamp": "2024-06-29T02:19:38.689321",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3798,13 +4201,17 @@
                         "    def zero1(currency: CurrencyUnit, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def zero1(currency: CurrencyUnit, scale: int) -> BigMoney:",
+                        "         return BigMoney.of0(currency, decimal.Decimal(0).scaleb(scale))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1358962059020996,
+                    "generation_timestamp": "2024-06-29T02:21:46.313022",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3844,13 +4251,17 @@
                         "    def zero0(currency: CurrencyUnit) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def zero0(currency: CurrencyUnit) -> BigMoney:",
+                        "         return BigMoney.of0(currency, decimal.Decimal(0))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9821939468383789,
+                    "generation_timestamp": "2024-06-29T02:21:47.307303",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3902,13 +4313,17 @@
                         "    def ofMinor(currency: CurrencyUnit, amountMinor: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofMinor(currency: CurrencyUnit, amountMinor: int) -> BigMoney:",
+                        "         return BigMoney.of0(currency, decimal.Decimal(amountMinor).scaleb(-currency.getDecimalPlaces()))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.336634874343872,
+                    "generation_timestamp": "2024-06-29T02:21:48.663430",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -3955,13 +4370,17 @@
                         "    def ofMajor(currency: CurrencyUnit, amountMajor: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofMajor(currency: CurrencyUnit, amountMajor: int) -> BigMoney:",
+                        "         return BigMoney.of0(currency, decimal.Decimal(amountMajor))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.110520839691162,
+                    "generation_timestamp": "2024-06-29T02:21:49.793981",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -4009,13 +4428,17 @@
                         "    def ofScale2(currency: CurrencyUnit, unscaledAmount: int, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofScale2(currency: CurrencyUnit, unscaledAmount: int, scale: int) -> BigMoney:",
+                        "         return BigMoney.of0(currency, decimal.Decimal(unscaledAmount).scaleb(-scale))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2185516357421875,
+                    "generation_timestamp": "2024-06-29T02:21:51.033132",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -4068,13 +4491,21 @@
                         "    def ofScale1(currency: CurrencyUnit, amount: decimal.Decimal, scale: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofScale1(currency: CurrencyUnit, amount: decimal.Decimal, scale: int, roundingMode: typing.Any) -> BigMoney:",
+                        "        MoneyUtils.checkNotNull(currency, \"CurrencyUnit must not be null\")",
+                        "        MoneyUtils.checkNotNull(amount, \"Amount must not be null\")",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        scaledAmount = amount.setScale(scale, roundingMode)",
+                        "        return BigMoney.of0(currency, scaledAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.8751301765441895,
+                    "generation_timestamp": "2024-06-29T02:21:53.927018",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -4116,13 +4547,17 @@
                         "    def ofScale0(currency: CurrencyUnit, amount: decimal.Decimal, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofScale0(currency: CurrencyUnit, amount: decimal.Decimal, scale: int) -> BigMoney:",
+                        "         return BigMoney.ofScale1(currency, amount, scale, RoundingMode.UNNECESSARY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3622283935546875,
+                    "generation_timestamp": "2024-06-29T02:21:55.309066",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -4177,13 +4612,19 @@
                         "    def of1(currency: CurrencyUnit, amount: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def of1(currency: CurrencyUnit, amount: float) -> BigMoney:",
+                        "         if amount == 0.0:",
+                        "             return BigMoney.zero0(currency)",
+                        "         return BigMoney.of0(currency, decimal.Decimal(amount).quantize(decimal.Decimal('0.00')))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.3177428245544434,
+                    "generation_timestamp": "2024-06-29T02:21:57.647175",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -4243,7 +4684,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -4305,13 +4746,19 @@
                         "    def __checkCurrencyEqual(self, moneyProvider: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __checkCurrencyEqual(self, moneyProvider: BigMoneyProvider) -> BigMoney:",
+                        "         money = BigMoney.of2(moneyProvider)",
+                        "         if not self.isSameCurrency(money):",
+                        "             raise CurrencyMismatchException(self.getCurrencyUnit(), money.getCurrencyUnit())",
+                        "         return money"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.882833480834961,
+                    "generation_timestamp": "2024-06-29T02:21:59.554414",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -4352,13 +4799,18 @@
                         "    def __with(self, newAmount: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __with(self, newAmount: decimal.Decimal) -> BigMoney:",
+                        "         if newAmount == self.__amount:",
+                        "             return self",
+                        "         return BigMoney(0, newAmount, self.__currency)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2831687927246094,
+                    "generation_timestamp": "2024-06-29T02:12:27.960965",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -4394,13 +4846,16 @@
                         "    def __writeReplace(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __writeReplace(self) -> typing.Any:",
+                        "         return Ser(0, self, Ser.BIG_MONEY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.984769344329834,
+                    "generation_timestamp": "2024-06-29T03:14:02.572658",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -4432,13 +4887,16 @@
                         "    def __readObject(self, ois: pickle.Unpickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __readObject(self, ois: pickle.Unpickler) -> None:",
+                        "         raise pickle.InvalidObject(\"Serialization delegate required\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8114922046661377,
+                    "generation_timestamp": "2024-06-29T02:12:30.604021",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -4464,13 +4922,16 @@
                         "    __amount: decimal.Decimal = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __amount: decimal.Decimal = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T02:06:11.107589",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -4494,13 +4955,16 @@
                         "    __currency: CurrencyUnit = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __currency: CurrencyUnit = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T02:06:11.116832",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -4525,13 +4989,15 @@
                         "    __PARSE_REGEX: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PARSE_REGEX: re.Pattern = re.compile(r\"[+-]?\\d*\\.\\d+|\\d+\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3633787631988525,
+                    "generation_timestamp": "2024-06-29T02:06:12.486941",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -4556,13 +5022,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7950611114501953,
+                    "generation_timestamp": "2024-06-29T02:06:13.292641",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

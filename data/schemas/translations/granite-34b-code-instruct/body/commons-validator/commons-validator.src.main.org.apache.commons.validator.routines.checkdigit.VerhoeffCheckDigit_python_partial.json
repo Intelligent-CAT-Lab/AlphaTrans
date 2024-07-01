@@ -67,13 +67,19 @@
                         "    def calculate(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def calculate(self, code: str) -> str:",
+                        "         if code is None or len(code) == 0:",
+                        "             raise CheckDigitException.CheckDigitException1(\"Code is missing\")",
+                        "         checksum: int = self.__calculateChecksum(code, False)",
+                        "         return str(self.__INV_TABLE[checksum])"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.262711524963379,
+                    "generation_timestamp": "2024-07-01T10:29:59.311329",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -120,13 +126,21 @@
                         "    def isValid(self, code: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValid(self, code: str) -> bool:",
+                        "         if code is None or len(code) == 0:",
+                        "             return False",
+                        "         try:",
+                        "             return self.__calculateChecksum(code, True) == 0",
+                        "         except CheckDigitException as e:",
+                        "             return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9783873558044434,
+                    "generation_timestamp": "2024-07-01T10:30:01.291166",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -177,13 +191,24 @@
                         "    def __calculateChecksum(self, code: str, includesCheckDigit: bool) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __calculateChecksum(self, code: str, includesCheckDigit: bool) -> int:",
+                        "         checksum: int = 0",
+                        "         for i in range(len(code)):",
+                        "             idx: int = len(code) - (i + 1)",
+                        "             num: int = int(code[idx])",
+                        "             if num < 0 or num > 9:",
+                        "                 raise CheckDigitException(\"Invalid Character[\" + str(i) + \"] = '\" + str(ord(code[idx])) + \"'\")",
+                        "             pos: int = i + 1 if includesCheckDigit else i",
+                        "             checksum = self.__D_TABLE[checksum][self.__P_TABLE[pos % 8][num]]",
+                        "         return checksum"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.772279500961304,
+                    "generation_timestamp": "2024-07-01T10:29:57.046828",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }
@@ -210,13 +235,15 @@
                         "    VERHOEFF_CHECK_DIGIT: CheckDigit = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    VERHOEFF_CHECK_DIGIT: CheckDigit = VerhoeffCheckDigit()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0635349750518799,
+                    "generation_timestamp": "2024-07-01T09:51:51.987296",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -241,13 +268,15 @@
                         "    __INV_TABLE: typing.List[int] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __INV_TABLE: typing.List[int] = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.887230634689331,
+                    "generation_timestamp": "2024-07-01T09:51:53.876559",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -282,13 +311,24 @@
                         "    __P_TABLE: typing.List[typing.List[int]] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __P_TABLE: typing.List[typing.List[int]] = [",
+                        "        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],",
+                        "        [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],",
+                        "        [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],",
+                        "        [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],",
+                        "        [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],",
+                        "        [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],",
+                        "        [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],",
+                        "        [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]",
+                        "    ]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.261744976043701,
+                    "generation_timestamp": "2024-07-01T09:52:03.141020",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -325,13 +365,26 @@
                         "    __D_TABLE: typing.List[typing.List[int]] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __D_TABLE: typing.List[typing.List[int]] = [",
+                        "        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],",
+                        "        [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],",
+                        "        [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],",
+                        "        [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],",
+                        "        [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],",
+                        "        [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],",
+                        "        [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],",
+                        "        [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],",
+                        "        [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],",
+                        "        [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]",
+                        "    ]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 11.123968124389648,
+                    "generation_timestamp": "2024-07-01T09:52:14.267035",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -356,13 +409,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 4138993995483695178"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4991610050201416,
+                    "generation_timestamp": "2024-07-01T09:52:15.769802",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }

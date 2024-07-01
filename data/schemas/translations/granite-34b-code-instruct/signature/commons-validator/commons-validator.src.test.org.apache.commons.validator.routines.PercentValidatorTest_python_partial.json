@@ -65,13 +65,17 @@
                         "    def _tearDown(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _tearDown(self) -> None:",
+                        "         super().tearDown()",
+                        "         self._validator = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8244321346282959,
+                    "generation_timestamp": "2024-06-29T01:06:49.593137",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -110,13 +114,16 @@
                         "    def _setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _setUp(self) -> None:",
+                        "         self._validator = PercentValidator.PercentValidator1()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8531978130340576,
+                    "generation_timestamp": "2024-06-29T01:06:50.448725",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -178,13 +185,29 @@
                         "    def testInvalid(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testInvalid(self) -> None:",
+                        "        ",
+                        "",
+                        "        validator = PercentValidator.getInstance()",
+                        "",
+                        "        self.assertFalse(\"isValid() Null Value\", validator.isValid0(None))",
+                        "        self.assertFalse(\"isValid() Empty Value\", validator.isValid0(\"\"))",
+                        "        self.assertNull(\"validate() Null Value\", validator.validate0(None))",
+                        "        self.assertNull(\"validate() Empty Value\", validator.validate0(\"\"))",
+                        "",
+                        "        self.assertFalse(\"UK wrong symbol\", validator.isValid2(\"12@\", Locale.UK)) # ???",
+                        "        self.assertFalse(\"UK wrong negative\", validator.isValid2(\"(12%)\", Locale.UK))",
+                        "",
+                        "        self.assertFalse(\"US wrong symbol\", validator.isValid2(\"12@\", Locale.US)) # ???",
+                        "        self.assertFalse(\"US wrong negative\", validator.isValid2(\"(12%)\", Locale.US))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.13616681098938,
+                    "generation_timestamp": "2024-06-29T01:06:56.588729",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -251,13 +274,37 @@
                         "    def testValid(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testValid(self) -> None:",
+                        "         origDefault: typing.Any = Locale.getDefault()",
+                        "         Locale.setDefault(Locale.UK)",
+                        "",
+                        "         validator: BigDecimalValidator = PercentValidator.getInstance()",
+                        "         expected: decimal.Decimal = decimal.Decimal(\"0.12\")",
+                        "         negative: decimal.Decimal = decimal.Decimal(\"-0.12\")",
+                        "         hundred: decimal.Decimal = decimal.Decimal(\"1.00\")",
+                        "",
+                        "         self.assertEqual(\"Default locale\", expected, validator.validate0(\"12%\"))",
+                        "         self.assertEqual(\"Default negtve\", negative, validator.validate0(\"-12%\"))",
+                        "",
+                        "         self.assertEqual(\"UK locale\", expected, validator.validate2(\"12%\", Locale.UK))",
+                        "         self.assertEqual(\"UK negative\", negative, validator.validate2(\"-12%\", Locale.UK))",
+                        "         self.assertEqual(\"UK No symbol\", expected, validator.validate2(\"12\", Locale.UK))",
+                        "",
+                        "         self.assertEqual(\"US locale\", expected, validator.validate2(\"12%\", Locale.US))",
+                        "         self.assertEqual(\"US negative\", negative, validator.validate2(\"-12%\", Locale.US))",
+                        "         self.assertEqual(\"US No symbol\", expected, validator.validate2(\"12\", Locale.US))",
+                        "",
+                        "         self.assertEqual(\"100%\", hundred, validator.validate0(\"100%\"))",
+                        "",
+                        "         Locale.setDefault(origDefault)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.799475193023682,
+                    "generation_timestamp": "2024-06-29T01:07:07.391439",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -302,13 +349,17 @@
                         "    def testFormatType(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testFormatType(self) -> None:",
+                        "         self.assertEqual(\"Format Type A\", 2, PercentValidator.getInstance().getFormatType())",
+                        "         self.assertEqual(\"Format Type B\", AbstractNumberValidator.PERCENT_FORMAT, PercentValidator.getInstance().getFormatType())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.080989122390747,
+                    "generation_timestamp": "2024-06-29T01:07:09.477552",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -340,13 +391,16 @@
                         "    def __init__(self, name: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, name: str) -> None:",
+                        "         super().__init__(name)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6727571487426758,
+                    "generation_timestamp": "2024-06-29T01:07:10.153432",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -371,13 +425,16 @@
                         "    _validator: PercentValidator = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _validator: PercentValidator = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:49:05.297535",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

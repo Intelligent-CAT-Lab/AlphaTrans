@@ -87,13 +87,16 @@
                         "    def _getFormat(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _getFormat(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:",
+                        "         return self._getFormat0(pattern, locale)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.881798267364502,
+                    "generation_timestamp": "2024-06-28T23:55:12.760614",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -136,13 +139,17 @@
                         "    def isValid3(self, value: str, pattern: str, locale: typing.Any) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValid3(self, value: str, pattern: str, locale: typing.Any) -> bool:",
+                        "         parsedValue = self._parse(value, pattern, locale)",
+                        "         return (parsedValue is None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1427278518676758,
+                    "generation_timestamp": "2024-06-28T23:55:13.906336",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -207,13 +214,34 @@
                         "    def _getFormat1(self, locale: typing.Any) -> typing.Union[str, datetime.datetime]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _getFormat1(self, locale: typing.Any) -> typing.Union[str, datetime.datetime]:",
+                        "         formatter = None",
+                        "         if self.__formatType == AbstractNumberValidator.CURRENCY_FORMAT:",
+                        "             if locale is None:",
+                        "                 formatter = NumberFormat.getCurrencyInstance()",
+                        "             else:",
+                        "                 formatter = NumberFormat.getCurrencyInstance(locale)",
+                        "         elif self.__formatType == AbstractNumberValidator.PERCENT_FORMAT:",
+                        "             if locale is None:",
+                        "                 formatter = NumberFormat.getPercentInstance()",
+                        "             else:",
+                        "                 formatter = NumberFormat.getPercentInstance(locale)",
+                        "         else:",
+                        "             if locale is None:",
+                        "                 formatter = NumberFormat.getInstance()",
+                        "             else:",
+                        "                 formatter = NumberFormat.getInstance(locale)",
+                        "             if not self.isAllowFractions():",
+                        "                 formatter.setParseIntegerOnly(True)",
+                        "         return formatter"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.305683374404907,
+                    "generation_timestamp": "2024-06-28T23:54:53.243935",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -278,13 +306,33 @@
                         "    def _determineScale(self, format: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _determineScale(self, format: typing.Any) -> int:",
+                        "         if not self.isStrict():",
+                        "             return -1",
+                        "         if not self.isAllowFractions() or format.isParseIntegerOnly():",
+                        "             return 0",
+                        "         minimumFraction = format.getMinimumFractionDigits()",
+                        "         maximumFraction = format.getMaximumFractionDigits()",
+                        "         if minimumFraction != maximumFraction:",
+                        "             return -1",
+                        "         scale = minimumFraction",
+                        "         if isinstance(format, DecimalFormat):",
+                        "             multiplier = format.getMultiplier()",
+                        "             if multiplier == 100: # CHECKSTYLE IGNORE MagicNumber",
+                        "                 scale += 2 # CHECKSTYLE IGNORE MagicNumber",
+                        "             elif multiplier == 1000: # CHECKSTYLE IGNORE MagicNumber",
+                        "                 scale += 3 # CHECKSTYLE IGNORE MagicNumber",
+                        "         elif self.__formatType == self.PERCENT_FORMAT:",
+                        "             scale += 2 # CHECKSTYLE IGNORE MagicNumber",
+                        "         return scale"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.0802836418151855,
+                    "generation_timestamp": "2024-06-28T23:54:59.327636",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -343,13 +391,31 @@
                         "    def _getFormat0(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _getFormat0(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:",
+                        "        ",
+                        "",
+                        "        formatter: typing.Union[str, datetime.datetime] = None",
+                        "        use_pattern: bool = (pattern is not None and len(pattern) > 0)",
+                        "        if not use_pattern:",
+                        "            formatter = self._getFormat1(locale)",
+                        "        else:",
+                        "            if locale is None:",
+                        "                formatter = DecimalFormat(pattern)",
+                        "            else:",
+                        "                symbols: DecimalFormatSymbols = DecimalFormatSymbols(locale)",
+                        "                formatter = DecimalFormat(pattern, symbols)",
+                        "",
+                        "        if not self.isAllowFractions():",
+                        "            formatter.setParseIntegerOnly(True)",
+                        "        return formatter"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.383375883102417,
+                    "generation_timestamp": "2024-06-28T23:55:03.714352",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -400,13 +466,22 @@
                         "    def _parse(self, value: str, pattern: str, locale: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _parse(self, value: str, pattern: str, locale: typing.Any) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        value = (value if value is not None else None)",
+                        "        if value is None or len(value) == 0:",
+                        "            return None",
+                        "        formatter = self._getFormat0(pattern, locale)",
+                        "        return self._parse(value, formatter)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.220978260040283,
+                    "generation_timestamp": "2024-06-28T23:55:05.938826",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -448,13 +523,18 @@
                         "    def maxValue(self, value: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def maxValue(self, value: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:",
+                        "         if self.isAllowFractions():",
+                        "             return (value.real if isinstance(value, complex) else value) <= (max.real if isinstance(max, complex) else max)",
+                        "         return value <= max"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9058265686035156,
+                    "generation_timestamp": "2024-06-28T23:55:07.847678",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -496,13 +576,18 @@
                         "    def minValue(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minValue(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number]) -> bool:",
+                        "         if self.isAllowFractions():",
+                        "             return (value.real >= min.real)",
+                        "         return (value.real >= min.real)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4609744548797607,
+                    "generation_timestamp": "2024-06-28T23:55:09.311673",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -547,13 +632,16 @@
                         "    def isInRange(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isInRange(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:",
+                        "         return (self.minValue(value, min) and self.maxValue(value, max))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2942373752593994,
+                    "generation_timestamp": "2024-06-28T23:55:10.609260",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -583,13 +671,16 @@
                         "    def getFormatType(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getFormatType(self) -> int:",
+                        "         return self.__formatType"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8846704959869385,
+                    "generation_timestamp": "2024-06-28T23:54:42.105131",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -619,13 +710,16 @@
                         "    def isAllowFractions(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isAllowFractions(self) -> bool:",
+                        "         return self.__allowFractions"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7107503414154053,
+                    "generation_timestamp": "2024-06-28T23:54:47.935264",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -667,13 +761,18 @@
                         "    def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:",
+                        "         super().__init__(strict)",
+                        "         self.__allowFractions = allowFractions",
+                        "         self.__formatType = formatType"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2630114555358887,
+                    "generation_timestamp": "2024-06-28T23:55:11.875732",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -705,13 +804,16 @@
                         "    def _processParsedValue(self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _processParsedValue(self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:",
+                        "         raise NotImplementedError(\"This method must be implemented by a subclass.\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9644408226013184,
+                    "generation_timestamp": "2024-06-28T23:55:14.873630",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -738,13 +840,15 @@
                         "    PERCENT_FORMAT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    PERCENT_FORMAT: int = 2"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.599449634552002,
+                    "generation_timestamp": "2024-06-30T10:47:43.191993",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -769,13 +873,15 @@
                         "    CURRENCY_FORMAT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CURRENCY_FORMAT: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.082253456115723,
+                    "generation_timestamp": "2024-06-30T10:47:48.278934",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -800,13 +906,15 @@
                         "    STANDARD_FORMAT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    STANDARD_FORMAT: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.18813157081604,
+                    "generation_timestamp": "2024-06-30T10:47:54.470598",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -830,13 +938,16 @@
                         "    __formatType: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __formatType: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:21:18.038990",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -860,13 +971,16 @@
                         "    __allowFractions: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __allowFractions: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T23:21:18.040884",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -891,13 +1005,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = -3088817875906765463"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.380617380142212,
+                    "generation_timestamp": "2024-06-28T23:21:19.423294",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

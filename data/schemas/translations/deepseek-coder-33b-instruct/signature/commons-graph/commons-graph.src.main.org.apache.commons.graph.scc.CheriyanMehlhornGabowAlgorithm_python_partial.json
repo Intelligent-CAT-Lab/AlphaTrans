@@ -121,13 +121,28 @@
                         "    def perform(self) -> typing.Set[typing.Set[typing.Any]]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def perform(self) -> typing.Set[typing.Set[typing.Any]]:",
+                        "        ",
+                        "        for vertex in self.__graph.getVertices0():",
+                        "            if vertex not in self.__marked:",
+                        "                self.__dfs(vertex)",
+                        "",
+                        "        indexed_scc_components = [set() for _ in range(self.__sscCounter)]",
+                        "",
+                        "        for w in self.__graph.getVertices0():",
+                        "            component = indexed_scc_components[self.__sscId[w]]",
+                        "            component.add(w)",
+                        "",
+                        "        scc = set(indexed_scc_components)",
+                        "        return scc"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.470077753067017,
+                    "generation_timestamp": "2024-06-28T22:48:26.375943",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -159,13 +174,18 @@
                         "    def __init__(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:",
+                        "         self.__p = []",
+                        "         self.__s = []",
+                        "         self.__graph = graph"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.6452724933624268,
+                    "generation_timestamp": "2024-06-28T22:47:19.550108",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -225,13 +245,38 @@
                         "    def __dfs(self, vertex: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __dfs(self, vertex: typing.Any) -> None:",
+                        "        ",
+                        "        self.__marked.add(vertex)",
+                        "        self.__preorder[vertex] = self.__preorderCounter",
+                        "        self.__preorderCounter += 1",
+                        "        self.__s.append(vertex)",
+                        "        self.__p.append(vertex)",
+                        "        ",
+                        "        for w in self.__graph.getConnectedVertices(vertex):",
+                        "            if w not in self.__marked:",
+                        "                self.__dfs(w)",
+                        "            elif self.__sscId.get(w) is None:",
+                        "                while self.__preorder[self.__p[-1]] > self.__preorder[w]:",
+                        "                    self.__p.pop()",
+                        "        ",
+                        "        if self.__p[-1] == vertex:",
+                        "            self.__p.pop()",
+                        "            w = None",
+                        "            while True:",
+                        "                w = self.__s.pop()",
+                        "                self.__sscId[w] = self.__sscCounter",
+                        "                if vertex == w:",
+                        "                    break",
+                        "            self.__sscCounter += 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 60.351174116134644,
+                    "generation_timestamp": "2024-06-28T22:48:19.904665",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -256,13 +301,15 @@
                         "    __sscCounter: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __sscCounter: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7243235111236572,
+                    "generation_timestamp": "2024-06-30T10:30:33.850319",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -285,13 +332,15 @@
                         "    __preorderCounter: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __preorderCounter: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7788352966308594,
+                    "generation_timestamp": "2024-06-30T10:30:34.631101",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -315,13 +364,15 @@
                         "    __p: typing.List[typing.Any] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __p: List[Any] = []"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8008236885070801,
+                    "generation_timestamp": "2024-06-30T10:30:35.433849",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -345,13 +396,15 @@
                         "    __s: typing.List[typing.Any] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __s: List[Any] = []"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7833430767059326,
+                    "generation_timestamp": "2024-06-30T10:30:36.219568",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -375,13 +428,16 @@
                         "    __sscId: typing.Dict[typing.Any, int] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __sscId: typing.Dict[typing.Any, int] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:26:40.950181",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -405,13 +461,16 @@
                         "    __preorder: typing.Dict[typing.Any, int] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __preorder: typing.Dict[typing.Any, int] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:26:40.951953",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -435,13 +494,15 @@
                         "    __marked: typing.Set[typing.Any] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __marked: Set[Any] = set()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9334895610809326,
+                    "generation_timestamp": "2024-06-30T10:30:37.155180",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -465,13 +526,16 @@
                         "    __graph: DirectedGraph[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __graph: DirectedGraph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:26:42.509532",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }

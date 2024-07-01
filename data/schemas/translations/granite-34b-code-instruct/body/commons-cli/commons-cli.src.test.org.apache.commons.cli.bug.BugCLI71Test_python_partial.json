@@ -127,13 +127,21 @@
                         "    def testMistakenArgument(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testMistakenArgument(self) -> None:",
+                        "         args = [\"-a\", \"Caesar\", \"-k\", \"A\"]",
+                        "         line = self.__parser.parse0(self.__options, args)",
+                        "         args = [\"-a\", \"Caesar\", \"-k\", \"a\"]",
+                        "         line = self.__parser.parse0(self.__options, args)",
+                        "         assert line.getOptionValue4(\"a\") == \"Caesar\"",
+                        "         assert line.getOptionValue4(\"k\") == \"a\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.711735963821411,
+                    "generation_timestamp": "2024-07-01T09:26:43.297012",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -187,13 +195,20 @@
                         "    def testLackOfError(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testLackOfError(self) -> None:",
+                        "         args = [\"-k\", \"-a\", \"Caesar\"]",
+                        "         with pytest.raises(MissingArgumentException) as cm:",
+                        "             self.__parser.parse0(self.__options, args)",
+                        "         e = cm.value",
+                        "         assert e.getOption().getOpt() == \"k\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.4940109252929688,
+                    "generation_timestamp": "2024-07-01T09:26:45.799358",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -256,13 +271,21 @@
                         "    def testGetsDefaultIfOptional(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testGetsDefaultIfOptional(self) -> None:",
+                        "         args = [\"-k\", \"-a\", \"Caesar\"]",
+                        "         self.options.getOption(\"k\").setOptionalArg(True)",
+                        "         line = self.parser.parse0(self.options, args)",
+                        "",
+                        "         assert line.getOptionValue4(\"a\") == \"Caesar\"",
+                        "         assert line.getOptionValue1(\"k\", \"a\") == \"a\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.4854423999786377,
+                    "generation_timestamp": "2024-07-01T09:26:49.291841",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -308,13 +331,19 @@
                         "    def testBasic(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testBasic(self) -> None:",
+                        "         args = [\"-a\", \"Caesar\", \"-k\", \"A\"]",
+                        "         line = self.__parser.parse0(self.__options, args)",
+                        "         assert line.getOptionValue4(\"a\") == \"Caesar\"",
+                        "         assert line.getOptionValue4(\"k\") == \"A\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.929147958755493,
+                    "generation_timestamp": "2024-07-01T09:26:52.226285",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -386,13 +415,26 @@
                         "    def setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setUp(self) -> None:",
+                        "         self.__options = Options()",
+                        "",
+                        "         algorithm = Option(0, \"a\", \"algo\", \"the algorithm which it to perform executing\", True, None)",
+                        "         algorithm.setArgName(\"algorithm name\")",
+                        "         self.__options.addOption0(algorithm)",
+                        "",
+                        "         key = Option(0, \"k\", \"key\", \"the key the setted algorithm uses to process\", True, None)",
+                        "         key.setArgName(\"value\")",
+                        "         self.__options.addOption0(key)",
+                        "",
+                        "         self.__parser = PosixParser()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.623955249786377,
+                    "generation_timestamp": "2024-07-01T09:26:56.855635",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }
@@ -417,13 +459,16 @@
                         "    __parser: CommandLineParser = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __parser: CommandLineParser = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T09:06:42.361672",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -446,13 +491,16 @@
                         "    __options: Options = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __options: Options = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T09:06:42.362898",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }

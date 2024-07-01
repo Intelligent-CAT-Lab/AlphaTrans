@@ -111,13 +111,16 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return str(self.__predecessors)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.683743953704834,
+                    "generation_timestamp": "2024-06-28T20:42:20.737559",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -147,13 +150,16 @@
                         "    def isEmpty(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isEmpty(self) -> bool:",
+                        "         return not bool(self.__predecessors)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.401945114135742,
+                    "generation_timestamp": "2024-06-28T20:42:26.141655",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -185,13 +191,16 @@
                         "    def hasWeight(self, vertex: typing.Any) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def hasWeight(self, vertex: typing.Any) -> bool:",
+                        "         return vertex in self.__predecessors"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7847237586975098,
+                    "generation_timestamp": "2024-06-28T20:42:26.928558",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -233,13 +242,25 @@
                         "    def getWeight(self, vertex: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getWeight(self, vertex: typing.Any) -> typing.Any:",
+                        "        ",
+                        "        if self.__source == vertex:",
+                        "            return self.__weightOperations.identity()",
+                        "",
+                        "        edge = self.__predecessors.get(vertex)",
+                        "",
+                        "        if edge is None:",
+                        "            return None",
+                        "",
+                        "        return self.__weightedEdges.map(edge)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.8097195625305176,
+                    "generation_timestamp": "2024-06-28T20:42:29.740512",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -290,13 +311,30 @@
                         "    def createSpanningTree(self) -> SpanningTree[typing.Any, typing.Any, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def createSpanningTree(self) -> SpanningTree[typing.Any, typing.Any, typing.Any]:",
+                        "        ",
+                        "        spanningTree = MutableSpanningTree(self.__weightOperations, self.__weightedEdges)",
+                        "",
+                        "        for edge in self.__predecessors.values():",
+                        "            vertices = self.__graph.getVertices1(edge)",
+                        "",
+                        "            head = vertices.getHead()",
+                        "            tail = vertices.getTail()",
+                        "",
+                        "            self.__addEdgeIgnoringExceptions(head, spanningTree)",
+                        "            self.__addEdgeIgnoringExceptions(tail, spanningTree)",
+                        "",
+                        "            spanningTree.addEdge(head, self.__graph.getEdge(head, tail), tail)",
+                        "",
+                        "        return spanningTree"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.749513626098633,
+                    "generation_timestamp": "2024-06-28T20:42:57.917414",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -347,13 +385,24 @@
                         "    def compare(self, left: typing.Any, right: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def compare(self, left: typing.Any, right: typing.Any) -> int:",
+                        "        ",
+                        "        if not self.hasWeight(left) and not self.hasWeight(right):",
+                        "            return 0",
+                        "        elif not self.hasWeight(left):",
+                        "            return 1",
+                        "        elif not self.hasWeight(right):",
+                        "            return -1",
+                        "        else:",
+                        "            return self.__weightOperations.compare(self.getWeight(left), self.getWeight(right))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.488379716873169,
+                    "generation_timestamp": "2024-06-28T20:42:39.231774",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -386,13 +435,16 @@
                         "    def addPredecessor(self, tail: typing.Any, head: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def addPredecessor(self, tail: typing.Any, head: typing.Any) -> None:",
+                        "         self.__predecessors[tail] = head"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9297728538513184,
+                    "generation_timestamp": "2024-06-28T20:42:40.163734",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -434,13 +486,20 @@
                         "    def __init__(self, graph: Graph[typing.Any, typing.Any], source: typing.Any, weightOperations: OrderedMonoid[typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, graph: Graph[typing.Any, typing.Any], source: typing.Any, weightOperations: OrderedMonoid[typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:",
+                        "        ",
+                        "        self.__graph = graph",
+                        "        self.__source = source",
+                        "        self.__weightOperations = weightOperations",
+                        "        self.__weightedEdges = weightedEdges"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.248525142669678,
+                    "generation_timestamp": "2024-06-28T20:42:44.414281",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -479,13 +538,21 @@
                         "    def __addEdgeIgnoringExceptions(vertex: typing.Any, spanningTree: MutableSpanningTree[typing.Any, typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __addEdgeIgnoringExceptions(vertex: typing.Any, spanningTree: MutableSpanningTree[typing.Any, typing.Any, typing.Any]) -> None:",
+                        "        ",
+                        "        try:",
+                        "            spanningTree.addVertex(vertex)",
+                        "        except GraphException:",
+                        "            pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.7492995262146,
+                    "generation_timestamp": "2024-06-28T20:42:50.165699",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -511,13 +578,16 @@
                         "    __source: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __source: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:25:25.010179",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -541,13 +611,16 @@
                         "    __graph: Graph[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:25:25.011639",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -571,13 +644,16 @@
                         "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:25:25.013076",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -601,13 +677,16 @@
                         "    __weightOperations: OrderedMonoid[typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __weightOperations: OrderedMonoid[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:25:25.014486",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -631,13 +710,16 @@
                         "    __predecessors: typing.Dict[typing.Any, typing.Any] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __predecessors: typing.Dict[typing.Any, typing.Any] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:25:25.015942",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }

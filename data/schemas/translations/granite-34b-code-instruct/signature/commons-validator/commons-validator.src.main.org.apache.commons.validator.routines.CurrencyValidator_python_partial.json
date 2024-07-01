@@ -84,13 +84,31 @@
                         "    def _parse(self, value: str, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _parse(self, value: str, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        parsed_value = super()._parse(value, formatter)",
+                        "        if parsed_value is not None or not isinstance(formatter, DecimalFormat):",
+                        "            return parsed_value",
+                        "",
+                        "        decimal_format = typing.cast(DecimalFormat, formatter)",
+                        "        pattern = decimal_format.to_pattern()",
+                        "        if pattern.find(self.__CURRENCY_SYMBOL) >= 0:",
+                        "            buffer = io.StringIO()",
+                        "            for i in range(len(pattern)):",
+                        "                if pattern[i] != self.__CURRENCY_SYMBOL:",
+                        "                    buffer.write(pattern[i])",
+                        "            decimal_format.apply_pattern(buffer.getvalue())",
+                        "            parsed_value = super()._parse(value, decimal_format)",
+                        "        return parsed_value"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.517851114273071,
+                    "generation_timestamp": "2024-06-29T00:06:51.931312",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -128,13 +146,17 @@
                         "    def CurrencyValidator1() -> CurrencyValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def CurrencyValidator1() -> CurrencyValidator:",
+                        "         return CurrencyValidator(True, True)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7600736618041992,
+                    "generation_timestamp": "2024-06-29T00:06:53.721395",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -173,13 +195,16 @@
                         "    def __init__(self, strict: bool, allowFractions: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, strict: bool, allowFractions: bool) -> None:",
+                        "         super().__init__(strict, CURRENCY_FORMAT, allowFractions)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0261974334716797,
+                    "generation_timestamp": "2024-06-29T00:06:52.959709",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -211,13 +236,17 @@
                         "    def getInstance() -> BigDecimalValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> BigDecimalValidator:",
+                        "         return CurrencyValidator.__VALIDATOR"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0060396194458008,
+                    "generation_timestamp": "2024-06-29T00:06:54.729162",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -244,13 +273,15 @@
                         "    __CURRENCY_SYMBOL: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CURRENCY_SYMBOL: str = '\\u00A4'"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2582128047943115,
+                    "generation_timestamp": "2024-06-28T23:28:19.391738",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -275,13 +306,15 @@
                         "    __VALIDATOR: CurrencyValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __VALIDATOR: CurrencyValidator = CurrencyValidator.CurrencyValidator1()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0121655464172363,
+                    "generation_timestamp": "2024-06-28T23:28:20.405911",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -306,13 +339,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = -4201640771171486514"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3601956367492676,
+                    "generation_timestamp": "2024-06-28T23:28:21.767352",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

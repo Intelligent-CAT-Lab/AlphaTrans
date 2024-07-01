@@ -97,13 +97,24 @@
                         "    def run(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def run(self) -> None:",
+                        "         with EvictionTimer:",
+                        "            for entry in taskMap.items():",
+                        "                if entry[0].get() is None:",
+                        "                    executor.remove(entry[1])",
+                        "                    taskMap.pop(entry[0])",
+                        "            if not taskMap and executor is not None:",
+                        "                executor.shutdown()",
+                        "                executor.setCorePoolSize(0)",
+                        "                executor = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.190201997756958,
+                    "generation_timestamp": "2024-06-28T21:50:08.006972",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -154,13 +165,16 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return \"EvictionTimer []\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5794904232025146,
+                    "generation_timestamp": "2024-06-28T21:50:16.162909",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -192,13 +206,17 @@
                         "    def getNumTasks() -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getNumTasks() -> int:",
+                        "         return len(EvictionTimer.__taskMap)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1637511253356934,
+                    "generation_timestamp": "2024-06-28T21:50:18.329986",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -255,13 +273,29 @@
                         "    def cancel(evictor: Evictor[typing.Any], timeout: datetime.timedelta, restarting: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def cancel(evictor: Evictor[typing.Any], timeout: datetime.timedelta, restarting: bool) -> None:",
+                        "        ",
+                        "        if evictor is not None:",
+                        "            evictor.cancel()",
+                        "            EvictionTimer.__remove(evictor)",
+                        "",
+                        "        if not restarting and EvictionTimer.__executor is not None and not EvictionTimer.__taskMap:",
+                        "            EvictionTimer.__executor.shutdown()",
+                        "            try:",
+                        "                EvictionTimer.__executor.awaitTermination(timeout.total_seconds(), TimeUnit.SECONDS)",
+                        "            except InterruptedException:",
+                        "                pass",
+                        "            EvictionTimer.__executor.setCorePoolSize(0)",
+                        "            EvictionTimer.__executor = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 15.772902250289917,
+                    "generation_timestamp": "2024-06-28T21:56:01.237301",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -290,7 +324,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -335,13 +369,22 @@
                         "    def __remove(evictor: Evictor[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __remove(evictor: Evictor[typing.Any]) -> None:",
+                        "        ",
+                        "        for key, value in EvictionTimer.__taskMap.items():",
+                        "            if key() == evictor:",
+                        "                EvictionTimer.__executor.remove(value)",
+                        "                del EvictionTimer.__taskMap[key]",
+                        "                break"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 25.136990547180176,
+                    "generation_timestamp": "2024-06-28T21:55:45.461041",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -369,13 +412,16 @@
                         "    __taskMap: typing.Dict[weakref.ref, weakRunner] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __taskMap: typing.Dict[weakref.ref, weakRunner] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:34:41.175672",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -399,13 +445,16 @@
                         "    __executor: typing.Union[concurrent.futures.ThreadPoolExecutor, concurrent.futures.Future] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __executor: typing.Union[concurrent.futures.ThreadPoolExecutor, concurrent.futures.Future] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:34:41.177437",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -458,13 +507,21 @@
                         "    def run(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def run(self) -> None:",
+                        "         task = self.__ref()",
+                        "         if task is not None:",
+                        "             task()",
+                        "         else:",
+                        "             self.executor.remove(self)",
+                        "             self.taskMap.remove(self.__ref)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.595351696014404,
+                    "generation_timestamp": "2024-06-28T21:50:12.604525",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -496,13 +553,16 @@
                         "    def __init__(self, ref: weakref.ref) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, ref: weakref.ref) -> None:",
+                        "         self.__ref = ref"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9748258590698242,
+                    "generation_timestamp": "2024-06-28T21:50:14.581199",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -528,13 +588,16 @@
                         "    __ref: weakref.ref = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ref: weakref.ref = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-28T20:34:41.179649",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }

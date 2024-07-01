@@ -98,13 +98,24 @@
                         "    def __init__(self, cc: str, len: int, format: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, cc: str, len: int, format: str) -> None:",
+                        "         if not (len(cc) == 2 and cc[0].isupper() and cc[1].isupper()):",
+                        "             raise ValueError(\"Invalid country Code; must be exactly 2 upper-case characters\")",
+                        "         if not (MIN_LEN <= len <= MAX_LEN):",
+                        "             raise ValueError(f\"Invalid length parameter, must be in range {MIN_LEN} to {MAX_LEN} inclusive: {len}\")",
+                        "         if not format.startswith(cc):",
+                        "             raise ValueError(f\"countryCode '{cc}' does not agree with format: {format}\")",
+                        "         self.countryCode = cc",
+                        "         self.lengthOfIBAN = len",
+                        "         self.validator = RegexValidator.RegexValidator3(format)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.258997201919556,
+                    "generation_timestamp": "2024-07-01T10:32:59.375461",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }
@@ -129,13 +140,16 @@
                         "    lengthOfIBAN: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    lengthOfIBAN: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T09:53:23.503263",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -158,13 +172,16 @@
                         "    validator: RegexValidator = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    validator: RegexValidator = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T09:53:23.505272",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -187,13 +204,16 @@
                         "    countryCode: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    countryCode: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T09:53:23.507159",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -218,13 +238,15 @@
                         "    __MAX_LEN: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MAX_LEN: int = 34"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4161972999572754,
+                    "generation_timestamp": "2024-07-01T13:54:35.029333",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -249,13 +271,15 @@
                         "    __MIN_LEN: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MIN_LEN: int = 8"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.2016260623931885,
+                    "generation_timestamp": "2024-07-01T13:54:39.235201",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }
@@ -321,13 +345,20 @@
                         "    def setValidator1(self, countryCode: str, length: int, format: str) -> Validator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setValidator1(self, countryCode: str, length: int, format: str) -> Validator:",
+                        "         if self == IBANValidator.DEFAULT_IBAN_VALIDATOR:",
+                        "             raise IllegalStateException(\"The singleton validator cannot be modified\")",
+                        "         if length < 0:",
+                        "             return self.__formatValidators.remove(countryCode)",
+                        "         return self.setValidator0(Validator(countryCode, length, format))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.550426959991455,
+                    "generation_timestamp": "2024-07-01T10:33:03.757419",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -362,13 +393,18 @@
                         "    def setValidator0(self, validator: Validator) -> Validator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setValidator0(self, validator: Validator) -> Validator:",
+                        "         if self == IBANValidator.DEFAULT_IBAN_VALIDATOR:",
+                        "             raise IllegalStateException(\"The singleton validator cannot be modified\")",
+                        "         return self.__formatValidators.put(validator.countryCode, validator)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.8229122161865234,
+                    "generation_timestamp": "2024-07-01T10:33:01.203613",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -404,13 +440,19 @@
                         "    def getValidator(self, code: str) -> Validator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getValidator(self, code: str) -> Validator:",
+                        "         if code is None or len(code) < 2: # ensure we can extract the code",
+                        "             return None",
+                        "         key = code[:2]",
+                        "         return self.__formatValidators.get(key)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7894911766052246,
+                    "generation_timestamp": "2024-07-01T10:33:05.549470",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -441,7 +483,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -484,13 +526,16 @@
                         "    def hasValidator(self, code: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def hasValidator(self, code: str) -> bool:",
+                        "         return self.getValidator(code) is not None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2798793315887451,
+                    "generation_timestamp": "2024-07-01T10:35:58.859381",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -544,13 +589,19 @@
                         "    def isValid(self, code: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValid(self, code: str) -> bool:",
+                        "         formatValidator = self.getValidator(code)",
+                        "         if formatValidator is None or len(code) != formatValidator.lengthOfIBAN or not formatValidator.validator.isValid(code):",
+                        "             return False",
+                        "         return IBANCheckDigit.IBAN_CHECK_DIGIT.isValid(code)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.5112552642822266,
+                    "generation_timestamp": "2024-07-01T10:36:01.374691",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -588,13 +639,17 @@
                         "    def IBANValidator1() -> IBANValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def IBANValidator1() -> IBANValidator:",
+                        "         return IBANValidator(IBANValidator.__DEFAULT_FORMATS)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6826603412628174,
+                    "generation_timestamp": "2024-07-01T10:36:10.306180",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -632,13 +687,16 @@
                         "    def __init__(self, formatMap: typing.List[Validator]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, formatMap: typing.List[Validator]) -> None:",
+                        "         self.__formatValidators = self.__createValidators(formatMap)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9451103210449219,
+                    "generation_timestamp": "2024-07-01T10:36:04.433190",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -670,13 +728,17 @@
                         "    def getInstance() -> IBANValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> IBANValidator:",
+                        "         return IBANValidator.DEFAULT_IBAN_VALIDATOR"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8750474452972412,
+                    "generation_timestamp": "2024-07-01T10:36:02.255227",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -712,13 +774,19 @@
                         "    def __createValidators(self, formatMap: typing.List[Validator]) -> typing.Dict[str, Validator]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __createValidators(self, formatMap: typing.List[Validator]) -> typing.Dict[str, Validator]:",
+                        "         m = {}",
+                        "         for v in formatMap:",
+                        "             m[v.countryCode] = v",
+                        "         return m"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.227245569229126,
+                    "generation_timestamp": "2024-07-01T10:36:03.485177",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }
@@ -745,13 +813,15 @@
                         "    DEFAULT_IBAN_VALIDATOR: IBANValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    DEFAULT_IBAN_VALIDATOR: IBANValidator = IBANValidator(IBANValidator.__DEFAULT_FORMATS)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.061614513397217,
+                    "generation_timestamp": "2024-07-01T13:54:42.304604",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -855,7 +925,7 @@
                         ""
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -884,13 +954,16 @@
                         "    __formatValidators: typing.Dict[str, Validator] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __formatValidators: typing.Dict[str, Validator] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T09:56:17.952776",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }

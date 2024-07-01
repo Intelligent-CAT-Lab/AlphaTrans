@@ -89,13 +89,16 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return self.__printerParser.toString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7314863204956055,
+                    "generation_timestamp": "2024-06-29T02:11:01.645596",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -160,13 +163,26 @@
                         "    def parse(self, text: str, startIndex: int) -> MoneyParseContext:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parse(self, text: str, startIndex: int) -> MoneyParseContext:",
+                        "        ",
+                        "",
+                        "        MoneyFormatter.checkNotNull(text, \"Text must not be null\")",
+                        "        if startIndex < 0 or startIndex > len(text):",
+                        "            raise StringIndexOutOfBoundsException(\"Invalid start index: \" + startIndex)",
+                        "        if self.isParser() == False:",
+                        "            raise UnsupportedOperationException(",
+                        "                    \"MoneyFomatter has not been configured to be able to parse\")",
+                        "        context = MoneyParseContext(1, text, startIndex, self.__locale, None, 0, None)",
+                        "        self.__printerParser.parse(context)",
+                        "        return context"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.573444128036499,
+                    "generation_timestamp": "2024-06-29T02:13:05.378748",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -209,13 +225,16 @@
                         "    def parseMoney(self, text: str) -> Money:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parseMoney(self, text: str) -> Money:",
+                        "         return self.parseBigMoney(text).toMoney0()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.936007022857666,
+                    "generation_timestamp": "2024-06-29T02:24:14.991467",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -311,13 +330,31 @@
                         "    def parseBigMoney(self, text: str) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parseBigMoney(self, text: str) -> BigMoney:",
+                        "        ",
+                        "",
+                        "        MoneyFormatter.checkNotNull(text, \"Text must not be null\")",
+                        "        result = self.parse(text, 0)",
+                        "        if result.isError() or result.isFullyParsed() == False or result.isComplete() == False:",
+                        "            str = (text[0:64] + '...' if len(text) > 64 else text)",
+                        "            if result.isError():",
+                        "                raise MoneyFormatException.MoneyFormatException1(",
+                        "                    \"Text could not be parsed at index \" + str(result.getErrorIndex()) + \": \" + str)",
+                        "            elif result.isFullyParsed() == False:",
+                        "                raise MoneyFormatException.MoneyFormatException1(",
+                        "                    \"Unparsed text found at index \" + str(result.getIndex()) + \": \" + str)",
+                        "            else:",
+                        "                raise MoneyFormatException.MoneyFormatException1(",
+                        "                    \"Parsing did not find both currency and amount: \" + str)",
+                        "        return result.toBigMoney()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.123531818389893,
+                    "generation_timestamp": "2024-06-29T02:20:16.505436",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -384,13 +421,23 @@
                         "    def printIO(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def printIO(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:",
+                        "         self.checkNotNull(moneyProvider, \"BigMoneyProvider must not be null\")",
+                        "         if self.isPrinter() == False:",
+                        "             raise UnsupportedOperationException(",
+                        "                 \"MoneyFomatter has not been configured to be able to print\")",
+                        "",
+                        "         money = BigMoney.of2(moneyProvider)",
+                        "         context = MoneyPrintContext(self.__locale)",
+                        "         self.__printerParser.print(context, appendable, money)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.2889420986175537,
+                    "generation_timestamp": "2024-06-29T02:20:19.807795",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -438,13 +485,19 @@
                         "    def print1(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def print1(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:",
+                        "         try:",
+                        "             self.printIO(appendable, moneyProvider)",
+                        "         except IOException as ex:",
+                        "             raise MoneyFormatException(ex.getMessage(), ex)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.860391616821289,
+                    "generation_timestamp": "2024-06-29T02:20:21.670198",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -484,13 +537,18 @@
                         "    def print0(self, moneyProvider: BigMoneyProvider) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def print0(self, moneyProvider: BigMoneyProvider) -> str:",
+                        "         buf = StringBuilder()",
+                        "         self.print1(buf, moneyProvider)",
+                        "         return buf.toString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1662113666534424,
+                    "generation_timestamp": "2024-06-29T02:20:22.841047",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -526,13 +584,16 @@
                         "    def isParser(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isParser(self) -> bool:",
+                        "         return self.__printerParser.isParser()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8165407180786133,
+                    "generation_timestamp": "2024-06-29T02:11:02.469136",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -568,13 +629,16 @@
                         "    def isPrinter(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isPrinter(self) -> bool:",
+                        "         return self.__printerParser.isPrinter()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7750382423400879,
+                    "generation_timestamp": "2024-06-29T02:11:03.249059",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -618,13 +682,17 @@
                         "    def withLocale(self, locale: typing.Any) -> MoneyFormatter:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withLocale(self, locale: typing.Any) -> MoneyFormatter:",
+                        "         self.checkNotNull(locale, \"Locale must not be null\")",
+                        "         return MoneyFormatter(1, locale, None, None, self.__printerParser)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4865643978118896,
+                    "generation_timestamp": "2024-06-29T02:11:14.687858",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -654,13 +722,16 @@
                         "    def getLocale(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getLocale(self) -> typing.Any:",
+                        "         return self.__locale"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6217207908630371,
+                    "generation_timestamp": "2024-06-29T02:11:03.874913",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -728,13 +799,28 @@
                         "    def __init__(self, constructorId: int, locale: typing.Any, parsers: typing.List[MoneyParser], printers: typing.List[MoneyPrinter], printerParser: MultiPrinterParser) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, locale: typing.Any, parsers: typing.List[MoneyParser], printers: typing.List[MoneyPrinter], printerParser: MultiPrinterParser) -> None:",
+                        "         if constructorId == 0:",
+                        "             MoneyFormatter.checkNotNull(locale, \"Locale must not be null\")",
+                        "             MoneyFormatter.checkNotNull(printers, \"Printers must not be null\")",
+                        "             MoneyFormatter.checkNotNull(parsers, \"Parsers must not be null\")",
+                        "             if len(printers) != len(parsers):",
+                        "                 raise IllegalArgumentException(\"Printers and parsers must match\")",
+                        "             self.__locale = locale",
+                        "             self.__printerParser = MultiPrinterParser(printers, parsers)",
+                        "         else:",
+                        "             MoneyFormatter.checkNotNull(locale, \"Locale must not be null\")",
+                        "             MoneyFormatter.checkNotNull(printerParser, \"PrinterParser must not be null\")",
+                        "             self.__locale = locale",
+                        "             self.__printerParser = printerParser"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.1917500495910645,
+                    "generation_timestamp": "2024-06-29T02:11:12.554915",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -770,13 +856,18 @@
                         "    def checkNotNull(object: typing.Any, message: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def checkNotNull(object: typing.Any, message: str) -> None:",
+                        "         if object is None:",
+                        "             raise NullPointerException(message)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.848865270614624,
+                    "generation_timestamp": "2024-06-29T02:11:04.727966",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -804,13 +895,16 @@
                         "    def getPrinterParser(self) -> MultiPrinterParser:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getPrinterParser(self) -> MultiPrinterParser:",
+                        "         return self.__printerParser"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6371471881866455,
+                    "generation_timestamp": "2024-06-29T02:11:13.196130",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -836,13 +930,16 @@
                         "    __printerParser: MultiPrinterParser = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __printerParser: MultiPrinterParser = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T02:05:18.999397",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -866,13 +963,16 @@
                         "    __locale: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __locale: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T02:05:19.002867",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -897,13 +997,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 2385346258"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.071831464767456,
+                    "generation_timestamp": "2024-06-29T02:05:20.077035",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

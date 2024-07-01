@@ -72,13 +72,16 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return \"PositiveZeroNegative(\" + self.__whenPositive + \",\" + self.__whenZero + \",\" + self.__whenNegative + \")\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3667516708374023,
+                    "generation_timestamp": "2024-06-29T02:15:01.066612",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -191,13 +194,39 @@
                         "    def parse(self, context: MoneyParseContext) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parse(self, context: MoneyParseContext) -> None:",
+                        "         positiveContext = context.createChild()",
+                        "         self.whenPositive.getPrinterParser().parse(positiveContext)",
+                        "         zeroContext = context.createChild()",
+                        "         self.whenZero.getPrinterParser().parse(zeroContext)",
+                        "         negativeContext = context.createChild()",
+                        "         self.whenNegative.getPrinterParser().parse(negativeContext)",
+                        "         best = None",
+                        "         if not positiveContext.isError():",
+                        "             best = positiveContext",
+                        "         if not zeroContext.isError():",
+                        "             if best is None or zeroContext.getIndex() > best.getIndex():",
+                        "                 best = zeroContext",
+                        "         if not negativeContext.isError():",
+                        "             if best is None or negativeContext.getIndex() > best.getIndex():",
+                        "                 best = negativeContext",
+                        "         if best is None:",
+                        "             context.setError()",
+                        "         else:",
+                        "             context.mergeChild(best)",
+                        "             if best == zeroContext:",
+                        "                 if context.getAmount() is None or context.getAmount().compareTo(decimal.Decimal(0)) != 0:",
+                        "                     context.setAmount(decimal.Decimal(0))",
+                        "             elif best == negativeContext and context.getAmount().compareTo(decimal.Decimal(0)) > 0:",
+                        "                 context.setAmount(context.getAmount().negate())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.675512313842773,
+                    "generation_timestamp": "2024-06-29T02:15:09.758364",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -257,13 +286,17 @@
                         "    def print(self, context: MoneyPrintContext, appendable: typing.Union[typing.List, io.TextIOBase], money: BigMoney) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def print(self, context: MoneyPrintContext, appendable: typing.Union[typing.List, io.TextIOBase], money: BigMoney) -> None:",
+                        "         fmt = (money.isZero() and self.whenZero or money.isPositive() and self.whenPositive or self.whenNegative)",
+                        "         fmt.getPrinterParser().print(context, appendable, money)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0318126678466797,
+                    "generation_timestamp": "2024-06-29T02:15:11.807552",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -298,13 +331,18 @@
                         "    def __init__(self, whenPositive: MoneyFormatter, whenZero: MoneyFormatter, whenNegative: MoneyFormatter) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, whenPositive: MoneyFormatter, whenZero: MoneyFormatter, whenNegative: MoneyFormatter) -> None:",
+                        "         self.__whenPositive = whenPositive",
+                        "         self.__whenZero = whenZero",
+                        "         self.__whenNegative = whenNegative"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.628469467163086,
+                    "generation_timestamp": "2024-06-29T02:15:13.437620",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -330,13 +368,16 @@
                         "    __whenNegative: MoneyFormatter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __whenNegative: MoneyFormatter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T02:06:36.284673",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -360,13 +401,16 @@
                         "    __whenZero: MoneyFormatter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __whenZero: MoneyFormatter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T02:06:36.286140",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -390,13 +434,16 @@
                         "    __whenPositive: MoneyFormatter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __whenPositive: MoneyFormatter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T02:06:36.287518",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -421,13 +468,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8462882041931152,
+                    "generation_timestamp": "2024-06-29T02:06:37.135181",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

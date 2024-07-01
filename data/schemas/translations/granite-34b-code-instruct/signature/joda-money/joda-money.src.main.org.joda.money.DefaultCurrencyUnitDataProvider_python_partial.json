@@ -137,13 +137,19 @@
                         "    def _registerCurrencies(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _registerCurrencies(self) -> None:",
+                        "         self.__parseCurrencies(self.__loadFromFile(\"/org/joda/money/CurrencyData.csv\"))",
+                        "         self.__parseCountries(self.__loadFromFile(\"/org/joda/money/CountryData.csv\"))",
+                        "         self.__parseCurrencies(self.__loadFromFiles(\"META-INF/org/joda/money/CurrencyDataExtension.csv\"))",
+                        "         self.__parseCountries(self.__loadFromFiles(\"META-INF/org/joda/money/CountryDataExtension.csv\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.756955862045288,
+                    "generation_timestamp": "2024-06-29T03:14:39.545369",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -188,13 +194,21 @@
                         "    def __parseCountries(self, content: typing.List[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __parseCountries(self, content: typing.List[str]) -> None:",
+                        "         for line in content:",
+                        "             matcher = self.__COUNTRY_REGEX_LINE.matcher(line)",
+                        "             if matcher.matches():",
+                        "                 countryCode = matcher.group(1)",
+                        "                 currencyCode = matcher.group(2)",
+                        "                 self._registerCountry(countryCode, currencyCode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.3554043769836426,
+                    "generation_timestamp": "2024-06-29T03:14:25.501388",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -240,13 +254,22 @@
                         "    def __parseCurrencies(self, content: typing.List[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __parseCurrencies(self, content: typing.List[str]) -> None:",
+                        "         for line in content:",
+                        "             matcher = DefaultCurrencyUnitDataProvider.__CURRENCY_REGEX_LINE.match(line)",
+                        "             if matcher.matches():",
+                        "                 currencyCode = matcher.group(1)",
+                        "                 numericCode = int(matcher.group(2))",
+                        "                 digits = int(matcher.group(3))",
+                        "                 self._registerCurrency(currencyCode, numericCode, digits)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.03220272064209,
+                    "generation_timestamp": "2024-06-29T03:14:28.537393",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -292,13 +315,30 @@
                         "    def __loadFromFiles(self, fileName: str) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __loadFromFiles(self, fileName: str) -> typing.List[str]:",
+                        "         content: typing.List[str] = []",
+                        "         en: Enumeration[URL] = self.getClass().getClassLoader().getResource(fileName)",
+                        "         while en.hasMoreElements():",
+                        "             url: URL = en.nextElement()",
+                        "             try:",
+                        "                 in_stream: InputStream = url.openStream()",
+                        "                 reader: BufferedReader = BufferedReader(InputStreamReader(in_stream, \"UTF-8\"))",
+                        "                 line: str = reader.readLine()",
+                        "                 while line is not None:",
+                        "                     content.add(line)",
+                        "                     line = reader.readLine()",
+                        "             finally:",
+                        "                 reader.close()",
+                        "                 in_stream.close()",
+                        "         return content"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.505856990814209,
+                    "generation_timestamp": "2024-06-29T03:14:33.045047",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -342,13 +382,22 @@
                         "    def __loadFromFile(self, fileName: str) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __loadFromFile(self, fileName: str) -> typing.List[str]:",
+                        "         with io.open(self.getClass().getResourceAsStream(fileName), \"UTF-8\") as reader:",
+                        "            if reader is None:",
+                        "                raise FileNotFoundError(f\"Data file {fileName} not found\")",
+                        "            content = []",
+                        "            for line in reader:",
+                        "                content.append(line)",
+                        "            return content"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.7391669750213623,
+                    "generation_timestamp": "2024-06-29T03:14:35.786039",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -376,13 +425,15 @@
                         "    __COUNTRY_REGEX_LINE: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __COUNTRY_REGEX_LINE: re.Pattern = re.compile(\"([A-Z]{2}),([A-Z]{3}) *(#.*)?\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6096441745758057,
+                    "generation_timestamp": "2024-06-29T02:10:36.920157",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -408,13 +459,15 @@
                         "    __CURRENCY_REGEX_LINE: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CURRENCY_REGEX_LINE: re.Pattern = re.compile(\"([A-Z]{3}),(-1|[0-9]{1,3}),(-1|[0-9]|[1-2][0-9]|30) *(#.*)?\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.422755479812622,
+                    "generation_timestamp": "2024-06-29T02:10:39.344732",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

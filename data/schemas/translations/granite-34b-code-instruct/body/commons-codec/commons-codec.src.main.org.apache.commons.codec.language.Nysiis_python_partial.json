@@ -139,13 +139,51 @@
                         "    def nysiis(self, str: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def nysiis(self, str: str) -> str:",
+                        "         if str is None:",
+                        "             return None",
+                        "         str = SoundexUtils.clean(str)",
+                        "         if not str:",
+                        "             return str",
+                        "         str = self.__PAT_MAC.sub(\"MCC\", str)",
+                        "         str = self.__PAT_KN.sub(\"NN\", str)",
+                        "         str = self.__PAT_K.sub(\"C\", str)",
+                        "         str = self.__PAT_PH_PF.sub(\"FF\", str)",
+                        "         str = self.__PAT_SCH.sub(\"SSS\", str)",
+                        "         str = self.__PAT_EE_IE.sub(\"Y\", str)",
+                        "         str = self.__PAT_DT_ETC.sub(\"D\", str)",
+                        "         key = []",
+                        "         key.append(str[0])",
+                        "         chars = list(str)",
+                        "         len = len(chars)",
+                        "         for i in range(1, len):",
+                        "             next = i < len - 1 and chars[i + 1] or self.__SPACE",
+                        "             aNext = i < len - 2 and chars[i + 2] or self.__SPACE",
+                        "             transcoded = self.__transcodeRemaining(chars[i - 1], chars[i], next, aNext)",
+                        "             chars[i:i + 1] = transcoded",
+                        "             if chars[i] != chars[i - 1]:",
+                        "                 key.append(chars[i])",
+                        "         if len(key) > 1:",
+                        "             lastChar = key[-1]",
+                        "             if lastChar == 'S':",
+                        "                 key.pop()",
+                        "                 lastChar = key[-1]",
+                        "             if len(key) > 2:",
+                        "                 last2Char = key[-2]",
+                        "                 if last2Char == 'A' and lastChar == 'Y':",
+                        "                     key.pop()",
+                        "             if lastChar == 'A':",
+                        "                 key.pop()",
+                        "         string = ''.join(key)",
+                        "         return self.isStrict() and string[:min(self.__TRUE_LENGTH, len(string))] or string"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 47.667797565460205,
+                    "generation_timestamp": "2024-07-01T14:06:40.017949",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -175,13 +213,16 @@
                         "    def isStrict(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isStrict(self) -> bool:",
+                        "         return self.__strict"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5255208015441895,
+                    "generation_timestamp": "2024-07-01T14:03:04.409979",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -219,13 +260,16 @@
                         "    def encode1(self, str: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode1(self, str: str) -> str:",
+                        "         return self.nysiis(str)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.2323083877563477,
+                    "generation_timestamp": "2024-07-01T14:06:42.256961",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -272,13 +316,19 @@
                         "    def encode0(self, obj: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode0(self, obj: typing.Any) -> typing.Any:",
+                        "         if not isinstance(obj, str):",
+                        "             raise EncoderException(",
+                        "                     \"Parameter supplied to Nysiis encode is not of type java.lang.String\", None)",
+                        "         return self.nysiis(obj)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.248444080352783,
+                    "generation_timestamp": "2024-07-01T14:06:46.508819",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -316,13 +366,17 @@
                         "    def Nysiis1() -> Nysiis:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def Nysiis1() -> Nysiis:",
+                        "         return Nysiis(True)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.588500738143921,
+                    "generation_timestamp": "2024-07-01T14:03:06.822849",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -354,13 +408,16 @@
                         "    def __init__(self, strict: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, strict: bool) -> None:",
+                        "         self.__strict = strict"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8145303726196289,
+                    "generation_timestamp": "2024-07-01T14:03:05.231025",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -445,7 +502,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -484,13 +541,17 @@
                         "    def __isVowel(c: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __isVowel(c: str) -> bool:",
+                        "         return c == 'A' or c == 'E' or c == 'I' or c == 'O' or c == 'U'"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.12434983253479,
+                    "generation_timestamp": "2024-07-01T14:03:11.954979",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }
@@ -516,13 +577,16 @@
                         "    __strict: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __strict: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T10:26:53.216520",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -547,13 +611,15 @@
                         "    __TRUE_LENGTH: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __TRUE_LENGTH: int = 6"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7791886329650879,
+                    "generation_timestamp": "2024-07-01T10:26:53.998861",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -578,13 +644,15 @@
                         "    __SPACE: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __SPACE: str = ' '"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7176177501678467,
+                    "generation_timestamp": "2024-07-01T10:26:54.720435",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -609,13 +677,15 @@
                         "    __PAT_DT_ETC: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_DT_ETC: re.Pattern = re.compile(\"(DT|RT|RD|NT|ND)$\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.536010503768921,
+                    "generation_timestamp": "2024-07-01T10:26:56.260352",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -640,13 +710,15 @@
                         "    __PAT_EE_IE: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_EE_IE: re.Pattern = re.compile(r\"(EE|IE)$\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2167985439300537,
+                    "generation_timestamp": "2024-07-01T10:26:57.481077",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -671,13 +743,15 @@
                         "    __PAT_SCH: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_SCH: re.Pattern = re.compile(\"^SCH\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9963629245758057,
+                    "generation_timestamp": "2024-07-01T10:26:58.481150",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -702,13 +776,15 @@
                         "    __PAT_PH_PF: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_PH_PF: re.Pattern = re.compile(\"^(PH|PF)\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1907551288604736,
+                    "generation_timestamp": "2024-07-01T10:26:59.675930",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -733,13 +809,15 @@
                         "    __PAT_K: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_K: re.Pattern = re.compile(\"^K\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0013315677642822,
+                    "generation_timestamp": "2024-07-01T10:27:00.681115",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -764,13 +842,15 @@
                         "    __PAT_KN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_KN: re.Pattern = re.compile(\"^KN\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.030773639678955,
+                    "generation_timestamp": "2024-07-01T10:27:01.715669",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -795,13 +875,15 @@
                         "    __PAT_MAC: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_MAC: re.Pattern = re.compile(\"^MAC\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.007420539855957,
+                    "generation_timestamp": "2024-07-01T10:27:02.726864",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -826,13 +908,15 @@
                         "    __CHARS_SSS: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_SSS: typing.List[str] = ['S', 'S', 'S']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2539665699005127,
+                    "generation_timestamp": "2024-07-01T10:27:03.984828",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -857,13 +941,15 @@
                         "    __CHARS_S: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_S: typing.List[str] = ['S']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9854319095611572,
+                    "generation_timestamp": "2024-07-01T10:27:04.974230",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -888,13 +974,15 @@
                         "    __CHARS_NN: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_NN: typing.List[str] = ['N', 'N']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.125652551651001,
+                    "generation_timestamp": "2024-07-01T10:27:06.103651",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -919,13 +1007,15 @@
                         "    __CHARS_N: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_N: typing.List[str] = ['N']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.022209644317627,
+                    "generation_timestamp": "2024-07-01T10:27:07.129881",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -950,13 +1040,15 @@
                         "    __CHARS_G: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_G: typing.List[str] = ['G']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.949784517288208,
+                    "generation_timestamp": "2024-07-01T10:27:08.083499",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -981,13 +1073,15 @@
                         "    __CHARS_FF: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_FF: typing.List[str] = ['F', 'F']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1815390586853027,
+                    "generation_timestamp": "2024-07-01T10:27:09.268454",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1012,13 +1106,15 @@
                         "    __CHARS_C: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_C: typing.List[str] = ['C']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.041224718093872,
+                    "generation_timestamp": "2024-07-01T10:27:10.313425",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1043,13 +1139,15 @@
                         "    __CHARS_AF: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_AF: typing.List[str] = ['A', 'F']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1691617965698242,
+                    "generation_timestamp": "2024-07-01T10:27:11.486265",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 },
@@ -1074,13 +1172,15 @@
                         "    __CHARS_A: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_A: typing.List[str] = ['A']"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.16371750831604,
+                    "generation_timestamp": "2024-07-01T10:27:12.653683",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": true
                 }

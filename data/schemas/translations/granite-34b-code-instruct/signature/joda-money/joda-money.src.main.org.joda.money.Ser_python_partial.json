@@ -140,13 +140,24 @@
                         "    def readExternal(self, in_: pickle.Unpickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def readExternal(self, in_: pickle.Unpickler) -> None:",
+                        "         self.__type = in_.readByte()",
+                        "         if self.__type == Ser.BIG_MONEY:",
+                        "             self.__object = self.__readBigMoney(in_)",
+                        "         elif self.__type == Ser.MONEY:",
+                        "             self.__object = Money(0, self.__readBigMoney(in_))",
+                        "         elif self.__type == Ser.CURRENCY_UNIT:",
+                        "             self.__object = self.__readCurrency(in_)",
+                        "         else:",
+                        "             raise pickle.UnpicklingError(\"Serialization input has invalid type\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.021798133850098,
+                    "generation_timestamp": "2024-06-29T03:14:13.903848",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -217,13 +228,27 @@
                         "    def writeExternal(self, out: pickle.Pickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def writeExternal(self, out: pickle.Pickler) -> None:",
+                        "         out.writeByte(self.__type)",
+                        "         if self.__type == Ser.BIG_MONEY:",
+                        "             obj = typing.cast(BigMoney, self.__object)",
+                        "             self.__writeBigMoney(out, obj)",
+                        "         elif self.__type == Ser.MONEY:",
+                        "             obj = typing.cast(Money, self.__object)",
+                        "             self.__writeBigMoney(out, obj.toBigMoney())",
+                        "         elif self.__type == Ser.CURRENCY_UNIT:",
+                        "             obj = typing.cast(CurrencyUnit, self.__object)",
+                        "             self.__writeCurrency(out, obj)",
+                        "         else:",
+                        "             raise pickle.PicklingError(\"Joda-Money bug: Serialization broken\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.437095880508423,
+                    "generation_timestamp": "2024-06-29T03:14:23.140028",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -262,13 +287,20 @@
                         "    def __init__(self, constructorId: int, object: typing.Any, type: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, object: typing.Any, type: int) -> None:",
+                        "         if constructorId == 0:",
+                        "             self.__type = type",
+                        "             self.__object = object",
+                        "         else:",
+                        "             pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2652413845062256,
+                    "generation_timestamp": "2024-06-29T03:14:00.598951",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -298,13 +330,16 @@
                         "    def __readResolve(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __readResolve(self) -> typing.Any:",
+                        "         return self.__object"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.560065507888794,
+                    "generation_timestamp": "2024-06-29T03:14:04.075245",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -362,13 +397,24 @@
                         "    def __readCurrency(self, in_: pickle.Unpickler) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __readCurrency(self, in_: pickle.Unpickler) -> CurrencyUnit:",
+                        "         code = in_.readUTF()",
+                        "         singletonCurrency = CurrencyUnit.of1(code)",
+                        "         if singletonCurrency.getNumericCode() != in_.readShort():",
+                        "             raise InvalidObjectException(",
+                        "                     \"Deserialization found a mismatch in the numeric code for currency \" + code)",
+                        "         if singletonCurrency.getDecimalPlaces() != in_.readShort():",
+                        "             raise InvalidObjectException(",
+                        "                     \"Deserialization found a mismatch in the decimal places for currency \" + code)",
+                        "         return singletonCurrency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.621006727218628,
+                    "generation_timestamp": "2024-06-29T03:14:07.705610",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -416,13 +462,21 @@
                         "    def __readBigMoney(self, in_: pickle.Unpickler) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __readBigMoney(self, in_: pickle.Unpickler) -> BigMoney:",
+                        "         currency = self.__readCurrency(in_)",
+                        "         bytes = bytearray(in_.readInt())",
+                        "         in_.readFully(bytes)",
+                        "         bd = decimal.Decimal(bytes)",
+                        "         bigMoney = BigMoney(0, bd, currency)",
+                        "         return bigMoney"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1581711769104004,
+                    "generation_timestamp": "2024-06-29T03:14:09.875614",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -473,13 +527,18 @@
                         "    def __writeCurrency(self, out: pickle.Pickler, obj: CurrencyUnit) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __writeCurrency(self, out: pickle.Pickler, obj: CurrencyUnit) -> None:",
+                        "         out.writeUTF(obj.getCode())",
+                        "         out.writeShort(obj.getNumericCode())",
+                        "         out.writeShort(obj.getDecimalPlaces())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5620267391204834,
+                    "generation_timestamp": "2024-06-29T03:14:15.472028",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -537,13 +596,20 @@
                         "    def __writeBigMoney(self, out: pickle.Pickler, obj: BigMoney) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __writeBigMoney(self, out: pickle.Pickler, obj: BigMoney) -> None:",
+                        "         self.__writeCurrency(out, obj.getCurrencyUnit())",
+                        "         bytes = obj.getAmount().unscaledValue().toByteArray()",
+                        "         out.writeInt(len(bytes))",
+                        "         out.write(bytes)",
+                        "         out.writeInt(obj.getScale())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.2129247188568115,
+                    "generation_timestamp": "2024-06-29T03:14:17.697893",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -569,13 +635,15 @@
                         "    CURRENCY_UNIT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CURRENCY_UNIT: int = 67"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.306061744689941,
+                    "generation_timestamp": "2024-06-30T12:08:04.840288",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -599,13 +667,15 @@
                         "    MONEY: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    MONEY: int = 77"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.443061828613281,
+                    "generation_timestamp": "2024-06-30T12:08:10.285504",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -629,13 +699,15 @@
                         "    BIG_MONEY: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BIG_MONEY: int = 66"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.842520236968994,
+                    "generation_timestamp": "2024-06-30T12:08:16.130125",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -658,13 +730,16 @@
                         "    __object: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __object: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T02:10:35.303792",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -687,13 +762,16 @@
                         "    __type: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __type: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-06-29T02:10:35.306461",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }

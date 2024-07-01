@@ -128,13 +128,39 @@
                         "    def _decodeText(self, text: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _decodeText(self, text: str) -> str:",
+                        "         if text is None:",
+                        "             return None",
+                        "         if not text.startswith(self._PREFIX) or not text.endswith(self._POSTFIX):",
+                        "             raise DecoderException(\"RFC 1522 violation: malformed encoded content\", None)",
+                        "         terminator = len(text) - 2",
+                        "         from_ = 2",
+                        "         to = text.find(self._SEP, from_)",
+                        "         if to == terminator:",
+                        "             raise DecoderException(\"RFC 1522 violation: charset token not found\", None)",
+                        "         charset = text[from_:to]",
+                        "         if charset == \"\":",
+                        "             raise DecoderException(\"RFC 1522 violation: charset not specified\", None)",
+                        "         from_ = to + 1",
+                        "         to = text.find(self._SEP, from_)",
+                        "         if to == terminator:",
+                        "             raise DecoderException(\"RFC 1522 violation: encoding token not found\", None)",
+                        "         encoding = text[from_:to]",
+                        "         if not self._getEncoding().lower() == encoding.lower():",
+                        "             raise DecoderException(\"This codec cannot decode \" + encoding + \" encoded content\", None)",
+                        "         from_ = to + 1",
+                        "         to = text.find(self._SEP, from_)",
+                        "         data = StringUtils.getBytesUsAscii(text[from_:to])",
+                        "         data = self._doDecoding(data)",
+                        "         return str(data, charset)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.831398248672485,
+                    "generation_timestamp": "2024-06-29T01:27:42.570465",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -177,13 +203,18 @@
                         "    def _encodeText1(self, text: str, charsetName: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _encodeText1(self, text: str, charsetName: str) -> str:",
+                        "         if text is None:",
+                        "             return None",
+                        "         return self._encodeText0(text, charsetName)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2019546031951904,
+                    "generation_timestamp": "2024-06-29T01:27:47.989167",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -243,13 +274,26 @@
                         "    def _encodeText0(self, text: str, charset: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _encodeText0(self, text: str, charset: str) -> str:",
+                        "         if text is None:",
+                        "             return None",
+                        "         buffer = StringBuilder()",
+                        "         buffer.append(self._PREFIX)",
+                        "         buffer.append(charset)",
+                        "         buffer.append(self._SEP)",
+                        "         buffer.append(self._getEncoding())",
+                        "         buffer.append(self._SEP)",
+                        "         buffer.append(StringUtils.newStringUsAscii(self._doEncoding(text.encode(charset))))",
+                        "         buffer.append(self._POSTFIX)",
+                        "         return str(buffer)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.6026244163513184,
+                    "generation_timestamp": "2024-06-29T01:27:46.177574",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -280,13 +324,16 @@
                         "    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:",
+                        "         raise NotImplementedError"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.5509812831878662,
+                    "generation_timestamp": "2024-06-29T01:27:31.545083",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -317,13 +364,16 @@
                         "    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:",
+                        "         raise NotImplementedError"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.5151596069335938,
+                    "generation_timestamp": "2024-06-29T01:27:32.061836",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -352,13 +402,16 @@
                         "    def _getEncoding(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _getEncoding(self) -> str:",
+                        "         return \"UTF-8\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6715695858001709,
+                    "generation_timestamp": "2024-06-29T01:27:32.734995",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
@@ -385,13 +438,15 @@
                         "    _PREFIX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _PREFIX: str = \"=?=\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7948174476623535,
+                    "generation_timestamp": "2024-06-29T00:30:51.538832",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -416,13 +471,15 @@
                         "    _POSTFIX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _POSTFIX: str = \"?=\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7931299209594727,
+                    "generation_timestamp": "2024-06-29T00:30:52.334867",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 },
@@ -447,13 +504,15 @@
                         "    _SEP: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _SEP: str = '?'"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7203562259674072,
+                    "generation_timestamp": "2024-06-29T00:30:53.057734",
                     "model_name": "granite-34b-code-instruct",
                     "include_implementation": false
                 }
