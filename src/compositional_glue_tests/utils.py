@@ -148,3 +148,12 @@ def get_method_parameter_types(method_schema_data: dict):
 
     result.append(s[start:].strip())
     return list(filter(None, result))
+
+
+def schema_filter(schema_file_name: str):
+    schema_name = schema_file_name.split('.')[-2].split('_python_partial')[0].strip()
+    return (schema_file_name.endswith('_python_partial.json')
+        and (
+            'src.main.' in schema_file_name # consider only the main schemas
+            or ('src.test.' in schema_file_name and 'Test' not in schema_name) # or test schemas without 'Test' in their name
+        ))
