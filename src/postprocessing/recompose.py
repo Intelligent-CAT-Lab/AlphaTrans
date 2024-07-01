@@ -8,7 +8,9 @@ def main(args):
     total_fragments = 0
     total_unsuccessful = 0
 
-    for schema in os.listdir(args.translation_dir):
+    translation_dir = f'data/schemas/translations/{args.model_name}/{args.type}/{args.project_name}'
+
+    for schema in os.listdir(translation_dir):
 
         if not schema.endswith('_python_partial.json'):
             continue
@@ -17,7 +19,7 @@ def main(args):
             continue
 
         data = {}
-        with open(f'{args.translation_dir}/{schema}') as f:
+        with open(f'{translation_dir}/{schema}') as f:
             data = json.load(f)
 
         recomposed_file = '\n'.join(data['python_imports'])
@@ -62,32 +64,27 @@ def main(args):
                 field_name = translation[:translation.find(':')].strip()
                 field_value = ''.join(translation.split('=')[1:]).strip()
                 field_val[field_name] = {'value': field_value, 'key': field}
-
-            field_order = []
-            dependent_fields = []
+            
+            field_dependencies = {}
             for field in field_val:
-                found_dependency = False
-                # for token in field_val[field]['value'].split():
-                #     if token in field_val:
-                #         dependent_fields.append(field_val[field]['key'])
-                #         found_dependency = True
-                #         break
-                
+                field_dependencies.setdefault(field, [])
                 for field_ in field_val:
                     if field == field_:
                         continue
                     if field_ in field_val[field]['value']:
-                        dependent_fields.append(field_val[field]['key'])
-                        found_dependency = True
-                        break
-                
-                if found_dependency:
-                    continue
-                field_order.append(field_val[field]['key'])
-            
-            field_order += dependent_fields
+                        field_dependencies[field].append(field_)
+
+            field_order = []
+            while len(field_order) != len(field_val):
+                for field in field_val:
+                    if field in field_order:
+                        continue
+                    if all([x in field_order for x in field_dependencies[field]]):
+                        field_order.append(field)
 
             assert len(field_order) == len(field_val)
+
+            field_order = [field_val[x]['key'] for x in field_order]
 
             intialize_later_fields = []
             for field in field_order:
@@ -99,17 +96,31 @@ def main(args):
                     total_unsuccessful += 1
                     continue
 
-                if type(data['classes'][class_]['fields'][field]['translation']) == str:
-                    recomposed_file += data['classes'][class_]['fields'][field]['translation']
-                    recomposed_file += '\n'
-                    continue
-
-                field_translation = '\n'.join(data['classes'][class_]['fields'][field]['translation'])
+                field_translation = ''
+                for l in data['classes'][class_]['fields'][field]['translation']:
+                    field_translation += l
 
                 found = False
-                for a_class in class_order:
-                    if f'{a_class}(' in field_translation:
-                        intialize_later_fields.append((field, field_translation.split('=')[0].strip(), field_translation.split('=')[1].strip()))
+
+                static_methods = []
+                for method in data['classes'][class_]['methods']:
+                    if 'static' in data['classes'][class_]['methods'][method]['modifiers']:
+                        if 'private' in data['classes'][class_]['methods'][method]['modifiers']:
+                            static_methods.append(f'__{method.split(":")[1]}')
+                        elif 'protected' in data['classes'][class_]['methods'][method]['modifiers']:
+                            static_methods.append(f'_{method.split(":")[1]}')
+                        else:
+                            static_methods.append(method.split(":")[1])
+
+                for method in static_methods:
+                    field_translation = field_translation.replace(f'self.{method}', method)
+                    if f'{method}(' in field_translation.split('=')[1].strip() or \
+                        f'({method}' in field_translation.split('=')[1].strip() or \
+                        f'{method})' in field_translation.split('=')[1].strip() or \
+                        f'{method},' in field_translation.split('=')[1].strip() or \
+                        f',{method}' in field_translation.split('=')[1].strip():
+
+                        intialize_later_fields.append((field, field_translation.split('=')[0].strip(), '='.join(field_translation.split('=')[1:]).strip().replace(f'{method}', f'{class_}.{method}' if f'{class_}.{method}' not in field_translation.split('=')[1].strip() else f'{method}')))
                         recomposed_file += ''.join(data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', f'None')
                         recomposed_file += '\n'
                         found = True
@@ -117,6 +128,22 @@ def main(args):
                 if found:
                     continue
 
+                for a_class in class_order:
+                    if f'{a_class}.' in field_translation.split('=')[1].strip() or \
+                        f'{a_class}(' in field_translation.split('=')[1].strip() or \
+                        f'({a_class}' in field_translation.split('=')[1].strip() or \
+                        f'{a_class})' in field_translation.split('=')[1].strip() or \
+                        f'{a_class},' in field_translation.split('=')[1].strip() or \
+                        f',{a_class}' in field_translation.split('=')[1].strip():
+
+                        intialize_later_fields.append((field, field_translation.split('=')[0].strip(), '='.join(field_translation.split('=')[1:]).strip()))
+                        recomposed_file += ''.join(data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', f'None')
+                        recomposed_file += '\n'
+                        found = True
+                
+                if found:
+                    continue
+                
                 recomposed_file += '\n'.join(data['classes'][class_]['fields'][field]['translation'])
                 recomposed_file += '\n'
             
@@ -128,9 +155,15 @@ def main(args):
                     recomposed_file += '\n'
                 class_initialize_methods.append(f'{class_}.initialize_fields()')
             
+            if 'static_initializers' in data['classes'][class_]:
+                for static_initializer in data['classes'][class_]['static_initializers']:
+                    recomposed_file += '\n'.join(data['classes'][class_]['static_initializers'][static_initializer]['translation'])
+                    recomposed_file += '\n'
+                class_initialize_methods.append(f'{class_}.run_static_init()')
+            
             for method in data['classes'][class_]['methods']:
 
-                if 'Ignore' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
+                if 'Ignore' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']] or 'ParameterizedTest' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
                     recomposed_file += '\n    @pytest.mark.skip(reason="Ignore")\n'
 
                 # if 'Test' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
@@ -159,8 +192,15 @@ def main(args):
         for initialize_method in class_initialize_methods:
             recomposed_file += f'\n\n{initialize_method}'
 
-        import_map = {'urllib': 'import urllib\n', 'sys': 'import sys\n', 'mock': 'import mock\n', 'cmp_to_key': 'from functools import cmp_to_key\n', 'field': 'from dataclasses import field\n',
-                      'random': 'import random\n', 're': 'import re\n', 'locale': 'import locale\n', 'copy': 'import copy\n'}
+        import_map = {'ABC': 'from abc import ABC\n', 'Path': 'import pathlib\n', 'IOBase': 'import io\n', 'StringIO': 'import io\n', 'io': 'import io\n', 'threading': 'import threading\n',
+                      'BytesIO': 'import io\n', 'TextIOWrapper': 'import io\n', 'Number': 'import numbers\n', 'Callable': 'import typing\nfrom typing import *\n', 'enum': 'import enum\n',
+                      'Type': 'import typing\nfrom typing import *\n', 'Any': 'import typing\nfrom typing import *\n', 'Iterator': 'import typing\nfrom typing import *\n', 'decimal': 'import decimal\n',
+                      'Dict': 'import typing\nfrom typing import *\n', 'List': 'import typing\nfrom typing import *\n', 'Union': 'import typing\nfrom typing import *\n', 'datetime': 'import datetime\n', 
+                      'os': 'import os\n', 'pickle': 'import pickle\n', 'itertools': 'import itertools\n', 'sys': 'import sys\n', 'collections': 'import collections\n', 
+                      'unittest.TestCase': 'import unittest\n', 'uuid': 'import uuid\n', 'tempfile': 'import tempfile\n', 'typing': 'import typing\n', 'BytesIO': 'from io import BytesIO\n',
+                      'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n', 'zoneinfo': 'import zoneinfo\n',
+                      'urllib': 'import urllib\n', 'logging': 'import logging\n', 'mock': 'import mock\n', 'cmp_to_key': 'from functools import cmp_to_key\n', 'random': 'import random\n',
+                      're': 'import re\n', 'locale': 'import locale\n', 'copy': 'import copy\n', 'traceback': 'import traceback\n', 'inspect': 'import inspect\n', 'time': 'import time\n',}
 
         python_imports = data['python_imports']
         for key in import_map:
@@ -175,39 +215,48 @@ def main(args):
         for key in exception_map:
             if key in recomposed_file:
                 recomposed_file = recomposed_file.replace(key, exception_map[key])
+        
+        constant_map = {'Byte.SIZE': '8', 'Byte.MAX_VALUE': '127', 'Byte.MIN_VALUE': '-128', 'DateFormat.SHORT': '3'}
+
+        for key in constant_map:
+            if key in recomposed_file:
+                recomposed_file = recomposed_file.replace(key, constant_map[key])
 
         formatted_schema_fname = '.'.join(schema.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
-        os.makedirs(f'{args.output_dir}/{args.model_name}/{args.project_name}/{sub_dir}', exist_ok=True)
-        file_path = f"{args.output_dir}/{args.model_name}/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
-        with open(file_path, 'w') as f:
+        os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}', exist_ok=True)
+        file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
+
+        recomposed_file = recomposed_file.replace('\u0000', '\\u0000')
+
+        with open(file_path, 'w', encoding='utf-8') as f:
             f.write(recomposed_file)
         
         os.system(f'python3 -m black {file_path}')
 
     # add __init__.py files for each subdirectory
-    for schema in os.listdir(args.translation_dir):
+    for schema in os.listdir(translation_dir):
         formatted_schema_fname = '.'.join(schema.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
-        os.makedirs(f'{args.output_dir}/{args.model_name}/{args.project_name}/{sub_dir}', exist_ok=True)
+        os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}', exist_ok=True)
 
         sub_dirs = sub_dir.split('/')
         for i in range(len(sub_dirs)):
             current_sub_dir = '/'.join(sub_dirs[:i+1])
-            with open(f'{args.output_dir}/{args.model_name}/{args.project_name}/{current_sub_dir}/__init__.py', 'w') as f:
+            with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{current_sub_dir}/__init__.py', 'w') as f:
                 f.write('')
 
-        file_path = f"{args.output_dir}/{args.model_name}/{args.project_name}/{sub_dir}/__init__.py"
+        file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}/__init__.py"
         with open(file_path, 'w') as f:
             f.write('')
     
-    with open(f'{args.output_dir}/{args.model_name}/{args.project_name}/pytest.ini', 'w') as f:
-        f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=no --junitxml=pytest-report.xml\n\n# Define directories to look for tests\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*\n')
+    with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/pytest.ini', 'w') as f:
+        f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=native --junitxml=pytest-report.xml\n\n# Define directories to look for tests\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*\n')
     
-    with open(f'{args.output_dir}/{args.model_name}/{args.project_name}/run.sh', 'w') as f:
-        f.write('python3 -m pytest\nxmllint --format pytest-report.xml -o pytest-report.xml')
+    with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/run.sh', 'w') as f:
+        f.write('CURRENT_DIR=$(pwd)\nexport PYTHONPATH=$CURRENT_DIR\npython3 -m pytest\nxmllint --format pytest-report.xml -o pytest-report.xml')
 
-    with open(f'{args.output_dir}/{args.model_name}/{args.project_name}/conftest.py', 'w') as f:
+    with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/conftest.py', 'w') as f:
         f.write("""
 # conftest.py
 import pytest
@@ -235,8 +284,8 @@ if __name__ == '__main__':
     parser_ = argparse.ArgumentParser(description='Translate java types to python types')
     parser_.add_argument('--project_name', type=str, dest='project_name', help='project name to translate')
     parser_.add_argument('--model_name', type=str, dest='model_name', help='model name to translate')
-    parser_.add_argument('--translation_dir', type=str, dest='translation_dir', help='directory to store translations')
     parser_.add_argument('--output_dir', type=str, dest='output_dir', help='directory to store recomposed projects')
+    parser_.add_argument('--type', type=str, dest='type', help='prompting type signature/body')
     parser_.add_argument('--file_name', type=str, dest='file_name', help='file name to recompose')
     args = parser_.parse_args()
     main(args)
