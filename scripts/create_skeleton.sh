@@ -3,7 +3,7 @@
 
 pwd=$(pwd)
 
-for model in 'deepseek-coder-33b-instruct' 'granite-34b-code-instruct';
+for model in 'deepseek-coder-33b-instruct' 'granite-34b-code-instruct' 'llama-3-70b-instruct';
 do
     for type in 'body' 'signature';
     do
