@@ -13,8 +13,11 @@ def l0_validation(generation, fragment):
 
             if fragment == 'field': # remove import lines from generation
                 generation_lines = output.strip().split('\n')
-                if generation_lines[0].strip().startswith('import') or generation_lines[0].strip().startswith('from'):
-                    generation_lines = generation_lines[1:]
+                current_index = 0
+                while generation_lines[current_index].strip().startswith('import') or generation_lines[current_index].strip().startswith('from'):
+                    current_index += 1
+
+                generation_lines = generation_lines[current_index:]
                 output = '\n'.join(generation_lines)
 
             if not output.startswith('    '):
