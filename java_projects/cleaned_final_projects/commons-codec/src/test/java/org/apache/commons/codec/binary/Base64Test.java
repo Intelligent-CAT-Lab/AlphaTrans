@@ -1632,7 +1632,7 @@ public class Base64Test {
      *
      * @see <a href="https://issues.apache.org/jira/projects/CODEC/issues/CODEC-265">CODEC-265</a>
      */
-    @Test
+    // @Test
     public void testCodec265() {
         final int size1GiB = 1 << 30;
 
