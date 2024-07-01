@@ -6,7 +6,7 @@ import keyword
 import re
 import xml.etree.ElementTree as ET
  
-from src.compositional_glue_tests.utils import IMMUTABLES, default_type_value, get_method_parameter_types, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
+from src.compositional_glue_tests.utils import IMMUTABLES, default_type_value, get_method_parameter_types, schema_filter, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
 from src.compositional_glue_tests.constants import *
 
 ERROR = "error"
@@ -100,10 +100,8 @@ class Project:
         os.makedirs(f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/", exist_ok=True)
             
         # process all the schemas to create instrumented python files
-        for schema_file_name in os.listdir(f"{self.schema_dir}/{self.name}"):
-            if (schema_file_name.endswith('_python_partial.json')
-                and '.test.' not in schema_file_name): # leave the test schemas alone
-                          
+        for schema_file_name in os.listdir(f"{self.schema_dir}/{self.name}"):        
+            if schema_filter(schema_file_name):                          
                 schema_file_name_without_ext = ".".join(schema_file_name.split('.')[:-1])
                 
                 with open(f"{self.schema_dir}/{self.name}/{schema_file_name}") as f:
@@ -459,11 +457,8 @@ class CompositionalTest:
         """
         Set up the schemas to process for the project.
         If no schemas are provided, all schemas in the project will be processed.
-        """   
-        self.project_schemas = [file_name for file_name in os.listdir(f'{self.project.schema_dir}/{self.project.name}') if (
-            'src.test' not in file_name # ignore test schemas
-            and file_name.endswith('_python_partial.json') # only consider partial schemas
-        )]
+        """
+        self.project_schemas = filter(schema_filter, os.listdir(f'{self.project.schema_dir}/{self.project.name}'))               
         
         if not schemas_to_process:
             self.schemas_to_process = self.project_schemas
@@ -525,7 +520,10 @@ class CompositionalTest:
                         not data['classes'][_class]['is_interface']
                         and not data['classes'][_class]['is_abstract']
                         and not is_enum
-                        and not '/test/' in data['path']
+                        and (
+                            '/main/' in data['path'] # only consider main classes
+                             or '/test/' in data['path'] and ('Test' not in _class) # or test classes without 'Test' in their name
+                        )
                         and not ('new' in _class or '{' in _class) # skip "anonymous" classes
                         and not Schema.is_class_enclosed_in_method(_class, data) # skip classes enclosed in methods
                 ):
