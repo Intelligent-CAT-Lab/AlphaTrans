@@ -250,42 +250,42 @@ class Project:
         if is_constructor:
             method_content.append("\n".join([
                 f"        idMapPyToJ = JavaHandler.valueToObject(dict(), \"Map\")",
-                f"        " + "        \n".join(translated_args),
+                f"        " + "\n        ".join(translated_args),
                 f"        try:",
                 f"            self.javaObj = {java_call}",
                 f"        except:",
                 f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
                 f"        finally:",
                 f"            self.javaObj.setPythonObject(self)",
-                f"            idMapJToPy = self.javaObj.jToPy()",
-                "            " + "            \n".join(retranslated_args)
+                f"            idMapJToPy = " + ("self.javaObj.jToPy()" if not is_static else "dict()"),
+                "            " + "\n            ".join(retranslated_args)
             ]))
         elif 'void' in method_schema_data['return_types'][0]:
             method_content.append("\n".join([
-                f"        idMapPyToJ = self.javaObj.pyToJ()" if not is_static else "",
-                f"        " + "        \n".join(translated_args),
+                f"        idMapPyToJ = " + ("self.javaObj.pyToJ()" if not is_static else "JavaHandler.valueToObject(dict(), \"Map\")"),
+                f"        " + "\n        ".join(translated_args),
                 f"        try:",
                 f"            {java_call}",
                 f"        except:",
                 f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
                 f"        finally:",
-                f"            idMapJToPy = self.javaObj.jToPy()" if not is_static else "",
-                f"            " + "            \n".join(retranslated_args)
+                f"            idMapJToPy = " + ("self.javaObj.jToPy()" if not is_static else "dict()"),
+                f"            " + "\n            ".join(retranslated_args)
             ]))
         else:
             method_content.append("\n".join([
-                f"        idMapPyToJ = self.javaObj.pyToJ()" if not is_static else "",
-                f"        " + "        \n".join(translated_args),
+                f"        idMapPyToJ = " + ("self.javaObj.pyToJ()" if not is_static else "JavaHandler.valueToObject(dict(), \"Map\")"),
+                f"        " + "\n        ".join(translated_args),
                 f"        try:",
                 f"            val = JavaHandler.mapping({java_call})",
-                f"            idMapJToPy = self.javaObj.jToPy()" if not is_static else "",
-                f"            " + "            \n".join(retranslated_args),
+                f"            idMapJToPy = " + ("self.javaObj.jToPy()" if not is_static else "dict()"),
+                f"            " + "\n            ".join(retranslated_args),
                 f"            return val",
                 f"        except:",
                 f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
                 f"        finally:",
-                f"            idMapJToPy = self.javaObj.jToPy()" if not is_static else "",
-                f"            " + "            \n".join(retranslated_args)
+                f"            idMapJToPy = " + ("self.javaObj.jToPy()" if not is_static else "dict()"),
+                f"            " + "\n            ".join(retranslated_args)
             ]))
 
         method_body = method_declaration + "\n" + "\n".join(method_content)
@@ -851,6 +851,11 @@ class Schema:
         is_static = 'static' in class_declaration
         is_nested = bool(class_schema_data['nested_inside'])
         is_abstract = class_schema_data['is_abstract']
+
+        python_file_dir = self.subpackage.replace('.', '/')
+        python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
+        current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
+        python_file = f'{python_file_dir}/{current_file_name}.py'
         
         # if the class is not public, make it public
         if 'public' not in class_declaration:
@@ -866,36 +871,37 @@ class Schema:
             "name": class_name,
             "declaration": class_declaration,
             "fields": [],
+            # ----- TODO: Possibly do not need uninitialized fields -----
             "unitialized_fields": [],
+            # -----------------------------------------------------------
             "methods": [],
             "pyToJ": SyncMethod(class_name) if not (is_interface) else None,
             "jToPy": SyncMethod(class_name, reverse=True) if not (is_interface) else None,
             "nests": [],
             "is_interface": is_interface,
-            "is_enum": is_enum
+            "is_enum": is_enum,
+            "static_initializer": "",
+            "classref": f"ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\")"
         }
         
         value_fields = [] # fields that are related to graal
         
         # add graal-related members (unless it is an interface)
-        if not (is_interface):
-            python_file_dir = self.subpackage.replace('.', '/')
-            python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
-            current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
-            python_file = f'{python_file_dir}/{current_file_name}.py'
-            
+        if not is_interface:            
             value_fields += [
-                (
-                    f"private static final Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");"
-                    if not (not is_static and is_nested) and not is_enum
-                    else
-                    # compromise for non-static nested classes (which we do not support)
-                    # and also for enums
-                    f"private final Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");"
-                 ),
+                # ------- TODO: Better to not have this ----------
+                # (
+                #     f"private static final Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");"
+                #     if not (not is_static and is_nested) and not is_enum
+                #     else
+                #     # compromise for non-static nested classes (which we do not support)
+                #     # and also for enums
+                #     f"private final Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");"
+                #  ),
+                # ------------------------------------------------
                 
                 # 'transient' so that it is not part of serialization
-                f"private transient Value obj = clz.invokeMember(\"getDefaultInstance\");"
+                f"private transient Value obj = {class_obj['classref']}.invokeMember(\"getDefaultInstance\");"
             ]
             unititialized_fields_body = "".join(class_obj["unitialized_fields"])
 
@@ -944,6 +950,14 @@ class Schema:
                 class_schema_data['methods'][_method], 
                 dont_process = dont_process or _method not in methods_to_process
             )
+
+        # check if the class has a static initializer
+        if "static_initializers" in class_schema_data:
+            static_initializer = "".join([
+                "".join(class_schema_data['static_initializers'][initializer]["body"])
+                for initializer in class_schema_data['static_initializers']
+            ])
+            class_obj["static_initializer"] = static_initializer
 
         # check if this class is nested inside another class
         if class_schema_data['nested_inside']:
@@ -1104,7 +1118,7 @@ class Schema:
             
         # construct call to Python
         if "static" in method_schema_data['modifiers']:
-            caller = "clz"
+            caller = class_obj['classref']
         else:
             caller = "this.obj"
 
@@ -1207,6 +1221,7 @@ class Schema:
                 self.__get_class_body(nested_class) for nested_class in _class['nests']
             ]),
             "".join(_class['fields']),
+            _class['static_initializer'],
             "".join(_class['methods']),
             _class['pyToJ'].get_body() if _class['pyToJ'] else "",
             _class['jToPy'].get_body() if _class['jToPy'] else "",
