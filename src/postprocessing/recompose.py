@@ -98,8 +98,8 @@ def main(args):
 
                 field_translation = ''
                 for l in data['classes'][class_]['fields'][field]['translation']:
-                    field_translation += l
-
+                    field_translation += l[:l.find('#')].replace('\\', '') if '#' in l else l.replace('\\', '')
+                
                 found = False
 
                 static_methods = []
@@ -129,12 +129,13 @@ def main(args):
                     continue
 
                 for a_class in class_order:
-                    if f'{a_class}.' in field_translation.split('=')[1].strip() or \
-                        f'{a_class}(' in field_translation.split('=')[1].strip() or \
-                        f'({a_class}' in field_translation.split('=')[1].strip() or \
-                        f'{a_class})' in field_translation.split('=')[1].strip() or \
-                        f'{a_class},' in field_translation.split('=')[1].strip() or \
-                        f',{a_class}' in field_translation.split('=')[1].strip():
+                    if f'{a_class}.' in field_translation or \
+                        f'{a_class}(' in field_translation or \
+                        f'({a_class}' in field_translation or \
+                        f'{a_class})' in field_translation or \
+                        f'{a_class},' in field_translation or \
+                        f',{a_class}' in field_translation or \
+                        f'{a_class}' in field_translation:
 
                         intialize_later_fields.append((field, field_translation.split('=')[0].strip(), '='.join(field_translation.split('=')[1:]).strip()))
                         recomposed_file += ''.join(data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', f'None')
@@ -144,6 +145,9 @@ def main(args):
                 if found:
                     continue
                 
+                if '='.join(field_translation.split('=')[1:]).strip() == 'self':
+                    continue
+
                 recomposed_file += '\n'.join(data['classes'][class_]['fields'][field]['translation'])
                 recomposed_file += '\n'
             
@@ -200,7 +204,8 @@ def main(args):
                       'unittest.TestCase': 'import unittest\n', 'uuid': 'import uuid\n', 'tempfile': 'import tempfile\n', 'typing': 'import typing\n', 'BytesIO': 'from io import BytesIO\n',
                       'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n', 'zoneinfo': 'import zoneinfo\n',
                       'urllib': 'import urllib\n', 'logging': 'import logging\n', 'mock': 'import mock\n', 'cmp_to_key': 'from functools import cmp_to_key\n', 'random': 'import random\n',
-                      're': 'import re\n', 'locale': 'import locale\n', 'copy': 'import copy\n', 'traceback': 'import traceback\n', 'inspect': 'import inspect\n', 'time': 'import time\n',}
+                      're': 'import re\n', 'locale': 'import locale\n', 'copy': 'import copy\n', 'traceback': 'import traceback\n', 'inspect': 'import inspect\n', 'time': 'import time\n',
+                      'sqrt': 'from math import *\n', 'math': 'import math\n'}
 
         python_imports = data['python_imports']
         for key in import_map:
@@ -210,7 +215,7 @@ def main(args):
         
         exception_map = {'IllegalArgumentException': 'ValueError', 'RuntimeException': 'RuntimeError', 'UnsupportedOperationException': 'NotImplementedError',
                          'CloneNotSupportedError': 'NotImplementedError', 'IllegalStateException': 'RuntimeError', 'UnsupportedEncodingException': 'ValueError',
-                         'UnsupportedEncodingError': 'ValueError'}
+                         'UnsupportedEncodingError': 'ValueError', 'NullPointerException': 'RuntimeError', 'NoSuchElementException': 'RuntimeError',}
         
         for key in exception_map:
             if key in recomposed_file:
