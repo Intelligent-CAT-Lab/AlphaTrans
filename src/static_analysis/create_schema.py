@@ -6,11 +6,13 @@ import argparse
 def create_schema(args):
     project = args.project_name
     projects_dir = 'java_projects/cleaned_final_projects/'
-    # projects_dir = 'temp_dir/'
+    # projects_dir = 'java_projects/cleaned_final_projects_evosuite/'
+    query_outputs_dir = 'data/query_outputs'
+    # query_outputs_dir = 'data/query_outputs-evosuite'
     os.makedirs(f'data/schemas/{project}', exist_ok=True)
     schemas = {}
 
-    imports_query_out = f'data/query_outputs/{project}/{project}_imports.txt'
+    imports_query_out = f'{query_outputs_dir}/{project}/{project}_imports.txt'
     lines = []
     with open(imports_query_out, 'r') as f:
         lines = f.readlines()
@@ -38,7 +40,7 @@ def create_schema(args):
                                                                                        "end": end_line,
                                                                                        "body": import_body,})
 
-    callables_query_out = f'data/query_outputs/{project}/{project}_class_callables.txt'
+    callables_query_out = f'{query_outputs_dir}/{project}/{project}_class_callables.txt'
     lines = []
     with open(callables_query_out, 'r') as f:
         lines = f.readlines()
@@ -179,7 +181,7 @@ def create_schema(args):
                 annotation_body = annotation_body[annotation_start_col:annotation_end_col]
             schemas[path]["classes"][class_name]["methods"][pos_callable_name]["annotations"].append(annotation_body)
 
-    interfaces_query_out = f'data/query_outputs/{project}/{project}_interfaces.txt'
+    interfaces_query_out = f'{query_outputs_dir}/{project}/{project}_interfaces.txt'
     lines = []
     with open(interfaces_query_out, 'r') as f:
         lines = f.readlines()
@@ -310,7 +312,7 @@ def create_schema(args):
         for class_ in schemas[path]["classes"].keys():
             schemas[path]["classes"][class_].setdefault("fields", {})
 
-    fields_query_out = f'data/query_outputs/{project}/{project}_fields.txt'
+    fields_query_out = f'{query_outputs_dir}/{project}/{project}_fields.txt'
     lines = []
     with open(fields_query_out, 'r') as f:
         lines = f.readlines()
@@ -350,7 +352,7 @@ def create_schema(args):
         if modifier not in schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"] and modifier != 'null':
             schemas[path]["classes"][class_name]["fields"][f'{start_line}-{end_line}:{field_name}']["modifiers"].append(modifier)
 
-    classes_query_out = f'data/query_outputs/{project}/{project}_superclasses.txt'
+    classes_query_out = f'{query_outputs_dir}/{project}/{project}_superclasses.txt'
     lines = []
     with open(classes_query_out, 'r') as f:
         lines = f.readlines()
@@ -379,7 +381,7 @@ def create_schema(args):
         elif 'implements' in class_declaration:
             schemas[path]["classes"][class_name]["implements"].append(parent_class)
 
-    static_initializers_query_out = f'data/query_outputs/{project}/{project}_static_initializers.txt'
+    static_initializers_query_out = f'{query_outputs_dir}/{project}/{project}_static_initializers.txt'
     lines = []
     with open(static_initializers_query_out, 'r') as f:
         lines = f.readlines()
@@ -403,7 +405,7 @@ def create_schema(args):
                                                                                                                             "end": end_line,
                                                                                                                             "body": static_initializer_body})
 
-    nested_classes_query_out = f'data/query_outputs/{project}/{project}_nested_classes.txt'
+    nested_classes_query_out = f'{query_outputs_dir}/{project}/{project}_nested_classes.txt'
     lines = []
     with open(nested_classes_query_out, 'r') as f:
         lines = f.readlines()
@@ -418,7 +420,7 @@ def create_schema(args):
         schemas[path]["classes"][class_name]["nested_inside"] = nested_inside
         schemas[path]["classes"][nested_inside]["nests"].append(class_name)
 
-    parameters = f'data/query_outputs/{project}/{project}_parameters.txt'
+    parameters = f'{query_outputs_dir}/{project}/{project}_parameters.txt'
     lines = []
     with open(parameters, 'r') as f:
         lines = f.readlines()
@@ -487,6 +489,8 @@ def create_schema(args):
 
     for k,v in schemas.items():
         key = k[k.find(project):].replace('/', '.')
+        # if not key.endswith('ESTest.java'):
+        #     continue
         key = key.replace('.java', '')
         with open(f'data/schemas/{project}/{key}.json', 'w') as f:
             json.dump(v, f, indent=4)

@@ -24,8 +24,10 @@ def split_with_nested_commas(s):
 
 def get_dependency_path(dependent_class, project_name):
     if os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'):
+    # if os.path.exists(f'java_projects/cleaned_final_projects_evosuite/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'):
         return f'src.main.{dependent_class}'
     elif os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'):
+    # elif os.path.exists(f'java_projects/cleaned_final_projects_evosuite/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'):
         return f'src.test.{dependent_class}'
     else:
         return f'src.main.{dependent_class}'
@@ -54,6 +56,8 @@ def get_dependency_cycle(dependencies):
     class_path = {}
     for key, value in dependencies.items():
         for pair in value:
+            # if pair[0] == '':
+            #     continue
             adjacency_list[key].append(pair[0])
             class_path[pair[0]] = pair[1]
 
@@ -112,8 +116,11 @@ def main(args):
 
     schemas = os.listdir(f'data/schemas/{args.project_name}')
 
+    dependencies_dir = 'data/dependencies'
+    # dependencies_dir = 'data/dependencies-evosuite'
+
     dependencies = {}
-    with open(f'data/dependencies/{args.project_name}/dependencies.json', 'r') as f:
+    with open(f'{dependencies_dir}/{args.project_name}/dependencies.json', 'r') as f:
         dependencies = json.load(f)
 
     dependent_files, class_path = get_dependency_cycle(dependencies)
@@ -123,6 +130,9 @@ def main(args):
 
         if 'python_partial' in schema_fname:
             continue
+
+        # if not schema_fname.endswith('ESTest.json'):
+        #     continue
 
         schema_path = f'data/schemas/{args.project_name}/{schema_fname}'
         
