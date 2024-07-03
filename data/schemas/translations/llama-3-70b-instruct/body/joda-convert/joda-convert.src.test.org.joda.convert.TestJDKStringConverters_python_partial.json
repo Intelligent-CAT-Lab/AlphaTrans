@@ -226,13 +226,26 @@
                         "    def test_Enum_withRename(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Enum_withRename(self) -> None:",
+                        "         test: TypedStringConverter[Status] = StringConvert.create().findTypedConverter(Status)",
+                        "         self.assertEqual(\"VALID\", test.convertToString(Status.VALID))",
+                        "         self.assertEqual(\"INVALID\", test.convertToString(Status.INVALID))",
+                        "         self.assertEqual(Status.VALID, test.convertFromString(Status, \"VALID\"))",
+                        "         self.assertEqual(Status.INVALID, test.convertFromString(Status, \"INVALID\"))",
+                        "         with self.assertRaises(RuntimeError):",
+                        "             test.convertFromString(Status, \"OK\")",
+                        "         RenameHandler.INSTANCE.renamedEnum(\"OK\", Status.VALID)",
+                        "         self.assertEqual(Status.VALID, test.convertFromString(Status, \"OK\"))",
+                        "         self.assertEqual(Status.VALID, test.convertFromString(Status, \"VALID\"))",
+                        "         self.assertEqual(Status.INVALID, test.convertFromString(Status, \"INVALID\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.764021635055542,
+                    "generation_timestamp": "2024-07-02T00:08:35.629426",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -277,13 +290,18 @@
                         "    def test_Enum_invalidConstant(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Enum_invalidConstant(self) -> None:",
+                        "         test: TypedStringConverter[RoundingMode] = StringConvert.create().findTypedConverter(RoundingMode)",
+                        "         with self.assertRaises(RuntimeError):",
+                        "             test.convertFromString(RoundingMode, \"RUBBISH\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.4391281604766846,
+                    "generation_timestamp": "2024-07-02T00:08:39.080503",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -330,13 +348,19 @@
                         "    def test_Enum(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Enum(self) -> None:",
+                        "         test: TypedStringConverter[RoundingMode] = StringConvert.create().findTypedConverter(RoundingMode)",
+                        "         self.assertEqual(RoundingMode, test.getEffectiveType())",
+                        "         self.assertEqual(\"CEILING\", test.convertToString(RoundingMode.CEILING))",
+                        "         self.assertEqual(RoundingMode.CEILING, test.convertFromString(RoundingMode, \"CEILING\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.332187175750732,
+                    "generation_timestamp": "2024-07-02T00:08:44.428295",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -410,7 +434,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -449,7 +473,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -486,13 +510,17 @@
                         "    def test_Calendar_invalidLength(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Calendar_invalidLength(self) -> None:",
+                        "         with self.assertRaises(RuntimeError):",
+                        "            JDKStringConverter.CALENDAR.convertFromString(GregorianCalendar, \"2010-09-03\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1508259773254395,
+                    "generation_timestamp": "2024-07-02T00:10:04.648906",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -539,13 +567,25 @@
                         "    def test_Calendar(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Calendar(self) -> None:",
+                        "         test = JDKStringConverter.CALENDAR",
+                        "         cal = GregorianCalendar(TimeZone.getTimeZone(\"Europe/Paris\"))",
+                        "         cal.set(2010, 9 - 1, 3, 12, 34, 5)",
+                        "         cal.set(Calendar.MILLISECOND, 0)",
+                        "         self.doTest0(test, Calendar, cal, \"2010-09-03T12:34:05.000+02:00[Europe/Paris]\")",
+                        "",
+                        "         cal2 = GregorianCalendar(TimeZone.getTimeZone(\"Europe/Paris\"))",
+                        "         cal2.set(2011, 1 - 1, 4, 12, 34, 5)",
+                        "         cal2.set(Calendar.MILLISECOND, 0)",
+                        "         self.doTest0(test, Calendar, cal2, \"2011-01-04T12:34:05.000+01:00[Europe/Paris]\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 16.288162231445312,
+                    "generation_timestamp": "2024-07-02T00:14:37.881761",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -577,13 +617,17 @@
                         "    def test_Date_invalidFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Date_invalidFormat(self) -> None:",
+                        "         with self.assertRaises(RuntimeError):",
+                        "            JDKStringConverter.DATE.convertFromString(Date, \"2010-09-03XXX:34:05.000+02:00\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.6650922298431396,
+                    "generation_timestamp": "2024-07-02T00:10:07.323572",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -615,13 +659,17 @@
                         "    def test_Date_invalidLength(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Date_invalidLength(self) -> None:",
+                        "         with self.assertRaises(RuntimeError):",
+                        "             JDKStringConverter.DATE.convertFromString(Date, \"2010-09-03\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9654710292816162,
+                    "generation_timestamp": "2024-07-02T00:10:09.297185",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -676,13 +724,31 @@
                         "    def test_Date(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Date(self) -> None:",
+                        "         zone: TimeZone = TimeZone.getDefault()",
+                        "         try:",
+                        "             TimeZone.setDefault(TimeZone.getTimeZone(\"Europe/Paris\"))",
+                        "             test: JDKStringConverter = JDKStringConverter.DATE",
+                        "             self.doTest0(",
+                        "                 test,",
+                        "                 Date,",
+                        "                 Date(2010 - 1900, 9 - 1, 3, 12, 34, 5),",
+                        "                 \"2010-09-03T12:34:05.000+02:00\")",
+                        "             self.doTest0(",
+                        "                 test,",
+                        "                 Date,",
+                        "                 Date(2011 - 1900, 1 - 1, 4, 12, 34, 5),",
+                        "                 \"2011-01-04T12:34:05.000+01:00\")",
+                        "         finally:",
+                        "             TimeZone.setDefault(zone)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 13.09797215461731,
+                    "generation_timestamp": "2024-07-02T00:14:50.987484",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -722,13 +788,18 @@
                         "    def test_File(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_File(self) -> None:",
+                        "         test = JDKStringConverter.FILE",
+                        "         file = File(\"/path/to/file\")",
+                        "         self.doTest0(test, File, file, file.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.168294906616211,
+                    "generation_timestamp": "2024-07-02T00:14:54.165609",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -783,13 +854,28 @@
                         "    def test_InetAddress(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_InetAddress(self) -> None:",
+                        "         test: JDKStringConverter = JDKStringConverter.INET_ADDRESS",
+                        "         self.doTest0(test, InetAddress, InetAddress.getByName(\"1.2.3.4\"), \"1.2.3.4\")",
+                        "",
+                        "         obj: InetAddress = InetAddress.getByName(\"2001:0db8:85a3:0000:0000:8a2e:0370:7334\")",
+                        "         str: str = test.convertToString(obj)",
+                        "         self.assertTrue(",
+                        "                 str.equals(\"2001:db8:85a3:0:0:8a2e:370:7334\")",
+                        "                         or str.equals(\"2001:db8:85a3::8a2e:370:7334\"))",
+                        "         self.assertEqual(obj, test.convertFromString(InetAddress, str))",
+                        "         self.assertEqual(",
+                        "                 obj, test.convertFromString(InetAddress, \"2001:db8:85a3:0:0:8a2e:370:7334\"))",
+                        "         self.assertEqual(",
+                        "                 obj, test.convertFromString(InetAddress, \"2001:db8:85a3::8a2e:370:7334\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 18.52081823348999,
+                    "generation_timestamp": "2024-07-02T00:15:12.696398",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -835,13 +921,24 @@
                         "    def test_URI(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_URI(self) -> None:",
+                        "         test = JDKStringConverter.URI",
+                        "         self.doTest0(",
+                        "                test,",
+                        "                URI,",
+                        "                URI.create(\"http://localhost:8080/my/test\"),",
+                        "                \"http://localhost:8080/my/test\")",
+                        "         self.doTest0(test, URI, URI.create(\"/my/test\"), \"/my/test\")",
+                        "         self.doTest0(test, URI, URI.create(\"/my/../test\"), \"/my/../test\")",
+                        "         self.doTest0(test, URI, URI.create(\"urn:hello\"), \"urn:hello\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.180938005447388,
+                    "generation_timestamp": "2024-07-02T00:15:20.887523",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -874,7 +971,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -923,13 +1020,18 @@
                         "    def test_URL(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_URL(self) -> None:",
+                        "         test = JDKStringConverter.URL",
+                        "         self.doTest0(test, URL, URL(\"http://localhost:8080/my/test\"), \"http://localhost:8080/my/test\")",
+                        "         self.doTest0(test, URL, URL(None, \"ftp:world\"), \"ftp:world\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.24637508392334,
+                    "generation_timestamp": "2024-07-02T00:15:26.144316",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -969,13 +1071,18 @@
                         "    def test_UUID(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_UUID(self) -> None:",
+                        "         test = JDKStringConverter.UUID",
+                        "         uuid = UUID.randomUUID()",
+                        "         self.doTest0(test, UUID, uuid, uuid.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.620295286178589,
+                    "generation_timestamp": "2024-07-02T00:15:28.774203",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1015,13 +1122,18 @@
                         "    def test_TimeZone(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_TimeZone(self) -> None:",
+                        "         test = JDKStringConverter.TIME_ZONE",
+                        "         self.doTest0(test, TimeZone, TimeZone.getTimeZone(\"Europe/London\"), \"Europe/London\")",
+                        "         self.doTest0(test, TimeZone, TimeZone.getTimeZone(\"America/New_York\"), \"America/New_York\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.216421127319336,
+                    "generation_timestamp": "2024-07-02T00:15:34.000727",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1061,13 +1173,18 @@
                         "    def test_Currency(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Currency(self) -> None:",
+                        "         test = JDKStringConverter.CURRENCY",
+                        "         self.doTest0(test, Currency, Currency.getInstance(\"GBP\"), \"GBP\")",
+                        "         self.doTest0(test, Currency, Currency.getInstance(\"USD\"), \"USD\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.4676198959350586,
+                    "generation_timestamp": "2024-07-02T00:15:37.477367",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1108,7 +1225,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -1160,7 +1277,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -1197,13 +1314,17 @@
                         "    def test_Class_fail(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Class_fail(self) -> None:",
+                        "         with self.assertRaises(RuntimeError):",
+                        "            JDKStringConverter.CLASS.convertFromString(Class, \"RUBBISH\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.8417079448699951,
+                    "generation_timestamp": "2024-07-02T00:10:49.957567",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1245,7 +1366,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -1297,13 +1418,25 @@
                         "    def test_Class_primitive(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Class_primitive(self) -> None:",
+                        "         test = JDKStringConverter.CLASS",
+                        "         self.doTest0(test, Class, byte, \"byte\")",
+                        "         self.doTest0(test, Class, short, \"short\")",
+                        "         self.doTest0(test, Class, int, \"int\")",
+                        "         self.doTest0(test, Class, long, \"long\")",
+                        "         self.doTest0(test, Class, float, \"float\")",
+                        "         self.doTest0(test, Class, double, \"double\")",
+                        "         self.doTest0(test, Class, boolean, \"boolean\")",
+                        "         self.doTest0(test, Class, char, \"char\")",
+                        "         self.doTest0(test, Class, void, \"void\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.720843076705933,
+                    "generation_timestamp": "2024-07-02T00:16:33.796015",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1343,13 +1476,18 @@
                         "    def test_Class(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Class(self) -> None:",
+                        "         test = JDKStringConverter.CLASS",
+                        "         self.doTest0(test, Class, Locale, \"java.util.Locale\")",
+                        "         self.doTest0(test, Class, FromString, \"org.joda.convert.FromString\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.640105962753296,
+                    "generation_timestamp": "2024-07-02T00:16:37.446873",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1390,13 +1528,19 @@
                         "    def test_Locale(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Locale(self) -> None:",
+                        "         test = JDKStringConverter.LOCALE",
+                        "         self.doTest0(test, Locale, Locale(\"en\"), \"en\")",
+                        "         self.doTest0(test, Locale, Locale(\"en\", \"GB\"), \"en_GB\")",
+                        "         self.doTest0(test, Locale, Locale(\"en\", \"GB\", \"VARIANT_B\"), \"en_GB_VARIANT_B\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.294633865356445,
+                    "generation_timestamp": "2024-07-02T00:16:42.751500",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1429,7 +1573,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -1482,13 +1626,21 @@
                         "    def test_AtomicBoolean_false(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_AtomicBoolean_false(self) -> None:",
+                        "         test: JDKStringConverter = JDKStringConverter.ATOMIC_BOOLEAN",
+                        "         obj: AtomicBoolean = AtomicBoolean(False)",
+                        "         self.assertEqual(AtomicBoolean, test.getType())",
+                        "         self.assertEqual(\"false\", test.convertToString(obj))",
+                        "         back: AtomicBoolean = test.convertFromString(AtomicBoolean, \"false\")",
+                        "         self.assertEqual(False, back.get())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.484841823577881,
+                    "generation_timestamp": "2024-07-02T00:11:08.184191",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1536,13 +1688,21 @@
                         "    def test_AtomicBoolean_true(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_AtomicBoolean_true(self) -> None:",
+                        "         test: JDKStringConverter = JDKStringConverter.ATOMIC_BOOLEAN",
+                        "         obj: AtomicBoolean = AtomicBoolean(True)",
+                        "         self.assertEqual(AtomicBoolean, test.getType())",
+                        "         self.assertEqual(\"true\", test.convertToString(obj))",
+                        "         back: AtomicBoolean = test.convertFromString(AtomicBoolean, \"true\")",
+                        "         self.assertEqual(True, back.get())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.3247668743133545,
+                    "generation_timestamp": "2024-07-02T00:11:13.520534",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1590,13 +1750,21 @@
                         "    def test_AtomicInteger(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_AtomicInteger(self) -> None:",
+                        "         test: JDKStringConverter = JDKStringConverter.ATOMIC_INTEGER",
+                        "         obj: AtomicInteger = AtomicInteger(12)",
+                        "         self.assertEqual(AtomicInteger, test.getType())",
+                        "         self.assertEqual(\"12\", test.convertToString(obj))",
+                        "         back: AtomicInteger = test.convertFromString(AtomicInteger, \"12\")",
+                        "         self.assertEqual(12, back.get())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.746233940124512,
+                    "generation_timestamp": "2024-07-02T00:11:19.277409",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1644,13 +1812,21 @@
                         "    def test_AtomicLong(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_AtomicLong(self) -> None:",
+                        "         test: JDKStringConverter = JDKStringConverter.ATOMIC_LONG",
+                        "         obj: AtomicLong = AtomicLong(12)",
+                        "         self.assertEqual(AtomicLong, test.getType())",
+                        "         self.assertEqual(\"12\", test.convertToString(obj))",
+                        "         back: AtomicLong = test.convertFromString(AtomicLong, \"12\")",
+                        "         self.assertEqual(12, back.get())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.365185022354126,
+                    "generation_timestamp": "2024-07-02T00:11:24.649449",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1689,13 +1865,17 @@
                         "    def test_BigDecimal(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_BigDecimal(self) -> None:",
+                        "         test = JDKStringConverter.BIG_DECIMAL",
+                        "         self.doTest0(test, BigDecimal, BigDecimal.valueOf(12.23), \"12.23\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.019217014312744,
+                    "generation_timestamp": "2024-07-02T00:16:45.777084",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1735,7 +1915,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -1779,13 +1959,17 @@
                         "    def test_Float(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Float(self) -> None:",
+                        "         test = JDKStringConverter.FLOAT",
+                        "         self.doTest0(test, Float, Float(12.2), \"12.2\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.6361637115478516,
+                    "generation_timestamp": "2024-07-02T00:17:00.656519",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1824,13 +2008,17 @@
                         "    def test_Double(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Double(self) -> None:",
+                        "         test = JDKStringConverter.DOUBLE",
+                        "         self.doTest0(test, Double, Double(12.4), \"12.4\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.903635025024414,
+                    "generation_timestamp": "2024-07-02T00:17:03.568980",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1863,7 +2051,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -1908,13 +2096,18 @@
                         "    def test_Boolean(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Boolean(self) -> None:",
+                        "         test: JDKStringConverter = JDKStringConverter.BOOLEAN",
+                        "         self.doTest0(test, Boolean, Boolean.TRUE, \"true\")",
+                        "         self.doTest0(test, Boolean, Boolean.FALSE, \"false\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.564113140106201,
+                    "generation_timestamp": "2024-07-02T00:17:07.142172",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1963,7 +2156,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -2017,7 +2210,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -2071,7 +2264,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -2125,7 +2318,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -2169,13 +2362,17 @@
                         "    def test_Byte(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Byte(self) -> None:",
+                        "         test = JDKStringConverter.BYTE",
+                        "         self.doTest0(test, Byte, Byte(12), \"12\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.9173591136932373,
+                    "generation_timestamp": "2024-07-02T00:17:11.068818",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2224,7 +2421,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -2262,7 +2459,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -2307,13 +2504,18 @@
                         "    def test_Character(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Character(self) -> None:",
+                        "         test = JDKStringConverter.CHARACTER",
+                        "         self.doTest0(test, Character, Character('a'), \"a\")",
+                        "         self.doTest0(test, Character, Character('z'), \"z\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.102465867996216,
+                    "generation_timestamp": "2024-07-02T00:17:14.181810",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2353,7 +2555,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -2397,13 +2599,17 @@
                         "    def test_Int(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Int(self) -> None:",
+                        "         test = JDKStringConverter.INTEGER",
+                        "         self.doTest0(test, Integer, Integer(12), \"12\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.113454818725586,
+                    "generation_timestamp": "2024-07-02T00:17:28.964821",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2442,13 +2648,17 @@
                         "    def test_Long(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_Long(self) -> None:",
+                        "         test = JDKStringConverter.LONG",
+                        "         self.doTest0(test, Long, Long(12), \"12\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.053222894668579,
+                    "generation_timestamp": "2024-07-02T00:17:31.027468",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2494,13 +2704,19 @@
                         "    def test_CharSequence(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_CharSequence(self) -> None:",
+                        "         test = JDKStringConverter.CHAR_SEQUENCE",
+                        "         self.doTest0(test, CharSequence, \"Hello\", \"Hello\")",
+                        "         self.doTest1(test, CharSequence, StringBuffer(\"Hello\"), \"Hello\", \"Hello\")",
+                        "         self.doTest1(test, CharSequence, StringBuilder(\"Hello\"), \"Hello\", \"Hello\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.71765398979187,
+                    "generation_timestamp": "2024-07-02T00:17:35.748422",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2548,13 +2764,21 @@
                         "    def test_StringBuilder(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_StringBuilder(self) -> None:",
+                        "         test: JDKStringConverter = JDKStringConverter.STRING_BUILDER",
+                        "         obj: typing.Any = StringBuilder(\"Hello\")",
+                        "         self.assertEqual(StringBuilder, test.getType())",
+                        "         self.assertEqual(\"Hello\", test.convertToString(obj))",
+                        "         back: StringBuilder = test.convertFromString(StringBuilder, \"Hello\")",
+                        "         self.assertEqual(\"Hello\", back.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.730294942855835,
+                    "generation_timestamp": "2024-07-02T00:14:10.016869",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2602,13 +2826,21 @@
                         "    def test_StringBuffer(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_StringBuffer(self) -> None:",
+                        "         test: JDKStringConverter = JDKStringConverter.STRING_BUFFER",
+                        "         obj: typing.Any = StringBuffer(\"Hello\")",
+                        "         self.assertEqual(StringBuffer, test.getType())",
+                        "         self.assertEqual(\"Hello\", test.convertToString(obj))",
+                        "         back: StringBuffer = test.convertFromString(StringBuffer, \"Hello\")",
+                        "         self.assertEqual(\"Hello\", back.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.14301323890686,
+                    "generation_timestamp": "2024-07-02T00:14:16.164969",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2647,13 +2879,17 @@
                         "    def test_String(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_String(self) -> None:",
+                        "         test = JDKStringConverter.STRING",
+                        "         self.doTest0(test, String, \"Hello\", \"Hello\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.038163900375366,
+                    "generation_timestamp": "2024-07-02T00:17:37.796383",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2703,13 +2939,18 @@
                         "    def doTest1(self, test: JDKStringConverter, cls: typing.Type[typing.Any], obj: typing.Any, str: str, objFromStr: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def doTest1(self, test: JDKStringConverter, cls: typing.Type[typing.Any], obj: typing.Any, str: str, objFromStr: typing.Any) -> None:",
+                        "         self.assertEqual(cls, test.getType())",
+                        "         self.assertEqual(str, test.convertToString(obj))",
+                        "         self.assertEqual(objFromStr, test.convertFromString(cls, str))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.2825748920440674,
+                    "generation_timestamp": "2024-07-02T00:14:19.458050",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2750,13 +2991,16 @@
                         "    def doTest0(self, test: JDKStringConverter, cls: typing.Type[typing.Any], obj: typing.Any, str: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def doTest0(self, test: JDKStringConverter, cls: typing.Type[typing.Any], obj: typing.Any, str: str) -> None:",
+                        "         self.doTest1(test, cls, obj, str, obj)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.115485906600952,
+                    "generation_timestamp": "2024-07-02T00:14:21.584025",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

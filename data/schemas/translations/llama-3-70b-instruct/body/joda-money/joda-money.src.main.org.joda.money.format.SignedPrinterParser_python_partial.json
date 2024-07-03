@@ -72,13 +72,16 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return \"PositiveZeroNegative(\" + self.__whenPositive + \",\" + self.__whenZero + \",\" + self.__whenNegative + \")\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.402785062789917,
+                    "generation_timestamp": "2024-07-02T01:03:00.472297",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -191,13 +194,39 @@
                         "    def parse(self, context: MoneyParseContext) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parse(self, context: MoneyParseContext) -> None:",
+                        "         positiveContext = context.createChild()",
+                        "         self.__whenPositive.getPrinterParser().parse(positiveContext)",
+                        "         zeroContext = context.createChild()",
+                        "         self.__whenZero.getPrinterParser().parse(zeroContext)",
+                        "         negativeContext = context.createChild()",
+                        "         self.__whenNegative.getPrinterParser().parse(negativeContext)",
+                        "         best = None",
+                        "         if not positiveContext.isError():",
+                        "             best = positiveContext",
+                        "         if not zeroContext.isError():",
+                        "             if best is None or zeroContext.getIndex() > best.getIndex():",
+                        "                 best = zeroContext",
+                        "         if not negativeContext.isError():",
+                        "             if best is None or negativeContext.getIndex() > best.getIndex():",
+                        "                 best = negativeContext",
+                        "         if best is None:",
+                        "             context.setError()",
+                        "         else:",
+                        "             context.mergeChild(best)",
+                        "             if best == zeroContext:",
+                        "                 if context.getAmount() is None or context.getAmount().compareTo(BigDecimal.ZERO) != 0:",
+                        "                     context.setAmount(BigDecimal.ZERO)",
+                        "             elif best == negativeContext and context.getAmount().compareTo(BigDecimal.ZERO) > 0:",
+                        "                 context.setAmount(context.getAmount().negate())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 14.630666017532349,
+                    "generation_timestamp": "2024-07-02T01:03:15.114405",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -257,13 +286,17 @@
                         "    def print(self, context: MoneyPrintContext, appendable: typing.Union[typing.List, io.TextIOBase], money: BigMoney) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def print(self, context: MoneyPrintContext, appendable: typing.Union[typing.List, io.TextIOBase], money: BigMoney) -> None:",
+                        "         fmt = money.isZero() and self.__whenZero or money.isPositive() and self.__whenPositive or self.__whenNegative",
+                        "         fmt.getPrinterParser().print(context, appendable, money)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.6782538890838623,
+                    "generation_timestamp": "2024-07-02T01:03:18.804515",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -298,13 +331,18 @@
                         "    def __init__(self, whenPositive: MoneyFormatter, whenZero: MoneyFormatter, whenNegative: MoneyFormatter) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, whenPositive: MoneyFormatter, whenZero: MoneyFormatter, whenNegative: MoneyFormatter) -> None:",
+                        "         self.__whenPositive = whenPositive",
+                        "         self.__whenZero = whenZero",
+                        "         self.__whenNegative = whenNegative"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.038707971572876,
+                    "generation_timestamp": "2024-07-02T01:03:20.847005",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -330,13 +368,16 @@
                         "    __whenNegative: MoneyFormatter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __whenNegative: MoneyFormatter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:50:08.915381",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -360,13 +401,16 @@
                         "    __whenZero: MoneyFormatter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __whenZero: MoneyFormatter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:50:08.916703",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -390,13 +434,16 @@
                         "    __whenPositive: MoneyFormatter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __whenPositive: MoneyFormatter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:50:08.917942",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -421,13 +468,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2225830554962158,
+                    "generation_timestamp": "2024-07-02T00:50:10.141759",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

@@ -111,13 +111,16 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return str(self.__predecessors)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6066319942474365,
+                    "generation_timestamp": "2024-07-01T22:31:19.928391",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -147,13 +150,16 @@
                         "    def isEmpty(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isEmpty(self) -> bool:",
+                        "         return self.__predecessors.isEmpty()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.022284984588623,
+                    "generation_timestamp": "2024-07-01T22:31:20.955114",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -185,13 +191,16 @@
                         "    def hasWeight(self, vertex: typing.Any) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def hasWeight(self, vertex: typing.Any) -> bool:",
+                        "         return self.__predecessors.containsKey(vertex)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2602407932281494,
+                    "generation_timestamp": "2024-07-01T22:31:22.220217",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -233,13 +242,21 @@
                         "    def getWeight(self, vertex: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getWeight(self, vertex: typing.Any) -> typing.Any:",
+                        "         if self.__source == vertex:",
+                        "             return self.__weightOperations.identity()",
+                        "         edge = self.__predecessors.get(vertex)",
+                        "         if edge is None:",
+                        "             return None",
+                        "         return self.__weightedEdges.map(edge)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.361195087432861,
+                    "generation_timestamp": "2024-07-01T22:31:26.587596",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -290,13 +307,29 @@
                         "    def createSpanningTree(self) -> SpanningTree[typing.Any, typing.Any, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def createSpanningTree(self) -> SpanningTree[typing.Any, typing.Any, typing.Any]:",
+                        "         spanningTree: MutableSpanningTree[typing.Any, typing.Any, typing.Any] = MutableSpanningTree[typing.Any, typing.Any, typing.Any](self.__weightOperations, self.__weightedEdges)",
+                        "",
+                        "         for edge in self.__predecessors.values():",
+                        "             vertices: VertexPair[typing.Any] = self.__graph.getVertices1(edge)",
+                        "",
+                        "             head: typing.Any = vertices.getHead()",
+                        "             tail: typing.Any = vertices.getTail()",
+                        "",
+                        "             self.__addEdgeIgnoringExceptions(head, spanningTree)",
+                        "             self.__addEdgeIgnoringExceptions(tail, spanningTree)",
+                        "",
+                        "             spanningTree.addEdge(head, self.__graph.getEdge(head, tail), tail)",
+                        "",
+                        "         return spanningTree"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 13.499164819717407,
+                    "generation_timestamp": "2024-07-01T22:32:02.817350",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -347,13 +380,22 @@
                         "    def compare(self, left: typing.Any, right: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def compare(self, left: typing.Any, right: typing.Any) -> int:",
+                        "         if not self.hasWeight(left) and not self.hasWeight(right):",
+                        "             return 0",
+                        "         elif not self.hasWeight(left):",
+                        "             return 1",
+                        "         elif not self.hasWeight(right):",
+                        "             return -1",
+                        "         return self.__weightOperations.compare(self.getWeight(left), self.getWeight(right))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.932122230529785,
+                    "generation_timestamp": "2024-07-01T22:31:32.525770",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -386,13 +428,16 @@
                         "    def addPredecessor(self, tail: typing.Any, head: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def addPredecessor(self, tail: typing.Any, head: typing.Any) -> None:",
+                        "         self.__predecessors[tail] = head"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3958110809326172,
+                    "generation_timestamp": "2024-07-01T22:31:33.924165",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -434,13 +479,19 @@
                         "    def __init__(self, graph: Graph[typing.Any, typing.Any], source: typing.Any, weightOperations: OrderedMonoid[typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, graph: Graph[typing.Any, typing.Any], source: typing.Any, weightOperations: OrderedMonoid[typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:",
+                        "         self.__source = source",
+                        "         self.__graph = graph",
+                        "         self.__weightOperations = weightOperations",
+                        "         self.__weightedEdges = weightedEdges"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.6692099571228027,
+                    "generation_timestamp": "2024-07-01T22:31:37.596916",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -480,7 +531,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -511,13 +562,16 @@
                         "    __source: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __source: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:19:04.425537",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -541,13 +595,16 @@
                         "    __graph: Graph[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:19:04.426580",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -571,13 +628,16 @@
                         "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:19:04.427534",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -601,13 +661,16 @@
                         "    __weightOperations: OrderedMonoid[typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __weightOperations: OrderedMonoid[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:19:04.428519",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -631,13 +694,16 @@
                         "    __predecessors: typing.Dict[typing.Any, typing.Any] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __predecessors: typing.Dict[typing.Any, typing.Any] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:19:04.429597",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

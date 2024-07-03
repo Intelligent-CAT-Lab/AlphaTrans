@@ -137,13 +137,19 @@
                         "    def _registerCurrencies(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _registerCurrencies(self) -> None:",
+                        "         self.__parseCurrencies(self.__loadFromFile(\"/org/joda/money/CurrencyData.csv\"))",
+                        "         self.__parseCountries(self.__loadFromFile(\"/org/joda/money/CountryData.csv\"))",
+                        "         self.__parseCurrencies(self.__loadFromFiles(\"META-INF/org/joda/money/CurrencyDataExtension.csv\"))",
+                        "         self.__parseCountries(self.__loadFromFiles(\"META-INF/org/joda/money/CountryDataExtension.csv\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.563906669616699,
+                    "generation_timestamp": "2024-07-02T02:49:57.560161",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -188,13 +194,21 @@
                         "    def __parseCountries(self, content: typing.List[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __parseCountries(self, content: typing.List[str]) -> None:",
+                        "         for line in content:",
+                        "            matcher = self.__COUNTRY_REGEX_LINE.matcher(line)",
+                        "            if matcher.matches():",
+                        "                countryCode = matcher.group(1)",
+                        "                currencyCode = matcher.group(2)",
+                        "                self._registerCountry(countryCode, currencyCode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.579878807067871,
+                    "generation_timestamp": "2024-07-02T02:49:37.781831",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -240,13 +254,22 @@
                         "    def __parseCurrencies(self, content: typing.List[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __parseCurrencies(self, content: typing.List[str]) -> None:",
+                        "         for line in content:",
+                        "            matcher = self.__CURRENCY_REGEX_LINE.match(line)",
+                        "            if matcher:",
+                        "                currencyCode = matcher.group(1)",
+                        "                numericCode = int(matcher.group(2))",
+                        "                digits = int(matcher.group(3))",
+                        "                self._registerCurrency(currencyCode, numericCode, digits)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.326032876968384,
+                    "generation_timestamp": "2024-07-02T02:49:42.114498",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -292,13 +315,25 @@
                         "    def __loadFromFiles(self, fileName: str) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __loadFromFiles(self, fileName: str) -> typing.List[str]:",
+                        "         content: typing.List[str] = []",
+                        "         en = self.__class__.get_class_loader().get_resources(fileName)",
+                        "         while en.has_more_elements():",
+                        "             url = en.next_element()",
+                        "             with url.open_stream() as in_:",
+                        "                 with io.BufferedReader(io.InputStreamReader(in_, \"UTF-8\")) as reader:",
+                        "                     line: str",
+                        "                     while (line := reader.read_line()) is not None:",
+                        "                         content.append(line)",
+                        "         return content"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.214834928512573,
+                    "generation_timestamp": "2024-07-02T02:49:48.331496",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -342,13 +377,18 @@
                         "    def __loadFromFile(self, fileName: str) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __loadFromFile(self, fileName: str) -> typing.List[str]:",
+                        "         with io.open(fileName, \"r\", encoding=\"UTF-8\") as f:",
+                        "            content = f.readlines()",
+                        "            return content"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.6569089889526367,
+                    "generation_timestamp": "2024-07-02T02:49:50.992321",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -376,13 +416,15 @@
                         "    __COUNTRY_REGEX_LINE: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __COUNTRY_REGEX_LINE: re.Pattern = re.compile(\"([A-Z]{2}),([A-Z]{3}) *(#.*)?\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.626181125640869,
+                    "generation_timestamp": "2024-07-02T00:55:33.694186",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -408,13 +450,15 @@
                         "    __CURRENCY_REGEX_LINE: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __CURRENCY_REGEX_LINE: re.Pattern = re.compile(\"([A-Z]{3}),(-1|[0-9]{1,3}),(-1|[0-9]|[1-2][0-9]|30) *(#.*)?\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.3616719245910645,
+                    "generation_timestamp": "2024-07-02T00:55:38.059447",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

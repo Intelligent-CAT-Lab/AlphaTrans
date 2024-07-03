@@ -121,13 +121,28 @@
                         "    def testUsageTracking(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testUsageTracking(self) -> None:",
+                        "         obj = self.__pool.borrowObject(self.__KEY1)",
+                        "         assert obj is not None",
+                        "",
+                        "         obj.setData(self.__DATA1)",
+                        "",
+                        "         time.sleep(self.__ABANDONED_TIMEOUT_SECS.total_seconds() + 2)",
+                        "",
+                        "         self.__pool.borrowObject(self.__KEY1)",
+                        "",
+                        "         logOutput = self.__log.getvalue()",
+                        "",
+                        "         assert \"Pooled object created\" in logOutput",
+                        "         assert \"The last code to use this object was\" in logOutput"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.422787189483643,
+                    "generation_timestamp": "2024-07-01T23:21:06.580302",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -160,13 +175,18 @@
                         "    def testPassThroughMethods02(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testPassThroughMethods02(self) -> None:",
+                        "         self.__pool.close()",
+                        "         with pytest.raises(IllegalStateException):",
+                        "             self.__pool.addObject(self.__KEY1)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.247731924057007,
+                    "generation_timestamp": "2024-07-01T23:21:08.831870",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -209,13 +229,27 @@
                         "    def testPassThroughMethods01(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testPassThroughMethods01(self) -> None:",
+                        "         self.assertEqual(0, self.__pool.getNumActive0())",
+                        "         self.assertEqual(0, self.__pool.getNumIdle0())",
+                        "",
+                        "         self.__pool.addObject(self.__KEY1)",
+                        "",
+                        "         self.assertEqual(0, self.__pool.getNumActive0())",
+                        "         self.assertEqual(1, self.__pool.getNumIdle0())",
+                        "",
+                        "         self.__pool.clear0()",
+                        "",
+                        "         self.assertEqual(0, self.__pool.getNumActive0())",
+                        "         self.assertEqual(0, self.__pool.getNumIdle0())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.628417015075684,
+                    "generation_timestamp": "2024-07-01T23:21:16.465609",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -264,13 +298,22 @@
                         "    def testBorrowObject(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testBorrowObject(self) -> None:",
+                        "         obj = self.__pool.borrowObject(self.__KEY1)",
+                        "         self.assertIsNotNone(obj)",
+                        "",
+                        "         obj.setData(self.__DATA1)",
+                        "         self.assertEqual(self.__DATA1, obj.getData())",
+                        "",
+                        "         self.__pool.returnObject(self.__KEY1, obj)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.750523805618286,
+                    "generation_timestamp": "2024-07-01T23:21:21.223220",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -322,13 +365,26 @@
                         "    def testAccessAfterReturn(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testAccessAfterReturn(self) -> None:",
+                        "         obj = self.__pool.borrowObject(self.__KEY1)",
+                        "         self.assertIsNotNone(obj)",
+                        "",
+                        "         obj.setData(self.__DATA1)",
+                        "         self.assertEqual(self.__DATA1, obj.getData())",
+                        "",
+                        "         self.__pool.returnObject(self.__KEY1, obj)",
+                        "",
+                        "         self.assertIsNotNone(obj)",
+                        "         with self.assertRaises(IllegalStateException):",
+                        "             obj.getData()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.445730209350586,
+                    "generation_timestamp": "2024-07-01T23:21:27.674982",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -381,13 +437,27 @@
                         "    def testAccessAfterInvalidate(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testAccessAfterInvalidate(self) -> None:",
+                        "         obj = self.__pool.borrowObject(self.__KEY1)",
+                        "         self.assertIsNotNone(obj)",
+                        "",
+                        "         obj.setData(self.__DATA1)",
+                        "         self.assertEqual(self.__DATA1, obj.getData())",
+                        "",
+                        "         self.__pool.invalidateObject0(self.__KEY1, obj)",
+                        "",
+                        "         self.assertIsNotNone(obj)",
+                        "",
+                        "         with self.assertRaises(IllegalStateException):",
+                        "             obj.getData()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.056165933609009,
+                    "generation_timestamp": "2024-07-01T23:21:33.736738",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -416,13 +486,16 @@
                         "    def _getproxySource(self) -> ProxySource[TestObject]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _getproxySource(self) -> ProxySource[TestObject]:",
+                        "         return ProxySource(TestObjectImpl)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0625669956207275,
+                    "generation_timestamp": "2024-07-01T23:21:34.803251",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -447,13 +520,16 @@
                         "    __log: io.StringIO = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __log: io.StringIO = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:24:19.527251",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -476,13 +552,16 @@
                         "    __pool: KeyedObjectPool[str, TestObject] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __pool: KeyedObjectPool[str, TestObject] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:24:19.528677",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -507,13 +586,15 @@
                         "    __ABANDONED_TIMEOUT_SECS: datetime.timedelta = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ABANDONED_TIMEOUT_SECS: datetime.timedelta = datetime.timedelta(seconds=3)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6889429092407227,
+                    "generation_timestamp": "2024-07-02T08:05:07.073515",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -538,13 +619,15 @@
                         "    __DATA1: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __DATA1: str = \"data1\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1655709743499756,
+                    "generation_timestamp": "2024-07-02T08:05:08.243048",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -569,13 +652,15 @@
                         "    __KEY1: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __KEY1: str = \"key1\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3244409561157227,
+                    "generation_timestamp": "2024-07-02T08:05:09.571606",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -624,13 +709,16 @@
                         "    def setData(self, data: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setData(self, data: str) -> None:",
+                        "         self.__data = data"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0212311744689941,
+                    "generation_timestamp": "2024-07-01T23:20:57.876331",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -662,13 +750,16 @@
                         "    def getData(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getData(self) -> str:",
+                        "         return self.__data"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.269366979598999,
+                    "generation_timestamp": "2024-07-01T23:20:59.149990",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -693,13 +784,16 @@
                         "    __data: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __data: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:24:24.727363",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -755,13 +849,16 @@
                         "    def setData(self, data: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setData(self, data: str) -> None:",
+                        "         self.data = data"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0894389152526855,
+                    "generation_timestamp": "2024-07-01T23:20:56.157772",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -790,13 +887,16 @@
                         "    def getData(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getData(self) -> str:",
+                        "         return \"test\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6888818740844727,
+                    "generation_timestamp": "2024-07-01T23:20:56.851110",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

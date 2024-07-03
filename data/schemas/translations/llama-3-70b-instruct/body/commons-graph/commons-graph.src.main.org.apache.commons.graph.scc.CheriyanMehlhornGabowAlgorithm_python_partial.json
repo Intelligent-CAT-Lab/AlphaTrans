@@ -121,13 +121,30 @@
                         "    def perform(self) -> typing.Set[typing.Set[typing.Any]]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def perform(self) -> typing.Set[typing.Set[typing.Any]]:",
+                        "         for vertex in self.__graph.getVertices0():",
+                        "             if vertex not in self.__marked:",
+                        "                 self.__dfs(vertex)",
+                        "",
+                        "         indexedSccComponents = []",
+                        "         for i in range(self.__sscCounter):",
+                        "             indexedSccComponents.append(set())",
+                        "",
+                        "         for w in self.__graph.getVertices0():",
+                        "             component = indexedSccComponents[self.__sscId.get(w)]",
+                        "             component.add(w)",
+                        "",
+                        "         scc = set()",
+                        "         scc.update(indexedSccComponents)",
+                        "         return scc"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.036780834197998,
+                    "generation_timestamp": "2024-07-02T04:25:53.928457",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -159,13 +176,18 @@
                         "    def __init__(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:",
+                        "         self.__p = []",
+                        "         self.__s = []",
+                        "         self.__graph = graph"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5930969715118408,
+                    "generation_timestamp": "2024-07-02T04:25:37.585992",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -225,13 +247,35 @@
                         "    def __dfs(self, vertex: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __dfs(self, vertex: typing.Any) -> None:",
+                        "         self.__marked.add(vertex)",
+                        "         self.__preorder[vertex] = self.__preorderCounter",
+                        "         self.__preorderCounter += 1",
+                        "         self.__s.append(vertex)",
+                        "         self.__p.append(vertex)",
+                        "         for w in self.__graph.getConnectedVertices(vertex):",
+                        "             if w not in self.__marked:",
+                        "                 self.__dfs(w)",
+                        "             elif self.__sscId.get(w) is None:",
+                        "                 while self.__preorder[self.__p[-1]] > self.__preorder[w]:",
+                        "                     self.__p.pop()",
+                        "         if self.__p[-1] == vertex:",
+                        "             self.__p.pop()",
+                        "             w = None",
+                        "             while True:",
+                        "                 w = self.__s.pop()",
+                        "                 self.__sscId[w] = self.__sscCounter",
+                        "                 if vertex == w:",
+                        "                     break",
+                        "             self.__sscCounter += 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.297346115112305,
+                    "generation_timestamp": "2024-07-02T04:25:47.887537",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -256,13 +300,15 @@
                         "    __sscCounter: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __sscCounter: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6344561576843262,
+                    "generation_timestamp": "2024-07-02T08:02:17.880614",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -285,13 +331,15 @@
                         "    __preorderCounter: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __preorderCounter: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9241859912872314,
+                    "generation_timestamp": "2024-07-02T08:02:19.808680",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -315,13 +363,15 @@
                         "    __p: typing.List[typing.Any] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __p: typing.List[typing.Any] = []"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9415290355682373,
+                    "generation_timestamp": "2024-07-02T08:02:21.753077",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -345,13 +395,15 @@
                         "    __s: typing.List[typing.Any] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __s: typing.List[typing.Any] = []"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.725724220275879,
+                    "generation_timestamp": "2024-07-02T08:02:23.482653",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -375,13 +427,16 @@
                         "    __sscId: typing.Dict[typing.Any, int] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __sscId: typing.Dict[typing.Any, int] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T02:00:52.827304",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -405,13 +460,16 @@
                         "    __preorder: typing.Dict[typing.Any, int] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __preorder: typing.Dict[typing.Any, int] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T02:00:52.828802",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -435,13 +493,15 @@
                         "    __marked: typing.Set[typing.Any] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __marked: typing.Set[typing.Any] = set()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7840149402618408,
+                    "generation_timestamp": "2024-07-02T08:02:25.268773",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -465,13 +525,16 @@
                         "    __graph: DirectedGraph[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __graph: DirectedGraph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T02:00:54.518482",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

@@ -54,13 +54,21 @@
                         "    def getInputStream(name: str) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInputStream(name: str) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:",
+                        "         inputStream = typing.cast(typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], ",
+                        "                                   Resources.__class__.__loader__.get_data(name))",
+                        "         if inputStream is None:",
+                        "             raise ValueError(f\"Unable to resolve required resource: {name}\")",
+                        "         return inputStream"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.660001993179321,
+                    "generation_timestamp": "2024-07-02T18:50:51.994274",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

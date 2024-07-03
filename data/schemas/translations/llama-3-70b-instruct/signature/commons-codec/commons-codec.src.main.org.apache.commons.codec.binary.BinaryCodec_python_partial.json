@@ -81,13 +81,18 @@
                         "    def toByteArray(self, ascii: str) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toByteArray(self, ascii: str) -> typing.List[int]:",
+                        "         if ascii is None:",
+                        "             return self.__EMPTY_BYTE_ARRAY",
+                        "         return self.fromAscii1(list(ascii))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.3109660148620605,
+                    "generation_timestamp": "2024-07-02T03:33:09.655781",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -133,13 +138,18 @@
                         "    def encode1(self, raw: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode1(self, raw: typing.Any) -> typing.Any:",
+                        "         if not isinstance(raw, list):",
+                        "             raise EncoderException(\"argument not a byte array\", None)",
+                        "         return self.toAsciiChars(raw)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1724932193756104,
+                    "generation_timestamp": "2024-07-02T03:33:46.608386",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -177,13 +187,16 @@
                         "    def encode0(self, raw: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode0(self, raw: typing.List[int]) -> typing.List[int]:",
+                        "         return self.toAsciiBytes(raw)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8637187480926514,
+                    "generation_timestamp": "2024-07-02T03:33:47.476987",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -244,7 +257,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -287,13 +300,16 @@
                         "    def decode0(self, ascii: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def decode0(self, ascii: typing.List[int]) -> typing.List[int]:",
+                        "         return self.fromAscii0(ascii)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0212359428405762,
+                    "generation_timestamp": "2024-07-02T03:34:16.356987",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -333,13 +349,17 @@
                         "    def toAsciiString(raw: typing.List[int]) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def toAsciiString(raw: typing.List[int]) -> str:",
+                        "         return \"\".join([chr(x) for x in raw])"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4256336688995361,
+                    "generation_timestamp": "2024-07-02T03:34:17.788980",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -397,13 +417,29 @@
                         "    def toAsciiChars(raw: typing.List[int]) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def toAsciiChars(raw: typing.List[int]) -> typing.List[str]:",
+                        "         if BinaryCodec.__isEmpty(raw):",
+                        "             return BinaryCodec.__EMPTY_CHAR_ARRAY",
+                        "         rawLength: int = len(raw)",
+                        "         l_ascii: typing.List[str] = [''] * (rawLength << 3)",
+                        "         jj: int = len(l_ascii) - 1",
+                        "         for ii in range(0, rawLength):",
+                        "             for bits in range(0, len(BinaryCodec.__BITS)):",
+                        "                 if (raw[ii] & BinaryCodec.__BITS[bits]) == 0:",
+                        "                     l_ascii[jj - bits] = '0'",
+                        "                 else:",
+                        "                     l_ascii[jj - bits] = '1'",
+                        "             jj -= 8",
+                        "         return l_ascii"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.192355155944824,
+                    "generation_timestamp": "2024-07-02T03:33:20.020289",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -461,13 +497,28 @@
                         "    def toAsciiBytes(raw: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def toAsciiBytes(raw: typing.List[int]) -> typing.List[int]:",
+                        "         if BinaryCodec.__isEmpty(raw):",
+                        "             return BinaryCodec.__EMPTY_BYTE_ARRAY",
+                        "         rawLength: int = len(raw)",
+                        "         l_ascii: typing.List[int] = [0] * (rawLength << 3)",
+                        "         for ii in range(0, rawLength):",
+                        "             jj: int = l_ascii.length - 1 - (ii << 3)",
+                        "             for bits in range(0, len(BinaryCodec.__BITS)):",
+                        "                 if (raw[ii] & BinaryCodec.__BITS[bits]) == 0:",
+                        "                     l_ascii[jj - bits] = ord('0')",
+                        "                 else:",
+                        "                     l_ascii[jj - bits] = ord('1')",
+                        "         return l_ascii"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.166844129562378,
+                    "generation_timestamp": "2024-07-02T03:33:29.191720",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -517,13 +568,26 @@
                         "    def fromAscii1(ascii: typing.List[str]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def fromAscii1(ascii: typing.List[str]) -> typing.List[int]:",
+                        "         if ascii is None or len(ascii) == 0:",
+                        "             return BinaryCodec.__EMPTY_BYTE_ARRAY",
+                        "         asciiLength = len(ascii)",
+                        "         l_raw = [0] * (asciiLength >> 3)",
+                        "         for ii in range(0, len(l_raw)):",
+                        "             jj = asciiLength - 1 - ii * 8",
+                        "             for bits in range(0, len(BinaryCodec.__BITS)):",
+                        "                 if ascii[jj - bits] == '1':",
+                        "                     l_raw[ii] |= BinaryCodec.__BITS[bits]",
+                        "         return l_raw"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.274889945983887,
+                    "generation_timestamp": "2024-07-02T03:33:07.338376",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -579,13 +643,26 @@
                         "    def fromAscii0(ascii: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def fromAscii0(ascii: typing.List[int]) -> typing.List[int]:",
+                        "         if BinaryCodec.__isEmpty(ascii):",
+                        "             return BinaryCodec.__EMPTY_BYTE_ARRAY",
+                        "         asciiLength = len(ascii)",
+                        "         l_raw = [0] * (asciiLength >> 3)",
+                        "         for ii in range(0, l_raw.length):",
+                        "             jj = asciiLength - 1 - ii * 8",
+                        "             for bits in range(0, len(BinaryCodec.__BITS)):",
+                        "                 if ascii[jj - bits] == '1':",
+                        "                     l_raw[ii] |= BinaryCodec.__BITS[bits]",
+                        "         return l_raw"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.4483020305633545,
+                    "generation_timestamp": "2024-07-02T03:33:36.646569",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -619,13 +696,17 @@
                         "    def __isEmpty(array: typing.List[int]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __isEmpty(array: typing.List[int]) -> bool:",
+                        "         return array is None or len(array) == 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1607410907745361,
+                    "generation_timestamp": "2024-07-02T03:33:10.822026",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -652,13 +733,15 @@
                         "    __BITS: typing.List[int] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __BITS: typing.List[int] = [__BIT_0, __BIT_1, __BIT_2, __BIT_3, __BIT_4, __BIT_5, __BIT_6, __BIT_7]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.004515647888184,
+                    "generation_timestamp": "2024-07-01T23:52:44.144736",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -683,13 +766,15 @@
                         "    __BIT_7: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __BIT_7: int = 0x80"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6123969554901123,
+                    "generation_timestamp": "2024-07-01T23:52:45.763129",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -714,13 +799,15 @@
                         "    __BIT_6: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __BIT_6: int = 0x40"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6204249858856201,
+                    "generation_timestamp": "2024-07-01T23:52:47.389123",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -745,13 +832,15 @@
                         "    __BIT_5: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __BIT_5: int = 0x20"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7546532154083252,
+                    "generation_timestamp": "2024-07-01T23:52:49.150578",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -776,13 +865,15 @@
                         "    __BIT_4: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __BIT_4: int = 0x10"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6163849830627441,
+                    "generation_timestamp": "2024-07-01T23:52:50.768591",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -807,13 +898,15 @@
                         "    __BIT_3: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __BIT_3: int = 0x08"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4497809410095215,
+                    "generation_timestamp": "2024-07-01T23:52:52.222814",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -838,13 +931,15 @@
                         "    __BIT_2: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __BIT_2: int = 0x04"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4543359279632568,
+                    "generation_timestamp": "2024-07-01T23:52:53.681194",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -869,13 +964,15 @@
                         "    __BIT_1: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __BIT_1: int = 0x02"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.877824068069458,
+                    "generation_timestamp": "2024-07-01T23:52:55.564487",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -900,13 +997,15 @@
                         "    __BIT_0: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __BIT_0: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9165990352630615,
+                    "generation_timestamp": "2024-07-01T23:52:57.486192",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -931,13 +1030,15 @@
                         "    __EMPTY_BYTE_ARRAY: typing.List[int] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EMPTY_BYTE_ARRAY: typing.List[int] = []"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5707383155822754,
+                    "generation_timestamp": "2024-07-01T23:52:59.062024",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -962,13 +1063,15 @@
                         "    __EMPTY_CHAR_ARRAY: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EMPTY_CHAR_ARRAY: typing.List[str] = []"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2707030773162842,
+                    "generation_timestamp": "2024-07-01T23:53:00.338115",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

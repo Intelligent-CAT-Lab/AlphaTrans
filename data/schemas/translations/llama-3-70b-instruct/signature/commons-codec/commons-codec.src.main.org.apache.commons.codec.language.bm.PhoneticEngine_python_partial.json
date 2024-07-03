@@ -159,13 +159,23 @@
                         "    def makeString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def makeString(self) -> str:",
+                        "         sb = StringBuilder()",
+                        "",
+                        "         for ph in self.phonemes:",
+                        "             if len(sb) > 0:",
+                        "                 sb.append(\"|\")",
+                        "             sb.append(ph.getPhonemeText())",
+                        "",
+                        "         return sb.toString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.1672959327697754,
+                    "generation_timestamp": "2024-07-02T01:09:11.674953",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -195,13 +205,16 @@
                         "    def getPhonemes(self) -> typing.Set[Phoneme]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getPhonemes(self) -> typing.Set[Phoneme]:",
+                        "         return self.__phonemes"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7941310405731201,
+                    "generation_timestamp": "2024-07-02T01:09:12.475213",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -280,13 +293,27 @@
                         "    def apply(self, phonemeExpr: PhonemeExpr, maxPhonemes: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def apply(self, phonemeExpr: PhonemeExpr, maxPhonemes: int) -> None:",
+                        "         newPhonemes: typing.Set[Phoneme] = set()",
+                        "         for left in self.__phonemes:",
+                        "             for right in phonemeExpr.getPhonemes():",
+                        "                 languages: LanguageSet = left.getLanguages().restrictTo(right.getLanguages())",
+                        "                 if not languages.isEmpty():",
+                        "                     join: Phoneme = Phoneme.Phoneme1(left, right, languages)",
+                        "                     if len(newPhonemes) < maxPhonemes:",
+                        "                         newPhonemes.add(join)",
+                        "                         if len(newPhonemes) >= maxPhonemes:",
+                        "                             break",
+                        "         self.__phonemes.clear()",
+                        "         self.__phonemes.update(newPhonemes)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.32393193244934,
+                    "generation_timestamp": "2024-07-02T01:09:21.811496",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -326,13 +353,17 @@
                         "    def append(self, str: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def append(self, str: str) -> None:",
+                        "         for ph in self.__phonemes:",
+                        "            ph.append(str)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.557459831237793,
+                    "generation_timestamp": "2024-07-02T01:09:23.377097",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -372,13 +403,20 @@
                         "    def __init__(self, constructorId: int, phonemes: typing.Set[Phoneme], phoneme: Phoneme) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, phonemes: typing.Set[Phoneme], phoneme: Phoneme) -> None:",
+                        "         if constructorId == 0:",
+                        "             self.__phonemes = phonemes",
+                        "         else:",
+                        "             self.__phonemes = set()",
+                        "             self.__phonemes.add(phoneme)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.6848719120025635,
+                    "generation_timestamp": "2024-07-02T01:09:26.068352",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -423,13 +461,17 @@
                         "    def empty(languages: LanguageSet) -> PhonemeBuilder:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def empty(languages: LanguageSet) -> PhonemeBuilder:",
+                        "         return PhonemeBuilder(3, None, Phoneme(2, \"\", languages, None))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6169929504394531,
+                    "generation_timestamp": "2024-07-02T01:09:27.692862",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -455,13 +497,16 @@
                         "    __phonemes: typing.Set[Phoneme] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __phonemes: typing.Set[Phoneme] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:28.771644",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -507,13 +552,16 @@
                         "    def getMaxPhonemes(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getMaxPhonemes(self) -> int:",
+                        "         return self.__maxPhonemes"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1200077533721924,
+                    "generation_timestamp": "2024-07-02T01:10:00.620951",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -543,13 +591,16 @@
                         "    def isConcat(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isConcat(self) -> bool:",
+                        "         return self.__concat"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4302599430084229,
+                    "generation_timestamp": "2024-07-02T01:10:02.058895",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -579,13 +630,16 @@
                         "    def getRuleType(self) -> RuleType:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getRuleType(self) -> RuleType:",
+                        "         return self.__ruleType"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8322842121124268,
+                    "generation_timestamp": "2024-07-02T01:10:02.897169",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -615,13 +669,16 @@
                         "    def getNameType(self) -> NameType:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getNameType(self) -> NameType:",
+                        "         return self.__nameType"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9930529594421387,
+                    "generation_timestamp": "2024-07-02T01:10:03.897870",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -651,13 +708,16 @@
                         "    def getLang(self) -> Lang:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getLang(self) -> Lang:",
+                        "         return self.__lang"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8118031024932861,
+                    "generation_timestamp": "2024-07-02T01:10:04.716202",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -818,13 +878,71 @@
                         "    def encode1(self, input: str, languageSet: LanguageSet) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode1(self, input: str, languageSet: LanguageSet) -> str:",
+                        "         rules = Rule.getInstanceMap0(self.nameType, RuleType.RULES, languageSet)",
+                        "         finalRules1 = Rule.getInstanceMap1(self.nameType, self.ruleType, \"common\")",
+                        "         finalRules2 = Rule.getInstanceMap0(self.nameType, self.ruleType, languageSet)",
+                        "",
+                        "         input = input.lower().replace('-', ' ').strip()",
+                        "",
+                        "         if self.nameType == NameType.GENERIC:",
+                        "             if len(input) >= 2 and input[0:2] == \"d'\":  # check for d'",
+                        "                 remainder = input[2:]",
+                        "                 combined = \"d\" + remainder",
+                        "                 return \"(\" + self.encode0(remainder) + \")-(\" + self.encode0(combined) + \")\"",
+                        "             for l in PhoneticEngine.NAME_PREFIXES[self.nameType]:",
+                        "                 if input.startswith(l + \" \"):",
+                        "                     remainder = input[len(l) + 1:]  # input without the prefix",
+                        "                     combined = l + remainder  # input with prefix without space",
+                        "                     return \"(\" + self.encode0(remainder) + \")-(\" + self.encode0(combined) + \")\"",
+                        "",
+                        "         words = input.split(\"\\\\s+\")",
+                        "         words2 = []",
+                        "",
+                        "         if self.nameType == NameType.SEPHARDIC:",
+                        "             for aWord in words:",
+                        "                 parts = aWord.split(\"'\")",
+                        "                 lastPart = parts[len(parts) - 1]",
+                        "                 words2.append(lastPart)",
+                        "             words2 = [x for x in words2 if x not in PhoneticEngine.NAME_PREFIXES[self.nameType]]",
+                        "         elif self.nameType == NameType.ASHKENAZI:",
+                        "             words2 = words",
+                        "             words2 = [x for x in words2 if x not in PhoneticEngine.NAME_PREFIXES[self.nameType]]",
+                        "         elif self.nameType == NameType.GENERIC:",
+                        "             words2 = words",
+                        "         else:",
+                        "             raise Exception(\"Unreachable case: \" + self.nameType)",
+                        "",
+                        "         if self.concat:",
+                        "             input = self.__join(words2, \" \")",
+                        "         elif len(words2) == 1:",
+                        "             input = words[0]",
+                        "         else:",
+                        "             result = \"\"",
+                        "             for word in words2:",
+                        "                 result += \"-\" + self.encode0(word)",
+                        "             return result[1:]",
+                        "",
+                        "         phonemeBuilder = PhonemeBuilder.empty(languageSet)",
+                        "",
+                        "         i = 0",
+                        "         while i < len(input):",
+                        "             rulesApplication = RulesApplication(finalRules, input, phonemeBuilder, i, self.maxPhonemes).invoke()",
+                        "             i = rulesApplication.getI()",
+                        "             phonemeBuilder = rulesApplication.getPhonemeBuilder()",
+                        "",
+                        "         phonemeBuilder = self.__applyFinalRules(phonemeBuilder, finalRules1)",
+                        "         phonemeBuilder = self.__applyFinalRules(phonemeBuilder, finalRules2)",
+                        "",
+                        "         return phonemeBuilder.makeString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 31.805573225021362,
+                    "generation_timestamp": "2024-07-02T06:19:52.596066",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -868,13 +986,17 @@
                         "    def encode0(self, input: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode0(self, input: str) -> str:",
+                        "         languageSet: LanguageSet = self.lang.guessLanguages(input)",
+                        "         return self.encode1(input, languageSet)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.8562569618225098,
+                    "generation_timestamp": "2024-07-02T06:19:54.460307",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -926,13 +1048,22 @@
                         "    def __init__(self, nameType: NameType, ruleType: RuleType, concat: bool, maxPhonemes: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, nameType: NameType, ruleType: RuleType, concat: bool, maxPhonemes: int) -> None:",
+                        "         if ruleType == RuleType.RULES:",
+                        "             raise IllegalArgumentException(\"ruleType must not be \" + RuleType.RULES)",
+                        "         self.__nameType = nameType",
+                        "         self.__ruleType = ruleType",
+                        "         self.__concat = concat",
+                        "         self.__lang = Lang.instance(nameType)",
+                        "         self.__maxPhonemes = maxPhonemes"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.013949394226074,
+                    "generation_timestamp": "2024-07-02T01:10:09.737682",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -975,13 +1106,17 @@
                         "    def PhoneticEngine0(nameType: NameType, ruleType: RuleType, concat: bool) -> PhoneticEngine:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def PhoneticEngine0(nameType: NameType, ruleType: RuleType, concat: bool) -> PhoneticEngine:",
+                        "         return PhoneticEngine(nameType, ruleType, concat, DEFAULT_MAX_PHONEMES)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.655155897140503,
+                    "generation_timestamp": "2024-07-02T01:10:11.400913",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1113,13 +1248,39 @@
                         "    def __applyFinalRules(self, phonemeBuilder: PhonemeBuilder, finalRules: typing.Dict[str, typing.List[Rule]]) -> PhonemeBuilder:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __applyFinalRules(self, phonemeBuilder: PhonemeBuilder, finalRules: typing.Dict[str, typing.List[Rule]]) -> PhonemeBuilder:",
+                        "         if finalRules is None:",
+                        "             raise TypeError(\"finalRules\")",
+                        "         if not finalRules:",
+                        "             return phonemeBuilder",
+                        "         phonemes: typing.Dict[Phoneme, Phoneme] = {}",
+                        "         for phoneme in phonemeBuilder.getPhonemes():",
+                        "             subBuilder = PhonemeBuilder.empty(phoneme.getLanguages())",
+                        "             phonemeText = phoneme.getPhonemeText()",
+                        "             i = 0",
+                        "             while i < len(phonemeText):",
+                        "                 rulesApplication = RulesApplication(finalRules, phonemeText, subBuilder, i, self.__maxPhonemes).invoke()",
+                        "                 found = rulesApplication.isFound()",
+                        "                 subBuilder = rulesApplication.getPhonemeBuilder()",
+                        "                 if not found:",
+                        "                     subBuilder.append(phonemeText[i])",
+                        "                 i = rulesApplication.getI()",
+                        "             for newPhoneme in subBuilder.getPhonemes():",
+                        "                 if newPhoneme in phonemes:",
+                        "                     oldPhoneme = phonemes[newPhoneme]",
+                        "                     mergedPhoneme = oldPhoneme.mergeWithLanguage(newPhoneme.getLanguages())",
+                        "                     phonemes[mergedPhoneme] = mergedPhoneme",
+                        "                 else:",
+                        "                     phonemes[newPhoneme] = newPhoneme",
+                        "         return PhonemeBuilder(0, phonemes.keys(), None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 17.57946801185608,
+                    "generation_timestamp": "2024-07-02T01:10:28.989825",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1163,13 +1324,21 @@
                         "    def __join(strings: typing.Iterable[str], sep: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __join(strings: typing.Iterable[str], sep: str) -> str:",
+                        "         sb = ''",
+                        "         for s in strings:",
+                        "             sb += s",
+                        "             sb += sep",
+                        "         return sb"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1719470024108887,
+                    "generation_timestamp": "2024-07-02T01:10:31.168098",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -1195,13 +1364,16 @@
                         "    __maxPhonemes: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __maxPhonemes: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:28.773618",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1225,13 +1397,16 @@
                         "    __concat: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __concat: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:28.775233",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1255,13 +1430,16 @@
                         "    __ruleType: RuleType = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ruleType: RuleType = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:28.776735",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1285,13 +1463,16 @@
                         "    __nameType: NameType = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __nameType: NameType = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:28.778218",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1315,13 +1496,16 @@
                         "    __lang: Lang = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __lang: Lang = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:28.779750",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1346,13 +1530,15 @@
                         "    __DEFAULT_MAX_PHONEMES: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __DEFAULT_MAX_PHONEMES: int = 20"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.337893009185791,
+                    "generation_timestamp": "2024-07-02T09:04:21.660049",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1377,13 +1563,16 @@
                         "    __NAME_PREFIXES: typing.Dict[NameType, typing.Set[str]] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __NAME_PREFIXES: typing.Dict[NameType, typing.Set[str]] = {}",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:30.172934",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -1415,13 +1604,19 @@
                         "    }\n"
                     ],
                     "partial_translation": [],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def run_static_init():",
+                        "         PhoneticEngine.__NAME_PREFIXES[NameType.ASHKENAZI] = frozenset({\"bar\", \"ben\", \"da\", \"de\", \"van\", \"von\"})",
+                        "         PhoneticEngine.__NAME_PREFIXES[NameType.SEPHARDIC] = frozenset({\"al\", \"el\", \"da\", \"dal\", \"de\", \"del\", \"dela\", \"de la\", \"della\", \"des\", \"di\", \"do\", \"dos\", \"du\", \"van\", \"von\"})",
+                        "         PhoneticEngine.__NAME_PREFIXES[NameType.GENERIC] = frozenset({\"da\", \"dal\", \"de\", \"del\", \"dela\", \"de la\", \"della\", \"des\", \"di\", \"do\", \"dos\", \"du\", \"van\", \"von\"})"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.46636700630188,
+                    "generation_timestamp": "2024-07-02T09:04:31.135512",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -1464,13 +1659,16 @@
                         "    def isFound(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isFound(self) -> bool:",
+                        "         return self.__found"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8146748542785645,
+                    "generation_timestamp": "2024-07-02T01:09:28.514978",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1541,13 +1739,30 @@
                         "    def invoke(self) -> RulesApplication:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def invoke(self) -> RulesApplication:",
+                        "         self.__found = False",
+                        "         patternLength = 1",
+                        "         rules = self.__finalRules.get(self.__input[self.__i:self.__i + patternLength])",
+                        "         if rules is not None:",
+                        "             for rule in rules:",
+                        "                 pattern = rule.getPattern()",
+                        "                 patternLength = len(pattern)",
+                        "                 if rule.patternAndContextMatches(self.__input, self.__i):",
+                        "                     self.__phonemeBuilder.apply(rule.getPhoneme(), self.__maxPhonemes)",
+                        "                     self.__found = True",
+                        "                     break",
+                        "         if not self.__found:",
+                        "             patternLength = 1",
+                        "         self.__i += patternLength",
+                        "         return self"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.951169967651367,
+                    "generation_timestamp": "2024-07-02T01:09:37.478738",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1577,13 +1792,16 @@
                         "    def getPhonemeBuilder(self) -> PhonemeBuilder:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getPhonemeBuilder(self) -> PhonemeBuilder:",
+                        "         return self.__phonemeBuilder"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8870770931243896,
+                    "generation_timestamp": "2024-07-02T01:09:38.372081",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1613,13 +1831,16 @@
                         "    def getI(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getI(self) -> int:",
+                        "         return self.__i"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8405001163482666,
+                    "generation_timestamp": "2024-07-02T01:09:39.218996",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1665,13 +1886,22 @@
                         "    def __init__(self, finalRules: typing.Dict[str, typing.List[Rule]], input: str, phonemeBuilder: PhonemeBuilder, i: int, maxPhonemes: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, finalRules: typing.Dict[str, typing.List[Rule]], input: str, phonemeBuilder: PhonemeBuilder, i: int, maxPhonemes: int) -> None:",
+                        "         if not finalRules:",
+                        "             raise ValueError(\"finalRules\")",
+                        "         self.__finalRules = finalRules",
+                        "         self.__phonemeBuilder = phonemeBuilder",
+                        "         self.__input = input",
+                        "         self.__i = i",
+                        "         self.__maxPhonemes = maxPhonemes"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 11.808850049972534,
+                    "generation_timestamp": "2024-07-02T18:56:55.586917",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -1696,13 +1926,16 @@
                         "    __found: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __found: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:41.881848",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1726,13 +1959,16 @@
                         "    __maxPhonemes: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __maxPhonemes: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:41.883552",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1755,13 +1991,16 @@
                         "    __i: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __i: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:41.885091",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1785,13 +2024,16 @@
                         "    __phonemeBuilder: PhonemeBuilder = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __phonemeBuilder: PhonemeBuilder = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:41.886563",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1815,13 +2057,16 @@
                         "    __input: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __input: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:41.888069",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -1845,13 +2090,16 @@
                         "    __finalRules: typing.Dict[str, typing.List[Rule]] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __finalRules: typing.Dict[str, typing.List[Rule]] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:16:41.889625",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

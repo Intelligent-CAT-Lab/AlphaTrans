@@ -132,13 +132,36 @@
                         "    def test_matchUsingConfigFile(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_matchUsingConfigFile(self) -> None:",
+                        "         originalErr = System.err",
+                        "         try:",
+                        "             baos = ByteArrayOutputStream()",
+                        "             ps = PrintStream(baos, False, \"UTF-8\")",
+                        "             System.setErr(ps)",
+                        "             test = RenameHandler.create1(True)",
+                        "             System.err.flush()",
+                        "             self.assertEqual(Status, test.lookupType(\"com.foo.Bar\"))",
+                        "             self.assertEqual(Status.YES, test.lookupEnum(Status, \"YES\"))",
+                        "             self.assertEqual(DistanceMethodMethod, test.lookupType(\"com.foo.Foo\"))",
+                        "             self.assertEqual(Status.INVALID, test.lookupEnum(Status, \"NO\"))",
+                        "             logged = baos.toString(\"UTF-8\")",
+                        "             self.assertTrue(logged.startswith(\"ERROR: Invalid Renamed.ini: \"))",
+                        "             self.assertTrue(logged.contains(\"org.joda.convert.ClassDoesNotExist\"))",
+                        "             self.assertTrue(",
+                        "                 test.getTypeRenames().containsKey(\"com.foo.convert.TestRenameHandlerBadInit\"))",
+                        "             self.assertTrue(Status.STRING_CONVERTIBLE)",
+                        "             self.assertFalse(BAD_INIT)",
+                        "",
+                        "         finally:",
+                        "             System.setErr(originalErr)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 18.429553031921387,
+                    "generation_timestamp": "2024-07-01T23:01:09.223819",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -190,7 +213,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -240,7 +263,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -290,7 +313,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -340,7 +363,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -389,13 +412,18 @@
                         "    def test_noMatchType(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_noMatchType(self) -> None:",
+                        "         with self.assertRaises(ClassNotFoundException):",
+                        "            test = RenameHandler.create0()",
+                        "            test.lookupType(\"com.foo.Foo\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.9294471740722656,
+                    "generation_timestamp": "2024-07-01T23:02:22.712727",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -446,13 +474,19 @@
                         "    def test_matchRenamedType(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def test_matchRenamedType(self) -> None:",
+                        "         test = RenameHandler.create0()",
+                        "         test.renamedType(\"com.foo.Bar\", TestRenameHandler)",
+                        "         renamed = test.lookupType(\"com.foo.Bar\")",
+                        "         self.assertEqual(TestRenameHandler, renamed)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.041056871414185,
+                    "generation_timestamp": "2024-07-01T23:02:27.759893",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -478,13 +512,15 @@
                         "    BAD_INIT: bool = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BAD_INIT: bool = False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5250186920166016,
+                    "generation_timestamp": "2024-07-01T22:24:09.296908",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

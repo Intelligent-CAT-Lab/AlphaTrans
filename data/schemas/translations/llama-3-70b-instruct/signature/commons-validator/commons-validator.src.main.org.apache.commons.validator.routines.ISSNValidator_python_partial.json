@@ -102,13 +102,34 @@
                         "    def extractFromEAN13(self, ean13: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def extractFromEAN13(self, ean13: str) -> str:",
+                        "         input = ean13.strip()",
+                        "         if len(input) != self.__EAN_ISSN_LEN:",
+                        "             raise IllegalArgumentException(",
+                        "                 \"Invalid length \" + str(len(input)) + \" for '\" + input + \"'\")",
+                        "         if not input.startswith(self.__ISSN_PREFIX):",
+                        "             raise IllegalArgumentException(",
+                        "                 \"Prefix must be \" + self.__ISSN_PREFIX + \" to contain an ISSN: '\" + ean13 + \"'\")",
+                        "         result = self.validateEan(input)",
+                        "         if result is None:",
+                        "             return None",
+                        "         input = result.toString()",
+                        "         try:",
+                        "             issnBase = input[3:10]  # TODO: how to derive these",
+                        "             checkDigit = ISSNCheckDigit.ISSN_CHECK_DIGIT.calculate(issnBase)",
+                        "             issn = issnBase + checkDigit",
+                        "             return issn",
+                        "         except CheckDigitException as e:  # Should not happen",
+                        "             raise IllegalArgumentException(",
+                        "                 \"Check digit error for '\" + ean13 + \"' - \" + e.getMessage())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 14.522637844085693,
+                    "generation_timestamp": "2024-07-01T23:30:33.060778",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -171,13 +192,29 @@
                         "    def convertToEAN13(self, issn: str, suffix: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def convertToEAN13(self, issn: str, suffix: str) -> str:",
+                        "         if suffix is None or not suffix.matches(\"\\\\d\\\\d\"):",
+                        "             raise IllegalArgumentException(\"Suffix must be two digits: '\" + suffix + \"'\")",
+                        "         result = self.validate(issn)",
+                        "         if result is None:",
+                        "             return None",
+                        "         input = result.toString()",
+                        "         ean13 = ISSN_PREFIX + input.substring(0, input.length() - 1) + suffix",
+                        "         try:",
+                        "             checkDigit = EAN13CheckDigit.EAN13_CHECK_DIGIT.calculate(ean13)",
+                        "             ean13 += checkDigit",
+                        "             return ean13",
+                        "         except CheckDigitException as e:  # Should not happen",
+                        "             raise IllegalArgumentException(",
+                        "                 \"Check digit error for '\" + ean13 + \"' - \" + e.getMessage())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 11.812546968460083,
+                    "generation_timestamp": "2024-07-01T23:30:16.198756",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -215,13 +252,16 @@
                         "    def validate(self, code: str) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def validate(self, code: str) -> typing.Any:",
+                        "         return ISSNValidator.__VALIDATOR.validate(code)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5274591445922852,
+                    "generation_timestamp": "2024-07-01T23:30:02.646144",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -259,13 +299,16 @@
                         "    def isValid(self, code: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValid(self, code: str) -> bool:",
+                        "         return ISSNValidator.__VALIDATOR.isValid(code)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.183650016784668,
+                    "generation_timestamp": "2024-07-01T23:30:17.392812",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -303,13 +346,16 @@
                         "    def validateEan(self, code: str) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def validateEan(self, code: str) -> typing.Any:",
+                        "         return self.__EAN_VALIDATOR.validate(code)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.130201816558838,
+                    "generation_timestamp": "2024-07-01T23:30:18.529751",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -341,13 +387,17 @@
                         "    def getInstance() -> ISSNValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> ISSNValidator:",
+                        "         return ISSNValidator.__ISSN_VALIDATOR"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.327143907546997,
+                    "generation_timestamp": "2024-07-01T23:30:34.391971",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -374,13 +424,15 @@
                         "    __ISSN_VALIDATOR: ISSNValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ISSN_VALIDATOR: ISSNValidator = ISSNValidator()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.022818088531494,
+                    "generation_timestamp": "2024-07-01T22:37:32.503012",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -407,13 +459,15 @@
                         "    __EAN_VALIDATOR: CodeValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EAN_VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(EAN_ISSN_REGEX, EAN_ISSN_LEN, EAN13CheckDigit.EAN13_CHECK_DIGIT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.573806047439575,
+                    "generation_timestamp": "2024-07-01T22:37:36.083812",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -439,13 +493,15 @@
                         "    __VALIDATOR: CodeValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(__ISSN_REGEX, __ISSN_LEN, ISSNCheckDigit.ISSN_CHECK_DIGIT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.6814768314361572,
+                    "generation_timestamp": "2024-07-01T22:37:39.769278",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -470,13 +526,15 @@
                         "    __EAN_ISSN_LEN: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EAN_ISSN_LEN: int = 13"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3591148853302002,
+                    "generation_timestamp": "2024-07-01T22:37:41.133235",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -501,13 +559,15 @@
                         "    __EAN_ISSN_REGEX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __EAN_ISSN_REGEX: str = \"^(977)(?:(\\\\d{10}))$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.451054811477661,
+                    "generation_timestamp": "2024-07-01T22:37:44.586046",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -532,13 +592,15 @@
                         "    __ISSN_PREFIX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ISSN_PREFIX: str = \"977\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4274859428405762,
+                    "generation_timestamp": "2024-07-01T22:37:46.019354",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -563,13 +625,15 @@
                         "    __ISSN_LEN: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ISSN_LEN: int = 8"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1830520629882812,
+                    "generation_timestamp": "2024-07-01T22:37:47.207783",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -595,13 +659,15 @@
                         "    __ISSN_REGEX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ISSN_REGEX: str = \"(?:ISSN )?(\\\\d{4})-(\\\\d{3}[0-9X])$\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.951970100402832,
+                    "generation_timestamp": "2024-07-01T22:37:50.163733",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -626,13 +692,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 4319515687976420405"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1551311016082764,
+                    "generation_timestamp": "2024-07-01T22:37:52.324806",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

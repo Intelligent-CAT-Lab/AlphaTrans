@@ -129,13 +129,16 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return self.__currency.getCode() + ' ' + self.__amount.toPlainString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.010430097579956,
+                    "generation_timestamp": "2024-07-02T00:57:13.918769",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -173,13 +176,16 @@
                         "    def hashCode(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def hashCode(self) -> int:",
+                        "         return self.__currency.hashCode() ^ self.__amount.hashCode()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3816759586334229,
+                    "generation_timestamp": "2024-07-02T00:57:15.312564",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -232,13 +238,21 @@
                         "    def equals(self, other: typing.Any) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def equals(self, other: typing.Any) -> bool:",
+                        "         if self == other:",
+                        "             return True",
+                        "         if isinstance(other, BigMoney):",
+                        "             otherMoney: BigMoney = other",
+                        "             return self.__currency.equals(otherMoney.getCurrencyUnit()) and self.__amount.equals(otherMoney.__amount)",
+                        "         return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.162759065628052,
+                    "generation_timestamp": "2024-07-02T00:57:45.800171",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -297,13 +311,19 @@
                         "    def compareTo(self, other: BigMoneyProvider) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def compareTo(self, other: BigMoneyProvider) -> int:",
+                        "         otherMoney: BigMoney = BigMoney.of2(other)",
+                        "         if self.__currency.equals(otherMoney.getCurrencyUnit()) == False:",
+                        "             raise CurrencyMismatchException(self.getCurrencyUnit(), otherMoney.getCurrencyUnit())",
+                        "         return self.__amount.compareTo(otherMoney.__amount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.740837335586548,
+                    "generation_timestamp": "2024-07-02T01:19:05.530049",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -335,13 +355,16 @@
                         "    def toBigMoney(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toBigMoney(self) -> BigMoney:",
+                        "         return self"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6310431957244873,
+                    "generation_timestamp": "2024-07-02T00:57:15.953472",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -387,13 +410,23 @@
                         "    def __init__(self, constructorId: int, amount: decimal.Decimal, currency: CurrencyUnit) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, amount: decimal.Decimal, currency: CurrencyUnit) -> None:",
+                        "         if constructorId == 0:",
+                        "            assert currency is not None, \"Joda-Money bug: Currency must not be null\"",
+                        "            assert amount is not None, \"Joda-Money bug: Amount must not be null\"",
+                        "            self.__currency = currency",
+                        "            self.__amount = amount if amount.scale() >= 0 else amount.setScale(0)",
+                        "         else:",
+                        "            self.__currency = None",
+                        "            self.__amount = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.885617971420288,
+                    "generation_timestamp": "2024-07-02T00:57:23.850703",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -459,13 +492,27 @@
                         "    def parse(moneyStr: str) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def parse(moneyStr: str) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(moneyStr, \"Money must not be null\")",
+                        "         if len(moneyStr) < 4:",
+                        "            raise IllegalArgumentException(\"Money '\" + moneyStr + \"' cannot be parsed\")",
+                        "         currStr = moneyStr[0:3]",
+                        "         amountStart = 3",
+                        "         while amountStart < len(moneyStr) and moneyStr[amountStart] == ' ':",
+                        "            amountStart += 1",
+                        "         amountStr = moneyStr[amountStart:]",
+                        "         if BigMoney.__PARSE_REGEX.match(amountStr) is None:",
+                        "            raise IllegalArgumentException(\"Money amount '\" + moneyStr + \"' cannot be parsed\")",
+                        "         return BigMoney.of0(CurrencyUnit.of1(currStr), decimal.Decimal(amountStr))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.521898031234741,
+                    "generation_timestamp": "2024-07-02T01:19:16.066036",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -503,13 +550,16 @@
                         "    def isLessThanOrEqual(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isLessThanOrEqual(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) <= 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.036344051361084,
+                    "generation_timestamp": "2024-07-02T01:19:17.115233",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -547,13 +597,16 @@
                         "    def isLessThan(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isLessThan(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) < 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0398590564727783,
+                    "generation_timestamp": "2024-07-02T01:19:18.172107",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -591,13 +644,16 @@
                         "    def isGreaterThanOrEqual(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isGreaterThanOrEqual(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) >= 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7354092597961426,
+                    "generation_timestamp": "2024-07-02T01:19:19.922368",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -635,13 +691,16 @@
                         "    def isGreaterThan(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isGreaterThan(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) > 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1152241230010986,
+                    "generation_timestamp": "2024-07-02T01:19:21.051096",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -679,13 +738,16 @@
                         "    def isEqual(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isEqual(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) == 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6222498416900635,
+                    "generation_timestamp": "2024-07-02T01:19:22.688857",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -733,13 +795,16 @@
                         "    def isSameCurrency(self, money: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isSameCurrency(self, money: BigMoneyProvider) -> bool:",
+                        "         return self.__currency.equals(BigMoney.of2(money).getCurrencyUnit())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5445692539215088,
+                    "generation_timestamp": "2024-07-02T01:19:24.249667",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -777,13 +842,16 @@
                         "    def toMoney1(self, roundingMode: typing.Any) -> Money:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toMoney1(self, roundingMode: typing.Any) -> Money:",
+                        "         return Money.of5(self, roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.061509132385254,
+                    "generation_timestamp": "2024-07-02T01:24:58.815251",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -819,13 +887,16 @@
                         "    def toMoney0(self) -> Money:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toMoney0(self) -> Money:",
+                        "         return Money.of4(self)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1752870082855225,
+                    "generation_timestamp": "2024-07-02T01:24:59.997428",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -876,13 +947,16 @@
                         "    def convertRetainScale(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def convertRetainScale(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "         return self.convertedTo(currency, conversionMultipler).withScale1(self.getScale(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.809973955154419,
+                    "generation_timestamp": "2024-07-02T01:23:23.620094",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -939,13 +1013,26 @@
                         "    def convertedTo(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def convertedTo(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(currency, \"CurrencyUnit must not be null\")",
+                        "         MoneyUtils.checkNotNull(conversionMultipler, \"Multiplier must not be null\")",
+                        "         if self.__currency == currency:",
+                        "            if conversionMultipler == decimal.Decimal(1):",
+                        "                return self",
+                        "            raise IllegalArgumentException(\"Cannot convert to the same currency\")",
+                        "         if conversionMultipler < decimal.Decimal(0):",
+                        "            raise IllegalArgumentException(",
+                        "                    \"Cannot convert using a negative conversion multiplier\")",
+                        "         newAmount = self.__amount * conversionMultipler",
+                        "         return BigMoney.of0(currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.007248163223267,
+                    "generation_timestamp": "2024-07-02T01:19:32.272102",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1000,13 +1087,21 @@
                         "    def rounded(self, scale: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def rounded(self, scale: int, roundingMode: typing.Any) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "         if scale >= self.getScale():",
+                        "            return self",
+                        "         currentScale = self.__amount.scale()",
+                        "         newAmount = self.__amount.setScale(scale, roundingMode).setScale(currentScale)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.761742115020752,
+                    "generation_timestamp": "2024-07-02T01:19:38.044959",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1047,13 +1142,16 @@
                         "    def abs(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def abs(self) -> BigMoney:",
+                        "         return (self.negated() if self.isNegative() else self)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5420401096343994,
+                    "generation_timestamp": "2024-07-02T01:23:25.175268",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1097,13 +1195,18 @@
                         "    def negated(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def negated(self) -> BigMoney:",
+                        "         if self.isZero():",
+                        "            return self",
+                        "         return BigMoney.of0(self.__currency, self.__amount.negate())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.0677249431610107,
+                    "generation_timestamp": "2024-07-02T01:19:41.120739",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1146,13 +1249,19 @@
                         "    def dividedBy2(self, valueToDivideBy: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def dividedBy2(self, valueToDivideBy: int, roundingMode: typing.Any) -> BigMoney:",
+                        "         if valueToDivideBy == 1:",
+                        "            return self",
+                        "         newAmount = self.__amount / decimal.Decimal(valueToDivideBy)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.6596550941467285,
+                    "generation_timestamp": "2024-07-02T01:19:44.795384",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1201,13 +1310,20 @@
                         "    def dividedBy1(self, valueToDivideBy: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def dividedBy1(self, valueToDivideBy: float, roundingMode: typing.Any) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "         if valueToDivideBy == 1:",
+                        "            return self",
+                        "         newAmount = self.__amount / decimal.Decimal(valueToDivideBy)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.901478052139282,
+                    "generation_timestamp": "2024-07-02T01:19:49.711799",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1257,13 +1373,21 @@
                         "    def dividedBy0(self, valueToDivideBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def dividedBy0(self, valueToDivideBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(valueToDivideBy, \"Divisor must not be null\")",
+                        "         MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "         if valueToDivideBy.compareTo(decimal.Decimal(1)) == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount.divide(valueToDivideBy, roundingMode)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.382904291152954,
+                    "generation_timestamp": "2024-07-02T01:19:56.108985",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1302,13 +1426,16 @@
                         "    def multiplyRetainScale1(self, valueToMultiplyBy: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def multiplyRetainScale1(self, valueToMultiplyBy: float, roundingMode: typing.Any) -> BigMoney:",
+                        "         return self.multiplyRetainScale0(decimal.Decimal(valueToMultiplyBy), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4892361164093018,
+                    "generation_timestamp": "2024-07-02T01:23:26.678707",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1364,13 +1491,22 @@
                         "    def multiplyRetainScale0(self, valueToMultiplyBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def multiplyRetainScale0(self, valueToMultiplyBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(valueToMultiplyBy, \"Multiplier must not be null\")",
+                        "         MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "         if valueToMultiplyBy.compare(decimal.Decimal(1)) == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount * valueToMultiplyBy",
+                        "         newAmount = newAmount.quantize(decimal.Decimal(1), rounding=roundingMode)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.886534214019775,
+                    "generation_timestamp": "2024-07-02T01:20:03.013237",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1412,13 +1548,19 @@
                         "    def multipliedBy2(self, valueToMultiplyBy: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def multipliedBy2(self, valueToMultiplyBy: int) -> BigMoney:",
+                        "         if valueToMultiplyBy == 1:",
+                        "            return self",
+                        "         newAmount = self.__amount * decimal.Decimal(valueToMultiplyBy)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.216489791870117,
+                    "generation_timestamp": "2024-07-02T01:20:06.245676",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1460,13 +1602,19 @@
                         "    def multipliedBy1(self, valueToMultiplyBy: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def multipliedBy1(self, valueToMultiplyBy: float) -> BigMoney:",
+                        "         if valueToMultiplyBy == 1:",
+                        "            return self",
+                        "         newAmount = self.__amount * decimal.Decimal(valueToMultiplyBy)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.6386168003082275,
+                    "generation_timestamp": "2024-07-02T01:20:09.896883",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1514,13 +1662,27 @@
                         "    def multipliedBy0(self, valueToMultiplyBy: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def multipliedBy0(self, valueToMultiplyBy: decimal.Decimal) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(valueToMultiplyBy, \"Multiplier must not be null\")",
+                        "         if valueToMultiplyBy.__class__ != decimal.Decimal:",
+                        "            value = valueToMultiplyBy.unscaledValue()",
+                        "            if value is None:",
+                        "                raise IllegalArgumentException(\"Illegal BigDecimal subclass\")",
+                        "            if value.__class__ != int:",
+                        "                value = int(value.toString())",
+                        "            valueToMultiplyBy = decimal.Decimal(value, valueToMultiplyBy.scale())",
+                        "         if valueToMultiplyBy.compareTo(decimal.Decimal(1)) == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount.multiply(valueToMultiplyBy)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.11123013496399,
+                    "generation_timestamp": "2024-07-02T01:20:19.022703",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1569,13 +1731,20 @@
                         "    def minusRetainScale2(self, amountToSubtract: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minusRetainScale2(self, amountToSubtract: float, roundingMode: typing.Any) -> BigMoney:",
+                        "         if amountToSubtract == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount - decimal.Decimal(amountToSubtract)",
+                        "         newAmount = newAmount.quantize(decimal.Decimal(1), rounding=roundingMode)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.6894989013671875,
+                    "generation_timestamp": "2024-07-02T01:20:23.727555",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1630,13 +1799,21 @@
                         "    def minusRetainScale1(self, amountToSubtract: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minusRetainScale1(self, amountToSubtract: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(amountToSubtract, \"Amount must not be null\")",
+                        "         if amountToSubtract.compare(BigDecimal.ZERO) == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount.subtract(amountToSubtract)",
+                        "         newAmount = newAmount.setScale(self.getScale(), roundingMode)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.303872108459473,
+                    "generation_timestamp": "2024-07-02T01:20:30.047607",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1686,13 +1863,17 @@
                         "    def minusRetainScale0(self, moneyToSubtract: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minusRetainScale0(self, moneyToSubtract: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:",
+                        "         toSubtract = self.__checkCurrencyEqual(moneyToSubtract)",
+                        "         return self.minusRetainScale1(toSubtract.getAmount(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.778172016143799,
+                    "generation_timestamp": "2024-07-02T01:23:29.473906",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1740,13 +1921,19 @@
                         "    def minusMinor(self, amountToSubtract: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minusMinor(self, amountToSubtract: int) -> BigMoney:",
+                        "         if amountToSubtract == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount - decimal.Decimal(amountToSubtract, self.__currency.getDecimalPlaces())",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.8975870609283447,
+                    "generation_timestamp": "2024-07-02T01:20:33.960257",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1788,13 +1975,19 @@
                         "    def minusMajor(self, amountToSubtract: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minusMajor(self, amountToSubtract: int) -> BigMoney:",
+                        "         if amountToSubtract == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount - decimal.Decimal(amountToSubtract)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.952517032623291,
+                    "generation_timestamp": "2024-07-02T01:20:36.926749",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1836,13 +2029,19 @@
                         "    def minus3(self, amountToSubtract: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minus3(self, amountToSubtract: float) -> BigMoney:",
+                        "         if amountToSubtract == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount - decimal.Decimal(amountToSubtract)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.165839910507202,
+                    "generation_timestamp": "2024-07-02T01:20:40.105404",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1890,13 +2089,20 @@
                         "    def minus2(self, amountToSubtract: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minus2(self, amountToSubtract: decimal.Decimal) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(amountToSubtract, \"Amount must not be null\")",
+                        "         if amountToSubtract.compare(BigDecimal.ZERO) == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount.subtract(amountToSubtract)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.361259937286377,
+                    "generation_timestamp": "2024-07-02T01:20:44.480920",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1945,13 +2151,17 @@
                         "    def minus1(self, moneyToSubtract: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minus1(self, moneyToSubtract: BigMoneyProvider) -> BigMoney:",
+                        "         toSubtract = self.__checkCurrencyEqual(moneyToSubtract)",
+                        "         return self.minus2(toSubtract.getAmount())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1339128017425537,
+                    "generation_timestamp": "2024-07-02T01:23:31.624351",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1999,13 +2209,20 @@
                         "    def minus0(self, moniesToSubtract: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minus0(self, moniesToSubtract: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "         total: decimal.Decimal = self.__amount",
+                        "         for moneyProvider in moniesToSubtract:",
+                        "             money: BigMoney = self.__checkCurrencyEqual(moneyProvider)",
+                        "             total = total - money.__amount",
+                        "         return self.__with(total)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.775122880935669,
+                    "generation_timestamp": "2024-07-02T01:23:35.415789",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2054,13 +2271,20 @@
                         "    def plusRetainScale2(self, amountToAdd: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plusRetainScale2(self, amountToAdd: float, roundingMode: typing.Any) -> BigMoney:",
+                        "         if amountToAdd == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount + decimal.Decimal(amountToAdd)",
+                        "         newAmount = newAmount.quantize(decimal.Decimal(1), rounding=roundingMode)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.9198999404907227,
+                    "generation_timestamp": "2024-07-02T01:20:48.417065",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2115,13 +2339,21 @@
                         "    def plusRetainScale1(self, amountToAdd: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plusRetainScale1(self, amountToAdd: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(amountToAdd, \"Amount must not be null\")",
+                        "         if amountToAdd.compare(BigDecimal.ZERO) == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount.add(amountToAdd)",
+                        "         newAmount = newAmount.setScale(self.getScale(), roundingMode)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.8762428760528564,
+                    "generation_timestamp": "2024-07-02T01:20:53.313749",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2171,13 +2403,17 @@
                         "    def plusRetainScale0(self, moneyToAdd: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plusRetainScale0(self, moneyToAdd: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:",
+                        "         toAdd = self.__checkCurrencyEqual(moneyToAdd)",
+                        "         return self.plusRetainScale1(toAdd.getAmount(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1318910121917725,
+                    "generation_timestamp": "2024-07-02T01:23:37.565013",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2225,13 +2461,19 @@
                         "    def plusMinor(self, amountToAdd: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plusMinor(self, amountToAdd: int) -> BigMoney:",
+                        "         if amountToAdd == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount + decimal.Decimal(amountToAdd, self.__currency.getDecimalPlaces())",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.4372642040252686,
+                    "generation_timestamp": "2024-07-02T01:20:56.767143",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2273,13 +2515,19 @@
                         "    def plusMajor(self, amountToAdd: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plusMajor(self, amountToAdd: int) -> BigMoney:",
+                        "         if amountToAdd == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount + decimal.Decimal(amountToAdd)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.5182600021362305,
+                    "generation_timestamp": "2024-07-02T01:21:00.295582",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2321,13 +2569,19 @@
                         "    def plus3(self, amountToAdd: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plus3(self, amountToAdd: float) -> BigMoney:",
+                        "         if amountToAdd == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount + decimal.Decimal(amountToAdd)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.1404306888580322,
+                    "generation_timestamp": "2024-07-02T01:21:03.451459",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2375,13 +2629,20 @@
                         "    def plus2(self, amountToAdd: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plus2(self, amountToAdd: decimal.Decimal) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(amountToAdd, \"Amount must not be null\")",
+                        "         if amountToAdd.compare(BigDecimal.ZERO) == 0:",
+                        "            return self",
+                        "         newAmount = self.__amount.add(amountToAdd)",
+                        "         return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.173188924789429,
+                    "generation_timestamp": "2024-07-02T01:21:07.638918",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2430,13 +2691,17 @@
                         "    def plus1(self, moneyToAdd: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plus1(self, moneyToAdd: BigMoneyProvider) -> BigMoney:",
+                        "         toAdd = self.__checkCurrencyEqual(moneyToAdd)",
+                        "         return self.plus2(toAdd.getAmount())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7939949035644531,
+                    "generation_timestamp": "2024-07-02T01:23:39.375836",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2484,13 +2749,20 @@
                         "    def plus0(self, moniesToAdd: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def plus0(self, moniesToAdd: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "         total: decimal.Decimal = self.__amount",
+                        "         for moneyProvider in moniesToAdd:",
+                        "             money: BigMoney = self.__checkCurrencyEqual(moneyProvider)",
+                        "             total = total + money.__amount",
+                        "         return self.__with(total)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.8532321453094482,
+                    "generation_timestamp": "2024-07-02T01:23:43.243365",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2528,13 +2800,16 @@
                         "    def withAmount1(self, amount: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withAmount1(self, amount: float) -> BigMoney:",
+                        "         return self.withAmount0(decimal.Decimal(amount))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0300579071044922,
+                    "generation_timestamp": "2024-07-02T01:23:44.287645",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2581,13 +2856,19 @@
                         "    def withAmount0(self, amount: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withAmount0(self, amount: decimal.Decimal) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(amount, \"Amount must not be null\")",
+                        "         if self.__amount == amount:",
+                        "            return self",
+                        "         return BigMoney.of0(self.__currency, amount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.6456871032714844,
+                    "generation_timestamp": "2024-07-02T01:21:10.298158",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2617,13 +2898,16 @@
                         "    def isNegativeOrZero(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isNegativeOrZero(self) -> bool:",
+                        "         return self.__amount <= decimal.Decimal(0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3742568492889404,
+                    "generation_timestamp": "2024-07-02T00:57:25.240298",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2653,13 +2937,16 @@
                         "    def isNegative(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isNegative(self) -> bool:",
+                        "         return self.__amount < 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2397761344909668,
+                    "generation_timestamp": "2024-07-02T00:57:26.489946",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2689,13 +2976,16 @@
                         "    def isPositiveOrZero(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isPositiveOrZero(self) -> bool:",
+                        "         return self.__amount >= 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9872801303863525,
+                    "generation_timestamp": "2024-07-02T00:57:27.488443",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2725,13 +3015,16 @@
                         "    def isPositive(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isPositive(self) -> bool:",
+                        "         return self.__amount > 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2924871444702148,
+                    "generation_timestamp": "2024-07-02T00:57:28.786778",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2761,13 +3054,16 @@
                         "    def isZero(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isZero(self) -> bool:",
+                        "         return self.__amount == decimal.Decimal(0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6314220428466797,
+                    "generation_timestamp": "2024-07-02T00:57:30.430044",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2812,13 +3108,20 @@
                         "    def getMinorPart(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getMinorPart(self) -> int:",
+                        "         cdp = self.getCurrencyUnit().getDecimalPlaces()",
+                        "         return self.__amount.quantize(decimal.Decimal('1.' + '0' * cdp), rounding=decimal.ROUND_DOWN) \\",
+                        "                .remainder(decimal.Decimal('1')) \\",
+                        "                .shift(cdp) \\",
+                        "                .to_integral_value()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.481794118881226,
+                    "generation_timestamp": "2024-07-02T00:57:50.296313",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2854,13 +3157,16 @@
                         "    def getAmountMinorInt(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMinorInt(self) -> int:",
+                        "         return self.getAmountMinor().to_integral_value()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2094857692718506,
+                    "generation_timestamp": "2024-07-02T00:57:57.050504",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2896,13 +3202,16 @@
                         "    def getAmountMinorLong(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMinorLong(self) -> int:",
+                        "         return self.getAmountMinor().to_integral_value()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0641560554504395,
+                    "generation_timestamp": "2024-07-02T00:57:58.128894",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2944,13 +3253,17 @@
                         "    def getAmountMinor(self) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMinor(self) -> decimal.Decimal:",
+                        "         cdp: int = self.getCurrencyUnit().getDecimalPlaces()",
+                        "         return self.getAmount().setScale(cdp, decimal.ROUND_DOWN).movePointRight(cdp)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.810534954071045,
+                    "generation_timestamp": "2024-07-02T00:57:53.121279",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2986,13 +3299,16 @@
                         "    def getAmountMajorInt(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMajorInt(self) -> int:",
+                        "         return self.getAmountMajor().to_integral_value()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.17586088180542,
+                    "generation_timestamp": "2024-07-02T00:57:33.924735",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3028,13 +3344,16 @@
                         "    def getAmountMajorLong(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMajorLong(self) -> int:",
+                        "         return self.getAmountMajor().to_integral_value()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0819628238677979,
+                    "generation_timestamp": "2024-07-02T00:57:35.013664",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3064,13 +3383,16 @@
                         "    def getAmountMajor(self) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmountMajor(self) -> decimal.Decimal:",
+                        "         return self.__amount.quantize(decimal.Decimal(1), rounding=decimal.ROUND_DOWN)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.29455304145813,
+                    "generation_timestamp": "2024-07-02T00:57:32.734710",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3100,13 +3422,16 @@
                         "    def getAmount(self) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getAmount(self) -> decimal.Decimal:",
+                        "         return self.__amount"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2901318073272705,
+                    "generation_timestamp": "2024-07-02T00:57:36.313751",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3149,13 +3474,16 @@
                         "    def withCurrencyScale1(self, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withCurrencyScale1(self, roundingMode: typing.Any) -> BigMoney:",
+                        "         return self.withScale1(self.__currency.getDecimalPlaces(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5627999305725098,
+                    "generation_timestamp": "2024-07-02T01:23:45.858643",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3196,13 +3524,16 @@
                         "    def withCurrencyScale0(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withCurrencyScale0(self) -> BigMoney:",
+                        "         return self.withScale1(self.__currency.getDecimalPlaces(), RoundingMode.UNNECESSARY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.938124179840088,
+                    "generation_timestamp": "2024-07-02T01:23:47.812213",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3250,13 +3581,19 @@
                         "    def withScale1(self, scale: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withScale1(self, scale: int, roundingMode: typing.Any) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "         if scale == self.__amount.scale():",
+                        "            return self",
+                        "         return BigMoney.of0(self.__currency, self.__amount.setScale(scale, roundingMode))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.300120115280151,
+                    "generation_timestamp": "2024-07-02T01:21:14.612846",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3294,13 +3631,16 @@
                         "    def withScale0(self, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withScale0(self, scale: int) -> BigMoney:",
+                        "         return self.withScale1(scale, RoundingMode.UNNECESSARY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4203698635101318,
+                    "generation_timestamp": "2024-07-02T01:21:16.046536",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3336,13 +3676,16 @@
                         "    def isCurrencyScale(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isCurrencyScale(self) -> bool:",
+                        "         return self.__amount.scale() == self.__currency.getDecimalPlaces()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.919424057006836,
+                    "generation_timestamp": "2024-07-02T00:57:38.244780",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3372,13 +3715,16 @@
                         "    def getScale(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getScale(self) -> int:",
+                        "         return self.__amount.scale()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.085411787033081,
+                    "generation_timestamp": "2024-07-02T00:57:39.340306",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3425,13 +3771,19 @@
                         "    def withCurrencyUnit(self, currency: CurrencyUnit) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withCurrencyUnit(self, currency: CurrencyUnit) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(currency, \"CurrencyUnit must not be null\")",
+                        "         if self.__currency == currency:",
+                        "            return self",
+                        "         return BigMoney(0, self.__amount, currency)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.7271463871002197,
+                    "generation_timestamp": "2024-07-02T01:17:59.736397",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3461,13 +3813,16 @@
                         "    def getCurrencyUnit(self) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getCurrencyUnit(self) -> CurrencyUnit:",
+                        "         return self.__currency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2680611610412598,
+                    "generation_timestamp": "2024-07-02T00:57:40.619921",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3514,13 +3869,17 @@
                         "    def total3(currency: CurrencyUnit, monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total3(currency: CurrencyUnit, monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "         return BigMoney.zero0(currency).plus0(monies)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.8200550079345703,
+                    "generation_timestamp": "2024-07-02T01:23:49.647508",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3566,13 +3925,17 @@
                         "    def total2(currency: CurrencyUnit, monies: typing.List[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total2(currency: CurrencyUnit, monies: typing.List[BigMoneyProvider]) -> BigMoney:",
+                        "         return BigMoney.zero0(currency).plus0(monies)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.315134048461914,
+                    "generation_timestamp": "2024-07-02T01:23:50.978892",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3632,13 +3995,25 @@
                         "    def total1(monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total1(monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(monies, \"Money iterator must not be null\")",
+                        "         it: typing.Iterator[BigMoneyProvider] = monies.__iter__()",
+                        "         if it.__next__() is None:",
+                        "            raise IllegalArgumentException(\"Money iterator must not be empty\")",
+                        "         total: BigMoney = BigMoney.of2(it.__next__())",
+                        "         MoneyUtils.checkNotNull(total, \"Money iterator must not contain null entries\")",
+                        "         while it.__next__() is not None:",
+                        "            total = total.plus1(it.__next__())",
+                        "         return total"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.246556043624878,
+                    "generation_timestamp": "2024-07-02T01:23:58.242062",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3697,13 +4072,24 @@
                         "    def total0(monies: typing.List[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total0(monies: typing.List[BigMoneyProvider]) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(monies, \"Money array must not be null\")",
+                        "         if len(monies) == 0:",
+                        "            raise IllegalArgumentException(\"Money array must not be empty\")",
+                        "         total = BigMoney.of2(monies[0])",
+                        "         MoneyUtils.checkNotNull(total, \"Money array must not contain null entries\")",
+                        "         for i in range(1, len(monies)):",
+                        "            total = total.plus1(BigMoney.of2(monies[i]))",
+                        "         return total"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.1009461879730225,
+                    "generation_timestamp": "2024-07-02T01:24:04.359623",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3751,13 +4137,20 @@
                         "    def of2(moneyProvider: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def of2(moneyProvider: BigMoneyProvider) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(moneyProvider, \"BigMoneyProvider must not be null\")",
+                        "         money: BigMoney = moneyProvider.toBigMoney()",
+                        "         MoneyUtils.checkNotNull(money, \"BigMoneyProvider must not return null\")",
+                        "         return money"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.6077449321746826,
+                    "generation_timestamp": "2024-07-02T01:18:03.355439",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3798,13 +4191,17 @@
                         "    def zero1(currency: CurrencyUnit, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def zero1(currency: CurrencyUnit, scale: int) -> BigMoney:",
+                        "         return BigMoney.of0(currency, decimal.Decimal(0, scale))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.828361988067627,
+                    "generation_timestamp": "2024-07-02T01:21:17.888761",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3844,13 +4241,17 @@
                         "    def zero0(currency: CurrencyUnit) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def zero0(currency: CurrencyUnit) -> BigMoney:",
+                        "         return BigMoney.of0(currency, decimal.Decimal(0))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2572739124298096,
+                    "generation_timestamp": "2024-07-02T01:21:19.160710",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3902,13 +4303,18 @@
                         "    def ofMinor(currency: CurrencyUnit, amountMinor: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofMinor(currency: CurrencyUnit, amountMinor: int) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(currency, \"CurrencyUnit must not be null\")",
+                        "         return BigMoney.of0(currency, decimal.Decimal(amountMinor, currency.getDecimalPlaces()))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.615027904510498,
+                    "generation_timestamp": "2024-07-02T01:21:21.790146",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -3955,13 +4361,18 @@
                         "    def ofMajor(currency: CurrencyUnit, amountMajor: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofMajor(currency: CurrencyUnit, amountMajor: int) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(currency, \"CurrencyUnit must not be null\")",
+                        "         return BigMoney.of0(currency, decimal.Decimal(amountMajor))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.03088116645813,
+                    "generation_timestamp": "2024-07-02T01:21:23.835651",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4009,13 +4420,18 @@
                         "    def ofScale2(currency: CurrencyUnit, unscaledAmount: int, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofScale2(currency: CurrencyUnit, unscaledAmount: int, scale: int) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(currency, \"Currency must not be null\")",
+                        "         return BigMoney.of0(currency, decimal.Decimal(unscaledAmount, scale))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1996660232543945,
+                    "generation_timestamp": "2024-07-02T01:21:26.049031",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4068,13 +4484,21 @@
                         "    def ofScale1(currency: CurrencyUnit, amount: decimal.Decimal, scale: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofScale1(currency: CurrencyUnit, amount: decimal.Decimal, scale: int, roundingMode: typing.Any) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(currency, \"CurrencyUnit must not be null\")",
+                        "         MoneyUtils.checkNotNull(amount, \"Amount must not be null\")",
+                        "         MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "         scaledAmount = amount.setScale(scale, roundingMode)",
+                        "         return BigMoney.of0(currency, scaledAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.347314834594727,
+                    "generation_timestamp": "2024-07-02T01:21:31.409084",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4116,13 +4540,17 @@
                         "    def ofScale0(currency: CurrencyUnit, amount: decimal.Decimal, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofScale0(currency: CurrencyUnit, amount: decimal.Decimal, scale: int) -> BigMoney:",
+                        "         return BigMoney.ofScale1(currency, amount, scale, RoundingMode.UNNECESSARY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7403960227966309,
+                    "generation_timestamp": "2024-07-02T01:21:33.165382",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4177,13 +4605,20 @@
                         "    def of1(currency: CurrencyUnit, amount: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def of1(currency: CurrencyUnit, amount: float) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(currency, \"Currency must not be null\")",
+                        "         if amount == 0.0:",
+                        "            return BigMoney.zero0(currency)",
+                        "         return BigMoney.of0(currency, decimal.Decimal(amount).normalize())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.4574601650238037,
+                    "generation_timestamp": "2024-07-02T01:21:36.631720",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4242,13 +4677,27 @@
                         "    def of0(currency: CurrencyUnit, amount: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def of0(currency: CurrencyUnit, amount: decimal.Decimal) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(currency, \"Currency must not be null\")",
+                        "         MoneyUtils.checkNotNull(amount, \"Amount must not be null\")",
+                        "         checkedAmount = amount",
+                        "         if amount.__class__ != decimal.Decimal:",
+                        "            value = amount.unscaledValue()",
+                        "            if value is None:",
+                        "                raise IllegalArgumentException(\"Illegal BigDecimal subclass\")",
+                        "            if value.__class__ != int:",
+                        "                value = int(value.toString())",
+                        "            checkedAmount = decimal.Decimal(value, amount.scale())",
+                        "         return BigMoney(0, checkedAmount, currency)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.678642988204956,
+                    "generation_timestamp": "2024-07-02T01:18:10.048817",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4305,13 +4754,19 @@
                         "    def __checkCurrencyEqual(self, moneyProvider: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __checkCurrencyEqual(self, moneyProvider: BigMoneyProvider) -> BigMoney:",
+                        "         money: BigMoney = BigMoney.of2(moneyProvider)",
+                        "         if self.isSameCurrency(money) == False:",
+                        "             raise CurrencyMismatchException(self.getCurrencyUnit(), money.getCurrencyUnit())",
+                        "         return money"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.1386501789093018,
+                    "generation_timestamp": "2024-07-02T01:21:39.787566",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4352,13 +4807,18 @@
                         "    def __with(self, newAmount: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __with(self, newAmount: decimal.Decimal) -> BigMoney:",
+                        "         if newAmount == self.__amount:",
+                        "            return self",
+                        "         return BigMoney(0, newAmount, self.__currency)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.6906139850616455,
+                    "generation_timestamp": "2024-07-02T00:57:55.827225",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4394,13 +4854,16 @@
                         "    def __writeReplace(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __writeReplace(self) -> typing.Any:",
+                        "         return Ser(0, self, Ser.BIG_MONEY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3794260025024414,
+                    "generation_timestamp": "2024-07-02T02:48:59.619570",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4432,13 +4895,16 @@
                         "    def __readObject(self, ois: pickle.Unpickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __readObject(self, ois: pickle.Unpickler) -> None:",
+                        "         raise InvalidObjectException(\"Serialization delegate required\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3742752075195312,
+                    "generation_timestamp": "2024-07-02T00:57:59.512791",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -4464,13 +4930,16 @@
                         "    __amount: decimal.Decimal = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __amount: decimal.Decimal = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:49:30.388456",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4494,13 +4963,16 @@
                         "    __currency: CurrencyUnit = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __currency: CurrencyUnit = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:49:30.395024",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4525,13 +4997,15 @@
                         "    __PARSE_REGEX: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PARSE_REGEX: re.Pattern = re.compile(\"[+-]?[0-9]*[.]?[0-9]*\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.5343708992004395,
+                    "generation_timestamp": "2024-07-02T00:49:32.935138",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -4556,13 +5030,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5336909294128418,
+                    "generation_timestamp": "2024-07-02T00:49:34.479785",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

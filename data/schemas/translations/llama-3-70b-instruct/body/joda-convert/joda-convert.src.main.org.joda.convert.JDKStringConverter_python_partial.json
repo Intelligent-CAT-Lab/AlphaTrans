@@ -217,13 +217,16 @@
                         "    def convertToString(self, object: typing.Any) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def convertToString(self, object: typing.Any) -> str:",
+                        "         return object.toString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8301491737365723,
+                    "generation_timestamp": "2024-07-01T23:47:31.588690",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -255,13 +258,16 @@
                         "    def getEffectiveType(self) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getEffectiveType(self) -> typing.Type[typing.Any]:",
+                        "         return self.__type"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9420828819274902,
+                    "generation_timestamp": "2024-07-01T23:47:32.537934",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -321,13 +327,44 @@
                         "    def __parseBase64Binary(str: str) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __parseBase64Binary(str: str) -> typing.List[int]:",
+                        "         if len(str) % 4 != 0:",
+                        "             raise IllegalArgumentException(\"Invalid Base64 string\")",
+                        "         parsedLen = (len(str) * 3) // 4",
+                        "         decoded = [0] * parsedLen",
+                        "         inChars = list(str)",
+                        "         pos = 0",
+                        "         i = 0",
+                        "         while i < len(inChars):",
+                        "             bits = ((JDKStringConverter.__base64Str.index(inChars[i]) & JDKStringConverter.__MASK_6BIT) << 18",
+                        "                     | (JDKStringConverter.__base64Str.index(inChars[i + 1]) & JDKStringConverter.__MASK_6BIT) << 12",
+                        "                     | (JDKStringConverter.__base64Str.index(inChars[i + 2]) & JDKStringConverter.__MASK_6BIT) << 6",
+                        "                     | (JDKStringConverter.__base64Str.index(inChars[i + 3]) & JDKStringConverter.__MASK_6BIT))",
+                        "             decoded[pos] = (bits >> 16) & JDKStringConverter.__MASK_8BIT",
+                        "             pos += 1",
+                        "             decoded[pos] = (bits >> 8) & JDKStringConverter.__MASK_8BIT",
+                        "             pos += 1",
+                        "             decoded[pos] = bits & JDKStringConverter.__MASK_8BIT",
+                        "             pos += 1",
+                        "             i += 4",
+                        "         if str.endswith(\"==\"):",
+                        "             result = [0] * (parsedLen - 2)",
+                        "             System.arraycopy(decoded, 0, result, 0, parsedLen - 2)",
+                        "             return result",
+                        "         elif str.endswith(\"=\"):",
+                        "             result = [0] * (parsedLen - 1)",
+                        "             System.arraycopy(decoded, 0, result, 0, parsedLen - 1)",
+                        "             return result",
+                        "         return decoded"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 27.923509120941162,
+                    "generation_timestamp": "2024-07-01T23:48:00.468009",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -389,13 +426,52 @@
                         "    def __printBase64Binary(array: typing.List[int]) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __printBase64Binary(array: typing.List[int]) -> str:",
+                        "         len = len(array)",
+                        "         buf = [''] * (((len + 2) // 3) * 4)",
+                        "         pos = 0",
+                        "         for i in range(0, len, 3):",
+                        "             remaining = len - i",
+                        "             if remaining >= 3:",
+                        "                 bits = (array[i] & JDKStringConverter.__MASK_8BIT) << 16 | (array[i + 1] & JDKStringConverter.__MASK_8BIT) << 8 | (array[i + 2] & JDKStringConverter.__MASK_8BIT)",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[(bits >> 18) & JDKStringConverter.__MASK_6BIT]",
+                        "                 pos += 1",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[(bits >> 12) & JDKStringConverter.__MASK_6BIT]",
+                        "                 pos += 1",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[(bits >> 6) & JDKStringConverter.__MASK_6BIT]",
+                        "                 pos += 1",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[bits & JDKStringConverter.__MASK_6BIT]",
+                        "                 pos += 1",
+                        "             elif remaining == 2:",
+                        "                 bits = (array[i] & JDKStringConverter.__MASK_8BIT) << 16 | (array[i + 1] & JDKStringConverter.__MASK_8BIT) << 8",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[(bits >> 18) & JDKStringConverter.__MASK_6BIT]",
+                        "                 pos += 1",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[(bits >> 12) & JDKStringConverter.__MASK_6BIT]",
+                        "                 pos += 1",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[(bits >> 6) & JDKStringConverter.__MASK_6BIT]",
+                        "                 pos += 1",
+                        "                 buf[pos] = '='",
+                        "                 pos += 1",
+                        "             else:",
+                        "                 bits = (array[i] & JDKStringConverter.__MASK_8BIT) << 16",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[(bits >> 18) & JDKStringConverter.__MASK_6BIT]",
+                        "                 pos += 1",
+                        "                 buf[pos] = JDKStringConverter.__base64Array[(bits >> 12) & JDKStringConverter.__MASK_6BIT]",
+                        "                 pos += 1",
+                        "                 buf[pos] = '='",
+                        "                 pos += 1",
+                        "                 buf[pos] = '='",
+                        "                 pos += 1",
+                        "         return ''.join(buf)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 36.035704135894775,
+                    "generation_timestamp": "2024-07-01T23:48:36.511065",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -427,13 +503,16 @@
                         "    def __init__(self, type: typing.Type[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, type: typing.Type[typing.Any]) -> None:",
+                        "         self.__type = type"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1252458095550537,
+                    "generation_timestamp": "2024-07-01T23:48:37.642747",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -461,13 +540,16 @@
                         "    def getType(self) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getType(self) -> typing.Type[typing.Any]:",
+                        "         return self.__type"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.90671706199646,
+                    "generation_timestamp": "2024-07-01T23:48:38.558470",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -534,13 +616,15 @@
                         "    CALENDAR: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CALENDAR: JDKStringConverter = JDKStringConverter(Calendar)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.9351308345794678,
+                    "generation_timestamp": "2024-07-02T08:03:07.050485",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -586,13 +670,15 @@
                         "    DATE: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    DATE: JDKStringConverter = JDKStringConverter(Date)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6386597156524658,
+                    "generation_timestamp": "2024-07-02T08:03:08.697102",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -622,13 +708,16 @@
                         "    FILE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    FILE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:27.630142",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -667,13 +756,16 @@
                         "    INET_ADDRESS: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    INET_ADDRESS: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:27.633773",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -703,13 +795,16 @@
                         "    URI: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    URI: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:27.637184",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -743,13 +838,16 @@
                         "    URL: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    URL: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:27.640024",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -779,13 +877,16 @@
                         "    UUID: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    UUID: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:27.642829",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -820,13 +921,16 @@
                         "    TIME_ZONE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    TIME_ZONE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:27.645404",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -856,13 +960,16 @@
                         "    CURRENCY: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CURRENCY: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:27.647859",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -897,13 +1004,16 @@
                         "    PACKAGE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    PACKAGE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:27.650279",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -942,13 +1052,16 @@
                         "    CLASS: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CLASS: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:27.652407",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -987,13 +1100,15 @@
                         "    LOCALE: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    LOCALE: JDKStringConverter = JDKStringConverter(Locale)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9427850246429443,
+                    "generation_timestamp": "2024-07-02T08:03:10.647086",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1030,13 +1145,16 @@
                         "    ATOMIC_BOOLEAN: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ATOMIC_BOOLEAN: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:29.377288",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1067,13 +1185,15 @@
                         "    ATOMIC_INTEGER: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ATOMIC_INTEGER: JDKStringConverter = JDKStringConverter(AtomicInteger)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9216797351837158,
+                    "generation_timestamp": "2024-07-02T08:03:12.571232",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1104,13 +1224,15 @@
                         "    ATOMIC_LONG: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    ATOMIC_LONG: JDKStringConverter = JDKStringConverter(AtomicLong)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.120839834213257,
+                    "generation_timestamp": "2024-07-02T08:03:14.698812",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1140,13 +1262,16 @@
                         "    BIG_DECIMAL: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BIG_DECIMAL: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:33.092500",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1176,13 +1301,16 @@
                         "    BIG_INTEGER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BIG_INTEGER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:33.095630",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1212,13 +1340,16 @@
                         "    FLOAT: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    FLOAT: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:33.099100",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1248,13 +1379,16 @@
                         "    DOUBLE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    DOUBLE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:33.102355",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1291,13 +1425,16 @@
                         "    BOOLEAN: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BOOLEAN: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:33.105600",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1332,13 +1469,16 @@
                         "    CHAR_ARRAY: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CHAR_ARRAY: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:33.108370",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1371,13 +1511,15 @@
                         "    CHARACTER: JDKStringConverter = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CHARACTER: JDKStringConverter = JDKStringConverter(Character)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0551979541778564,
+                    "generation_timestamp": "2024-07-02T08:03:16.760912",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1412,13 +1554,16 @@
                         "    BYTE_ARRAY: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BYTE_ARRAY: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:34.433172",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1448,13 +1593,16 @@
                         "    BYTE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BYTE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:34.436620",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1484,13 +1632,16 @@
                         "    SHORT: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    SHORT: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:34.439714",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1520,13 +1671,16 @@
                         "    INTEGER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    INTEGER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:34.442536",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1556,13 +1710,16 @@
                         "    LONG: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    LONG: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:34.445066",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1592,13 +1749,16 @@
                         "    STRING_BUILDER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    STRING_BUILDER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:34.447418",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1628,13 +1788,16 @@
                         "    STRING_BUFFER: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    STRING_BUFFER: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:34.449758",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1664,13 +1827,16 @@
                         "    CHAR_SEQUENCE: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CHAR_SEQUENCE: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:34.451962",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1700,13 +1866,16 @@
                         "    STRING: JDKStringConverter = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    STRING: JDKStringConverter = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:34.454020",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1731,13 +1900,15 @@
                         "    __MASK_6BIT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MASK_6BIT: int = 0x3f"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9649889469146729,
+                    "generation_timestamp": "2024-07-02T08:03:18.733844",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1762,13 +1933,15 @@
                         "    __MASK_8BIT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MASK_8BIT: int = 0xff"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7925889492034912,
+                    "generation_timestamp": "2024-07-02T08:03:20.528643",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1792,13 +1965,15 @@
                         "    __base64Array: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __base64Array: typing.List[str] = []"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6847212314605713,
+                    "generation_timestamp": "2024-07-02T08:03:22.219781",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1823,13 +1998,15 @@
                         "    __base64Str: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __base64Str: str = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.491899013519287,
+                    "generation_timestamp": "2024-07-02T08:03:24.719706",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1852,13 +2029,16 @@
                         "    __type: typing.Type[typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __type: typing.Type[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:35:41.321723",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

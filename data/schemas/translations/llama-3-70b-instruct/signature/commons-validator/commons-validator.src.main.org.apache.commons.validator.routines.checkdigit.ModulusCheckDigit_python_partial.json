@@ -73,13 +73,20 @@
                         "    def calculate(self, code: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def calculate(self, code: str) -> str:",
+                        "         if code is None or len(code) == 0:",
+                        "             raise CheckDigitException.CheckDigitException1(\"Code is missing\")",
+                        "         modulusResult = self._calculateModulus(code, False)",
+                        "         charValue = (self.__modulus - modulusResult) % self.__modulus",
+                        "         return self._toCheckDigit(charValue)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.300971984863281,
+                    "generation_timestamp": "2024-07-01T22:57:21.255148",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -127,13 +134,22 @@
                         "    def isValid(self, code: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValid(self, code: str) -> bool:",
+                        "         if code is None or len(code) == 0:",
+                        "             return False",
+                        "         try:",
+                        "             modulusResult = self._calculateModulus(code, True)",
+                        "             return modulusResult == 0",
+                        "         except CheckDigitException as ex:",
+                        "             return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.363452196121216,
+                    "generation_timestamp": "2024-07-01T22:57:25.624546",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -173,13 +189,22 @@
                         "    def sumDigits(number: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def sumDigits(number: int) -> int:",
+                        "         total = 0",
+                        "         todo = number",
+                        "         while todo > 0:",
+                        "             total += todo % 10",
+                        "             todo = todo // 10",
+                        "         return total"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.756791830062866,
+                    "generation_timestamp": "2024-07-01T22:56:54.650377",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -220,13 +245,18 @@
                         "    def _toCheckDigit(self, charValue: int) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _toCheckDigit(self, charValue: int) -> str:",
+                        "         if charValue >= 0 and charValue <= 9:",
+                        "             return str(charValue)",
+                        "         raise CheckDigitException.CheckDigitException1(\"Invalid Check Digit Value =\" + str(charValue))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.8682260513305664,
+                    "generation_timestamp": "2024-07-01T22:56:57.524742",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -270,13 +300,19 @@
                         "    def _toInt(self, character: str, leftPos: int, rightPos: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _toInt(self, character: str, leftPos: int, rightPos: int) -> int:",
+                        "         if character.isdigit():",
+                        "             return int(character)",
+                        "         raise CheckDigitException.CheckDigitException1(",
+                        "             \"Invalid Character[\" + str(leftPos) + \"] = '\" + character + \"'\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.338212966918945,
+                    "generation_timestamp": "2024-07-01T22:57:01.866830",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -337,13 +373,25 @@
                         "    def _calculateModulus(self, code: str, includesCheckDigit: bool) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _calculateModulus(self, code: str, includesCheckDigit: bool) -> int:",
+                        "         total: int = 0",
+                        "         for i in range(0, len(code)):",
+                        "             lth: int = len(code) + (1 if includesCheckDigit else 0)",
+                        "             leftPos: int = i + 1",
+                        "             rightPos: int = lth - i",
+                        "             charValue: int = self._toInt(code[i], leftPos, rightPos)",
+                        "             total += self._weightedValue(charValue, leftPos, rightPos)",
+                        "         if total == 0:",
+                        "             raise CheckDigitException.CheckDigitException1(\"Invalid code, sum is zero\")",
+                        "         return total % self.__modulus"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.072076082229614,
+                    "generation_timestamp": "2024-07-01T22:57:15.027849",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -373,13 +421,16 @@
                         "    def getModulus(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getModulus(self) -> int:",
+                        "         return self.__modulus"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8678436279296875,
+                    "generation_timestamp": "2024-07-01T22:57:02.739417",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -411,13 +462,16 @@
                         "    def __init__(self, modulus: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, modulus: int) -> None:",
+                        "         self.__modulus = modulus"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1030797958374023,
+                    "generation_timestamp": "2024-07-01T22:57:03.846930",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -451,13 +505,16 @@
                         "    def _weightedValue(self, charValue: int, leftPos: int, rightPos: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _weightedValue(self, charValue: int, leftPos: int, rightPos: int) -> int:",
+                        "         return charValue * (leftPos + rightPos)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0999009609222412,
+                    "generation_timestamp": "2024-07-01T22:57:04.950247",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -483,13 +540,16 @@
                         "    __modulus: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __modulus: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:21:15.284106",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -514,13 +574,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 2948962251251528941"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9866089820861816,
+                    "generation_timestamp": "2024-07-01T22:21:17.271801",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

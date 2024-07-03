@@ -62,13 +62,23 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         builder = StringBuilder()",
+                        "         builder.append(getClass().getName())",
+                        "         builder.append(\" [pooledObject=\")",
+                        "         builder.append(self.__pooledObject)",
+                        "         builder.append(\", usageTracking=\")",
+                        "         builder.append(self.__usageTracking)",
+                        "         builder.append(\"]\")",
+                        "         return builder.toString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.842521905899048,
+                    "generation_timestamp": "2024-07-01T22:43:36.510494",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -100,13 +110,19 @@
                         "    def validateProxiedObject(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def validateProxiedObject(self) -> None:",
+                        "         if self.__pooledObject is None:",
+                        "             raise IllegalStateException(",
+                        "                 \"This object may no longer be \"",
+                        "                 \"used as it has been returned to the Object Pool.\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.88828706741333,
+                    "generation_timestamp": "2024-07-01T22:43:39.402189",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -134,13 +150,16 @@
                         "    def getPooledObject(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getPooledObject(self) -> typing.Any:",
+                        "         return self.__pooledObject"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4023363590240479,
+                    "generation_timestamp": "2024-07-01T22:43:40.807482",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -187,13 +206,20 @@
                         "    def doInvoke(self, method: typing.Union[inspect.Signature, typing.Callable], args: typing.List[typing.Any]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def doInvoke(self, method: typing.Union[inspect.Signature, typing.Callable], args: typing.List[typing.Any]) -> typing.Any:",
+                        "         self.validateProxiedObject()",
+                        "         object = self.getPooledObject()",
+                        "         if self.__usageTracking != None:",
+                        "             self.__usageTracking.use(object)",
+                        "         return method.invoke(object, args)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.9939723014831543,
+                    "generation_timestamp": "2024-07-01T22:43:44.806471",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -223,13 +249,18 @@
                         "    def disableProxy(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def disableProxy(self) -> typing.Any:",
+                        "         result = self.__pooledObject",
+                        "         self.__pooledObject = None",
+                        "         return result"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.074984073638916,
+                    "generation_timestamp": "2024-07-01T22:43:46.883068",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -261,13 +292,17 @@
                         "    def __init__(self, pooledObject: typing.Any, usageTracking: UsageTracking[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, pooledObject: typing.Any, usageTracking: UsageTracking[typing.Any]) -> None:",
+                        "         self.__pooledObject = pooledObject",
+                        "         self.__usageTracking = usageTracking"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.660884141921997,
+                    "generation_timestamp": "2024-07-01T22:43:48.547016",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -293,13 +328,16 @@
                         "    __usageTracking: UsageTracking[typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __usageTracking: UsageTracking[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:22:12.228694",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -323,13 +361,16 @@
                         "    __pooledObject: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __pooledObject: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:22:12.229820",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

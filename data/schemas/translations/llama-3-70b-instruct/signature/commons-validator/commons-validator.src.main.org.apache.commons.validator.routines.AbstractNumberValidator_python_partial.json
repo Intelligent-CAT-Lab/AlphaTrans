@@ -87,13 +87,16 @@
                         "    def _getFormat(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _getFormat(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:",
+                        "         return self._getFormat0(pattern, locale)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2431490421295166,
+                    "generation_timestamp": "2024-07-01T22:58:15.341721",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -137,7 +140,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -207,13 +210,34 @@
                         "    def _getFormat1(self, locale: typing.Any) -> typing.Union[str, datetime.datetime]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _getFormat1(self, locale: typing.Any) -> typing.Union[str, datetime.datetime]:",
+                        "         formatter = None",
+                        "         if self.__formatType == self.CURRENCY_FORMAT:",
+                        "             if locale is None:",
+                        "                 formatter = NumberFormat.getCurrencyInstance()",
+                        "             else:",
+                        "                 formatter = NumberFormat.getCurrencyInstance(locale)",
+                        "         elif self.__formatType == self.PERCENT_FORMAT:",
+                        "             if locale is None:",
+                        "                 formatter = NumberFormat.getPercentInstance()",
+                        "             else:",
+                        "                 formatter = NumberFormat.getPercentInstance(locale)",
+                        "         else:",
+                        "             if locale is None:",
+                        "                 formatter = NumberFormat.getInstance()",
+                        "             else:",
+                        "                 formatter = NumberFormat.getInstance(locale)",
+                        "             if not self.isAllowFractions():",
+                        "                 formatter.setParseIntegerOnly(True)",
+                        "         return formatter"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 11.396107196807861,
+                    "generation_timestamp": "2024-07-01T22:57:38.501497",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -278,13 +302,33 @@
                         "    def _determineScale(self, format: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _determineScale(self, format: typing.Any) -> int:",
+                        "         if not self.isStrict():",
+                        "             return -1",
+                        "         if not self.isAllowFractions() or format.isParseIntegerOnly():",
+                        "             return 0",
+                        "         minimumFraction = format.getMinimumFractionDigits()",
+                        "         maximumFraction = format.getMaximumFractionDigits()",
+                        "         if minimumFraction != maximumFraction:",
+                        "             return -1",
+                        "         scale = minimumFraction",
+                        "         if isinstance(format, DecimalFormat):",
+                        "             multiplier = format.getMultiplier()",
+                        "             if multiplier == 100:",
+                        "                 scale += 2",
+                        "             elif multiplier == 1000:",
+                        "                 scale += 3",
+                        "         elif self.__formatType == AbstractNumberValidator.PERCENT_FORMAT:",
+                        "             scale += 2",
+                        "         return scale"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 12.202395915985107,
+                    "generation_timestamp": "2024-07-01T22:57:50.709765",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -343,13 +387,28 @@
                         "    def _getFormat0(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _getFormat0(self, pattern: str, locale: typing.Any) -> typing.Union[str, datetime.datetime]:",
+                        "         formatter: typing.Union[str, datetime.datetime] = None",
+                        "         usePattern: bool = (pattern != None and len(pattern) > 0)",
+                        "         if not usePattern:",
+                        "             formatter = self._getFormat1(locale)",
+                        "         elif locale == None:",
+                        "             formatter = DecimalFormat(pattern)",
+                        "         else:",
+                        "             symbols: typing.Union[str, datetime.datetime] = DecimalFormatSymbols(locale)",
+                        "             formatter = DecimalFormat(pattern, symbols)",
+                        "",
+                        "         if not self.isAllowFractions():",
+                        "             formatter.setParseIntegerOnly(True)",
+                        "         return formatter"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.166158676147461,
+                    "generation_timestamp": "2024-07-01T22:57:59.879743",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -400,13 +459,20 @@
                         "    def _parse(self, value: str, pattern: str, locale: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _parse(self, value: str, pattern: str, locale: typing.Any) -> typing.Any:",
+                        "         value = (value if value is not None else None)",
+                        "         if value is None or len(value) == 0:",
+                        "             return None",
+                        "         formatter = self._getFormat0(pattern, locale)",
+                        "         return self._parse(value, formatter)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.804599046707153,
+                    "generation_timestamp": "2024-07-01T22:58:04.691260",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -448,13 +514,18 @@
                         "    def maxValue(self, value: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def maxValue(self, value: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:",
+                        "         if self.isAllowFractions():",
+                        "             return (value <= max)",
+                        "         return (value <= max)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.2653110027313232,
+                    "generation_timestamp": "2024-07-01T22:58:06.961974",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -496,13 +567,18 @@
                         "    def minValue(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def minValue(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number]) -> bool:",
+                        "         if self.isAllowFractions():",
+                        "             return (value >= min)",
+                        "         return (value >= min)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.664357900619507,
+                    "generation_timestamp": "2024-07-01T22:58:09.631899",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -547,13 +623,16 @@
                         "    def isInRange(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isInRange(self, value: typing.Union[int, float, numbers.Number], min: typing.Union[int, float, numbers.Number], max: typing.Union[int, float, numbers.Number]) -> bool:",
+                        "         return (self.minValue(value, min) and self.maxValue(value, max))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0490059852600098,
+                    "generation_timestamp": "2024-07-01T22:58:11.686455",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -583,13 +662,16 @@
                         "    def getFormatType(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getFormatType(self) -> int:",
+                        "         return self.__formatType"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9140090942382812,
+                    "generation_timestamp": "2024-07-01T22:57:15.949359",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -619,13 +701,16 @@
                         "    def isAllowFractions(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isAllowFractions(self) -> bool:",
+                        "         return self.__allowFractions"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4713656902313232,
+                    "generation_timestamp": "2024-07-01T22:57:27.100741",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -667,13 +752,18 @@
                         "    def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:",
+                        "         super().__init__(strict)",
+                        "         self.__allowFractions = allowFractions",
+                        "         self.__formatType = formatType"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.399421215057373,
+                    "generation_timestamp": "2024-07-01T22:58:14.092515",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -705,13 +795,16 @@
                         "    def _processParsedValue(self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _processParsedValue(self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]) -> typing.Any:",
+                        "         return value"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6489968299865723,
+                    "generation_timestamp": "2024-07-01T22:58:29.857595",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -738,13 +831,15 @@
                         "    PERCENT_FORMAT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    PERCENT_FORMAT: int = 2"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.874398946762085,
+                    "generation_timestamp": "2024-07-02T08:02:24.692247",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -769,13 +864,15 @@
                         "    CURRENCY_FORMAT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CURRENCY_FORMAT: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4467499256134033,
+                    "generation_timestamp": "2024-07-02T08:02:26.142130",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -800,13 +897,15 @@
                         "    STANDARD_FORMAT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    STANDARD_FORMAT: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.3024699687957764,
+                    "generation_timestamp": "2024-07-02T08:02:28.450564",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -830,13 +929,16 @@
                         "    __formatType: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __formatType: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:21:21.750211",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -860,13 +962,16 @@
                         "    __allowFractions: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __allowFractions: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:21:21.751929",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -891,13 +996,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = -3088817875906765463"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.3405630588531494,
+                    "generation_timestamp": "2024-07-01T22:21:24.094109",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

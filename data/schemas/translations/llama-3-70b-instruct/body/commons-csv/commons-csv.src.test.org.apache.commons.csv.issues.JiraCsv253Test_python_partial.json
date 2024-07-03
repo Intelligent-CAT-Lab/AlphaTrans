@@ -145,13 +145,23 @@
                         "    def testHandleAbsentValues(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testHandleAbsentValues(self) -> None:",
+                        "         source = \"\\\"John\\\",,\\\"Doe\\\"\\n\" + \",\\\"AA\\\",123\\n\" + \"\\\"John\\\",90,\\n\" + \"\\\"\\\",,90\"",
+                        "         csvFormat = CSVFormat.DEFAULT.builder().setQuoteMode(QuoteMode.NON_NUMERIC).build()",
+                        "         with csvFormat.parse(io.StringIO(source)) as parser:",
+                        "             csvRecords = parser.iterator()",
+                        "             self.__assertArrayEqual([\"John\", None, \"Doe\"], csvRecords.next())",
+                        "             self.__assertArrayEqual([None, \"AA\", \"123\"], csvRecords.next())",
+                        "             self.__assertArrayEqual([\"John\", \"90\", None], csvRecords.next())",
+                        "             self.__assertArrayEqual([\"\", None, \"90\"], csvRecords.next())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.79545521736145,
+                    "generation_timestamp": "2024-07-02T00:54:21.012992",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -192,13 +202,17 @@
                         "    def __assertArrayEqual(self, expected: typing.List[str], actual: CSVRecord) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __assertArrayEqual(self, expected: typing.List[str], actual: CSVRecord) -> None:",
+                        "         for i in range(len(expected)):",
+                        "             self.assertEqual(expected[i], actual.get1(i))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6965081691741943,
+                    "generation_timestamp": "2024-07-02T00:54:10.193801",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

@@ -89,13 +89,33 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         buf1 = \"\"",
+                        "         if self.isPrinter():",
+                        "             for printer in self.__printers:",
+                        "                 buf1 += printer.toString()",
+                        "         buf2 = \"\"",
+                        "         if self.isParser():",
+                        "             for parser in self.__parsers:",
+                        "                 buf2 += parser.toString()",
+                        "         str1 = buf1",
+                        "         str2 = buf2",
+                        "         if self.isPrinter() and not self.isParser():",
+                        "             return str1",
+                        "         elif self.isParser() and not self.isPrinter():",
+                        "             return str2",
+                        "         elif str1 == str2:",
+                        "             return str1",
+                        "         else:",
+                        "             return str1 + \":\" + str2"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.548075675964355,
+                    "generation_timestamp": "2024-07-02T00:56:05.956765",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -160,13 +180,24 @@
                         "    def parse(self, text: str, startIndex: int) -> MoneyParseContext:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parse(self, text: str, startIndex: int) -> MoneyParseContext:",
+                        "         self.checkNotNull(text, \"Text must not be null\")",
+                        "         if startIndex < 0 or startIndex > len(text):",
+                        "             raise StringIndexOutOfBoundsException(\"Invalid start index: \" + startIndex)",
+                        "         if self.isParser() == False:",
+                        "             raise UnsupportedOperationException(",
+                        "                     \"MoneyFomatter has not been configured to be able to parse\")",
+                        "         context = MoneyParseContext(1, text, startIndex, self.__locale, None, 0, None)",
+                        "         self.__printerParser.parse(context)",
+                        "         return context"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.28198790550232,
+                    "generation_timestamp": "2024-07-02T00:59:08.320269",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -209,13 +240,16 @@
                         "    def parseMoney(self, text: str) -> Money:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parseMoney(self, text: str) -> Money:",
+                        "         return self.parseBigMoney(text).toMoney0()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.5625090599060059,
+                    "generation_timestamp": "2024-07-02T01:25:05.363746",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -311,13 +345,29 @@
                         "    def parseBigMoney(self, text: str) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def parseBigMoney(self, text: str) -> BigMoney:",
+                        "         self.checkNotNull(text, \"Text must not be null\")",
+                        "         result = self.parse(text, 0)",
+                        "         if result.isError() or result.isFullyParsed() == False or result.isComplete() == False:",
+                        "            str = text[0:64] + \"...\" if len(text) > 64 else text",
+                        "            if result.isError():",
+                        "                raise MoneyFormatException.MoneyFormatException1(",
+                        "                        \"Text could not be parsed at index \" + result.getErrorIndex() + \": \" + str)",
+                        "            elif result.isFullyParsed() == False:",
+                        "                raise MoneyFormatException.MoneyFormatException1(",
+                        "                        \"Unparsed text found at index \" + result.getIndex() + \": \" + str)",
+                        "            else:",
+                        "                raise MoneyFormatException.MoneyFormatException1(",
+                        "                        \"Parsing did not find both currency and amount: \" + str)",
+                        "         return result.toBigMoney()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 12.177943229675293,
+                    "generation_timestamp": "2024-07-02T01:18:46.849681",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -384,13 +434,23 @@
                         "    def printIO(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def printIO(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:",
+                        "         MoneyUtils.checkNotNull(moneyProvider, \"BigMoneyProvider must not be null\")",
+                        "         if self.isPrinter() == False:",
+                        "            raise UnsupportedOperationException(",
+                        "                    \"MoneyFomatter has not been configured to be able to print\")",
+                        "",
+                        "         money: BigMoney = BigMoney.of2(moneyProvider)",
+                        "         context: MoneyPrintContext = MoneyPrintContext(self.__locale)",
+                        "         self.__printerParser.print(context, appendable, money)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.761085033416748,
+                    "generation_timestamp": "2024-07-02T01:18:53.621167",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -438,13 +498,19 @@
                         "    def print1(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def print1(self, appendable: typing.Union[typing.List, io.TextIOBase], moneyProvider: BigMoneyProvider) -> None:",
+                        "         try:",
+                        "            self.printIO(appendable, moneyProvider)",
+                        "         except IOException as ex:",
+                        "            raise MoneyFormatException(ex.getMessage(), ex)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.423646926879883,
+                    "generation_timestamp": "2024-07-02T01:18:56.049447",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -484,13 +550,18 @@
                         "    def print0(self, moneyProvider: BigMoneyProvider) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def print0(self, moneyProvider: BigMoneyProvider) -> str:",
+                        "         buf = io.StringIO()",
+                        "         self.print1(buf, moneyProvider)",
+                        "         return buf.getvalue()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9425883293151855,
+                    "generation_timestamp": "2024-07-02T01:18:57.996601",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -526,13 +597,16 @@
                         "    def isParser(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isParser(self) -> bool:",
+                        "         return self.__printerParser.isParser()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0212490558624268,
+                    "generation_timestamp": "2024-07-02T00:56:06.983697",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -568,13 +642,16 @@
                         "    def isPrinter(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isPrinter(self) -> bool:",
+                        "         return self.__printerParser.isPrinter()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.201244831085205,
+                    "generation_timestamp": "2024-07-02T00:56:08.191199",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -618,13 +695,17 @@
                         "    def withLocale(self, locale: typing.Any) -> MoneyFormatter:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def withLocale(self, locale: typing.Any) -> MoneyFormatter:",
+                        "         MoneyFormatter.checkNotNull(locale, \"Locale must not be null\")",
+                        "         return MoneyFormatter(1, locale, None, None, self.__printerParser)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.9399502277374268,
+                    "generation_timestamp": "2024-07-02T00:56:36.056902",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -654,13 +735,16 @@
                         "    def getLocale(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getLocale(self) -> typing.Any:",
+                        "         return self.__locale"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9169328212738037,
+                    "generation_timestamp": "2024-07-02T00:56:09.111124",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -728,13 +812,28 @@
                         "    def __init__(self, constructorId: int, locale: typing.Any, parsers: typing.List[MoneyParser], printers: typing.List[MoneyPrinter], printerParser: MultiPrinterParser) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, locale: typing.Any, parsers: typing.List[MoneyParser], printers: typing.List[MoneyPrinter], printerParser: MultiPrinterParser) -> None:",
+                        "         if constructorId == 0:",
+                        "            MoneyFormatter.checkNotNull(locale, \"Locale must not be null\")",
+                        "            MoneyFormatter.checkNotNull(printers, \"Printers must not be null\")",
+                        "            MoneyFormatter.checkNotNull(parsers, \"Parsers must not be null\")",
+                        "            if len(printers) != len(parsers):",
+                        "                raise IllegalArgumentException(\"Printers and parsers must match\")",
+                        "            self.__locale = locale",
+                        "            self.__printerParser = MultiPrinterParser(printers, parsers)",
+                        "         else:",
+                        "            MoneyFormatter.checkNotNull(locale, \"Locale must not be null\")",
+                        "            MoneyFormatter.checkNotNull(printerParser, \"PrinterParser must not be null\")",
+                        "            self.__locale = locale",
+                        "            self.__printerParser = printerParser"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.701721906661987,
+                    "generation_timestamp": "2024-07-02T00:56:32.120292",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -770,13 +869,18 @@
                         "    def checkNotNull(object: typing.Any, message: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def checkNotNull(object: typing.Any, message: str) -> None:",
+                        "         if object is None:",
+                        "            raise NullPointerException(message)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2029821872711182,
+                    "generation_timestamp": "2024-07-02T00:56:10.319822",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -804,13 +908,16 @@
                         "    def getPrinterParser(self) -> MultiPrinterParser:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getPrinterParser(self) -> MultiPrinterParser:",
+                        "         return self.__printerParser"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9879989624023438,
+                    "generation_timestamp": "2024-07-02T00:56:33.112641",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -836,13 +943,16 @@
                         "    __printerParser: MultiPrinterParser = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __printerParser: MultiPrinterParser = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:48:17.716936",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -866,13 +976,16 @@
                         "    __locale: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __locale: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:48:17.718892",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -897,13 +1010,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    serialVersionUID: int = 2385346258"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2971978187561035,
+                    "generation_timestamp": "2024-07-02T00:48:19.017766",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

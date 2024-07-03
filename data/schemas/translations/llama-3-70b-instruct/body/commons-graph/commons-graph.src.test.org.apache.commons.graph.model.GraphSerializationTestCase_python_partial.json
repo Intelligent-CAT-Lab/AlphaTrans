@@ -203,13 +203,18 @@
                         "    def testSerializeUndirectedWeightdGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testSerializeUndirectedWeightdGraph(self) -> None:",
+                        "         g: MutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]] = CommonsGraph.newUndirectedMutableGraph(self.__buildWeightedGraphConnections())",
+                        "",
+                        "         self.__checkSerialization(g)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.8626818656921387,
+                    "generation_timestamp": "2024-07-02T03:33:04.166314",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -260,13 +265,17 @@
                         "    def testSerializeUndirectedGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testSerializeUndirectedGraph(self) -> None:",
+                        "         g: MutableGraph[BaseLabeledVertex, BaseLabeledEdge] = CommonsGraph.newUndirectedMutableGraph(self.__buildGraphConnections())",
+                        "         self.__checkSerialization(g)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.8420140743255615,
+                    "generation_timestamp": "2024-07-02T03:33:21.571576",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -324,13 +333,22 @@
                         "    def testSerializeSyncronyzedDirectedWeightdGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testSerializeSyncronyzedDirectedWeightdGraph(self) -> None:",
+                        "         g: Graph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]] = CommonsGraph.synchronize2(",
+                        "             CommonsGraph.newDirectedMutableGraph(",
+                        "                 GraphSerializationTestCase.__buildWeightedGraphConnections()",
+                        "             )",
+                        "         )",
+                        "",
+                        "         GraphSerializationTestCase.__checkSerialization(g)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.778975009918213,
+                    "generation_timestamp": "2024-07-02T03:33:07.951708",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -391,13 +409,18 @@
                         "    def testSerializeSpanningTree(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testSerializeSpanningTree(self) -> None:",
+                        "         spanningTree: MutableSpanningTree[BaseLabeledVertex, BaseLabeledWeightedEdge[float], float] = MutableSpanningTree[BaseLabeledVertex, BaseLabeledWeightedEdge[float], float](DoubleWeightBaseOperations(), BaseWeightedEdge[float]())",
+                        "         CommonsGraph.populate(spanningTree).withConnections(self.__buildWeightedGraphConnections())",
+                        "         self.__checkSerialization(spanningTree)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.8315818309783936,
+                    "generation_timestamp": "2024-07-02T03:33:13.788538",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -464,13 +487,29 @@
                         "    def testSerializePath(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testSerializePath(self) -> None:",
+                        "         start: BaseLabeledVertex = BaseLabeledVertex(\"start\")",
+                        "         goal: BaseLabeledVertex = BaseLabeledVertex(\"goal\")",
+                        "         a: BaseLabeledVertex = BaseLabeledVertex(\"a\")",
+                        "         b: BaseLabeledVertex = BaseLabeledVertex(\"b\")",
+                        "         c: BaseLabeledVertex = BaseLabeledVertex(\"c\")",
+                        "",
+                        "         g: InMemoryWeightedPath[BaseLabeledVertex, BaseLabeledWeightedEdge[double], double] = InMemoryWeightedPath[BaseLabeledVertex, BaseLabeledWeightedEdge[double], double](start, goal, DoubleWeightBaseOperations(), BaseWeightedEdge[double]())",
+                        "",
+                        "         g.addConnectionInTail(start, BaseLabeledWeightedEdge[double](\"start <-> a\", 1.5), a)",
+                        "         g.addConnectionInTail(a, BaseLabeledWeightedEdge[double](\"a <-> b\", 2.0), b)",
+                        "         g.addConnectionInTail(b, BaseLabeledWeightedEdge[double](\"b <-> c\", 3.0), c)",
+                        "         g.addConnectionInTail(c, BaseLabeledWeightedEdge[double](\"c <-> goal\", 3.0), goal)",
+                        "",
+                        "         self.__checkSerialization(g)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 16.4257071018219,
+                    "generation_timestamp": "2024-07-02T03:32:10.143550",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -521,13 +560,17 @@
                         "    def testSerializeDirectedWeightdGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testSerializeDirectedWeightdGraph(self) -> None:",
+                        "         g: MutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]] = CommonsGraph.newDirectedMutableGraph(self.__buildWeightedGraphConnections())",
+                        "         self.__checkSerialization(g)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.9159557819366455,
+                    "generation_timestamp": "2024-07-02T03:33:16.710009",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -578,13 +621,17 @@
                         "    def testSerializeDirectedGraph(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testSerializeDirectedGraph(self) -> None:",
+                        "         g: MutableGraph[BaseLabeledVertex, BaseLabeledEdge] = CommonsGraph.newDirectedMutableGraph(self.__buildGraphConnections())",
+                        "         self.__checkSerialization(g)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.5571184158325195,
+                    "generation_timestamp": "2024-07-02T03:33:24.134395",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -619,13 +666,18 @@
                         "    def cleanUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def cleanUp(self) -> None:",
+                        "         f = pathlib.Path(self.__FILE_NAME)",
+                        "         if f.exists():",
+                        "             f.unlink()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9351119995117188,
+                    "generation_timestamp": "2024-07-02T03:31:28.623920",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -671,7 +723,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -723,7 +775,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -773,13 +825,17 @@
                         "    def __buildGraphConnections() -> GraphConnection[BaseLabeledVertex,BaseLabeledEdge]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __buildGraphConnections() -> GraphConnection[BaseLabeledVertex,BaseLabeledEdge]:",
+                        "         return AbstractGraphConnection[BaseLabeledVertex,BaseLabeledEdge]().connect0()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0086829662323,
+                    "generation_timestamp": "2024-07-02T03:33:18.723234",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -806,13 +862,15 @@
                         "    __FILE_NAME: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __FILE_NAME: str = \"target/serialiazedGraph.dat\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7885260581970215,
+                    "generation_timestamp": "2024-07-02T02:00:45.250725",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

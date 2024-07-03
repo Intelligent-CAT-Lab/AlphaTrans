@@ -140,13 +140,26 @@
                         "    def readExternal(self, in_: pickle.Unpickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def readExternal(self, in_: pickle.Unpickler) -> None:",
+                        "         self.__type = in_.read_byte()",
+                        "         if self.__type == self.BIG_MONEY:",
+                        "             self.__object = self.__readBigMoney(in_)",
+                        "             return",
+                        "         if self.__type == self.MONEY:",
+                        "             self.__object = Money(0, self.__readBigMoney(in_))",
+                        "             return",
+                        "         if self.__type == self.CURRENCY_UNIT:",
+                        "             self.__object = self.__readCurrency(in_)",
+                        "             return",
+                        "         raise StreamCorruptedException(\"Serialization input has invalid type\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.8532421588897705,
+                    "generation_timestamp": "2024-07-02T02:49:20.271603",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -217,13 +230,29 @@
                         "    def writeExternal(self, out: pickle.Pickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def writeExternal(self, out: pickle.Pickler) -> None:",
+                        "         out.write(self.__type)",
+                        "         if self.__type == self.BIG_MONEY:",
+                        "             obj = typing.cast(BigMoney, self.__object)",
+                        "             self.__writeBigMoney(out, obj)",
+                        "             return",
+                        "         if self.__type == self.MONEY:",
+                        "             obj = typing.cast(Money, self.__object)",
+                        "             self.__writeBigMoney(out, obj.toBigMoney())",
+                        "             return",
+                        "         if self.__type == self.CURRENCY_UNIT:",
+                        "             obj = typing.cast(CurrencyUnit, self.__object)",
+                        "             self.__writeCurrency(out, obj)",
+                        "             return",
+                        "         raise Exception(\"Joda-Money bug: Serialization broken\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.671801090240479,
+                    "generation_timestamp": "2024-07-02T02:49:34.196060",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -262,13 +291,20 @@
                         "    def __init__(self, constructorId: int, object: typing.Any, type: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, object: typing.Any, type: int) -> None:",
+                        "         if constructorId == 0:",
+                        "            self.__type = type",
+                        "            self.__object = object",
+                        "         else:",
+                        "            pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.077738046646118,
+                    "generation_timestamp": "2024-07-02T02:48:57.060530",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -298,13 +334,16 @@
                         "    def __readResolve(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __readResolve(self) -> typing.Any:",
+                        "         return self.__object"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8041548728942871,
+                    "generation_timestamp": "2024-07-02T02:49:01.739970",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -362,13 +401,24 @@
                         "    def __readCurrency(self, in_: pickle.Unpickler) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __readCurrency(self, in_: pickle.Unpickler) -> CurrencyUnit:",
+                        "         code: str = in_.read_string()",
+                        "         singletonCurrency: CurrencyUnit = CurrencyUnit.of1(code)",
+                        "         if singletonCurrency.getNumericCode() != in_.read_short():",
+                        "            raise InvalidObjectException(",
+                        "                    \"Deserialization found a mismatch in the numeric code for currency \" + code)",
+                        "         if singletonCurrency.getDecimalPlaces() != in_.read_short():",
+                        "            raise InvalidObjectException(",
+                        "                    \"Deserialization found a mismatch in the decimal places for currency \" + code)",
+                        "         return singletonCurrency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.814942836761475,
+                    "generation_timestamp": "2024-07-02T02:49:08.562599",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -416,13 +466,20 @@
                         "    def __readBigMoney(self, in_: pickle.Unpickler) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __readBigMoney(self, in_: pickle.Unpickler) -> BigMoney:",
+                        "         currency: CurrencyUnit = self.__readCurrency(in_)",
+                        "         bytes: bytes = in_.read_bytes(in_.read_int())",
+                        "         bd: decimal.Decimal = decimal.Decimal(bytes, in_.read_int())",
+                        "         bigMoney: BigMoney = BigMoney(0, bd, currency)",
+                        "         return bigMoney"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.839303016662598,
+                    "generation_timestamp": "2024-07-02T02:49:13.409703",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -473,13 +530,18 @@
                         "    def __writeCurrency(self, out: pickle.Pickler, obj: CurrencyUnit) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __writeCurrency(self, out: pickle.Pickler, obj: CurrencyUnit) -> None:",
+                        "         out.write(obj.getCode())",
+                        "         out.write(obj.getNumericCode())",
+                        "         out.write(obj.getDecimalPlaces())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.084991931915283,
+                    "generation_timestamp": "2024-07-02T02:49:22.364944",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -537,13 +599,20 @@
                         "    def __writeBigMoney(self, out: pickle.Pickler, obj: BigMoney) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __writeBigMoney(self, out: pickle.Pickler, obj: BigMoney) -> None:",
+                        "         self.__writeCurrency(out, obj.getCurrencyUnit())",
+                        "         bytes = obj.getAmount().unscaledValue().to_bytes()",
+                        "         out.write(len(bytes))",
+                        "         out.write(bytes)",
+                        "         out.write(obj.getScale())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.134791135787964,
+                    "generation_timestamp": "2024-07-02T02:49:25.515183",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -569,13 +638,15 @@
                         "    CURRENCY_UNIT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    CURRENCY_UNIT: int = 67"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.558593988418579,
+                    "generation_timestamp": "2024-07-02T08:04:06.800430",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -599,13 +670,15 @@
                         "    MONEY: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    MONEY: int = 77"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.373471975326538,
+                    "generation_timestamp": "2024-07-02T08:04:08.179284",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -629,13 +702,15 @@
                         "    BIG_MONEY: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    BIG_MONEY: int = 66"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4342567920684814,
+                    "generation_timestamp": "2024-07-02T08:04:09.620651",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -658,13 +733,16 @@
                         "    __object: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __object: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:55:31.060704",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -687,13 +765,16 @@
                         "    __type: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __type: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:55:31.064521",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

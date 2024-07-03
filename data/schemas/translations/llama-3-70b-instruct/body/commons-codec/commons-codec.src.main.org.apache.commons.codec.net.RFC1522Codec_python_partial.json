@@ -128,13 +128,39 @@
                         "    def _decodeText(self, text: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _decodeText(self, text: str) -> str:",
+                        "         if text is None:",
+                        "             return None",
+                        "         if not text.startswith(self._PREFIX) or not text.endswith(self._POSTFIX):",
+                        "             raise DecoderException(\"RFC 1522 violation: malformed encoded content\", None)",
+                        "         terminator: int = len(text) - 2",
+                        "         from_: int = 2",
+                        "         to: int = text.index(self._SEP, from_)",
+                        "         if to == terminator:",
+                        "             raise DecoderException(\"RFC 1522 violation: charset token not found\", None)",
+                        "         charset: str = text[from_:to]",
+                        "         if charset == \"\":",
+                        "             raise DecoderException(\"RFC 1522 violation: charset not specified\", None)",
+                        "         from_ = to + 1",
+                        "         to = text.index(self._SEP, from_)",
+                        "         if to == terminator:",
+                        "             raise DecoderException(\"RFC 1522 violation: encoding token not found\", None)",
+                        "         encoding: str = text[from_:to]",
+                        "         if not self._getEncoding().lower() == encoding.lower():",
+                        "             raise DecoderException(\"This codec cannot decode \" + encoding + \" encoded content\", None)",
+                        "         from_ = to + 1",
+                        "         to = text.index(self._SEP, from_)",
+                        "         data: typing.List[int] = StringUtils.getBytesUsAscii(text[from_:to])",
+                        "         data = self._doDecoding(data)",
+                        "         return str(data, charset)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 65.3184700012207,
+                    "generation_timestamp": "2024-07-02T10:19:01.383156",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -177,13 +203,18 @@
                         "    def _encodeText1(self, text: str, charsetName: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _encodeText1(self, text: str, charsetName: str) -> str:",
+                        "         if text is None:",
+                        "             return None",
+                        "         return self._encodeText0(text, Charset.forName(charsetName))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6685068607330322,
+                    "generation_timestamp": "2024-07-02T10:19:17.178793",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -243,13 +274,26 @@
                         "    def _encodeText0(self, text: str, charset: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _encodeText0(self, text: str, charset: str) -> str:",
+                        "         if text is None:",
+                        "             return None",
+                        "         buffer: io.StringIO = io.StringIO()",
+                        "         buffer.write(self._PREFIX)",
+                        "         buffer.write(charset)",
+                        "         buffer.write(self._SEP)",
+                        "         buffer.write(self._getEncoding())",
+                        "         buffer.write(self._SEP)",
+                        "         buffer.write(StringUtils.newStringUsAscii(self._doEncoding(text.encode(charset))))",
+                        "         buffer.write(self._POSTFIX)",
+                        "         return buffer.getvalue()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 13.32682180404663,
+                    "generation_timestamp": "2024-07-02T10:19:14.714654",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -280,13 +324,16 @@
                         "    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:",
+                        "         return bytes"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 17.07107901573181,
+                    "generation_timestamp": "2024-07-02T10:17:54.748807",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -317,13 +364,16 @@
                         "    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:",
+                        "         return bytes"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.5999758243560791,
+                    "generation_timestamp": "2024-07-02T10:17:55.353905",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -352,13 +402,16 @@
                         "    def _getEncoding(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _getEncoding(self) -> str:",
+                        "         return self.getEncoding()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7022547721862793,
+                    "generation_timestamp": "2024-07-02T10:17:56.059620",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -385,13 +438,15 @@
                         "    _PREFIX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _PREFIX: str = \"=?\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0621790885925293,
+                    "generation_timestamp": "2024-07-02T07:28:04.740501",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -416,13 +471,15 @@
                         "    _POSTFIX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _POSTFIX: str = \"?=\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0797748565673828,
+                    "generation_timestamp": "2024-07-02T07:28:05.823190",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -447,13 +504,15 @@
                         "    _SEP: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    _SEP: str = '?'"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0823819637298584,
+                    "generation_timestamp": "2024-07-02T07:28:06.908769",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

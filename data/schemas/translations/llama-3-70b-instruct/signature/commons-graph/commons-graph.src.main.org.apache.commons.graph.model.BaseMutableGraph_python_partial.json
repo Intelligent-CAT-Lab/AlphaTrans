@@ -85,13 +85,23 @@
                         "    def removeVertex(self, v: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def removeVertex(self, v: typing.Any) -> None:",
+                        "         self._checkGraphCondition(v != None, \"Impossible to remove a null Vertex from the Graph\", [])",
+                        "         self._checkGraphCondition(self.containsVertex(v), \"Vertex '%s' not present in the Graph\", [v])",
+                        "",
+                        "         for tail in self.getAdjacencyList().get(v):",
+                        "             self.getIndexedEdges().remove(VertexPair(v, tail))",
+                        "         self.getAdjacencyList().remove(v)",
+                        "",
+                        "         self._decorateRemoveVertex(v)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.752758026123047,
+                    "generation_timestamp": "2024-07-01T22:29:16.034049",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -145,13 +155,21 @@
                         "    def removeEdge(self, e: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def removeEdge(self, e: typing.Any) -> None:",
+                        "         checkGraphCondition(e != None, \"Impossible to remove a null Edge from the Graph\")",
+                        "         checkGraphCondition(containsEdge(e), \"Edge '%s' not present in the Graph\", e)",
+                        "         vertexPair = getVertices1(e)",
+                        "         decorateRemoveEdge(e)",
+                        "         internalRemoveEdge(vertexPair.getHead(), e, vertexPair.getTail())",
+                        "         getAllEdges().remove(e)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.685411214828491,
+                    "generation_timestamp": "2024-07-01T22:29:22.721858",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -188,13 +206,19 @@
                         "    def _internalRemoveEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _internalRemoveEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "         vertexPair = VertexPair(head, tail)",
+                        "         self.__indexedVertices.pop(e)",
+                        "         self.__indexedEdges.pop(vertexPair)",
+                        "         self.__adjacencyList.get(vertexPair.getHead()).remove(vertexPair.getTail())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.634922742843628,
+                    "generation_timestamp": "2024-07-01T22:22:27.796894",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -235,13 +259,22 @@
                         "    def _internalAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _internalAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "         self.__adjacencyList.get(head).add(tail)",
+                        "",
+                        "         vertexPair = VertexPair(head, tail)",
+                        "         self.__indexedEdges.put(vertexPair, e)",
+                        "",
+                        "         if not self.__indexedVertices.containsKey(e):",
+                        "             self.__indexedVertices.put(e, vertexPair)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.81543231010437,
+                    "generation_timestamp": "2024-07-01T22:22:34.614624",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -290,13 +323,21 @@
                         "    def addVertex(self, v: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def addVertex(self, v: typing.Any) -> None:",
+                        "         self._checkGraphCondition(v != None, \"Impossible to add a null Vertex to the Graph\", [])",
+                        "         self._checkGraphCondition(not self.containsVertex(v), \"Vertex '%s' already present in the Graph\", [v])",
+                        "",
+                        "         self._getAdjacencyList().put(v, LinkedHashSet())",
+                        "",
+                        "         self._decorateAddVertex(v)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.2368857860565186,
+                    "generation_timestamp": "2024-07-01T22:29:28.964935",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -360,13 +401,27 @@
                         "    def addEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def addEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "         self._checkGraphCondition(head != None, \"Null head Vertex not admitted\", [])",
+                        "         self._checkGraphCondition(e != None, \"Impossible to add a null Edge in the Graph\", [])",
+                        "         self._checkGraphCondition(tail != None, \"Null tail Vertex not admitted\", [])",
+                        "         self._checkGraphCondition(self.containsVertex(head), \"Head Vertex '%s' not present in the Graph\", [head])",
+                        "         self._checkGraphCondition(self.containsVertex(tail), \"Head Vertex '%s' not present in the Graph\", [tail])",
+                        "         self._checkGraphCondition(self.getEdge(head, tail) == None, \"Edge %s is already present in the Graph\", [e])",
+                        "",
+                        "         self.getAllEdges().add(e)",
+                        "",
+                        "         self._internalAddEdge(head, e, tail)",
+                        "",
+                        "         self._decorateAddEdge(head, e, tail)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 16.22689700126648,
+                    "generation_timestamp": "2024-07-01T22:29:45.197689",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -397,13 +452,16 @@
                         "    def _decorateRemoveVertex(self, v: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _decorateRemoveVertex(self, v: typing.Any) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7568302154541016,
+                    "generation_timestamp": "2024-07-01T22:22:35.374919",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -434,13 +492,16 @@
                         "    def _decorateRemoveEdge(self, e: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _decorateRemoveEdge(self, e: typing.Any) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8190619945526123,
+                    "generation_timestamp": "2024-07-01T22:22:36.195796",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -471,13 +532,16 @@
                         "    def _decorateAddVertex(self, v: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _decorateAddVertex(self, v: typing.Any) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7677140235900879,
+                    "generation_timestamp": "2024-07-01T22:22:36.968774",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -510,13 +574,16 @@
                         "    def _decorateAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _decorateAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "         self.decorateAddEdge(head, e, tail)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.717808723449707,
+                    "generation_timestamp": "2024-07-01T22:22:38.688624",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -543,13 +610,15 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 1549113549446254183"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.1265740394592285,
+                    "generation_timestamp": "2024-07-01T22:18:40.136138",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

@@ -113,13 +113,17 @@
                         "    def from_(self, source: typing.Any) -> TargetSourceSelector[typing.Any, typing.Any, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def from_(self, source: typing.Any) -> TargetSourceSelector[typing.Any, typing.Any, typing.Any]:",
+                        "         source = Assertions.checkNotNull(source, \"Shortest path can not be calculated from a null source\")",
+                        "         return DefaultTargetSourceSelector(self.__graph, self.__weightedEdges, source)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.552868127822876,
+                    "generation_timestamp": "2024-07-02T04:27:11.920610",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -224,13 +228,41 @@
                         "    def applyingFloydWarshall(self, weightOperations: typing.Any) -> AllVertexPairsShortestPath[typing.Any, typing.Any, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def applyingFloydWarshall(self, weightOperations: typing.Any) -> AllVertexPairsShortestPath[typing.Any, typing.Any, typing.Any]:",
+                        "         weightOperations = Assertions.checkNotNull(weightOperations, \"Floyd-Warshall algorithm can not be applied using null weight operations\")",
+                        "         shortestPaths = AllVertexPairsShortestPath(weightOperations)",
+                        "         next = {}",
+                        "         for we in self.__graph.getEdges():",
+                        "             vertexPair = self.__graph.getVertices1(we)",
+                        "             shortestPaths.addShortestDistance(vertexPair.getHead(), vertexPair.getTail(), self.__weightedEdges.map(we))",
+                        "             if isinstance(self.__graph, UndirectedGraph):",
+                        "                 shortestPaths.addShortestDistance(vertexPair.getTail(), vertexPair.getHead(), self.__weightedEdges.map(we))",
+                        "         for k in self.__graph.getVertices0():",
+                        "             for i in self.__graph.getVertices0():",
+                        "                 for j in self.__graph.getVertices0():",
+                        "                     if shortestPaths.hasShortestDistance(i, k) and shortestPaths.hasShortestDistance(k, j):",
+                        "                         newDistance = weightOperations.append(shortestPaths.getShortestDistance(i, k), shortestPaths.getShortestDistance(k, j))",
+                        "                         if not shortestPaths.hasShortestDistance(i, j) or weightOperations.compare(newDistance, shortestPaths.getShortestDistance(i, j)) < 0:",
+                        "                             shortestPaths.addShortestDistance(i, j, newDistance)",
+                        "                             next[VertexPair(i, j)] = k",
+                        "         for source in self.__graph.getVertices0():",
+                        "             for target in self.__graph.getVertices0():",
+                        "                 if source != target:",
+                        "                     predecessorsList = PredecessorsList(self.__graph, weightOperations, self.__weightedEdges)",
+                        "                     self.__pathReconstruction(predecessorsList, source, target, next)",
+                        "                     if not predecessorsList.isEmpty():",
+                        "                         weightedPath = predecessorsList.buildPath0(source, target)",
+                        "                         if weightedPath.getOrder() > 0:",
+                        "                             shortestPaths.addShortestPath(source, target, weightedPath)",
+                        "         return shortestPaths"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.53090214729309,
+                    "generation_timestamp": "2024-07-02T04:27:47.668414",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -264,13 +296,17 @@
                         "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:",
+                        "         self.__graph = graph",
+                        "         self.__weightedEdges = weightedEdges"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4326789379119873,
+                    "generation_timestamp": "2024-07-02T04:27:20.320123",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -321,13 +357,23 @@
                         "    def __pathReconstruction(self, path: PredecessorsList[typing.Any, typing.Any, typing.Any], source: typing.Any, target: typing.Any, next: typing.Dict[VertexPair[typing.Any], typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __pathReconstruction(self, path: PredecessorsList[typing.Any, typing.Any, typing.Any], source: typing.Any, target: typing.Any, next: typing.Dict[VertexPair[typing.Any], typing.Any]) -> None:",
+                        "         k = next.get(VertexPair(source, target))",
+                        "         if k is None:",
+                        "             edge = self.__graph.getEdge(source, target)",
+                        "             if edge is not None:",
+                        "                 path.addPredecessor(target, source)",
+                        "         else:",
+                        "             self.__pathReconstruction(path, source, k, next)",
+                        "             self.__pathReconstruction(path, k, target, next)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.809283018112183,
+                    "generation_timestamp": "2024-07-02T04:27:25.133237",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -353,13 +399,16 @@
                         "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T02:00:54.527179",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -383,13 +432,16 @@
                         "    __graph: Graph[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T02:00:54.528206",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

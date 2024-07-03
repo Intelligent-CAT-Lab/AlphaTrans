@@ -104,13 +104,21 @@
                         "    def decode1(self, obj: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def decode1(self, obj: typing.Any) -> typing.Any:",
+                        "         if obj is None:",
+                        "             return None",
+                        "         if isinstance(obj, bytes):",
+                        "             return self.decode0(obj)",
+                        "         raise DecoderException(",
+                        "             \"Objects of type \" + obj.__class__.__name__ + \" cannot be Percent decoded\", None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.2646541595458984,
+                    "generation_timestamp": "2024-07-02T03:46:59.969835",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -160,13 +168,21 @@
                         "    def encode1(self, obj: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode1(self, obj: typing.Any) -> typing.Any:",
+                        "         if obj is None:",
+                        "             return None",
+                        "         if isinstance(obj, bytes):",
+                        "             return self.encode0(obj)",
+                        "         raise EncoderException(",
+                        "             \"Objects of type \" + obj.__class__.__name__ + \" cannot be Percent encoded\", None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.1836557388305664,
+                    "generation_timestamp": "2024-07-02T03:47:33.280658",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -235,13 +251,33 @@
                         "    def decode0(self, bytes: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def decode0(self, bytes: typing.List[int]) -> typing.List[int]:",
+                        "         if bytes is None:",
+                        "             return None",
+                        "",
+                        "         buffer = ByteBuffer.allocate(self.__expectedDecodingBytes(bytes))",
+                        "         for i in range(0, len(bytes)):",
+                        "             b = bytes[i]",
+                        "             if b == self.__ESCAPE_CHAR:",
+                        "                 try:",
+                        "                     u = Utils.digit16(bytes[i + 1])",
+                        "                     l = Utils.digit16(bytes[i + 2])",
+                        "                     buffer.put((u << 4) + l)",
+                        "                 except ArrayIndexOutOfBoundsException as e:",
+                        "                     raise DecoderException(\"Invalid percent decoding: \", e)",
+                        "             elif self.__plusForSpace and b == '+':",
+                        "                 buffer.put(' ')",
+                        "             else:",
+                        "                 buffer.put(b)",
+                        "         return buffer.array()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.495151042938232,
+                    "generation_timestamp": "2024-07-02T03:46:55.854135",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -298,13 +334,23 @@
                         "    def encode0(self, bytes: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode0(self, bytes: typing.List[int]) -> typing.List[int]:",
+                        "         if bytes is None:",
+                        "             return None",
+                        "",
+                        "         expectedEncodingBytes = self.__expectedEncodingBytes(bytes)",
+                        "         willEncode = expectedEncodingBytes != len(bytes)",
+                        "         if willEncode or (self.__plusForSpace and self.__containsSpace(bytes)):",
+                        "             return self.__doEncode(bytes, expectedEncodingBytes, willEncode)",
+                        "         return bytes"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.60050106048584,
+                    "generation_timestamp": "2024-07-02T03:47:26.789055",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -358,13 +404,21 @@
                         "    def __init__(self, constructorId: int, plusForSpace: bool, alwaysEncodeChars: typing.List[int]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, plusForSpace: bool, alwaysEncodeChars: typing.List[int]) -> None:",
+                        "         if constructorId == 0:",
+                        "            self.__plusForSpace = plusForSpace",
+                        "            self.__insertAlwaysEncodeChars(alwaysEncodeChars)",
+                        "         else:",
+                        "            self.__plusForSpace = False",
+                        "            self.__insertAlwaysEncodeChar(self.__ESCAPE_CHAR)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.782742977142334,
+                    "generation_timestamp": "2024-07-02T03:47:40.312516",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -402,13 +456,22 @@
                         "    def __expectedDecodingBytes(self, bytes: typing.List[int]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __expectedDecodingBytes(self, bytes: typing.List[int]) -> int:",
+                        "         byteCount = 0",
+                        "         i = 0",
+                        "         while i < len(bytes):",
+                        "             b = bytes[i]",
+                        "             i += 3 if b == self.__ESCAPE_CHAR else 1",
+                        "             byteCount += 1",
+                        "         return byteCount"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.678972005844116,
+                    "generation_timestamp": "2024-07-02T03:46:47.354244",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -440,13 +503,16 @@
                         "    def __isAsciiChar(self, c: int) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __isAsciiChar(self, c: int) -> bool:",
+                        "         return c >= 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8397061824798584,
+                    "generation_timestamp": "2024-07-02T03:46:56.698556",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -478,13 +544,16 @@
                         "    def __inAlwaysEncodeCharsRange(self, c: int) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __inAlwaysEncodeCharsRange(self, c: int) -> bool:",
+                        "         return c >= self.__alwaysEncodeCharsMin and c <= self.__alwaysEncodeCharsMax"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.8790960311889648,
+                    "generation_timestamp": "2024-07-02T03:47:01.853596",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -527,13 +596,16 @@
                         "    def __canEncode(self, c: int) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __canEncode(self, c: int) -> bool:",
+                        "         return not self.__isAsciiChar(c) or (self.__inAlwaysEncodeCharsRange(c) and self.__alwaysEncodeChars[c])"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0696139335632324,
+                    "generation_timestamp": "2024-07-02T03:47:03.928464",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -571,7 +643,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -618,13 +690,19 @@
                         "    def __expectedEncodingBytes(self, bytes: typing.List[int]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __expectedEncodingBytes(self, bytes: typing.List[int]) -> int:",
+                        "         byteCount = 0",
+                        "         for b in bytes:",
+                        "             byteCount += 3 if self.__canEncode(b) else 1",
+                        "         return byteCount"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.351125955581665,
+                    "generation_timestamp": "2024-07-02T03:47:15.111938",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -688,13 +766,29 @@
                         "    def __doEncode(self, bytes: typing.List[int], expectedLength: int, willEncode: bool) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __doEncode(self, bytes: typing.List[int], expectedLength: int, willEncode: bool) -> typing.List[int]:",
+                        "         buffer = io.BytesIO(expectedLength)",
+                        "         for b in bytes:",
+                        "             if willEncode and self.__canEncode(b):",
+                        "                 bb = b",
+                        "                 if bb < 0:",
+                        "                     bb = 256 + bb",
+                        "                 hex1 = Utils.hexDigit(bb >> 4)",
+                        "                 hex2 = Utils.hexDigit(bb)",
+                        "                 buffer.write(bytes([self.__ESCAPE_CHAR, hex1, hex2]))",
+                        "             elif self.__plusForSpace and b == ord(' '):",
+                        "                 buffer.write(b'+')",
+                        "             else:",
+                        "                 buffer.write(bytes([b]))",
+                        "         return buffer.getvalue()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.062964916229248,
+                    "generation_timestamp": "2024-07-02T03:47:22.182150",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -732,13 +826,20 @@
                         "    def __insertAlwaysEncodeChar(self, b: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __insertAlwaysEncodeChar(self, b: int) -> None:",
+                        "         self.__alwaysEncodeChars[b] = True",
+                        "         if b < self.__alwaysEncodeCharsMin:",
+                        "             self.__alwaysEncodeCharsMin = b",
+                        "         if b > self.__alwaysEncodeCharsMax:",
+                        "             self.__alwaysEncodeCharsMax = b"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.2962749004364014,
+                    "generation_timestamp": "2024-07-02T03:47:30.090142",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -781,13 +882,19 @@
                         "    def __insertAlwaysEncodeChars(self, alwaysEncodeCharsArray: typing.List[int]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __insertAlwaysEncodeChars(self, alwaysEncodeCharsArray: typing.List[int]) -> None:",
+                        "         if alwaysEncodeCharsArray is not None:",
+                        "             for b in alwaysEncodeCharsArray:",
+                        "                 self.__insertAlwaysEncodeChar(b)",
+                        "         self.__insertAlwaysEncodeChar(self.__ESCAPE_CHAR)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.238110065460205,
+                    "generation_timestamp": "2024-07-02T03:47:36.524537",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -812,13 +919,15 @@
                         "    __alwaysEncodeCharsMax: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __alwaysEncodeCharsMax: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.21036696434021,
+                    "generation_timestamp": "2024-07-02T09:07:59.284807",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -841,13 +950,15 @@
                         "    __alwaysEncodeCharsMin: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __alwaysEncodeCharsMin: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.3370771408081055,
+                    "generation_timestamp": "2024-07-02T09:08:00.625782",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -871,13 +982,16 @@
                         "    __plusForSpace: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __plusForSpace: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T23:56:21.475536",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -901,13 +1015,15 @@
                         "    __alwaysEncodeChars: typing.List[bool] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __alwaysEncodeChars: typing.List[bool] = [False] * 256"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.284956932067871,
+                    "generation_timestamp": "2024-07-01T23:56:23.762108",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -932,13 +1048,15 @@
                         "    __ESCAPE_CHAR: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ESCAPE_CHAR: int = 0x25"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4405200481414795,
+                    "generation_timestamp": "2024-07-01T23:56:25.210341",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

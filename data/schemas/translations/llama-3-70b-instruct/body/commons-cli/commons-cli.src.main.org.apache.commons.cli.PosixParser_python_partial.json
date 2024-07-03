@@ -177,7 +177,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -255,13 +255,31 @@
                         "    def _burstToken(self, token: str, stopAtNonOption: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _burstToken(self, token: str, stopAtNonOption: bool) -> None:",
+                        "         for i in range(1, len(token)):",
+                        "             ch = token[i]",
+                        "",
+                        "             if not self.__options.hasOption(ch):",
+                        "                 if stopAtNonOption:",
+                        "                     self.__processNonOptionToken(token[i:], True)",
+                        "                 else:",
+                        "                     self.__tokens.append(token)",
+                        "                 break",
+                        "             self.__tokens.append(\"-\" + ch)",
+                        "             self.__currentOption = self.__options.getOption(ch)",
+                        "",
+                        "             if self.__currentOption.hasArg() and len(token) != i + 1:",
+                        "                 self.__tokens.append(token[i + 1])",
+                        "",
+                        "                 break"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.126035928726196,
+                    "generation_timestamp": "2024-07-01T22:29:50.251671",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -313,13 +331,22 @@
                         "    def __processOptionToken(self, token: str, stopAtNonOption: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __processOptionToken(self, token: str, stopAtNonOption: bool) -> None:",
+                        "         if stopAtNonOption and not self.__options.hasOption(token):",
+                        "             self.__eatTheRest = True",
+                        "",
+                        "         if self.__options.hasOption(token):",
+                        "             self.__currentOption = self.__options.getOption(token)",
+                        "",
+                        "         self.__tokens.append(token)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.0884480476379395,
+                    "generation_timestamp": "2024-07-01T22:28:10.401668",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -363,13 +390,19 @@
                         "    def __processNonOptionToken(self, value: str, stopAtNonOption: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __processNonOptionToken(self, value: str, stopAtNonOption: bool) -> None:",
+                        "         if stopAtNonOption and (self.__currentOption is None or not self.__currentOption.hasArg()):",
+                        "             self.__eatTheRest = True",
+                        "             self.__tokens.append(\"--\")",
+                        "         self.__tokens.append(value)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.318123817443848,
+                    "generation_timestamp": "2024-07-01T22:29:25.918367",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -400,13 +433,17 @@
                         "    def __init(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init(self) -> None:",
+                        "         self.__eatTheRest = False",
+                        "         self.__tokens.clear()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4102919101715088,
+                    "generation_timestamp": "2024-07-01T22:29:51.667137",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -442,13 +479,18 @@
                         "    def __gobble(self, iter: typing.Iterator[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __gobble(self, iter: typing.Iterator[str]) -> None:",
+                        "         if self.__eatTheRest:",
+                        "            while iter.hasNext():",
+                        "                self.__tokens.append(iter.next())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.810910940170288,
+                    "generation_timestamp": "2024-07-01T22:30:10.659084",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -473,13 +515,16 @@
                         "    __options: Options = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __options: Options = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:15:03.610708",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -502,13 +547,16 @@
                         "    __currentOption: Option = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __currentOption: Option = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:15:03.611495",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -531,13 +579,16 @@
                         "    __eatTheRest: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __eatTheRest: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:15:03.612222",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -561,13 +612,16 @@
                         "    __tokens: typing.List[str] = []",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __tokens: typing.List[str] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-01T22:15:03.612934",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

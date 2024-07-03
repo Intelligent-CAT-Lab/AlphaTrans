@@ -120,13 +120,28 @@
                         "    def readLine(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def readLine(self) -> str:",
+                        "         if self.lookAhead0() == END_OF_STREAM:",
+                        "             return None",
+                        "         buffer = StringBuilder()",
+                        "         while True:",
+                        "             current = self.read0()",
+                        "             if current == CR:",
+                        "                 next = self.lookAhead0()",
+                        "                 if next == LF:",
+                        "                     self.read0()",
+                        "             if current == END_OF_STREAM or current == LF or current == CR:",
+                        "                 break",
+                        "             buffer.append(chr(current))",
+                        "         return buffer.toString()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.379724025726318,
+                    "generation_timestamp": "2024-07-02T00:33:53.071730",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -160,13 +175,18 @@
                         "    def close(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def close(self) -> None:",
+                        "         self.__closed = True",
+                        "         self.__lastChar = END_OF_STREAM",
+                        "         super().close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.879612922668457,
+                    "generation_timestamp": "2024-07-02T00:33:20.725101",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -226,13 +246,37 @@
                         "    def read1(self, buf: typing.List[str], offset: int, length: int) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def read1(self, buf: typing.List[str], offset: int, length: int) -> int:",
+                        "         if length == 0:",
+                        "             return 0",
+                        "",
+                        "         len = super().read(buf, offset, length)",
+                        "",
+                        "         if len > 0:",
+                        "",
+                        "             for i in range(offset, offset + len):",
+                        "                 ch = buf[i]",
+                        "                 if ch == LF:",
+                        "                     if CR != (buf[i - 1] if i > offset else self.__lastChar):",
+                        "                         self.__eolCounter += 1",
+                        "                 elif ch == CR:",
+                        "                     self.__eolCounter += 1",
+                        "",
+                        "             self.__lastChar = buf[offset + len - 1]",
+                        "",
+                        "         elif len == -1:",
+                        "             self.__lastChar = END_OF_STREAM",
+                        "",
+                        "         self.__position += len",
+                        "         return len"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 11.119592905044556,
+                    "generation_timestamp": "2024-07-02T00:33:31.851410",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -273,13 +317,21 @@
                         "    def read0(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def read0(self) -> int:",
+                        "         current = super().read()",
+                        "         if current == CR or current == LF and self.__lastChar != CR or current == END_OF_STREAM and self.__lastChar != CR and self.__lastChar != LF and self.__lastChar != END_OF_STREAM:",
+                        "             self.__eolCounter += 1",
+                        "         self.__lastChar = current",
+                        "         self.__position += 1",
+                        "         return self.__lastChar"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.260991096496582,
+                    "generation_timestamp": "2024-07-02T00:33:38.115425",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -309,13 +361,16 @@
                         "    def isClosed(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isClosed(self) -> bool:",
+                        "         return self.__closed"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8958401679992676,
+                    "generation_timestamp": "2024-07-02T00:33:39.016611",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -352,13 +407,17 @@
                         "    def lookAhead2(self, n: int) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def lookAhead2(self, n: int) -> typing.List[str]:",
+                        "         buf = [\"\" for _ in range(n)]",
+                        "         return self.lookAhead1(buf)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7361490726470947,
+                    "generation_timestamp": "2024-07-02T00:33:43.621670",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -393,13 +452,21 @@
                         "    def lookAhead1(self, buf: typing.List[str]) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def lookAhead1(self, buf: typing.List[str]) -> typing.List[str]:",
+                        "         n = len(buf)",
+                        "         super().mark(n)",
+                        "         super().read(buf, 0, n)",
+                        "         super().reset()",
+                        "",
+                        "         return buf"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.859480857849121,
+                    "generation_timestamp": "2024-07-02T00:33:41.881412",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -431,13 +498,19 @@
                         "    def lookAhead0(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def lookAhead0(self) -> int:",
+                        "         self.mark(1)",
+                        "         c = self.read()",
+                        "         self.reset()",
+                        "         return c"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.0608949661254883,
+                    "generation_timestamp": "2024-07-02T00:33:45.687214",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -465,13 +538,16 @@
                         "    def getPosition(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getPosition(self) -> int:",
+                        "         return self.__position"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0332591533660889,
+                    "generation_timestamp": "2024-07-02T00:33:54.111706",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -499,13 +575,16 @@
                         "    def getLastChar(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getLastChar(self) -> int:",
+                        "         return self.__lastChar"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.953233003616333,
+                    "generation_timestamp": "2024-07-02T00:33:55.069973",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -539,13 +618,18 @@
                         "    def getCurrentLineNumber(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getCurrentLineNumber(self) -> int:",
+                        "         if self.__lastChar == CR or self.__lastChar == LF or self.__lastChar == UNDEFINED or self.__lastChar == END_OF_STREAM:",
+                        "             return self.__eolCounter",
+                        "         return self.__eolCounter + 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.258729934692383,
+                    "generation_timestamp": "2024-07-02T00:33:59.331768",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -575,13 +659,16 @@
                         "    def __init__(self, reader: typing.Union[io.TextIOWrapper, io.BufferedReader]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, reader: typing.Union[io.TextIOWrapper, io.BufferedReader]) -> None:",
+                        "         super().__init__(reader)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.1822760105133057,
+                    "generation_timestamp": "2024-07-02T00:34:00.518882",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -606,13 +693,16 @@
                         "    __closed: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __closed: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:30:15.660342",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -635,13 +725,16 @@
                         "    __position: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __position: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:30:15.662087",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -664,13 +757,16 @@
                         "    __eolCounter: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __eolCounter: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-02T00:30:15.663647",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -693,13 +789,15 @@
                         "    __lastChar: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __lastChar: int = UNDEFINED"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.4155189990997314,
+                    "generation_timestamp": "2024-07-02T00:30:17.080706",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

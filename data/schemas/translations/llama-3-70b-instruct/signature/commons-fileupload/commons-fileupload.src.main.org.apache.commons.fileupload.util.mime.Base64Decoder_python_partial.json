@@ -99,13 +99,51 @@
                         "    def decode(data: typing.List[int], out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def decode(data: typing.List[int], out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> int:",
+                        "         outLen = 0",
+                        "         cache = [0] * Base64Decoder.__INPUT_BYTES_PER_CHUNK",
+                        "         cachedBytes = 0",
+                        "",
+                        "         for b in data:",
+                        "             d = Base64Decoder.__DECODING_TABLE[Base64Decoder.__MASK_BYTE_UNSIGNED & b]",
+                        "             if d == Base64Decoder.__INVALID_BYTE:",
+                        "                 continue  # Ignore invalid bytes",
+                        "             cache[cachedBytes] = d",
+                        "             cachedBytes += 1",
+                        "             if cachedBytes == Base64Decoder.__INPUT_BYTES_PER_CHUNK:",
+                        "                 b1 = cache[0]",
+                        "                 b2 = cache[1]",
+                        "                 b3 = cache[2]",
+                        "                 b4 = cache[3]",
+                        "                 if b1 == Base64Decoder.__PAD_BYTE or b2 == Base64Decoder.__PAD_BYTE:",
+                        "                     raise Exception(",
+                        "                         \"Invalid Base64 input: incorrect padding, first two bytes cannot be\"",
+                        "                         + \" padding\")",
+                        "                 out.write((b1 << 2) | (b2 >> 4))  # 6 bits of b1 plus 2 bits of b2",
+                        "                 outLen += 1",
+                        "                 if b3 != Base64Decoder.__PAD_BYTE:",
+                        "                     out.write((b2 << 4) | (b3 >> 2))  # 4 bits of b2 plus 4 bits of b3",
+                        "                     outLen += 1",
+                        "                     if b4 != Base64Decoder.__PAD_BYTE:",
+                        "                         out.write((b3 << 6) | b4)  # 2 bits of b3 plus 6 bits of b4",
+                        "                         outLen += 1",
+                        "                 elif b4 != Base64Decoder.__PAD_BYTE:  # if byte 3 is pad, byte 4 must be pad too",
+                        "                     raise Exception(",
+                        "                         \"Invalid Base64 input: incorrect padding, 4th byte must be padding if\"",
+                        "                         + \" 3rd byte is\")",
+                        "                 cachedBytes = 0",
+                        "         if cachedBytes != 0:",
+                        "             raise Exception(\"Invalid Base64 input: truncated\")",
+                        "         return outLen"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 38.197458028793335,
+                    "generation_timestamp": "2024-07-01T22:23:48.000158",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -133,13 +171,16 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6813230514526367,
+                    "generation_timestamp": "2024-07-01T22:23:49.683932",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -166,13 +207,15 @@
                         "    __DECODING_TABLE: typing.List[int] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __DECODING_TABLE: typing.List[int] = [0] * 256"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9160850048065186,
+                    "generation_timestamp": "2024-07-01T22:18:03.758917",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -197,13 +240,15 @@
                         "    __PADDING: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PADDING: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2333011627197266,
+                    "generation_timestamp": "2024-07-01T22:18:04.993757",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -293,13 +338,15 @@
                         "    __ENCODING_TABLE: typing.List[int] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __ENCODING_TABLE: typing.List[int] = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 43, 47]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 13.671737909317017,
+                    "generation_timestamp": "2024-07-01T22:18:18.668656",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -324,13 +371,15 @@
                         "    __INPUT_BYTES_PER_CHUNK: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __INPUT_BYTES_PER_CHUNK: int = 4"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.444615125656128,
+                    "generation_timestamp": "2024-07-01T22:18:20.117037",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -355,13 +404,15 @@
                         "    __MASK_BYTE_UNSIGNED: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __MASK_BYTE_UNSIGNED: int = 0xFF"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2275700569152832,
+                    "generation_timestamp": "2024-07-01T22:18:21.347962",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -386,13 +437,15 @@
                         "    __PAD_BYTE: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __PAD_BYTE: int = -2"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2862279415130615,
+                    "generation_timestamp": "2024-07-01T22:18:22.638114",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 },
@@ -417,13 +470,15 @@
                         "    __INVALID_BYTE: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __INVALID_BYTE: int = -1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.124361276626587,
+                    "generation_timestamp": "2024-07-01T22:18:23.763933",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }
@@ -444,13 +499,21 @@
                         "    }\n"
                     ],
                     "partial_translation": [],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def run_static_init():",
+                        "        for i in range(0, 256):",
+                        "            Base64Decoder.__DECODING_TABLE[i] = Base64Decoder.__INVALID_BYTE",
+                        "        for i in range(0, 64):",
+                        "            Base64Decoder.__DECODING_TABLE[Base64Decoder.__ENCODING_TABLE[i]] = i",
+                        "        Base64Decoder.__DECODING_TABLE[Base64Decoder.__PADDING] = Base64Decoder.__PAD_BYTE"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.465996026992798,
+                    "generation_timestamp": "2024-07-02T11:43:38.795804",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": false
                 }

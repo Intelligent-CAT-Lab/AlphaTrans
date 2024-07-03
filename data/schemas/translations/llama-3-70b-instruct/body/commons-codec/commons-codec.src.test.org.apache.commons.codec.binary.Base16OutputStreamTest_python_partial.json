@@ -100,7 +100,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -184,7 +184,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -262,7 +262,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -340,7 +340,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -392,7 +392,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -482,7 +482,7 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
                     "syntactical_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
@@ -526,13 +526,16 @@
                         "    def __testByteByByte0(self, encoded: typing.List[int], decoded: typing.List[int]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __testByteByByte0(self, encoded: typing.List[int], decoded: typing.List[int]) -> None:",
+                        "        self.__testByteByByte1(encoded, decoded, False)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2227272987365723,
+                    "generation_timestamp": "2024-07-02T14:51:32.715204",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -600,13 +603,34 @@
                         "    def __testByChunk1(self, encoded: typing.List[int], decoded: typing.List[int], lowerCase: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __testByChunk1(self, encoded: typing.List[int], decoded: typing.List[int], lowerCase: bool) -> None:",
+                        "        with io.BytesIO() as byteOut:",
+                        "            with Base16OutputStream.Base16OutputStream1(byteOut, True, lowerCase) as out:",
+                        "                out.write(decoded)",
+                        "                output = byteOut.getvalue()",
+                        "                self.assertListEqual(\"Streaming chunked base16 encode\", encoded, output)",
+                        "",
+                        "            with Base16OutputStream.Base16OutputStream1(byteOut, False, lowerCase) as out:",
+                        "                out.write(encoded)",
+                        "                output = byteOut.getvalue()",
+                        "                self.assertListEqual(\"Streaming chunked base16 decode\", decoded, output)",
+                        "",
+                        "            with io.BytesIO() as byteOut:",
+                        "                decoderOut = Base16OutputStream.Base16OutputStream1(byteOut, False, lowerCase)",
+                        "                encoderOut = Base16OutputStream.Base16OutputStream1(decoderOut, True, lowerCase)",
+                        "",
+                        "                encoderOut.write(decoded)",
+                        "                output = byteOut.getvalue()",
+                        "",
+                        "                self.assertListEqual(\"Streaming chunked base16 wrap-wrap!\", decoded, output)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.335393190383911,
+                    "generation_timestamp": "2024-07-02T14:52:22.472461",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -645,13 +669,16 @@
                         "    def __testByChunk0(self, encoded: typing.List[int], decoded: typing.List[int]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __testByChunk0(self, encoded: typing.List[int], decoded: typing.List[int]) -> None:",
+                        "        self.__testByChunk1(encoded, decoded, False)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.170659065246582,
+                    "generation_timestamp": "2024-07-02T14:52:23.644592",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -678,13 +705,15 @@
                         "    __STRING_FIXTURE: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    __STRING_FIXTURE: str = \"Hello World\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.243175983428955,
+                    "generation_timestamp": "2024-07-02T08:00:40.852369",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
