@@ -18,6 +18,7 @@ main_paths = {
     "joda-convert": "main/java/org/joda/convert/",
     "joda-money": "main/java/org/joda/money/",
     "trying_stuff_out": "main/java/my/pack/",
+    "darko": "main/java/darko/",
 }
 test_paths = {
     "commons-fileupload": "test/java/org/apache/commons/fileupload/",
@@ -30,6 +31,7 @@ test_paths = {
     "joda-convert": "test/java/org/joda/convert/",
     "joda-money": "test/java/org/joda/money/",
     "trying_stuff_out": "test/java/my/pack/",
+    "darko": "test/java/darko/",
 }
 
 paths = dict()
@@ -57,6 +59,10 @@ paths.update({
         "main": "main/java/my/pack/",
         "test": "test/java/my/pack/",
     },
+    "darko": {
+        "main": "main/java/darko/",
+        "test": "test/java/darko/",
+    }
 })
 
 package_names = {}
@@ -75,4 +81,5 @@ package_names.update({k: f"org.joda.{v}" for k, v in (
 )})
 package_names.update({
     "trying_stuff_out": "my.pack",
+    "darko": "darko",
 })
