@@ -227,11 +227,14 @@ class Project:
         
         # build the method body            
         casted_parameters = [
-            type_mapping(param, parameter_types[i], calling_from_python=True)
+            type_mapping(param, parameter_types[i], calling_from_python=True, include_idMap=True, idMap_name="idMapPyToJ")
             for i, param in enumerate(method_schema_data['parameters'])
         ]
         
-        args_buildup = ", ".join(casted_parameters)
+        translated_args = [f"translatedArg{i} = {param}" for i, param in enumerate(casted_parameters)]
+        retranslated_args = [f"JavaHandler.mapping(translatedArg{i}, idMapJToPy, {param})" for i, param in enumerate(method_schema_data['parameters'])]
+        
+        args_buildup = ", ".join([f"translatedArg{i}" for i in range(len(casted_parameters))])
         
         if "static" in method_schema_data['modifiers'] or is_constructor:
             caller = f"{class_name}.javaClz"
@@ -246,35 +249,43 @@ class Project:
         method_content = []
         if is_constructor:
             method_content.append("\n".join([
+                f"        idMapPyToJ = JavaHandler.valueToObject(dict(), \"Map\")",
+                f"        " + "        \n".join(translated_args),
                 f"        try:",
                 f"            self.javaObj = {java_call}",
                 f"        except:",
                 f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
                 f"        finally:",
                 f"            self.javaObj.setPythonObject(self)",
-                f"            self.javaObj.jToPy()",
+                f"            idMapJToPy = self.javaObj.jToPy()",
+                "            " + "            \n".join(retranslated_args)
             ]))
         elif 'void' in method_schema_data['return_types'][0]:
             method_content.append("\n".join([
-                f"        self.javaObj.pyToJ()" if not is_static else "",
+                f"        idMapPyToJ = self.javaObj.pyToJ()" if not is_static else "",
+                f"        " + "        \n".join(translated_args),
                 f"        try:",
                 f"            {java_call}",
                 f"        except:",
                 f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
                 f"        finally:",
-                f"            self.javaObj.jToPy()" if not is_static else "",               
+                f"            idMapJToPy = self.javaObj.jToPy()" if not is_static else "",
+                f"            " + "            \n".join(retranslated_args)
             ]))
         else:
             method_content.append("\n".join([
-                f"        self.javaObj.pyToJ()" if not is_static else "",
+                f"        idMapPyToJ = self.javaObj.pyToJ()" if not is_static else "",
+                f"        " + "        \n".join(translated_args),
                 f"        try:",
                 f"            val = JavaHandler.mapping({java_call})",
-                f"            self.javaObj.jToPy()" if not is_static else "",
+                f"            idMapJToPy = self.javaObj.jToPy()" if not is_static else "",
+                f"            " + "            \n".join(retranslated_args),
                 f"            return val",
                 f"        except:",
                 f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
                 f"        finally:",
-                f"            self.javaObj.jToPy()" if not is_static else "",
+                f"            idMapJToPy = self.javaObj.jToPy()" if not is_static else "",
+                f"            " + "            \n".join(retranslated_args)
             ]))
 
         method_body = method_declaration + "\n" + "\n".join(method_content)
@@ -494,10 +505,13 @@ class CompositionalTest:
                     imports = ctx_imports,
                     code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/src/{self.project.main_path.replace('/java/', '/')}",
                     package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/",
-                    mappings = ""               
                     # ----------------------------------------------------------------------------------------------
-                    # mappings = ctx_mappings # We shouldn't need these anymore due to IntegrationUtils.valueToObject
-                    #                         # but sometimes we need this for implicitly handling null values
+                    # mappings = ""               
+                    # ----------------------------------------------------------------------------------------------
+                    mappings = ctx_mappings # We shouldn't need these anymore due to IntegrationUtils.valueToObject
+                                            # but sometimes we need this for implicitly handling null values
+                                            # We also need this for handling Arrays (Type[])
+                                            # TODO: FIXME
                     # ----------------------------------------------------------------------------------------------
                 ),
                 priority = 1
@@ -782,19 +796,21 @@ class SyncMethod:
         
         if not self.reverse:
             return f"""
-            public void pyToJ() {{
+            public java.util.Map pyToJ() {{
                 java.util.Map idMap = new java.util.HashMap();
                 {fields_body}
+                return idMap;
             }}
         """
         else:
             return f"""
-            public void jToPy() {{
+            public Value jToPy() {{
                 Value idMap = IntegrationUtils.mapToPython(new java.util.HashMap());
-                jToPy(idMap);
+                return jToPy(idMap);
             }}
-            public void jToPy(Value idMap) {{
+            public Value jToPy(Value idMap) {{
                 {fields_body}
+                return idMap;
             }}
         """
                 
@@ -1091,23 +1107,31 @@ class Schema:
             caller = "clz"
         else:
             caller = "this.obj"
-            
-        casted_parameters = [f"IntegrationUtils.mapToPython({param})" for param in method_schema_data['parameters']]
-            
-        args_buildup = ", ".join(casted_parameters)
+
+        parameter_types = get_method_parameter_types(method_schema_data)
+        casted_parameters = [f"IntegrationUtils.mapToPython({param}, idMapJToPy)" for param in method_schema_data['parameters']]
+        translated_args = "\n".join([
+            f"Value translatedArg{i} = {param};" for i, param in enumerate(casted_parameters)
+        ])
+        retranslated_args = "\n".join([
+            type_mapping(f"translatedArg{i}", param_type, target_object=param_name, include_idMap=True, idMap_name="idMapPyToJ") + ";"
+            for i, (param_type, param_name) in enumerate(zip(parameter_types, method_schema_data['parameters']))
+        ])
+
+        args_buildup = ", ".join([f"translatedArg{i}" for i in range(len(casted_parameters))])
         
         if is_constructor:
             python_call = f"{caller}.invokeMember(\"__init__\"{', ' + args_buildup if args_buildup else ''})"
         else:
             python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
-            
+
         if is_constructor:
-            final_method_content += f"jToPy();{python_call};pyToJ();"
+            final_method_content += f"Value idMapJToPy = jToPy();{translated_args}{python_call};java.util.Map idMapPyToJ = pyToJ();{retranslated_args}"
         elif 'void' in method_signature:
             if 'static' in method_schema_data['modifiers']:
-                final_method_content += f"{python_call};" # no need to sync for static methods
+                final_method_content += f"{translated_args}{python_call};{retranslated_args}" # no need to sync for static methods
             else:
-                final_method_content += f"jToPy();{python_call};pyToJ();"
+                final_method_content += f"Value idMapJToPy = jToPy();{translated_args}{python_call};java.util.Map idMapPyToJ = pyToJ();{retranslated_args}"
         else:
             return_type = method_schema_data['return_types'][0][0]
             
@@ -1117,9 +1141,15 @@ class Schema:
             return_type_casted = type_mapping(python_call, return_type)
             
             final_method_content += "".join([
-                f"jToPy();" if 'static' not in method_schema_data['modifiers'] else '', # no need to sync for static methods
+                f"Value idMapJToPy = " + (
+                    "jToPy()" if 'static' not in method_schema_data['modifiers'] else 'IntegrationUtils.mapToPython(new java.util.HashMap())'
+                ) + ";",
+                translated_args,
                 f"{return_type} val = ({return_type}) {return_type_casted};",
-                "pyToJ();" if 'static' not in method_schema_data['modifiers'] else '', # no need to sync for static methods
+                "java.util.Map idMapPyToJ = " + (
+                    "pyToJ()" if 'static' not in method_schema_data['modifiers'] else 'new java.util.HashMap()'
+                ) + ";",
+                retranslated_args,
                 f"return val;"
             ])
         
@@ -1132,6 +1162,7 @@ class Schema:
                 throw ({exception_name}) ExceptionHandler.handle(e, "{class_obj['name']}.{method_name}");
             }} finally {{
                 pyToJ();
+                {retranslated_args}
             }}
             """
             self.__exceptions.append((exception_name, f"{class_obj['name']}.{method_name}"))

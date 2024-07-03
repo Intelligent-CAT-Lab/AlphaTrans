@@ -24,7 +24,7 @@ default_type_value = default_type_value_class()
 IMMUTABLES =  ['int', 'double', 'float', 'long', 'boolean', 'char', 'String']
 
 
-def type_mapping(obj: str, target_type: str, include_idMap=False, calling_from_python=False, target_object=None) -> str:
+def type_mapping(obj: str, target_type: str, include_idMap=False, calling_from_python=False, target_object=None, idMap_name="idMap") -> str:
     """
     Return the code to convert a python Value to a Java object.
     
@@ -48,7 +48,7 @@ def type_mapping(obj: str, target_type: str, include_idMap=False, calling_from_p
         args=", ".join([
             obj,
             f'"{target_type}"'
-        ] + (["idMap"] if include_idMap else [])
+        ] + ([idMap_name] if include_idMap else [])
         + ([target_object] if target_object else [])
     ))
 
