@@ -35,7 +35,7 @@ package_names.update({k: f"org.apache.commons.{v}" for k, v in (
     ("commons-csv", "csv"),
     ("commons-fileupload", "fileupload"),
     ("commons-graph", "graph"),
-    ("commons-pool", "pool"),
+    ("commons-pool", "pool2"),
     ("commons-validator", "validator"),
 )})
 package_names.update({k: f"org.joda.{v}" for k, v in (

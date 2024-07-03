@@ -1105,9 +1105,9 @@ class Schema:
                 method_content = f"""
                     try {{
                         {method_content}
-                    }} catch (Exception e) {{
-                        ExceptionHandler.ERR = e;
-                        throw e;
+                    }} catch (Exception ExceptionObjectForCaching) {{
+                        ExceptionHandler.ERR = ExceptionObjectForCaching;
+                        throw ExceptionObjectForCaching;
                     }}
                 """
             class_obj["methods"].append(f"{method_signature}\n{method_content}\n}}")
