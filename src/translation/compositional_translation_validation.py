@@ -21,6 +21,15 @@ from genai.schema import (
 )
 
 
+def get_dependency_path(dependent_class, project_name):
+    if os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'):
+        return f'src.main.{dependent_class}'
+    elif os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'):
+        return f'src.test.{dependent_class}'
+    else:
+        return f'src.main.{dependent_class}'
+
+
 def translate(model, tokenizer, device, members_to_translate: list[list], processed_fragments, args):
     """
     members_to_translate: [prompt, fragment, use_bam, project_name, schema, class_, fragment_]
@@ -66,6 +75,8 @@ def translate(model, tokenizer, device, members_to_translate: list[list], proces
                     model_id = "deepseek-ai/deepseek-coder-33b-instruct"
                 elif args.model_name == 'granite-34b-code-instruct':
                     model_id = "ibm/granite-34b-code-instruct"
+                elif args.model_name == 'llama-3-70b-instruct':
+                    model_id = "meta-llama/llama-3-70b-instruct"
 
                 total_tokens = 0
                 for response in client.text.tokenization.create(model_id=model_id, input=prompt):
@@ -144,16 +155,17 @@ def translate(model, tokenizer, device, members_to_translate: list[list], proces
                                                         'prompt': prompt,
                                                         'model': "meta-llama/Meta-Llama-3-70B",
                                                         'max_tokens': max_new_tokens,
-                                                        'temperature': 0
+                                                        'temperature': 0,
+                                                        'stop': ['### ']
                                                     }
                                         )
 
                     response.raise_for_status()
                     result = response.json()
 
-                    generated_text = result.get('choices', '')[0]['text']
+                    generated_text = result.get('choices', '')[0]['text'].strip()
                     generation = prompt + generated_text
-                
+                            
                 except Exception as e:
                     print(f"Error: {e}")
                     exit()
@@ -192,7 +204,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], proces
                 generation = tokenizer.decode(raw_output.sequences[0], skip_special_tokens=True)
 
             model_response = ''
-            if args.model_name == 'deepseek-coder-33b-instruct':
+            if args.model_name == 'deepseek-coder-33b-instruct' or args.model_name == 'llama-3-70b-instruct':
                 model_response = '### Response:'
             elif args.model_name == 'granite-34b-code-instruct':
                 model_response = 'Answer:'
@@ -472,18 +484,32 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type, model)
     original_fragment += '\n}\n'
 
     prompt_instruction = ""
-    if args.model_name == 'deepseek-coder-33b-instruct':
+    if args.model_name == 'deepseek-coder-33b-instruct' or args.model_name == 'llama-3-70b-instruct':
         prompt_instruction = "### Instruction:"
     elif args.model_name == 'granite-34b-code-instruct':
         prompt_instruction = "Question:"
     
     model_response = ""
-    if args.model_name == 'deepseek-coder-33b-instruct':
+    if args.model_name == 'deepseek-coder-33b-instruct' or args.model_name == 'llama-3-70b-instruct':
         model_response = '### Response:'
     elif args.model_name == 'granite-34b-code-instruct':
         model_response = 'Answer:'
 
     instruction = f'{prompt_instruction}\nTranslate the following {args.from_lang} {fragment_type} to {args.to_lang} 3.10 like the example above. You only need to translate the \"{fragment_.split(":")[1]}\" {fragment_type}. All necessary dependencies are available in partial {args.to_lang} translation.\n\n'
+    
+    # data_type_map = {'ArrayList': 'list', 'HashMap': 'dict', 'Map': 'dict', 'Collections': 'list'}
+    # available_maps = []
+    # for data_type in data_type_map:
+    #     if data_type in ''.join(data['classes'][class_][f'{fragment_type}s'][fragment_]['body']):
+    #         available_maps.append(data_type)
+    
+    # if available_maps != []:
+    #     instruction += f"You can use the following mapping for Java to Python data types:\n\n"
+    #     for data_type in available_maps:
+    #         instruction += f"{data_type} -> {data_type_map[data_type]}\n"
+
+    # instruction += '\n\n'
+
     instruction += f"{args.from_lang} code:\n```\n{original_fragment}\n```"
 
     instruction += f'\n\nPartial {args.to_lang} translation:\n```\n'
@@ -497,6 +523,28 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type, model)
         instruction += f"\n\nclass {nested_class_}:\n"
         for field in data['classes'][nested_class_]['fields']:
             instruction += '\n'.join(data['classes'][nested_class_]['fields'][field]['translation']) + '\n' if data['classes'][nested_class_]['fields'][field]['translation'] != [] else ''.join(data['classes'][nested_class_]['fields'][field]['partial_translation']).replace('<placeholder>', 'None') + '\n'
+
+    dependencies = {}
+    with open(f'data/dependencies/{args.project_name}/dependencies.json', 'r') as f:
+        dependencies = json.load(f)
+    imported_classes = dependencies[class_]
+    for imported_class_ in imported_classes:
+        imported_class_path = get_dependency_path(imported_class_[1], args.project_name)
+        imported_classes = []
+        imported_classes.append(f'class {imported_class_[0]}:')
+        imported_class_data = {}
+        with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{args.project_name}.{imported_class_path}_python_partial.json', 'r') as f:      
+            imported_class_data = json.load(f)
+        
+        for field in imported_class_data['classes'][imported_class_[0]]['fields']:
+            if field.split(':')[1] in ''.join(data['classes'][class_][f'{fragment_type}s'][fragment_]['body']):
+                if imported_class_data['classes'][imported_class_[0]]['fields'][field]['translation'] != []:
+                    imported_classes += [imported_class_data["classes"][imported_class_[0]]["fields"][field]["translation"][0]]
+                else:
+                    imported_classes += [imported_class_data["classes"][imported_class_[0]]["fields"][field]["partial_translation"].replace("<placeholder>", "None")]
+        
+        if len(imported_classes) > 1:
+            instruction += '\n'.join(imported_classes) + '\n\n'
 
     main_class_decl = data['classes'][class_]['python_class_declaration']
 
@@ -521,7 +569,9 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type, model)
 
         related_methods = []
         for method in data['classes'][class_]['methods']:
-            if method.split(':')[1] in ''.join(data['classes'][class_]['fields'][fragment_]['body']):
+            if '=' not in ''.join(data['classes'][class_]['fields'][fragment_]['body']):
+                continue
+            if method.split(':')[1] in ''.join(''.join(data['classes'][class_]['fields'][fragment_]['body']).split('=')[1:]).strip():
                 related_methods.append(method)
         
         for related_method in related_methods:
@@ -529,6 +579,8 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type, model)
                 main_class_decl += '\n'.join(data['classes'][class_]['methods'][related_method]['translation']).rstrip() if data['classes'][class_]['methods'][related_method]['translation'] != [] else ''.join(data['classes'][class_]['methods'][related_method]['partial_translation']).rstrip()
             else:
                 main_class_decl += ''.join(data['classes'][class_]['methods'][related_method]['partial_translation'])
+            
+            main_class_decl += '\n\n'
 
         main_class_decl += ''.join(data['classes'][class_]['fields'][fragment_]['partial_translation']).replace('<placeholder>', '') + '\n'
         main_class_decl += f'\n```\n\n{model_response}\n'
@@ -569,7 +621,7 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type, model)
 
         for method in data['classes'][class_]['methods']:
             if ('setUp' in method or 'tearDown' in method) and 'Test' in [x.split('(')[0] for x in data['classes'][class_]['methods'][fragment_]['annotations']]:
-                main_class_decl += '\n'.join(data['classes'][class_]['methods'][method]['translation']).rstrip() if data['classes'][class_]['methods'][method]['translation'] != [] else ''.join(data['classes'][class_]['methods'][method]['partial_translation']).rstrip()
+                main_class_decl += '\n'.join(data['classes'][class_]['methods'][method]['translation']).rstrip() if data['classes'][class_]['methods'][method]['translation'] != [] else ''.join(data['classes'][class_]['methods'][method]['partial_translation']).rstrip() + '\n'
 
         if len(data['classes'][class_]['methods'][fragment_]['calls']) != 0 and args.include_call_graph:
 
@@ -622,6 +674,8 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type, model)
                             instruction += '\n'.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['translation']) if callee_schema_data['classes'][callee_class]['methods'][callee_method]['translation'] != [] else f"\nclass {callee_class}:\n" + ''.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['partial_translation'])
                         else:
                             instruction += ''.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['partial_translation'])
+                        
+                        instruction += '\n\n'
 
             if len(out_of_class_dependencies) != 0:
                 ordered_out_of_file_dependencies = {}
@@ -643,6 +697,8 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type, model)
                             instruction += '\n'.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['translation']) if callee_schema_data['classes'][callee_class]['methods'][callee_method]['translation'] != None else f"\nclass {callee_class}:\n" + ''.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['partial_translation'])
                         else:
                             instruction += ''.join(callee_schema_data['classes'][callee_class]['methods'][callee_method]['partial_translation'])
+                        
+                        instruction += '\n\n'
                     
             instruction += '\n\n' + main_class_decl + '\n\n'
             
