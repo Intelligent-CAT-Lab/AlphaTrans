@@ -1,10 +1,10 @@
-import java
+import java # type: ignore
 import abc
 import io
 
 
 class JavaHandler:
-    def mapping(x, id_map=None):
+    def mapping(x, id_map=None, target_object=None):
         if id_map is None:
             id_map = dict() # map IDs of Java objects to IDs of their corresponding Python objects
 
@@ -20,30 +20,38 @@ class JavaHandler:
         id = JavaHandler.getJavaId(x)
         if id in id_map:
             return id_map[id]
+        
+        # if the target object is None, try to take it from the J-py map
+        if target_object is None:
+            target_object = JavaHandler.mapping(JavaHandler.getPyFromJ(id))
 
         # get underlying python objects from java objects
         if hasattr(x, 'getPythonObject'):
             obj = x.getPythonObject()
             id_map[id] = obj
-            x.revsync(id_map) # sync the java object with the python object
+            x.jToPy(id_map) # sync the java object with the python object
 
             return obj
 
         # Properties
         if hasattr(x, 'getProperty'):
-            return JavaHandler.properties_to_dict(x, id_map)
+            return JavaHandler.properties_to_dict(x, id_map, target_object)
 
         # Map
         if hasattr(x, 'keySet'):
-            return JavaHandler.map_to_dict(x, id_map)
+            return JavaHandler.map_to_dict(x, id_map, target_object)
 
         # List
         if hasattr(x, 'toArray'):
-            return JavaHandler.list_to_list(x, id_map)
+            return JavaHandler.list_to_list(x, id_map, target_object)
 
         # Array
         if hasattr(x, 'length'):
-            return JavaHandler.array_to_list(x, id_map)
+            return JavaHandler.array_to_list(x, id_map, target_object)
+
+        # handle exception objects
+        if x.getClass().getName().endswith("Exception"):
+            return ExceptionHandler.instance_mapping(x)
 
         # handle the 'Class' type
         # this is safe because Strings don't have the foreign type
@@ -66,48 +74,72 @@ class JavaHandler:
 
         # handle StringReader
         if x.getClass().getName() == "java.io.StringReader":
-            return JavaHandler.stringreader_to_stringio(x, id_map)
+            return JavaHandler.stringreader_to_stringio(x, id_map, target_object)
 
         # handle StringWriter
         if x.getClass().getName() == "java.io.StringWriter":
-            return JavaHandler.stringwriter_to_stringio(x, id_map)
+            return JavaHandler.stringwriter_to_stringio(x, id_map, target_object)
 
         raise ValueError("Unknown Java object type: " + repr(x))
 
-    def properties_to_dict(x, id_map):
+    def properties_to_dict(x, id_map, target_object=None):
         D = dict()
+        if target_object:
+            D = target_object
+            D.clear()
         id = JavaHandler.getJavaId(x)
         id_map[id] = D
         for key in x.propertyNames():
             D[key] = x.getProperty(key)
+
+        JavaHandler.putObjectsToMaps(x, D)
         return D
 
-    def map_to_dict(x, id_map):
+    def map_to_dict(x, id_map, target_object=None):
         D = dict()
+        if target_object:
+            D = target_object
+            D.clear()
         id = JavaHandler.getJavaId(x)
         id_map[id] = D
         for key in x.keySet():
             D[JavaHandler.mapping(key)] = JavaHandler.mapping(x.get(key), id_map)
+
+        JavaHandler.putObjectsToMaps(x, D)
         return D
     
-    def list_to_list(x, id_map):
+    def list_to_list(x, id_map, target_object=None):
         L = []
+        if target_object:
+            L = target_object
+            L.clear()
         id = JavaHandler.getJavaId(x)
         id_map[id] = L
         for item in x.toArray():
-            L.append(JavaHandler.mapping(item, id_map))        
+            L.append(JavaHandler.mapping(item, id_map))
+        
+        JavaHandler.putObjectsToMaps(x, L)    
         return L
 
-    def array_to_list(x, id_map):
+    def array_to_list(x, id_map, target_object=None):
         L = []
+        if target_object:
+            L = target_object
+            L.clear()
         id = JavaHandler.getJavaId(x)
         id_map[id] = L
         for i in range(x.length):
             L.append(JavaHandler.mapping(x[i], id_map))
+
+        JavaHandler.putObjectsToMaps(x, L)
         return L
 
-    def stringreader_to_stringio(x, id_map):
+    def stringreader_to_stringio(x, id_map, target_object=None):
         S = io.StringIO()
+        if target_object:
+            S = target_object
+            S.seek(0)
+            S.truncate(0)
         id = JavaHandler.getJavaId(x)
         id_map[id] = S
         while (c := x.read()) != -1:
@@ -115,8 +147,12 @@ class JavaHandler:
         S.seek(0)
         return S
 
-    def stringwriter_to_stringio(x, id_map):
+    def stringwriter_to_stringio(x, id_map, target_object=None):
         S = io.StringIO()
+        if target_object:
+            S = target_object
+            S.seek(0)
+            S.truncate(0)
         id = JavaHandler.getJavaId(x)
         id_map[id] = S
         S.write(x.toString())
@@ -136,9 +172,15 @@ class JavaHandler:
         
         return JavaHandler.IntegrationUtils.valueToObject(obj, class_descriptor, idMap)
 
+    def getPyFromJ(obj):
+        return JavaHandler.IntegrationUtils.getPyFromJ(obj)
+
+    def putObjectsToMaps(javaObj, pyObj):
+        return JavaHandler.IntegrationUtils.putObjectsToMaps(javaObj, pyObj)
+
 
 class ExceptionHandler:
-    exception_map = {exception_map}
+    exception_map = {exception_map} # type: ignore
     
     @staticmethod
     def mapping(x):
@@ -147,6 +189,16 @@ class ExceptionHandler:
             return eval(ExceptionHandler.exception_map[exception_name]['target'])
         
         # return the same class if the exception is not in the mapping
+        return x
+    
+    @staticmethod
+    def instance_mapping(x):
+        exception_name = x.getClass().getName().split(".")[-1]
+        exception_message = str(x).split(":", 1)[-1].strip()
+        if exception_name in ExceptionHandler.exception_map:
+            return eval(f"{{ExceptionHandler.exception_map[exception_name]['target']}}(\"{{exception_message}}\")")
+        
+        # return the same object if the exception is not in the mapping
         return x
 
 
