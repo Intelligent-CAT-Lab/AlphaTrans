@@ -105,7 +105,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "SuppressWarnings"
+                        "SuppressWarnings(\"rawtypes\")"
                     ],
                     "modifiers": [
                         "static"
@@ -137,11 +137,31 @@
                         "    def getFactoryType(factoryClass: typing.Type[PooledObjectFactory[typing.Any]]) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getFactoryType(factoryClass: typing.Type[PooledObjectFactory[typing.Any]]) -> typing.Type[typing.Any]:",
+                        "        ",
+                        "        type = PooledObjectFactory",
+                        "        genericType = PoolImplUtils.__getGenericType(type, factoryClass)",
+                        "        if isinstance(genericType, int):",
+                        "            pi = PoolImplUtils.__getParameterizedType(type, factoryClass)",
+                        "            if pi is not None:",
+                        "                bounds = pi.__args__[0].__bounds__",
+                        "                if bounds is not None and len(bounds) > 0:",
+                        "                    bound0 = bounds[0]",
+                        "                    if isinstance(bound0, typing.Type):",
+                        "                        return bound0",
+                        "            return object",
+                        "        return genericType"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "222-224:toDuration": {
                     "start": 222,
@@ -179,11 +199,36 @@
                         "    def toDuration(amount: int, timeUnit: datetime.timedelta) -> datetime.timedelta:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def toDuration(amount: int, timeUnit: datetime.timedelta) -> datetime.timedelta:",
+                        "        ",
+                        "        if timeUnit is None:",
+                        "            raise ValueError(\"timeUnit cannot be None\")",
+                        "",
+                        "        if timeUnit == datetime.timedelta(microseconds=1):",
+                        "            return datetime.timedelta(microseconds=amount)",
+                        "        elif timeUnit == datetime.timedelta(milliseconds=1):",
+                        "            return datetime.timedelta(milliseconds=amount)",
+                        "        elif timeUnit == datetime.timedelta(seconds=1):",
+                        "            return datetime.timedelta(seconds=amount)",
+                        "        elif timeUnit == datetime.timedelta(minutes=1):",
+                        "            return datetime.timedelta(minutes=amount)",
+                        "        elif timeUnit == datetime.timedelta(hours=1):",
+                        "            return datetime.timedelta(hours=amount)",
+                        "        elif timeUnit == datetime.timedelta(days=1):",
+                        "            return datetime.timedelta(days=amount)",
+                        "        else:",
+                        "            raise ValueError(f\"Unsupported timeUnit: {timeUnit}\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "210-212:nonNull": {
                     "start": 210,
@@ -215,11 +260,19 @@
                         "    def nonNull(value: datetime.timedelta, defaultValue: datetime.timedelta) -> datetime.timedelta:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def nonNull(value: datetime.timedelta, defaultValue: datetime.timedelta) -> datetime.timedelta:",
+                        "         return value if value is not None else defaultValue"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "182-201:toChronoUnit": {
                     "start": 182,
@@ -267,11 +320,36 @@
                         "    def toChronoUnit(timeUnit: datetime.timedelta) -> datetime.timedelta:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def toChronoUnit(timeUnit: datetime.timedelta) -> datetime.timedelta:",
+                        "        ",
+                        "        if timeUnit is None:",
+                        "            raise ValueError(\"timeUnit cannot be None\")",
+                        "",
+                        "        if timeUnit == datetime.timedelta(microseconds=1):",
+                        "            return datetime.timedelta(microseconds=1)",
+                        "        elif timeUnit == datetime.timedelta(milliseconds=1):",
+                        "            return datetime.timedelta(milliseconds=1)",
+                        "        elif timeUnit == datetime.timedelta(seconds=1):",
+                        "            return datetime.timedelta(seconds=1)",
+                        "        elif timeUnit == datetime.timedelta(minutes=1):",
+                        "            return datetime.timedelta(minutes=1)",
+                        "        elif timeUnit == datetime.timedelta(hours=1):",
+                        "            return datetime.timedelta(hours=1)",
+                        "        elif timeUnit == datetime.timedelta(days=1):",
+                        "            return datetime.timedelta(days=1)",
+                        "        else:",
+                        "            raise ValueError(f\"Unsupported timeUnit: {timeUnit}\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "172-174:min": {
                     "start": 172,
@@ -303,11 +381,19 @@
                         "    def min(a: datetime.datetime, b: datetime.datetime) -> datetime.datetime:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def min(a: datetime.datetime, b: datetime.datetime) -> datetime.datetime:",
+                        "         return a if a < b else b"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "159-161:max": {
                     "start": 159,
@@ -339,11 +425,19 @@
                         "    def max(a: datetime.datetime, b: datetime.datetime) -> datetime.datetime:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def max(a: datetime.datetime, b: datetime.datetime) -> datetime.datetime:",
+                        "         return a if a > b else b"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "146-148:isPositive": {
                     "start": 146,
@@ -374,11 +468,19 @@
                         "    def isPositive(delay: datetime.timedelta) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def isPositive(delay: datetime.timedelta) -> bool:",
+                        "         return delay is not None and delay.total_seconds() > 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "133-144:getTypeParameter": {
                     "start": 133,
@@ -420,11 +522,28 @@
                         "    def __getTypeParameter(clazz: typing.Type[typing.Any], argType: typing.Type) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __getTypeParameter(clazz: typing.Type[typing.Any], argType: typing.Type) -> typing.Any:",
+                        "        ",
+                        "        if isinstance(argType, typing._GenericAlias):",
+                        "            return argType",
+                        "        ",
+                        "        tvs = typing.get_type_hints(clazz).keys()",
+                        "        for i, tv in enumerate(tvs):",
+                        "            if tv == argType:",
+                        "                return i",
+                        "        ",
+                        "        return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "109-121:getParameterizedType": {
                     "start": 109,
@@ -467,11 +586,25 @@
                         "    def __getParameterizedType(type: typing.Type[typing.Any], clazz: typing.Type[typing.Any]) -> typing.Generic[typing.TypeVar('T')]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __getParameterizedType(type: typing.Type[typing.Any], clazz: typing.Type[typing.Any]) -> typing.Generic[typing.TypeVar('T')]:",
+                        "        ",
+                        "        for iface in clazz.__orig_bases__:",
+                        "            if isinstance(iface, typing._GenericAlias):",
+                        "                pi = iface",
+                        "                if isinstance(pi.__origin__, type) and type.is_assignable_from(pi.__origin__):",
+                        "                    return pi",
+                        "        return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "75-99:getGenericType": {
                     "start": 75,
@@ -542,11 +675,35 @@
                         "    def __getGenericType(type: typing.Type[typing.Any], clazz: typing.Type[typing.Any]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __getGenericType(type: typing.Type[typing.Any], clazz: typing.Type[typing.Any]) -> typing.Any:",
+                        "        ",
+                        "        if type is None or clazz is None:",
+                        "            return None",
+                        "",
+                        "        pi = PoolImplUtils.__getParameterizedType(type, clazz)",
+                        "        if pi is not None:",
+                        "            return PoolImplUtils.__getTypeParameter(clazz, pi.__args__[0])",
+                        "",
+                        "        superClass = typing.get_origin(clazz)",
+                        "",
+                        "        result = PoolImplUtils.__getGenericType(type, superClass)",
+                        "        if isinstance(result, typing.Type):",
+                        "            return result",
+                        "        if isinstance(result, int):",
+                        "            superClassType = typing.get_args(clazz)[0]",
+                        "            return PoolImplUtils.__getTypeParameter(clazz, superClassType.__args__[result])",
+                        "        return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},

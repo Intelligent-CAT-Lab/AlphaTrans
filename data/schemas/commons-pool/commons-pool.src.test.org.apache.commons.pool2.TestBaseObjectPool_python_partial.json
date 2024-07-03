@@ -78,11 +78,18 @@
                         "    def returnObject(self, obj: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def returnObject(self, obj: typing.Any) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "35-35:invalidateObject0": {
                     "start": 35,
@@ -112,11 +119,18 @@
                         "    def invalidateObject0(self, obj: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def invalidateObject0(self, obj: typing.Any) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "30-32:borrowObject": {
                     "start": 30,
@@ -146,11 +160,18 @@
                         "    def borrowObject(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def borrowObject(self) -> typing.Any:",
+                        "         return None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
@@ -217,11 +238,34 @@
                         "    def testUnsupportedOperations(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testUnsupportedOperations(self) -> None:",
+                        "        ",
+                        "        if not isinstance(self, TestBaseObjectPool):",
+                        "            return  # skip redundant tests",
+                        "        ",
+                        "        try:",
+                        "            pool = TestObjectPool()",
+                        "",
+                        "            self.assertTrue(pool.getNumIdle() < 0, \"Negative expected.\")",
+                        "            self.assertTrue(pool.getNumActive() < 0, \"Negative expected.\")",
+                        "",
+                        "            with self.assertRaises(UnsupportedOperationException):",
+                        "                pool.clear()",
+                        "            with self.assertRaises(UnsupportedOperationException):",
+                        "                pool.addObject()",
+                        "",
+                        "        finally:",
+                        "            pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "256-262:testClose": {
                     "start": 256,
@@ -261,11 +305,26 @@
                         "    def testClose(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testClose(self) -> None:",
+                        "        ",
+                        "        # Create an instance of TestObjectPool",
+                        "        pool = TestObjectPool()",
+                        "",
+                        "        # Call the close method",
+                        "        pool.close()",
+                        "",
+                        "        # Call the close method again",
+                        "        pool.close()  # should not error as of Pool 2.0."
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "232-253:testBaseNumActiveNumIdle": {
                     "start": 232,
@@ -320,11 +379,43 @@
                         "    def testBaseNumActiveNumIdle(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseNumActiveNumIdle(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as e:",
+                        "            return  # skip this test if unsupported",
+                        "        ",
+                        "        self.assertEqual(0, self.__pool.getNumActive())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle())",
+                        "        ",
+                        "        obj0 = self.__pool.borrowObject()",
+                        "        self.assertEqual(1, self.__pool.getNumActive())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle())",
+                        "        ",
+                        "        obj1 = self.__pool.borrowObject()",
+                        "        self.assertEqual(2, self.__pool.getNumActive())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle())",
+                        "        ",
+                        "        self.__pool.returnObject(obj1)",
+                        "        self.assertEqual(1, self.__pool.getNumActive())",
+                        "        self.assertEqual(1, self.__pool.getNumIdle())",
+                        "        ",
+                        "        self.__pool.returnObject(obj0)",
+                        "        self.assertEqual(0, self.__pool.getNumActive())",
+                        "        self.assertEqual(2, self.__pool.getNumIdle())",
+                        "        ",
+                        "        self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "210-229:testBaseInvalidateObject": {
                     "start": 210,
@@ -377,11 +468,41 @@
                         "    def testBaseInvalidateObject(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseInvalidateObject(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as e:",
+                        "            return  # skip this test if unsupported",
+                        "        ",
+                        "        self.assertEqual(0, self.__pool.getNumActive())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle())",
+                        "        ",
+                        "        obj0 = self.__pool.borrowObject()",
+                        "        obj1 = self.__pool.borrowObject()",
+                        "        ",
+                        "        self.assertEqual(2, self.__pool.getNumActive())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle())",
+                        "        ",
+                        "        self.__pool.invalidateObject0(obj0)",
+                        "        self.assertEqual(1, self.__pool.getNumActive())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle())",
+                        "        ",
+                        "        self.__pool.invalidateObject0(obj1)",
+                        "        self.assertEqual(0, self.__pool.getNumActive())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle())",
+                        "        ",
+                        "        self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "196-207:testBaseClosePool": {
                     "start": 196,
@@ -426,11 +547,29 @@
                         "    def testBaseClosePool(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseClosePool(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException:",
+                        "            return  # skip this test if unsupported",
+                        "",
+                        "        obj = self.__pool.borrowObject()",
+                        "        self.__pool.returnObject(obj)",
+                        "",
+                        "        self.__pool.close()",
+                        "        with pytest.raises(IllegalStateException):",
+                        "            self.__pool.borrowObject()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "171-193:testBaseClear": {
                     "start": 171,
@@ -491,11 +630,48 @@
                         "    def testBaseClear(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseClear(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as e:",
+                        "            return  # skip this test if unsupported",
+                        "        ",
+                        "        self.assertEqual(0, self.__pool.getNumActive())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle())",
+                        "        ",
+                        "        obj0 = self.__pool.borrowObject()",
+                        "        obj1 = self.__pool.borrowObject()",
+                        "        ",
+                        "        self.assertEqual(2, self.__pool.getNumActive())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle())",
+                        "        ",
+                        "        self.__pool.returnObject(obj1)",
+                        "        self.__pool.returnObject(obj0)",
+                        "        ",
+                        "        self.assertEqual(0, self.__pool.getNumActive())",
+                        "        self.assertEqual(2, self.__pool.getNumIdle())",
+                        "        ",
+                        "        self.__pool.clear()",
+                        "        ",
+                        "        self.assertEqual(0, self.__pool.getNumActive())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle())",
+                        "        ",
+                        "        obj2 = self.__pool.borrowObject()",
+                        "        ",
+                        "        self.assertEqual(self._getNthObject(2), obj2)",
+                        "        ",
+                        "        self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "132-168:testBaseBorrowReturn": {
                     "start": 132,
@@ -580,11 +756,49 @@
                         "    def testBaseBorrowReturn(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseBorrowReturn(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as e:",
+                        "            return  # skip this test if unsupported",
+                        "",
+                        "        obj0 = self.__pool.borrowObject()",
+                        "        self.assertEqual(self._getNthObject(0), obj0)",
+                        "        obj1 = self.__pool.borrowObject()",
+                        "        self.assertEqual(self._getNthObject(1), obj1)",
+                        "        obj2 = self.__pool.borrowObject()",
+                        "        self.assertEqual(self._getNthObject(2), obj2)",
+                        "        self.__pool.returnObject(obj2)",
+                        "        obj2 = self.__pool.borrowObject()",
+                        "        self.assertEqual(self._getNthObject(2), obj2)",
+                        "        self.__pool.returnObject(obj1)",
+                        "        obj1 = self.__pool.borrowObject()",
+                        "        self.assertEqual(self._getNthObject(1), obj1)",
+                        "        self.__pool.returnObject(obj0)",
+                        "        self.__pool.returnObject(obj2)",
+                        "        obj2 = self.__pool.borrowObject()",
+                        "        if self._isLifo():",
+                        "            self.assertEqual(self._getNthObject(2), obj2)",
+                        "        if self._isFifo():",
+                        "            self.assertEqual(self._getNthObject(0), obj2)",
+                        "",
+                        "        obj0 = self.__pool.borrowObject()",
+                        "        if self._isLifo():",
+                        "            self.assertEqual(self._getNthObject(0), obj0)",
+                        "        if self._isFifo():",
+                        "            self.assertEqual(self._getNthObject(2), obj0)",
+                        "        self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "119-129:testBaseBorrow": {
                     "start": 119,
@@ -633,11 +847,27 @@
                         "    def testBaseBorrow(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseBorrow(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as e:",
+                        "            return  # skip this test if unsupported",
+                        "        ",
+                        "        self.assertEqual(self._getNthObject(0), self.__pool.borrowObject())",
+                        "        self.assertEqual(self._getNthObject(1), self.__pool.borrowObject())",
+                        "        self.assertEqual(self._getNthObject(2), self.__pool.borrowObject())",
+                        "        self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "92-116:testBaseAddObject": {
                     "start": 92,
@@ -700,11 +930,40 @@
                         "    def testBaseAddObject(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseAddObject(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as e:",
+                        "            return  # skip this test if unsupported",
+                        "",
+                        "        try:",
+                        "            self.assertEqual(0, self.__pool.getNumIdle())",
+                        "            self.assertEqual(0, self.__pool.getNumActive())",
+                        "            self.__pool.addObject()",
+                        "            self.assertEqual(1, self.__pool.getNumIdle())",
+                        "            self.assertEqual(0, self.__pool.getNumActive())",
+                        "            obj = self.__pool.borrowObject()",
+                        "            self.assertEqual(self._getNthObject(0), obj)",
+                        "            self.assertEqual(0, self.__pool.getNumIdle())",
+                        "            self.assertEqual(1, self.__pool.getNumActive())",
+                        "            self.__pool.returnObject(obj)",
+                        "            self.assertEqual(1, self.__pool.getNumIdle())",
+                        "            self.assertEqual(0, self.__pool.getNumActive())",
+                        "        except UnsupportedOperationException as e:",
+                        "            return  # skip this test if one of those calls is unsupported",
+                        "        finally:",
+                        "            self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "80-82:makeEmptyPool": {
                     "start": 80,
@@ -742,11 +1001,18 @@
                         "    def _makeEmptyPool(self, factory: PooledObjectFactory[typing.Any]) -> ObjectPool[object]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _makeEmptyPool(self, factory: PooledObjectFactory[typing.Any]) -> ObjectPool[object]:",
+                        "         return self._makeEmptyPool1(factory)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "84-89:makeEmptyPool1": {
                     "start": 84,
@@ -779,11 +1045,21 @@
                         "    def _makeEmptyPool1(self, factory: PooledObjectFactory[typing.Any]) -> ObjectPool[object]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _makeEmptyPool1(self, factory: PooledObjectFactory[typing.Any]) -> ObjectPool[object]:",
+                        "        ",
+                        "        if type(self) != TestBaseObjectPool:",
+                        "            self.fail(\"Subclasses of TestBaseObjectPool must reimplement this method.\")",
+                        "        raise UnsupportedOperationException(\"BaseObjectPool isn't a complete implementation.\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "72-77:makeEmptyPool0": {
                     "start": 72,
@@ -816,11 +1092,22 @@
                         "    def _makeEmptyPool0(self, minCapacity: int) -> ObjectPool[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _makeEmptyPool0(self, minCapacity: int) -> ObjectPool[str]:",
+                        "        ",
+                        "        if type(self) != TestBaseObjectPool:",
+                        "            self.fail(\"Subclasses of TestBaseObjectPool must reimplement this method.\")",
+                        "        else:",
+                        "            raise UnsupportedOperationException(\"BaseObjectPool isn't a complete implementation.\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "61-66:isLifo": {
                     "start": 61,
@@ -851,11 +1138,21 @@
                         "    def _isLifo(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _isLifo(self) -> bool:",
+                        "        ",
+                        "        if type(self) != TestBaseObjectPool:",
+                        "            self.fail(\"Subclasses of TestBaseObjectPool must reimplement this method.\")",
+                        "        return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "54-59:isFifo": {
                     "start": 54,
@@ -886,11 +1183,21 @@
                         "    def _isFifo(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _isFifo(self) -> bool:",
+                        "        ",
+                        "        if type(self) != TestBaseObjectPool:",
+                        "            self.fail(\"Subclasses of TestBaseObjectPool must reimplement this method.\")",
+                        "        return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "47-52:getNthObject": {
                     "start": 47,
@@ -923,11 +1230,21 @@
                         "    def _getNthObject(self, n: int) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _getNthObject(self, n: int) -> typing.Any:",
+                        "        ",
+                        "        if type(self) != TestBaseObjectPool:",
+                        "            self.fail(\"Subclasses of TestBaseObjectPool must reimplement this method.\")",
+                        "        raise UnsupportedOperationException(\"BaseObjectPool isn't a complete implementation.\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -946,15 +1263,25 @@
                             "ObjectPool<String>"
                         ]
                     ],
-                    "partial_translation": "    __pool: ObjectPool[str] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __pool: ObjectPool[str] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __pool: ObjectPool[str] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class TestBaseObjectPool(TestObjectPool):\n\n"
+            "python_class_declaration": "class TestBaseObjectPool(TestObjectPool, unittest.TestCase):\n\n"
         },
         "new Executable(...) { ... }": {
             "start": 206,
@@ -971,9 +1298,12 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
         "import os",
+        "import unittest",
         "from src.test.org.apache.commons.pool2.MethodCall import *",
         "from src.test.org.apache.commons.pool2.MethodCallPoolableObjectFactory import *",
         "from src.main.org.apache.commons.pool2.ObjectPool import *",

@@ -84,20 +84,35 @@
                         "    def printStackTraceIsNoOp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def printStackTraceIsNoOp(self) -> None:",
+                        "        ",
+                        "        stack = NoOpCallStack.INSTANCE",
+                        "        stack.fillInStackTrace()",
+                        "        writer = io.StringIO()",
+                        "        stack.printStackTrace(writer)",
+                        "        self.assertEqual(\"\", writer.getvalue())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class NoOpCallStackTest:\n\n"
+            "python_class_declaration": "class NoOpCallStackTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
+        "import unittest",
         "from src.main.org.apache.commons.pool2.impl.CallStack import *",
         "from src.main.org.apache.commons.pool2.impl.NoOpCallStack import *"
     ]

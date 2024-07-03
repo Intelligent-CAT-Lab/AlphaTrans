@@ -70,11 +70,25 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "        ",
+                        "        builder = io.StringIO()",
+                        "        builder.write(\"ProxiedKeyedObjectPool [pool=\")",
+                        "        builder.write(str(self.__pool))",
+                        "        builder.write(\", proxySource=\")",
+                        "        builder.write(str(self.__proxySource))",
+                        "        builder.write(\"]\")",
+                        "        return builder.getvalue()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "102-104:returnObject": {
                     "start": 102,
@@ -107,11 +121,19 @@
                         "    def returnObject(self, key: typing.Any, proxy: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def returnObject(self, key: typing.Any, proxy: typing.Any) -> None:",
+                        "        ",
+                        "        self.__pool.returnObject(key, self.__proxySource.resolveProxy(proxy))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "97-99:invalidateObject0": {
                     "start": 97,
@@ -144,11 +166,19 @@
                         "    def invalidateObject0(self, key: typing.Any, proxy: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def invalidateObject0(self, key: typing.Any, proxy: typing.Any) -> None:",
+                        "        ",
+                        "        self.__pool.invalidateObject0(key, self.__proxySource.resolveProxy(proxy))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "76-78:close": {
                     "start": 76,
@@ -178,11 +208,18 @@
                         "    def close(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def close(self) -> None:",
+                        "         self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "58-65:borrowObject": {
                     "start": 58,
@@ -199,7 +236,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "SuppressWarnings(\"unchecked\")"
                     ],
                     "modifiers": [
                         "public"
@@ -219,11 +257,23 @@
                         "    def borrowObject(self, key: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def borrowObject(self, key: typing.Any) -> typing.Any:",
+                        "        ",
+                        "        usageTracking = None",
+                        "        if isinstance(self.__pool, UsageTracking):",
+                        "            usageTracking = typing.cast(UsageTracking[typing.Any], self.__pool)",
+                        "        ",
+                        "        return self.__proxySource.createProxy(self.__pool.borrowObject(key), usageTracking)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "51-54:addObject": {
                     "start": 51,
@@ -256,11 +306,18 @@
                         "    def addObject(self, key: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def addObject(self, key: typing.Any) -> None:",
+                        "         self.__pool.addObject(key)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "92-94:getNumIdle1": {
                     "start": 92,
@@ -290,11 +347,18 @@
                         "    def getNumIdle1(self, key: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getNumIdle1(self, key: typing.Any) -> int:",
+                        "         return self.__pool.getNumIdle1(key)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "88-90:getNumIdle0": {
                     "start": 88,
@@ -322,11 +386,18 @@
                         "    def getNumIdle0(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getNumIdle0(self) -> int:",
+                        "         return self.__pool.getNumIdle0()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "84-86:getNumActive1": {
                     "start": 84,
@@ -356,11 +427,18 @@
                         "    def getNumActive1(self, key: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getNumActive1(self, key: typing.Any) -> int:",
+                        "         return self.__pool.getNumActive1(key)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "80-82:getNumActive0": {
                     "start": 80,
@@ -388,11 +466,18 @@
                         "    def getNumActive0(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getNumActive0(self) -> int:",
+                        "         return self.__pool.getNumActive0()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "71-73:clear1": {
                     "start": 71,
@@ -422,11 +507,24 @@
                         "    def clear1(self, key: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def clear1(self, key: typing.Any) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool.clear1(key)",
+                        "        except Exception as e:",
+                        "            raise e",
+                        "        except UnsupportedOperationException as uoe:",
+                        "            raise uoe"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "67-69:clear0": {
                     "start": 67,
@@ -454,11 +552,24 @@
                         "    def clear0(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def clear0(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool.clear0()",
+                        "        except Exception as e:",
+                        "            raise e",
+                        "        except UnsupportedOperationException as uoe:",
+                        "            raise uoe"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "44-48:ProxiedKeyedObjectPool": {
                     "start": 44,
@@ -491,11 +602,20 @@
                         "    def __init__(self, pool: KeyedObjectPool[typing.Any, typing.Any], proxySource: ProxySource[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, pool: KeyedObjectPool[typing.Any, typing.Any], proxySource: ProxySource[typing.Any]) -> None:",
+                        "        ",
+                        "        self.__pool = pool",
+                        "        self.__proxySource = proxySource"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -515,12 +635,22 @@
                             "ProxySource<V>"
                         ]
                     ],
-                    "partial_translation": "    __proxySource: ProxySource[typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __proxySource: ProxySource[typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __proxySource: ProxySource[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "35-35:pool": {
                     "start": 35,
@@ -538,12 +668,22 @@
                             "KeyedObjectPool<K,V>"
                         ]
                     ],
-                    "partial_translation": "    __pool: KeyedObjectPool[typing.Any, typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __pool: KeyedObjectPool[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __pool: KeyedObjectPool[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class ProxiedKeyedObjectPool(KeyedObjectPool):\n\n"

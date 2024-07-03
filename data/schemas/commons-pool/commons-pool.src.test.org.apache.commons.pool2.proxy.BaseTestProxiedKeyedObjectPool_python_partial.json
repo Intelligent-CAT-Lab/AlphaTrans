@@ -69,7 +69,8 @@
                 "TestObjectImpl",
                 "new Executable(...) { ... }",
                 "new Executable(...) { ... }",
-                "new Executable(...) { ... }"
+                "new Executable(...) { ... }",
+                "TestObject"
             ],
             "implements": [],
             "extends": [],
@@ -120,11 +121,31 @@
                         "    def testUsageTracking(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testUsageTracking(self) -> None:",
+                        "        ",
+                        "        obj = self.__pool.borrowObject(self.__KEY1)",
+                        "        assert obj is not None",
+                        "",
+                        "        obj.setData(self.__DATA1)",
+                        "",
+                        "        time.sleep((self.__ABANDONED_TIMEOUT_SECS + datetime.timedelta(seconds=2)).total_seconds())",
+                        "",
+                        "        self.__pool.borrowObject(self.__KEY1)",
+                        "",
+                        "        logOutput = self.__log.getvalue()",
+                        "",
+                        "        assert \"Pooled object created\" in logOutput",
+                        "        assert \"The last code to use this object was\" in logOutput"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "122-125:testPassThroughMethods02": {
                     "start": 122,
@@ -155,11 +176,21 @@
                         "    def testPassThroughMethods02(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testPassThroughMethods02(self) -> None:",
+                        "        ",
+                        "        self.__pool.close()",
+                        "        with pytest.raises(IllegalStateException):",
+                        "            self.__pool.addObject(self.__KEY1)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "106-119:testPassThroughMethods01": {
                     "start": 106,
@@ -200,11 +231,30 @@
                         "    def testPassThroughMethods01(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testPassThroughMethods01(self) -> None:",
+                        "        ",
+                        "        self.assertEqual(0, self.__pool.getNumActive0())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle0())",
+                        "",
+                        "        self.__pool.addObject(self.__KEY1)",
+                        "",
+                        "        self.assertEqual(0, self.__pool.getNumActive0())",
+                        "        self.assertEqual(1, self.__pool.getNumIdle0())",
+                        "",
+                        "        self.__pool.clear0()",
+                        "",
+                        "        self.assertEqual(0, self.__pool.getNumActive0())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle0())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "95-103:testBorrowObject": {
                     "start": 95,
@@ -251,11 +301,25 @@
                         "    def testBorrowObject(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBorrowObject(self) -> None:",
+                        "        ",
+                        "        obj = self.__pool.borrowObject(self.__KEY1)",
+                        "        assert obj is not None",
+                        "",
+                        "        obj.setData(self.__DATA1)",
+                        "        assert self.__DATA1 == obj.getData()",
+                        "",
+                        "        self.__pool.returnObject(self.__KEY1, obj)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "81-92:testAccessAfterReturn": {
                     "start": 81,
@@ -305,11 +369,29 @@
                         "    def testAccessAfterReturn(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testAccessAfterReturn(self) -> None:",
+                        "        ",
+                        "        obj = self.__pool.borrowObject(self.__KEY1)",
+                        "        assert obj is not None",
+                        "",
+                        "        obj.setData(self.__DATA1)",
+                        "        self.assertEqual(self.__DATA1, obj.getData())",
+                        "",
+                        "        self.__pool.returnObject(self.__KEY1, obj)",
+                        "",
+                        "        assert obj is not None",
+                        "        with self.assertRaises(IllegalStateException):",
+                        "            obj.getData()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-78:testAccessAfterInvalidate": {
                     "start": 66,
@@ -360,11 +442,30 @@
                         "    def testAccessAfterInvalidate(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testAccessAfterInvalidate(self) -> None:",
+                        "        ",
+                        "        obj = self.__pool.borrowObject(self.__KEY1)",
+                        "        assert obj is not None",
+                        "",
+                        "        obj.setData(self.__DATA1)",
+                        "        self.assertEqual(self.__DATA1, obj.getData())",
+                        "",
+                        "        self.__pool.invalidateObject0(self.__KEY1, obj)",
+                        "",
+                        "        assert obj is not None",
+                        "",
+                        "        with self.assertRaises(IllegalStateException):",
+                        "            obj.getData()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "63-63:getproxySource": {
                     "start": 63,
@@ -391,11 +492,18 @@
                         "    def _getproxySource(self) -> ProxySource[TestObject]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _getproxySource(self) -> ProxySource[TestObject]:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -414,12 +522,22 @@
                             "java.io.StringWriter"
                         ]
                     ],
-                    "partial_translation": "    __log: io.StringIO = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __log: io.StringIO = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __log: io.StringIO = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "59-59:pool": {
                     "start": 59,
@@ -436,12 +554,22 @@
                             "KeyedObjectPool<String,TestObject>"
                         ]
                     ],
-                    "partial_translation": "    __pool: KeyedObjectPool[str, TestObject] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __pool: KeyedObjectPool[str, TestObject] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __pool: KeyedObjectPool[str, TestObject] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "57-57:ABANDONED_TIMEOUT_SECS": {
                     "start": 57,
@@ -460,12 +588,21 @@
                             "java.time.Duration"
                         ]
                     ],
-                    "partial_translation": "    __ABANDONED_TIMEOUT_SECS: datetime.timedelta = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __ABANDONED_TIMEOUT_SECS: datetime.timedelta = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ABANDONED_TIMEOUT_SECS: datetime.timedelta = datetime.timedelta(seconds=3)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "55-55:DATA1": {
                     "start": 55,
@@ -484,12 +621,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __DATA1: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __DATA1: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __DATA1: str = \"data1\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "53-53:KEY1": {
                     "start": 53,
@@ -508,15 +654,24 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __KEY1: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __KEY1: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __KEY1: str = \"key1\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class BaseTestProxiedKeyedObjectPool(ABC):\n\n"
+            "python_class_declaration": "class BaseTestProxiedKeyedObjectPool(ABC, unittest.TestCase):\n\n"
         },
         "TestObjectImpl": {
             "start": 38,
@@ -560,11 +715,18 @@
                         "    def setData(self, data: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def setData(self, data: str) -> None:",
+                        "         self.__data = data"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "43-45:getData": {
                     "start": 43,
@@ -594,11 +756,18 @@
                         "    def getData(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getData(self) -> str:",
+                        "         return self.__data"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -617,12 +786,22 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __data: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __data: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __data: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class TestObjectImpl(TestObject):\n\n"
@@ -676,11 +855,18 @@
                         "    def setData(self, data: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def setData(self, data: str) -> None:",
+                        "         self.data = data"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "33-33:getData": {
                     "start": 33,
@@ -707,11 +893,18 @@
                         "    def getData(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getData(self) -> str:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
@@ -720,10 +913,13 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "from abc import ABC",
         "from io import StringIO",
         "import io",
         "import datetime",
+        "import unittest",
         "from src.main.org.apache.commons.pool2.KeyedObjectPool import *",
         "from src.main.org.apache.commons.pool2.proxy.ProxySource import *"
     ]

@@ -143,11 +143,74 @@
                         "    def testBaseNumActiveNumIdle2(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseNumActiveNumIdle2(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(6)",
+                        "        except UnsupportedOperationException as uoe:",
+                        "            return  # skip this test if unsupported",
+                        "",
+                        "        keya = self._makeKey(0)",
+                        "        keyb = self._makeKey(1)",
+                        "",
+                        "        self.assertEqual(0, self.__pool.getNumActive0())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle0())",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(keyb))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keyb))",
+                        "",
+                        "        objA0 = self.__pool.borrowObject(keya)",
+                        "        objB0 = self.__pool.borrowObject(keyb)",
+                        "",
+                        "        self.assertEqual(2, self.__pool.getNumActive0())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle0())",
+                        "        self.assertEqual(1, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "        self.assertEqual(1, self.__pool.getNumActive1(keyb))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keyb))",
+                        "",
+                        "        objA1 = self.__pool.borrowObject(keya)",
+                        "        objB1 = self.__pool.borrowObject(keyb)",
+                        "",
+                        "        self.assertEqual(4, self.__pool.getNumActive0())",
+                        "        self.assertEqual(0, self.__pool.getNumIdle0())",
+                        "        self.assertEqual(2, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "        self.assertEqual(2, self.__pool.getNumActive1(keyb))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keyb))",
+                        "",
+                        "        self.__pool.returnObject(keya, objA0)",
+                        "        self.__pool.returnObject(keyb, objB0)",
+                        "",
+                        "        self.assertEqual(2, self.__pool.getNumActive0())",
+                        "        self.assertEqual(2, self.__pool.getNumIdle0())",
+                        "        self.assertEqual(1, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(1, self.__pool.getNumIdle1(keya))",
+                        "        self.assertEqual(1, self.__pool.getNumActive1(keyb))",
+                        "        self.assertEqual(1, self.__pool.getNumIdle1(keyb))",
+                        "",
+                        "        self.__pool.returnObject(keya, objA1)",
+                        "        self.__pool.returnObject(keyb, objB1)",
+                        "",
+                        "        self.assertEqual(0, self.__pool.getNumActive0())",
+                        "        self.assertEqual(4, self.__pool.getNumIdle0())",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(2, self.__pool.getNumIdle1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(keyb))",
+                        "        self.assertEqual(2, self.__pool.getNumIdle1(keyb))",
+                        "",
+                        "        self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "348-374:testBaseNumActiveNumIdle": {
                     "start": 348,
@@ -212,11 +275,47 @@
                         "    def testBaseNumActiveNumIdle(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseNumActiveNumIdle(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as uoe:",
+                        "            return  # skip this test if unsupported",
+                        "",
+                        "        keya = self._makeKey(0)",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "",
+                        "        obj0 = self.__pool.borrowObject(keya)",
+                        "        self.assertEqual(1, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "",
+                        "        obj1 = self.__pool.borrowObject(keya)",
+                        "        self.assertEqual(2, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "",
+                        "        self.__pool.returnObject(keya, obj1)",
+                        "        self.assertEqual(1, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(1, self.__pool.getNumIdle1(keya))",
+                        "",
+                        "        self.__pool.returnObject(keya, obj0)",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(2, self.__pool.getNumIdle1(keya))",
+                        "",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(\"xyzzy12345\"))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(\"xyzzy12345\"))",
+                        "",
+                        "        self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "325-345:testBaseInvalidateObject": {
                     "start": 325,
@@ -275,11 +374,37 @@
                         "    def testBaseInvalidateObject(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseInvalidateObject(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as uoe:",
+                        "            return  # skip this test if unsupported",
+                        "        ",
+                        "        keya = self._makeKey(0)",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "        obj0 = self.__pool.borrowObject(keya)",
+                        "        obj1 = self.__pool.borrowObject(keya)",
+                        "        self.assertEqual(2, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "        self.__pool.invalidateObject0(keya, obj0)",
+                        "        self.assertEqual(1, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "        self.__pool.invalidateObject0(keya, obj1)",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "        self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "299-322:testBaseClear": {
                     "start": 299,
@@ -346,11 +471,48 @@
                         "    def testBaseClear(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseClear(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as uoe:",
+                        "            return  # skip this test if unsupported",
+                        "        ",
+                        "        keya = self._makeKey(0)",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "        ",
+                        "        obj0 = self.__pool.borrowObject(keya)",
+                        "        obj1 = self.__pool.borrowObject(keya)",
+                        "        ",
+                        "        self.assertEqual(2, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "        ",
+                        "        self.__pool.returnObject(keya, obj1)",
+                        "        self.__pool.returnObject(keya, obj0)",
+                        "        ",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(2, self.__pool.getNumIdle1(keya))",
+                        "        ",
+                        "        self.__pool.clear1(keya)",
+                        "        ",
+                        "        self.assertEqual(0, self.__pool.getNumActive1(keya))",
+                        "        self.assertEqual(0, self.__pool.getNumIdle1(keya))",
+                        "        ",
+                        "        obj2 = self.__pool.borrowObject(keya)",
+                        "        self.assertEqual(self._getNthObject(keya, 2), obj2)",
+                        "        ",
+                        "        self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "260-296:testBaseBorrowReturn": {
                     "start": 260,
@@ -440,11 +602,49 @@
                         "    def testBaseBorrowReturn(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseBorrowReturn(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as uoe:",
+                        "            return  # skip this test if unsupported",
+                        "",
+                        "        keya = self._makeKey(0)",
+                        "        obj0 = self.__pool.borrowObject(keya)",
+                        "        self.assertEqual(self._getNthObject(keya, 0), obj0)",
+                        "        obj1 = self.__pool.borrowObject(keya)",
+                        "        self.assertEqual(self._getNthObject(keya, 1), obj1)",
+                        "        obj2 = self.__pool.borrowObject(keya)",
+                        "        self.assertEqual(self._getNthObject(keya, 2), obj2)",
+                        "        self.__pool.returnObject(keya, obj2)",
+                        "        obj2 = self.__pool.borrowObject(keya)",
+                        "        self.assertEqual(self._getNthObject(keya, 2), obj2)",
+                        "        self.__pool.returnObject(keya, obj1)",
+                        "        obj1 = self.__pool.borrowObject(keya)",
+                        "        self.assertEqual(self._getNthObject(keya, 1), obj1)",
+                        "        self.__pool.returnObject(keya, obj0)",
+                        "        self.__pool.returnObject(keya, obj2)",
+                        "        obj2 = self.__pool.borrowObject(keya)",
+                        "        if self._isLifo():",
+                        "            self.assertEqual(self._getNthObject(keya, 2), obj2)",
+                        "        if self._isFifo():",
+                        "            self.assertEqual(self._getNthObject(keya, 0), obj2)",
+                        "        obj0 = self.__pool.borrowObject(keya)",
+                        "        if self._isLifo():",
+                        "            self.assertEqual(self._getNthObject(keya, 0), obj0)",
+                        "        if self._isFifo():",
+                        "            self.assertEqual(self._getNthObject(keya, 2), obj0)",
+                        "        self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "242-257:testBaseBorrow": {
                     "start": 242,
@@ -503,11 +703,34 @@
                         "    def testBaseBorrow(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseBorrow(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as uoe:",
+                        "            return  # skip this test if unsupported",
+                        "        ",
+                        "        keya = self._makeKey(0)",
+                        "        keyb = self._makeKey(1)",
+                        "        ",
+                        "        self.assertEqual(self._getNthObject(keya, 0), self.__pool.borrowObject(keya), \"1\")",
+                        "        self.assertEqual(self._getNthObject(keyb, 0), self.__pool.borrowObject(keyb), \"2\")",
+                        "        self.assertEqual(self._getNthObject(keyb, 1), self.__pool.borrowObject(keyb), \"3\")",
+                        "        self.assertEqual(self._getNthObject(keya, 1), self.__pool.borrowObject(keya), \"4\")",
+                        "        self.assertEqual(self._getNthObject(keyb, 2), self.__pool.borrowObject(keyb), \"5\")",
+                        "        self.assertEqual(self._getNthObject(keya, 2), self.__pool.borrowObject(keya), \"6\")",
+                        "        ",
+                        "        self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "206-239:testBaseAddObject": {
                     "start": 206,
@@ -584,11 +807,49 @@
                         "    def testBaseAddObject(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def testBaseAddObject(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__pool = self._makeEmptyPool0(3)",
+                        "        except UnsupportedOperationException as uoe:",
+                        "            return  # skip this test if unsupported",
+                        "",
+                        "        key = self._makeKey(0)",
+                        "        try:",
+                        "            self.assertEqual(0, self.__pool.getNumIdle0())",
+                        "            self.assertEqual(0, self.__pool.getNumActive0())",
+                        "            self.assertEqual(0, self.__pool.getNumIdle1(key))",
+                        "            self.assertEqual(0, self.__pool.getNumActive1(key))",
+                        "            self.__pool.addObject(key)",
+                        "            self.assertEqual(1, self.__pool.getNumIdle0())",
+                        "            self.assertEqual(0, self.__pool.getNumActive0())",
+                        "            self.assertEqual(1, self.__pool.getNumIdle1(key))",
+                        "            self.assertEqual(0, self.__pool.getNumActive1(key))",
+                        "            obj = self.__pool.borrowObject(key)",
+                        "            self.assertEqual(self._getNthObject(key, 0), obj)",
+                        "            self.assertEqual(0, self.__pool.getNumIdle0())",
+                        "            self.assertEqual(1, self.__pool.getNumActive0())",
+                        "            self.assertEqual(0, self.__pool.getNumIdle1(key))",
+                        "            self.assertEqual(1, self.__pool.getNumActive1(key))",
+                        "            self.__pool.returnObject(key, obj)",
+                        "            self.assertEqual(1, self.__pool.getNumIdle0())",
+                        "            self.assertEqual(0, self.__pool.getNumActive0())",
+                        "            self.assertEqual(1, self.__pool.getNumIdle1(key))",
+                        "            self.assertEqual(0, self.__pool.getNumActive1(key))",
+                        "        except UnsupportedOperationException as e:",
+                        "            return  # skip this test if one of those calls is unsupported",
+                        "        finally:",
+                        "            self.__pool.close()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "201-203:tearDown": {
                     "start": 201,
@@ -618,11 +879,18 @@
                         "    def tearDown(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def tearDown(self) -> None:",
+                        "         self.__pool = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "190-198:reset": {
                     "start": 190,
@@ -671,11 +939,20 @@
                         "    def __reset(self, pool: KeyedObjectPool[object, typing.Any], factory: FailingKeyedPooledObjectFactory, expectedMethods: typing.List[MethodCall]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __reset(self, pool: KeyedObjectPool[object, typing.Any], factory: FailingKeyedPooledObjectFactory, expectedMethods: typing.List[MethodCall]) -> None:",
+                        "         pool.clear0()",
+                        "         self.__clear(factory, expectedMethods)",
+                        "         factory.reset()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "147-151:clear": {
                     "start": 147,
@@ -714,11 +991,19 @@
                         "    def __clear(self, factory: FailingKeyedPooledObjectFactory, expectedMethods: typing.List[MethodCall]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __clear(self, factory: FailingKeyedPooledObjectFactory, expectedMethods: typing.List[MethodCall]) -> None:",
+                        "         factory.getMethodCalls().clear()",
+                        "         expectedMethods.clear()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "188-188:makeKey": {
                     "start": 188,
@@ -747,17 +1032,25 @@
                         "    def _makeKey(self, n: int) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _makeKey(self, n: int) -> typing.Any:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
-                "185-185:makeEmptyPool1": {
+                "185-187:makeEmptyPool1": {
                     "start": 185,
-                    "end": 185,
+                    "end": 187,
                     "body": [
-                        "    protected abstract KeyedObjectPool<Object, Object> makeEmptyPool1(\n"
+                        "    protected abstract KeyedObjectPool<Object, Object> makeEmptyPool1(\n",
+                        "            KeyedPooledObjectFactory<Object, Object> factory);\n"
                     ],
                     "is_constructor": false,
                     "annotations": [],
@@ -780,11 +1073,20 @@
                         "    def _makeEmptyPool1(self, factory: KeyedPooledObjectFactory[typing.Any, typing.Any]) -> KeyedObjectPool[object, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _makeEmptyPool1(self, factory: KeyedPooledObjectFactory[typing.Any, typing.Any]) -> KeyedObjectPool[object, typing.Any]:",
+                        "        ",
+                        "        # Your implementation here",
+                        "        pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "175-175:makeEmptyPool0": {
                     "start": 175,
@@ -813,11 +1115,20 @@
                         "    def _makeEmptyPool0(self, minCapacity: int) -> KeyedObjectPool[object, typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _makeEmptyPool0(self, minCapacity: int) -> KeyedObjectPool[object, typing.Any]:",
+                        "        ",
+                        "        # Your implementation here",
+                        "        pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "165-165:isLifo": {
                     "start": 165,
@@ -844,11 +1155,18 @@
                         "    def _isLifo(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _isLifo(self) -> bool:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "163-163:isFifo": {
                     "start": 163,
@@ -875,11 +1193,18 @@
                         "    def _isFifo(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _isFifo(self) -> bool:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "161-161:getNthObject": {
                     "start": 161,
@@ -909,11 +1234,18 @@
                         "    def _getNthObject(self, key: typing.Any, n: int) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def _getNthObject(self, key: typing.Any, n: int) -> typing.Any:",
+                        "         pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -934,12 +1266,21 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    _KEY: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    _KEY: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _KEY: str = \"key\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "145-145:ONE": {
                     "start": 145,
@@ -957,12 +1298,21 @@
                             "java.lang.Integer"
                         ]
                     ],
-                    "partial_translation": "    __ONE: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __ONE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ONE: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "143-143:ZERO": {
                     "start": 143,
@@ -980,12 +1330,21 @@
                             "java.lang.Integer"
                         ]
                     ],
-                    "partial_translation": "    __ZERO: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __ZERO: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ZERO: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "141-141:pool": {
                     "start": 141,
@@ -1002,15 +1361,25 @@
                             "KeyedObjectPool<Object,Object>"
                         ]
                     ],
-                    "partial_translation": "    __pool: KeyedObjectPool[object, typing.Any] = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __pool: KeyedObjectPool[object, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __pool: KeyedObjectPool[object, typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class TestKeyedObjectPool(ABC):\n\n"
+            "python_class_declaration": "class TestKeyedObjectPool(ABC, unittest.TestCase):\n\n"
         },
         "FailingKeyedPooledObjectFactory": {
             "start": 30,
@@ -1074,11 +1443,28 @@
                         "    def validateObject(self, key: typing.Any, obj: PooledObject[typing.Any]) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def validateObject(self, key: typing.Any, obj: PooledObject[typing.Any]) -> bool:",
+                        "        ",
+                        "        call = MethodCall.MethodCall0(\"validateObject\", key, obj.getObject())",
+                        "        self.__methodCalls.append(call)",
+                        "        ",
+                        "        if self.__validateObjectFail:",
+                        "            raise PrivateException(\"validateObject\")",
+                        "        ",
+                        "        r = True",
+                        "        call.returned(bool(r))",
+                        "        ",
+                        "        return r"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "123-125:setValidateObjectFail": {
                     "start": 123,
@@ -1108,11 +1494,18 @@
                         "    def setValidateObjectFail(self, validateObjectFail: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def setValidateObjectFail(self, validateObjectFail: bool) -> None:",
+                        "         self.__validateObjectFail = validateObjectFail"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "119-121:setPassivateObjectFail": {
                     "start": 119,
@@ -1142,11 +1535,18 @@
                         "    def setPassivateObjectFail(self, passivateObjectFail: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def setPassivateObjectFail(self, passivateObjectFail: bool) -> None:",
+                        "         self.__passivateObjectFail = passivateObjectFail"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "115-117:setMakeObjectFail": {
                     "start": 115,
@@ -1176,11 +1576,18 @@
                         "    def setMakeObjectFail(self, makeObjectFail: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def setMakeObjectFail(self, makeObjectFail: bool) -> None:",
+                        "         self.__makeObjectFail = makeObjectFail"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "111-113:setDestroyObjectFail": {
                     "start": 111,
@@ -1210,11 +1617,18 @@
                         "    def setDestroyObjectFail(self, destroyObjectFail: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def setDestroyObjectFail(self, destroyObjectFail: bool) -> None:",
+                        "         self.__destroyObjectFail = destroyObjectFail"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "107-109:setCurrentCount": {
                     "start": 107,
@@ -1244,11 +1658,18 @@
                         "    def setCurrentCount(self, count: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def setCurrentCount(self, count: int) -> None:",
+                        "         self.__count = count"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "103-105:setActivateObjectFail": {
                     "start": 103,
@@ -1278,11 +1699,18 @@
                         "    def setActivateObjectFail(self, activateObjectFail: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def setActivateObjectFail(self, activateObjectFail: bool) -> None:",
+                        "         self.__activateObjectFail = activateObjectFail"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "93-101:reset": {
                     "start": 93,
@@ -1347,11 +1775,24 @@
                         "    def reset(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def reset(self) -> None:",
+                        "         self.__count = 0",
+                        "         self.__methodCalls.clear()",
+                        "         self.setMakeObjectFail(False)",
+                        "         self.setActivateObjectFail(False)",
+                        "         self.setValidateObjectFail(False)",
+                        "         self.setPassivateObjectFail(False)",
+                        "         self.setDestroyObjectFail(False)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "85-91:passivateObject": {
                     "start": 85,
@@ -1397,11 +1838,22 @@
                         "    def passivateObject(self, key: typing.Any, obj: PooledObject[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def ivateObject(self, key: typing.Any, obj: PooledObject[typing.Any]) -> None:",
+                        "        ",
+                        "        self.__methodCalls.append(MethodCall.MethodCall0(\"passivateObject\", key, obj.getObject()))",
+                        "        ",
+                        "        if self.__passivateObjectFail:",
+                        "            raise PrivateException(\"passivateObject\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "81-83:isValidateObjectFail": {
                     "start": 81,
@@ -1429,11 +1881,18 @@
                         "    def isValidateObjectFail(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isValidateObjectFail(self) -> bool:",
+                        "         return self.__validateObjectFail"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "77-79:isPassivateObjectFail": {
                     "start": 77,
@@ -1461,11 +1920,18 @@
                         "    def isPassivateObjectFail(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isPassivateObjectFail(self) -> bool:",
+                        "         return self.__passivateObjectFail"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "73-75:isMakeObjectFail": {
                     "start": 73,
@@ -1493,11 +1959,18 @@
                         "    def isMakeObjectFail(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isMakeObjectFail(self) -> bool:",
+                        "         return self.__makeObjectFail"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "69-71:isDestroyObjectFail": {
                     "start": 69,
@@ -1525,11 +1998,18 @@
                         "    def isDestroyObjectFail(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isDestroyObjectFail(self) -> bool:",
+                        "         return self.__destroyObjectFail"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "65-67:isActivateObjectFail": {
                     "start": 65,
@@ -1557,11 +2037,18 @@
                         "    def isActivateObjectFail(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isActivateObjectFail(self) -> bool:",
+                        "         return self.__activateObjectFail"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "61-63:getMethodCalls": {
                     "start": 61,
@@ -1589,11 +2076,18 @@
                         "    def getMethodCalls(self) -> typing.List[MethodCall]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getMethodCalls(self) -> typing.List[MethodCall]:",
+                        "         return self.__methodCalls"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "57-59:getCurrentCount": {
                     "start": 57,
@@ -1621,11 +2115,18 @@
                         "    def getCurrentCount(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getCurrentCount(self) -> int:",
+                        "         return self.__count"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "49-55:destroyObject": {
                     "start": 49,
@@ -1671,11 +2172,22 @@
                         "    def destroyObject(self, key: typing.Any, obj: PooledObject[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def destroyObject(self, key: typing.Any, obj: PooledObject[typing.Any]) -> None:",
+                        "        ",
+                        "        self.__methodCalls.append(MethodCall.MethodCall0(\"destroyObject\", key, obj.getObject()))",
+                        "        ",
+                        "        if self.__destroyObjectFail:",
+                        "            raise PrivateException(\"destroyObject\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "41-47:activateObject": {
                     "start": 41,
@@ -1721,11 +2233,22 @@
                         "    def activateObject(self, key: typing.Any, obj: PooledObject[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def activateObject(self, key: typing.Any, obj: PooledObject[typing.Any]) -> None:",
+                        "        ",
+                        "        self.__methodCalls.append(MethodCall.MethodCall0(\"activateObject\", key, obj.getObject()))",
+                        "        ",
+                        "        if self.__activateObjectFail:",
+                        "            raise PrivateException(\"activateObject\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "39-39:FailingKeyedPooledObjectFactory": {
                     "start": 39,
@@ -1751,11 +2274,31 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "        ",
+                        "        self.__destroyObjectFail: bool = False",
+                        "",
+                        "        self.__passivateObjectFail: bool = False",
+                        "",
+                        "        self.__validateObjectFail: bool = False",
+                        "",
+                        "        self.__activateObjectFail: bool = False",
+                        "",
+                        "        self.__makeObjectFail: bool = False",
+                        "",
+                        "        self.__count: int = 0",
+                        "",
+                        "        self.__methodCalls: typing.List[MethodCall] = []"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1774,12 +2317,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __destroyObjectFail: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __destroyObjectFail: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __destroyObjectFail: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "36-36:passivateObjectFail": {
                     "start": 36,
@@ -1796,12 +2349,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __passivateObjectFail: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __passivateObjectFail: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __passivateObjectFail: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "35-35:validateObjectFail": {
                     "start": 35,
@@ -1818,12 +2381,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __validateObjectFail: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __validateObjectFail: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __validateObjectFail: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "34-34:activateObjectFail": {
                     "start": 34,
@@ -1840,12 +2413,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __activateObjectFail: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __activateObjectFail: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __activateObjectFail: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "33-33:makeObjectFail": {
                     "start": 33,
@@ -1862,12 +2445,22 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __makeObjectFail: bool = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __makeObjectFail: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __makeObjectFail: bool = False",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "32-32:count": {
                     "start": 32,
@@ -1884,12 +2477,22 @@
                             "int"
                         ]
                     ],
-                    "partial_translation": "    __count: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __count: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __count: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "31-31:methodCalls": {
                     "start": 31,
@@ -1907,12 +2510,22 @@
                             "java.util.List<MethodCall>"
                         ]
                     ],
-                    "partial_translation": "    __methodCalls: typing.List[MethodCall] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __methodCalls: typing.List[MethodCall] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __methodCalls: typing.List[MethodCall] = []",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class FailingKeyedPooledObjectFactory:\n\n"
@@ -1920,9 +2533,12 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "from abc import ABC",
         "import io",
         "import typing\nfrom typing import *",
+        "import unittest",
         "from src.main.org.apache.commons.pool2.KeyedObjectPool import *",
         "from src.main.org.apache.commons.pool2.KeyedPooledObjectFactory import *",
         "from src.test.org.apache.commons.pool2.MethodCall import *",
