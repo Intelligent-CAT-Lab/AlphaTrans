@@ -157,3 +157,33 @@ def schema_filter(schema_file_name: str):
             'src.main.' in schema_file_name # consider only the main schemas
             or ('src.test.' in schema_file_name and 'Test' not in schema_name) # or test schemas without 'Test' in their name
         ))
+
+
+def get_enum_field_body(field_name: str, field_schema: dict, schema_data: dict) -> str:
+    """
+    Returns the body of an enum field after traversing the class body
+    to capture any trailing ';'.
+    """
+    with open(schema_data['path'], 'r') as f:
+        lst = f.readlines()
+
+    start = field_schema['start']
+    end = field_schema['end']
+    field_body = "".join(lst[start-1:end])
+    
+    # return immediately if the field body ends with ';'
+    if field_body.strip().endswith(";"):
+        return field_body
+
+    # loop over all the lines until we find a non-empty line
+    i = end
+    line = lst[i]
+    while not line.strip():
+        i += 1
+        line = lst[i]
+    
+    # check what the first non-whitespace character is
+    if line.strip()[0] == ';':
+        field_body += ';'
+            
+    return field_body
