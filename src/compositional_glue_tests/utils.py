@@ -42,8 +42,7 @@ def type_mapping(obj: str, target_type: str, include_idMap=False, calling_from_p
             return f"IntegrationUtils.valueToArray({obj}, {target_type}.class)"
     
     caller = "JavaHandler.valueToObject" if calling_from_python else "IntegrationUtils.valueToObject"
-    
-    # TODO FIXME: JavaHandler.valueToObject does not handle idMap!! 
+
     return "{caller}({args})".format(
         caller=caller,
         args=", ".join([

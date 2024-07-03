@@ -3,7 +3,6 @@ import os
 import subprocess
 import json
 import keyword
-import re
 import xml.etree.ElementTree as ET
  
 from src.compositional_glue_tests.utils import IMMUTABLES, default_type_value, get_enum_field_body, get_method_parameter_types, schema_filter, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
@@ -18,19 +17,19 @@ class Project:
     """
     Represents a project under testing.
     """
-    
+
     def __init__(self, name: str):
         """
         Initialize the project with the given name.
         """
         if name not in paths:
             raise ValueError(f"Project {name} not found!")
-        
+
         self.name = name
         self.formatted_name = name.replace('-', '.')
         self.main_path = paths[name]['main']
         self.package = package_names[name]
-        
+
         # meta information for the file
         self.script_dir = os.path.dirname(__file__)
         self.schema_dir = os.path.join(self.script_dir, SCRIPT_DIR_DEPTH, SCHEMAS_DIR)
@@ -39,7 +38,7 @@ class Project:
         self.glue_dir = os.path.join(self.root_dir, OUTPUT_DIR, self.name)
 
         self.__initialize_java_project()
-                
+
     def __initialize_java_project(self):
         """       
         Copy original java project to glue_code directory
@@ -87,7 +86,7 @@ class Project:
                 )
             )
 
-    def recompose_python_project(self, injected_translations: dict[tuple[str, str, str], str]): 
+    def recompose_python_project(self, injected_translations: dict[tuple[str, str, str], str]):
         """
         (Re)compose the python project with the injected translations.
         injected_translations is a dict with the following structure:
@@ -154,7 +153,7 @@ class Project:
                     python_file_contents.append(class_declaration)
                     
                     # we do not need to add "fields" because they are taken from the Java object
-                    # due to revsync()
+                    # due to jToPy()
                     
                     # add methods
                     for _method in schema_data['classes'][_class]['methods']:
@@ -247,22 +246,35 @@ class Project:
         method_content = []
         if is_constructor:
             method_content.append("\n".join([
-                f"        self.javaObj = {java_call}",
-                f"        self.javaObj.setPythonObject(self)",
-                f"        self.javaObj.revsync()"
+                f"        try:",
+                f"            self.javaObj = {java_call}",
+                f"        except:",
+                f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
+                f"        finally:",
+                f"            self.javaObj.setPythonObject(self)",
+                f"            self.javaObj.jToPy()",
             ]))
         elif 'void' in method_schema_data['return_types'][0]:
             method_content.append("\n".join([
-                f"        self.javaObj.sync()" if not is_static else "",
-                f"        {java_call}",
-                f"        self.javaObj.revsync()" if not is_static else ""                
+                f"        self.javaObj.pyToJ()" if not is_static else "",
+                f"        try:",
+                f"            {java_call}",
+                f"        except:",
+                f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
+                f"        finally:",
+                f"            self.javaObj.jToPy()" if not is_static else "",               
             ]))
         else:
             method_content.append("\n".join([
-                f"        self.javaObj.sync()" if not is_static else "",
-                f"        val = JavaHandler.mapping({java_call})",
-                f"        self.javaObj.revsync()" if not is_static else "",
-                f"        return val"
+                f"        self.javaObj.pyToJ()" if not is_static else "",
+                f"        try:",
+                f"            val = JavaHandler.mapping({java_call})",
+                f"            self.javaObj.jToPy()" if not is_static else "",
+                f"            return val",
+                f"        except:",
+                f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
+                f"        finally:",
+                f"            self.javaObj.jToPy()" if not is_static else "",
             ]))
 
         method_body = method_declaration + "\n" + "\n".join(method_content)
@@ -482,9 +494,11 @@ class CompositionalTest:
                     imports = ctx_imports,
                     code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/src/{self.project.main_path.replace('/java/', '/')}",
                     package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/",
-                    mappings = ctx_mappings # We shouldn't need these anymore due to IntegrationUtils.valueToObject
-                                            # but sometimes we need this for implicitly handling null values
-                                            # TODO: Remove after type-mapping at callback Py-J boundary
+                    mappings = ""               
+                    # ----------------------------------------------------------------------------------------------
+                    # mappings = ctx_mappings # We shouldn't need these anymore due to IntegrationUtils.valueToObject
+                    #                         # but sometimes we need this for implicitly handling null values
+                    # ----------------------------------------------------------------------------------------------
                 ),
                 priority = 1
             )
@@ -537,7 +551,7 @@ class CompositionalTest:
                 f".targetTypeMapping(Value.class, {_class}.class, null, (v) -> {{",
                 f"    if(v.isNull()){{ return null; }}",
                 f"    {_class} obj = v.getMember(\"javaObj\").asHostObject();",
-                f"    obj.sync();",
+                f"    obj.pyToJ();",
                 f"    return obj;",
                 "})"
             ])
@@ -727,23 +741,11 @@ class CompositionalTest:
         Check if the method can be processed.
         """
         method_body = "".join(method_data['body'])
-        
-        # no support for methods with "try-catch" blocks
-        # Define regex patterns for the try-catch and try-finally
-        try_catch_pattern = r'try\s*\{[^}]*\}\s*catch\s*\([^)]+\)\s*\{[^}]*\}'
-        try_finally_pattern = r'try\s*\{[^}]*\}\s*finally\s*\{[^}]*\}'
-        
-        # Check for the presence of each block type
-        has_try_catch = re.search(try_catch_pattern, method_body, re.DOTALL) is not None
-        has_try_finally = re.search(try_finally_pattern, method_body, re.DOTALL) is not None
-        
-        if has_try_catch or has_try_finally:
-            raise NotImplementedError("Methods with exception handling are not supported.")
 
 
 class SyncMethod:
     """
-    A class to manage the sync and revsync methods.
+    A class to manage the pyToJ and jToPy (reverse=True) methods.
     """
     
     def __init__(self, class_name: str, reverse: bool = False):
@@ -773,25 +775,25 @@ class SyncMethod:
             field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True, target_object=field_name)
             self.fields.append(f"{field_name} = ({formatted_field_type}) {field_from_python};")
         else:
-            self.fields.append(f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}, idMap));")
+            self.fields.append(f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}, idMap, this.obj.getMember(\"{python_field_name}\")));")
     
     def get_body(self):
         fields_body = "\n".join(self.fields)
         
         if not self.reverse:
             return f"""
-            public void sync() {{
+            public void pyToJ() {{
                 java.util.Map idMap = new java.util.HashMap();
                 {fields_body}
             }}
         """
         else:
             return f"""
-            public void revsync() {{
+            public void jToPy() {{
                 Value idMap = IntegrationUtils.mapToPython(new java.util.HashMap());
-                revsync(idMap);
+                jToPy(idMap);
             }}
-            public void revsync(Value idMap) {{
+            public void jToPy(Value idMap) {{
                 {fields_body}
             }}
         """
@@ -850,8 +852,8 @@ class Schema:
             "fields": [],
             "unitialized_fields": [],
             "methods": [],
-            "sync": SyncMethod(class_name) if not (is_interface) else None,
-            "revsync": SyncMethod(class_name, reverse=True) if not (is_interface) else None,
+            "pyToJ": SyncMethod(class_name) if not (is_interface) else None,
+            "jToPy": SyncMethod(class_name, reverse=True) if not (is_interface) else None,
             "nests": [],
             "is_interface": is_interface,
             "is_enum": is_enum
@@ -920,13 +922,12 @@ class Schema:
             class_obj["fields"] = class_obj["fields"] + value_fields
             
         for _method in class_schema_data['methods']:
-            if dont_process:
-                self.__add_method_to_unprocessed_class(class_obj, _method, class_schema_data['methods'][_method])
-            else:
-                if _method in methods_to_process:
-                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method])
-                else:
-                    self.__add_method_to_class(class_obj, _method, class_schema_data['methods'][_method], dont_process=True)
+            self.__add_method_to_class(
+                class_obj, 
+                _method, 
+                class_schema_data['methods'][_method], 
+                dont_process = dont_process or _method not in methods_to_process
+            )
 
         # check if this class is nested inside another class
         if class_schema_data['nested_inside']:
@@ -985,22 +986,22 @@ class Schema:
                 and field_body.strip()[-1] != ';'):
                 field_body += ','
 
-        # processing for creating sync and revsync methods (if the field is not static)
+        # processing for creating pyToJ and jToPy methods (if the field is not static)
         if 'static' not in field_schema_data['modifiers']:
-            # add field to sync() and revsync() methods if those methods exist
-            if class_obj["sync"] and class_obj["revsync"]:
-                # deal with sync
+            # add field to pyToJ() and jToPy() methods if those methods exist
+            if class_obj["pyToJ"] and class_obj["jToPy"]:
+                # deal with pyToJ
                 if (
-                    not is_final  # don't add final fields to sync...
+                    not is_final  # don't add final fields to pyToJ...
                     or field_type not in IMMUTABLES # ...unless they are immutable
                 ):                
                     if is_final: # if field is 'final', remove the 'final' keyword
                         field_body = field_body.replace('final', '', 1)
 
-                    class_obj["sync"].add_field(field_name, field_schema_data)
+                    class_obj["pyToJ"].add_field(field_name, field_schema_data)
 
-                # deal with revsync
-                class_obj["revsync"].add_field(field_name, field_schema_data)
+                # deal with jToPy
+                class_obj["jToPy"].add_field(field_name, field_schema_data)
 
         if not skip_body:
             class_obj["fields"].append(field_body)
@@ -1010,37 +1011,6 @@ class Schema:
             if '=' not in field_body:
                 class_obj["unitialized_fields"].append(f"{field_name} = {default_type_value[field_type]};")
 
-    def __add_method_to_unprocessed_class(self, class_obj: dict, method_name: str, method_schema_data: dict):
-        method_body = "".join(method_schema_data['body'])
-        # check if the method is not implemented
-        if method_body.strip()[-1] != '}':
-            # add a semi-colon if not present
-            if method_body.strip()[-1] != ';':
-                method_body += ';'
-            
-            class_obj["methods"].append(method_body)
-            return
-
-        method_signature = method_body[:method_body.find('{')+1]
-        method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
-        is_constructor = method_schema_data['is_constructor']
-        
-        # if the method is not public, make it so
-        # unless it is the constructor of an enum (cannot be public)
-        if (
-            'public' not in method_signature
-            and not (class_obj["is_enum"] and is_constructor)
-        ):
-            # check if the method is marked as private or protected
-            if 'private' in method_signature:
-                method_signature = method_signature.replace('private', 'public', 1)
-            elif 'protected' in method_signature:
-                method_signature = method_signature.replace('protected', 'public', 1)
-            else:
-                method_signature = "public " + method_signature
-                
-        class_obj["methods"].append(f"{method_signature}\n{method_content}\n}}")
-    
     def __add_method_to_class(self, class_obj: dict, method_name: str, method_schema_data: dict, dont_process: bool = False):
         method_body = "".join(method_schema_data['body'])
         # check if the method is not implemented
@@ -1056,9 +1026,31 @@ class Schema:
         method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
         is_constructor = method_schema_data['is_constructor']
         method_name = method_name.split(':', 1)[1].strip() if not is_constructor else "__init__"
+
+        # if method is private, take mangling into account
+        # except for constructors
+        if 'private' in method_schema_data['modifiers'] and not is_constructor:
+            method_name = f"_{class_obj['name']}__{method_name}"
+        
+        # take into account the naming scheme for protected methods
+        elif 'protected' in method_schema_data['modifiers'] and not is_constructor:
+            method_name = f"_{method_name}"
+            
+        # if method name is a keyword, add an underscore at the end
+        if keyword.iskeyword(method_name):
+            method_name += "_"
+        
+        # handle the presence of exceptions
+        exception_name = None # We only handle one exception for now! TODO: Fix this later
+        if 'throws' in method_body: # if specificied with the "throws" keyword
+            exception_name = method_body[method_body.find('throws')+6:method_body.find('{')].strip()
+            exception_name = exception_name.split(',')[0].strip() # take the first exception for now if there are multiple
+        elif 'throw new' in method_body: # if specified with the "throw new" keyword but not in the method signature
+            throw_new_pos = method_body.find('throw new')
+            exception_name = method_body[throw_new_pos+9:method_body.find('(', throw_new_pos)].strip()
         
         # check if the method signature should have @Override
-        if 'Override' in method_schema_data['annotations']:
+        if 'Override' in method_schema_data['annotations'] and '@Override' not in method_signature:
             method_signature = '@Override\n' + method_signature
         
         # if the method is not public, make it so
@@ -1077,21 +1069,19 @@ class Schema:
         
         # if method is not to be processed, add it directly
         if dont_process:
+            # intercept exceptions to save them in the ExceptionHandler
+            # before rethrowing them
+            if exception_name:
+                method_content = f"""
+                    try {{
+                        {method_content}
+                    }} catch (Exception e) {{
+                        ExceptionHandler.ERR = e;
+                        throw e;
+                    }}
+                """
             class_obj["methods"].append(f"{method_signature}\n{method_content}\n}}")
             return
-        
-        # if method is private, take mangling into account
-        # except for constructors
-        if 'private' in method_schema_data['modifiers'] and not is_constructor:
-            method_name = f"_{class_obj['name']}__{method_name}"
-        
-        # take into account the naming scheme for protected methods
-        elif 'protected' in method_schema_data['modifiers'] and not is_constructor:
-            method_name = f"_{method_name}"
-            
-        # if method name is a keyword, add an underscore at the end
-        if keyword.iskeyword(method_name):
-            method_name += "_"
         
         # comment out the original method contents
         final_method_content = "".join([f"// {line.strip()}\n" for line in method_content.split('\n')])
@@ -1112,12 +1102,12 @@ class Schema:
             python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
             
         if is_constructor:
-            final_method_content += f"revsync();{python_call};sync();"
+            final_method_content += f"jToPy();{python_call};pyToJ();"
         elif 'void' in method_signature:
             if 'static' in method_schema_data['modifiers']:
                 final_method_content += f"{python_call};" # no need to sync for static methods
             else:
-                final_method_content += f"revsync();{python_call};sync();"
+                final_method_content += f"jToPy();{python_call};pyToJ();"
         else:
             return_type = method_schema_data['return_types'][0][0]
             
@@ -1127,27 +1117,21 @@ class Schema:
             return_type_casted = type_mapping(python_call, return_type)
             
             final_method_content += "".join([
-                f"revsync();" if 'static' not in method_schema_data['modifiers'] else '', # no need to sync for static methods
+                f"jToPy();" if 'static' not in method_schema_data['modifiers'] else '', # no need to sync for static methods
                 f"{return_type} val = ({return_type}) {return_type_casted};",
-                "sync();" if 'static' not in method_schema_data['modifiers'] else '', # no need to sync for static methods
+                "pyToJ();" if 'static' not in method_schema_data['modifiers'] else '', # no need to sync for static methods
                 f"return val;"
             ])
         
-        # handle the presence of exceptions
-        exception_name = None # We only handle one exception for now! TODO: Fix this later
-        if 'throws' in method_body: # if specificied with the "throws" keyword
-            exception_name = method_body[method_body.find('throws')+6:method_body.find('{')].strip()
-            exception_name = exception_name.split(',')[0].strip() # take the first exception for now if there are multiple
-        elif 'throw new' in method_body: # if specified with the "throw new" keyword but not in the method signature
-            throw_new_pos = method_body.find('throw new')
-            exception_name = method_body[throw_new_pos+9:method_body.find('(', throw_new_pos)].strip()
-        
+        # exception handling        
         if exception_name:            
             final_method_content = f"""
             try {{
                 {final_method_content}
             }} catch (PolyglotException e) {{
                 throw ({exception_name}) ExceptionHandler.handle(e, "{class_obj['name']}.{method_name}");
+            }} finally {{
+                pyToJ();
             }}
             """
             self.__exceptions.append((exception_name, f"{class_obj['name']}.{method_name}"))
@@ -1193,8 +1177,8 @@ class Schema:
             ]),
             "".join(_class['fields']),
             "".join(_class['methods']),
-            _class['sync'].get_body() if _class['sync'] else "",
-            _class['revsync'].get_body() if _class['revsync'] else "",
+            _class['pyToJ'].get_body() if _class['pyToJ'] else "",
+            _class['jToPy'].get_body() if _class['jToPy'] else "",
             "}"
         ])
         
@@ -1261,7 +1245,6 @@ class Schema:
                 return True
             
         return False
- 
 
 
 if __name__ == '__main__':
