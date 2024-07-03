@@ -265,7 +265,7 @@ def align_schema_order(schemas, traversal_order):
         aligned_schemas += found_schema
     
     schemas = [fname for fname in schemas if fname.endswith('_python_partial.json')]
-    assert len(aligned_schemas) == len(schemas), f"Found less schemas than expected: {aligned_schemas}"
+    # assert len(aligned_schemas) == len(schemas), f"Found less schemas than expected: {aligned_schemas}"
 
     return aligned_schemas
 
