@@ -35,7 +35,11 @@ def type_mapping(obj: str, target_type: str, include_idMap=False, calling_from_p
     target_object: The target object which will receive the converted value.    
     """
     # handle arrays separately (TODO: This may not work in general)
-    if target_type.endswith("[]"):        
+    if target_type.endswith("[]"):
+        # if the target type is an array, ensure there is no <...> in the type
+        if "<" in target_type:
+            target_type = target_type[:target_type.index("<")] + "[]"
+          
         if calling_from_python:
             return obj
         else:
