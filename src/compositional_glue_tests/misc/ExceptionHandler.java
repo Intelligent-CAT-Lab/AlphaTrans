@@ -11,6 +11,8 @@ import org.graalvm.polyglot.Value;
  * thrower: the class and method that threw the exception (as "Class.method")
  */
 final public class ExceptionHandler {{
+    public static Throwable ERR = null;
+
     public static Throwable handle(PolyglotException e, String thrower) {{
         if(e.isHostException()) {{
           return e.asHostException();

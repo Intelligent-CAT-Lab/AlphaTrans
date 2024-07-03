@@ -8,15 +8,30 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.graalvm.polyglot.Value;
 
 /** Provides utility methods for integration with GraalVM. */
 public final class IntegrationUtils {{
-
-  private IntegrationUtils() {{
+  private static final Map<Integer, Value> jToPyMap = new HashMap<>(); 
+  private static final Map<Long, Object> pyToJMap = new HashMap<>();
+  
+  public static void putObjectsToMaps(Object javaObj, Value pyObj) {{
+    jToPyMap.put(getIdentityHashCode(javaObj), pyObj);
+    pyToJMap.put(getPythonObjectId(pyObj), javaObj);
   }}
+
+  public static Value getPyFromJ(Object javaObj) {{
+    return jToPyMap.get(getIdentityHashCode(javaObj));
+  }}
+
+  public static Object getJFromPy(Value pyObj) {{
+    return pyToJMap.get(getPythonObjectId(pyObj));
+  }}
+
+  private IntegrationUtils() {{}}
 
   public static Object valueToObject(Value value, String classDescriptor) {{
     return valueToObject(value, classDescriptor, new HashMap<>(), null);
@@ -26,7 +41,8 @@ public final class IntegrationUtils {{
     return valueToObject(value, classDescriptor, idMap, null);
   }}
 
-  public static Object valueToObject(Value value, String classDescriptor, Map<Long, Object> idMap, Object targetObject) {{
+  public static Object valueToObject(
+      Value value, String classDescriptor, Map<Long, Object> idMap, Object targetObject) {{
     // Nullify
     if (value.isNull()) {{
       return null;
@@ -43,11 +59,17 @@ public final class IntegrationUtils {{
       return idMap.get(id);
     }}
 
+    // try to take the target object from the py-J map if it is null
+    if (targetObject == null) {{
+      targetObject = getJFromPy(value);
+    }}
+
+
     // return the 'javaObj' member if it exists, which is a Java object
-    // but first call 'sync' on the javaObj
+    // but first call 'pyToJ' on the javaObj
     if (value.hasMember("javaObj")) {{
       Value javaObj = value.getMember("javaObj");
-      javaObj.invokeMember("sync");
+      javaObj.invokeMember("pyToJ");
       Object hostObj = javaObj.asHostObject();
       idMap.put(id, hostObj);
       return hostObj;
@@ -61,12 +83,13 @@ public final class IntegrationUtils {{
     if (value.hasArrayElements()) {{
       String innerClassName = "";
       if (classDescriptor.contains("<")) {{
-        innerClassName = classDescriptor.substring(
-            classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
+        innerClassName =
+            classDescriptor.substring(
+                classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
       }}
       List<Object> list = new ArrayList<>();
 
-      if (targetObject != null) {{        
+      if (targetObject != null) {{
         list = (List<Object>) targetObject;
         list.clear();
       }}
@@ -75,11 +98,31 @@ public final class IntegrationUtils {{
       for (int i = 0; i < value.getArraySize(); i++) {{
         list.add(valueToObject(value.getArrayElement(i), innerClassName, idMap));
       }}
+
+      putObjectsToMaps(list, value);
       return list;
     }}
 
+    // handle Properties
+    if (value.hasMembers() && primaryClassName.equals("Properties")) {{
+      Properties properties = new Properties();
+
+      if (targetObject != null) {{
+        properties = (Properties) targetObject;
+        properties.clear();
+      }}
+
+      idMap.put(id, properties);
+      for (String key : value.getMemberKeys()) {{
+        properties.setProperty(key, (String) valueToObject(value.getMember(key), "String", idMap));
+      }}
+
+      putObjectsToMaps(properties, value);
+      return properties;
+    }}
+
     // handle maps
-    // need not check `primaryClassName.equals("Map")` because there is no other case yet
+    // need not check `primaryClassName.equals("Map")` because there is no other case
     if (value.hasHashEntries()) {{
       String keyClassName = "";
       String valueClassName = "";
@@ -96,14 +139,16 @@ public final class IntegrationUtils {{
       if (targetObject != null) {{
         map = (Map<Object, Object>) targetObject;
         map.clear();
-      }}      
+      }}
 
       idMap.put(id, map);
       for (Object key : value.getHashKeysIterator().as(Iterable.class)) {{
         map.put(
-          valueToObject(Value.asValue(key), keyClassName, idMap),
-          valueToObject(value.getHashValue(key), valueClassName, idMap));
+            valueToObject(Value.asValue(key), keyClassName, idMap),
+            valueToObject(value.getHashValue(key), valueClassName, idMap));
       }}
+
+      putObjectsToMaps(map, value);
       return map;
     }}
 
@@ -117,12 +162,23 @@ public final class IntegrationUtils {{
       }}
       if (classDescriptor.equals("StringBuilder")) {{
         String str = value.asString();
-        return new StringBuilder(str);
+        StringBuilder sb = new StringBuilder();
+
+        if (targetObject != null) {{
+          sb = (StringBuilder) targetObject;
+          sb.setLength(0);
+        }}
+
+        sb.append(str);
+        return sb;
       }}
 
       // Default to "String"
       return value.asString();
     }}
+
+    // TODO: handle StringReader
+    // TODO: handle StringWriter
 
     // handle other types
     if (value.isBoolean()) {{
@@ -168,13 +224,14 @@ public final class IntegrationUtils {{
       if (splitIndex != -1) {{
         String something = insideBrackets.substring(0, splitIndex).trim();
         String somethingElse = insideBrackets.substring(splitIndex + 1).trim();
-        return new String[] {{ something, somethingElse }};
+        return new String[] {{something, somethingElse}};
       }}
     }}
     return null; // Return null if no match is found
   }}
 
-  private static Value JavaHandler = ContextInitializer.getPythonClass("java_handler.py", "JavaHandler");
+  private static Value JavaHandler =
+      ContextInitializer.getPythonClass("java_handler.py", "JavaHandler");
 
   public static Value mapToPython(Object obj) {{
     return JavaHandler.invokeMember("mapping", obj);
@@ -182,6 +239,10 @@ public final class IntegrationUtils {{
 
   public static Value mapToPython(Object obj, Value idMap) {{
     return JavaHandler.invokeMember("mapping", obj, idMap);
+  }}
+
+  public static Value mapToPython(Object obj, Value idMap, Value targetObj) {{
+    return JavaHandler.invokeMember("mapping", obj, idMap, targetObj);
   }}
 
   public static int getIdentityHashCode(Object obj) {{
