@@ -6,7 +6,7 @@ import keyword
 import re
 import xml.etree.ElementTree as ET
  
-from src.compositional_glue_tests.utils import IMMUTABLES, default_type_value, get_method_parameter_types, schema_filter, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
+from src.compositional_glue_tests.utils import IMMUTABLES, default_type_value, get_enum_field_body, get_method_parameter_types, schema_filter, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
 from src.compositional_glue_tests.constants import *
 
 ERROR = "error"
@@ -281,6 +281,7 @@ class Project:
         try:
             return CompositionalTest(self, components, debug)
         except NotImplementedError as e:
+            print(e)
             return None
 
         
@@ -312,8 +313,8 @@ class CompositionalTest:
         
         # list of exception-method pairs to map (from all schemas)
         self.__exceptions = []
-        
-        for schema in self.project_schemas:            
+
+        for schema in self.project_schemas:
             with open(f'{self.project.schema_dir}/{self.project.name}/{schema}') as f:
                 schema_data = json.load(f)
                 
@@ -458,7 +459,7 @@ class CompositionalTest:
         Set up the schemas to process for the project.
         If no schemas are provided, all schemas in the project will be processed.
         """
-        self.project_schemas = filter(schema_filter, os.listdir(f'{self.project.schema_dir}/{self.project.name}'))               
+        self.project_schemas = list(filter(schema_filter, os.listdir(f'{self.project.schema_dir}/{self.project.name}')))
         
         if not schemas_to_process:
             self.schemas_to_process = self.project_schemas
@@ -522,7 +523,7 @@ class CompositionalTest:
                         and not is_enum
                         and (
                             '/main/' in data['path'] # only consider main classes
-                             or '/test/' in data['path'] and ('Test' not in _class) # or test classes without 'Test' in their name
+                            #  or '/test/' in data['path'] and ('Test' not in _class) # or test classes without 'Test' in their name
                         )
                         and not ('new' in _class or '{' in _class) # skip "anonymous" classes
                         and not Schema.is_class_enclosed_in_method(_class, data) # skip classes enclosed in methods
@@ -562,12 +563,17 @@ class CompositionalTest:
                     classes_to_map.append(class_to_map)
                     if import_to_add:
                         imports.append(import_to_add)
-                        
-        # code for the mappings
-        mapping_code = "".join([
-            f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(exceptionObj);}}\n" 
-            for _class in classes_to_map
-        ])
+
+        # This is no longer required due to 'javaObj' field in all classes
+        # but we will keep it here for some time
+        # --------------------------------------------------------------------------------------
+        # # code for the mappings
+        # mapping_code = "".join([
+        #     f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(exceptionObj);}}\n" 
+        #     for _class in classes_to_map
+        # ])
+        # --------------------------------------------------------------------------------------
+        mapping_code = ""
         
         for exception, method in self.__exceptions:
             if exception in exception_handling:
@@ -955,7 +961,9 @@ class Schema:
     def __add_field_to_class(self, class_obj: dict, field_name: str, field_schema_data: dict, dont_process: bool = False, field_of_enum=False, skip_body=False):
         field_name = field_name.split(':')[1].strip()
         field_type = field_schema_data['types'][0][0]
-        field_body = "".join(field_schema_data['body'])
+        
+        # specially handle fields of enums (traverse body to capture any trailing ';')
+        field_body = "".join(field_schema_data['body']) if not field_of_enum else get_enum_field_body(field_name, field_schema_data, self.schema_data)
         
         is_final = 'final' in field_schema_data['modifiers']
         is_public = 'public' in field_schema_data['modifiers']
