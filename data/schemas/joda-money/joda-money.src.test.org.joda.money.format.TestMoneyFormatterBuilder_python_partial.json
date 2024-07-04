@@ -168,11 +168,20 @@
                         "    def test_toFormatter_Locale(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_toFormatter_Locale(self) -> None:",
+                        "        ",
+                        "        test = self.__iBuilder.toFormatter1(self.__TEST_FR_LOCALE)",
+                        "        self.assertEqual(self.__TEST_FR_LOCALE, test.getLocale())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "874-877:test_toFormatter_defaultLocale": {
                     "start": 874,
@@ -214,11 +223,20 @@
                         "    def test_toFormatter_defaultLocale(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_toFormatter_defaultLocale(self) -> None:",
+                        "        ",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(self.__TEST_GB_LOCALE, test.getLocale())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "846-871:test_appendSigned_PZN_edgeCases": {
                     "start": 846,
@@ -337,11 +355,29 @@
                         "    def test_appendSigned_PZN_edgeCases(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendSigned_PZN_edgeCases(self) -> None:",
+                        "        ",
+                        "        pos = MoneyFormatterBuilder().appendAmount0().toFormatter0()",
+                        "        zro = MoneyFormatterBuilder().appendAmount0().appendLiteral(\" (zero)\").toFormatter0()",
+                        "        neg = MoneyFormatterBuilder().appendLiteral(\"(\").appendAmount1(MoneyAmountStyle.ASCII_DECIMAL_POINT_GROUP3_COMMA.withAbsValue(True)).appendLiteral(\")\").toFormatter0()",
+                        "        f = MoneyFormatterBuilder().appendCurrencyCode().appendLiteral(\" \").appendSigned1(pos, zro, neg).toFormatter0()",
+                        "        self.assertEqual(\"GBP 234.56\", f.print0(self.__GBP_234_56))",
+                        "        self.assertEqual(\"GBP 0.00 (zero)\", f.print0(BigMoney.zero0(self.__GBP).withScale0(2)))",
+                        "        self.assertEqual(\"GBP (234.56)\", f.print0(self.__GBP_MINUS_234_56))",
+                        "        self.assertEqual(self.__GBP_234_56.toBigMoney(), f.parseBigMoney(\"GBP 234.56\"))",
+                        "        self.assertEqual(BigMoney.zero0(self.__GBP).withScale0(2), f.parseBigMoney(\"GBP 0.00 (zero)\"))",
+                        "        self.assertEqual(BigMoney.zero0(self.__GBP), f.parseBigMoney(\"GBP 1.23 (zero)\"))",
+                        "        self.assertEqual(self.__GBP_MINUS_234_56.toBigMoney(), f.parseBigMoney(\"GBP (234.56)\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "815-843:test_appendSigned_PZN": {
                     "start": 815,
@@ -453,11 +489,31 @@
                         "    def test_appendSigned_PZN(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendSigned_PZN(self) -> None:",
+                        "        ",
+                        "        pos = MoneyFormatterBuilder().appendCurrencyCode().appendLiteral(\" \").appendAmount0().toFormatter0()",
+                        "        zro = MoneyFormatterBuilder().appendCurrencyCode().appendLiteral(\" -\").toFormatter0()",
+                        "        neg = MoneyFormatterBuilder().appendLiteral(\"(\").appendCurrencyCode().appendLiteral(\" \").appendAmount1(MoneyAmountStyle.ASCII_DECIMAL_POINT_GROUP3_COMMA.withAbsValue(True)).appendLiteral(\")\").toFormatter0()",
+                        "        f = MoneyFormatterBuilder().appendSigned1(pos, zro, neg).toFormatter0()",
+                        "        ",
+                        "        self.assertEqual(\"GBP 234.56\", f.print0(Money.parseMoney(\"GBP 234.56\")))",
+                        "        self.assertEqual(\"GBP -\", f.print0(Money.zero(self.__GBP)))",
+                        "        self.assertEqual(\"(GBP 234.56)\", f.print0(Money.parseMoney(\"GBP -234.56\")))",
+                        "        self.assertEqual(Money.parseMoney(\"GBP 234.56\"), f.parseMoney(\"GBP 234.56\"))",
+                        "        self.assertEqual(Money.parseMoney(\"GBP -234.56\"), f.parseMoney(\"GBP -234.56\"))",
+                        "        self.assertEqual(Money.zero(self.__GBP), f.parseMoney(\"GBP -\"))",
+                        "        self.assertEqual(Money.parseMoney(\"GBP 234.56\"), f.parseMoney(\"(GBP 234.56)\"))",
+                        "        self.assertEqual(Money.parseMoney(\"GBP -234.56\"), f.parseMoney(\"(GBP -234.56)\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "781-812:test_appendSigned_PN": {
                     "start": 781,
@@ -592,11 +648,35 @@
                         "    def test_appendSigned_PN(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendSigned_PN(self) -> None:",
+                        "        ",
+                        "        pos = MoneyFormatterBuilder().appendCurrencyCode().appendLiteral(\" \").appendAmount0().toFormatter0()",
+                        "        neg = MoneyFormatterBuilder().appendLiteral(\"(\").appendCurrencyCode().appendLiteral(\" \").appendAmount1(",
+                        "            MoneyAmountStyle.ASCII_DECIMAL_POINT_GROUP3_COMMA.withAbsValue(True)).appendLiteral(\")\").toFormatter0()",
+                        "        f = MoneyFormatterBuilder().appendSigned0(pos, neg).toFormatter0()",
+                        "        self.assertEqual(",
+                        "            \"PositiveZeroNegative(${code}' '${amount},${code}' '${amount},'('${code}'\"",
+                        "            + \" '${amount}')')\",",
+                        "            f.toString())",
+                        "        self.assertEqual(\"GBP 234.56\", f.print0(self.__GBP_234_56))",
+                        "        self.assertEqual(\"GBP 0.00\", f.print0(Money.zero(self.__GBP)))",
+                        "        self.assertEqual(\"(GBP 234.56)\", f.print0(self.__GBP_MINUS_234_56))",
+                        "        self.assertEqual(self.__GBP_234_56, f.parseMoney(\"GBP 234.56\"))",
+                        "        self.assertEqual(Money.zero(self.__GBP), f.parseMoney(\"GBP 0\"))",
+                        "        self.assertEqual(self.__GBP_MINUS_234_56, f.parseMoney(\"(GBP 234.56)\"))",
+                        "        context = f.parse(\"X\", 0)",
+                        "        self.assertEqual(0, context.getIndex())",
+                        "        self.assertEqual(0, context.getErrorIndex())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "769-778:test_append_MoneyFormatter": {
                     "start": 769,
@@ -669,11 +749,21 @@
                         "    def test_append_MoneyFormatter(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_append_MoneyFormatter(self) -> None:",
+                        "        ",
+                        "        f1 = MoneyFormatterBuilder().appendAmount0().toFormatter0()",
+                        "        f2 = MoneyFormatterBuilder().appendCurrencyCode().appendLiteral(\" \").append0(f1).toFormatter0()",
+                        "        self.assertEqual(\"GBP 2,345.67\", f2.print0(self.__GBP_2345_67))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "760-766:test_append_MoneyPrinter_nullMoneyPrinter_nullMoneyParser": {
                     "start": 760,
@@ -733,11 +823,23 @@
                         "    def test_append_MoneyPrinter_nullMoneyPrinter_nullMoneyParser(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_append_MoneyPrinter_nullMoneyPrinter_nullMoneyParser(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.append1(None, None)",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(False, test.isPrinter())",
+                        "        self.assertEqual(False, test.isParser())",
+                        "        self.assertEqual(\"\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "739-757:test_append_MoneyPrinterMoneyParser_parser": {
                     "start": 739,
@@ -814,11 +916,31 @@
                         "    def test_append_MoneyPrinterMoneyParser_parser(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_append_MoneyPrinterMoneyParser_parser(self) -> None:",
+                        "        ",
+                        "        parser = MoneyParser()",
+                        "        class Parser(MoneyParser):",
+                        "            def parse(self, context: MoneyParseContext) -> None:",
+                        "                context.setAmount(self.__JPY_2345.getAmount())",
+                        "                context.setCurrency(self.__JPY_2345.getCurrencyUnit())",
+                        "",
+                        "        parser = Parser()",
+                        "        self.__iBuilder.append1(None, parser)",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(False, test.isPrinter())",
+                        "        self.assertEqual(True, test.isParser())",
+                        "        self.assertEqual(self.__JPY_2345, test.parseMoney(\"\"))",
+                        "        self.assertEqual(True, test.toString().startswith(\"org.joda.money.format.TestMoneyFormatterBuilder$\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "717-736:test_append_MoneyPrinterMoneyParser_printer": {
                     "start": 717,
@@ -896,11 +1018,26 @@
                         "    def test_append_MoneyPrinterMoneyParser_printer(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_append_MoneyPrinterMoneyParser_printer(self) -> None:",
+                        "        ",
+                        "        printer = MoneyPrinter()",
+                        "        printer.print = lambda context, appendable, money: appendable.write(\"HELLO\")",
+                        "        self.__iBuilder.append1(printer, None)",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(True, test.isPrinter())",
+                        "        self.assertEqual(False, test.isParser())",
+                        "        self.assertEqual(\"HELLO\", test.print0(self.__JPY_2345))",
+                        "        self.assertTrue(test.toString().startswith(\"org.joda.money.format.TestMoneyFormatterBuilder$\"))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "704-714:test_appendAmount_parseExcessGrouping": {
                     "start": 704,
@@ -974,11 +1111,26 @@
                         "    def test_appendAmount_parseExcessGrouping(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmount_parseExcessGrouping(self) -> None:",
+                        "        ",
+                        "        expected = BigMoney.parse(\"GBP 12123.4567\")",
+                        "        f = MoneyFormatterBuilder() \\",
+                        "            .appendCurrencyCode() \\",
+                        "            .appendLiteral(\" \") \\",
+                        "            .appendAmount1(MoneyAmountStyle.ASCII_DECIMAL_POINT_GROUP3_COMMA) \\",
+                        "            .toFormatter0()",
+                        "        money = f.parseBigMoney(\"GBP 12,1,2,3,.,45,6,7\")",
+                        "        self.assertEqual(expected, money)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "690-701:test_appendAmount_parseExtendedGroupingSize": {
                     "start": 690,
@@ -999,7 +1151,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "UseDataProvider"
+                        "UseDataProvider(\"data_appendAmountExtendedGrouping\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -1056,11 +1209,28 @@
                         "    def test_appendAmount_parseExtendedGroupingSize(self, money: BigMoneyProvider, expected: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmount_parseExtendedGroupingSize(self, money: BigMoneyProvider, expected: str) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendAmount0()",
+                        "        test = (",
+                        "            MoneyFormatterBuilder()",
+                        "            .appendAmount1(",
+                        "                MoneyAmountStyle.ASCII_DECIMAL_POINT_GROUP3_COMMA",
+                        "                .withExtendedGroupingSize(2))",
+                        "            .toFormatter0()",
+                        "        )",
+                        "        self.assertEqual(expected, test.print0(money))",
+                        "        self.assertEqual(\"${amount}\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "675-686:data_appendAmountExtendedGrouping": {
                     "start": 675,
@@ -1081,6 +1251,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "DataProvider",
                         "DataProvider"
                     ],
                     "modifiers": [
@@ -1101,11 +1272,29 @@
                         "    def data_appendAmountExtendedGrouping() -> typing.List[typing.List[typing.Any]]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def data_appendAmountExtendedGrouping() -> typing.List[typing.List[typing.Any]]:",
+                        "        ",
+                        "        return [",
+                        "            [TestMoneyFormatterBuilder.__GBP_2_34, \"2.34\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_23_45, \"23.45\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_234_56, \"234.56\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_2345_67, \"2,345.67\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_1234567_89, \"12,34,567.89\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_1234_56789, \"1,234.567,89\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_1234567891234_1234567891, \"12,34,56,78,91,234.123,45,67,89,1\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_MINUS_234_56, \"-234.56\"],",
+                        "        ]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "663-672:test_appendAmount_MoneyAmountStyle_JPY_issue49": {
                     "start": 663,
@@ -1173,11 +1362,27 @@
                         "    def test_appendAmount_MoneyAmountStyle_JPY_issue49(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmount_MoneyAmountStyle_JPY_issue49(self) -> None:",
+                        "        ",
+                        "        money = Money.parse(\"JPY 12\")",
+                        "        style = MoneyAmountStyle.LOCALIZED_GROUPING",
+                        "        formatter = (",
+                        "            MoneyFormatterBuilder()",
+                        "            .appendAmount1(style)",
+                        "            .toFormatter0()",
+                        "            .withLocale(Locale.JAPAN)",
+                        "        )",
+                        "        self.assertEqual(\"12\", formatter.print0(money))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "648-660:test_appendAmount_MoneyAmountStyle_BHD": {
                     "start": 648,
@@ -1199,7 +1404,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "UseDataProvider"
+                        "UseDataProvider(\"data_appendAmount_MoneyAmountStyle\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -1262,11 +1468,26 @@
                         "    def test_appendAmount_MoneyAmountStyle_BHD(self, style: MoneyAmountStyle, amount: str, expected: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmount_MoneyAmountStyle_BHD(self, style: MoneyAmountStyle, amount: str, expected: str) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendAmount1(style)",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        money = BigMoney.of0(self.__BHD, decimal.Decimal(amount))",
+                        "        self.assertEqual(expected, test.print0(money))",
+                        "        if not style.isAbsValue():",
+                        "            self.assertEqual(money.getAmount(), test.parse(expected, 0).getAmount())",
+                        "        else:",
+                        "            self.assertEqual(money.getAmount().copy_abs(), test.parse(expected, 0).getAmount())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "632-644:test_appendAmount_MoneyAmountStyle_JPY": {
                     "start": 632,
@@ -1288,7 +1509,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "UseDataProvider"
+                        "UseDataProvider(\"data_appendAmount_MoneyAmountStyle\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -1351,11 +1573,26 @@
                         "    def test_appendAmount_MoneyAmountStyle_JPY(self, style: MoneyAmountStyle, amount: str, expected: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmount_MoneyAmountStyle_JPY(self, style: MoneyAmountStyle, amount: str, expected: str) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendAmount1(style)",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        money = BigMoney.of0(self.__JPY, decimal.Decimal(amount))",
+                        "        self.assertEqual(expected, test.print0(money))",
+                        "        if not style.isAbsValue():",
+                        "            self.assertEqual(money.getAmount(), test.parse(expected, 0).getAmount())",
+                        "        else:",
+                        "            self.assertEqual(money.getAmount().copy_abs(), test.parse(expected, 0).getAmount())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "616-628:test_appendAmount_MoneyAmountStyle_GBP": {
                     "start": 616,
@@ -1377,7 +1614,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "UseDataProvider"
+                        "UseDataProvider(\"data_appendAmount_MoneyAmountStyle\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -1440,11 +1678,26 @@
                         "    def test_appendAmount_MoneyAmountStyle_GBP(self, style: MoneyAmountStyle, amount: str, expected: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmount_MoneyAmountStyle_GBP(self, style: MoneyAmountStyle, amount: str, expected: str) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendAmount1(style)",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        money = BigMoney.of0(self.__GBP, decimal.Decimal(amount))",
+                        "        self.assertEqual(expected, test.print0(money))",
+                        "        if not style.isAbsValue():",
+                        "            self.assertEqual(money.getAmount(), test.parse(expected, 0).getAmount())",
+                        "        else:",
+                        "            self.assertEqual(money.getAmount().copy_abs(), test.parse(expected, 0).getAmount())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "442-612:data_appendAmount_MoneyAmountStyle": {
                     "start": 442,
@@ -1624,6 +1877,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "DataProvider",
                         "DataProvider"
                     ],
                     "modifiers": [
@@ -1681,10 +1935,14 @@
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "pending",
+                    "translation_status": "failed",
+                    "syntactical_validation_status": "failed",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "437-439:test_appendAmount_MoneyAmountStyle_null": {
                     "start": 437,
@@ -1696,7 +1954,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = NullPointerException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -1720,11 +1978,20 @@
                         "    def test_appendAmount_MoneyAmountStyle_null(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmount_MoneyAmountStyle_null(self) -> None:",
+                        "        ",
+                        "        with pytest.raises(NullPointerException):",
+                        "            self.__iBuilder.appendAmount1(None)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "429-434:test_appendAmountLocalized_JPY_2345": {
                     "start": 429,
@@ -1778,11 +2045,22 @@
                         "    def test_appendAmountLocalized_JPY_2345(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmountLocalized_JPY_2345(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendAmountLocalized()",
+                        "        test = self.__iBuilder.toFormatter1(Locale.FRANCE)",
+                        "        self.assertEqual(\"2\" + self.__FR_GROUP + \"345\", test.print0(self.__JPY_2345))",
+                        "        self.assertEqual(\"${amount}\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "421-426:test_appendAmountLocalized_GBP_1234_56789_US": {
                     "start": 421,
@@ -1836,11 +2114,22 @@
                         "    def test_appendAmountLocalized_GBP_1234_56789_US(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmountLocalized_GBP_1234_56789_US(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendAmountLocalized()",
+                        "        test = self.__iBuilder.toFormatter1(Locale.US)",
+                        "        self.assertEqual(\"1,234.567,89\", test.print0(self.__GBP_1234_56789))",
+                        "        self.assertEqual(\"${amount}\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "413-418:test_appendAmountLocalized": {
                     "start": 413,
@@ -1855,7 +2144,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "UseDataProvider"
+                        "UseDataProvider(\"data_appendAmountLocalized\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -1897,11 +2187,22 @@
                         "    def test_appendAmountLocalized(self, money: BigMoneyProvider, expected: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmountLocalized(self, money: BigMoneyProvider, expected: str) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendAmountLocalized()",
+                        "        test = self.__iBuilder.toFormatter1(Locale.FRANCE)",
+                        "        self.assertEqual(expected, test.print0(money))",
+                        "        self.assertEqual(\"${amount}\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "399-409:data_appendAmountLocalized": {
                     "start": 399,
@@ -1921,6 +2222,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "DataProvider",
                         "DataProvider"
                     ],
                     "modifiers": [
@@ -1941,11 +2243,39 @@
                         "    def data_appendAmountLocalized() -> typing.List[typing.List[typing.Any]]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def data_appendAmountLocalized() -> typing.List[typing.List[typing.Any]]:",
+                        "        ",
+                        "        FR_GROUP = TestMoneyFormatterBuilder.__FR_SYMBOLS.getGroupingSeparator()",
+                        "        FR_DECIMAL = TestMoneyFormatterBuilder.__FR_SYMBOLS.getMonetaryDecimalSeparator()",
+                        "",
+                        "        GBP_2_34 = Money.parse(\"GBP 2.34\")",
+                        "        GBP_23_45 = Money.parse(\"GBP 23.45\")",
+                        "        GBP_234_56 = Money.parse(\"GBP 234.56\")",
+                        "        GBP_2345_67 = Money.parse(\"GBP 2345.67\")",
+                        "        GBP_1234567_89 = Money.parse(\"GBP 1234567.89\")",
+                        "        GBP_1234_56789 = Money.parse(\"GBP 1234.56789\")",
+                        "        GBP_MINUS_234_56 = Money.parse(\"GBP -234.56\")",
+                        "",
+                        "        return [",
+                        "            [GBP_2_34, \"2\" + FR_DECIMAL + \"34\"],",
+                        "            [GBP_23_45, \"23\" + FR_DECIMAL + \"45\"],",
+                        "            [GBP_234_56, \"234\" + FR_DECIMAL + \"56\"],",
+                        "            [GBP_2345_67, \"2\" + FR_GROUP + \"345\" + FR_DECIMAL + \"67\"],",
+                        "            [GBP_1234567_89, \"1\" + FR_GROUP + \"234\" + FR_GROUP + \"567\" + FR_DECIMAL + \"89\"],",
+                        "            [GBP_1234_56789, \"1\" + FR_GROUP + \"234\" + FR_DECIMAL + \"567\" + FR_GROUP + \"89\"],",
+                        "            [GBP_MINUS_234_56, \"-234\" + FR_DECIMAL + \"56\"],",
+                        "        ]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "391-396:test_appendAmount_3dp_BHD": {
                     "start": 391,
@@ -2004,11 +2334,22 @@
                         "    def test_appendAmount_3dp_BHD(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmount_3dp_BHD(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendAmount0()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        money = Money.of2(CurrencyUnit.of1(\"BHD\"), 6345345.735)",
+                        "        self.assertEqual(\"6,345,345.735\", test.print0(money))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "383-388:test_appendAmount_JPY_2345": {
                     "start": 383,
@@ -2062,11 +2403,22 @@
                         "    def test_appendAmount_JPY_2345(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmount_JPY_2345(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendAmount0()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(\"2,345\", test.print0(self.__JPY_2345))",
+                        "        self.assertEqual(\"${amount}\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "375-380:test_appendAmount_GBP_1234_56789_France": {
                     "start": 375,
@@ -2120,11 +2472,22 @@
                         "    def test_appendAmount_GBP_1234_56789_France(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmount_GBP_1234_56789_France(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendAmount0()",
+                        "        test = self.__iBuilder.toFormatter1(Locale.FRANCE)",
+                        "        self.assertEqual(\"1,234.567,89\", test.print0(self.__GBP_1234_56789))",
+                        "        self.assertEqual(\"${amount}\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "367-372:test_appendAmount": {
                     "start": 367,
@@ -2139,7 +2502,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "UseDataProvider"
+                        "UseDataProvider(\"data_appendAmount\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -2181,11 +2545,22 @@
                         "    def test_appendAmount(self, money: BigMoneyProvider, expected: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendAmount(self, money: BigMoneyProvider, expected: str) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendAmount0()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(expected, test.print0(money))",
+                        "        self.assertEqual(\"${amount}\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "352-363:data_appendAmount": {
                     "start": 352,
@@ -2206,6 +2581,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "DataProvider",
                         "DataProvider"
                     ],
                     "modifiers": [
@@ -2226,11 +2602,29 @@
                         "    def data_appendAmount() -> typing.List[typing.List[typing.Any]]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def data_appendAmount() -> typing.List[typing.List[typing.Any]]:",
+                        "        ",
+                        "        return [",
+                        "            [TestMoneyFormatterBuilder.__GBP_2_34, \"2.34\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_23_45, \"23.45\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_234_56, \"234.56\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_2345_67, \"2,345.67\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_1234567_89, \"1,234,567.89\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_1234_56789, \"1,234.567,89\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_1234567891234_1234567891, \"1,234,567,891,234.123,456,789,1\"],",
+                        "            [TestMoneyFormatterBuilder.__GBP_234_56, \"-234.56\"],",
+                        "        ]"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "340-349:test_appendLiteral_parse_noMatch": {
                     "start": 340,
@@ -2308,11 +2702,26 @@
                         "    def test_appendLiteral_parse_noMatch(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendLiteral_parse_noMatch(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendLiteral(\"Hello\")",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"Helol\", 0)",
+                        "        self.assertEqual(True, parsed.isError())",
+                        "        self.assertEqual(0, parsed.getIndex())",
+                        "        self.assertEqual(0, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(None, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "328-337:test_appendLiteral_parse_tooShort": {
                     "start": 328,
@@ -2390,11 +2799,26 @@
                         "    def test_appendLiteral_parse_tooShort(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendLiteral_parse_tooShort(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendLiteral(\"Hello\")",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"Hell\", 0)",
+                        "        self.assertEqual(True, parsed.isError())",
+                        "        self.assertEqual(0, parsed.getIndex())",
+                        "        self.assertEqual(0, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(None, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "316-325:test_appendLiteral_parse_ok": {
                     "start": 316,
@@ -2472,11 +2896,26 @@
                         "    def test_appendLiteral_parse_ok(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendLiteral_parse_ok(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendLiteral(\"Hello\")",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"HelloWorld\", 0)",
+                        "        self.assertEqual(False, parsed.isError())",
+                        "        self.assertEqual(5, parsed.getIndex())",
+                        "        self.assertEqual(-1, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(None, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "308-313:test_appendLiteral_print_null": {
                     "start": 308,
@@ -2530,11 +2969,22 @@
                         "    def test_appendLiteral_print_null(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendLiteral_print_null(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendLiteral(None)",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(\"\", test.print0(self.__GBP_2_34))",
+                        "        self.assertEqual(\"\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "300-305:test_appendLiteral_print_empty": {
                     "start": 300,
@@ -2588,11 +3038,22 @@
                         "    def test_appendLiteral_print_empty(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendLiteral_print_empty(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendLiteral(\"\")",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(\"\", test.print0(self.__GBP_2_34))",
+                        "        self.assertEqual(\"\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "292-297:test_appendLiteral_print": {
                     "start": 292,
@@ -2646,11 +3107,22 @@
                         "    def test_appendLiteral_print(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendLiteral_print(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendLiteral(\"Hello\")",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(\"Hello\", test.print0(self.__GBP_2_34))",
+                        "        self.assertEqual(\"'Hello'\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "285-289:test_appendCurrencySymbolLocalized_parse": {
                     "start": 285,
@@ -2698,11 +3170,21 @@
                         "    def test_appendCurrencySymbolLocalized_parse(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencySymbolLocalized_parse(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencySymbolLocalized()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(False, test.isParser())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "277-282:test_appendCurrencySymbolLocalized_print": {
                     "start": 277,
@@ -2756,11 +3238,22 @@
                         "    def test_appendCurrencySymbolLocalized_print(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencySymbolLocalized_print(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencySymbolLocalized()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(\"\\u00a3\", test.print0(self.__GBP_2_34))",
+                        "        self.assertEqual(\"${symbolLocalized}\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "265-274:test_appendCurrencyNumericCode_parse_empty": {
                     "start": 265,
@@ -2838,11 +3331,26 @@
                         "    def test_appendCurrencyNumericCode_parse_empty(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumericCode_parse_empty(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumericCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"\", 0)",
+                        "        self.assertEqual(True, parsed.isError())",
+                        "        self.assertEqual(0, parsed.getIndex())",
+                        "        self.assertEqual(0, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(None, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "253-262:test_appendCurrencyNumericCode_parse_badCurrency": {
                     "start": 253,
@@ -2920,11 +3428,26 @@
                         "    def test_appendCurrencyNumericCode_parse_badCurrency(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumericCode_parse_badCurrency(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumericCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"991A\", 0)",
+                        "        self.assertEqual(True, parsed.isError())",
+                        "        self.assertEqual(0, parsed.getIndex())",
+                        "        self.assertEqual(0, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(None, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "241-250:test_appendCurrencyNumericCode_parse_tooShort": {
                     "start": 241,
@@ -3002,11 +3525,26 @@
                         "    def test_appendCurrencyNumericCode_parse_tooShort(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumericCode_parse_tooShort(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumericCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"\", 0)",
+                        "        self.assertEqual(True, parsed.isError())",
+                        "        self.assertEqual(0, parsed.getIndex())",
+                        "        self.assertEqual(0, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(None, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "229-238:test_appendCurrencyNumericCode_parse_ok_notPadded2": {
                     "start": 229,
@@ -3089,11 +3627,26 @@
                         "    def test_appendCurrencyNumericCode_parse_ok_notPadded2(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumericCode_parse_ok_notPadded2(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumericCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"51 \", 0)",
+                        "        self.assertEqual(False, parsed.isError())",
+                        "        self.assertEqual(2, parsed.getIndex())",
+                        "        self.assertEqual(-1, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(\"AMD\", parsed.getCurrency().getCode())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "217-226:test_appendCurrencyNumericCode_parse_ok_notPadded1": {
                     "start": 217,
@@ -3176,11 +3729,26 @@
                         "    def test_appendCurrencyNumericCode_parse_ok_notPadded1(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumericCode_parse_ok_notPadded1(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumericCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"8A\", 0)",
+                        "        self.assertEqual(False, parsed.isError())",
+                        "        self.assertEqual(1, parsed.getIndex())",
+                        "        self.assertEqual(-1, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(\"ALL\", parsed.getCurrency().getCode())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "205-214:test_appendCurrencyNumericCode_parse_ok_padded": {
                     "start": 205,
@@ -3263,11 +3831,26 @@
                         "    def test_appendCurrencyNumericCode_parse_ok_padded(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumericCode_parse_ok_padded(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumericCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"008A\", 0)",
+                        "        self.assertEqual(False, parsed.isError())",
+                        "        self.assertEqual(3, parsed.getIndex())",
+                        "        self.assertEqual(-1, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(\"ALL\", parsed.getCurrency().getCode())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "193-202:test_appendCurrencyNumericCode_parse_ok": {
                     "start": 193,
@@ -3345,11 +3928,26 @@
                         "    def test_appendCurrencyNumericCode_parse_ok(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumericCode_parse_ok(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumericCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"826A\", 0)",
+                        "        self.assertEqual(False, parsed.isError())",
+                        "        self.assertEqual(3, parsed.getIndex())",
+                        "        self.assertEqual(-1, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(CurrencyUnit.GBP, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "185-190:test_appendCurrencyNumericCode_print": {
                     "start": 185,
@@ -3403,11 +4001,22 @@
                         "    def test_appendCurrencyNumericCode_print(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumericCode_print(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumericCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(\"826\", test.print0(self.__GBP_2_34))",
+                        "        self.assertEqual(\"${numericCode}\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "173-182:test_appendCurrencyNumeric3Code_parse_empty": {
                     "start": 173,
@@ -3485,11 +4094,26 @@
                         "    def test_appendCurrencyNumeric3Code_parse_empty(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumeric3Code_parse_empty(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumeric3Code()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"\", 0)",
+                        "        self.assertEqual(True, parsed.isError())",
+                        "        self.assertEqual(0, parsed.getIndex())",
+                        "        self.assertEqual(0, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(None, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "161-170:test_appendCurrencyNumeric3Code_parse_badCurrency": {
                     "start": 161,
@@ -3567,11 +4191,26 @@
                         "    def test_appendCurrencyNumeric3Code_parse_badCurrency(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumeric3Code_parse_badCurrency(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumeric3Code()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"991A\", 0)",
+                        "        self.assertEqual(True, parsed.isError())",
+                        "        self.assertEqual(0, parsed.getIndex())",
+                        "        self.assertEqual(0, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(None, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "149-158:test_appendCurrencyNumeric3Code_parse_tooShort": {
                     "start": 149,
@@ -3649,11 +4288,26 @@
                         "    def test_appendCurrencyNumeric3Code_parse_tooShort(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumeric3Code_parse_tooShort(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumeric3Code()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"82\", 0)",
+                        "        self.assertEqual(True, parsed.isError())",
+                        "        self.assertEqual(0, parsed.getIndex())",
+                        "        self.assertEqual(0, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(None, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "137-146:test_appendCurrencyNumeric3Code_parse_ok": {
                     "start": 137,
@@ -3731,11 +4385,26 @@
                         "    def test_appendCurrencyNumeric3Code_parse_ok(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumeric3Code_parse_ok(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumeric3Code()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"826A\", 0)",
+                        "        self.assertEqual(False, parsed.isError())",
+                        "        self.assertEqual(3, parsed.getIndex())",
+                        "        self.assertEqual(-1, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(CurrencyUnit.GBP, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "129-134:test_appendCurrencyNumeric3Code_print": {
                     "start": 129,
@@ -3789,11 +4458,22 @@
                         "    def test_appendCurrencyNumeric3Code_print(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyNumeric3Code_print(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyNumeric3Code()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(\"826\", test.print0(self.__GBP_2_34))",
+                        "        self.assertEqual(\"${numeric3Code}\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "117-126:test_appendCurrencyCode_parse_empty": {
                     "start": 117,
@@ -3871,11 +4551,26 @@
                         "    def test_appendCurrencyCode_parse_empty(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyCode_parse_empty(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"\", 0)",
+                        "        self.assertEqual(True, parsed.isError())",
+                        "        self.assertEqual(0, parsed.getIndex())",
+                        "        self.assertEqual(0, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(None, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "105-114:test_appendCurrencyCode_parse_tooShort": {
                     "start": 105,
@@ -3953,11 +4648,26 @@
                         "    def test_appendCurrencyCode_parse_tooShort(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyCode_parse_tooShort(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"GB\", 0)",
+                        "        self.assertEqual(True, parsed.isError())",
+                        "        self.assertEqual(0, parsed.getIndex())",
+                        "        self.assertEqual(0, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(None, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "93-102:test_appendCurrencyCode_parse_ok": {
                     "start": 93,
@@ -4035,11 +4745,26 @@
                         "    def test_appendCurrencyCode_parse_ok(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyCode_parse_ok(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        parsed = test.parse(\"GBP\", 0)",
+                        "        self.assertEqual(False, parsed.isError())",
+                        "        self.assertEqual(3, parsed.getIndex())",
+                        "        self.assertEqual(-1, parsed.getErrorIndex())",
+                        "        self.assertEqual(None, parsed.getAmount())",
+                        "        self.assertEqual(CurrencyUnit.GBP, parsed.getCurrency())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "85-90:test_appendCurrencyCode_print": {
                     "start": 85,
@@ -4093,11 +4818,22 @@
                         "    def test_appendCurrencyCode_print(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_appendCurrencyCode_print(self) -> None:",
+                        "        ",
+                        "        self.__iBuilder.appendCurrencyCode()",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(\"GBP\", test.print0(self.__GBP_2_34))",
+                        "        self.assertEqual(\"${code}\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "78-82:test_empty": {
                     "start": 78,
@@ -4145,11 +4881,21 @@
                         "    def test_empty(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_empty(self) -> None:",
+                        "        ",
+                        "        test = self.__iBuilder.toFormatter0()",
+                        "        self.assertEqual(\"\", test.print0(self.__GBP_2_34))",
+                        "        self.assertEqual(\"\", test.toString())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "72-75:afterMethod": {
                     "start": 72,
@@ -4180,11 +4926,20 @@
                         "    def afterMethod(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def afterMethod(self) -> None:",
+                        "        ",
+                        "        Locale.setDefault(self.__cCachedLocale)",
+                        "        self.__iBuilder = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-69:beforeMethod": {
                     "start": 66,
@@ -4221,11 +4976,20 @@
                         "    def beforeMethod(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def beforeMethod(self) -> None:",
+                        "        ",
+                        "        Locale.setDefault(self.__TEST_GB_LOCALE)",
+                        "        self.__iBuilder = MoneyFormatterBuilder()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -4244,12 +5008,22 @@
                             "MoneyFormatterBuilder"
                         ]
                     ],
-                    "partial_translation": "    __iBuilder: MoneyFormatterBuilder = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __iBuilder: MoneyFormatterBuilder = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __iBuilder: MoneyFormatterBuilder = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "61-61:FR_GROUP": {
                     "start": 61,
@@ -4268,12 +5042,21 @@
                             "char"
                         ]
                     ],
-                    "partial_translation": "    __FR_GROUP: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __FR_GROUP: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __FR_GROUP: str = __FR_SYMBOLS.getGroupingSeparator()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "60-60:FR_DECIMAL": {
                     "start": 60,
@@ -4292,12 +5075,21 @@
                             "char"
                         ]
                     ],
-                    "partial_translation": "    __FR_DECIMAL: str = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __FR_DECIMAL: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __FR_DECIMAL: str = __FR_SYMBOLS.getMonetaryDecimalSeparator()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "59-59:FR_SYMBOLS": {
                     "start": 59,
@@ -4316,12 +5108,21 @@
                             "java.text.DecimalFormatSymbols"
                         ]
                     ],
-                    "partial_translation": "    __FR_SYMBOLS: typing.Union[decimal.Decimal, str] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __FR_SYMBOLS: typing.Union[decimal.Decimal, str] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __FR_SYMBOLS: DecimalFormatSymbols = DecimalFormatSymbols(Locale.FRANCE)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "58-58:TEST_FR_LOCALE": {
                     "start": 58,
@@ -4340,12 +5141,21 @@
                             "java.util.Locale"
                         ]
                     ],
-                    "partial_translation": "    __TEST_FR_LOCALE: typing.Any = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __TEST_FR_LOCALE: typing.Any = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __TEST_FR_LOCALE: typing.Any = Locale(\"fr\", \"FR\", \"TEST\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "57-57:TEST_GB_LOCALE": {
                     "start": 57,
@@ -4364,12 +5174,21 @@
                             "java.util.Locale"
                         ]
                     ],
-                    "partial_translation": "    __TEST_GB_LOCALE: typing.Any = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __TEST_GB_LOCALE: typing.Any = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __TEST_GB_LOCALE: typing.Any = Locale(\"en\", \"GB\", \"TEST\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "56-56:cCachedLocale": {
                     "start": 56,
@@ -4388,12 +5207,21 @@
                             "java.util.Locale"
                         ]
                     ],
-                    "partial_translation": "    __cCachedLocale: typing.Any = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __cCachedLocale: typing.Any = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __cCachedLocale: typing.Any = Locale.getDefault()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "54-54:JPY_2345": {
                     "start": 54,
@@ -4412,12 +5240,21 @@
                             "Money"
                         ]
                     ],
-                    "partial_translation": "    __JPY_2345: Money = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __JPY_2345: Money = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __JPY_2345: Money = Money.parse(\"JPY 2345\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "52-53:GBP_1234567891234_1234567891": {
                     "start": 52,
@@ -4437,12 +5274,21 @@
                             "BigMoney"
                         ]
                     ],
-                    "partial_translation": "    __GBP_1234567891234_1234567891: BigMoney = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __GBP_1234567891234_1234567891: BigMoney = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __GBP_1234567891234_1234567891: BigMoney = BigMoney.parse(\"GBP 1234567891234.1234567891\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "51-51:GBP_1234_56789": {
                     "start": 51,
@@ -4461,12 +5307,21 @@
                             "BigMoney"
                         ]
                     ],
-                    "partial_translation": "    __GBP_1234_56789: BigMoney = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __GBP_1234_56789: BigMoney = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __GBP_1234_56789: BigMoney = BigMoney.parse(\"GBP 1234.56789\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "50-50:GBP_1234567_89": {
                     "start": 50,
@@ -4485,12 +5340,21 @@
                             "Money"
                         ]
                     ],
-                    "partial_translation": "    __GBP_1234567_89: Money = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __GBP_1234567_89: Money = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __GBP_1234567_89: Money = Money.parse(\"GBP 1234567.89\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "49-49:GBP_2345_67": {
                     "start": 49,
@@ -4509,12 +5373,21 @@
                             "Money"
                         ]
                     ],
-                    "partial_translation": "    __GBP_2345_67: Money = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __GBP_2345_67: Money = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __GBP_2345_67: Money = Money.parse(\"GBP 2345.67\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "48-48:GBP_MINUS_234_56": {
                     "start": 48,
@@ -4533,12 +5406,21 @@
                             "Money"
                         ]
                     ],
-                    "partial_translation": "    __GBP_MINUS_234_56: Money = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __GBP_MINUS_234_56: Money = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __GBP_23_45: Money = Money.parse(\"GBP 23.45\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "47-47:GBP_234_56": {
                     "start": 47,
@@ -4557,12 +5439,21 @@
                             "Money"
                         ]
                     ],
-                    "partial_translation": "    __GBP_234_56: Money = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __GBP_234_56: Money = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __GBP_234_56: Money = Money.parse(\"GBP 234.56\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "46-46:GBP_23_45": {
                     "start": 46,
@@ -4581,12 +5472,21 @@
                             "Money"
                         ]
                     ],
-                    "partial_translation": "    __GBP_23_45: Money = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __GBP_23_45: Money = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __GBP_23_45: Money = Money.parse(\"GBP 23.45\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "45-45:GBP_2_34": {
                     "start": 45,
@@ -4605,12 +5505,21 @@
                             "Money"
                         ]
                     ],
-                    "partial_translation": "    __GBP_2_34: Money = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __GBP_2_34: Money = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __GBP_2_34: Money = Money.parse(\"GBP 2.34\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "44-44:BHD": {
                     "start": 44,
@@ -4629,12 +5538,21 @@
                             "CurrencyUnit"
                         ]
                     ],
-                    "partial_translation": "    __BHD: CurrencyUnit = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __BHD: CurrencyUnit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BHD: CurrencyUnit = CurrencyUnit.of1(\"BHD\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "43-43:JPY": {
                     "start": 43,
@@ -4653,12 +5571,21 @@
                             "CurrencyUnit"
                         ]
                     ],
-                    "partial_translation": "    __JPY: CurrencyUnit = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __JPY: CurrencyUnit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __JPY: CurrencyUnit = CurrencyUnit.JPY"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "42-42:GBP": {
                     "start": 42,
@@ -4677,15 +5604,24 @@
                             "CurrencyUnit"
                         ]
                     ],
-                    "partial_translation": "    __GBP: CurrencyUnit = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __GBP: CurrencyUnit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __GBP: CurrencyUnit = CurrencyUnit.GBP"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
-            "python_class_declaration": "class TestMoneyFormatterBuilder:\n\n"
+            "python_class_declaration": "class TestMoneyFormatterBuilder(unittest.TestCase):\n\n"
         },
         "new MoneyPrinter(...) { ... }": {
             "start": 719,
@@ -4709,7 +5645,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -4772,7 +5709,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -4836,9 +5774,12 @@
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import typing\nfrom typing import *",
         "import decimal",
+        "import unittest",
         "from src.main.org.joda.money.BigMoney import *",
         "from src.main.org.joda.money.BigMoneyProvider import *",
         "from src.main.org.joda.money.CurrencyUnit import *",

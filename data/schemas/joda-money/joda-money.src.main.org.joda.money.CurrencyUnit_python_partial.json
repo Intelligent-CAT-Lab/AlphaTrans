@@ -142,7 +142,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "ToString"
                     ],
                     "modifiers": [
                         "public"
@@ -160,11 +161,18 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return self.__code"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "640-642:hashCode": {
                     "start": 640,
@@ -194,11 +202,18 @@
                         "    def hashCode(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def hashCode(self) -> int:",
+                        "         return hash(self.__code)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "624-632:equals": {
                     "start": 624,
@@ -236,11 +251,23 @@
                         "    def equals(self, obj: typing.Any) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def equals(self, obj: typing.Any) -> bool:",
+                        "        ",
+                        "        if obj is self:",
+                        "            return True",
+                        "        if isinstance(obj, CurrencyUnit):",
+                        "            return self.__code == obj.__code",
+                        "        return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "611-613:compareTo": {
                     "start": 611,
@@ -272,11 +299,18 @@
                         "    def compareTo(self, other: CurrencyUnit) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def compareTo(self, other: CurrencyUnit) -> int:",
+                        "         return (self.__code > other.__code) - (self.__code < other.__code)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "345-352:of1": {
                     "start": 345,
@@ -293,6 +327,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "FromString",
                         "FromString"
                     ],
                     "modifiers": [
@@ -326,11 +361,23 @@
                         "    def of1(currencyCode: str) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def of1(currencyCode: str) -> CurrencyUnit:",
+                        "         MoneyUtils.checkNotNull(currencyCode, \"Currency code must not be null\")",
+                        "         currency = CurrencyUnit.__currenciesByCode.get(currencyCode)",
+                        "         if currency is None:",
+                        "             raise IllegalCurrencyException(\"Unknown currency '\" + currencyCode + '\\'')",
+                        "         return currency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "600-602:toCurrency": {
                     "start": 600,
@@ -358,11 +405,28 @@
                         "    def toCurrency(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def toCurrency(self) -> typing.Any:",
+                        "        ",
+                        "        # Python's built-in locale module does not have a direct equivalent to Java's java.util.Currency.",
+                        "        # However, you can use the locale.setlocale() function to set the locale and then use the locale.currency() function to get the currency symbol.",
+                        "        # Here is an example:",
+                        "",
+                        "        import locale",
+                        "        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')  # Set the locale to US English",
+                        "        return locale.currency(1000, grouping=True)  # Get the currency symbol for 1000",
+                        "",
+                        "        # Note: This is a simplified example and may not work as expected for all currencies.",
+                        "        # For a more accurate translation, you would need to use a library that provides a direct equivalent to Java's java.util.Currency."
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "583-590:getSymbol1": {
                     "start": 583,
@@ -403,11 +467,22 @@
                         "    def getSymbol1(self, locale: typing.Any) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getSymbol1(self, locale: typing.Any) -> str:",
+                        "         MoneyUtils.checkNotNull(locale, \"Locale must not be null\")",
+                        "         try:",
+                        "             return Currency.getInstance(self.__code).getSymbol(locale)",
+                        "         except IllegalArgumentException:",
+                        "             return self.__code"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "565-571:getSymbol0": {
                     "start": 565,
@@ -439,11 +514,22 @@
                         "    def getSymbol0(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getSymbol0(self) -> str:",
+                        "        ",
+                        "        try:",
+                        "            return Currency.getInstance(self.__code).getSymbol()",
+                        "        except IllegalArgumentException as ex:",
+                        "            return self.__code"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "552-554:isPseudoCurrency": {
                     "start": 552,
@@ -471,11 +557,18 @@
                         "    def isPseudoCurrency(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isPseudoCurrency(self) -> bool:",
+                        "         return self.__decimalPlaces < 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "543-545:getDecimalPlaces": {
                     "start": 543,
@@ -503,11 +596,18 @@
                         "    def getDecimalPlaces(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getDecimalPlaces(self) -> int:",
+                        "         return self.__decimalPlaces if self.__decimalPlaces >= 0 else 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "525-533:getCountryCodes": {
                     "start": 525,
@@ -547,11 +647,23 @@
                         "    def getCountryCodes(self) -> typing.Set[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getCountryCodes(self) -> typing.Set[str]:",
+                        "        ",
+                        "        countryCodes = set()",
+                        "        for entry in self.__currenciesByCountry.items():",
+                        "            if self.equals(entry[1]):",
+                        "                countryCodes.add(entry[0])",
+                        "        return countryCodes"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "503-515:getNumeric3Code": {
                     "start": 503,
@@ -589,11 +701,26 @@
                         "    def getNumeric3Code(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getNumeric3Code(self) -> str:",
+                        "        ",
+                        "        if self.__numericCode < 0:",
+                        "            return \"\"",
+                        "        str_num = str(self.__numericCode)",
+                        "        if len(str_num) == 1:",
+                        "            return \"00\" + str_num",
+                        "        if len(str_num) == 2:",
+                        "            return \"0\" + str_num",
+                        "        return str_num"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "491-493:getNumericCode": {
                     "start": 491,
@@ -621,11 +748,18 @@
                         "    def getNumericCode(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getNumericCode(self) -> int:",
+                        "         return self.__numericCode"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "480-482:getCode": {
                     "start": 480,
@@ -653,11 +787,18 @@
                         "    def getCode(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getCode(self) -> str:",
+                        "         return self.__code"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "430-438:ofCountry": {
                     "start": 430,
@@ -706,11 +847,24 @@
                         "    def ofCountry(countryCode: str) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofCountry(countryCode: str) -> CurrencyUnit:",
+                        "         MoneyUtils.checkNotNull(countryCode, \"Country code must not be null\")",
+                        "         currency = CurrencyUnit.__currenciesByCountry.get(countryCode)",
+                        "         if currency is None:",
+                        "             raise IllegalCurrencyException(",
+                        "                 \"No currency found for country '\" + countryCode + '\\'')",
+                        "         return currency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "412-419:of2": {
                     "start": 412,
@@ -758,11 +912,23 @@
                         "    def of2(locale: typing.Any) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def of2(locale: typing.Any) -> CurrencyUnit:",
+                        "         MoneyUtils.checkNotNull(locale, \"Locale must not be null\")",
+                        "         currency = CurrencyUnit.__currenciesByCountry.get(locale.getCountry())",
+                        "         if currency is None:",
+                        "             raise IllegalCurrencyException(\"No currency found for locale '\" + str(locale) + '\\'')",
+                        "         return currency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "395-401:ofNumericCode1": {
                     "start": 395,
@@ -804,11 +970,23 @@
                         "    def ofNumericCode1(numericCurrencyCode: int) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofNumericCode1(numericCurrencyCode: int) -> CurrencyUnit:",
+                        "        ",
+                        "        currency = CurrencyUnit.__currenciesByNumericCode.get(numericCurrencyCode)",
+                        "        if currency is None:",
+                        "            raise IllegalCurrencyException(\"Unknown currency '\" + str(numericCurrencyCode) + '\\'')",
+                        "        return currency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "364-384:ofNumericCode0": {
                     "start": 364,
@@ -874,11 +1052,31 @@
                         "    def ofNumericCode0(numericCurrencyCode: str) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofNumericCode0(numericCurrencyCode: str) -> CurrencyUnit:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(numericCurrencyCode, \"Currency code must not be null\")",
+                        "        ",
+                        "        length = len(numericCurrencyCode)",
+                        "        ",
+                        "        if length == 1:",
+                        "            return CurrencyUnit.ofNumericCode1(ord(numericCurrencyCode[0]) - ord('0'))",
+                        "        elif length == 2:",
+                        "            return CurrencyUnit.ofNumericCode1((ord(numericCurrencyCode[0]) - ord('0')) * 10 + ord(numericCurrencyCode[1]) - ord('0'))",
+                        "        elif length == 3:",
+                        "            return CurrencyUnit.ofNumericCode1((ord(numericCurrencyCode[0]) - ord('0')) * 100 + (ord(numericCurrencyCode[1]) - ord('0')) * 10 + ord(numericCurrencyCode[2]) - ord('0'))",
+                        "        else:",
+                        "            raise IllegalCurrencyException(\"Unknown currency '\" + numericCurrencyCode + '\\'')"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "329-332:of0": {
                     "start": 329,
@@ -922,11 +1120,20 @@
                         "    def of0(currency: typing.Any) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def of0(currency: typing.Any) -> CurrencyUnit:",
+                        "         MoneyUtils.checkNotNull(currency, \"Currency must not be null\")",
+                        "         return CurrencyUnit.of1(currency.getCurrencyCode())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "316-318:registeredCountries": {
                     "start": 316,
@@ -956,11 +1163,19 @@
                         "    def registeredCountries() -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def registeredCountries() -> typing.List[str]:",
+                        "         return list(CurrencyUnit.__currenciesByCountry.keys())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "304-306:registeredCurrencies": {
                     "start": 304,
@@ -990,11 +1205,19 @@
                         "    def registeredCurrencies() -> typing.List[CurrencyUnit]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def registeredCurrencies() -> typing.List[CurrencyUnit]:",
+                        "         return list(CurrencyUnit.__currenciesByCode.values())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "291-293:registerCountry": {
                     "start": 291,
@@ -1028,11 +1251,19 @@
                         "    def registerCountry(countryCode: str, currency: CurrencyUnit) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def registerCountry(countryCode: str, currency: CurrencyUnit) -> None:",
+                        "         CurrencyUnit.__currenciesByCountry[countryCode] = currency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "267-273:registerCurrency2": {
                     "start": 267,
@@ -1078,11 +1309,21 @@
                         "    def registerCurrency2(currencyCode: str, numericCurrencyCode: int, decimalPlaces: int, force: bool) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def registerCurrency2(currencyCode: str, numericCurrencyCode: int, decimalPlaces: int, force: bool) -> CurrencyUnit:",
+                        "        ",
+                        "        countryCodes = []",
+                        "        return CurrencyUnit.registerCurrency1(currencyCode, numericCurrencyCode, decimalPlaces, countryCodes, force)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "187-238:registerCurrency1": {
                     "start": 187,
@@ -1184,11 +1425,49 @@
                         "    def registerCurrency1(currencyCode: str, numericCurrencyCode: int, decimalPlaces: int, countryCodes: typing.List[str], force: bool) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def registerCurrency1(currencyCode: str, numericCurrencyCode: int, decimalPlaces: int, countryCodes: typing.List[str], force: bool) -> CurrencyUnit:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(currencyCode, \"Currency code must not be null\")",
+                        "        if len(currencyCode) != 3:",
+                        "            raise ValueError(\"Invalid string code, must be length 3\")",
+                        "        if not CurrencyUnit.__CODE.match(currencyCode):",
+                        "            raise ValueError(\"Invalid string code, must be ASCII upper-case letters\")",
+                        "        if numericCurrencyCode < -1 or numericCurrencyCode > 999:",
+                        "            raise ValueError(\"Invalid numeric code\")",
+                        "        if decimalPlaces < -1 or decimalPlaces > 30:",
+                        "            raise ValueError(\"Invalid number of decimal places\")",
+                        "        MoneyUtils.checkNotNull(countryCodes, \"Country codes must not be null\")",
+                        "",
+                        "        currency = CurrencyUnit(currencyCode, numericCurrencyCode, decimalPlaces)",
+                        "        if force:",
+                        "            CurrencyUnit.__currenciesByCode.pop(currencyCode, None)",
+                        "            CurrencyUnit.__currenciesByNumericCode.pop(numericCurrencyCode, None)",
+                        "            for countryCode in countryCodes:",
+                        "                CurrencyUnit.__currenciesByCountry.pop(countryCode, None)",
+                        "        else:",
+                        "            if currencyCode in CurrencyUnit.__currenciesByCode or numericCurrencyCode in CurrencyUnit.__currenciesByNumericCode:",
+                        "                raise ValueError(\"Currency already registered: \" + currencyCode)",
+                        "            for countryCode in countryCodes:",
+                        "                if countryCode in CurrencyUnit.__currenciesByCountry:",
+                        "                    raise ValueError(\"Currency already registered for country: \" + countryCode)",
+                        "",
+                        "        CurrencyUnit.__currenciesByCode[currencyCode] = currency",
+                        "        if numericCurrencyCode >= 0:",
+                        "            CurrencyUnit.__currenciesByNumericCode[numericCurrencyCode] = currency",
+                        "        for countryCode in countryCodes:",
+                        "            CurrencyUnit.registerCountry(countryCode, currency)",
+                        "        return CurrencyUnit.__currenciesByCode.get(currencyCode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "149-157:registerCurrency0": {
                     "start": 149,
@@ -1236,11 +1515,20 @@
                         "    def registerCurrency0(currencyCode: str, numericCurrencyCode: int, decimalPlaces: int, countryCodes: typing.List[str]) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def registerCurrency0(currencyCode: str, numericCurrencyCode: int, decimalPlaces: int, countryCodes: typing.List[str]) -> CurrencyUnit:",
+                        "        ",
+                        "        return CurrencyUnit.registerCurrency1(currencyCode, numericCurrencyCode, decimalPlaces, countryCodes, False)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "469-471:writeReplace": {
                     "start": 469,
@@ -1274,11 +1562,18 @@
                         "    def __writeReplace(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __writeReplace(self) -> typing.Any:",
+                        "         return Ser(0, self, Ser.CURRENCY_UNIT)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "460-462:readObject": {
                     "start": 460,
@@ -1308,11 +1603,18 @@
                         "    def __readObject(self, ois: pickle.Unpickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __readObject(self, ois: pickle.Unpickler) -> None:",
+                        "         raise pickle.UnpicklingError(\"Serialization delegate required\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "447-452:CurrencyUnit": {
                     "start": 447,
@@ -1345,11 +1647,22 @@
                         "    def __init__(self, code: str, numericCode: int, decimalPlaces: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, code: str, numericCode: int, decimalPlaces: int) -> None:",
+                        "        ",
+                        "        assert code is not None, \"Joda-Money bug: Currency code must not be null\"",
+                        "        self.__code = code",
+                        "        self.__numericCode = numericCode",
+                        "        self.__decimalPlaces = decimalPlaces"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1370,12 +1683,21 @@
                             "CurrencyUnit"
                         ]
                     ],
-                    "partial_translation": "    CAD: CurrencyUnit = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    CAD: CurrencyUnit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    CAD: CurrencyUnit = of1(\"CAD\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "113-113:AUD": {
                     "start": 113,
@@ -1394,12 +1716,21 @@
                             "CurrencyUnit"
                         ]
                     ],
-                    "partial_translation": "    AUD: CurrencyUnit = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    AUD: CurrencyUnit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    AUD: CurrencyUnit = of1(\"AUD\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "110-110:CHF": {
                     "start": 110,
@@ -1418,12 +1749,21 @@
                             "CurrencyUnit"
                         ]
                     ],
-                    "partial_translation": "    CHF: CurrencyUnit = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    CHF: CurrencyUnit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    CHF: CurrencyUnit = of1(\"CHF\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "107-107:GBP": {
                     "start": 107,
@@ -1442,12 +1782,21 @@
                             "CurrencyUnit"
                         ]
                     ],
-                    "partial_translation": "    GBP: CurrencyUnit = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    GBP: CurrencyUnit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    GBP: CurrencyUnit = of1(\"GBP\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "104-104:JPY": {
                     "start": 104,
@@ -1466,12 +1815,21 @@
                             "CurrencyUnit"
                         ]
                     ],
-                    "partial_translation": "    JPY: CurrencyUnit = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    JPY: CurrencyUnit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    JPY: CurrencyUnit = of1(\"JPY\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "101-101:EUR": {
                     "start": 101,
@@ -1490,12 +1848,21 @@
                             "CurrencyUnit"
                         ]
                     ],
-                    "partial_translation": "    EUR: CurrencyUnit = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    EUR: CurrencyUnit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    EUR: CurrencyUnit = of1(\"EUR\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "98-98:USD": {
                     "start": 98,
@@ -1514,12 +1881,21 @@
                             "CurrencyUnit"
                         ]
                     ],
-                    "partial_translation": "    USD: CurrencyUnit = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    USD: CurrencyUnit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    USD: CurrencyUnit = of1(\"USD\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "125-125:decimalPlaces": {
                     "start": 125,
@@ -1537,12 +1913,22 @@
                             "short"
                         ]
                     ],
-                    "partial_translation": "    __decimalPlaces: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __decimalPlaces: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __decimalPlaces: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "122-122:numericCode": {
                     "start": 122,
@@ -1560,12 +1946,22 @@
                             "short"
                         ]
                     ],
-                    "partial_translation": "    __numericCode: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __numericCode: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __numericCode: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "119-119:code": {
                     "start": 119,
@@ -1583,12 +1979,22 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __code: str = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __code: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __code: str = ''",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "67-68:currenciesByCountry": {
                     "start": 67,
@@ -1608,12 +2014,21 @@
                             "java.util.concurrent.ConcurrentMap<String,CurrencyUnit>"
                         ]
                     ],
-                    "partial_translation": "    __currenciesByCountry: typing.Dict[str, CurrencyUnit] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __currenciesByCountry: typing.Dict[str, CurrencyUnit] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __currenciesByCountry: typing.Dict[str, CurrencyUnit] = {}"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "63-64:currenciesByNumericCode": {
                     "start": 63,
@@ -1633,12 +2048,21 @@
                             "java.util.concurrent.ConcurrentMap<Integer,CurrencyUnit>"
                         ]
                     ],
-                    "partial_translation": "    __currenciesByNumericCode: typing.Dict[int, CurrencyUnit] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __currenciesByNumericCode: typing.Dict[int, CurrencyUnit] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __currenciesByNumericCode: typing.Dict[int, CurrencyUnit] = {}"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "59-60:currenciesByCode": {
                     "start": 59,
@@ -1658,12 +2082,21 @@
                             "java.util.concurrent.ConcurrentMap<String,CurrencyUnit>"
                         ]
                     ],
-                    "partial_translation": "    __currenciesByCode: typing.Dict[str, CurrencyUnit] = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __currenciesByCode: typing.Dict[str, CurrencyUnit] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __currenciesByCode: typing.Dict[str, CurrencyUnit] = {}"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "56-56:CODE": {
                     "start": 56,
@@ -1682,12 +2115,21 @@
                             "java.util.regex.Pattern"
                         ]
                     ],
-                    "partial_translation": "    __CODE: re.Pattern = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __CODE: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CODE: re.Pattern = re.compile(\"[A-Z][A-Z][A-Z]\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "53-53:serialVersionUID": {
                     "start": 53,
@@ -1706,16 +2148,25 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 327835287287"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "static_initializers": {
-                "70-95": {
+                "70-95:run_static_init": {
                     "start": 70,
                     "end": 95,
                     "body": [
@@ -1747,15 +2198,37 @@
                         "    }\n"
                     ],
                     "partial_translation": [],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def run_static_init():",
+                        "        ",
+                        "        try:",
+                        "            try:",
+                        "                clsName = os.getenv(",
+                        "                    \"org.joda.money.CurrencyUnitDataProvider\",",
+                        "                    \"org.joda.money.DefaultCurrencyUnitDataProvider\"",
+                        "                )",
+                        "                cls = CurrencyUnit.__class__.getClassLoader().loadClass(clsName).asSubclass(CurrencyUnitDataProvider)",
+                        "                cls.getDeclaredConstructor().newInstance().registerCurrencies()",
+                        "            except SecurityException as ex:",
+                        "                DefaultCurrencyUnitDataProvider().registerCurrencies()",
+                        "        except RuntimeException as ex:",
+                        "            print(\"ERROR: \" + str(ex))",
+                        "            traceback.print_exc()",
+                        "            raise ex",
+                        "        except Exception as ex:",
+                        "            print(\"ERROR: \" + str(ex))",
+                        "            traceback.print_exc()",
+                        "            raise RuntimeException(str(ex), ex)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": false
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class CurrencyUnit():\n\n"

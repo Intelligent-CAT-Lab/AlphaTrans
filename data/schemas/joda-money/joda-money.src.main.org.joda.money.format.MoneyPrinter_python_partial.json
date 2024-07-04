@@ -53,14 +53,25 @@
                     ],
                     "calls": [],
                     "partial_translation": [
-                        "    def print(self, context: MoneyPrintContext, appendable: io.TextIOBase, money: BigMoney) -> None:\n",
+                        "    def print(self, context: MoneyPrintContext, appendable: typing.Union[typing.List, io.TextIOBase], money: BigMoney) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def print(self, context: MoneyPrintContext, appendable: typing.Union[typing.List, io.TextIOBase], money: BigMoney) -> None:",
+                        "        ",
+                        "        if isinstance(appendable, list):",
+                        "            appendable = io.StringIO()",
+                        "",
+                        "        appendable.write(str(money))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
@@ -72,6 +83,7 @@
         "from abc import ABC",
         "from io import IOBase",
         "import io",
+        "import typing\nfrom typing import *",
         "from src.main.org.joda.money.BigMoney import *",
         "from src.main.org.joda.money.format.MoneyPrintContext import *"
     ]

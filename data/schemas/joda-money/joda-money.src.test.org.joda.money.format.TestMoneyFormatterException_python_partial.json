@@ -68,11 +68,25 @@
                         "    def test_MoneyFormatException_nonIOException_notRethrown(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_MoneyFormatException_nonIOException_notRethrown(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            test = MoneyFormatException(\"Error\", IOError(\"Inner\"))",
+                        "            test.rethrowIOException()",
+                        "        except IOError:",
+                        "            pass",
+                        "        else:",
+                        "            self.fail(\"Expected IOError\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "26-29:test_MoneyFormatException_IOException_notRethrown": {
                     "start": 26,
@@ -85,7 +99,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Test"
+                        "Test(expected = IOException.class)"
                     ],
                     "modifiers": [
                         "public"
@@ -114,20 +128,33 @@
                         "    def test_MoneyFormatException_IOException_notRethrown(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def test_MoneyFormatException_IOException_notRethrown(self) -> None:",
+                        "        ",
+                        "        with pytest.raises(io.IOException):",
+                        "            test = MoneyFormatException(\"Error\", io.IOException(\"Inner\"))",
+                        "            test.rethrowIOException()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class TestMoneyFormatterException:\n\n"
+            "python_class_declaration": "class TestMoneyFormatterException(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
+        "import unittest",
         "from src.main.org.joda.money.format.MoneyFormatException import *"
     ]
 }

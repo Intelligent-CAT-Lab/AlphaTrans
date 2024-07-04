@@ -104,7 +104,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "ToString"
                     ],
                     "modifiers": [
                         "public"
@@ -128,11 +129,18 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return f\"{self.__currency.getCode()} {self.__amount.to_eng_string()}\""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1646-1648:hashCode": {
                     "start": 1646,
@@ -168,11 +176,18 @@
                         "    def hashCode(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def hashCode(self) -> int:",
+                        "         return self.__currency.hashCode() ^ hash(self.__amount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1628-1638:equals": {
                     "start": 1628,
@@ -223,11 +238,22 @@
                         "    def equals(self, other: typing.Any) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def equals(self, other: typing.Any) -> bool:",
+                        "         if self is other:",
+                        "             return True",
+                        "         if isinstance(other, BigMoney):",
+                        "             return self.__currency.equals(other.getCurrencyUnit()) and self.__amount == other.__amount",
+                        "         return False"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1543-1549:compareTo": {
                     "start": 1543,
@@ -284,11 +310,21 @@
                         "    def compareTo(self, other: BigMoneyProvider) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def compareTo(self, other: BigMoneyProvider) -> int:",
+                        "         otherMoney = self.of2(other)",
+                        "         if self.__currency.equals(otherMoney.getCurrencyUnit()) == False:",
+                        "             raise CurrencyMismatchException(self.getCurrencyUnit(), otherMoney.getCurrencyUnit())",
+                        "         return self.__amount.compareTo(otherMoney.amount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1499-1501:toBigMoney": {
                     "start": 1499,
@@ -318,11 +354,18 @@
                         "    def toBigMoney(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def toBigMoney(self) -> BigMoney:",
+                        "         return self"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "369-381:BigMoney": {
                     "start": 369,
@@ -344,7 +387,7 @@
                     ],
                     "is_constructor": true,
                     "annotations": [
-                        "SuppressWarnings"
+                        "SuppressWarnings(\"unused\")"
                     ],
                     "modifiers": [
                         "public"
@@ -366,11 +409,28 @@
                         "    def __init__(self, constructorId: int, amount: decimal.Decimal, currency: CurrencyUnit) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, amount: decimal.Decimal, currency: CurrencyUnit) -> None:",
+                        "        ",
+                        "        if constructorId == 0:",
+                        "",
+                        "            assert currency is not None, \"Joda-Money bug: Currency must not be null\"",
+                        "            assert amount is not None, \"Joda-Money bug: Amount must not be null\"",
+                        "            self.__currency = currency",
+                        "            self.__amount = (amount.as_tuple().exponent < 0 and amount.quantize(decimal.Decimal(1)) or amount)",
+                        "        else:",
+                        "",
+                        "            self.__currency = None",
+                        "            self.__amount = None"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "350-365:parse": {
                     "start": 350,
@@ -395,6 +455,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
+                        "FromString",
                         "FromString"
                     ],
                     "modifiers": [
@@ -433,11 +494,36 @@
                         "    def parse(moneyStr: str) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def parse(moneyStr: str) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(moneyStr, \"Money must not be null\")",
+                        "        ",
+                        "        if len(moneyStr) < 4:",
+                        "            raise ValueError(\"Money '\" + moneyStr + \"' cannot be parsed\")",
+                        "        ",
+                        "        currStr = moneyStr[:3]",
+                        "        amountStart = 3",
+                        "        ",
+                        "        while amountStart < len(moneyStr) and moneyStr[amountStart] == ' ':",
+                        "            amountStart += 1",
+                        "        ",
+                        "        amountStr = moneyStr[amountStart:]",
+                        "        ",
+                        "        if not re.match(BigMoney.__PARSE_REGEX, amountStr):",
+                        "            raise ValueError(\"Money amount '\" + moneyStr + \"' cannot be parsed\")",
+                        "        ",
+                        "        return BigMoney.of0(CurrencyUnit.of1(currStr), decimal.Decimal(amountStr))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1611-1613:isLessThanOrEqual": {
                     "start": 1611,
@@ -473,11 +559,18 @@
                         "    def isLessThanOrEqual(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isLessThanOrEqual(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) <= 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1599-1601:isLessThan": {
                     "start": 1599,
@@ -513,11 +606,18 @@
                         "    def isLessThan(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isLessThan(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) < 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1587-1589:isGreaterThanOrEqual": {
                     "start": 1587,
@@ -553,11 +653,18 @@
                         "    def isGreaterThanOrEqual(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isGreaterThanOrEqual(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) >= 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1575-1577:isGreaterThan": {
                     "start": 1575,
@@ -593,11 +700,18 @@
                         "    def isGreaterThan(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isGreaterThan(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) > 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1563-1565:isEqual": {
                     "start": 1563,
@@ -633,11 +747,18 @@
                         "    def isEqual(self, other: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isEqual(self, other: BigMoneyProvider) -> bool:",
+                        "         return self.compareTo(other) == 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1531-1533:isSameCurrency": {
                     "start": 1531,
@@ -683,11 +804,18 @@
                         "    def isSameCurrency(self, money: BigMoneyProvider) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isSameCurrency(self, money: BigMoneyProvider) -> bool:",
+                        "         return self.__currency.equals(self.of2(money).getCurrencyUnit())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1521-1523:toMoney1": {
                     "start": 1521,
@@ -723,11 +851,18 @@
                         "    def toMoney1(self, roundingMode: typing.Any) -> Money:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def toMoney1(self, roundingMode: typing.Any) -> Money:",
+                        "         return Money.of5(self, roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1510-1512:toMoney0": {
                     "start": 1510,
@@ -761,11 +896,18 @@
                         "    def toMoney0(self) -> Money:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def toMoney0(self) -> Money:",
+                        "         return Money.of4(self)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1488-1491:convertRetainScale": {
                     "start": 1488,
@@ -814,11 +956,19 @@
                         "    def convertRetainScale(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def convertRetainScale(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        return self.convertedTo(currency, conversionMultipler).withScale1(self.getScale(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1453-1468:convertedTo": {
                     "start": 1453,
@@ -873,11 +1023,32 @@
                         "    def convertedTo(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def convertedTo(self, currency: CurrencyUnit, conversionMultipler: decimal.Decimal) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(currency, \"CurrencyUnit must not be null\")",
+                        "        MoneyUtils.checkNotNull(conversionMultipler, \"Multiplier must not be null\")",
+                        "        ",
+                        "        if self.__currency == currency:",
+                        "            if conversionMultipler == decimal.Decimal(1):",
+                        "                return self",
+                        "            raise ValueError(\"Cannot convert to the same currency\")",
+                        "        ",
+                        "        if conversionMultipler < decimal.Decimal(0):",
+                        "            raise ValueError(\"Cannot convert using a negative conversion multiplier\")",
+                        "        ",
+                        "        newAmount = self.__amount * conversionMultipler",
+                        "        ",
+                        "        return BigMoney.of0(currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1427-1435:rounded": {
                     "start": 1427,
@@ -930,11 +1101,28 @@
                         "    def rounded(self, scale: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def rounded(self, scale: int, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        ",
+                        "        if scale >= self.getScale():",
+                        "            return self",
+                        "        ",
+                        "        currentScale = self.__amount.as_tuple().exponent",
+                        "        newAmount = self.__amount.quantize(decimal.Decimal(10) ** -scale, rounding=roundingMode)",
+                        "        newAmount = newAmount.quantize(decimal.Decimal(10) ** currentScale)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1397-1399:abs": {
                     "start": 1397,
@@ -973,11 +1161,18 @@
                         "    def abs(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def abs(self) -> BigMoney:",
+                        "         return self.negated() if self.isNegative() else self"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1383-1388:negated": {
                     "start": 1383,
@@ -1019,11 +1214,22 @@
                         "    def negated(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def negated(self) -> BigMoney:",
+                        "        ",
+                        "        if self.isZero():",
+                        "            return self",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, self.__amount.copy_negate())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1368-1374:dividedBy2": {
                     "start": 1368,
@@ -1064,11 +1270,23 @@
                         "    def dividedBy2(self, valueToDivideBy: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def dividedBy2(self, valueToDivideBy: int, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        if valueToDivideBy == 1:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount.divide(decimal.Decimal(valueToDivideBy), roundingMode)",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1345-1352:dividedBy1": {
                     "start": 1345,
@@ -1115,11 +1333,26 @@
                         "    def dividedBy1(self, valueToDivideBy: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def dividedBy1(self, valueToDivideBy: float, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        ",
+                        "        if valueToDivideBy == 1:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount.quantize(decimal.Decimal(1) / decimal.Decimal(valueToDivideBy), rounding=roundingMode)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1315-1323:dividedBy0": {
                     "start": 1315,
@@ -1167,11 +1400,27 @@
                         "    def dividedBy0(self, valueToDivideBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def dividedBy0(self, valueToDivideBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(valueToDivideBy, \"Divisor must not be null\")",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        ",
+                        "        if valueToDivideBy == decimal.Decimal(1):",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount.quantize(decimal.Decimal('1.' + '0' * 10), rounding=roundingMode) / valueToDivideBy",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1296-1298:multiplyRetainScale1": {
                     "start": 1296,
@@ -1208,11 +1457,28 @@
                         "    def multiplyRetainScale1(self, valueToMultiplyBy: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def multiplyRetainScale1(self, valueToMultiplyBy: float, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(valueToMultiplyBy, \"Multiplier must not be null\")",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        ",
+                        "        if valueToMultiplyBy == 1.0:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount * decimal.Decimal(valueToMultiplyBy)",
+                        "        newAmount = newAmount.quantize(decimal.Decimal(10) ** -self.getScale(), rounding=roundingMode)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1264-1273:multiplyRetainScale0": {
                     "start": 1264,
@@ -1266,11 +1532,28 @@
                         "    def multiplyRetainScale0(self, valueToMultiplyBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def multiplyRetainScale0(self, valueToMultiplyBy: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(valueToMultiplyBy, \"Multiplier must not be null\")",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        ",
+                        "        if valueToMultiplyBy == decimal.Decimal(1):",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount * valueToMultiplyBy",
+                        "        newAmount = newAmount.quantize(decimal.Decimal(10) ** -self.getScale(), rounding=roundingMode)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1240-1246:multipliedBy2": {
                     "start": 1240,
@@ -1310,11 +1593,24 @@
                         "    def multipliedBy2(self, valueToMultiplyBy: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def multipliedBy2(self, valueToMultiplyBy: int) -> BigMoney:",
+                        "        ",
+                        "        if valueToMultiplyBy == 1:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount.quantize(decimal.Decimal('.01'), rounding=decimal.ROUND_DOWN) * decimal.Decimal(valueToMultiplyBy)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1221-1227:multipliedBy1": {
                     "start": 1221,
@@ -1354,11 +1650,24 @@
                         "    def multipliedBy1(self, valueToMultiplyBy: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def multipliedBy1(self, valueToMultiplyBy: float) -> BigMoney:",
+                        "        ",
+                        "        if valueToMultiplyBy == 1:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount.quantize(decimal.Decimal('.01'), rounding=decimal.ROUND_DOWN) * decimal.Decimal(valueToMultiplyBy)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1196-1203:multipliedBy0": {
                     "start": 1196,
@@ -1404,11 +1713,25 @@
                         "    def multipliedBy0(self, valueToMultiplyBy: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def multipliedBy0(self, valueToMultiplyBy: decimal.Decimal) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(valueToMultiplyBy, \"Multiplier must not be null\")",
+                        "        ",
+                        "        if valueToMultiplyBy == decimal.Decimal(1):",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount.quantize(decimal.Decimal('.01'), rounding=decimal.ROUND_DOWN) * valueToMultiplyBy",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1176-1183:minusRetainScale2": {
                     "start": 1176,
@@ -1455,11 +1778,25 @@
                         "    def minusRetainScale2(self, amountToSubtract: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def minusRetainScale2(self, amountToSubtract: float, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        if amountToSubtract == 0:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount - decimal.Decimal(amountToSubtract)",
+                        "        newAmount = newAmount.quantize(decimal.Decimal(10) ** -self.getScale(), rounding=roundingMode)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1148-1156:minusRetainScale1": {
                     "start": 1148,
@@ -1512,11 +1849,27 @@
                         "    def minusRetainScale1(self, amountToSubtract: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def minusRetainScale1(self, amountToSubtract: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(amountToSubtract, \"Amount must not be null\")",
+                        "        ",
+                        "        if amountToSubtract == decimal.Decimal(0):",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount - amountToSubtract",
+                        "        newAmount = newAmount.quantize(decimal.Decimal(10) ** -self.getScale(), rounding=roundingMode)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1130-1133:minusRetainScale0": {
                     "start": 1130,
@@ -1564,11 +1917,20 @@
                         "    def minusRetainScale0(self, moneyToSubtract: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def minusRetainScale0(self, moneyToSubtract: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        toSubtract = self.__checkCurrencyEqual(moneyToSubtract)",
+                        "        return self.minusRetainScale1(toSubtract.getAmount(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1108-1115:minusMinor": {
                     "start": 1108,
@@ -1614,11 +1976,24 @@
                         "    def minusMinor(self, amountToSubtract: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def minusMinor(self, amountToSubtract: int) -> BigMoney:",
+                        "        ",
+                        "        if amountToSubtract == 0:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount - decimal.Decimal(amountToSubtract) / decimal.Decimal(10 ** self.__currency.getDecimalPlaces())",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1085-1091:minusMajor": {
                     "start": 1085,
@@ -1658,11 +2033,24 @@
                         "    def minusMajor(self, amountToSubtract: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def minusMajor(self, amountToSubtract: int) -> BigMoney:",
+                        "        ",
+                        "        if amountToSubtract == 0:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount - decimal.Decimal(amountToSubtract)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1063-1069:minus3": {
                     "start": 1063,
@@ -1702,11 +2090,24 @@
                         "    def minus3(self, amountToSubtract: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def minus3(self, amountToSubtract: float) -> BigMoney:",
+                        "        ",
+                        "        if amountToSubtract == 0:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount - decimal.Decimal(amountToSubtract)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1036-1043:minus2": {
                     "start": 1036,
@@ -1752,11 +2153,26 @@
                         "    def minus2(self, amountToSubtract: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def minus2(self, amountToSubtract: decimal.Decimal) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(amountToSubtract, \"Amount must not be null\")",
+                        "        ",
+                        "        if amountToSubtract == decimal.Decimal(0):",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount - amountToSubtract",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "1018-1021:minus1": {
                     "start": 1018,
@@ -1803,11 +2219,21 @@
                         "    def minus1(self, moneyToSubtract: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def minus1(self, moneyToSubtract: BigMoneyProvider) -> BigMoney:",
+                        "        ",
+                        "        toSubtract = self.__checkCurrencyEqual(moneyToSubtract)",
+                        "        ",
+                        "        return self.minus2(toSubtract.getAmount())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "994-1001:minus0": {
                     "start": 994,
@@ -1853,11 +2279,23 @@
                         "    def minus0(self, moniesToSubtract: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def minus0(self, moniesToSubtract: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "        ",
+                        "        total = self.__amount",
+                        "        for moneyProvider in moniesToSubtract:",
+                        "            money = self.__checkCurrencyEqual(moneyProvider)",
+                        "            total = total - money.getAmount()",
+                        "        return self.__with(total)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "972-979:plusRetainScale2": {
                     "start": 972,
@@ -1904,11 +2342,25 @@
                         "    def plusRetainScale2(self, amountToAdd: float, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def plusRetainScale2(self, amountToAdd: float, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        if amountToAdd == 0:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount + decimal.Decimal(amountToAdd)",
+                        "        newAmount = newAmount.quantize(decimal.Decimal(10) ** -self.getScale(), rounding=roundingMode)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "944-952:plusRetainScale1": {
                     "start": 944,
@@ -1961,11 +2413,27 @@
                         "    def plusRetainScale1(self, amountToAdd: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def plusRetainScale1(self, amountToAdd: decimal.Decimal, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(amountToAdd, \"Amount must not be null\")",
+                        "        ",
+                        "        if amountToAdd.compare_to(decimal.Decimal(0)) == 0:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount.add(amountToAdd)",
+                        "        newAmount = newAmount.setScale(self.getScale(), roundingMode)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "926-929:plusRetainScale0": {
                     "start": 926,
@@ -2013,11 +2481,20 @@
                         "    def plusRetainScale0(self, moneyToAdd: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def plusRetainScale0(self, moneyToAdd: BigMoneyProvider, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        toAdd = self.__checkCurrencyEqual(moneyToAdd)",
+                        "        return self.plusRetainScale1(toAdd.getAmount(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "904-911:plusMinor": {
                     "start": 904,
@@ -2063,11 +2540,24 @@
                         "    def plusMinor(self, amountToAdd: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def plusMinor(self, amountToAdd: int) -> BigMoney:",
+                        "        ",
+                        "        if amountToAdd == 0:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount + decimal.Decimal(amountToAdd) / (10 ** self.__currency.getDecimalPlaces())",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "881-887:plusMajor": {
                     "start": 881,
@@ -2107,11 +2597,24 @@
                         "    def plusMajor(self, amountToAdd: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def plusMajor(self, amountToAdd: int) -> BigMoney:",
+                        "        ",
+                        "        if amountToAdd == 0:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount + decimal.Decimal(amountToAdd)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "859-865:plus3": {
                     "start": 859,
@@ -2151,11 +2654,24 @@
                         "    def plus3(self, amountToAdd: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def plus3(self, amountToAdd: float) -> BigMoney:",
+                        "        ",
+                        "        if amountToAdd == 0:",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount + decimal.Decimal(amountToAdd)",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "832-839:plus2": {
                     "start": 832,
@@ -2201,11 +2717,26 @@
                         "    def plus2(self, amountToAdd: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def plus2(self, amountToAdd: decimal.Decimal) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(amountToAdd, \"Amount must not be null\")",
+                        "        ",
+                        "        if amountToAdd == decimal.Decimal(0):",
+                        "            return self",
+                        "        ",
+                        "        newAmount = self.__amount + amountToAdd",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, newAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "814-817:plus1": {
                     "start": 814,
@@ -2252,11 +2783,19 @@
                         "    def plus1(self, moneyToAdd: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def plus1(self, moneyToAdd: BigMoneyProvider) -> BigMoney:",
+                        "         toAdd = self.__checkCurrencyEqual(moneyToAdd)",
+                        "         return self.plus2(toAdd.getAmount())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "790-797:plus0": {
                     "start": 790,
@@ -2302,11 +2841,23 @@
                         "    def plus0(self, moniesToAdd: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def plus0(self, moniesToAdd: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "        ",
+                        "        total = self.__amount",
+                        "        for moneyProvider in moniesToAdd:",
+                        "            money = self.__checkCurrencyEqual(moneyProvider)",
+                        "            total = total + money.getAmount()",
+                        "        return self.__with(total)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "759-761:withAmount1": {
                     "start": 759,
@@ -2342,11 +2893,19 @@
                         "    def withAmount1(self, amount: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def withAmount1(self, amount: float) -> BigMoney:",
+                        "        ",
+                        "        return self.withAmount0(decimal.Decimal(amount))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "734-740:withAmount0": {
                     "start": 734,
@@ -2391,11 +2950,24 @@
                         "    def withAmount0(self, amount: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def withAmount0(self, amount: decimal.Decimal) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(amount, \"Amount must not be null\")",
+                        "        ",
+                        "        if self.__amount == amount:",
+                        "            return self",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, amount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "719-721:isNegativeOrZero": {
                     "start": 719,
@@ -2423,11 +2995,18 @@
                         "    def isNegativeOrZero(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isNegativeOrZero(self) -> bool:",
+                        "         return self.__amount <= decimal.Decimal(0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "710-712:isNegative": {
                     "start": 710,
@@ -2455,11 +3034,18 @@
                         "    def isNegative(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isNegative(self) -> bool:",
+                        "         return self.__amount < decimal.Decimal(0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "701-703:isPositiveOrZero": {
                     "start": 701,
@@ -2487,11 +3073,18 @@
                         "    def isPositiveOrZero(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isPositiveOrZero(self) -> bool:",
+                        "         return self.__amount >= decimal.Decimal(0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "692-694:isPositive": {
                     "start": 692,
@@ -2519,11 +3112,18 @@
                         "    def isPositive(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isPositive(self) -> bool:",
+                        "         return self.__amount > decimal.Decimal(0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "683-685:isZero": {
                     "start": 683,
@@ -2551,11 +3151,18 @@
                         "    def isZero(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isZero(self) -> bool:",
+                        "         return self.__amount == decimal.Decimal(0)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "670-676:getMinorPart": {
                     "start": 670,
@@ -2598,11 +3205,19 @@
                         "    def getMinorPart(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getMinorPart(self) -> int:",
+                        "         cdp = self.getCurrencyUnit().getDecimalPlaces()",
+                        "         return (self.__amount.quantize(decimal.Decimal(10) ** -cdp, rounding=decimal.ROUND_DOWN) % 1).scaleb(cdp)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "654-656:getAmountMinorInt": {
                     "start": 654,
@@ -2636,11 +3251,18 @@
                         "    def getAmountMinorInt(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getAmountMinorInt(self) -> int:",
+                        "         return self.getAmountMinor().to_integral_value(decimal.ROUND_DOWN)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "640-642:getAmountMinorLong": {
                     "start": 640,
@@ -2674,11 +3296,18 @@
                         "    def getAmountMinorLong(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getAmountMinorLong(self) -> int:",
+                        "         return self.getAmountMinor().to_integral_exact(rounding=decimal.ROUND_DOWN)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "625-628:getAmountMinor": {
                     "start": 625,
@@ -2718,11 +3347,19 @@
                         "    def getAmountMinor(self) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getAmountMinor(self) -> decimal.Decimal:",
+                        "         cdp = self.getCurrencyUnit().getDecimalPlaces()",
+                        "         return self.__amount.quantize(decimal.Decimal(10) ** -cdp, decimal.ROUND_DOWN)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "608-610:getAmountMajorInt": {
                     "start": 608,
@@ -2756,11 +3393,18 @@
                         "    def getAmountMajorInt(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getAmountMajorInt(self) -> int:",
+                        "         return int(self.getAmountMajor())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "594-596:getAmountMajorLong": {
                     "start": 594,
@@ -2794,11 +3438,18 @@
                         "    def getAmountMajorLong(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getAmountMajorLong(self) -> int:",
+                        "         return int(self.getAmountMajor())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "580-582:getAmountMajor": {
                     "start": 580,
@@ -2826,11 +3477,18 @@
                         "    def getAmountMajor(self) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getAmountMajor(self) -> decimal.Decimal:",
+                        "         return self.__amount.quantize(decimal.Decimal('1'), rounding=decimal.ROUND_DOWN)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "563-565:getAmount": {
                     "start": 563,
@@ -2858,11 +3516,18 @@
                         "    def getAmount(self) -> decimal.Decimal:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getAmount(self) -> decimal.Decimal:",
+                        "         return self.__amount"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "551-553:withCurrencyScale1": {
                     "start": 551,
@@ -2903,11 +3568,21 @@
                         "    def withCurrencyScale1(self, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def withCurrencyScale1(self, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        ",
+                        "        return self.withScale1(self.__currency.getDecimalPlaces(), roundingMode)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "534-536:withCurrencyScale0": {
                     "start": 534,
@@ -2946,11 +3621,18 @@
                         "    def withCurrencyScale0(self) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def withCurrencyScale0(self) -> BigMoney:",
+                        "         return self.withScale1(self.__currency.getDecimalPlaces(), decimal.ROUND_UNNECESSARY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "513-519:withScale1": {
                     "start": 513,
@@ -2996,11 +3678,24 @@
                         "    def withScale1(self, scale: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def withScale1(self, scale: int, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        ",
+                        "        if scale == self.__amount.as_tuple().exponent:",
+                        "            return self",
+                        "        ",
+                        "        return BigMoney.of0(self.__currency, self.__amount.quantize(decimal.Decimal((0, (1,), -scale)), rounding=roundingMode))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "494-496:withScale0": {
                     "start": 494,
@@ -3036,11 +3731,21 @@
                         "    def withScale0(self, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def withScale0(self, scale: int) -> BigMoney:",
+                        "        ",
+                        "        from decimal import ROUND_UNNECESSARY",
+                        "        ",
+                        "        return self.withScale1(scale, ROUND_UNNECESSARY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "475-477:isCurrencyScale": {
                     "start": 475,
@@ -3074,11 +3779,18 @@
                         "    def isCurrencyScale(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def isCurrencyScale(self) -> bool:",
+                        "         return self.__amount.as_tuple().exponent == self.__currency.getDecimalPlaces()"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "463-465:getScale": {
                     "start": 463,
@@ -3106,11 +3818,18 @@
                         "    def getScale(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getScale(self) -> int:",
+                        "         return self.__amount.as_tuple().exponent"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "444-450:withCurrencyUnit": {
                     "start": 444,
@@ -3155,11 +3874,24 @@
                         "    def withCurrencyUnit(self, currency: CurrencyUnit) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def withCurrencyUnit(self, currency: CurrencyUnit) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(currency, \"CurrencyUnit must not be null\")",
+                        "        ",
+                        "        if self.__currency == currency:",
+                        "            return self",
+                        "        ",
+                        "        return BigMoney(0, self.__amount, currency)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "429-431:getCurrencyUnit": {
                     "start": 429,
@@ -3187,11 +3919,18 @@
                         "    def getCurrencyUnit(self) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def getCurrencyUnit(self) -> CurrencyUnit:",
+                        "         return self.__currency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "328-331:total3": {
                     "start": 328,
@@ -3236,11 +3975,20 @@
                         "    def total3(currency: CurrencyUnit, monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total3(currency: CurrencyUnit, monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "        ",
+                        "        return BigMoney.zero0(currency).plus0(monies)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "313-315:total2": {
                     "start": 313,
@@ -3284,11 +4032,20 @@
                         "    def total2(currency: CurrencyUnit, monies: typing.List[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total2(currency: CurrencyUnit, monies: typing.List[BigMoneyProvider]) -> BigMoney:",
+                        "        ",
+                        "        return BigMoney.zero0(currency).plus0(monies)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "288-300:total1": {
                     "start": 288,
@@ -3346,11 +4103,28 @@
                         "    def total1(monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total1(monies: typing.Iterable[BigMoneyProvider]) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(monies, \"Money iterator must not be null\")",
+                        "         it = iter(monies)",
+                        "         try:",
+                        "             first = next(it)",
+                        "         except StopIteration:",
+                        "             raise ValueError(\"Money iterator must not be empty\")",
+                        "         total = BigMoney.of2(first)",
+                        "         for money in it:",
+                        "             total = total.plus1(money)",
+                        "         return total"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "264-275:total0": {
                     "start": 264,
@@ -3407,11 +4181,26 @@
                         "    def total0(monies: typing.List[BigMoneyProvider]) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def total0(monies: typing.List[BigMoneyProvider]) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(monies, \"Money array must not be null\")",
+                        "         if len(monies) == 0:",
+                        "             raise ValueError(\"Money array must not be empty\")",
+                        "         total = BigMoney.of2(monies[0])",
+                        "         MoneyUtils.checkNotNull(total, \"Money array must not contain null entries\")",
+                        "         for i in range(1, len(monies)):",
+                        "             total = total.plus1(BigMoney.of2(monies[i]))",
+                        "         return total"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "246-251:of2": {
                     "start": 246,
@@ -3457,11 +4246,22 @@
                         "    def of2(moneyProvider: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def of2(moneyProvider: BigMoneyProvider) -> BigMoney:",
+                        "         MoneyUtils.checkNotNull(moneyProvider, \"BigMoneyProvider must not be null\")",
+                        "         money = moneyProvider.toBigMoney()",
+                        "         MoneyUtils.checkNotNull(money, \"BigMoneyProvider must not return null\")",
+                        "         return money"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "232-234:zero1": {
                     "start": 232,
@@ -3500,11 +4300,20 @@
                         "    def zero1(currency: CurrencyUnit, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def zero1(currency: CurrencyUnit, scale: int) -> BigMoney:",
+                        "        ",
+                        "        return BigMoney.of0(currency, decimal.Decimal(0).scaleb(scale))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "218-220:zero0": {
                     "start": 218,
@@ -3542,11 +4351,22 @@
                         "    def zero0(currency: CurrencyUnit) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def zero0(currency: CurrencyUnit) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(currency, \"Currency must not be null\")",
+                        "        ",
+                        "        return BigMoney.of0(currency, decimal.Decimal(0))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "204-207:ofMinor": {
                     "start": 204,
@@ -3596,11 +4416,22 @@
                         "    def ofMinor(currency: CurrencyUnit, amountMinor: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofMinor(currency: CurrencyUnit, amountMinor: int) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(currency, \"Currency must not be null\")",
+                        "        ",
+                        "        return BigMoney.of0(currency, decimal.Decimal(amountMinor) / decimal.Decimal(10 ** currency.getDecimalPlaces()))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "184-187:ofMajor": {
                     "start": 184,
@@ -3645,11 +4476,22 @@
                         "    def ofMajor(currency: CurrencyUnit, amountMajor: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofMajor(currency: CurrencyUnit, amountMajor: int) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(currency, \"Currency must not be null\")",
+                        "        ",
+                        "        return BigMoney.of0(currency, decimal.Decimal(amountMajor))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "166-169:ofScale2": {
                     "start": 166,
@@ -3695,11 +4537,25 @@
                         "    def ofScale2(currency: CurrencyUnit, unscaledAmount: int, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofScale2(currency: CurrencyUnit, unscaledAmount: int, scale: int) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(currency, \"Currency must not be null\")",
+                        "        ",
+                        "        amount = decimal.Decimal(unscaledAmount)",
+                        "        amount = amount / (10 ** scale)",
+                        "        ",
+                        "        return BigMoney.of0(currency, amount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "143-150:ofScale1": {
                     "start": 143,
@@ -3750,11 +4606,26 @@
                         "    def ofScale1(currency: CurrencyUnit, amount: decimal.Decimal, scale: int, roundingMode: typing.Any) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofScale1(currency: CurrencyUnit, amount: decimal.Decimal, scale: int, roundingMode: typing.Any) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(currency, \"Currency must not be null\")",
+                        "        MoneyUtils.checkNotNull(amount, \"Amount must not be null\")",
+                        "        MoneyUtils.checkNotNull(roundingMode, \"RoundingMode must not be null\")",
+                        "        ",
+                        "        scaledAmount = amount.quantize(decimal.Decimal(10) ** -scale, rounding=roundingMode)",
+                        "        ",
+                        "        return BigMoney.of0(currency, scaledAmount)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "124-126:ofScale0": {
                     "start": 124,
@@ -3794,11 +4665,20 @@
                         "    def ofScale0(currency: CurrencyUnit, amount: decimal.Decimal, scale: int) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ofScale0(currency: CurrencyUnit, amount: decimal.Decimal, scale: int) -> BigMoney:",
+                        "        ",
+                        "        return BigMoney.ofScale1(currency, amount, scale, decimal.ROUND_UNNECESSARY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "103-109:of1": {
                     "start": 103,
@@ -3851,11 +4731,25 @@
                         "    def of1(currency: CurrencyUnit, amount: float) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def of1(currency: CurrencyUnit, amount: float) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(currency, \"Currency must not be null\")",
+                        "        ",
+                        "        if amount == 0.0:",
+                        "            return BigMoney.zero0(currency)",
+                        "        ",
+                        "        return BigMoney.of0(currency, decimal.Decimal(amount).quantize(decimal.Decimal('1.0000000000000000000000000000000')))"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "70-85:of0": {
                     "start": 70,
@@ -3912,11 +4806,33 @@
                         "    def of0(currency: CurrencyUnit, amount: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def of0(currency: CurrencyUnit, amount: decimal.Decimal) -> BigMoney:",
+                        "        ",
+                        "        MoneyUtils.checkNotNull(currency, \"Currency must not be null\")",
+                        "        MoneyUtils.checkNotNull(amount, \"Amount must not be null\")",
+                        "        ",
+                        "        checkedAmount = amount",
+                        "        ",
+                        "        if type(amount) != decimal.Decimal:",
+                        "            value = amount.as_tuple().digits",
+                        "            if value is None:",
+                        "                raise ValueError(\"Illegal BigDecimal subclass\")",
+                        "            if type(value) != tuple:",
+                        "                value = tuple(str(value))",
+                        "            checkedAmount = decimal.Decimal(value)",
+                        "        ",
+                        "        return BigMoney(0, checkedAmount, currency)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "769-775:checkCurrencyEqual": {
                     "start": 769,
@@ -3971,11 +4887,21 @@
                         "    def __checkCurrencyEqual(self, moneyProvider: BigMoneyProvider) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __checkCurrencyEqual(self, moneyProvider: BigMoneyProvider) -> BigMoney:",
+                        "         money = self.of2(moneyProvider)",
+                        "         if not self.isSameCurrency(money):",
+                        "             raise CurrencyMismatchException(self.getCurrencyUnit(), money.getCurrencyUnit())",
+                        "         return money"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "417-422:with": {
                     "start": 417,
@@ -4014,11 +4940,21 @@
                         "    def __with(self, newAmount: decimal.Decimal) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __with(self, newAmount: decimal.Decimal) -> BigMoney:",
+                        "        ",
+                        "        if newAmount == self.__amount:",
+                        "            return self",
+                        "        return BigMoney(0, newAmount, self.__currency)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "405-407:writeReplace": {
                     "start": 405,
@@ -4052,11 +4988,19 @@
                         "    def __writeReplace(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __writeReplace(self) -> typing.Any:",
+                        "        ",
+                        "        return Ser(0, self, Ser.BIG_MONEY)"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "396-398:readObject": {
                     "start": 396,
@@ -4086,11 +5030,18 @@
                         "    def __readObject(self, ois: pickle.Unpickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __readObject(self, ois: pickle.Unpickler) -> None:",
+                        "         raise pickle.UnpicklingError(\"Serialization delegate required\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -4110,12 +5061,22 @@
                             "java.math.BigDecimal"
                         ]
                     ],
-                    "partial_translation": "    __amount: decimal.Decimal = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __amount: decimal.Decimal = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __amount: decimal.Decimal = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "54-54:currency": {
                     "start": 54,
@@ -4133,12 +5094,22 @@
                             "CurrencyUnit"
                         ]
                     ],
-                    "partial_translation": "    __currency: CurrencyUnit = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __currency: CurrencyUnit = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __currency: CurrencyUnit = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "51-51:PARSE_REGEX": {
                     "start": 51,
@@ -4157,12 +5128,21 @@
                             "java.util.regex.Pattern"
                         ]
                     ],
-                    "partial_translation": "    __PARSE_REGEX: re.Pattern = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __PARSE_REGEX: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PARSE_REGEX: re.Pattern = re.compile(\"[+-]?[0-9]*[.]?[0-9]*\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "48-48:serialVersionUID": {
                     "start": 48,
@@ -4181,12 +5161,21 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 1"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class BigMoney:\n\n"

@@ -140,11 +140,27 @@
                         "    def readExternal(self, in_: pickle.Unpickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def readExternal(self, in_: pickle.Unpickler) -> None:",
+                        "        ",
+                        "        self.__type = in_.load()",
+                        "        if self.__type == self.BIG_MONEY:",
+                        "            self.__object = self.__readBigMoney(in_)",
+                        "        elif self.__type == self.MONEY:",
+                        "            self.__object = Money(0, self.__readBigMoney(in_))",
+                        "        elif self.__type == self.CURRENCY_UNIT:",
+                        "            self.__object = self.__readCurrency(in_)",
+                        "        else:",
+                        "            raise pickle.UnpicklingError(\"Serialization input has invalid type\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "75-98:writeExternal": {
                     "start": 75,
@@ -213,11 +229,29 @@
                         "    def writeExternal(self, out: pickle.Pickler) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def writeExternal(self, out: pickle.Pickler) -> None:",
+                        "         out.dump(self.__type)",
+                        "         if self.__type == self.BIG_MONEY:",
+                        "             obj = typing.cast(BigMoney, self.__object)",
+                        "             self.__writeBigMoney(out, obj)",
+                        "         elif self.__type == self.MONEY:",
+                        "             obj = typing.cast(Money, self.__object)",
+                        "             self.__writeBigMoney(out, obj.toBigMoney())",
+                        "         elif self.__type == self.CURRENCY_UNIT:",
+                        "             obj = typing.cast(CurrencyUnit, self.__object)",
+                        "             self.__writeCurrency(out, obj)",
+                        "         else:",
+                        "             raise pickle.PicklingError(\"Joda-Money bug: Serialization broken\")"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "51-58:Ser": {
                     "start": 51,
@@ -254,11 +288,23 @@
                         "    def __init__(self, constructorId: int, object: typing.Any, type: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, object: typing.Any, type: int) -> None:",
+                        "        ",
+                        "        if constructorId == 0:",
+                        "            self.__type = type",
+                        "            self.__object = object",
+                        "        else:",
+                        "            pass"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "171-173:readResolve": {
                     "start": 171,
@@ -286,11 +332,18 @@
                         "    def __readResolve(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __readResolve(self) -> typing.Any:",
+                        "         return self.__object"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "152-164:readCurrency": {
                     "start": 152,
@@ -346,11 +399,26 @@
                         "    def __readCurrency(self, in_: pickle.Unpickler) -> CurrencyUnit:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __readCurrency(self, in_: pickle.Unpickler) -> CurrencyUnit:",
+                        "         code = in_.load()",
+                        "         singletonCurrency = CurrencyUnit.of1(code)",
+                        "         if singletonCurrency.getNumericCode() != in_.load():",
+                        "             raise pickle.UnpicklingError(",
+                        "                     \"Deserialization found a mismatch in the numeric code for currency \" + code)",
+                        "         if singletonCurrency.getDecimalPlaces() != in_.load():",
+                        "             raise pickle.UnpicklingError(",
+                        "                     \"Deserialization found a mismatch in the decimal places for currency \" + code)",
+                        "         return singletonCurrency"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "143-150:readBigMoney": {
                     "start": 143,
@@ -396,11 +464,23 @@
                         "    def __readBigMoney(self, in_: pickle.Unpickler) -> BigMoney:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __readBigMoney(self, in_: pickle.Unpickler) -> BigMoney:",
+                        "        ",
+                        "        currency = self.__readCurrency(in_)",
+                        "        bytes_ = in_.load()",
+                        "        bd = decimal.Decimal(bytes_)",
+                        "        bigMoney = BigMoney(0, bd, currency)",
+                        "        return bigMoney"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "108-112:writeCurrency": {
                     "start": 108,
@@ -449,11 +529,20 @@
                         "    def __writeCurrency(self, out: pickle.Pickler, obj: CurrencyUnit) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __writeCurrency(self, out: pickle.Pickler, obj: CurrencyUnit) -> None:",
+                        "         out.dump(obj.getCode())",
+                        "         out.dump(obj.getNumericCode())",
+                        "         out.dump(obj.getDecimalPlaces())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "100-106:writeBigMoney": {
                     "start": 100,
@@ -509,11 +598,23 @@
                         "    def __writeBigMoney(self, out: pickle.Pickler, obj: BigMoney) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
+                    "translation": [
+                        "    def __writeBigMoney(self, out: pickle.Pickler, obj: BigMoney) -> None:",
+                        "         self.__writeCurrency(out, obj.getCurrencyUnit())",
+                        "         bytes_ = obj.getAmount().as_tuple().digits",
+                        "         out.dump(len(bytes_))",
+                        "         for byte in bytes_:",
+                        "             out.dump(byte)",
+                        "         out.dump(obj.getScale())"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -533,12 +634,21 @@
                             "byte"
                         ]
                     ],
-                    "partial_translation": "    CURRENCY_UNIT: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    CURRENCY_UNIT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    CURRENCY_UNIT: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "39-39:MONEY": {
                     "start": 39,
@@ -556,12 +666,21 @@
                             "byte"
                         ]
                     ],
-                    "partial_translation": "    MONEY: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    MONEY: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    MONEY: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "36-36:BIG_MONEY": {
                     "start": 36,
@@ -579,12 +698,21 @@
                             "byte"
                         ]
                     ],
-                    "partial_translation": "    BIG_MONEY: int = <placeholder>\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    BIG_MONEY: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    BIG_MONEY: int = 0"
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "48-48:object": {
                     "start": 48,
@@ -601,12 +729,22 @@
                             "java.lang.Object"
                         ]
                     ],
-                    "partial_translation": "    __object: typing.Any = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __object: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __object: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "45-45:type": {
                     "start": 45,
@@ -623,12 +761,22 @@
                             "byte"
                         ]
                     ],
-                    "partial_translation": "    __type: int = None\n",
-                    "translation": [],
-                    "translation_status": "pending",
+                    "partial_translation": [
+                        "    __type: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __type: int = 0",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "syntactical_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "python_class_declaration": "class Ser():\n\n"
