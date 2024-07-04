@@ -1,0 +1,105 @@
+from __future__ import annotations
+import re
+import io
+import typing
+from typing import *
+from src.main.org.apache.commons.validator.routines.CodeValidator import *
+from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
+from src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit import *
+
+
+class ISINValidator:
+
+    __checkCountryCode: bool = False
+
+    __SPECIALS: typing.List[str] = ["EZ", "XS"]
+    __CCODES: typing.List[str] = [
+        country.strip()
+        for country in open("/usr/share/xml/iso-codes/iso_3166-1.xml", "r")
+        if "<iso_3166_entry" in country
+    ]
+    __ISIN_VALIDATOR_TRUE: ISINValidator = None
+    __ISIN_VALIDATOR_FALSE: ISINValidator = None
+    __VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(
+        "([A-Z]{2}[A-Z0-9]{9}[0-9])", 12, ISINCheckDigit.ISIN_CHECK_DIGIT
+    )
+    __ISIN_REGEX: str = "([A-Z]{2}[A-Z0-9]{9}[0-9])"
+    __serialVersionUID: int = -5964391439144260936
+
+    @staticmethod
+    def initialize_fields() -> None:
+        ISINValidator.__ISIN_VALIDATOR_TRUE: ISINValidator = ISINValidator(True)
+
+        ISINValidator.__ISIN_VALIDATOR_FALSE: ISINValidator = ISINValidator(False)
+
+    @staticmethod
+    def run_static_init():
+
+        ISINValidator.__CCODES.sort()
+        ISINValidator.__SPECIALS.sort()
+
+    def validate(self, code: str) -> typing.Any:
+
+        validate = self.__VALIDATOR.validate(code)
+        if validate is not None and self.__checkCountryCode:
+            return self.__checkCode(code[:2]) and validate
+        return validate
+
+    def isValid(self, code: str) -> bool:
+
+        valid = self.__VALIDATOR.isValid(code)
+        if valid and self.__checkCountryCode:
+            return self.__checkCode(code[:2])
+        return valid
+
+    @staticmethod
+    def getInstance(checkCountryCode: bool) -> ISINValidator:
+        return (
+            ISINValidator.__ISIN_VALIDATOR_TRUE
+            if checkCountryCode
+            else ISINValidator.__ISIN_VALIDATOR_FALSE
+        )
+
+    def __checkCode(self, code: str) -> bool:
+
+        return (
+            self.__binarySearch(self.__CCODES, code) >= 0
+            or self.__binarySearch(self.__SPECIALS, code) >= 0
+        )
+
+    def __binarySearch(self, arr: List[str], x: str) -> int:
+        low = 0
+        high = len(arr) - 1
+        mid = 0
+
+        while low <= high:
+            mid = (high + low) // 2
+
+            if arr[mid] < x:
+                low = mid + 1
+
+            elif arr[mid] > x:
+                high = mid - 1
+
+            else:
+                return mid
+
+        return -1
+
+    def __init__(self, checkCountryCode: bool) -> None:
+
+        self.__checkCountryCode = checkCountryCode
+        self.__SPECIALS = ["EZ", "XS"]
+        self.__CCODES = Locale.getISOCountries()
+        self.__ISIN_VALIDATOR_TRUE = ISINValidator(True)
+        self.__ISIN_VALIDATOR_FALSE = ISINValidator(False)
+        self.__VALIDATOR = CodeValidator.CodeValidator4(
+            "([A-Z]{2}[A-Z0-9]{9}[0-9])", 12, ISINCheckDigit.ISIN_CHECK_DIGIT
+        )
+        self.__ISIN_REGEX = "([A-Z]{2}[A-Z0-9]{9}[0-9])"
+        self.__serialVersionUID = -5964391439144260936
+
+
+ISINValidator.initialize_fields()
+
+ISINValidator.run_static_init()

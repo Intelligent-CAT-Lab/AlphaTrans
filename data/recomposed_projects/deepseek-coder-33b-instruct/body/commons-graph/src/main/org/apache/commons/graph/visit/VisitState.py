@@ -1,0 +1,19 @@
+from __future__ import annotations
+import re
+import io
+
+
+class VisitState:
+
+    SKIP: VisitState = None
+    CONTINUE: VisitState = None
+    ABORT: VisitState = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        VisitState.SKIP: VisitState = None
+        VisitState.CONTINUE: VisitState = None
+        VisitState.ABORT: VisitState = None
+
+
+VisitState.initialize_fields()
