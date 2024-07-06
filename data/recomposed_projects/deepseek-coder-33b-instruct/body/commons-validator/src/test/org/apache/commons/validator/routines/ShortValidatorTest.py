@@ -81,3 +81,13 @@ class ShortValidatorTest(AbstractNumberValidatorTest):
     def testShortValidatorMethods(self) -> None:
 
         pass  # LLM could not translate this method
+
+    def __init__(self, name: str) -> None:
+
+        import locale
+
+        locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
+
+        super().__init__(name)
+
+        self.setUp()

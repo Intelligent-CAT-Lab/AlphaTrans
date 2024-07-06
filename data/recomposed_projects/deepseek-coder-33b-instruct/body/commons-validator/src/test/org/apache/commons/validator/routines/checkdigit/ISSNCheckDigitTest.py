@@ -36,3 +36,7 @@ class ISSNCheckDigitTest(AbstractCheckDigitTest):
         ]
         self.missingMessage = "Code is missing"
         self.zeroSum = "00000000"
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)

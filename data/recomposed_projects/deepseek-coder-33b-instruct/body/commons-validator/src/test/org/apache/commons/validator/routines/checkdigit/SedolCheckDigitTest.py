@@ -50,3 +50,7 @@ class SedolCheckDigitTest(AbstractCheckDigitTest):
             assert not self.routine.isValid(invalidCheckDigit), (
                 "Should fail: " + invalidCheckDigit
             )
+
+    def __init__(self, name: str) -> None:
+
+        pass  # LLM could not translate this method

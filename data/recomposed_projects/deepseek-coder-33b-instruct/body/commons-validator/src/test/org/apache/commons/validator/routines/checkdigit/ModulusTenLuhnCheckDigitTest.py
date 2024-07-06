@@ -29,3 +29,15 @@ class ModulusTenLuhnCheckDigitTest(AbstractCheckDigitTest):
             self.__VALID_DISCOVER,
             self.__VALID_DINERS,
         ]
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)
+        self._valid = [
+            self.__VALID_DINERS,
+            self.__VALID_DISCOVER,
+            self.__VALID_MASTERCARD,
+            self.__VALID_AMEX,
+            self.__VALID_SHORT_VISA,
+            self.__VALID_VISA,
+        ]

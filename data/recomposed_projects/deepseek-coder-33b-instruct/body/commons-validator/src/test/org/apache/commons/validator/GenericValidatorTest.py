@@ -42,3 +42,6 @@ class GenericValidatorTest(unittest.TestCase):
         self.assertTrue("Min=6 End=2", GenericValidator.minLength1("12345\n\r", 6, 2))
         self.assertTrue("Min=7 End=2", GenericValidator.minLength1("12345\n\r", 7, 2))
         self.assertFalse("Min=8 End=2", GenericValidator.minLength1("12345\n\r", 8, 2))
+
+    def __init__(self, name: str) -> None:
+        super().__init__(name)

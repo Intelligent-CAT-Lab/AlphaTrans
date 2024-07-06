@@ -13,6 +13,12 @@ from src.main.org.apache.commons.codec.language.DoubleMetaphone import *
 
 class DoubleMetaphone2Test(StringEncoderAbstractTest, unittest.TestCase):
 
+    __TEST_DATA: typing.List[typing.List[str]] = (
+        None  # LLM could not translate this field
+    )
+
+    __PRIMARY_INDEX: int = None  # LLM could not translate this field
+
     __ALTERNATE_INDEX: int = None  # LLM could not translate this field
 
     def testDoubleMetaphonePrimary(self) -> None:

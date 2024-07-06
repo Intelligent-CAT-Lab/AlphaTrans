@@ -57,3 +57,7 @@ class ISBNCheckDigitTest(AbstractCheckDigitTest):
             assert False, "calculate() Lth 13 - expected exception"
         except Exception as e:
             assert str(e) == "Invalid ISBN Length = 13", "calculate() Lth 13"
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)

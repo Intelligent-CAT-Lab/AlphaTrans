@@ -239,6 +239,14 @@ class RegexValidatorTest(unittest.TestCase):
             (RegexValidator.RegexValidator3("^([A-Z]*)$")).match("ABC"),
         )
 
+    def __init__(self, name: str) -> None:
+        super().__init__(name)
+        self.__MULTIPLE_REGEX = [self.__REGEX_1, self.__REGEX_2, self.__REGEX_3]
+        self._setUp()
+
+    def _setUp(self) -> None:
+        super().setUp()
+
     def __checkArray(
         self, label: str, expect: typing.List[str], result: typing.List[str]
     ) -> None:

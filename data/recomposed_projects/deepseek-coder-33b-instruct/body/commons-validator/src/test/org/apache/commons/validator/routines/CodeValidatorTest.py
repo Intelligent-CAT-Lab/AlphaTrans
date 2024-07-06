@@ -116,3 +116,6 @@ class CodeValidatorTest(unittest.TestCase):
         self.assertFalse("EAN CheckDigit (is) invalid", validator.isValid(invalidEAN))
         self.assertTrue("EAN CheckDigit (is) valid", validator.isValid(validEAN))
         self.assertIsNone(validator.validate("978193011099X"))
+
+    def __init__(self, name: str) -> None:
+        super().__init__(name)

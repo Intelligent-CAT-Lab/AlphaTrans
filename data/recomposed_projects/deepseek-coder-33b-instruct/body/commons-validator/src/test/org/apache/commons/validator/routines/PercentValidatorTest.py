@@ -78,3 +78,7 @@ class PercentValidatorTest(unittest.TestCase):
             AbstractNumberValidator.PERCENT_FORMAT,
             PercentValidator.getInstance().getFormatType(),
         )
+
+    def __init__(self, name: str) -> None:
+        super().__init__(name)
+        self._validator = PercentValidator.PercentValidator1()

@@ -36,3 +36,6 @@ class ISBNValidatorTest(unittest.TestCase):
         self.assertTrue(validator.isValid(self.__VALID_ISBN_SPACES))
         self.assertTrue(validator.isValid(self.__VALID_ISBN_X))
         self.assertFalse(validator.isValid(self.__INVALID_ISBN))
+
+    def __init__(self, name: str) -> None:
+        super().__init__(name)

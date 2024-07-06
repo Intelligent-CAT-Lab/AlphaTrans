@@ -14,3 +14,7 @@ class ISBN10CheckDigitTest(AbstractCheckDigitTest):
         super().setUp()
         self.routine = ISBN10CheckDigit.ISBN10_CHECK_DIGIT
         self.valid = ["1930110995", "020163385X", "1932394354", "1590596277"]
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)

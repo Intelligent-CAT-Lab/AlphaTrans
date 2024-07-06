@@ -219,3 +219,20 @@ class CurrencyValidatorTest(unittest.TestCase):
             AbstractNumberValidator.CURRENCY_FORMAT,
             CurrencyValidator.getInstance().getFormatType(),
         )
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)
+
+        import locale
+        import decimal
+
+        locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
+        self.__US_DOLLAR = decimal.Decimal("1.00").format_money(
+            locale.currency(1234567.89)
+        )
+
+        locale.setlocale(locale.LC_ALL, "en_GB.UTF-8")
+        self.__UK_POUND = decimal.Decimal("1.00").format_money(
+            locale.currency(1234567.89)
+        )

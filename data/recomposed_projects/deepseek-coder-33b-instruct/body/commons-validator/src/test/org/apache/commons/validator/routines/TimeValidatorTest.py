@@ -349,5 +349,78 @@ class TimeValidatorTest(unittest.TestCase):
             )
             self.assertEqual(self._patternExpect[i], date, "compare " + text)
 
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)
+
+        self._localeInvalid = [
+            "24:00",  # midnight
+            "24:00",  # past midnight
+            "25:02",  # invalid hour
+            "10:61",  # invalid minute
+            "05-02",  # invalid sep
+            "0X:01",  # invalid sep
+            "05:0X",  # invalid char
+            "01-01",  # invalid pattern
+            "10:",  # invalid pattern
+            "10::1",  # invalid pattern
+            "10:1:",
+        ]
+
+        self._patternInvalid = [
+            "24-00-00",  # midnight
+            "24-00-01",  # past midnight
+            "25-02-03",  # invalid hour
+            "10-61-31",  # invalid minute
+            "10-01-61",  # invalid second
+            "05:02-29",  # invalid sep
+            "0X-01:01",  # invalid sep
+            "05-0X-01",  # invalid char
+            "10-01-0X",  # invalid char
+            "01:01:05",  # invalid pattern
+            "10-10",  # invalid pattern
+            "10--10",  # invalid pattern
+            "10-10-",
+        ]
+
+        self._localeExpect = [
+            self.createDate(None, 235900, 0),
+            self.createDate(None, 0, 0),
+            self.createDate(None, 100, 0),
+            self.createDate(None, 0, 0),
+            self.createDate(None, 11200, 0),
+            self.createDate(None, 104900, 0),
+            self.createDate(None, 162300, 0),
+        ]
+
+        self._localeValid = ["23:59", "00:00", "00:01", "0:0", "1:12", "10:49", "16:23"]
+
+        self._patternExpect = [
+            self.createDate(None, 235959, 0),
+            self.createDate(None, 0, 0),
+            self.createDate(None, 1, 0),
+            self.createDate(None, 0, 0),
+            self.createDate(None, 11201, 0),
+            self.createDate(None, 104918, 0),
+            self.createDate(None, 162346, 0),
+        ]
+
+        self._patternValid = [
+            "23-59-59",
+            "00-00-00",
+            "00-00-01",
+            "0-0-0",
+            "1-12-1",
+            "10-49-18",
+            "16-23-46",
+        ]
+
+        self._validator = TimeValidator()
+
+        self._EST = zoneinfo.ZoneInfo("EST")
+        self._GMT = zoneinfo.ZoneInfo("GMT")
+        self.__defaultZone = None
+        self.__origDefault = None
+
 
 TimeValidatorTest.initialize_fields()

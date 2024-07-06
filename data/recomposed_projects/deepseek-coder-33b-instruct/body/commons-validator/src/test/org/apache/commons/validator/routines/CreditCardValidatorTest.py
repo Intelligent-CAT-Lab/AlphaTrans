@@ -377,3 +377,6 @@ class CreditCardValidatorTest(unittest.TestCase):
 
         ccv = CreditCardValidator(0, CreditCardValidator.AMEX, None, None)
         self.assertFalse(ccv.isValid("4417123456789113"))
+
+    def __init__(self, name: str) -> None:
+        super().__init__(name)

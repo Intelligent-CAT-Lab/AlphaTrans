@@ -106,3 +106,7 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
         dateformat.setTimeZone(TimeZone.getTimeZone("GMT"))
         date = dateformat.parse(txt)
         self.assertIsNotNone(date)
+
+    def __init__(self, name: str) -> None:
+
+        pass  # LLM could not translate this method

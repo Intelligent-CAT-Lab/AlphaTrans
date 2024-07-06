@@ -60,3 +60,8 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
                         assert not routine.isValid(line.replace(" ", "")), line
                     else:
                         assert routine.isValid(line.replace(" ", "")), line
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)
+        self._checkDigitLth = 2

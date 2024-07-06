@@ -42,3 +42,7 @@ class CUSIPCheckDigitTest(AbstractCheckDigitTest):
             assert not self.routine.isValid(invalidCheckDigit), (
                 "Should fail: " + invalidCheckDigit
             )
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)

@@ -57,3 +57,16 @@ class ISINCheckDigitTest(AbstractCheckDigitTest):
             assert not self.routine.isValid(invalidCheckDigit), (
                 "Should fail: " + invalidCheckDigit
             )
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)
+
+    _invalidCheckDigits: typing.List[str] = [
+        "US037833100O",  # proper check digit is '5', see above
+        "BMG8571G109D",  # proper check digit is '6', see above
+        "AU0000XVGZAD",  # proper check digit is '3', see above
+        "GB000263494I",  # proper check digit is '6', see above
+        "FR000402625C",  # proper check digit is '0', see above
+        "DK000976334H",  # proper check digit is '4', see above
+    ]

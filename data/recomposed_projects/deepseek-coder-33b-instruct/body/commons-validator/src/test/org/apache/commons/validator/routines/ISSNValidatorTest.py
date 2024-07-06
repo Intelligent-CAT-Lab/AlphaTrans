@@ -162,3 +162,6 @@ class ISSNValidatorTest(unittest.TestCase):
 
         for f in self.__validFormat:
             self.assertTrue(self.__VALIDATOR.isValid(f))
+
+    def __init__(self, name: str) -> None:
+        super().__init__(name)

@@ -47,3 +47,15 @@ class ModulusTenSedolCheckDigitTest(AbstractCheckDigitTest):
             assert not self.routine.isValid(invalidCheckDigit), (
                 "Should fail: " + invalidCheckDigit
             )
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)
+
+    __invalidCheckDigits: typing.List[str] = [
+        "026349E",
+        "087061C",
+        "B06LQ9H",
+        "343757F",
+        "B07LF5F",
+    ]

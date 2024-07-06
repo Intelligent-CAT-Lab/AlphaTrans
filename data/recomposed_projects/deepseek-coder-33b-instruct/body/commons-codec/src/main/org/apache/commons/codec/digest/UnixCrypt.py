@@ -10,6 +10,10 @@ from src.main.org.apache.commons.codec.digest.B64 import *
 
 class UnixCrypt:
 
+    __SPTRANS: typing.List[typing.List[int]] = (
+        None  # LLM could not translate this field
+    )
+
     __SKB: typing.List[typing.List[int]] = None  # LLM could not translate this field
 
     __SHIFT2: typing.List[bool] = [

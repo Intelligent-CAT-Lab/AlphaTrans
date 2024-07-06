@@ -26,13 +26,14 @@ class RPattern(ABC):
 
 class Phoneme(PhonemeExpr):
 
-    COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = (
-        None  # LLM could not translate this field
-    )
-
+    COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = None
     __languages: LanguageSet = None
 
     __phonemeText: str = ""
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Phoneme.COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = None
 
     def toString(self) -> str:
         return self.__phonemeText + "[" + str(self.__languages) + "]"
@@ -499,6 +500,8 @@ class Rule:
                 return True
         return False
 
+
+Phoneme.initialize_fields()
 
 PhonemeList.initialize_fields()
 

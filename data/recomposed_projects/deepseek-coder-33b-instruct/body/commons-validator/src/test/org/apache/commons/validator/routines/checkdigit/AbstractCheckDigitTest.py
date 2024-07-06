@@ -234,3 +234,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
                 self._routine.isValid(self._valid[i]),
                 "valid[" + str(i) + "]: " + self._valid[i],
             )
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)

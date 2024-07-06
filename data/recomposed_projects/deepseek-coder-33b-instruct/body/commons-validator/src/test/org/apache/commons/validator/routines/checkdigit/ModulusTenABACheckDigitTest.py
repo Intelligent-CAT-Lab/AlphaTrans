@@ -21,3 +21,7 @@ class ModulusTenABACheckDigitTest(AbstractCheckDigitTest):
             "231381116",
             "121181976",
         ]
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)

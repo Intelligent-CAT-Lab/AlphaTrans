@@ -326,3 +326,7 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             AbstractNumberValidator.STANDARD_FORMAT,
             self._validator.getFormatType(),
         )
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)

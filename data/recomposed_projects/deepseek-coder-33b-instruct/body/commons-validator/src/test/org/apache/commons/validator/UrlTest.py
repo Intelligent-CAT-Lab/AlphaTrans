@@ -241,6 +241,10 @@ class UrlTest(unittest.TestCase):
         )
         self.testIsValid1(testUrlPartsOptions, options)
 
+    def __init__(self, testName: str) -> None:
+
+        super().__init__(testName)
+
     def __testPartsIndextoString(self) -> str:
 
         carryMsg = "{"

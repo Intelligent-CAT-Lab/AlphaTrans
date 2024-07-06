@@ -46,3 +46,13 @@ class ModulusTenCUSIPCheckDigitTest(AbstractCheckDigitTest):
             assert not self.routine.isValid(invalidCheckDigit), (
                 "Should fail: " + invalidCheckDigit
             )
+
+    def __init__(self, name: str) -> None:
+
+        super().__init__(name)
+        self.__validCheckDigits: typing.List[str] = ["DUS0421C5"]
+        self.__invalidCheckDigits: typing.List[str] = [
+            "DUS0421CW",
+            "DUS0421CN",
+            "DUS0421CE",
+        ]
