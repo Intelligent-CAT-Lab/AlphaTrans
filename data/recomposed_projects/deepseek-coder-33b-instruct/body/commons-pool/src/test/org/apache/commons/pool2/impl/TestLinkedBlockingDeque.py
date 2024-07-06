@@ -70,14 +70,14 @@ class TestLinkedBlockingDeque(unittest.TestCase):
 
     def testRemoveLast(self) -> None:
 
-        with pytest.raises(ValueError):
+        with pytest.raises(RuntimeError):
             self.deque.removeLast()
 
         self.deque.add(self.__ONE)
         self.deque.add(self.__TWO)
         assert self.deque.removeLast() == self.__TWO
 
-        with pytest.raises(ValueError):
+        with pytest.raises(RuntimeError):
             self.deque.removeLast()
             self.deque.removeLast()
 
@@ -86,8 +86,8 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         # Create an instance of LinkedBlockingDeque
         deque = LinkedBlockingDeque()
 
-        # Test that removing from an empty deque raises a ValueError
-        with pytest.raises(ValueError):
+        # Test that removing from an empty deque raises a RuntimeError
+        with pytest.raises(RuntimeError):
             deque.removeFirst()
 
         # Add elements to the deque
@@ -97,8 +97,8 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         # Test that the first element is removed correctly
         assert deque.removeFirst() == self.__ONE
 
-        # Test that removing from an empty deque raises a ValueError
-        with pytest.raises(ValueError):
+        # Test that removing from an empty deque raises a RuntimeError
+        with pytest.raises(RuntimeError):
             deque.removeFirst()
             deque.removeFirst()
 
@@ -107,8 +107,8 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         # Create a deque
         deque = LinkedBlockingDeque()
 
-        # Test that removing from an empty deque raises a ValueError
-        with pytest.raises(ValueError):
+        # Test that removing from an empty deque raises a RuntimeError
+        with pytest.raises(RuntimeError):
             deque.remove()
 
         # Add elements to the deque
@@ -169,12 +169,12 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         deque.remove(0)
         deque.remove(2)
 
-        with pytest.raises(ValueError):
+        with pytest.raises(RuntimeError):
             next(iter)
 
     def testPop(self) -> None:
 
-        # assertThrows(ValueError.class, () -> deque.pop());
+        # assertThrows(RuntimeError.class, () -> deque.pop());
         with pytest.raises(IndexError):
             self.deque.pop()
 
@@ -186,7 +186,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         # assertEquals(Integer.valueOf(1), deque.pop());
         assert self.deque.pop() == self.__ONE
 
-        # assertThrows(ValueError.class, () -> {deque.pop(); deque.pop();});
+        # assertThrows(RuntimeError.class, () -> {deque.pop(); deque.pop();});
         with pytest.raises(IndexError):
             self.deque.pop()
             self.deque.pop()
@@ -275,12 +275,12 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         assert deque.offer1(self.__TWO, self.__TIMEOUT_50_MILLIS)
         assert not deque.offer1(self.__THREE, self.__TIMEOUT_50_MILLIS)
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             deque.offer1(None, self.__TIMEOUT_50_MILLIS)
 
     def testOfferLastWithTimeout(self) -> None:
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.deque.offerLast1(None, self.__TIMEOUT_50_MILLIS)
 
         assert self.deque.offerLast1(self.__ONE, self.__TIMEOUT_50_MILLIS)
@@ -293,13 +293,13 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         deque.offerLast(self.__ONE)
         deque.offerLast(self.__TWO)
         self.assertEqual(2, deque.size())
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             deque.offerLast(None)
         self.assertEqual(self.__ONE, deque.pop())
 
     def testOfferFirstWithTimeout(self) -> None:
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.deque.offerFirst1(None, self.__TIMEOUT_50_MILLIS)
 
         assert self.deque.offerFirst1(self.__ONE, self.__TIMEOUT_50_MILLIS)
@@ -313,7 +313,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         deque.offerFirst(self.__ONE)
         deque.offerFirst(self.__TWO)
         self.assertEqual(2, deque.size())
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             deque.offerFirst(None)
         self.assertEqual(Integer.valueOf(2), deque.pop())
 
@@ -325,7 +325,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         self.assertTrue(deque.offer(self.__TWO))
         self.assertFalse(deque.offer(self.__THREE))
 
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             deque.offer(None)
 
     def testIterator(self) -> None:
@@ -333,8 +333,8 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         # Create an instance of LinkedBlockingDeque
         deque = LinkedBlockingDeque()
 
-        # Test if ValueError is raised when calling next() on an empty iterator
-        with pytest.raises(ValueError):
+        # Test if RuntimeError is raised when calling next() on an empty iterator
+        with pytest.raises(RuntimeError):
             deque.iterator().next()
 
         # Add elements to the deque
@@ -358,8 +358,8 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         # Create an instance of LinkedBlockingDeque
         deque = LinkedBlockingDeque()
 
-        # Test that getLast() raises a ValueError when the deque is empty
-        with pytest.raises(ValueError):
+        # Test that getLast() raises a RuntimeError when the deque is empty
+        with pytest.raises(RuntimeError):
             deque.getLast()
 
         # Add elements to the deque
@@ -371,8 +371,8 @@ class TestLinkedBlockingDeque(unittest.TestCase):
 
     def testGetFirst(self) -> None:
 
-        # assertThrows(ValueError.class, () -> deque.getFirst());
-        with pytest.raises(ValueError):
+        # assertThrows(RuntimeError.class, () -> deque.getFirst());
+        with pytest.raises(RuntimeError):
             self.deque.getFirst()
 
         # deque.add(ONE);
@@ -385,8 +385,8 @@ class TestLinkedBlockingDeque(unittest.TestCase):
 
     def testElement(self) -> None:
 
-        # assertThrows(ValueError.class, () -> deque.element());
-        with pytest.raises(ValueError):
+        # assertThrows(RuntimeError.class, () -> deque.element());
+        with pytest.raises(RuntimeError):
             self.deque.element()
 
         # deque.add(ONE);
@@ -417,7 +417,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
 
         deque = LinkedBlockingDeque()
 
-        with pytest.raises(ValueError):
+        with pytest.raises(RuntimeError):
             deque.descendingIterator().next()
 
         deque.add(self.__ONE)
@@ -450,7 +450,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         deque = LinkedBlockingDeque.LinkedBlockingDeque2([1, 2])
         self.assertEqual(2, deque.size())
 
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             LinkedBlockingDeque.LinkedBlockingDeque2([1, None])
 
     def testClear(self) -> None:
@@ -492,7 +492,7 @@ class TestLinkedBlockingDeque(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             deque.add(self.__THREE)
 
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             deque.add(None)
 
     def setUp(self) -> None:

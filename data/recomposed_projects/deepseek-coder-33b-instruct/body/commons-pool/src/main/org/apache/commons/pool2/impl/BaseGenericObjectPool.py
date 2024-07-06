@@ -178,7 +178,6 @@ class BaseGenericObjectPool(BaseObject, ABC):
     __returnedCount: int = AtomicLong()
     __borrowedCount: int = AtomicLong()
     __evictor: Evictor = None
-
     __evictorShutdownTimeoutDuration: datetime.timedelta = (
         BaseObjectPoolConfig.DEFAULT_EVICTOR_SHUTDOWN_TIMEOUT
     )
@@ -225,6 +224,9 @@ class BaseGenericObjectPool(BaseObject, ABC):
         BaseGenericObjectPool.__activeTimes: StatsStore = StatsStore(
             MEAN_TIMING_STATS_CACHE_SIZE
         )
+
+        BaseGenericObjectPool.__evictor: Evictor = None
+        BaseGenericObjectPool.evictionIterator: EvictionIterator = None
 
     def _toStringAppendFields(self, builder: str) -> None:
 
@@ -441,10 +443,10 @@ class BaseGenericObjectPool(BaseObject, ABC):
         try:
             try:
                 self.__setEvictionPolicy1(evictionPolicyClassName, classLoader)
-            except (ClassCastException, ClassNotFoundException) as e:
+            except (TypeError, ClassNotFoundException) as e:
                 self.__setEvictionPolicy1(evictionPolicyClassName, epClassLoader)
         except (
-            ClassCastException,
+            TypeError,
             ClassNotFoundException,
             InstantiationException,
             IllegalAccessException,

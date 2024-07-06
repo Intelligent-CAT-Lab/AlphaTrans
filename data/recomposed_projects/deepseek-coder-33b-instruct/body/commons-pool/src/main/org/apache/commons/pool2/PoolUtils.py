@@ -54,8 +54,11 @@ class ErodingFactor:
 class ErodingKeyedObjectPool(KeyedObjectPool):
 
     __erodingFactor: ErodingFactor = None
-
     __keyedPool: KeyedObjectPool[typing.Any, typing.Any] = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        ErodingKeyedObjectPool.__erodingFactor: ErodingFactor = None
 
     def toString(self) -> str:
         return (
@@ -106,7 +109,7 @@ class ErodingKeyedObjectPool(KeyedObjectPool):
             return self.__keyedPool.borrowObject(key)
         except Exception as e:
             raise e
-        except ValueError as e:
+        except RuntimeError as e:
             raise e
         except RuntimeError as e:
             raise e
@@ -173,8 +176,11 @@ class ErodingKeyedObjectPool(KeyedObjectPool):
 class ErodingObjectPool(ObjectPool):
 
     __factor: ErodingFactor = None
-
     __pool: ObjectPool[typing.Any] = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        ErodingObjectPool.__factor: ErodingFactor = None
 
     def toString(self) -> str:
         return (
@@ -233,7 +239,7 @@ class ErodingObjectPool(ObjectPool):
         except Exception as e:
             print(f"An error occurred: {e}")
             raise
-        except ValueError as e:
+        except RuntimeError as e:
             print(f"No such element: {e}")
             raise
         except RuntimeError as e:
@@ -913,5 +919,9 @@ class PoolUtils:
     def __getMinIdleTimer() -> threading.Timer:
         return TimerHolder.MIN_IDLE_TIMER
 
+
+ErodingKeyedObjectPool.initialize_fields()
+
+ErodingObjectPool.initialize_fields()
 
 ErodingPerKeyKeyedObjectPool.initialize_fields()

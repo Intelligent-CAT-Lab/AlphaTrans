@@ -40,9 +40,12 @@ class BaseTestProxiedObjectPool(ABC, unittest.TestCase):
     __log: io.StringIO = None
 
     __pool: typing.List[TestObject] = None
-
     __ABANDONED_TIMEOUT_SECS: datetime.timedelta = datetime.timedelta(seconds=3)
     __DATA1: str = "data1"
+
+    @staticmethod
+    def initialize_fields() -> None:
+        BaseTestProxiedObjectPool.__pool: typing.List[TestObject] = None
 
     def testUsageTracking(self) -> None:
 
@@ -128,3 +131,6 @@ class BaseTestProxiedObjectPool(ABC, unittest.TestCase):
 
     def _getproxySource(self) -> ProxySource[TestObject]:
         pass
+
+
+BaseTestProxiedObjectPool.initialize_fields()

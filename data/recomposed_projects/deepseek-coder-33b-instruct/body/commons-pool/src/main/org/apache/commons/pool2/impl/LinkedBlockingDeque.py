@@ -17,10 +17,14 @@ from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *
 class AbstractItr(ABC):
 
     __lastRet: Node[typing.Any] = None
-
     nextItem: typing.Any = None
 
     next: Node[typing.Any] = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        AbstractItr.__lastRet: Node[typing.Any] = None
+        AbstractItr.next: Node[typing.Any] = None
 
     def remove(self) -> None:
 
@@ -99,10 +103,13 @@ class Itr(AbstractItr):
 class Node:
 
     next: Node = None
-
     prev: Node = None
-
     item: typing.Any = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Node.next: Node = None
+        Node.prev: Node = None
 
     def __init__(self, x: typing.Any, p: Node, n: Node) -> None:
         self.item = x
@@ -123,10 +130,13 @@ class LinkedBlockingDeque(Deque):
     __count: int = 0
 
     __last: Node[typing.Any] = None
-
     __first: Node[typing.Any] = None
-
     __serialVersionUID: int = -387911632671998426
+
+    @staticmethod
+    def initialize_fields() -> None:
+        LinkedBlockingDeque.__last: Node[typing.Any] = None
+        LinkedBlockingDeque.__first: Node[typing.Any] = None
 
     def toString(self) -> str:
         with self.__lock:
@@ -204,7 +214,7 @@ class LinkedBlockingDeque(Deque):
 
         x = self.pollFirst0()
         if x is None:
-            raise ValueError()
+            raise RuntimeError()
         return x
 
     def push(self, e: typing.Any) -> None:
@@ -281,21 +291,21 @@ class LinkedBlockingDeque(Deque):
 
         with self.__lock:
             if self.__last is None:
-                raise ValueError()
+                raise RuntimeError()
             return self.__last.item
 
     def getFirst(self) -> typing.Any:
 
         with self.__lock:
             if self.__first is None:
-                raise ValueError()
+                raise RuntimeError()
             return self.__first.item
 
     def element(self) -> typing.Any:
 
         with self.__lock:
             if self.__first is None:
-                raise ValueError()
+                raise RuntimeError()
             return self.__first.item
 
     def descendingIterator(self) -> typing.Iterator[typing.Any]:
@@ -419,7 +429,7 @@ class LinkedBlockingDeque(Deque):
 
         x = self.removeFirst()
         if x is None:
-            raise ValueError()
+            raise RuntimeError()
         return x
 
     def remainingCapacity(self) -> int:
@@ -845,3 +855,10 @@ class LinkedBlockingDeque(Deque):
             self.__lock.release()
 
         return True
+
+
+AbstractItr.initialize_fields()
+
+Node.initialize_fields()
+
+LinkedBlockingDeque.initialize_fields()
