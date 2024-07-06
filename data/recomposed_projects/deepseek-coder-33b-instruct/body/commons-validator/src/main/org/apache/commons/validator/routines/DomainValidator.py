@@ -10,28 +10,24 @@ from src.main.org.apache.commons.validator.routines.RegexValidator import *
 class ArrayType:
 
     LOCAL_MINUS: ArrayType = None
-    LOCAL_PLUS: ArrayType = None
-    LOCAL_RO: ArrayType = None
-    INFRASTRUCTURE_RO: ArrayType = None
-    COUNTRY_CODE_RO: ArrayType = None
-    GENERIC_RO: ArrayType = None
-    COUNTRY_CODE_MINUS: ArrayType = None
-    COUNTRY_CODE_PLUS: ArrayType = None
-    GENERIC_MINUS: ArrayType = None
-    GENERIC_PLUS: ArrayType = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        ArrayType.LOCAL_MINUS: ArrayType = None
-        ArrayType.LOCAL_PLUS: ArrayType = None
-        ArrayType.LOCAL_RO: ArrayType = None
-        ArrayType.INFRASTRUCTURE_RO: ArrayType = None
-        ArrayType.COUNTRY_CODE_RO: ArrayType = None
-        ArrayType.GENERIC_RO: ArrayType = None
-        ArrayType.COUNTRY_CODE_MINUS: ArrayType = None
-        ArrayType.COUNTRY_CODE_PLUS: ArrayType = None
-        ArrayType.GENERIC_MINUS: ArrayType = None
-        ArrayType.GENERIC_PLUS: ArrayType = None
+    LOCAL_PLUS: ArrayType = None
+
+    LOCAL_RO: ArrayType = None
+
+    INFRASTRUCTURE_RO: ArrayType = None
+
+    COUNTRY_CODE_RO: ArrayType = None
+
+    GENERIC_RO: ArrayType = None
+
+    COUNTRY_CODE_MINUS: ArrayType = None
+
+    COUNTRY_CODE_PLUS: ArrayType = None
+
+    GENERIC_MINUS: ArrayType = None
+
+    GENERIC_PLUS: ArrayType = None
 
 
 class IDNBUGHOLDER:
@@ -61,10 +57,6 @@ class Item:
     values: typing.List[str] = None
 
     type: ArrayType = None
-
-    @staticmethod
-    def initialize_fields() -> None:
-        Item.type: ArrayType = None
 
     def __init__(self, type: ArrayType, values: typing.List[str]) -> None:
         self.type = type
@@ -230,10 +222,6 @@ class DomainValidator:
         pass  # LLM could not translate this method
 
 
-ArrayType.initialize_fields()
-
 IDNBUGHOLDER.initialize_fields()
-
-Item.initialize_fields()
 
 LazyHolder.initialize_fields()

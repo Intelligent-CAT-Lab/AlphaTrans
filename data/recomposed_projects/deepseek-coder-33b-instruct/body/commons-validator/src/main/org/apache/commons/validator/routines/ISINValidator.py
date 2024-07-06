@@ -27,16 +27,16 @@ class ISINValidator:
     __serialVersionUID: int = -5964391439144260936
 
     @staticmethod
-    def initialize_fields() -> None:
-        ISINValidator.__ISIN_VALIDATOR_TRUE: ISINValidator = ISINValidator(True)
-
-        ISINValidator.__ISIN_VALIDATOR_FALSE: ISINValidator = ISINValidator(False)
-
-    @staticmethod
     def run_static_init():
 
         ISINValidator.__CCODES.sort()
         ISINValidator.__SPECIALS.sort()
+
+    @staticmethod
+    def initialize_fields() -> None:
+        ISINValidator.__ISIN_VALIDATOR_TRUE: ISINValidator = ISINValidator(True)
+
+        ISINValidator.__ISIN_VALIDATOR_FALSE: ISINValidator = ISINValidator(False)
 
     def validate(self, code: str) -> typing.Any:
 
@@ -100,6 +100,6 @@ class ISINValidator:
         self.__serialVersionUID = -5964391439144260936
 
 
-ISINValidator.initialize_fields()
-
 ISINValidator.run_static_init()
+
+ISINValidator.initialize_fields()

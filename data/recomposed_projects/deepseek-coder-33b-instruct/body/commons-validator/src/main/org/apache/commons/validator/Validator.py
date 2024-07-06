@@ -28,8 +28,6 @@ class Validator:
 
     @staticmethod
     def initialize_fields() -> None:
-        Validator._resources: ValidatorResources = None
-
         Validator.VALIDATOR_PARAM: str = "org.apache.commons.validator.Validator"
 
         Validator.VALIDATOR_RESULTS_PARAM: str = (

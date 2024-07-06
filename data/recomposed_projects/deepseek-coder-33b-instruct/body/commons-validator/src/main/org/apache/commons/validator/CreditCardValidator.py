@@ -59,11 +59,7 @@ class CreditCardValidator:
     VISA: int = 1 << 1
     AMEX: int = 1 << 0
     NONE: int = 0
-    __cardTypes: typing.Collection[CreditCardType] = None
-
-    @staticmethod
-    def initialize_fields() -> None:
-        CreditCardValidator.__cardTypes: typing.Collection[CreditCardType] = []
+    __cardTypes: typing.Collection[CreditCardType] = []
 
     def _luhnCheck(self, cardNumber: str) -> bool:
 
@@ -126,6 +122,3 @@ class CreditCardValidator:
 
         if f.isOn(self.DISCOVER):
             self.__cardTypes.append(Discover())
-
-
-CreditCardValidator.initialize_fields()
