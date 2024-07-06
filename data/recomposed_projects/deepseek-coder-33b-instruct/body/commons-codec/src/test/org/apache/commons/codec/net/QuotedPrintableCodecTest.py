@@ -182,7 +182,7 @@ class QuotedPrintableCodecTest(unittest.TestCase):
 
     def testInvalidEncoding(self) -> None:
 
-        with pytest.raises(UnsupportedCharsetException):
+        with pytest.raises(ValueError):
             QuotedPrintableCodec.QuotedPrintableCodec0("NONSENSE")
 
     def testEncodeObjects(self) -> None:

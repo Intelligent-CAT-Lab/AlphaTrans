@@ -96,7 +96,7 @@ class ChunkState:
 
     __blockLength: int = 0
 
-    __block: typing.List[int] = [0] * BLOCK_LEN
+    __block: typing.List[int] = [0] * 64
     __flags: int = 0
 
     __chunkCounter: int = 0
@@ -143,8 +143,7 @@ class ChunkState:
         return self.__blocksCompressed if self.__blocksCompressed == 0 else 0
 
     def length(self) -> int:
-
-        return BLOCK_LEN * self.__blocksCompressed + self.__blockLength
+        return self.__BLOCK_LEN * self.__blocksCompressed + self.__blockLength
 
     def __init__(self, key: typing.List[int], chunkCounter: int, flags: int) -> None:
 
@@ -245,10 +244,10 @@ class Blake3:
     __CHAINING_VALUE_INTS: int = 8
     __CHUNK_LEN: int = 1024
     __OUT_LEN: int = 32
-    __KEY_INTS: int = KEY_LEN // INT_BYTES
     __KEY_LEN: int = 32
     __BLOCK_LEN: int = 64
     __INT_BYTES: int = int(Integer.SIZE / 8)
+    __KEY_INTS: int = __KEY_LEN // __INT_BYTES
     __BLOCK_INTS: int = __BLOCK_LEN // __INT_BYTES
 
     @staticmethod

@@ -98,7 +98,7 @@ class BCodecTest(unittest.TestCase):
             pass
 
     def testInvalidEncoding(self) -> None:
-        with pytest.raises(UnsupportedCharsetException):
+        with pytest.raises(ValueError):
             BCodec.BCodec2("NONSENSE")
 
     def testEncodeObjects(self) -> None:
