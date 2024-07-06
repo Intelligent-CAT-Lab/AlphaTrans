@@ -20,10 +20,6 @@ class FibonacciHeapNode:
     @staticmethod
     def initialize_fields() -> None:
         FibonacciHeapNode.__child: FibonacciHeapNode = None
-        FibonacciHeapNode.__right: FibonacciHeapNode = self
-
-        FibonacciHeapNode.__left: FibonacciHeapNode = self
-
         FibonacciHeapNode.__parent: FibonacciHeapNode = None
 
     def toString(self) -> str:

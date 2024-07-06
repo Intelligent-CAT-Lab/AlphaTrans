@@ -11,10 +11,6 @@ class DisjointSetNode:
     __parent: DisjointSetNode = None
     __element: typing.Any = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        DisjointSetNode.__parent: DisjointSetNode = self
-
     def setRank(self, rank: int) -> None:
         self.__rank = rank
 
@@ -41,6 +37,3 @@ class DisjointSetNode:
         self.__rank = 0
         self.__parent = self
         self.__element = element
-
-
-DisjointSetNode.initialize_fields()
