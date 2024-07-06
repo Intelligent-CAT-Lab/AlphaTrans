@@ -251,34 +251,30 @@ class Builder:
 class Predefined:
 
     TDF: Predefined = None
-    RFC4180: Predefined = None
-    PostgreSQLText: Predefined = None
-    PostgreSQLCsv: Predefined = None
-    Oracle: Predefined = None
-    MySQL: Predefined = None
-    MongoDBTsv: Predefined = None
-    MongoDBCsv: Predefined = None
-    InformixUnloadCsv: Predefined = None
-    InformixUnload: Predefined = None
-    Excel: Predefined = None
-    Default: Predefined = None
-    __format: CSVFormat = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        Predefined.TDF: Predefined = None
-        Predefined.RFC4180: Predefined = None
-        Predefined.PostgreSQLText: Predefined = None
-        Predefined.PostgreSQLCsv: Predefined = None
-        Predefined.Oracle: Predefined = None
-        Predefined.MySQL: Predefined = None
-        Predefined.MongoDBTsv: Predefined = None
-        Predefined.MongoDBCsv: Predefined = None
-        Predefined.InformixUnloadCsv: Predefined = None
-        Predefined.InformixUnload: Predefined = None
-        Predefined.Excel: Predefined = None
-        Predefined.Default: Predefined = None
-        Predefined.__format: CSVFormat = None
+    RFC4180: Predefined = None
+
+    PostgreSQLText: Predefined = None
+
+    PostgreSQLCsv: Predefined = None
+
+    Oracle: Predefined = None
+
+    MySQL: Predefined = None
+
+    MongoDBTsv: Predefined = None
+
+    MongoDBCsv: Predefined = None
+
+    InformixUnloadCsv: Predefined = None
+
+    InformixUnload: Predefined = None
+
+    Excel: Predefined = None
+
+    Default: Predefined = None
+
+    __format: CSVFormat = None
 
     def getFormat(self) -> CSVFormat:
         return self.__format
@@ -289,6 +285,8 @@ class Predefined:
 
 class CSVFormat:
 
+    TDF: CSVFormat = None
+    RFC4180: CSVFormat = None
     POSTGRESQL_TEXT: CSVFormat = None
     POSTGRESQL_CSV: CSVFormat = None
     ORACLE: CSVFormat = None
@@ -337,12 +335,67 @@ class CSVFormat:
     __duplicateHeaderMode: DuplicateHeaderMode = None
 
     __serialVersionUID: int = 2
-    TDF: CSVFormat = None
-    RFC4180: CSVFormat = None
     MONGODB_CSV: CSVFormat = None
 
     @staticmethod
     def initialize_fields() -> None:
+        CSVFormat.TDF: CSVFormat = (
+            CSVFormat(
+                0,
+                False,
+                False,
+                ",",
+                None,
+                None,
+                False,
+                False,
+                None,
+                None,
+                False,
+                '"',
+                None,
+                True,
+                DuplicateHeaderMode.ALLOW_ALL,
+                None,
+                False,
+                False,
+                None,
+                "rn",
+            )
+            .builder()
+            .setDelimiter0("t")
+            .setIgnoreSurroundingSpaces(True)
+            .build()
+        )
+
+        CSVFormat.RFC4180: CSVFormat = (
+            CSVFormat(
+                0,
+                False,
+                False,
+                ",",
+                None,
+                None,
+                False,
+                False,
+                None,
+                None,
+                False,
+                '"',
+                None,
+                True,
+                DuplicateHeaderMode.ALLOW_ALL,
+                None,
+                False,
+                False,
+                None,
+                "rn",
+            )
+            .builder()
+            .setIgnoreEmptyLines(False)
+            .build()
+        )
+
         CSVFormat.POSTGRESQL_TEXT: CSVFormat = (
             CSVFormat(
                 0,
@@ -598,17 +651,6 @@ class CSVFormat:
             False,
             None,
             "rn",
-        )
-
-        CSVFormat.TDF: CSVFormat = (
-            DEFAULT.builder()
-            .setDelimiter0(Constants.TAB)
-            .setIgnoreSurroundingSpaces(True)
-            .build()
-        )
-
-        CSVFormat.RFC4180: CSVFormat = (
-            DEFAULT.builder().setIgnoreEmptyLines(False).build()
         )
 
         CSVFormat.MONGODB_CSV: CSVFormat = (
@@ -1562,7 +1604,5 @@ class CSVFormat:
             self.__recordSeparator,
         )
 
-
-Predefined.initialize_fields()
 
 CSVFormat.initialize_fields()

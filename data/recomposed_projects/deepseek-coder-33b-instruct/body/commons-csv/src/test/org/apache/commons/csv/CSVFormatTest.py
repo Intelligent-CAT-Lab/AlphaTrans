@@ -25,14 +25,10 @@ class EmptyEnum:
 class Header:
 
     Phone: Header = None
-    Email: Header = None
-    Name: Header = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        Header.Phone: Header = None
-        Header.Email: Header = None
-        Header.Name: Header = None
+    Email: Header = None
+
+    Name: Header = None
 
 
 class CSVFormatTest(unittest.TestCase):
@@ -1004,6 +1000,3 @@ class CSVFormatTest(unittest.TestCase):
     def __assertNotEquals0(right: typing.Any, left: typing.Any) -> None:
         assert right != left
         assert left != right
-
-
-Header.initialize_fields()
