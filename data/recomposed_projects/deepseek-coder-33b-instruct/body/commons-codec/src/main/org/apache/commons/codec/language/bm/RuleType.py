@@ -8,15 +8,12 @@ from typing import *
 class RuleType:
 
     RULES: RuleType = None
-    EXACT: RuleType = None
-    APPROX: RuleType = None
-    __name: str = ""
 
-    @staticmethod
-    def initialize_fields() -> None:
-        RuleType.RULES: RuleType = None
-        RuleType.EXACT: RuleType = None
-        RuleType.APPROX: RuleType = None
+    EXACT: RuleType = None
+
+    APPROX: RuleType = None
+
+    __name: str = ""
 
     def getName(self) -> str:
         return self.__name
@@ -31,6 +28,3 @@ class RuleType:
             RuleType.EXACT = self
         elif self.__name == "approx":
             RuleType.APPROX = self
-
-
-RuleType.initialize_fields()

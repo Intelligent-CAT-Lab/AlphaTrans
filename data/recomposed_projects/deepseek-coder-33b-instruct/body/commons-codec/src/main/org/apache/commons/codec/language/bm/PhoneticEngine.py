@@ -76,13 +76,10 @@ class RulesApplication:
     __i: int = 0
 
     __phonemeBuilder: PhonemeBuilder = None
+
     __input: str = ""
 
     __finalRules: typing.Dict[str, typing.List[Rule]] = None
-
-    @staticmethod
-    def initialize_fields() -> None:
-        RulesApplication.__phonemeBuilder: PhonemeBuilder = None
 
     def isFound(self) -> bool:
         return self.__found
@@ -364,7 +361,5 @@ class PhoneticEngine:
 
         return sb.getvalue()
 
-
-RulesApplication.initialize_fields()
 
 PhoneticEngine.run_static_init()

@@ -32,17 +32,11 @@ class LangRule:
 class Lang:
 
     __rules: typing.List[LangRule] = None
-    __rules: typing.List[LangRule] = None
+
     __languages: Languages = None
+
     __LANGUAGE_RULES_RN: str = "org/apache/commons/codec/language/bm/%s_lang.txt"
     __Langs: typing.Dict[NameType, Lang] = {}
-
-    @staticmethod
-    def initialize_fields() -> None:
-        Lang.__rules: typing.List[LangRule] = None
-        Lang.__rules: typing.List[LangRule] = None
-        Lang.__languages: Languages = None
-        Lang.__Langs: typing.Dict[NameType, Lang] = {}
 
     @staticmethod
     def run_static_init():
@@ -122,7 +116,5 @@ class Lang:
         self.__LANGUAGE_RULES_RN = "org/apache/commons/codec/language/bm/%s_lang.txt"
         self.__Langs = {}
 
-
-Lang.initialize_fields()
 
 Lang.run_static_init()

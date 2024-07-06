@@ -111,10 +111,6 @@ class PhonemeList(PhonemeExpr):
 
     __phonemes: typing.List[Phoneme] = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        PhonemeList.__phonemes: typing.List[Phoneme] = None
-
     def getPhonemes(self) -> typing.List[Phoneme]:
         return self.__phonemes
 
@@ -127,33 +123,21 @@ class Rule:
     ALL: str = "ALL"
     ALL_STRINGS_RMATCHER: RPattern = None
     __rContext: RPattern = None
+
     __phoneme: PhonemeExpr = None
-    __phoneme: PhonemeExpr = None
+
     __pattern: str = ""
 
     __lContext: RPattern = None
+
     __RULES: typing.Dict[
         NameType,
         typing.Dict[RuleType, typing.Dict[str, typing.Dict[str, typing.List[Rule]]]],
     ] = {}
+
     __HASH_INCLUDE_LENGTH: int = len(HASH_INCLUDE)
     __HASH_INCLUDE: str = "#include"
     __DOUBLE_QUOTE: str = '"'
-
-    @staticmethod
-    def initialize_fields() -> None:
-        Rule.ALL_STRINGS_RMATCHER: RPattern = RPattern()
-
-        Rule.__rContext: RPattern = None
-        Rule.__phoneme: PhonemeExpr = None
-        Rule.__phoneme: PhonemeExpr = None
-        Rule.__lContext: RPattern = None
-        Rule.__RULES: typing.Dict[
-            NameType,
-            typing.Dict[
-                RuleType, typing.Dict[str, typing.Dict[str, typing.List[Rule]]]
-            ],
-        ] = {}
 
     @staticmethod
     def run_static_init():
@@ -195,6 +179,10 @@ class Rule:
                 }
                 for k, v in rts.items()
             }
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Rule.ALL_STRINGS_RMATCHER: RPattern = RPattern()
 
     def patternAndContextMatches(self, input: str, i: int) -> bool:
 
@@ -503,8 +491,6 @@ class Rule:
 
 Phoneme.initialize_fields()
 
-PhonemeList.initialize_fields()
+Rule.run_static_init()
 
 Rule.initialize_fields()
-
-Rule.run_static_init()
