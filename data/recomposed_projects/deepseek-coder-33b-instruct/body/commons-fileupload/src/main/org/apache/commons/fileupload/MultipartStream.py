@@ -236,7 +236,6 @@ class MultipartStream:
     LF: int = 0x0A
     CR: int = 0x0D
     __notifier: ProgressNotifier = None
-
     __headerEncoding: str = ""
 
     __tail: int = 0
@@ -256,6 +255,10 @@ class MultipartStream:
     __boundaryLength: int = 0
 
     __input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        MultipartStream.__notifier: ProgressNotifier = None
 
     @staticmethod
     def MultipartStream3(
@@ -469,3 +472,6 @@ class MultipartStream:
     def newInputStream(self) -> ItemInputStream:
 
         return ItemInputStream()
+
+
+MultipartStream.initialize_fields()

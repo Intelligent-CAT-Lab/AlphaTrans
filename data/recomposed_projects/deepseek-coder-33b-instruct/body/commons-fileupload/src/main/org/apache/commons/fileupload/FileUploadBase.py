@@ -67,6 +67,10 @@ class FileItemIteratorImpl:
 
     __currentItem: FileItemStreamImpl = None
 
+    @staticmethod
+    def initialize_fields() -> None:
+        FileItemIteratorImpl.__currentItem: FileItemStreamImpl = None
+
     def __getContentLength(self, pHeaders: FileItemHeaders) -> int:
         try:
             return int(pHeaders.getHeader(CONTENT_LENGTH))
@@ -352,3 +356,6 @@ class FileUploadBase(ABC):
 
     def getFileItemFactory(self) -> FileItemFactory:
         pass
+
+
+FileItemIteratorImpl.initialize_fields()
