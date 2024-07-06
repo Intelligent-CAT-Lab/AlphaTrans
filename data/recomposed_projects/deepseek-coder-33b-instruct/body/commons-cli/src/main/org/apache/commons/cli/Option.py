@@ -22,10 +22,13 @@ class Builder:
     __argName: str = ""
 
     __longOption: str = ""
-
     __description: str = ""
 
     __option: str = ""
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Builder.__longOption: str = ""
 
     def valueSeparator1(self, sep: str) -> Builder:
         self.__valueSeparator = sep
@@ -113,10 +116,13 @@ class Option:
     __argName: str = ""
 
     __longOption: str = ""
-
     __option: str = ""
 
     __serialVersionUID: int = 1
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Option.__longOption: str = ""
 
     def toString(self) -> str:
 
@@ -369,3 +375,8 @@ class Option:
         return (self.hasArg() or self.hasArgs() or self.hasOptionalArg()) and (
             self.__argCount <= 0 or len(self.__values) < self.__argCount
         )
+
+
+Builder.initialize_fields()
+
+Option.initialize_fields()

@@ -64,6 +64,7 @@ class Parser(CommandLineParser, ABC):
                 self.__updateRequiredOptions(opt)
 
     def _processOption(self, arg: str, iter: typing.Iterator[str]) -> None:
+
         hasOption = self._getOptions().hasOption(arg)
 
         if not hasOption:

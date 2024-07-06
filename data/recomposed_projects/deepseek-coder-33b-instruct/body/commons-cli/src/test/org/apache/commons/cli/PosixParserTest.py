@@ -166,7 +166,5 @@ class PosixParserTest(ParserTestCase, unittest.TestCase):
 
     def setUp(self) -> None:
 
-        self._options = Options()
-        self._options.addOption3("a", "enable-a", False, "turn [a] on or off")
-        self._options.addOption3("b", "bfile", True, "set the value of [b]")
-        self._options.addOption3("c", "copt", False, "turn [c] on or off")
+        super().setUp()
+        self._parser = PosixParser()
