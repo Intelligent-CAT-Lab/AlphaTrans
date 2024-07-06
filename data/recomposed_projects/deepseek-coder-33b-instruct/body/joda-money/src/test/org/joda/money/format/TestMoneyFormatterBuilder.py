@@ -337,7 +337,7 @@ class TestMoneyFormatterBuilder(unittest.TestCase):
 
     def test_appendAmount_MoneyAmountStyle_null(self) -> None:
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__iBuilder.appendAmount1(None)
 
     def test_appendAmountLocalized_JPY_2345(self) -> None:

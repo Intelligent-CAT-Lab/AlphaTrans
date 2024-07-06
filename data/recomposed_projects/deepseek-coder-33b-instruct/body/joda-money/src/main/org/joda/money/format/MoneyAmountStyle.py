@@ -42,7 +42,7 @@ class MoneyAmountStyle:
     __zeroCharacter: int = 0
 
     __serialVersionUID: int = 1
-    __LOCALIZED_CACHE: typing.Dict[typing.Any, MoneyAmountStyle] = None
+    __LOCALIZED_CACHE: typing.Dict[typing.Any, MoneyAmountStyle] = {}
 
     @staticmethod
     def initialize_fields() -> None:
@@ -89,10 +89,6 @@ class MoneyAmountStyle:
                 "0", "+", "-", ".", GroupingStyle.FULL, ",", 3, 0, False, False
             )
         )
-
-        MoneyAmountStyle.__LOCALIZED_CACHE: typing.Dict[
-            typing.Any, MoneyAmountStyle
-        ] = {}
 
     def toString(self) -> str:
         return (

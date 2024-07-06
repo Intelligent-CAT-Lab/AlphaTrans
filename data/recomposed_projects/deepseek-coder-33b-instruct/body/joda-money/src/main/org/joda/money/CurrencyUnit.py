@@ -40,22 +40,6 @@ class CurrencyUnit:
     __serialVersionUID: int = 327835287287
 
     @staticmethod
-    def initialize_fields() -> None:
-        CurrencyUnit.CAD: CurrencyUnit = CurrencyUnit.of1("CAD")
-
-        CurrencyUnit.AUD: CurrencyUnit = CurrencyUnit.of1("AUD")
-
-        CurrencyUnit.CHF: CurrencyUnit = CurrencyUnit.of1("CHF")
-
-        CurrencyUnit.GBP: CurrencyUnit = CurrencyUnit.of1("GBP")
-
-        CurrencyUnit.JPY: CurrencyUnit = CurrencyUnit.of1("JPY")
-
-        CurrencyUnit.EUR: CurrencyUnit = CurrencyUnit.of1("EUR")
-
-        CurrencyUnit.USD: CurrencyUnit = CurrencyUnit.of1("USD")
-
-    @staticmethod
     def run_static_init():
 
         try:
@@ -70,7 +54,7 @@ class CurrencyUnit:
                     .asSubclass(CurrencyUnitDataProvider)
                 )
                 cls.getDeclaredConstructor().newInstance().registerCurrencies()
-            except SecurityException as ex:
+            except PermissionError as ex:
                 DefaultCurrencyUnitDataProvider().registerCurrencies()
         except RuntimeError as ex:
             print("ERROR: " + str(ex))
@@ -80,6 +64,22 @@ class CurrencyUnit:
             print("ERROR: " + str(ex))
             traceback.print_exc()
             raise RuntimeError(str(ex), ex)
+
+    @staticmethod
+    def initialize_fields() -> None:
+        CurrencyUnit.CAD: CurrencyUnit = CurrencyUnit.of1("CAD")
+
+        CurrencyUnit.AUD: CurrencyUnit = CurrencyUnit.of1("AUD")
+
+        CurrencyUnit.CHF: CurrencyUnit = CurrencyUnit.of1("CHF")
+
+        CurrencyUnit.GBP: CurrencyUnit = CurrencyUnit.of1("GBP")
+
+        CurrencyUnit.JPY: CurrencyUnit = CurrencyUnit.of1("JPY")
+
+        CurrencyUnit.EUR: CurrencyUnit = CurrencyUnit.of1("EUR")
+
+        CurrencyUnit.USD: CurrencyUnit = CurrencyUnit.of1("USD")
 
     def toString(self) -> str:
         return self.__code
@@ -320,6 +320,6 @@ class CurrencyUnit:
         self.__decimalPlaces = decimalPlaces
 
 
-CurrencyUnit.initialize_fields()
-
 CurrencyUnit.run_static_init()
+
+CurrencyUnit.initialize_fields()
