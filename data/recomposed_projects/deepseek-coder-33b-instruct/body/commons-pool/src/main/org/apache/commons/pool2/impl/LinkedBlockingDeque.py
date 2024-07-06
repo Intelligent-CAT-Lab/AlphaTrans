@@ -17,14 +17,10 @@ from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *
 class AbstractItr(ABC):
 
     __lastRet: Node[typing.Any] = None
+
     nextItem: typing.Any = None
 
     next: Node[typing.Any] = None
-
-    @staticmethod
-    def initialize_fields() -> None:
-        AbstractItr.__lastRet: Node[typing.Any] = None
-        AbstractItr.next: Node[typing.Any] = None
 
     def remove(self) -> None:
 
@@ -103,13 +99,10 @@ class Itr(AbstractItr):
 class Node:
 
     next: Node = None
-    prev: Node = None
-    item: typing.Any = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        Node.next: Node = None
-        Node.prev: Node = None
+    prev: Node = None
+
+    item: typing.Any = None
 
     def __init__(self, x: typing.Any, p: Node, n: Node) -> None:
         self.item = x
@@ -130,13 +123,10 @@ class LinkedBlockingDeque(Deque):
     __count: int = 0
 
     __last: Node[typing.Any] = None
-    __first: Node[typing.Any] = None
-    __serialVersionUID: int = -387911632671998426
 
-    @staticmethod
-    def initialize_fields() -> None:
-        LinkedBlockingDeque.__last: Node[typing.Any] = None
-        LinkedBlockingDeque.__first: Node[typing.Any] = None
+    __first: Node[typing.Any] = None
+
+    __serialVersionUID: int = -387911632671998426
 
     def toString(self) -> str:
         with self.__lock:
@@ -855,10 +845,3 @@ class LinkedBlockingDeque(Deque):
             self.__lock.release()
 
         return True
-
-
-AbstractItr.initialize_fields()
-
-Node.initialize_fields()
-
-LinkedBlockingDeque.initialize_fields()

@@ -36,12 +36,5 @@ class SecurityManagerCallStack:
 
     __snapshot: Snapshot = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        SecurityManagerCallStack.__snapshot: Snapshot = None
-
     def clear(self) -> None:
         self.__snapshot = None
-
-
-SecurityManagerCallStack.initialize_fields()

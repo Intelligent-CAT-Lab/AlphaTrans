@@ -54,11 +54,8 @@ class ErodingFactor:
 class ErodingKeyedObjectPool(KeyedObjectPool):
 
     __erodingFactor: ErodingFactor = None
-    __keyedPool: KeyedObjectPool[typing.Any, typing.Any] = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        ErodingKeyedObjectPool.__erodingFactor: ErodingFactor = None
+    __keyedPool: KeyedObjectPool[typing.Any, typing.Any] = None
 
     def toString(self) -> str:
         return (
@@ -176,11 +173,8 @@ class ErodingKeyedObjectPool(KeyedObjectPool):
 class ErodingObjectPool(ObjectPool):
 
     __factor: ErodingFactor = None
-    __pool: ObjectPool[typing.Any] = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        ErodingObjectPool.__factor: ErodingFactor = None
+    __pool: ObjectPool[typing.Any] = None
 
     def toString(self) -> str:
         return (
@@ -258,13 +252,8 @@ class ErodingObjectPool(ObjectPool):
 class ErodingPerKeyKeyedObjectPool:
 
     __factors: typing.Dict[typing.Any, ErodingFactor] = {}
-    __factor: float = 0.0
 
-    @staticmethod
-    def initialize_fields() -> None:
-        ErodingPerKeyKeyedObjectPool.__factors: typing.Dict[
-            typing.Any, ErodingFactor
-        ] = {}
+    __factor: float = 0.0
 
     def toString(self) -> str:
         return (
@@ -918,10 +907,3 @@ class PoolUtils:
     @staticmethod
     def __getMinIdleTimer() -> threading.Timer:
         return TimerHolder.MIN_IDLE_TIMER
-
-
-ErodingKeyedObjectPool.initialize_fields()
-
-ErodingObjectPool.initialize_fields()
-
-ErodingPerKeyKeyedObjectPool.initialize_fields()

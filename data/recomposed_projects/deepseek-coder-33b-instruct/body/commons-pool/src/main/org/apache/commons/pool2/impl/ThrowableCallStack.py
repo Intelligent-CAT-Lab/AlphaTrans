@@ -18,13 +18,10 @@ class Snapshot(BaseException):
 class ThrowableCallStack(CallStack):
 
     __snapshot: Snapshot = None
+
     __dateFormat: datetime.datetime = None
 
     __messageFormat: str = ""
-
-    @staticmethod
-    def initialize_fields() -> None:
-        ThrowableCallStack.__snapshot: Snapshot = None
 
     def printStackTrace(
         self, writer: typing.Union[io.TextIOWrapper, io.StringIO]
@@ -50,6 +47,3 @@ class ThrowableCallStack(CallStack):
 
         self.__messageFormat = messageFormat
         self.__dateFormat = datetime.datetime.now() if useTimestamp else None
-
-
-ThrowableCallStack.initialize_fields()
