@@ -11,12 +11,6 @@ class DisjointSet:
 
     __disjointSets: typing.Dict[typing.Any, DisjointSetNode[typing.Any]] = {}
 
-    @staticmethod
-    def initialize_fields() -> None:
-        DisjointSet.__disjointSets: typing.Dict[
-            typing.Any, DisjointSetNode[typing.Any]
-        ] = {}
-
     def union(self, e1: typing.Any, e2: typing.Any) -> None:
 
         e1Root = self.__find0(self.__getNode(e1))
@@ -58,6 +52,3 @@ class DisjointSet:
         if node == node.getParent():
             return node
         return self.__find0(node.getParent())
-
-
-DisjointSet.initialize_fields()

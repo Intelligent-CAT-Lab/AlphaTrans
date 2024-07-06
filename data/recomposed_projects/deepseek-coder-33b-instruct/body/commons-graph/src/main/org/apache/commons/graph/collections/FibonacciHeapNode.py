@@ -12,15 +12,10 @@ class FibonacciHeapNode:
     __degree: int = 0
 
     __child: FibonacciHeapNode = None
-    __right: FibonacciHeapNode = None
-    __left: FibonacciHeapNode = None
-    __parent: FibonacciHeapNode = None
-    __element: typing.Any = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        FibonacciHeapNode.__child: FibonacciHeapNode = None
-        FibonacciHeapNode.__parent: FibonacciHeapNode = None
+    __parent: FibonacciHeapNode = None
+
+    __element: typing.Any = None
 
     def toString(self) -> str:
         return str(self.__element)
@@ -75,6 +70,3 @@ class FibonacciHeapNode:
         self.setRight(self)
         self.setMarked(False)
         self.__element = element
-
-
-FibonacciHeapNode.initialize_fields()

@@ -13,10 +13,6 @@ class TestRunner(typing.Callable, ABC):
 
     __runner: MultiThreadedTestRunner = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        TestRunner.__runner: MultiThreadedTestRunner = None
-
     def setTestRunner(self, runner: MultiThreadedTestRunner) -> None:
         self.__runner = runner
 
@@ -28,6 +24,3 @@ class TestRunner(typing.Callable, ABC):
 
     def runTest(self) -> None:
         pass
-
-
-TestRunner.initialize_fields()

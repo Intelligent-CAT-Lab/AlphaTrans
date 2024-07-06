@@ -14,6 +14,7 @@ from src.main.org.apache.commons.graph.utils.Assertions import *
 class FibonacciHeap:
 
     __minimumNode: FibonacciHeapNode[typing.Any] = None
+
     __markedNodes: int = 0
     __trees: int = 0
     __size: int = 0
@@ -21,10 +22,6 @@ class FibonacciHeap:
 
     __elementsIndex: Set[typing.Any] = set()
     __LOG_PHI: float = math.log((1 + math.sqrt(5)) / 2)
-
-    @staticmethod
-    def initialize_fields() -> None:
-        FibonacciHeap.__minimumNode: FibonacciHeapNode[typing.Any] = None
 
     def toString(self) -> str:
 
@@ -360,6 +357,3 @@ class FibonacciHeap:
             else:
                 self.__cut(y, z)
                 self.__cascadingCut(z)
-
-
-FibonacciHeap.initialize_fields()
