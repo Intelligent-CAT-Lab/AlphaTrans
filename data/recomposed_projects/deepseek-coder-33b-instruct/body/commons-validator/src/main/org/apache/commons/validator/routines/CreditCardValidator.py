@@ -92,13 +92,13 @@ class CreditCardValidator:
     def initialize_fields() -> None:
         CreditCardValidator.VPAY_VALIDATOR: CodeValidator = (
             CodeValidator.CodeValidator5(
-                "^(4)(\\d{12,18})$", CreditCardValidator.__LUHN_VALIDATOR
+                "^(4)(d{12,18})$", CreditCardValidator.__LUHN_VALIDATOR
             )
         )
 
         CreditCardValidator.VISA_VALIDATOR: CodeValidator = (
             CodeValidator.CodeValidator5(
-                "^(4)(\\d{12}|\\d{15})$", CreditCardValidator.__LUHN_VALIDATOR
+                "^(4)(d{12}|d{15})$", CreditCardValidator.__LUHN_VALIDATOR
             )
         )
 
@@ -118,14 +118,14 @@ class CreditCardValidator:
 
         CreditCardValidator.DINERS_VALIDATOR: CodeValidator = (
             CodeValidator.CodeValidator5(
-                "^(30[0-5]\\d{11}|3095\\d{10}|36\\d{12}|3[8-9]\\d{12})$",
+                "^(30[0-5]d{11}|3095d{10}|36d{12}|3[8-9]d{12})$",
                 CreditCardValidator.__LUHN_VALIDATOR,
             )
         )
 
         CreditCardValidator.AMEX_VALIDATOR: CodeValidator = (
             CodeValidator.CodeValidator5(
-                "^(3[47]\\d{13})$", CreditCardValidator.__LUHN_VALIDATOR
+                "^(3[47]d{13})$", CreditCardValidator.__LUHN_VALIDATOR
             )
         )
 

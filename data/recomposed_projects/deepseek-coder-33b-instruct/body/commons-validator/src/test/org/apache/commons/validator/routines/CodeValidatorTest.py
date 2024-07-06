@@ -12,10 +12,10 @@ from src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit i
 
 class CodeValidatorTest(unittest.TestCase):
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         super().tearDown()
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         super().setUp()
 
     def testConstructors(self) -> None:
@@ -116,6 +116,3 @@ class CodeValidatorTest(unittest.TestCase):
         self.assertFalse("EAN CheckDigit (is) invalid", validator.isValid(invalidEAN))
         self.assertTrue("EAN CheckDigit (is) valid", validator.isValid(validEAN))
         self.assertIsNone(validator.validate("978193011099X"))
-
-    def __init__(self, name: str) -> None:
-        super().__init__(name)

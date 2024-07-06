@@ -10,10 +10,10 @@ import unittest
 
 class CustomValidatorResourcesTest(unittest.TestCase):
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         pass
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         pass
 
     def testCustomResources(self) -> None:
@@ -28,6 +28,3 @@ class CustomValidatorResourcesTest(unittest.TestCase):
                     in_stream.close()
             except Exception:
                 pass
-
-    def __init__(self, name: str) -> None:
-        super().__init__(name)

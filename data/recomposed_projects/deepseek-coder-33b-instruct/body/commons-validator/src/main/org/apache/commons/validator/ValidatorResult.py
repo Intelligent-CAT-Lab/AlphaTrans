@@ -49,8 +49,12 @@ class ResultStatus:
 class ValidatorResult:
 
     _field: typing.Any = None
-    _hAction: Dict[str, ResultStatus] = {}
+    _hAction: typing.Dict[str, ResultStatus] = {}
     __serialVersionUID: int = -3713364681647250531
+
+    @staticmethod
+    def initialize_fields() -> None:
+        _hAction: typing.Dict[str, ResultStatus] = {}
 
     def getActionMap(self) -> typing.Dict[str, ResultStatus]:
         return typing.MappingProxyType(self._hAction)
@@ -80,3 +84,6 @@ class ValidatorResult:
 
     def __init__(self, field: typing.Any) -> None:
         self._field = field
+
+
+ValidatorResult.initialize_fields()

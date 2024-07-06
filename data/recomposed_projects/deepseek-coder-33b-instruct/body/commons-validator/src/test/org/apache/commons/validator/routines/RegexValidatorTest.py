@@ -40,10 +40,10 @@ class RegexValidatorTest(unittest.TestCase):
     )
     __MULTIPLE_REGEX: List[str] = [__REGEX_1, __REGEX_2, __REGEX_3]
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         super().tearDown()
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         super().setUp()
 
     def testToString(self) -> None:
@@ -238,14 +238,6 @@ class RegexValidatorTest(unittest.TestCase):
             ["ABC"],
             (RegexValidator.RegexValidator3("^([A-Z]*)$")).match("ABC"),
         )
-
-    def __init__(self, name: str) -> None:
-        super().__init__(name)
-        self.__MULTIPLE_REGEX = [self.__REGEX_1, self.__REGEX_2, self.__REGEX_3]
-        self.__setUp()
-
-    def __setUp(self) -> None:
-        super().setUp()
 
     def __checkArray(
         self, label: str, expect: typing.List[str], result: typing.List[str]

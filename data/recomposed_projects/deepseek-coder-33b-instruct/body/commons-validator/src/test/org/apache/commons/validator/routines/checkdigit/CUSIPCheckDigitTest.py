@@ -15,7 +15,7 @@ class CUSIPCheckDigitTest(AbstractCheckDigitTest):
     __validCheckDigits: typing.List[str] = ["DUS0421C5"]
     __invalidCheckDigits: typing.List[str] = ["DUS0421CW", "DUS0421CN", "DUS0421CE"]
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self.__validCheckDigits = [
             "037833100",
@@ -42,7 +42,3 @@ class CUSIPCheckDigitTest(AbstractCheckDigitTest):
             assert not self.routine.isValid(invalidCheckDigit), (
                 "Should fail: " + invalidCheckDigit
             )
-
-    def __init__(self, name: str) -> None:
-
-        super().__init__(name)

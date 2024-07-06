@@ -20,7 +20,7 @@ class SedolCheckDigitTest(AbstractCheckDigitTest):
         "B07LF5F",  # proper check digit is '5', see above
     ]
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self.__invalidCheckDigits = [
             "026349E",
@@ -50,7 +50,3 @@ class SedolCheckDigitTest(AbstractCheckDigitTest):
             assert not self.routine.isValid(invalidCheckDigit), (
                 "Should fail: " + invalidCheckDigit
             )
-
-    def __init__(self, name: str) -> None:
-
-        pass  # LLM could not translate this method

@@ -13,8 +13,6 @@ from src.main.org.apache.commons.validator.routines.checkdigit.IBANCheckDigit im
 
 class IBANValidatorTest(unittest.TestCase):
 
-    __validIBANFormat: typing.List[str] = None  # LLM could not translate this field
-
     __IBAN_PART: str = "(?:(\\d+)!([acn]))"
     __VALIDATOR: IBANValidator = IBANValidator.getInstance()
     __invalidIBANFormat: typing.List[str] = [
@@ -32,6 +30,8 @@ class IBANValidatorTest(unittest.TestCase):
         "ST68000200010192194210112",  # ditto
         "SV62CENR0000000000000700025",  # ditto
     ]
+    __validIBANFormat: typing.List[str] = None  # LLM could not translate this field
+
     __IBAN_PAT: re.Pattern = re.compile(
         "([A-Z]{2})"
         + __IBAN_PART

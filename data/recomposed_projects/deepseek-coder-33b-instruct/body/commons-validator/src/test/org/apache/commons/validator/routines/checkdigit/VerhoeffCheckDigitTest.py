@@ -13,12 +13,8 @@ class VerhoeffCheckDigitTest(AbstractCheckDigitTest):
     def testZeroSum(self) -> None:
         pass
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
-        super()._setUp()
+        super().setUp()
         self.routine = VerhoeffCheckDigit.VERHOEFF_CHECK_DIGIT
         self.valid = ["15", "1428570", "12345678902"]
-
-    def __init__(self, name: str) -> None:
-
-        super().__init__(name)

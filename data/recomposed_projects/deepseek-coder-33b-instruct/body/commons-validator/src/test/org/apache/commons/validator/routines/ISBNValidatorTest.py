@@ -343,7 +343,3 @@ class ISBNValidatorTest(unittest.TestCase):
                 pattern.match(self.__validISBN10Format[i]),
                 f"Pattern[{i}]={self.__validISBN10Format[i]}",
             )
-
-    def __init__(self, name: str) -> None:
-
-        pass  # LLM could not translate this method

@@ -350,10 +350,6 @@ class FieldTest(unittest.TestCase):
     def FieldTest1() -> FieldTest:
         return FieldTest(None)
 
-    def __init__(self, name: str) -> None:
-        super().__init__(name)
-        self._field = Field()
-
     def __createArg3(self, key: str, name: str, position: int) -> Arg:
         arg = self.__createArg2(key, name)
         arg.setPosition(position)

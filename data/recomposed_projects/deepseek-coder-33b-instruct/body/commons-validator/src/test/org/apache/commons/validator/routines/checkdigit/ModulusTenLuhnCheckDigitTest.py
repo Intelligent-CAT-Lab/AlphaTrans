@@ -17,7 +17,7 @@ class ModulusTenLuhnCheckDigitTest(AbstractCheckDigitTest):
     __VALID_SHORT_VISA: str = "4222222222222"
     __VALID_VISA: str = "4417123456789113"
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self.routine = ModulusTenCheckDigit([1, 2], True, True)
 
@@ -28,16 +28,4 @@ class ModulusTenLuhnCheckDigitTest(AbstractCheckDigitTest):
             self.__VALID_MASTERCARD,
             self.__VALID_DISCOVER,
             self.__VALID_DINERS,
-        ]
-
-    def __init__(self, name: str) -> None:
-
-        super().__init__(name)
-        self._valid = [
-            self.__VALID_DINERS,
-            self.__VALID_DISCOVER,
-            self.__VALID_MASTERCARD,
-            self.__VALID_AMEX,
-            self.__VALID_SHORT_VISA,
-            self.__VALID_VISA,
         ]

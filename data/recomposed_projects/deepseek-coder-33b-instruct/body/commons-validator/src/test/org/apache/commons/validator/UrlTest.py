@@ -111,7 +111,7 @@ class UrlTest(unittest.TestCase):
         testUrlQuery,
     ]
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         for index in range(len(testPartsIndex) - 1):
             testPartsIndex[index] = 0
@@ -120,7 +120,7 @@ class UrlTest(unittest.TestCase):
     def main(argv: typing.List[str]) -> None:
 
         fct = UrlTest("url test")
-        fct._setUp()
+        fct.setUp()
         fct.testIsValid0()
         fct.testIsValidScheme()
 
@@ -233,17 +233,13 @@ class UrlTest(unittest.TestCase):
     def testIsValid0(self) -> None:
 
         self.testIsValid1(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES)
-        self._setUp()
+        self.setUp()
         options = (
             UrlValidator.ALLOW_2_SLASHES
             + UrlValidator.ALLOW_ALL_SCHEMES
             + UrlValidator.NO_FRAGMENTS
         )
         self.testIsValid1(testUrlPartsOptions, options)
-
-    def __init__(self, testName: str) -> None:
-
-        super().__init__(testName)
 
     def __testPartsIndextoString(self) -> str:
 

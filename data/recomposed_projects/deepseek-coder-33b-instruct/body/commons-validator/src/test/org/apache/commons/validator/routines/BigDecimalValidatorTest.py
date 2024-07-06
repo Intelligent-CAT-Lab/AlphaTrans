@@ -11,7 +11,7 @@ from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *
 
 class BigDecimalValidatorTest(AbstractNumberValidatorTest):
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         import locale
 
@@ -94,13 +94,3 @@ class BigDecimalValidatorTest(AbstractNumberValidatorTest):
     def testBigDecimalValidatorMethods(self) -> None:
 
         pass  # LLM could not translate this method
-
-    def __init__(self, name: str) -> None:
-
-        import locale
-
-        locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
-
-        super().__init__(name)
-
-        self._setUp()

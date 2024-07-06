@@ -20,7 +20,7 @@ class ByteValidatorTest(AbstractNumberValidatorTest):
     __BYTE_MAX_VAL: int = int(127)
     __BYTE_MIN_VAL: int = int(-128)
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         import locale
 
@@ -122,16 +122,3 @@ class ByteValidatorTest(AbstractNumberValidatorTest):
     def testByteValidatorMethods(self) -> None:
 
         pass  # LLM could not translate this method
-
-    def __init__(self, name: str) -> None:
-
-        super().__init__(name)
-
-        self.__BYTE_MIN_1: str = "-129"
-        self.__BYTE_MIN_0: str = "-128.99999999999999999999999"  # force double rounding
-        self.__BYTE_MIN: str = "-128"
-        self.__BYTE_MAX_1: str = "128"
-        self.__BYTE_MAX_0: str = "127.99999999999999999999999"  # force double rounding
-        self.__BYTE_MAX: str = "127"
-        self.__BYTE_MAX_VAL: int = int(127)
-        self.__BYTE_MIN_VAL: int = int(-128)

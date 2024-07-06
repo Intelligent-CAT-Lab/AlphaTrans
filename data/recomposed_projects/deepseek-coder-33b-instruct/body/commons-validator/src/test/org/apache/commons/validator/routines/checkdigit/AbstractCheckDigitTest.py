@@ -33,7 +33,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
         "0123456789 ABCDEFHIJKLMNOPQRSTUVWXYZ\tabcdefghijklmnopqrstuvwxyz¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿��ÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóô�����������"
     )
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
 
         super().tearDown()
         self._valid = None
@@ -234,7 +234,3 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
                 self._routine.isValid(self._valid[i]),
                 "valid[" + str(i) + "]: " + self._valid[i],
             )
-
-    def __init__(self, name: str) -> None:
-
-        super().__init__(name)

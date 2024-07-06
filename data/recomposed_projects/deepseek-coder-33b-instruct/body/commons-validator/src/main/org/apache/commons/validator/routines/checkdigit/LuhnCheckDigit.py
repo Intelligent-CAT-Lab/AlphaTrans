@@ -10,8 +10,13 @@ from src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit
 
 class LuhnCheckDigit(ModulusCheckDigit):
 
-    __serialVersionUID: int = -2976900113942875999
+    LUHN_CHECK_DIGIT: CheckDigit = None
     __POSITION_WEIGHT: typing.List[int] = [2, 1]
+    __serialVersionUID: int = -2976900113942875999
+
+    @staticmethod
+    def initialize_fields() -> None:
+        LuhnCheckDigit.LUHN_CHECK_DIGIT: CheckDigit = LuhnCheckDigit()
 
     def _weightedValue(self, charValue: int, leftPos: int, rightPos: int) -> int:
 
@@ -24,3 +29,6 @@ class LuhnCheckDigit(ModulusCheckDigit):
 
         super().__init__(10)
         self.__serialVersionUID = -2976900113942875999
+
+
+LuhnCheckDigit.initialize_fields()

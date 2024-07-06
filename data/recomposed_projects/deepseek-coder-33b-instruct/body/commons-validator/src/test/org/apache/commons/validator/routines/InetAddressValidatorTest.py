@@ -13,7 +13,7 @@ class InetAddressValidatorTest(unittest.TestCase):
 
     __validator: InetAddressValidator = None
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         self.__validator = InetAddressValidator()
 
     def testIPv6(self) -> None:
@@ -133,7 +133,3 @@ class InetAddressValidatorTest(unittest.TestCase):
             "appscs.ign.com IP should be valid",
             self.__validator.isValid("216.35.123.87"),
         )
-
-    def __init__(self, name: str) -> None:
-        super().__init__(name)
-        self.__validator = InetAddressValidator()

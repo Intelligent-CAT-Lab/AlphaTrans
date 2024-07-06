@@ -57,12 +57,12 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
 
     _validator: AbstractNumberValidator = None
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
 
         self._validator = None
         self._strictValidator = None
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         import locale
 
@@ -326,7 +326,3 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
             AbstractNumberValidator.STANDARD_FORMAT,
             self._validator.getFormatType(),
         )
-
-    def __init__(self, name: str) -> None:
-
-        super().__init__(name)

@@ -32,7 +32,7 @@ class ISBNValidator:
         ISBNValidator.__ISBN_VALIDATOR: ISBNValidator = ISBNValidator(False)
 
         ISBNValidator.ISBN13_REGEX: str = (
-            "^(978|979)(?:(\\d{10})|(?:"
+            "^(978|979)(?:(d{10})|(?:"
             + ISBNValidator.__SEP
             + ISBNValidator.__GROUP
             + ISBNValidator.__SEP
@@ -44,7 +44,7 @@ class ISBNValidator:
         )
 
         ISBNValidator.ISBN10_REGEX: str = (
-            "^(?:(\\d{9}[0-9X])|(?:"
+            "^(?:(d{9}[0-9X])|(?:"
             + ISBNValidator.__GROUP
             + ISBNValidator.__SEP
             + ISBNValidator.__PUBLISHER

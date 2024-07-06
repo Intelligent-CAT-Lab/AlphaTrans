@@ -10,6 +10,7 @@ from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitExcepti
 
 class VerhoeffCheckDigit(CheckDigit):
 
+    VERHOEFF_CHECK_DIGIT: CheckDigit = None
     __INV_TABLE: typing.List[int] = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9]
     __P_TABLE: typing.List[typing.List[int]] = [
         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -34,6 +35,10 @@ class VerhoeffCheckDigit(CheckDigit):
         [9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
     ]
     __serialVersionUID: int = 4138993995483695178
+
+    @staticmethod
+    def initialize_fields() -> None:
+        VerhoeffCheckDigit.VERHOEFF_CHECK_DIGIT: CheckDigit = VerhoeffCheckDigit()
 
     def calculate(self, code: str) -> str:
 
@@ -64,3 +69,6 @@ class VerhoeffCheckDigit(CheckDigit):
             pos = i if includesCheckDigit else i + 1
             checksum = self.__D_TABLE[checksum][self.__P_TABLE[pos % 8][num]]
         return checksum
+
+
+VerhoeffCheckDigit.initialize_fields()

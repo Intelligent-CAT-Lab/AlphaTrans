@@ -11,9 +11,14 @@ from src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit
 
 class SedolCheckDigit(ModulusCheckDigit):
 
+    SEDOL_CHECK_DIGIT: CheckDigit = None
     __POSITION_WEIGHT: typing.List[int] = [1, 3, 1, 7, 3, 9, 1]
     __MAX_ALPHANUMERIC_VALUE: int = 35  # Character.getNumericValue('Z')
     __serialVersionUID: int = -8976881621148878443
+
+    @staticmethod
+    def initialize_fields() -> None:
+        SedolCheckDigit.SEDOL_CHECK_DIGIT: CheckDigit = SedolCheckDigit()
 
     def _toInt(self, character: str, leftPos: int, rightPos: int) -> int:
 
@@ -73,3 +78,6 @@ class SedolCheckDigit(ModulusCheckDigit):
         self.SEDOL_CHECK_DIGIT = self
         self.__POSITION_WEIGHT = [1, 3, 1, 7, 3, 9, 1]
         self.__MAX_ALPHANUMERIC_VALUE = ord("Z") - 22
+
+
+SedolCheckDigit.initialize_fields()

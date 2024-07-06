@@ -11,8 +11,13 @@ from src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit
 
 class ABANumberCheckDigit(ModulusCheckDigit):
 
-    __serialVersionUID: int = -8255937433810380145
+    ABAN_CHECK_DIGIT: CheckDigit = None
     __POSITION_WEIGHT: List[int] = [3, 1, 7]
+    __serialVersionUID: int = -8255937433810380145
+
+    @staticmethod
+    def initialize_fields() -> None:
+        ABANumberCheckDigit.ABAN_CHECK_DIGIT: CheckDigit = ABANumberCheckDigit()
 
     def _weightedValue(self, charValue: int, leftPos: int, rightPos: int) -> int:
 
@@ -23,3 +28,6 @@ class ABANumberCheckDigit(ModulusCheckDigit):
 
         super().__init__(10)
         self.__serialVersionUID = -8255937433810380145
+
+
+ABANumberCheckDigit.initialize_fields()

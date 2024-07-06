@@ -18,13 +18,27 @@ class Validator:
     _formName: str = None
     _resources: ValidatorResources = None
     LOCALE_PARAM: str = "java.util.Locale"
-    VALIDATOR_PARAM: str = "org.apache.commons.validator.Validator"
+    VALIDATOR_PARAM: str = None
     FIELD_PARAM: str = "org.apache.commons.validator.Field"
     FORM_PARAM: str = "org.apache.commons.validator.Form"
-    VALIDATOR_RESULTS_PARAM: str = "org.apache.commons.validator.ValidatorResults"
-    VALIDATOR_ACTION_PARAM: str = "org.apache.commons.validator.ValidatorAction"
+    VALIDATOR_RESULTS_PARAM: str = None
+    VALIDATOR_ACTION_PARAM: str = None
     BEAN_PARAM: str = "java.lang.Object"
     __serialVersionUID: int = -7119418755208731611
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Validator._resources: ValidatorResources = None
+
+        Validator.VALIDATOR_PARAM: str = "org.apache.commons.validator.Validator"
+
+        Validator.VALIDATOR_RESULTS_PARAM: str = (
+            "org.apache.commons.validator.ValidatorResults"
+        )
+
+        Validator.VALIDATOR_ACTION_PARAM: str = (
+            "org.apache.commons.validator.ValidatorAction"
+        )
 
     def setOnlyReturnErrors(self, onlyReturnErrors: bool) -> None:
         self._onlyReturnErrors = onlyReturnErrors
@@ -104,3 +118,6 @@ class Validator:
                 raise ValueError("Resources cannot be null.")
             self._resources = resources
             self._formName = formName
+
+
+Validator.initialize_fields()

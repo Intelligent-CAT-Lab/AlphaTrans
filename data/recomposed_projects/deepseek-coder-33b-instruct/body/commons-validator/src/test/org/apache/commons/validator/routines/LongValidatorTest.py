@@ -22,7 +22,7 @@ class LongValidatorTest(AbstractNumberValidatorTest):
     __LONG_MAX_VAL: int = sys.maxsize
     __LONG_MIN_VAL: int = -9223372036854775808
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         import locale
 
@@ -130,13 +130,3 @@ class LongValidatorTest(AbstractNumberValidatorTest):
     def testLongValidatorMethods(self) -> None:
 
         pass  # LLM could not translate this method
-
-    def __init__(self, name: str) -> None:
-
-        import locale
-
-        locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
-
-        super().__init__(name)
-
-        self._setUp()

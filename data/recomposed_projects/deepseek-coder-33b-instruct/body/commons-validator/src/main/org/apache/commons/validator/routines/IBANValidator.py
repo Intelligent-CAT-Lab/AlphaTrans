@@ -15,11 +15,14 @@ class Validator:
     lengthOfIBAN: int = 0
 
     validator: RegexValidator = None
-
     countryCode: str = ""
 
     __MAX_LEN: int = 34
     __MIN_LEN: int = 8
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Validator.validator: RegexValidator = None
 
     def __init__(self, cc: str, len: int, format: str) -> None:
 
@@ -47,19 +50,19 @@ class Validator:
 
 class IBANValidator:
 
-    __DEFAULT_FORMATS: typing.List[Validator] = (
-        None  # LLM could not translate this field
-    )
-
-    __formatValidators: typing.Dict[str, Validator] = None
-
     DEFAULT_IBAN_VALIDATOR: IBANValidator = None
+    __DEFAULT_FORMATS: typing.List[Validator] = None
+    __formatValidators: typing.Dict[str, Validator] = None
 
     @staticmethod
     def initialize_fields() -> None:
         IBANValidator.DEFAULT_IBAN_VALIDATOR: IBANValidator = (
             IBANValidator.IBANValidator1()
         )
+
+        IBANValidator.__DEFAULT_FORMATS: typing.List[Validator] = None
+
+        IBANValidator.__formatValidators: typing.Dict[str, Validator] = None
 
     def setValidator1(self, countryCode: str, length: int, format: str) -> Validator:
 
@@ -135,5 +138,7 @@ class IBANValidator:
             m[v.countryCode] = v
         return m
 
+
+Validator.initialize_fields()
 
 IBANValidator.initialize_fields()

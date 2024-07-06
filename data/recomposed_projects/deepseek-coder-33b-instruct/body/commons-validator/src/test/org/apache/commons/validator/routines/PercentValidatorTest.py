@@ -18,11 +18,11 @@ class PercentValidatorTest(unittest.TestCase):
 
     _validator: PercentValidator = None
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         super().tearDown()
         self._validator = None
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         self._validator = PercentValidator.PercentValidator1()
 
     def testInvalid(self) -> None:
@@ -78,7 +78,3 @@ class PercentValidatorTest(unittest.TestCase):
             AbstractNumberValidator.PERCENT_FORMAT,
             PercentValidator.getInstance().getFormatType(),
         )
-
-    def __init__(self, name: str) -> None:
-        super().__init__(name)
-        self._validator = PercentValidator.PercentValidator1()

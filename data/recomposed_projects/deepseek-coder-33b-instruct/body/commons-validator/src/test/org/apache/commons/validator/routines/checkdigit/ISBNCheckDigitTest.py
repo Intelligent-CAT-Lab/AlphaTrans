@@ -10,9 +10,9 @@ from src.main.org.apache.commons.validator.routines.checkdigit.ISBNCheckDigit im
 
 class ISBNCheckDigitTest(AbstractCheckDigitTest):
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
-        super()._setUp()
+        super().setUp()
         self.routine = ISBNCheckDigit.ISBN_CHECK_DIGIT
         self.valid = [
             "9780072129519",
@@ -57,7 +57,3 @@ class ISBNCheckDigitTest(AbstractCheckDigitTest):
             assert False, "calculate() Lth 13 - expected exception"
         except Exception as e:
             assert str(e) == "Invalid ISBN Length = 13", "calculate() Lth 13"
-
-    def __init__(self, name: str) -> None:
-
-        super().__init__(name)

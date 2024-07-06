@@ -10,24 +10,28 @@ from src.main.org.apache.commons.validator.routines.RegexValidator import *
 class ArrayType:
 
     LOCAL_MINUS: ArrayType = None
-
     LOCAL_PLUS: ArrayType = None
-
     LOCAL_RO: ArrayType = None
-
     INFRASTRUCTURE_RO: ArrayType = None
-
     COUNTRY_CODE_RO: ArrayType = None
-
     GENERIC_RO: ArrayType = None
-
     COUNTRY_CODE_MINUS: ArrayType = None
-
     COUNTRY_CODE_PLUS: ArrayType = None
-
     GENERIC_MINUS: ArrayType = None
-
     GENERIC_PLUS: ArrayType = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        ArrayType.LOCAL_MINUS: ArrayType = None
+        ArrayType.LOCAL_PLUS: ArrayType = None
+        ArrayType.LOCAL_RO: ArrayType = None
+        ArrayType.INFRASTRUCTURE_RO: ArrayType = None
+        ArrayType.COUNTRY_CODE_RO: ArrayType = None
+        ArrayType.GENERIC_RO: ArrayType = None
+        ArrayType.COUNTRY_CODE_MINUS: ArrayType = None
+        ArrayType.COUNTRY_CODE_PLUS: ArrayType = None
+        ArrayType.GENERIC_MINUS: ArrayType = None
+        ArrayType.GENERIC_PLUS: ArrayType = None
 
 
 class IDNBUGHOLDER:
@@ -58,6 +62,10 @@ class Item:
 
     type: ArrayType = None
 
+    @staticmethod
+    def initialize_fields() -> None:
+        Item.type: ArrayType = None
+
     def __init__(self, type: ArrayType, values: typing.List[str]) -> None:
         self.type = type
         self.values = values
@@ -79,10 +87,6 @@ class LazyHolder:
 
 class DomainValidator:
 
-    __MAX_DOMAIN_LENGTH: int = None  # LLM could not translate this field
-
-    __allowLocal: bool = False
-
     mylocalTLDsMinus: typing.List[str] = None
 
     mylocalTLDsPlus: typing.List[str] = None
@@ -94,6 +98,50 @@ class DomainValidator:
     mycountryCodeTLDsPlus: typing.List[str] = None
 
     mycountryCodeTLDsMinus: typing.List[str] = None
+
+    __localTLDsPlus: typing.List[str] = None  # LLM could not translate this field
+
+    __localTLDsMinus: typing.List[str] = None  # LLM could not translate this field
+
+    __genericTLDsMinus: typing.List[str] = None  # LLM could not translate this field
+
+    __countryCodeTLDsMinus: typing.List[str] = (
+        None  # LLM could not translate this field
+    )
+
+    __genericTLDsPlus: typing.List[str] = None  # LLM could not translate this field
+
+    __countryCodeTLDsPlus: typing.List[str] = None  # LLM could not translate this field
+
+    __inUse: bool = None  # LLM could not translate this field
+
+    __LOCAL_TLDS: typing.List[str] = None  # LLM could not translate this field
+
+    __COUNTRY_CODE_TLDS: typing.List[str] = None  # LLM could not translate this field
+
+    __GENERIC_TLDS: typing.List[str] = None  # LLM could not translate this field
+
+    __INFRASTRUCTURE_TLDS: typing.List[str] = None  # LLM could not translate this field
+
+    __hostnameRegex: RegexValidator = None  # LLM could not translate this field
+
+    __domainRegex: RegexValidator = None  # LLM could not translate this field
+
+    __allowLocal: bool = False
+
+    __UNEXPECTED_ENUM_VALUE: str = None  # LLM could not translate this field
+
+    __DOMAIN_NAME_REGEX: str = None  # LLM could not translate this field
+
+    __TOP_LABEL_REGEX: str = None  # LLM could not translate this field
+
+    __DOMAIN_LABEL_REGEX: str = None  # LLM could not translate this field
+
+    __serialVersionUID: int = None  # LLM could not translate this field
+
+    __EMPTY_STRING_ARRAY: typing.List[str] = None  # LLM could not translate this field
+
+    __MAX_DOMAIN_LENGTH: int = None  # LLM could not translate this field
 
     @staticmethod
     def unicodeToASCII(input: str) -> str:
@@ -182,6 +230,10 @@ class DomainValidator:
         pass  # LLM could not translate this method
 
 
+ArrayType.initialize_fields()
+
 IDNBUGHOLDER.initialize_fields()
+
+Item.initialize_fields()
 
 LazyHolder.initialize_fields()

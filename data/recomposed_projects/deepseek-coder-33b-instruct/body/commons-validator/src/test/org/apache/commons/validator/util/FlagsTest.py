@@ -93,6 +93,3 @@ class FlagsTest(unittest.TestCase):
 
         f = Flags(1, 45)
         self.assertEqual(f.hashCode(), 45)
-
-    def __init__(self, name: str) -> None:
-        super().__init__(name)

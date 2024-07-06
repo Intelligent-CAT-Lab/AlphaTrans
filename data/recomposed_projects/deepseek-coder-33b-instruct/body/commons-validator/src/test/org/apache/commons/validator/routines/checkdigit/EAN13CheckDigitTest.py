@@ -10,8 +10,8 @@ from src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit i
 
 class EAN13CheckDigitTest(AbstractCheckDigitTest):
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self.routine = EAN13CheckDigit.EAN13_CHECK_DIGIT
         self.valid = [
             "9780072129519",
@@ -19,7 +19,3 @@ class EAN13CheckDigitTest(AbstractCheckDigitTest):
             "4025515373438",
             "0095673400332",
         ]
-
-    def __init__(self, name: str) -> None:
-
-        super().__init__(name)

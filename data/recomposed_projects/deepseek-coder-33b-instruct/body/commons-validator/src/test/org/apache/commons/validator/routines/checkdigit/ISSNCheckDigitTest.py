@@ -10,7 +10,7 @@ from src.main.org.apache.commons.validator.routines.checkdigit.ISSNCheckDigit im
 
 class ISSNCheckDigitTest(AbstractCheckDigitTest):
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self.routine = ISSNCheckDigit.ISSN_CHECK_DIGIT
         self.valid = [
@@ -36,7 +36,3 @@ class ISSNCheckDigitTest(AbstractCheckDigitTest):
         ]
         self.missingMessage = "Code is missing"
         self.zeroSum = "00000000"
-
-    def __init__(self, name: str) -> None:
-
-        super().__init__(name)
