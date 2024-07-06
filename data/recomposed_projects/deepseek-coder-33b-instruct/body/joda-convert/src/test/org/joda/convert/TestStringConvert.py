@@ -446,7 +446,7 @@ class TestStringConvert(unittest.TestCase):
 
         test = StringConvert.StringConvert1()
 
-        with pytest.raises(ClassCastException):
+        with pytest.raises(TypeError):
             test.convertFromString(SuperFactorySub, "25m")
 
     def test_convert_annotationSuperFactorySubViaSub1(self) -> None:

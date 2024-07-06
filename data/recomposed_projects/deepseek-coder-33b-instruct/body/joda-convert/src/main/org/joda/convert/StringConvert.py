@@ -9,7 +9,7 @@ from src.main.org.joda.convert.AnnotationStringConverterFactory import *
 from src.main.org.joda.convert.ConstructorFromStringConverter import *
 from src.main.org.joda.convert.EnumStringConverterFactory import *
 from src.main.org.joda.convert.FromStringConverter import *
-# from src.main.org.joda.convert.JDKStringConverter import *
+from src.main.org.joda.convert.JDKStringConverter import *
 from src.main.org.joda.convert.MethodFromStringConverter import *
 from src.main.org.joda.convert.ReflectionStringConverter import *
 from src.main.org.joda.convert.StringConverter import *
@@ -29,6 +29,9 @@ from src.main.org.joda.convert.factory.NumericObjectArrayStringConverterFactory 
 
 class StringConvert:
 
+    INSTANCE: StringConvert = None
+    LOG: bool = False
+
     __fromStrings: typing.Dict[
         typing.Type[typing.Any], FromStringConverter[typing.Any]
     ] = None  # LLM could not translate this field
@@ -37,19 +40,7 @@ class StringConvert:
         typing.Type[typing.Any], TypedStringConverter[typing.Any]
     ] = {}
     __factories: typing.List[StringConverterFactory] = []
-    __CACHED_NULL: TypedStringConverter[typing.Any] = TypedStringConverter[typing.Any](
-        convertToString=lambda object: None,
-        convertFromString=lambda cls, str: None,
-        getEffectiveType=lambda: None,
-    )
-    INSTANCE: StringConvert = None
-    LOG: bool = False
-
-    @staticmethod
-    def initialize_fields() -> None:
-        StringConvert.INSTANCE: StringConvert = (
-            StringConvert.StringConvert.StringConvert1()
-        )
+    __CACHED_NULL: TypedStringConverter[typing.Any] = None
 
     @staticmethod
     def run_static_init():
@@ -57,9 +48,21 @@ class StringConvert:
         log = None
         try:
             log = System.getProperty("org.joda.convert.debug")
-        except SecurityException as ex:
+        except PermissionError as ex:
             pass
         StringConvert.LOG = "true".equalsIgnoreCase(log)
+
+    @staticmethod
+    def initialize_fields() -> None:
+        StringConvert.INSTANCE: StringConvert = StringConvert.StringConvert1()
+
+        StringConvert.__CACHED_NULL: TypedStringConverter[
+            typing.Any
+        ] = TypedStringConverter[typing.Any](
+            convertToString=lambda object: None,
+            convertFromString=lambda cls, str: None,
+            getEffectiveType=lambda: None,
+        )
 
     def toString(self) -> str:
         return self.__class__.__name__
@@ -307,7 +310,6 @@ class StringConvert:
     def __init__(
         self, includeJdkConverters: bool, factories: typing.List[StringConverterFactory]
     ) -> None:
-        from src.main.org.joda.convert.JDKStringConverter import JDKStringConverter
 
         if factories is None:
             raise ValueError("StringConverterFactory array must not be null")
@@ -477,8 +479,6 @@ class StringConvert:
 
     def __tryRegisterJava8(self) -> None:
 
-        
-
         try:
             self.__tryRegister("java.time.Instant", "parse")
             self.__tryRegister("java.time.Duration", "parse")
@@ -502,8 +502,6 @@ class StringConvert:
 
     def __tryRegisterTimeZone(self) -> None:
 
-        from src.main.org.joda.convert.JDKStringConverter import JDKStringConverter
-        
         try:
             self.__registered[SimpleTimeZone] = JDKStringConverter.TIME_ZONE
 
@@ -592,6 +590,6 @@ class StringConvert:
                 print("tryRegisterGuava2: " + str(ex))
 
 
-StringConvert.initialize_fields()
-
 StringConvert.run_static_init()
+
+StringConvert.initialize_fields()

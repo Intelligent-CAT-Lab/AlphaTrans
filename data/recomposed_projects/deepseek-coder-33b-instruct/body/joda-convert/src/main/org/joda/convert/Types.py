@@ -349,7 +349,7 @@ class ClassOwnership(ABC):
     @staticmethod
     def initialize_fields() -> None:
         ClassOwnership.JVM_BEHAVIOR: ClassOwnership = (
-            ClassOwnership.ClassOwnership.__detectJvmBehavior()
+            ClassOwnership.__detectJvmBehavior()
         )
 
     @staticmethod
@@ -391,6 +391,21 @@ class JavaVersion(ABC):
     JAVA6: JavaVersion = None
     JAVA6: JavaVersion = None
     JAVA8: JavaVersion = None
+
+    @staticmethod
+    def run_static_init():
+
+        if issubclass(AnnotatedElement, TypeVariable):
+            if "java.util.Map.java.util.Map" in str(
+                TypeCapture[Map.Entry[str, int]].capture()
+            ):
+                JavaVersion.CURRENT = JavaVersion.JAVA8
+            else:
+                JavaVersion.CURRENT = JavaVersion.JAVA9
+        elif isinstance(TypeCapture[int].capture(), type):
+            JavaVersion.CURRENT = JavaVersion.JAVA7
+        else:
+            JavaVersion.CURRENT = JavaVersion.JAVA6
 
     @staticmethod
     def initialize_fields() -> None:
@@ -435,21 +450,6 @@ class JavaVersion(ABC):
                 "typeName": lambda self, type: type.getTypeName(),
             },
         )
-
-    @staticmethod
-    def run_static_init():
-
-        if issubclass(AnnotatedElement, TypeVariable):
-            if "java.util.Map.java.util.Map" in str(
-                TypeCapture[Map.Entry[str, int]].capture()
-            ):
-                JavaVersion.CURRENT = JavaVersion.JAVA8
-            else:
-                JavaVersion.CURRENT = JavaVersion.JAVA9
-        elif isinstance(TypeCapture[int].capture(), type):
-            JavaVersion.CURRENT = JavaVersion.JAVA7
-        else:
-            JavaVersion.CURRENT = JavaVersion.JAVA6
 
     def usedInGenericType1(
         self, types: typing.List[typing.Type]
@@ -643,7 +643,7 @@ class Types:
     @staticmethod
     def __checkNotNull(reference: typing.Any) -> typing.Any:
         if reference is None:
-            raise NullPointerException()
+            raise RuntimeError()
         return reference
 
     @staticmethod
@@ -718,6 +718,6 @@ NativeTypeVariableEquals.initialize_fields()
 
 ClassOwnership.initialize_fields()
 
-JavaVersion.initialize_fields()
-
 JavaVersion.run_static_init()
+
+JavaVersion.initialize_fields()

@@ -25,9 +25,7 @@ class RenameHandler:
 
     @staticmethod
     def initialize_fields() -> None:
-        RenameHandler.INSTANCE: RenameHandler = (
-            RenameHandler.RenameHandler.__createInstance()
-        )
+        RenameHandler.INSTANCE: RenameHandler = RenameHandler.__createInstance()
 
     def toString(self) -> str:
         return (

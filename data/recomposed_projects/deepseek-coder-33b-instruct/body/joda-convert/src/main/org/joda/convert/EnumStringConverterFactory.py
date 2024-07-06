@@ -6,6 +6,7 @@ import typing
 from typing import *
 from src.main.org.joda.convert.StringConverter import *
 from src.main.org.joda.convert.StringConverterFactory import *
+
 # from src.main.org.joda.convert.RenameHandler import *
 from src.main.org.joda.convert.TypedStringConverter import *
 
@@ -37,9 +38,14 @@ class EnumStringConverter(TypedStringConverter):
 class EnumStringConverterFactory(StringConverterFactory):
 
     INSTANCE: StringConverterFactory = None
+    INSTANCE: StringConverterFactory = None
 
     @staticmethod
     def initialize_fields() -> None:
+        EnumStringConverterFactory.INSTANCE: StringConverterFactory = (
+            EnumStringConverterFactory()
+        )
+
         EnumStringConverterFactory.INSTANCE: StringConverterFactory = (
             EnumStringConverterFactory()
         )

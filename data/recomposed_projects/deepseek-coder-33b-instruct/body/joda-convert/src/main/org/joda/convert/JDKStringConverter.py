@@ -7,7 +7,8 @@ import io
 import typing
 from typing import *
 from src.main.org.joda.convert.TypedStringConverter import *
-from src.main.org.joda.convert.RenameHandler import *
+
+# from src.main.org.joda.convert.RenameHandler import *
 
 
 class JDKStringConverter(TypedStringConverter):
@@ -70,11 +71,12 @@ class JDKStringConverter(TypedStringConverter):
 
     __MASK_6BIT: int = 0x3F
     __MASK_8BIT: int = 0xFF
-    __base64Array: typing.List[str] = list(base64Str)
     __base64Str: str = (
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
     )
     __type: typing.Type[typing.Any] = None
+
+    __base64Array: List[str] = list(__base64Str)
 
     @staticmethod
     def initialize_fields() -> None:
