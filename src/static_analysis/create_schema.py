@@ -489,7 +489,7 @@ def create_schema(args):
 
     for k,v in schemas.items():
         key = k[k.find(project):].replace('/', '.')
-        # if not key.endswith('ESTest.java'):
+        # if 'ESTest' not in key:
         #     continue
         key = key.replace('.java', '')
         with open(f'data/schemas/{project}/{key}.json', 'w') as f:

@@ -523,13 +523,34 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type, model)
         instruction += f"\n\nclass {nested_class_}:\n"
         for field in data['classes'][nested_class_]['fields']:
             instruction += '\n'.join(data['classes'][nested_class_]['fields'][field]['translation']) + '\n' if data['classes'][nested_class_]['fields'][field]['translation'] != [] else ''.join(data['classes'][nested_class_]['fields'][field]['partial_translation']).replace('<placeholder>', 'None') + '\n'
+        instruction += '\n\n'
+
+    outer_classes = [data['classes'][class_]['nested_inside']]
+    if outer_classes == [[]]:
+        outer_classes = []
+    for outer_class_ in outer_classes:
+        if 'new' in outer_class_ or '{' in outer_class_:
+            continue
+        instruction += f"\n\nclass {outer_class_}:\n"
+        for field in data['classes'][outer_class_]['fields']:
+            instruction += '\n'.join(data['classes'][outer_class_]['fields'][field]['translation']) + '\n' if data['classes'][outer_class_]['fields'][field]['translation'] != [] else ''.join(data['classes'][outer_class_]['fields'][field]['partial_translation']).replace('<placeholder>', 'None') + '\n'
+        instruction += '\n\n'
 
     dependencies = {}
-    with open(f'data/dependencies/{args.project_name}/dependencies.json', 'r') as f:
+    dependencies_path = f'data/dependencies/{args.project_name}/traversal.json'
+    if args.translate_evosuite:
+        dependencies_path = f'data/dependencies-evosuite/{args.project_name}/traversal.json'
+    with open(dependencies_path, 'r') as f:
         dependencies = json.load(f)
-    imported_classes = dependencies[class_]
+    
+    imported_classes = []
+    if class_ in dependencies:
+        imported_classes = dependencies[class_]
+
     for imported_class_ in imported_classes:
         imported_class_path = get_dependency_path(imported_class_[1], args.project_name)
+        if 'scaffolding' in imported_class_path or 'org.evosuite' in imported_class_path:
+            continue
         imported_classes = []
         imported_classes.append(f'class {imported_class_[0]}:')
         imported_class_data = {}
@@ -539,9 +560,9 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type, model)
         for field in imported_class_data['classes'][imported_class_[0]]['fields']:
             if field.split(':')[1] in ''.join(data['classes'][class_][f'{fragment_type}s'][fragment_]['body']):
                 if imported_class_data['classes'][imported_class_[0]]['fields'][field]['translation'] != []:
-                    imported_classes += [imported_class_data["classes"][imported_class_[0]]["fields"][field]["translation"][0]]
+                    imported_classes += ['\n'.join(imported_class_data["classes"][imported_class_[0]]["fields"][field]["translation"])]
                 else:
-                    imported_classes += [imported_class_data["classes"][imported_class_[0]]["fields"][field]["partial_translation"].replace("<placeholder>", "None")]
+                    imported_classes += ['\n'.join(imported_class_data["classes"][imported_class_[0]]["fields"][field]["partial_translation"]).replace("<placeholder>", "None")]
         
         if len(imported_classes) > 1:
             instruction += '\n'.join(imported_classes) + '\n\n'
@@ -772,7 +793,7 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type, model)
     return prompt
 
 
-def align_schema_order(schemas, traversal_order):
+def align_schema_order(schemas, traversal_order, args):
     aligned_schemas = []
     for fname in traversal_order:
         found_schema = []
@@ -783,8 +804,13 @@ def align_schema_order(schemas, traversal_order):
         # assert len(found_schema) == 1, f"Found more than one schema for {fname}: {found_schema}"
         aligned_schemas += found_schema
     
-    schemas = [fname for fname in schemas if fname.endswith('_python_partial.json')]
-    assert len(aligned_schemas) == len(schemas), f"Found less schemas than expected: {aligned_schemas}"
+    filetered_schemas = []
+    for fname in schemas:
+        if not args.translate_evosuite and 'ESTest' in fname:
+            continue
+        filetered_schemas.append(fname)
+
+    assert len(aligned_schemas) == len(filetered_schemas), f"Found less schemas than expected: {aligned_schemas}"
 
     return aligned_schemas
 
@@ -804,12 +830,15 @@ def main(args):
     schemas = os.listdir(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}')
 
     traversal = {}
-    with open(f'data/dependencies/{args.project_name}/traversal.json', 'r') as f:
+    dependencies_path = f'data/dependencies/{args.project_name}/traversal.json'
+    if args.translate_evosuite:
+        dependencies_path = f'data/dependencies-evosuite/{args.project_name}/traversal.json'
+    with open(dependencies_path, 'r') as f:
         traversal = json.load(f)
     
     traversal_order = list(traversal.values())
 
-    schemas = align_schema_order(schemas, traversal_order)
+    schemas = align_schema_order(schemas, traversal_order, args)
 
     for schema in schemas:
 
@@ -1061,5 +1090,6 @@ if __name__ == '__main__':
     parser_.add_argument('--use_cuda', action='store_true', help='use cuda for translation')
     parser_.add_argument('--validate_by_graal', action='store_true', help='validate translation by GraalVM')
     parser_.add_argument('--validate_by_test', action='store_true', help='validate translation by test cases')
+    parser_.add_argument('--translate_evosuite', action='store_true', help='translate evosuite generated tests')
     args = parser_.parse_args()
     main(args)

@@ -6,9 +6,13 @@ def main(args):
 
     project = args.project_name
     projects_dir = 'java_projects/cleaned_final_projects/'
+    # projects_dir = 'java_projects/cleaned_final_projects_evosuite/'
+
+    query_outputs_dir = 'data/query_outputs'
+    # query_outputs_dir = 'data/query_outputs-evosuite'
 
     method_call_graph = []
-    with open(f'data/query_outputs/{project}/{project}_call_graph.txt') as f:
+    with open(f'{query_outputs_dir}/{project}/{project}_call_graph.txt') as f:
         method_call_graph = f.readlines()
     
     for line in method_call_graph:
@@ -18,6 +22,9 @@ def main(args):
             continue
 
         call_location, caller_name, caller_location, callee_name, callee_location = splitted_line
+
+        # if 'ESTest' not in call_location:
+        #     continue
 
         if call_location == caller_location:
             continue

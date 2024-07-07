@@ -3,6 +3,13 @@ import json
 import os
 
 
+def has_test_method(methods):
+    for method in methods:
+        if 'Test' in [x.split('(')[0] for x in methods[method]['annotations']]:
+            return True
+    return False
+
+
 def main(args):
 
     total_fragments = 0
@@ -16,6 +23,12 @@ def main(args):
             continue
 
         if args.file_name != None and f'.{args.file_name}_python_partial.json' not in schema:
+            continue
+
+        if args.recompose_evosuite and 'ESTest' not in schema:
+            continue
+
+        if not args.recompose_evosuite and 'ESTest' in schema:
             continue
 
         data = {}
@@ -58,8 +71,8 @@ def main(args):
 
             field_val = {}
             for field in data['classes'][class_]['fields']:
-                if data['classes'][class_]['fields'][field]['translation'] == None:
-                    data['classes'][class_]['fields'][field]['translation'] = data['classes'][class_]['fields'][field]['partial_translation'].replace('<placeholder>', 'None # LLM could not translate this field')
+                if data['classes'][class_]['fields'][field]['translation'] == []:
+                    data['classes'][class_]['fields'][field]['translation'] = '\n'.join(data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', 'None # LLM could not translate this field').split('\n')
                 translation = '\n'.join(data['classes'][class_]['fields'][field]['translation']).strip()
                 field_name = translation[:translation.find(':')].strip()
                 field_value = ''.join(translation.split('=')[1:]).strip()
@@ -135,7 +148,7 @@ def main(args):
                         f'{a_class})' in field_translation or \
                         f'{a_class},' in field_translation or \
                         f',{a_class}' in field_translation or \
-                        f'{a_class}' in field_translation:
+                        f'{a_class}' in field_translation.split('=')[1].strip():
 
                         intialize_later_fields.append((field, field_translation.split('=')[0].strip(), '='.join(field_translation.split('=')[1:]).strip()))
                         recomposed_file += ''.join(data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', f'None')
@@ -144,28 +157,37 @@ def main(args):
                 
                 if found:
                     continue
-                
+
                 if '='.join(field_translation.split('=')[1:]).strip() == 'self':
                     continue
 
                 recomposed_file += '\n'.join(data['classes'][class_]['fields'][field]['translation'])
                 recomposed_file += '\n'
-            
-            # create static method for field initialization
-            if intialize_later_fields != []:
-                recomposed_file += f'\n\n    @staticmethod\n    def initialize_fields() -> None:\n'
-                for field, field_name, field_value in intialize_later_fields:
-                    recomposed_file += '    ' + ''.join(data['classes'][class_]['fields'][field]['partial_translation']).replace(f'{field_name}', f'{class_}.{field_name}').replace('<placeholder>', f'{field_value}\n')
-                    recomposed_file += '\n'
-                class_initialize_methods.append(f'{class_}.initialize_fields()')
-            
+
             if 'static_initializers' in data['classes'][class_]:
                 for static_initializer in data['classes'][class_]['static_initializers']:
                     recomposed_file += '\n'.join(data['classes'][class_]['static_initializers'][static_initializer]['translation'])
                     recomposed_file += '\n'
                 class_initialize_methods.append(f'{class_}.run_static_init()')
-            
+
+            # create static method for field initialization
+            if intialize_later_fields != []:
+                if len(intialize_later_fields) == 1 and intialize_later_fields[0][2] == 'self':
+                    pass
+                else:
+                    recomposed_file += f'\n\n    @staticmethod\n    def initialize_fields() -> None:\n'
+                    for field, field_name, field_value in intialize_later_fields:
+                        if field_value == 'self':
+                            continue
+                        recomposed_file += '    ' + ''.join(data['classes'][class_]['fields'][field]['partial_translation']).replace(f'{field_name}', f'{class_}.{field_name}').replace('<placeholder>', f'{field_value}\n')
+                        recomposed_file += '\n'
+                    class_initialize_methods.append(f'{class_}.initialize_fields()')
+                        
             for method in data['classes'][class_]['methods']:
+
+                # ignore constructors in test files
+                # if data['classes'][class_]['methods'][method]['is_constructor'] and 'src.test' in schema and has_test_method(data['classes'][class_]['methods']):
+                #     continue
 
                 if 'Ignore' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']] or 'ParameterizedTest' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
                     recomposed_file += '\n    @pytest.mark.skip(reason="Ignore")\n'
@@ -179,13 +201,16 @@ def main(args):
                 # if 'After' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
                 #     recomposed_file += '\n    @pytest.mark.after\n'
 
+                if data['classes'][class_]['methods'][method]['translation'] == [] and 'ESTest' in schema and not args.recompose_evosuite:
+                    continue
+
                 if data['classes'][class_]['methods'][method]['translation'] == []:
                     recomposed_file += '\n'.join([''] + data['classes'][class_]['methods'][method]['partial_translation']).replace('pass', 'pass # LLM could not translate this method')
                     recomposed_file += '\n'
                     total_unsuccessful += 1
                     continue
 
-                recomposed_file += '\n'.join(data['classes'][class_]['methods'][method]['translation'])
+                recomposed_file += '\n'.join(data['classes'][class_]['methods'][method]['translation']).replace('_setUp(', 'setUp(').replace('_tearDown(', 'tearDown(')
                 recomposed_file += '\n'
                 total_fragments += 1
 
@@ -215,7 +240,9 @@ def main(args):
         
         exception_map = {'IllegalArgumentException': 'ValueError', 'RuntimeException': 'RuntimeError', 'UnsupportedOperationException': 'NotImplementedError',
                          'CloneNotSupportedError': 'NotImplementedError', 'IllegalStateException': 'RuntimeError', 'UnsupportedEncodingException': 'ValueError',
-                         'UnsupportedEncodingError': 'ValueError', 'NullPointerException': 'RuntimeError', 'NoSuchElementException': 'RuntimeError',}
+                         'UnsupportedEncodingError': 'ValueError', 'NullPointerException': 'RuntimeError', 'NoSuchElementException': 'RuntimeError',
+                         'NumberFormatException': 'ValueError', 'ClassCastException': 'TypeError', 'ArrayIndexOutOfBoundsException': 'IndexError',
+                         'UnsupportedCharsetException': 'ValueError', 'SecurityException': 'PermissionError'}
         
         for key in exception_map:
             if key in recomposed_file:
@@ -230,7 +257,12 @@ def main(args):
         formatted_schema_fname = '.'.join(schema.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
         os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}', exist_ok=True)
-        file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
+        os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/evosuite-test/{sub_dir}', exist_ok=True)
+
+        if args.recompose_evosuite:
+            file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/evosuite-test/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
+        else:
+            file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
 
         recomposed_file = recomposed_file.replace('\u0000', '\\u0000')
 
@@ -256,7 +288,7 @@ def main(args):
             f.write('')
     
     with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/pytest.ini', 'w') as f:
-        f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=native --junitxml=pytest-report.xml\n\n# Define directories to look for tests\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*\n')
+        f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=native --junitxml=pytest-report.xml\n\n# Define directories to look for tests\n;testpaths = evosuite-test\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*\n')
     
     with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/run.sh', 'w') as f:
         f.write('CURRENT_DIR=$(pwd)\nexport PYTHONPATH=$CURRENT_DIR\npython3 -m pytest\nxmllint --format pytest-report.xml -o pytest-report.xml')
@@ -292,5 +324,6 @@ if __name__ == '__main__':
     parser_.add_argument('--output_dir', type=str, dest='output_dir', help='directory to store recomposed projects')
     parser_.add_argument('--type', type=str, dest='type', help='prompting type signature/body')
     parser_.add_argument('--file_name', type=str, dest='file_name', help='file name to recompose')
+    parser_.add_argument('--recompose_evosuite', action='store_true', dest='recompose_evosuite', help='recompose evosuite tests')
     args = parser_.parse_args()
     main(args)
