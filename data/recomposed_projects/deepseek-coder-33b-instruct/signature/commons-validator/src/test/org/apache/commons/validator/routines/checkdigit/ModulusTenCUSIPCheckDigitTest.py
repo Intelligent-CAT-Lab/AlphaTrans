@@ -15,7 +15,7 @@ class ModulusTenCUSIPCheckDigitTest(AbstractCheckDigitTest):
     __validCheckDigits: typing.List[str] = ["DUS0421C5"]
     __invalidCheckDigits: typing.List[str] = ["DUS0421CW", "DUS0421CN", "DUS0421CE"]
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._routine = ModulusTenCheckDigit([1, 2], True, True)
         self._valid = [

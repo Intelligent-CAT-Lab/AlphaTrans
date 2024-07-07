@@ -10,10 +10,10 @@ import unittest
 
 class CustomValidatorResourcesTest(unittest.TestCase):
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         pass
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         pass
 
     def testCustomResources(self) -> None:

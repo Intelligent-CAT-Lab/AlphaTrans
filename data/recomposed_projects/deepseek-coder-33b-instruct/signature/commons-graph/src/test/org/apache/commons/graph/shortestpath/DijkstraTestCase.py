@@ -30,7 +30,7 @@ class DijkstraTestCase(unittest.TestCase):
 
         graph = UndirectedMutableGraph()
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findShortestPath(graph).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).from_vertex(None).to_vertex(None).applyingDijkstra(
@@ -46,14 +46,14 @@ class DijkstraTestCase(unittest.TestCase):
         graph.addVertex(a)
         graph.addVertex(b)
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findShortestPath(graph).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).from_(a).to(b).applyingDijkstra(None)
 
     def testNullGraph(self) -> None:
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findShortestPath(None).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).from_(None).to_(None).applyingDijkstra(DoubleWeightBaseOperations())

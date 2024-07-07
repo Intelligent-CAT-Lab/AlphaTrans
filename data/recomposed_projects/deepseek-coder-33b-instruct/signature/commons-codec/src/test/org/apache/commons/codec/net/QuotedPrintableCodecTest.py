@@ -1,4 +1,5 @@
 from __future__ import annotations
+import math
 import re
 import os
 from io import StringIO
@@ -174,7 +175,7 @@ class QuotedPrintableCodecTest(unittest.TestCase):
             qpcodec.decode4(dObj)
 
     def testInvalidEncoding(self) -> None:
-        with pytest.raises(UnsupportedCharsetException):
+        with pytest.raises(ValueError):
             QuotedPrintableCodec.QuotedPrintableCodec0("NONSENSE")
 
     def testEncodeObjects(self) -> None:

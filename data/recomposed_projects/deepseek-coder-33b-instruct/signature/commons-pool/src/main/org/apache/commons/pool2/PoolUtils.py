@@ -638,12 +638,14 @@ class TimerHolder:
 
 class PoolUtils:
 
-    __MSG_MIN_IDLE: str = None  # LLM could not translate this field
-
-    __MSG_NULL_KEYED_POOL: str = "keyedPool must not be null."
-    __MSG_FACTOR_NEGATIVE: str = "factor must be positive."
     MSG_NULL_KEYS: str = "keys must not be null."
     MSG_NULL_KEY: str = "key must not be null."
+    __MSG_NULL_POOL: str = None  # LLM could not translate this field
+
+    __MSG_NULL_KEYED_POOL: str = "keyedPool must not be null."
+    __MSG_MIN_IDLE: str = None  # LLM could not translate this field
+
+    __MSG_FACTOR_NEGATIVE: str = "factor must be positive."
 
     @staticmethod
     def prefill2(pool: ObjectPool[typing.Any], count: int) -> None:

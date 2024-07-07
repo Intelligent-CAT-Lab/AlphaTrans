@@ -14,14 +14,26 @@ from src.main.org.apache.commons.validator.routines.RegexValidator import *
 
 class UrlValidator:
 
-    __SCHEME_PATTERN: re.Pattern = None  # LLM could not translate this field
+    _defaultSchemes: typing.List[str] = ["http", "https", "ftp"]
+    NO_FRAGMENTS: int = 1 << 2
+    ALLOW_2_SLASHES: int = 1 << 1
+    ALLOW_ALL_SCHEMES: int = 1 << 0
+    __allowedSchemes: Set[str] = set()
+    __options: Flags = None
+
+    __ALPHA_CHARS: str = "a-zA-Z"
+    __PORT_PATTERN: re.Pattern = None  # LLM could not translate this field
 
     __LEGAL_ASCII_PATTERN: re.Pattern = re.compile(r"^[\x00-\x7F]+$")
+    __QUERY_PATTERN: re.Pattern = None  # LLM could not translate this field
+
     __PATH_PATTERN: re.Pattern = re.compile("^(/[-\\w:@&?=+,.!/~*'%$_;]*)?$")
     __PARSE_AUTHORITY_EXTRA: int = 3
     __PARSE_AUTHORITY_PORT: int = 2
     __PARSE_AUTHORITY_HOST_IP: int = 1
     __AUTHORITY_PATTERN: re.Pattern = re.compile(r"^([\w\-\.]*)(:\d*)?(.*)?")
+    __SCHEME_PATTERN: re.Pattern = None  # LLM could not translate this field
+
     __PARSE_URL_FRAGMENT: int = 9
     __PARSE_URL_QUERY: int = 7
     __PARSE_URL_PATH: int = 5
@@ -31,14 +43,6 @@ class UrlValidator:
     __AUTHORITY_CHARS_REGEX: str = "\\p{Alnum}\\-\\."
     __SPECIAL_CHARS: str = "; / @ & = , . ? : + $"
     __serialVersionUID: int = 24137157400029593
-    _defaultSchemes: typing.List[str] = ["http", "https", "ftp"]
-    NO_FRAGMENTS: int = 1 << 2
-    ALLOW_2_SLASHES: int = 1 << 1
-    ALLOW_ALL_SCHEMES: int = 1 << 0
-    __allowedSchemes: Set[str] = set()
-    __options: Flags = None
-
-    __ALPHA_CHARS: str = "a-zA-Z"
     __AUTHORITY_REGEX: str = r"^([" + __AUTHORITY_CHARS_REGEX + r"]*)(:\d*)?(.*)?"
     __VALID_CHARS: str = None
     __ATOM: str = __VALID_CHARS + "+"
@@ -47,7 +51,7 @@ class UrlValidator:
 
     @staticmethod
     def initialize_fields() -> None:
-        UrlValidator.__VALID_CHARS: str = "[^\\s" + UrlValidator.__SPECIAL_CHARS + "]"
+        UrlValidator.__VALID_CHARS: str = "[^s" + UrlValidator.__SPECIAL_CHARS + "]"
 
     def _countToken(self, token: str, target: str) -> int:
 

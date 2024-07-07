@@ -53,9 +53,7 @@ class Base64OutputStreamTest(unittest.TestCase):
         try:
             out = Base64OutputStream.Base64OutputStream0(bout)
             out.write0(None, 0, 0)
-            self.fail(
-                "Expcted Base64OutputStream.write(null) to throw a NullPointerException"
-            )
+            self.fail("Expcted Base64OutputStream.write(null) to throw a RuntimeError")
         except Exception as e:
             self.assertIsInstance(e, TypeError)
 

@@ -76,20 +76,6 @@ class LazyHolder:
 
 class DomainValidator:
 
-    __GENERIC_TLDS: typing.List[str] = None  # LLM could not translate this field
-
-    __INFRASTRUCTURE_TLDS: typing.List[str] = ["arpa"]
-    __hostnameRegex: RegexValidator = RegexValidator.RegexValidator3(
-        "\\p{Alnum}(?>[\\p{Alnum}-]{0,61}\\p{Alnum})?"
-    )
-    __allowLocal: bool = False
-
-    __UNEXPECTED_ENUM_VALUE: str = "Unexpected enum value: "
-    __TOP_LABEL_REGEX: str = r"\p{Alpha}(?>[\p{Alnum}-]{0,61}\p{Alnum})?"
-    __DOMAIN_LABEL_REGEX: str = r"\p{Alnum}(?>[\p{Alnum}-]{0,61}\p{Alnum})?"
-    __serialVersionUID: int = -4407125112880174009
-    __EMPTY_STRING_ARRAY: typing.List[str] = []
-    __MAX_DOMAIN_LENGTH: int = 253
     mylocalTLDsMinus: typing.List[str] = None
 
     mylocalTLDsPlus: typing.List[str] = None
@@ -415,6 +401,20 @@ class DomainValidator:
         "zm",
         "zw",
     ]
+    __GENERIC_TLDS: typing.List[str] = None  # LLM could not translate this field
+
+    __INFRASTRUCTURE_TLDS: typing.List[str] = ["arpa"]
+    __hostnameRegex: RegexValidator = RegexValidator.RegexValidator3(
+        "\\p{Alnum}(?>[\\p{Alnum}-]{0,61}\\p{Alnum})?"
+    )
+    __allowLocal: bool = False
+
+    __UNEXPECTED_ENUM_VALUE: str = "Unexpected enum value: "
+    __TOP_LABEL_REGEX: str = r"\p{Alpha}(?>[\p{Alnum}-]{0,61}\p{Alnum})?"
+    __DOMAIN_LABEL_REGEX: str = r"\p{Alnum}(?>[\p{Alnum}-]{0,61}\p{Alnum})?"
+    __serialVersionUID: int = -4407125112880174009
+    __EMPTY_STRING_ARRAY: typing.List[str] = []
+    __MAX_DOMAIN_LENGTH: int = 253
     __DOMAIN_NAME_REGEX: str = (
         "^(?:" + __DOMAIN_LABEL_REGEX + "\\.)+" + "(" + __TOP_LABEL_REGEX + ")\\.?$"
     )

@@ -12,7 +12,7 @@ from src.main.org.apache.commons.validator.routines.DoubleValidator import *
 
 class DoubleValidatorTest(AbstractNumberValidatorTest):
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._validator = DoubleValidator(False, 0)
         self._strictValidator = DoubleValidator.DoubleValidator1()

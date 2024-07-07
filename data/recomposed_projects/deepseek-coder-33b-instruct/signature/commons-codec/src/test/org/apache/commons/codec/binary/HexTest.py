@@ -159,7 +159,7 @@ class HexTest(unittest.TestCase):
 
         data = "hello world".encode("utf-8")
 
-        with self.assertRaises(ArrayIndexOutOfBoundsException):
+        with self.assertRaises(IndexError):
             hex = Hex.encodeHex3(data, 9, 10, True)
             self.assertEqual(list("64"), hex)
 
@@ -167,7 +167,7 @@ class HexTest(unittest.TestCase):
 
         data = "hello world".encode("utf-8")
 
-        with pytest.raises(ArrayIndexOutOfBoundsException):
+        with pytest.raises(IndexError):
             hex = Hex.encodeHex3(data, -2, 10, True)
             self.assertEqual(list("64"), hex)
 
@@ -368,7 +368,7 @@ class HexTest(unittest.TestCase):
             decoded_bytes = hex.decode2("".join(encoded_string_chars))
             self.assertEqual(StringUtils.getBytesUtf8(data_string), decoded_bytes)
 
-    def testEncodeClassCastException(self) -> None:
+    def testEncodeTypeError(self) -> None:
 
         try:
             Hex(2, None, None).encode2([65])
@@ -491,7 +491,7 @@ class HexTest(unittest.TestCase):
     def testDecodeHexCharArrayOddCharacters1(self) -> None:
         self.__checkDecodeHexCharArrayOddCharacters0(["A"])
 
-    def testDecodeClassCastException(self) -> None:
+    def testDecodeTypeError(self) -> None:
 
         try:
             Hex(2, None, None).decode2([65])
@@ -623,7 +623,7 @@ class HexTest(unittest.TestCase):
         self.assertTrue(hex_instance.toString().find(Hex.DEFAULT_CHARSET_NAME) >= 0)
 
     def testCustomCharsetBadName(self) -> None:
-        with pytest.raises(UnsupportedCharsetException):
+        with pytest.raises(ValueError):
             Hex.Hex0(self.__BAD_ENCODING_NAME)
 
     def testCustomCharset0(self) -> None:

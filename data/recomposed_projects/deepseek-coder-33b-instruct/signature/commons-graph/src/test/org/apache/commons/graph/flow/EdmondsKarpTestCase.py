@@ -70,7 +70,7 @@ class EdmondsKarpTestCase(unittest.TestCase):
 
         graph = DirectedMutableGraph()
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findMaxFlow(graph).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).from_(a).to(g).applyingEdmondsKarp(IntegerWeightBaseOperations())
@@ -80,7 +80,7 @@ class EdmondsKarpTestCase(unittest.TestCase):
         a = BaseLabeledVertex("A")
         g = BaseLabeledVertex("G")
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findMaxFlow(None).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).from_(a).to(g).applyingEdmondsKarp(IntegerWeightBaseOperations())

@@ -38,7 +38,7 @@ class FloydWarshallTestCase(unittest.TestCase):
 
     def testNullGraph(self) -> None:
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findShortestPath(None).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).from_(None).to_(None).applyingDijkstra(DoubleWeightBaseOperations())

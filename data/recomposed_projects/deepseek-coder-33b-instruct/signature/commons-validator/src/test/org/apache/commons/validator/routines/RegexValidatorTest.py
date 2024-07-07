@@ -50,10 +50,10 @@ class RegexValidatorTest(unittest.TestCase):
             + "$"
         )
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         super().tearDown()
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         super().setUp()
 
     def testToString(self) -> None:

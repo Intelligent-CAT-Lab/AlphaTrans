@@ -18,17 +18,6 @@ from src.main.org.joda.money.Money import *
 
 class TestBigMoney(unittest.TestCase):
 
-    __GBP_INT_MAX_PLUS1: BigMoney = None  # LLM could not translate this field
-
-    __GBP: CurrencyUnit = CurrencyUnit.of("GBP")
-    __GBP_M1_23: BigMoney = BigMoney.parse("GBP -1.23")
-    __GBP_1_23: BigMoney = BigMoney.parse("GBP 1.23")
-    __GBP_0_00: BigMoney = BigMoney.parse("GBP 0.00")
-    __BIGDEC_M5_78: decimal.Decimal = decimal.Decimal("-5.78")
-    __BIGDEC_2_345: decimal.Decimal = decimal.Decimal("2.345")
-    __BIGDEC_2_34: decimal.Decimal = decimal.Decimal("2.34")
-    __JPY: CurrencyUnit = CurrencyUnit.of("JPY")
-    __EUR: CurrencyUnit = CurrencyUnit.of("EUR")
     __BAD_PROVIDER: BigMoneyProvider = BigMoneyProvider()
     __USD: CurrencyUnit = CurrencyUnit.of("USD")
     __JPY_423: BigMoney = BigMoney.parse("JPY 423")
@@ -48,6 +37,19 @@ class TestBigMoney(unittest.TestCase):
     __GBP_INT_MIN_MAJOR_MINUS1: BigMoney = BigMoney.ofMinor(
         CurrencyUnit.of("GBP"), (((-(2**31)) - 1) * 100)
     )
+    __GBP_INT_MIN_MINUS1: BigMoney = None  # LLM could not translate this field
+
+    __GBP_INT_MAX_PLUS1: BigMoney = None  # LLM could not translate this field
+
+    __GBP: CurrencyUnit = CurrencyUnit.of("GBP")
+    __GBP_M1_23: BigMoney = BigMoney.parse("GBP -1.23")
+    __GBP_1_23: BigMoney = BigMoney.parse("GBP 1.23")
+    __GBP_0_00: BigMoney = BigMoney.parse("GBP 0.00")
+    __BIGDEC_M5_78: decimal.Decimal = decimal.Decimal("-5.78")
+    __BIGDEC_2_345: decimal.Decimal = decimal.Decimal("2.345")
+    __BIGDEC_2_34: decimal.Decimal = decimal.Decimal("2.34")
+    __JPY: CurrencyUnit = CurrencyUnit.of("JPY")
+    __EUR: CurrencyUnit = CurrencyUnit.of("EUR")
     __GBP_INT_MAX_MAJOR_PLUS1: BigMoney = None
 
     @staticmethod
@@ -1020,7 +1022,7 @@ class TestBigMoney(unittest.TestCase):
             def toBigMoney(self) -> BigMoney:
                 return None
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__GBP_M5_78.minus1(NullBigMoneyProvider())
 
     def test_minus_BigMoneyProvider_nullBigMoneyProvider(self) -> None:
@@ -1067,7 +1069,7 @@ class TestBigMoney(unittest.TestCase):
         for provider in iterable:
             provider.toBigMoney = lambda: None
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__GBP_M5_78.minus0(iterable)
 
     def test_minus_Iterable_nullIterable(self) -> None:
@@ -1077,7 +1079,7 @@ class TestBigMoney(unittest.TestCase):
     def test_minus_Iterable_nullEntry(self) -> None:
 
         iterable = [self.__GBP_2_33, None]
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__GBP_M5_78.minus0(iterable)
 
     def test_minus_Iterable_currencyMismatch(self) -> None:
@@ -1398,7 +1400,7 @@ class TestBigMoney(unittest.TestCase):
         for provider in iterable:
             provider.toBigMoney = lambda: None
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__GBP_M5_78.plus0(iterable)
 
     def test_plus_Iterable_nullIterable(self) -> None:
@@ -1408,7 +1410,7 @@ class TestBigMoney(unittest.TestCase):
     def test_plus_Iterable_nullEntry(self) -> None:
 
         iterable = [self.__GBP_2_33, None]
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__GBP_M5_78.plus0(iterable)
 
     def test_plus_Iterable_currencyMismatch(self) -> None:
@@ -1457,7 +1459,7 @@ class TestBigMoney(unittest.TestCase):
         self.assertEqual(3, test.getScale())
 
     def test_withAmount_BigDecimal_nullBigDecimal(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             self.__GBP_2_34.withAmount0(None)
 
     def test_withAmount_BigDecimal_same(self) -> None:
@@ -1737,7 +1739,7 @@ class TestBigMoney(unittest.TestCase):
         self.assertEqual(scale, 2)
 
     def test_withCurrencyUnit_Currency_nullCurrency(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__GBP_2_34.withCurrencyUnit(None)
 
     def test_withCurrencyUnit_Currency_differentCurrencyScale(self) -> None:
@@ -1831,7 +1833,7 @@ class TestBigMoney(unittest.TestCase):
             self.assertEqual(AssertionError, type(ex))
 
     def test_factory_parse_String_nullString(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.parse(None)
 
     def test_factory_parse_String_badCurrency(self) -> None:
@@ -1886,19 +1888,19 @@ class TestBigMoney(unittest.TestCase):
                 return None
 
         iterable = [BAD_PROVIDER()]
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.total3(self.__GBP, iterable)
 
     def test_factory_total_CurrencyUnitIterable_nullNotFirst(self) -> None:
 
         iterable = [self.__GBP_2_33, None, self.__GBP_2_36]
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.total3(self.__GBP, iterable)
 
     def test_factory_total_CurrencyUnitIterable_nullFirst(self) -> None:
 
         iterable = [None, self.__GBP_2_33, self.__GBP_2_36]
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.total3(self.__GBP, iterable)
 
     def test_factory_total_CurrencyUnitIterable_currenciesDifferInIterable(
@@ -1947,7 +1949,7 @@ class TestBigMoney(unittest.TestCase):
         self.__BAD_PROVIDER = BadProvider()
         array = [self.__BAD_PROVIDER]
 
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             BigMoney.total2(self.__GBP, array)
 
     def test_factory_total_CurrencyUnitVarargs_badProvider(self) -> None:
@@ -1960,15 +1962,15 @@ class TestBigMoney(unittest.TestCase):
         # Set the bad provider
         self.__BAD_PROVIDER = BadProvider()
 
-        # Test that total2 raises a NullPointerException
-        with pytest.raises(NullPointerException):
+        # Test that total2 raises a RuntimeError
+        with pytest.raises(RuntimeError):
             BigMoney.total2(self.__GBP, [self.__BAD_PROVIDER])
 
     def test_factory_total_CurrencyUnitArray_nullNotFirst(self) -> None:
 
         array = [self.__GBP_2_33, None, self.__GBP_2_36]
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.total2(self.__GBP, array)
 
     def test_factory_total_CurrencyUnitVarargs_nullNotFirst(self) -> None:
@@ -1980,7 +1982,7 @@ class TestBigMoney(unittest.TestCase):
 
         array = [None, self.__GBP_2_33, self.__GBP_2_36]
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.total2(self.__GBP, array)
 
     def test_factory_total_CurrencyUnitVarargs_nullFirst(self) -> None:
@@ -2083,19 +2085,19 @@ class TestBigMoney(unittest.TestCase):
                 return None
 
         iterable = [BAD_PROVIDER()]
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.total1(iterable)
 
     def test_factory_total_Iterable_nullNotFirst(self) -> None:
 
         iterable = [self.__GBP_2_33, None, self.__GBP_2_36]
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.total1(iterable)
 
     def test_factory_total_Iterable_nullFirst(self) -> None:
 
         iterable: Iterable[BigMoney] = [None, self.__GBP_2_33, self.__GBP_2_36]
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.total1(iterable)
 
     def test_factory_total_Iterable_currenciesDiffer(self) -> None:
@@ -2136,7 +2138,7 @@ class TestBigMoney(unittest.TestCase):
                 return None
 
         array = [BadProvider()]
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.total0(array)
 
     def test_factory_total_varargs_badProvider(self) -> None:
@@ -2149,15 +2151,15 @@ class TestBigMoney(unittest.TestCase):
         # Create an instance of the bad provider
         bad_provider = BadProvider()
 
-        # Expect a NullPointerException when calling BigMoney.total0 with the bad provider
-        with self.assertRaises(NullPointerException):
+        # Expect a RuntimeError when calling BigMoney.total0 with the bad provider
+        with self.assertRaises(RuntimeError):
             BigMoney.total0([bad_provider])
 
     def test_factory_total_array_nullNotFirst(self) -> None:
 
         array = [self.__GBP_2_33, None, self.__GBP_2_36]
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.total0(array)
 
     def test_factory_total_varargs_nullNotFirst(self) -> None:
@@ -2168,7 +2170,7 @@ class TestBigMoney(unittest.TestCase):
 
         array = [None, self.__GBP_2_33, self.__GBP_2_36]
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.total0(array)
 
     def test_factory_total_varargs_nullFirst(self) -> None:
@@ -2246,8 +2248,8 @@ class TestBigMoney(unittest.TestCase):
         # Set the bad provider
         self.__BAD_PROVIDER = BadProvider()
 
-        # Test that BigMoney.of2 raises a NullPointerException when given the bad provider
-        with pytest.raises(NullPointerException):
+        # Test that BigMoney.of2 raises a RuntimeError when given the bad provider
+        with pytest.raises(RuntimeError):
             BigMoney.of2(self.__BAD_PROVIDER)
 
     def test_factory_from_BigMoneyProvider_nullBigMoneyProvider(self) -> None:
@@ -2262,7 +2264,7 @@ class TestBigMoney(unittest.TestCase):
         self.assertEqual(2, test.getScale())
 
     def test_factory_zero_Currency_int_nullCurrency(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.zero1(None, 3)
 
     def test_factory_zero_Currency_int_negativeScale(self) -> None:
@@ -2280,7 +2282,7 @@ class TestBigMoney(unittest.TestCase):
         )
 
     def test_factory_zero_Currency_nullCurrency(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.zero0(None)
 
     def test_factory_zero_Currency(self) -> None:
@@ -2291,7 +2293,7 @@ class TestBigMoney(unittest.TestCase):
         self.assertEqual(0, test.getScale())
 
     def test_factory_ofMinor_Currency_long_nullCurrency(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.ofMinor(None, 234)
 
     def test_factory_ofMinor_Currency_long(self) -> None:
@@ -2302,7 +2304,7 @@ class TestBigMoney(unittest.TestCase):
         self.assertEqual(2, test.getScale())
 
     def test_factory_ofMajor_Currency_long_nullCurrency(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.ofMajor(None, 234)
 
     def test_factory_ofMajor_Currency_long(self) -> None:
@@ -2313,7 +2315,7 @@ class TestBigMoney(unittest.TestCase):
         self.assertEqual(0, test.getScale())
 
     def test_factory_ofScale_Currency_long_int_nullCurrency(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.ofScale2(None, 234, 2)
 
     def test_factory_ofScale_Currency_long_int_negativeScale(self) -> None:
@@ -2339,13 +2341,13 @@ class TestBigMoney(unittest.TestCase):
     def test_factory_ofScale_Currency_BigDecimal_int_RoundingMode_nullBigDecimal(
         self,
     ) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.ofScale1(self.__GBP, None, 2, RoundingMode.DOWN)
 
     def test_factory_ofScale_Currency_BigDecimal_int_RoundingMode_nullCurrency(
         self,
     ) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.ofScale1(None, self.__BIGDEC_2_34, 2, RoundingMode.DOWN)
 
     def test_factory_ofScale_Currency_BigDecimal_int_RoundingMode_UNNECESSARY(
@@ -2385,7 +2387,7 @@ class TestBigMoney(unittest.TestCase):
         self.assertEqual(decimal.Decimal("23"), test.getAmount())
 
     def test_factory_ofScale_Currency_BigDecimal_nullBigDecimal(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.ofScale0(self.__GBP, None, 2)
 
     def test_factory_ofScale_Currency_BigDecimal_nullCurrency(self) -> None:
@@ -2412,7 +2414,7 @@ class TestBigMoney(unittest.TestCase):
         )
 
     def test_factory_of_Currency_double_nullCurrency(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.of1(None, 2.345)
 
     def test_factory_of_Currency_double_big(self) -> None:
@@ -2520,11 +2522,11 @@ class TestBigMoney(unittest.TestCase):
             BigMoney.of0(self.__GBP, sub)
 
     def test_factory_of_Currency_BigDecimal_nullBigDecimal(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.of0(self.__GBP, None)
 
     def test_factory_of_Currency_BigDecimal_nullCurrency(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             BigMoney.of0(None, self.__BIGDEC_2_345)
 
     def test_factory_of_Currency_BigDecimal(self) -> None:

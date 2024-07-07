@@ -94,9 +94,7 @@ class Base64InputStreamTest(unittest.TestCase):
         with Base64InputStream.Base64InputStream2(bin, True, 4, [0, 0, 0]) as in_:
             try:
                 in_.read1(None, 0, 0)
-                self.fail(
-                    "Base64InputStream.read(None, 0, 0) to throw a NullPointerException"
-                )
+                self.fail("Base64InputStream.read(None, 0, 0) to throw a RuntimeError")
             except Exception as e:
                 pass
 

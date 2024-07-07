@@ -25,10 +25,8 @@ class Base16OutputStreamTest(unittest.TestCase):
         try:
             out = Base16OutputStream.Base16OutputStream3(bout)
             out.write0(None, 0, 0)
-            self.fail(
-                "Expcted Base16OutputStream.write(null) to throw a NullPointerException"
-            )
-        except NullPointerException:
+            self.fail("Expcted Base16OutputStream.write(null) to throw a RuntimeError")
+        except RuntimeError:
             pass
 
     def testWriteOutOfBounds(self) -> None:

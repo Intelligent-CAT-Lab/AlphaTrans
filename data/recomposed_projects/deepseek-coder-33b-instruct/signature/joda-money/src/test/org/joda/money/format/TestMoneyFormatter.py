@@ -128,7 +128,7 @@ class TestMoneyFormatter(unittest.TestCase):
             self.__iParseTest.parse("", -1)
 
     def test_parse_CharSequenceInt_nullCharSequence(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__iParseTest.parse(None, 0)
 
     def test_parse_CharSequenceInt_cannotParse(self) -> None:
@@ -372,7 +372,7 @@ class TestMoneyFormatter(unittest.TestCase):
         ]
 
     def test_parseMoney_CharSequence_nullCharSequence(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__iParseTest.parseMoney(None)
 
     def test_parseMoney_CharSequence_cannotParse(self) -> None:
@@ -398,7 +398,7 @@ class TestMoneyFormatter(unittest.TestCase):
         self.assertEqual(self.__MONEY_GBP_12_34, test)
 
     def test_parseBigMoney_CharSequence_nullCharSequence(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__iParseTest.parseBigMoney(None)
 
     def test_parseBigMoney_CharSequence_cannotParse(self) -> None:
@@ -446,11 +446,11 @@ class TestMoneyFormatter(unittest.TestCase):
         self.assertEqual(self.__MONEY_GBP_12_34.toBigMoney(), test)
 
     def test_printIO_AppendableBigMoneyProvider_nullBigMoneyProvider(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__iPrintTest.printIO(StringBuilder(), None)
 
     def test_printIO_AppendableBigMoneyProvider_nullAppendable(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__iPrintTest.printIO(None, self.__MONEY_GBP_12_34)
 
     def test_printIO_AppendableBigMoneyProvider_cannotPrint(self) -> None:
@@ -482,12 +482,12 @@ class TestMoneyFormatter(unittest.TestCase):
         # Create a StringIO object to simulate an Appendable
         appendable = io.StringIO()
 
-        # Expect a NullPointerException when calling print1 with a null BigMoneyProvider
-        with pytest.raises(NullPointerException):
+        # Expect a RuntimeError when calling print1 with a null BigMoneyProvider
+        with pytest.raises(RuntimeError):
             self.__iPrintTest.print1(appendable, None)
 
     def test_print_AppendableBigMoneyProvider_nullAppendable(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__iPrintTest.print1(None, self.__MONEY_GBP_12_34)
 
     def test_print_AppendableBigMoneyProvider_cannotPrint(self) -> None:
@@ -518,7 +518,7 @@ class TestMoneyFormatter(unittest.TestCase):
         self.assertEqual("GBP hello", buf.getvalue())
 
     def test_print_BigMoneyProvider_nullBigMoneyProvider(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__iPrintTest.print0(None)
 
     def test_print_BigMoneyProvider_cannotPrint(self) -> None:
@@ -534,7 +534,7 @@ class TestMoneyFormatter(unittest.TestCase):
         self.assertEqual("GBP hello", self.__iPrintTest.print0(moneyProvider))
 
     def test_withLocale_nullLocale(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__iPrintTest.withLocale(None)
 
     def test_withLocale(self) -> None:

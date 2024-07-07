@@ -88,13 +88,13 @@ class CreditCardValidator:
     def initialize_fields() -> None:
         CreditCardValidator.VPAY_VALIDATOR: CodeValidator = (
             CodeValidator.CodeValidator5(
-                "^(4)(\\d{12,18})$", CreditCardValidator.__LUHN_VALIDATOR
+                "^(4)(d{12,18})$", CreditCardValidator.__LUHN_VALIDATOR
             )
         )
 
         CreditCardValidator.MASTERCARD_VALIDATOR_PRE_OCT2016: CodeValidator = (
             CodeValidator.CodeValidator5(
-                "^(5[1-5]\\d{14})$", CreditCardValidator.__LUHN_VALIDATOR
+                "^(5[1-5]d{14})$", CreditCardValidator.__LUHN_VALIDATOR
             )
         )
 

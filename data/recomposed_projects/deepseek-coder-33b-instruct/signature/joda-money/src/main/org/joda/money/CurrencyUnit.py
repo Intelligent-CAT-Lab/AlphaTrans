@@ -10,8 +10,6 @@ import typing
 from typing import *
 import decimal
 import pickle
-# import security error
-
 
 # from src.main.org.joda.convert.FromString import *
 # from src.main.org.joda.convert.ToString import *
@@ -44,6 +42,32 @@ class CurrencyUnit:
     __serialVersionUID: int = 327835287287
 
     @staticmethod
+    def run_static_init():
+
+        try:
+            try:
+                clsName = os.getenv(
+                    "org.joda.money.CurrencyUnitDataProvider",
+                    "org.joda.money.DefaultCurrencyUnitDataProvider",
+                )
+                cls = (
+                    CurrencyUnit.__class__.getClassLoader()
+                    .loadClass(clsName)
+                    .asSubclass(CurrencyUnitDataProvider)
+                )
+                cls.getDeclaredConstructor().newInstance().registerCurrencies()
+            except PermissionError as ex:
+                DefaultCurrencyUnitDataProvider().registerCurrencies()
+        except RuntimeError as ex:
+            print("ERROR: " + str(ex), file=sys.stderr)
+            traceback.print_exc()
+            raise ex
+        except Exception as ex:
+            print("ERROR: " + str(ex), file=sys.stderr)
+            traceback.print_exc()
+            raise RuntimeError(str(ex), ex)
+
+    @staticmethod
     def initialize_fields() -> None:
         CurrencyUnit.CAD: CurrencyUnit = CurrencyUnit.of1("CAD")
 
@@ -58,45 +82,6 @@ class CurrencyUnit:
         CurrencyUnit.EUR: CurrencyUnit = CurrencyUnit.of1("EUR")
 
         CurrencyUnit.USD: CurrencyUnit = CurrencyUnit.of1("USD")
-
-    @staticmethod
-    def run_static_init():
-
-        # try:
-        #     try:
-        #         clsName = os.getenv(
-        #             "org.joda.money.CurrencyUnitDataProvider",
-        #             "org.joda.money.DefaultCurrencyUnitDataProvider",
-        #         )
-        #         cls = (
-        #             CurrencyUnit.__class__.getClassLoader()
-        #             .loadClass(clsName)
-        #             .asSubclass(CurrencyUnitDataProvider)
-        #         )
-        #         cls.getDeclaredConstructor().newInstance().registerCurrencies()
-        #     except SecurityException as ex:
-        #         DefaultCurrencyUnitDataProvider().registerCurrencies()
-        # except RuntimeError as ex:
-        #     print("ERROR: " + str(ex), file=sys.stderr)
-        #     traceback.print_exc()
-        #     raise ex
-        # except Exception as ex:
-        #     print("ERROR: " + str(ex), file=sys.stderr)
-        #     traceback.print_exc()
-        #     raise RuntimeError(str(ex), ex)
-
-        try:
-            cls_name = sys.modules.get('org.joda.money.CurrencyUnitDataProvider', 'org.joda.money.DefaultCurrencyUnitDataProvider')
-            cls = getattr(__import__(cls_name, fromlist=['']), cls_name)
-            cls().register_currencies()
-        except Exception:
-            DefaultCurrencyUnitDataProvider()._registerCurrencies()
-        except RuntimeError as e:
-            print(f"ERROR: {e}", file=sys.stderr)
-            raise
-        except Exception as e:
-            print(f"ERROR: {e}", file=sys.stderr)
-            raise RuntimeError(str(e)) from e
 
     def toString(self) -> str:
         return self.__code
@@ -336,4 +321,3 @@ class CurrencyUnit:
 CurrencyUnit.run_static_init()
 
 CurrencyUnit.initialize_fields()
-

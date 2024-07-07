@@ -11,6 +11,12 @@ from src.main.org.apache.commons.codec.binary.BaseNCodec import *
 
 class Base16(BaseNCodec):
 
+    __encodeTable: typing.List[int] = None
+
+    __decodeTable: typing.List[int] = None
+
+    __MASK_4BITS: int = 0x0F
+    __LOWER_CASE_ENCODE_TABLE: List[int] = [ord(c) for c in "0123456789abcdef"]
     __LOWER_CASE_DECODE_TABLE: typing.List[int] = (
         None  # LLM could not translate this field
     )
@@ -25,12 +31,6 @@ class Base16(BaseNCodec):
     __BYTES_PER_UNENCODED_BLOCK: int = 1
     __BYTES_PER_ENCODED_BLOCK: int = 2
     __BITS_PER_ENCODED_BYTE: int = 4
-    __encodeTable: typing.List[int] = None
-
-    __decodeTable: typing.List[int] = None
-
-    __MASK_4BITS: int = 0x0F
-    __LOWER_CASE_ENCODE_TABLE: List[int] = [ord(c) for c in "0123456789abcdef"]
 
     def isInAlphabet0(self, octet: int) -> bool:
         return (octet & 0xFF) < len(self.__decodeTable) and self.__decodeTable[

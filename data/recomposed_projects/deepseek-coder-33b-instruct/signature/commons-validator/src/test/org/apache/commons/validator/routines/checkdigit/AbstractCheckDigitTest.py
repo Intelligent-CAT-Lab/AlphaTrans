@@ -32,7 +32,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
         "0123456789 ABCDEFHIJKLMNOPQRSTUVWXYZ\tabcdefghijklmnopqrstuvwxyz!\@£$%^&*()_+"
     )
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
 
         super().tearDown()
         self._valid = None

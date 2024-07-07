@@ -55,7 +55,7 @@ class KeyedObjectPool(ABC):
             pass
         except Exception as e:
             raise e
-        except NoSuchElementException as e:
+        except RuntimeError as e:
             raise e
         except RuntimeError as e:
             raise e

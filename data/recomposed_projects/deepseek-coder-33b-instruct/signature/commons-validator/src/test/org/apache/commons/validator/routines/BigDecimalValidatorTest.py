@@ -13,7 +13,7 @@ from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *
 
 class BigDecimalValidatorTest(AbstractNumberValidatorTest):
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._validator = BigDecimalValidator.BigDecimalValidator1(False)
         self._strictValidator = BigDecimalValidator.BigDecimalValidator2()

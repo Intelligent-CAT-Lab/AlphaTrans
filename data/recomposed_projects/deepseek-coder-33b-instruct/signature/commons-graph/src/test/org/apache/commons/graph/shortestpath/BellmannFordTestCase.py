@@ -33,7 +33,7 @@ class BellmannFordTestCase(unittest.TestCase):
 
         graph = UndirectedMutableGraph()
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findShortestPath(graph).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).from_vertex(None).applyingBelmannFord(DoubleWeightBaseOperations())

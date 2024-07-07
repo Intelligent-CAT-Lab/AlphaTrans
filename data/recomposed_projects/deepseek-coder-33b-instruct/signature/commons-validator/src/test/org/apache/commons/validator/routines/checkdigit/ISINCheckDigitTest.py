@@ -21,7 +21,7 @@ class ISINCheckDigitTest(AbstractCheckDigitTest):
         "DK000976334H",
     ]
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._routine = ISINCheckDigit.ISIN_CHECK_DIGIT
         self._valid = [

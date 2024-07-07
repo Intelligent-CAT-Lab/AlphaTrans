@@ -113,7 +113,7 @@ class UrlTest(unittest.TestCase):
         ]
     ] = [testUrlScheme, testUrlAuthority, testUrlPort, testPath, testUrlQuery]
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         for index in range(len(self.testPartsIndex) - 1):
             self.testPartsIndex[index] = 0
 
@@ -121,7 +121,7 @@ class UrlTest(unittest.TestCase):
     def main(argv: typing.List[str]) -> None:
 
         fct = UrlTest("url test")
-        fct._setUp()
+        fct.setUp()
         fct.testIsValid0()
         fct.testIsValidScheme()
 
@@ -231,7 +231,7 @@ class UrlTest(unittest.TestCase):
     def testIsValid0(self) -> None:
 
         self.testIsValid1(self.testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES)
-        self._setUp()
+        self.setUp()
         options = (
             UrlValidator.ALLOW_2_SLASHES
             + UrlValidator.ALLOW_ALL_SCHEMES

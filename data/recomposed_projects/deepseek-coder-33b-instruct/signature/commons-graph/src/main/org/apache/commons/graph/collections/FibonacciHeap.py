@@ -1,4 +1,6 @@
 from __future__ import annotations
+import math
+from math import *
 import re
 import collections
 from io import StringIO
@@ -74,7 +76,7 @@ class FibonacciHeap:
     def remove0(self) -> typing.Any:
 
         if self.isEmpty():
-            raise NoSuchElementException()
+            raise RuntimeError()
 
         return self.poll()
 
@@ -134,7 +136,7 @@ class FibonacciHeap:
 
     def element(self) -> typing.Any:
         if self.isEmpty():
-            raise NoSuchElementException()
+            raise RuntimeError()
         return self.peek()
 
     def containsAll(self, c: typing.Collection[typing.Any]) -> bool:

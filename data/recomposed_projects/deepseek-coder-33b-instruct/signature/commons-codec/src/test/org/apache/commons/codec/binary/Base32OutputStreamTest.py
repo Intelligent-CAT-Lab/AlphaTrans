@@ -52,9 +52,7 @@ class Base32OutputStreamTest(unittest.TestCase):
         try:
             out = Base32OutputStream.Base32OutputStream0(bout)
             out.write0(None, 0, 0)
-            self.fail(
-                "Expcted Base32OutputStream.write(null) to throw a NullPointerException"
-            )
+            self.fail("Expcted Base32OutputStream.write(null) to throw a RuntimeError")
         except Exception as e:
             pass
 

@@ -10,7 +10,7 @@ from src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit i
 
 class EAN13CheckDigitTest(AbstractCheckDigitTest):
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._routine = EAN13CheckDigit.EAN13_CHECK_DIGIT
         self._valid = [

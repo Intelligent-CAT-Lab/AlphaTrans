@@ -130,9 +130,21 @@ class Evictor:
 
 class BaseGenericObjectPool(BaseObject, ABC):
 
-    __borrowedCount: int = None  # LLM could not translate this field
+    _abandonedConfig: AbandonedConfig = None
+
+    destroyedByBorrowValidationCount: int = None  # LLM could not translate this field
+
+    destroyedByEvictorCount: int = None  # LLM could not translate this field
+
+    destroyedCount: int = None  # LLM could not translate this field
+
+    createdCount: int = None  # LLM could not translate this field
+
+    evictionLock: typing.Any = None  # LLM could not translate this field
 
     closed: bool = False
+
+    closeLock: typing.Any = None  # LLM could not translate this field
 
     MEAN_TIMING_STATS_CACHE_SIZE: int = 100
     __messageStatistics: bool = False
@@ -145,6 +157,10 @@ class BaseGenericObjectPool(BaseObject, ABC):
     __idleTimes: StatsStore = None
     __activeTimes: StatsStore = None
     __activeTimes: StatsStore = None
+    __returnedCount: int = None  # LLM could not translate this field
+
+    __borrowedCount: int = None  # LLM could not translate this field
+
     __evictor: Evictor = None
 
     __evictorShutdownTimeoutDuration: datetime.timedelta = (
@@ -177,8 +193,6 @@ class BaseGenericObjectPool(BaseObject, ABC):
     )
     __EVICTION_POLICY_TYPE_NAME: str = EvictionPolicy.__class__.__name__
     evictionIterator: EvictionIterator = None
-
-    _abandonedConfig: AbandonedConfig = None
 
     @staticmethod
     def initialize_fields() -> None:
@@ -412,9 +426,9 @@ class BaseGenericObjectPool(BaseObject, ABC):
 
         try:
             self.__setEvictionPolicy1(evictionPolicyClassName, classLoader)
-        except (ClassCastException, ClassNotFoundException) as e:
+        except (TypeError, ClassNotFoundException) as e:
             self.__setEvictionPolicy1(evictionPolicyClassName, epClassLoader)
-        except ClassCastException as e:
+        except TypeError as e:
             raise ValueError(
                 "Class "
                 + evictionPolicyClassName

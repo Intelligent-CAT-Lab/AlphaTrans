@@ -52,7 +52,7 @@ class EmailValidator:
         )
 
         EmailValidator.__USER_REGEX: str = (
-            "^" + EmailValidator.__WORD + "(\\." + EmailValidator.__WORD + ")*$"
+            "^" + EmailValidator.__WORD + "(." + EmailValidator.__WORD + ")*$"
         )
 
     def _isValidUser(self, user: str) -> bool:

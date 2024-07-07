@@ -14,19 +14,6 @@ class ISBNValidator:
     __isbn13Validator: CodeValidator = CodeValidator.CodeValidator4(
         ISBN13_REGEX, 13, EAN13CheckDigit.EAN13_CHECK_DIGIT
     )
-    ISBN10_REGEX: str = (
-        r"^(?:(\d{9}[0-9X])|(?:"
-        + GROUP
-        + SEP
-        + PUBLISHER
-        + SEP
-        + TITLE
-        + SEP
-        + "([0-9X])))$"
-    )
-    __isbn10Validator: CodeValidator = CodeValidator.CodeValidator4(
-        ISBN10_REGEX, 10, ISBN10CheckDigit.ISBN10_CHECK_DIGIT
-    )
     __convert: bool = False
 
     __ISBN_VALIDATOR_NO_CONVERT: ISBNValidator = None
@@ -37,12 +24,27 @@ class ISBNValidator:
     __SEP: str = "(?:\\-|\\s)"
     __serialVersionUID: int = 4319515687976420405
     __ISBN_10_LEN: int = 10
+    ISBN10_REGEX: str = (
+        "^(?:(\\d{9}[0-9X])|(?:"
+        + __GROUP
+        + __SEP
+        + __PUBLISHER
+        + __SEP
+        + __TITLE
+        + __SEP
+        + "([0-9X])))$"
+    )
+    __isbn10Validator: CodeValidator = None
 
     @staticmethod
     def initialize_fields() -> None:
         ISBNValidator.__ISBN_VALIDATOR_NO_CONVERT: ISBNValidator = ISBNValidator(False)
 
         ISBNValidator.__ISBN_VALIDATOR: ISBNValidator = ISBNValidator.ISBNValidator1()
+
+        ISBNValidator.__isbn10Validator: CodeValidator = CodeValidator.CodeValidator4(
+            ISBNValidator.ISBN10_REGEX, 10, ISBN10CheckDigit.ISBN10_CHECK_DIGIT
+        )
 
     def convertToISBN13(self, isbn10: str) -> str:
 

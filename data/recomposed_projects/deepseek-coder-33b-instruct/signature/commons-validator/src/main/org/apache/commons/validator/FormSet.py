@@ -126,13 +126,13 @@ class FormSet:
 
         if self.getVariant() is not None:
             if self.getLanguage() is None or self.getCountry() is None:
-                raise NullPointerException(
+                raise RuntimeError(
                     "When variant is specified, country and language must be specified."
                 )
             return self._VARIANT_FORMSET
         elif self.getCountry() is not None:
             if self.getLanguage() is None:
-                raise NullPointerException(
+                raise RuntimeError(
                     "When country is specified, language must be specified."
                 )
             return self._COUNTRY_FORMSET

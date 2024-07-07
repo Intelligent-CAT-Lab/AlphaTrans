@@ -54,9 +54,7 @@ class AnyLanguage(LanguageSet):
         return False
 
     def getAny(self) -> str:
-        raise NoSuchElementException(
-            "Can't fetch any language from the any language set."
-        )
+        raise RuntimeError("Can't fetch any language from the any language set.")
 
     def contains(self, language: str) -> bool:
         return True
@@ -83,9 +81,7 @@ class NoLanguage(LanguageSet):
         return True
 
     def getAny(self) -> str:
-        raise NoSuchElementException(
-            "Can't fetch any language from the empty language set."
-        )
+        raise RuntimeError("Can't fetch any language from the empty language set.")
 
     def contains(self, language: str) -> bool:
         return False
@@ -157,15 +153,15 @@ class Languages:
     __LANGUAGES: typing.Dict[NameType, Languages] = {}
 
     @staticmethod
-    def initialize_fields() -> None:
-        Languages.NO_LANGUAGES: LanguageSet = NoLanguage()
-
-    @staticmethod
     def run_static_init():
         for s in NameType:
             Languages.__LANGUAGES[s] = Languages.getInstance1(
                 Languages.__langResourceName(s)
             )
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Languages.NO_LANGUAGES: LanguageSet = NoLanguage()
 
     def getLanguages(self) -> typing.Set[str]:
         return self.__languages
@@ -201,6 +197,6 @@ class Languages:
         )
 
 
-Languages.initialize_fields()
-
 Languages.run_static_init()
+
+Languages.initialize_fields()

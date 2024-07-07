@@ -8,7 +8,6 @@ from typing import *
 class DisjointSetNode:
 
     __rank: int = 0
-    __parent: DisjointSetNode = self
     __element: typing.Any = None
 
     def setRank(self, rank: int) -> None:

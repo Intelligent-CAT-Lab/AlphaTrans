@@ -20,10 +20,6 @@ from src.test.org.apache.commons.csv.Utils import *
 
 class CSVParserTest(unittest.TestCase):
 
-    __CSV_INPUT: str = None  # LLM could not translate this field
-
-    __UTF_8_NAME: str = "UTF-8"
-    __UTF_8: str = "UTF-8"
     __CSV_INPUT_MULTILINE_HEADER_TRAILER_COMMENT: str = """# multi-line
 CRLF
 # header comment
@@ -46,6 +42,10 @@ CRLF
     ]
     __CSV_INPUT_2: str = "a,b,1 2"
     __CSV_INPUT_1: str = "a,b,c,d"
+    __CSV_INPUT: str = None  # LLM could not translate this field
+
+    __UTF_8_NAME: str = "UTF-8"
+    __UTF_8: str = "UTF-8"
 
     def testStream(self) -> None:
 

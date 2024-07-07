@@ -169,7 +169,7 @@ class ReverseDeleteTestCase(unittest.TestCase):
 
         input = None
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.minimumSpanningTree(input).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).applyingReverseDeleteAlgorithm(None)

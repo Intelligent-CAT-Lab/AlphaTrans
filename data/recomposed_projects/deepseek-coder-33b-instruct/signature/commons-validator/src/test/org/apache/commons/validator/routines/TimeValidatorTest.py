@@ -95,13 +95,13 @@ class TimeValidatorTest(unittest.TestCase):
             TimeValidatorTest._createDate(None, 162346, 0),
         ]
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         super().tearDown()
         self._validator = None
         locale.setlocale(locale.LC_ALL, self.__origDefault)
         time.tzset(self.__defaultZone)
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         super().setUp()
         self._validator = TimeValidator.TimeValidator1()

@@ -13,7 +13,7 @@ class InetAddressValidatorTest(unittest.TestCase):
 
     __validator: InetAddressValidator = None
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         self.__validator = InetAddressValidator()
 
     def testIPv6(self) -> None:

@@ -17,7 +17,7 @@ class ModulusTenLuhnCheckDigitTest(AbstractCheckDigitTest):
     __VALID_SHORT_VISA: str = "4222222222222"
     __VALID_VISA: str = "4417123456789113"
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._routine = ModulusTenCheckDigit([1, 2], True, True)
 

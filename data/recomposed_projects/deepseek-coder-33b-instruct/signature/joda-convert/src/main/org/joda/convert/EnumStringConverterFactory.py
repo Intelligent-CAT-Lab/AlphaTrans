@@ -30,9 +30,14 @@ class EnumStringConverter(TypedStringConverter):
 class EnumStringConverterFactory(StringConverterFactory):
 
     INSTANCE: StringConverterFactory = None
+    INSTANCE: StringConverterFactory = None
 
     @staticmethod
     def initialize_fields() -> None:
+        EnumStringConverterFactory.INSTANCE: StringConverterFactory = (
+            EnumStringConverterFactory()
+        )
+
         EnumStringConverterFactory.INSTANCE: StringConverterFactory = (
             EnumStringConverterFactory()
         )

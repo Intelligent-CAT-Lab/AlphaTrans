@@ -96,7 +96,7 @@ class BoruvkaTestCase(unittest.TestCase):
 
     def testNullVertex(self) -> None:
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             input = UndirectedMutableGraph()
             minimumSpanningTree(input).whereEdgesHaveWeights(
                 BaseLabeledWeightedEdge()
@@ -119,7 +119,7 @@ class BoruvkaTestCase(unittest.TestCase):
 
     def testNullGraph(self) -> None:
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.minimumSpanningTree(None).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).fromArbitrarySource().applyingBoruvkaAlgorithm(

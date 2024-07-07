@@ -190,7 +190,7 @@ class LinkedBlockingDeque(Deque):
 
         x = self.pollLast0()
         if x is None:
-            raise NoSuchElementException()
+            raise RuntimeError()
         return x
 
     def removeFirstOccurrence(self, o: typing.Any) -> bool:
@@ -218,7 +218,7 @@ class LinkedBlockingDeque(Deque):
 
         x = self.pollFirst0()
         if x is None:
-            raise NoSuchElementException()
+            raise RuntimeError()
         return x
 
     def push(self, e: typing.Any) -> None:
@@ -283,14 +283,14 @@ class LinkedBlockingDeque(Deque):
 
         x = self.peekLast()
         if x is None:
-            raise NoSuchElementException()
+            raise RuntimeError()
         return x
 
     def getFirst(self) -> typing.Any:
 
         x = self.peekFirst()
         if x is None:
-            raise NoSuchElementException()
+            raise RuntimeError()
         return x
 
     def element(self) -> typing.Any:
@@ -554,7 +554,7 @@ class LinkedBlockingDeque(Deque):
                 try:
                     for e in c:
                         if e is None:
-                            raise NullPointerException()
+                            raise RuntimeError()
                         if not self.__linkLast(e):
                             raise RuntimeError("Deque full")
                 finally:

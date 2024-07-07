@@ -12,10 +12,10 @@ from src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit i
 
 class CodeValidatorTest(unittest.TestCase):
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         super().tearDown()
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         super().setUp()
 
     def testConstructors(self) -> None:

@@ -59,9 +59,11 @@ class MethodCallLogger(typing.Callable):
 
 class TestPoolUtils(unittest.TestCase):
 
-    __CHECK_SLEEP_PERIOD: int = CHECK_PERIOD * (CHECK_COUNT - 1) + CHECK_PERIOD / 2
     __CHECK_COUNT: int = 4
     __CHECK_PERIOD: int = 300
+    __CHECK_SLEEP_PERIOD: int = (
+        __CHECK_PERIOD * (__CHECK_COUNT - 1) + __CHECK_PERIOD / 2
+    )
 
     def testTimerHolder(self) -> None:
 

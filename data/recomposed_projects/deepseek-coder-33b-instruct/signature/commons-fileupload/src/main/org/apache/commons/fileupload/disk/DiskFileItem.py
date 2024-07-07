@@ -12,8 +12,6 @@ from src.main.org.apache.commons.fileupload.util.Streams import *
 
 class DiskFileItem:
 
-    __UID: str = None  # LLM could not translate this field
-
     DEFAULT_CHARSET: str = "ISO-8859-1"
     __defaultCharset: str = "ISO-8859-1"
     __headers: FileItemHeaders = None
@@ -34,6 +32,10 @@ class DiskFileItem:
     __contentType: str = ""
 
     __fieldName: str = ""
+
+    __COUNTER: int = None  # LLM could not translate this field
+
+    __UID: str = None  # LLM could not translate this field
 
     def setDefaultCharset(self, charset: str) -> None:
         self.__defaultCharset = charset

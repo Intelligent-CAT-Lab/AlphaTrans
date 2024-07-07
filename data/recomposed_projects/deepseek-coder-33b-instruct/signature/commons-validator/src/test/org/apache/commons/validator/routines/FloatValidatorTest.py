@@ -12,7 +12,7 @@ from src.main.org.apache.commons.validator.routines.FloatValidator import *
 
 class FloatValidatorTest(AbstractNumberValidatorTest):
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._validator = FloatValidator(False, 0)
         self._strictValidator = FloatValidator.FloatValidator1()

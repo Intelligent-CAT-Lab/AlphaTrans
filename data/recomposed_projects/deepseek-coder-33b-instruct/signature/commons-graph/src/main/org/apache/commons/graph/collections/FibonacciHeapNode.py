@@ -13,8 +13,6 @@ class FibonacciHeapNode:
 
     __child: FibonacciHeapNode = None
 
-    __right: FibonacciHeapNode = self
-    __left: FibonacciHeapNode = self
     __parent: FibonacciHeapNode = None
 
     __element: typing.Any = None

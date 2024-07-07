@@ -10,7 +10,7 @@ from src.main.org.apache.commons.validator.routines.checkdigit.ModulusTenCheckDi
 
 class ModulusTenABACheckDigitTest(AbstractCheckDigitTest):
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._routine = ModulusTenCheckDigit.ModulusTenCheckDigit1([1, 7, 3], True)
 

@@ -24,7 +24,7 @@ class Assertions:
     ) -> typing.Any:
 
         if reference is None:
-            raise NullPointerException(errorMessageTemplate % errorMessageArgs)
+            raise RuntimeError(errorMessageTemplate % errorMessageArgs)
         return reference
 
     @staticmethod

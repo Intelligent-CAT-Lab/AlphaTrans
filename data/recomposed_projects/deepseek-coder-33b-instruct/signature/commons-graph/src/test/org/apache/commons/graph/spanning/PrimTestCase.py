@@ -137,7 +137,7 @@ class PrimTestCase(unittest.TestCase):
 
         input = UndirectedMutableGraph()
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             minimumSpanningTree(input).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).fromSource(None).applyingPrimAlgorithm(DoubleWeightBaseOperations())
@@ -159,7 +159,7 @@ class PrimTestCase(unittest.TestCase):
 
     def testNullGraph(self) -> None:
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.minimumSpanningTree(None).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).fromArbitrarySource().applyingPrimAlgorithm(DoubleWeightBaseOperations())

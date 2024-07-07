@@ -31,7 +31,7 @@ class FordFulkersonTestCase(unittest.TestCase):
 
     def testNullGraphAndVertices(self) -> None:
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findMaxFlow(None).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).from_(None).to_(None).applyingFordFulkerson(IntegerWeightBaseOperations())
@@ -41,7 +41,7 @@ class FordFulkersonTestCase(unittest.TestCase):
         a = BaseLabeledVertex("A")
         d = BaseLabeledVertex("D")
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findMaxFlow(None).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).from_(a).to(d).applyingFordFulkerson(IntegerWeightBaseOperations())

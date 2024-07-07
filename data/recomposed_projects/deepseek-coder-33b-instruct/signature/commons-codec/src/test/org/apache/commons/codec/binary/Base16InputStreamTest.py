@@ -108,9 +108,7 @@ class Base16InputStreamTest(unittest.TestCase):
         with Base16InputStream.Base16InputStream2(bin, True) as in_:
             try:
                 in_.read1(None, 0, 0)
-                self.fail(
-                    "Base16InputStream.read(null, 0, 0) to throw a NullPointerException"
-                )
+                self.fail("Base16InputStream.read(null, 0, 0) to throw a RuntimeError")
             except Exception as e:
                 pass
 

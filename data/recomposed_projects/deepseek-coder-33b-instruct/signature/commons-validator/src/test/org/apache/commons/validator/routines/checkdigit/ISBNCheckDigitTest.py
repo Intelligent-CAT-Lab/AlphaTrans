@@ -10,7 +10,7 @@ from src.main.org.apache.commons.validator.routines.checkdigit.ISBNCheckDigit im
 
 class ISBNCheckDigitTest(AbstractCheckDigitTest):
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._routine = ISBNCheckDigit.ISBN_CHECK_DIGIT
         self._valid = [

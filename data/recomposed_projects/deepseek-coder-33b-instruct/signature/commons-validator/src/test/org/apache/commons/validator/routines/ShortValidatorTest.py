@@ -12,7 +12,7 @@ from src.main.org.apache.commons.validator.routines.ShortValidator import *
 
 class ShortValidatorTest(AbstractNumberValidatorTest):
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._validator = ShortValidator(False, 0)
         self._strictValidator = ShortValidator.ShortValidator1()

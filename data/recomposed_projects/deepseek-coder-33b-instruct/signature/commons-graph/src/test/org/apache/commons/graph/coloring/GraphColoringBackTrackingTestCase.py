@@ -88,14 +88,14 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest, unittest.TestCase)
 
     def testNullGraph(self) -> None:
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             coloring(None).withColors(None).applyingBackTrackingAlgorithm0()
 
     def testNullColorGraph(self) -> None:
 
         g = UndirectedMutableGraph()
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             coloring(g).withColors(None).applyingBackTrackingAlgorithm0()
 
     def testNotEnoughtColorGraph(self) -> None:

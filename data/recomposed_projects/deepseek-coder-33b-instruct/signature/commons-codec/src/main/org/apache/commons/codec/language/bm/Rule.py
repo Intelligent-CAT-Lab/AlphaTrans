@@ -30,23 +30,27 @@ class Phoneme(PhonemeExpr):
 
     __phonemeText: str = ""
 
-    COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = lambda o1, o2: (
-        (
-            lambda o1Length=len(o1.__phonemeText), o2Length=len(o2.__phonemeText): (
-                next(
-                    (
+    COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Phoneme.COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = lambda o1, o2: (
+            (
+                lambda o1Length=len(o1.__phonemeText), o2Length=len(o2.__phonemeText): (
+                    next(
                         (
-                            o1.__phonemeText[i] - o2.__phonemeText[i]
-                            if i < o2Length
-                            else (+1 if i >= o2Length else -1)
-                        )
-                        for i in range(o1Length)
-                    ),
-                    -1 if o1Length < o2Length else 0,
+                            (
+                                o1.__phonemeText[i] - o2.__phonemeText[i]
+                                if i < o2Length
+                                else (+1 if i >= o2Length else -1)
+                            )
+                            for i in range(o1Length)
+                        ),
+                        -1 if o1Length < o2Length else 0,
+                    )
                 )
-            )
-        )()
-    )
+            )()
+        )
 
     def toString(self) -> str:
         return self.__phonemeText + "[" + str(self.__languages) + "]"
@@ -120,6 +124,7 @@ class PhonemeList(PhonemeExpr):
 
 class Rule:
 
+    ALL: str = "ALL"
     ALL_STRINGS_RMATCHER: RPattern = None  # LLM could not translate this field
 
     __rContext: RPattern = None
@@ -137,7 +142,6 @@ class Rule:
 
     __HASH_INCLUDE: str = "#include"
     __DOUBLE_QUOTE: str = '"'
-    ALL: str = "ALL"
 
     @staticmethod
     def run_static_init():
@@ -476,5 +480,7 @@ class Rule:
                 return True
         return False
 
+
+Phoneme.initialize_fields()
 
 Rule.run_static_init()

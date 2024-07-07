@@ -20,7 +20,7 @@ class ModulusTenSedolCheckDigitTest(AbstractCheckDigitTest):
         "B07LF5F",
     ]
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._routine = ModulusTenCheckDigit.ModulusTenCheckDigit2(
             [1, 3, 1, 7, 3, 9, 1]

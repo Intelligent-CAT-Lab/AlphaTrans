@@ -124,7 +124,7 @@ class BidirDijkstraTestCase(unittest.TestCase):
             BaseLabeledVertex, BaseLabeledWeightedEdge[float]
         ]()
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findShortestPath(graph).whereEdgesHaveWeights(
                 BaseWeightedEdge[float]()
             ).from_(None).to_(None).applyingBidirectionalDijkstra(
@@ -142,7 +142,7 @@ class BidirDijkstraTestCase(unittest.TestCase):
         graph.addVertex(a)
         graph.addVertex(b)
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findShortestPath(graph).whereEdgesHaveWeights(
                 BaseWeightedEdge[float]()
             ).from_(a).to(b).applyingBidirectionalDijkstra(None)

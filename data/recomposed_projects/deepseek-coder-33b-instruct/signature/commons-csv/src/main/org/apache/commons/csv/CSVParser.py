@@ -81,19 +81,16 @@ class CSVParser:
     __recordList: typing.List[str] = []
 
     __csvRecordIterator: CSVRecordIterator = None
+
     __lexer: Lexer = None
 
     __headers: Headers = None
+
     __format: CSVFormat = None
 
     __trailerComment: str = ""
 
     __headerComment: str = ""
-
-    @staticmethod
-    def initialize_fields() -> None:
-        CSVParser.__csvRecordIterator: CSVRecordIterator = None
-        CSVParser.__headers: Headers = None
 
     def iterator(self) -> typing.Iterator[CSVRecord]:
         return self.__csvRecordIterator
@@ -386,6 +383,3 @@ class CSVParser:
 
     def getHeaderMapRaw(self) -> typing.Dict[str, int]:
         return self.__headers.headerMap
-
-
-CSVParser.initialize_fields()

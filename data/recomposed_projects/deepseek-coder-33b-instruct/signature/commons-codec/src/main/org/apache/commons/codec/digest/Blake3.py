@@ -86,7 +86,7 @@ class ChunkState:
 
     __blockLength: int = 0
 
-    __block: typing.List[int] = [0] * BLOCK_LEN
+    __block: typing.List[int] = [0] * 64
     __flags: int = 0
 
     __chunkCounter: int = 0

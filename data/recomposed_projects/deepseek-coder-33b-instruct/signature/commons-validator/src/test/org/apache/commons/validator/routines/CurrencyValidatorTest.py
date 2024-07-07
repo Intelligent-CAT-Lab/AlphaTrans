@@ -22,10 +22,10 @@ class CurrencyValidatorTest(unittest.TestCase):
 
     __CURRENCY_SYMBOL: str = "\u00A4"
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         super().tearDown()
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         import locale
         from decimal import Decimal

@@ -40,15 +40,7 @@ class StringConvert:
         typing.Type[typing.Any], TypedStringConverter[typing.Any]
     ] = {}
     __factories: typing.List[StringConverterFactory] = []
-    __CACHED_NULL: TypedStringConverter[typing.Any] = TypedStringConverter[typing.Any](
-        convertToString=lambda object: None,
-        convertFromString=lambda cls, str: None,
-        getEffectiveType=lambda: None,
-    )
-
-    @staticmethod
-    def initialize_fields() -> None:
-        StringConvert.INSTANCE: StringConvert = StringConvert.StringConvert1()
+    __CACHED_NULL: TypedStringConverter[typing.Any] = None
 
     @staticmethod
     def run_static_init():
@@ -59,6 +51,18 @@ class StringConvert:
         except Exception:
             pass
         StringConvert.LOG = log == "true"
+
+    @staticmethod
+    def initialize_fields() -> None:
+        StringConvert.INSTANCE: StringConvert = StringConvert.StringConvert1()
+
+        StringConvert.__CACHED_NULL: TypedStringConverter[
+            typing.Any
+        ] = TypedStringConverter[typing.Any](
+            convertToString=lambda object: None,
+            convertFromString=lambda cls, str: None,
+            getEffectiveType=lambda: None,
+        )
 
     def toString(self) -> str:
         return self.__class__.__name__
@@ -548,6 +552,6 @@ class StringConvert:
                 print("tryRegisterGuava2: " + str(ex))
 
 
-StringConvert.initialize_fields()
-
 StringConvert.run_static_init()
+
+StringConvert.initialize_fields()

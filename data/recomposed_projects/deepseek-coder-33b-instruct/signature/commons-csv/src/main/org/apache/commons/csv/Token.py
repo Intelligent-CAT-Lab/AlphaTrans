@@ -8,18 +8,14 @@ from typing import *
 class Type:
 
     COMMENT: typing.Type = None
-    EORECORD: typing.Type = None
-    EOF: typing.Type = None
-    TOKEN: typing.Type = None
-    INVALID: typing.Type = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        Type.COMMENT: typing.Type = None
-        Type.EORECORD: typing.Type = None
-        Type.EOF: typing.Type = None
-        Type.TOKEN: typing.Type = None
-        Type.INVALID: typing.Type = None
+    EORECORD: typing.Type = None
+
+    EOF: typing.Type = None
+
+    TOKEN: typing.Type = None
+
+    INVALID: typing.Type = None
 
 
 class Token:
@@ -44,7 +40,5 @@ class Token:
         self.isReady = False
         self.isQuoted = False
 
-
-Type.initialize_fields()
 
 Token.initialize_fields()

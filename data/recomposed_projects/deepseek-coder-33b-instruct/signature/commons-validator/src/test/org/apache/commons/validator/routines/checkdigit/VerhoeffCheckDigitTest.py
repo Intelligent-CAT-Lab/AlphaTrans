@@ -27,7 +27,7 @@ class VerhoeffCheckDigitTest(AbstractCheckDigitTest):
         else:
             print("The sum is not zero.")
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._routine = VerhoeffCheckDigit.VERHOEFF_CHECK_DIGIT
         self._valid = ["15", "1428570", "12345678902"]

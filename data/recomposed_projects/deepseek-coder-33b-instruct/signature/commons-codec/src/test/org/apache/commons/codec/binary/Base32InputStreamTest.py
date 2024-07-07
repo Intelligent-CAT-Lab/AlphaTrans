@@ -117,9 +117,7 @@ class Base32InputStreamTest(unittest.TestCase):
         with Base32InputStream.Base32InputStream2(bin, True, 4, [0, 0, 0]) as inp:
             try:
                 inp.read1(None, 0, 0)
-                self.fail(
-                    "Base32InputStream.read(None, 0, 0) to throw a NullPointerException"
-                )
+                self.fail("Base32InputStream.read(None, 0, 0) to throw a RuntimeError")
             except Exception as e:
                 pass
 

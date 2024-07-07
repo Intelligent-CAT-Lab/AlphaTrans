@@ -11,6 +11,13 @@ from src.main.org.apache.commons.codec.digest.MurmurHash2 import *
 
 class MurmurHash2Test(unittest.TestCase):
 
+    text: str = "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
+    results64_seed: typing.List[int] = None  # LLM could not translate this field
+
+    results64_standard: typing.List[int] = None  # LLM could not translate this field
+
+    results32_seed: typing.List[int] = None  # LLM could not translate this field
+
     results32_standard: typing.List[int] = None  # LLM could not translate this field
 
     input: List[List[int]] = [
@@ -80,7 +87,6 @@ class MurmurHash2Test(unittest.TestCase):
         [0x7E],
         [],
     ]
-    text: str = "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
 
     def testHash64StringIntInt(self) -> None:
 

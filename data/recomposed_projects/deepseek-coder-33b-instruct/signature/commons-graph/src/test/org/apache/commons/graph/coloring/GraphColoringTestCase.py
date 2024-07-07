@@ -50,7 +50,7 @@ class GraphColoringTestCase(AbstractColoringTest, unittest.TestCase):
 
         g = UndirectedMutableGraph()
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             coloring(g).withColors(None).applyingBackTrackingAlgorithm0()
 
     def testNotEnoughtColorGreedyGraph(self) -> None:

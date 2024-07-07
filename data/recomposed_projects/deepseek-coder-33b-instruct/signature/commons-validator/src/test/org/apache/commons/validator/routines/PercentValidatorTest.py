@@ -18,10 +18,10 @@ class PercentValidatorTest(unittest.TestCase):
 
     _validator: PercentValidator = None
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         self._validator = None
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         self._validator = PercentValidator.PercentValidator1()
 
     def testInvalid(self) -> None:

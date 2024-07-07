@@ -7,13 +7,15 @@ from src.main.org.apache.commons.validator.routines.DomainValidator import *
 
 class EmailValidator:
 
+    __EMAIL_VALIDATOR: EmailValidator = None
+    __ATOM_PATTERN: re.Pattern = None  # LLM could not translate this field
+
     __USER_PATTERN: re.Pattern = None  # LLM could not translate this field
 
     __TLD_PATTERN: re.Pattern = re.compile("^([a-zA-Z]+)$")
     __IP_DOMAIN_PATTERN: re.Pattern = re.compile("^\\[(.*)\\]$")
     __QUOTED_USER: str = r"(\"[^\"]*\")"
     __SPECIAL_CHARS: str = "\\p{Cntrl}\\(\\)<>@,;:'\\\\\\\"\\.\\[\\]"
-    __EMAIL_VALIDATOR: EmailValidator = None
     __VALID_CHARS: str = None
     __WORD: str = None
     __ATOM: str = __VALID_CHARS + "+"
@@ -23,9 +25,7 @@ class EmailValidator:
     def initialize_fields() -> None:
         EmailValidator.__EMAIL_VALIDATOR: EmailValidator = EmailValidator()
 
-        EmailValidator.__VALID_CHARS: str = (
-            "[^\\s" + EmailValidator.__SPECIAL_CHARS + "]"
-        )
+        EmailValidator.__VALID_CHARS: str = "[^s" + EmailValidator.__SPECIAL_CHARS + "]"
 
         EmailValidator.__WORD: str = (
             "(("
@@ -36,7 +36,7 @@ class EmailValidator:
         )
 
         EmailValidator.__DOMAIN_PATTERN: re.Pattern = re.compile(
-            "^" + EmailValidator.__ATOM + "(\\." + EmailValidator.__ATOM + ")*\\s*$"
+            "^" + EmailValidator.__ATOM + "(." + EmailValidator.__ATOM + ")*s*$"
         )
 
     def _stripComments(self, emailStr: str) -> str:

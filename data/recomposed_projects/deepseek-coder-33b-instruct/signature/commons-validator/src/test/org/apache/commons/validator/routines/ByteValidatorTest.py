@@ -21,7 +21,7 @@ class ByteValidatorTest(AbstractNumberValidatorTest):
     __BYTE_MAX_VAL: int = int(127)
     __BYTE_MIN_VAL: int = -128
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
 
         self._validator = ByteValidator(False, 0)
         self._strictValidator = ByteValidator.ByteValidator1()

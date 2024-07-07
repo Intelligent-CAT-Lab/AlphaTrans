@@ -160,7 +160,7 @@ class KosarajuSharirTestCase(unittest.TestCase):
         a = None
         graph = DirectedMutableGraph()
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CommonsGraph.findStronglyConnectedComponent(graph).applyingKosarajuSharir1(
                 a
             )

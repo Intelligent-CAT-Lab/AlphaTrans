@@ -375,22 +375,6 @@ class JavaVersion(ABC):
     JAVA8: JavaVersion = None
 
     @staticmethod
-    def initialize_fields() -> None:
-        JavaVersion.JAVA6: JavaVersion = JavaVersion()
-
-        JavaVersion.JAVA8: JavaVersion = type(
-            "JAVA8",
-            (JavaVersion,),
-            {
-                "newArrayType": lambda self, componentType: JAVA7.newArrayType(
-                    componentType
-                ),
-                "usedInGenericType0": lambda self, type: JAVA7.usedInGenericType0(type),
-                "typeName": lambda self, type: getattr(type, "__name__"),
-            },
-        )
-
-    @staticmethod
     def run_static_init():
 
         JavaVersion.JAVA9 = JavaVersion()
@@ -408,6 +392,22 @@ class JavaVersion(ABC):
             JavaVersion.CURRENT = JavaVersion.JAVA7
         else:
             JavaVersion.CURRENT = JavaVersion.JAVA6
+
+    @staticmethod
+    def initialize_fields() -> None:
+        JavaVersion.JAVA6: JavaVersion = JavaVersion()
+
+        JavaVersion.JAVA8: JavaVersion = type(
+            "JAVA8",
+            (JavaVersion,),
+            {
+                "newArrayType": lambda self, componentType: JAVA7.newArrayType(
+                    componentType
+                ),
+                "usedInGenericType0": lambda self, type: JAVA7.usedInGenericType0(type),
+                "typeName": lambda self, type: getattr(type, "__name__"),
+            },
+        )
 
     def usedInGenericType1(
         self, types: typing.List[typing.Type]
@@ -612,7 +612,7 @@ class Types:
     @staticmethod
     def __checkNotNull(reference: typing.Any) -> typing.Any:
         if reference is None:
-            raise NullPointerException()
+            raise RuntimeError()
         return reference
 
     @staticmethod
@@ -682,6 +682,6 @@ NativeTypeVariableEquals.initialize_fields()
 
 ClassOwnership.initialize_fields()
 
-JavaVersion.initialize_fields()
-
 JavaVersion.run_static_init()
+
+JavaVersion.initialize_fields()

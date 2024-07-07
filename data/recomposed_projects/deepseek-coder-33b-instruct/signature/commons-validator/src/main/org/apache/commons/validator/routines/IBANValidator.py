@@ -46,13 +46,12 @@ class Validator:
 
 class IBANValidator:
 
+    DEFAULT_IBAN_VALIDATOR: IBANValidator = None
     __DEFAULT_FORMATS: typing.List[Validator] = (
         None  # LLM could not translate this field
     )
 
     __formatValidators: typing.Dict[str, Validator] = None
-
-    DEFAULT_IBAN_VALIDATOR: IBANValidator = None
 
     @staticmethod
     def initialize_fields() -> None:

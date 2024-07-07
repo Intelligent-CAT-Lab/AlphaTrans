@@ -139,7 +139,7 @@ class TestMoneyUtils_Money(unittest.TestCase):
 
     def test_checkNotNull_null(self) -> None:
 
-        with pytest.raises(NullPointerException) as ex:
+        with pytest.raises(RuntimeError) as ex:
             MoneyUtils.checkNotNull(None, "Hello")
 
         assert str(ex.value) == "Hello"

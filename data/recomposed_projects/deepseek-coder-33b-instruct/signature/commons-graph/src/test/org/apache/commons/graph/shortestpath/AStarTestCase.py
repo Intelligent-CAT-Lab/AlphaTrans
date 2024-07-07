@@ -33,7 +33,7 @@ class AStarTestCase(unittest.TestCase):
 
         graph = UndirectedMutableGraph()
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             findShortestPath(graph).whereEdgesHaveWeights(
                 BaseWeightedEdge()
             ).from_vertex(None).to_vertex(None).applyingAStar(
@@ -57,7 +57,7 @@ class AStarTestCase(unittest.TestCase):
 
             heuristic = Heuristic(lambda current, goal: heuristics.get(current))
 
-        except NullPointerException as e:
+        except RuntimeError as e:
             self.fail(e.getMessage())
 
         CommonsGraph.findShortestPath(graph).whereEdgesHaveWeights(
@@ -68,7 +68,7 @@ class AStarTestCase(unittest.TestCase):
 
         graph = UndirectedMutableGraph()
 
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             findShortestPath(graph).whereEdgesHaveWeights(BaseWeightedEdge()).from_(
                 BaseLabeledVertex("a")
             ).to_(BaseLabeledVertex("b")).applyingAStar(

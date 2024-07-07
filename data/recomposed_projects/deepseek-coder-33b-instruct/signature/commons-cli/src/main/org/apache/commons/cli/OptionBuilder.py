@@ -25,12 +25,12 @@ class OptionBuilder:
     __longOption: str = ""
 
     @staticmethod
-    def initialize_fields() -> None:
-        OptionBuilder.__INSTANCE: OptionBuilder = OptionBuilder()
-
-    @staticmethod
     def run_static_init():
         OptionBuilder.__reset()
+
+    @staticmethod
+    def initialize_fields() -> None:
+        OptionBuilder.__INSTANCE: OptionBuilder = OptionBuilder()
 
     @staticmethod
     def withType1(newType: typing.Any) -> OptionBuilder:
@@ -166,6 +166,6 @@ class OptionBuilder:
         OptionBuilder.__valueSeparator = chr(0)
 
 
-OptionBuilder.initialize_fields()
-
 OptionBuilder.run_static_init()
+
+OptionBuilder.initialize_fields()
