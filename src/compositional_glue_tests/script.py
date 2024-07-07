@@ -28,6 +28,7 @@ class Project:
         self.name = name
         self.formatted_name = name.replace('-', '.')
         self.main_path = paths[name]['main']
+        self.test_path = paths[name]['test']
         self.package = package_names[name]
 
         # meta information for the file
@@ -114,7 +115,10 @@ class Project:
                 # add imports
                 # filter out unnecessary imports
                 imports_from_schema = filter(
-                    lambda imp: not any(x in imp for x in ['commons.io', 'commons.logging', 'opentest4j', 'com.google']),
+                    lambda imp: not any(x in imp for x in [
+                        'commons.io', 'commons.logging', 'opentest4j', 'com.google',
+                        'pytest' # we "should not" need pytest. TODO: Is this ok?
+                    ]),
                     schema_data['python_imports']
                 )
                 python_file_contents.extend(imports_from_schema)
@@ -504,6 +508,7 @@ class CompositionalTest:
                     project = self.project.package,
                     imports = ctx_imports,
                     code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/src/{self.project.main_path.replace('/java/', '/')}",
+                    test_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/src/{self.project.test_path.replace('/java/', '/')}",
                     package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/",
                     # ----------------------------------------------------------------------------------------------
                     # mappings = ""               
@@ -570,7 +575,7 @@ class CompositionalTest:
                 "})"
             ])
             for _class in classes_to_map
-        ]) + "// TODO: Add other mappings"
+        ])
 
         imports_code = ""
         
@@ -851,6 +856,7 @@ class Schema:
         is_static = 'static' in class_declaration
         is_nested = bool(class_schema_data['nested_inside'])
         is_abstract = class_schema_data['is_abstract']
+        is_in_test_dir = '/test/' in self.schema_data['path']
 
         python_file_dir = self.subpackage.replace('.', '/')
         python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
@@ -881,7 +887,9 @@ class Schema:
             "is_interface": is_interface,
             "is_enum": is_enum,
             "static_initializer": "",
-            "classref": f"ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\")"
+            "classref": f"ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\", " + 
+                            ("true" if is_in_test_dir else "false")
+                        + ")"
         }
         
         value_fields = [] # fields that are related to graal
@@ -1069,6 +1077,8 @@ class Schema:
         # if method name is a keyword, add an underscore at the end
         if keyword.iskeyword(method_name):
             method_name += "_"
+            
+        method_content_super, method_content_without_super = Schema.split_method_content_at_super(method_content)
         
         # handle the presence of exceptions
         exception_name = None # We only handle one exception for now! TODO: Fix this later
@@ -1102,14 +1112,27 @@ class Schema:
             # intercept exceptions to save them in the ExceptionHandler
             # before rethrowing them
             if exception_name:
-                method_content = f"""
-                    try {{
-                        {method_content}
-                    }} catch (Exception ExceptionObjectForCaching) {{
-                        ExceptionHandler.ERR = ExceptionObjectForCaching;
-                        throw ExceptionObjectForCaching;
-                    }}
-                """
+                if is_constructor:
+                    # for constructors, any super() call must precede the exception handling
+                    method_content = f"""
+                        {method_content_super}
+                        try {{
+                            {method_content_without_super}
+                        }}
+                    """
+                else:
+                    method_content = f"""
+                        try {{
+                            {method_content}
+                        }}
+                    """
+                
+                method_content += """
+                catch (Exception ExceptionObjectForCaching) {
+                    ExceptionHandler.ERR = ExceptionObjectForCaching;
+                    throw ExceptionObjectForCaching;
+                }"""
+                
             class_obj["methods"].append(f"{method_signature}\n{method_content}\n}}")
             return
         
@@ -1291,6 +1314,19 @@ class Schema:
                 return True
             
         return False
+
+    @staticmethod
+    def split_method_content_at_super(method_content: str):
+        """
+        Split the method content at the super() call.
+        """
+        # check if the method content starts with a super() call
+        if method_content.strip().startswith('super('):
+            super_call_end = method_content.find(';') + 1 # find the end of the super() call
+            super_call = method_content[:super_call_end]
+            return super_call, method_content[super_call_end:]
+        
+        return "", method_content
 
 
 if __name__ == '__main__':
