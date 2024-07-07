@@ -10,6 +10,7 @@ import org.graalvm.polyglot.Value;
 public abstract class ContextInitializer {{
     private static Engine sharedEngine;
     private static String codeDirectory = "{code_directory}";
+    private static String testDirectory = "{test_directory}";
     private static String packageDirectory = "{package_directory}";
     private static Context context;
     static {{
@@ -29,9 +30,9 @@ public abstract class ContextInitializer {{
             System.out.println("[-] " + e);
         }}
     }}
-    public static Value[] getPythonClasses(String fileName, String... classNames) {{
+    public static Value[] getPythonClasses(String fileName, boolean isInTestDirectory, String... classNames) {{
         try {{
-            File file = new File(codeDirectory, fileName);
+            File file = isInTestDirectory ? new File(testDirectory, fileName) : new File(codeDirectory, fileName);
             Source source = Source.newBuilder("python", file).build();
             assert source != null;
 
@@ -47,7 +48,10 @@ public abstract class ContextInitializer {{
             return null; // ??
         }}
     }}
+    public static Value getPythonClass(String fileName, String className, boolean isInTestDirectory) {{
+        return getPythonClasses(fileName, isInTestDirectory, className)[0];
+    }}
     public static Value getPythonClass(String fileName, String className) {{
-        return getPythonClasses(fileName, className)[0];
+        return getPythonClass(fileName, className, false);
     }}
 }}
