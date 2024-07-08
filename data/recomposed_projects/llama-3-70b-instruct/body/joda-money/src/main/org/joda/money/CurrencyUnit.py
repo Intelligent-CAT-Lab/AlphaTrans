@@ -1,6 +1,8 @@
 from __future__ import annotations
+import time
 import locale
 import re
+import os
 import io
 import typing
 from typing import *
@@ -36,6 +38,25 @@ class CurrencyUnit:
     __currenciesByCode: typing.Dict[str, CurrencyUnit] = {}
     __CODE: re.Pattern = re.compile("[A-Z][A-Z][A-Z]")
     __serialVersionUID: int = 327835287287
+
+    @staticmethod
+    def run_static_init():
+        try:
+            try:
+                cls_name = os.environ.get(
+                    "org.joda.money.CurrencyUnitDataProvider",
+                    "DefaultCurrencyUnitDataProvider",
+                )
+                cls = type(cls_name, (CurrencyUnitDataProvider,), {})
+                cls()._registerCurrencies()
+            except PermissionError as ex:
+                DefaultCurrencyUnitDataProvider()._registerCurrencies()
+        except RuntimeError as ex:
+            print(f"ERROR: {ex}")
+            raise ex
+        except Exception as ex:
+            print(f"ERROR: {ex}")
+            raise RuntimeError(str(ex), ex)
 
     @staticmethod
     def initialize_fields() -> None:
@@ -272,6 +293,6 @@ class CurrencyUnit:
         self.__decimalPlaces = decimalPlaces
 
 
-CurrencyUnit.initialize_fields()
-
 CurrencyUnit.run_static_init()
+
+CurrencyUnit.initialize_fields()

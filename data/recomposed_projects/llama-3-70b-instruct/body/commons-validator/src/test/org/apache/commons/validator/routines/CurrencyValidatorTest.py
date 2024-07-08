@@ -23,10 +23,10 @@ class CurrencyValidatorTest(unittest.TestCase):
 
     __CURRENCY_SYMBOL: str = "\u00A4"
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         super().tearDown()
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         self.__US_DOLLAR = (DecimalFormatSymbols(Locale.US)).getCurrencySymbol()
         self.__UK_POUND = (DecimalFormatSymbols(Locale.UK)).getCurrencySymbol()
 

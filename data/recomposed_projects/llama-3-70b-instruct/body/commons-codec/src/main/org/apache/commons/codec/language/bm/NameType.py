@@ -8,21 +8,15 @@ from typing import *
 class NameType:
 
     SEPHARDIC: NameType = None
-    GENERIC: NameType = None
-    ASHKENAZI: NameType = None
-    __name: str = ""
 
-    @staticmethod
-    def initialize_fields() -> None:
-        NameType.SEPHARDIC: NameType = None
-        NameType.GENERIC: NameType = None
-        NameType.ASHKENAZI: NameType = None
+    GENERIC: NameType = None
+
+    ASHKENAZI: NameType = None
+
+    __name: str = ""
 
     def getName(self) -> str:
         return self.__name
 
     def __init__(self, name: str) -> None:
         self.__name = name
-
-
-NameType.initialize_fields()

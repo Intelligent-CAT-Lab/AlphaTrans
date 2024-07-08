@@ -10,31 +10,6 @@ from src.main.org.apache.commons.codec.binary.BaseNCodec import *
 
 class Base16(BaseNCodec):
 
-    __UPPER_CASE_DECODE_TABLE: typing.List[int] = (
-        None  # LLM could not translate this field
-    )
-
-    __UPPER_CASE_ENCODE_TABLE: typing.List[int] = [
-        48,
-        49,
-        50,
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        65,
-        66,
-        67,
-        68,
-        69,
-        70,
-    ]
-    __BYTES_PER_UNENCODED_BLOCK: int = 1
-    __BYTES_PER_ENCODED_BLOCK: int = 2
-    __BITS_PER_ENCODED_BYTE: int = 4
     __encodeTable: typing.List[int] = None
 
     __decodeTable: typing.List[int] = None
@@ -58,6 +33,35 @@ class Base16(BaseNCodec):
         101,
         102,
     ]
+    __LOWER_CASE_DECODE_TABLE: typing.List[int] = (
+        None  # LLM could not translate this field
+    )
+
+    __UPPER_CASE_ENCODE_TABLE: typing.List[int] = [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+    ]
+    __UPPER_CASE_DECODE_TABLE: typing.List[int] = (
+        None  # LLM could not translate this field
+    )
+
+    __BYTES_PER_UNENCODED_BLOCK: int = 1
+    __BYTES_PER_ENCODED_BLOCK: int = 2
+    __BITS_PER_ENCODED_BYTE: int = 4
 
     def isInAlphabet0(self, octet: int) -> bool:
         return (octet & 0xFF) < len(self.__decodeTable) and self.__decodeTable[

@@ -19,7 +19,7 @@ class ISSNValidator:
     __ISSN_LEN: int = 8
     __ISSN_REGEX: str = "(?:ISSN )?(\\d{4})-(\\d{3}[0-9X])$"
     __serialVersionUID: int = 4319515687976420405
-    __EAN_VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(
+    __EAN_VALIDATOR: CodeValidator = CodeValidator4(
         __EAN_ISSN_REGEX, __EAN_ISSN_LEN, EAN13CheckDigit.EAN13_CHECK_DIGIT
     )
     __VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(

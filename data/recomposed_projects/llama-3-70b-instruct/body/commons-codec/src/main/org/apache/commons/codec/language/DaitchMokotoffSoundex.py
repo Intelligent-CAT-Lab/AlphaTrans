@@ -122,16 +122,13 @@ class DaitchMokotoffSoundex(StringEncoder):
     __FOLDINGS: typing.Dict[str, str] = {}
 
     __RULES: typing.Dict[str, typing.List[Rule]] = {}
+
     __MAX_LENGTH: int = 6
     __RESOURCE_FILE: str = "org/apache/commons/codec/language/dmrules.txt"
     __MULTILINE_COMMENT_START: str = "/*"
     __MULTILINE_COMMENT_END: str = "*/"
     __DOUBLE_QUOTE: str = '"'
     __COMMENT: str = "//"
-
-    @staticmethod
-    def initialize_fields() -> None:
-        DaitchMokotoffSoundex.__RULES: typing.Dict[str, typing.List[Rule]] = {}
 
     def soundex0(self, source: str) -> str:
         branches = self.__soundex1(source, True)
@@ -411,7 +408,5 @@ class DaitchMokotoffSoundex(StringEncoder):
                             e,
                         )
 
-
-DaitchMokotoffSoundex.initialize_fields()
 
 DaitchMokotoffSoundex.run_static_init()

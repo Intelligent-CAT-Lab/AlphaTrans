@@ -14,14 +14,6 @@ from src.main.org.apache.commons.validator.routines.RegexValidator import *
 
 class UrlValidator:
 
-    __AUTHORITY_REGEX: str = None  # LLM could not translate this field
-
-    __USERINFO_CHARS_REGEX: str = "[a-zA-Z0-9%-._~!$&'()*+,;=]"
-    __IPV6_REGEX: str = "::FFFF:(?:\\d{1,3}\\.){3}\\d{1,3}|[0-9a-fA-F:]+"
-    __AUTHORITY_CHARS_REGEX: str = "\\p{Alnum}\\-\\."
-    __SCHEME_REGEX: str = "^\\p{Alpha}[\\p{Alnum}\\+\\-\\.]*"
-    __MAX_UNSIGNED_16_BIT_INT: int = 0xFFFF
-    __serialVersionUID: int = 7557161713937335013
     ALLOW_LOCAL_URLS: int = 1 << 3
     NO_FRAGMENTS: int = 1 << 2
     ALLOW_2_SLASHES: int = 1 << 1
@@ -42,13 +34,21 @@ class UrlValidator:
     __PARSE_AUTHORITY_PORT: int = 3
     __PARSE_AUTHORITY_HOST_IP: int = 2
     __PARSE_AUTHORITY_IPV6: int = 1
+    __AUTHORITY_REGEX: str = None  # LLM could not translate this field
+
+    __USERINFO_CHARS_REGEX: str = "[a-zA-Z0-9%-._~!$&'()*+,;=]"
+    __IPV6_REGEX: str = "::FFFF:(?:\\d{1,3}\\.){3}\\d{1,3}|[0-9a-fA-F:]+"
+    __AUTHORITY_CHARS_REGEX: str = "\\p{Alnum}\\-\\."
+    __SCHEME_REGEX: str = "^\\p{Alpha}[\\p{Alnum}\\+\\-\\.]*"
+    __MAX_UNSIGNED_16_BIT_INT: int = 0xFFFF
+    __serialVersionUID: int = 7557161713937335013
+    __QUERY_PATTERN: re.Pattern = re.compile(__QUERY_REGEX)
+    __PATH_PATTERN: re.Pattern = re.compile(__PATH_REGEX)
     __AUTHORITY_PATTERN: re.Pattern = re.compile(__AUTHORITY_REGEX)
     __USERINFO_FIELD_REGEX: str = (
         __USERINFO_CHARS_REGEX + "+" + "(?::" + __USERINFO_CHARS_REGEX + "*)?@"
     )
     __SCHEME_PATTERN: re.Pattern = re.compile(__SCHEME_REGEX)
-    __QUERY_PATTERN: re.Pattern = re.compile(__QUERY_REGEX)
-    __PATH_PATTERN: re.Pattern = re.compile(__PATH_REGEX)
 
     @staticmethod
     def initialize_fields() -> None:

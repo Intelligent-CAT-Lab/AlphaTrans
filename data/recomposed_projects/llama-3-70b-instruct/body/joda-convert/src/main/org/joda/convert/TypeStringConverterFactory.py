@@ -33,9 +33,14 @@ class TypeStringConverter(TypedStringConverter):
 class TypeStringConverterFactory(StringConverterFactory):
 
     INSTANCE: TypeStringConverterFactory = None
+    INSTANCE: TypeStringConverterFactory = None
 
     @staticmethod
     def initialize_fields() -> None:
+        TypeStringConverterFactory.INSTANCE: TypeStringConverterFactory = (
+            TypeStringConverterFactory()
+        )
+
         TypeStringConverterFactory.INSTANCE: TypeStringConverterFactory = (
             TypeStringConverterFactory()
         )

@@ -45,7 +45,7 @@ class TestCurrencyUnit(unittest.TestCase):
         self.assertFalse(b.equals(c))
 
     def test_compareTo_null(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CurrencyUnit.of1("EUR").compareTo(None)
 
     def test_compareTo(self) -> None:
@@ -207,7 +207,7 @@ class TestCurrencyUnit(unittest.TestCase):
         self.assertEqual("No currency found for country 'gb'", str(cm.exception))
 
     def test_factory_ofCountry_String_nullString(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CurrencyUnit.ofCountry(None)
 
     def test_factory_ofCountry_String(self) -> None:
@@ -220,7 +220,7 @@ class TestCurrencyUnit(unittest.TestCase):
         self.assertEqual("No currency found for locale 'en_XY'", str(cm.exception))
 
     def test_factory_of_Locale_nullLocale(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CurrencyUnit.of2(None)
 
     def test_factory_of_LocaleUS(self) -> None:
@@ -278,7 +278,7 @@ class TestCurrencyUnit(unittest.TestCase):
         self.assertEqual("Unknown currency '111'", str(cm.exception))
 
     def test_factory_ofNumericCode_String_nullString(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CurrencyUnit.ofNumericCode0(None)
 
     def test_factory_ofNumericCode_String_1charNoPad(self) -> None:
@@ -319,7 +319,7 @@ class TestCurrencyUnit(unittest.TestCase):
         assert str(ex.value) == "Unknown currency 'ABC'"
 
     def test_factory_of_String_nullString(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             CurrencyUnit.of1(None)
 
     def test_factory_of_String(self) -> None:
@@ -327,7 +327,7 @@ class TestCurrencyUnit(unittest.TestCase):
         self.assertEqual("GBP", test.getCode())
 
     def test_factory_of_Currency_nullCurrency(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CurrencyUnit.of0(None)
 
     def test_factory_of_Currency(self) -> None:
@@ -391,7 +391,7 @@ class TestCurrencyUnit(unittest.TestCase):
             CurrencyUnit.registerCurrency0("GBP", 991, 2, ["GB"])
 
     def test_registeredCurrency_nullCountry(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CurrencyUnit.registerCurrency0("TST", 991, 2, [None])
 
     def test_registeredCurrency_validDP_big(self) -> None:
@@ -444,7 +444,7 @@ class TestCurrencyUnit(unittest.TestCase):
             CurrencyUnit.registerCurrency0("", 991, 2, ["TS"])
 
     def test_registeredCurrency_nullCode(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CurrencyUnit.registerCurrency0(None, 991, 2, ["TS"])
 
     def test_registeredCurrencies_sorted(self) -> None:

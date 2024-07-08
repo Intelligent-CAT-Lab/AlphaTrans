@@ -13,8 +13,8 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
 
     __dateValidator: DateValidator = None
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self.__dateValidator = DateValidator.DateValidator1()
         self._validator = self.__dateValidator
 

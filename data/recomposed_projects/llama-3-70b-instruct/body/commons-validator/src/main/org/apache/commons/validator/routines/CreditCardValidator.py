@@ -37,21 +37,6 @@ class CreditCardRange:
 
 class CreditCardValidator:
 
-    VPAY_VALIDATOR: CodeValidator = CodeValidator.CodeValidator5(
-        "^(4)(\\d{12,18})$", LUHN_VALIDATOR
-    )
-    VISA_VALIDATOR: CodeValidator = CodeValidator5(
-        "^(4)(\\d{12}|\\d{15})$", LUHN_VALIDATOR
-    )
-    MASTERCARD_VALIDATOR_PRE_OCT2016: CodeValidator = CodeValidator5(
-        "^(5[1-5]\\d{14})$", LUHN_VALIDATOR
-    )
-    DINERS_VALIDATOR: CodeValidator = CodeValidator.CodeValidator5(
-        "^(30[0-5]\\d{11}|3095\\d{10}|36\\d{12}|3[8-9]\\d{12})$", LUHN_VALIDATOR
-    )
-    AMEX_VALIDATOR: CodeValidator = CodeValidator.CodeValidator5(
-        "^(3[47]\\d{13})$", LUHN_VALIDATOR
-    )
     MASTERCARD_PRE_OCT2016: int = 1 << 6
     VPAY: int = 1 << 5
     DINERS: int = 1 << 4
@@ -60,23 +45,23 @@ class CreditCardValidator:
     VISA: int = 1 << 1
     AMEX: int = 1 << 0
     NONE: int = 0
-    MASTERCARD_REGEX: RegexValidator = RegexValidator.RegexValidator1(
+    __MASTERCARD_REGEX: RegexValidator = RegexValidator(
         [
-            "^(5[1-5]\\d{14})$",  # 51 - 55 (pre Oct 2016)
-            "^(2221\\d{12})$",  # 222100 - 222199
-            "^(222[2-9]\\d{12})$",  # 222200 - 222999
-            "^(22[3-9]\\d{13})$",  # 223000 - 229999
-            "^(2[3-6]\\d{14})$",  # 230000 - 269999
-            "^(27[01]\\d{13})$",  # 270000 - 271999
-            "^(2720\\d{12})$",  # 272000 - 272099
+            r"^(5[1-5]\d{14})$",
+            r"^(2221\d{12})$",
+            r"^(222[2-9]\d{12})$",
+            r"^(22[3-9]\d{13})$",
+            r"^(2[3-6]\d{14})$",
+            r"^(27[01]\d{13})$",
+            r"^(2720\d{12})$",
         ]
     )
-    __DISCOVER_REGEX: RegexValidator = RegexValidator.RegexValidator1(
+    __DISCOVER_REGEX: RegexValidator = RegexValidator(
         [
-            "^(6011\\d{12,13})$",
-            "^(64[4-9]\\d{13})$",
-            "^(65\\d{14})$",
-            "^(62[2-8]\\d{13})$",
+            r"^(6011\d{12,13})$",
+            r"^(64[4-9]\d{13})$",
+            r"^(65\d{14})$",
+            r"^(62[2-8]\d{13})$",
         ]
     )
     __LUHN_VALIDATOR: CheckDigit = LuhnCheckDigit.LUHN_CHECK_DIGIT
@@ -84,13 +69,61 @@ class CreditCardValidator:
 
     __MAX_CC_LENGTH: int = 19
     __MIN_CC_LENGTH: int = 12
-    serialVersionUID: int = 5955978921148959496
-    MASTERCARD_VALIDATOR: CodeValidator = CodeValidator.CodeValidator2(
-        __MASTERCARD_REGEX, __LUHN_VALIDATOR
-    )
-    DISCOVER_VALIDATOR: CodeValidator = CodeValidator2(
-        __DISCOVER_REGEX, __LUHN_VALIDATOR
-    )
+    __serialVersionUID: int = 5955978921148959496
+    VPAY_VALIDATOR: CodeValidator = None
+    VISA_VALIDATOR: CodeValidator = None
+    MASTERCARD_VALIDATOR_PRE_OCT2016: CodeValidator = None
+    MASTERCARD_VALIDATOR: CodeValidator = None
+    DISCOVER_VALIDATOR: CodeValidator = None
+    DINERS_VALIDATOR: CodeValidator = None
+    AMEX_VALIDATOR: CodeValidator = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        CreditCardValidator.VPAY_VALIDATOR: CodeValidator = (
+            CodeValidator.CodeValidator5(
+                r"^(4)(d{12,18})$", CreditCardValidator.__LUHN_VALIDATOR
+            )
+        )
+
+        CreditCardValidator.VISA_VALIDATOR: CodeValidator = (
+            CodeValidator.CodeValidator5(
+                r"^(4)(d{12}|d{15})$", CreditCardValidator.__LUHN_VALIDATOR
+            )
+        )
+
+        CreditCardValidator.MASTERCARD_VALIDATOR_PRE_OCT2016: CodeValidator = (
+            CodeValidator.CodeValidator5(
+                "^(5[1-5]d{14})$", CreditCardValidator.__LUHN_VALIDATOR
+            )
+        )
+
+        CreditCardValidator.MASTERCARD_VALIDATOR: CodeValidator = (
+            CodeValidator.CodeValidator2(
+                CreditCardValidator.__MASTERCARD_REGEX,
+                CreditCardValidator.__LUHN_VALIDATOR,
+            )
+        )
+
+        CreditCardValidator.DISCOVER_VALIDATOR: CodeValidator = (
+            CodeValidator.CodeValidator2(
+                CreditCardValidator.__DISCOVER_REGEX,
+                CreditCardValidator.__LUHN_VALIDATOR,
+            )
+        )
+
+        CreditCardValidator.DINERS_VALIDATOR: CodeValidator = (
+            CodeValidator.CodeValidator5(
+                r"^(30[0-5]d{11}|3095d{10}|36d{12}|3[8-9]d{12})$",
+                CreditCardValidator.__LUHN_VALIDATOR,
+            )
+        )
+
+        CreditCardValidator.AMEX_VALIDATOR: CodeValidator = (
+            CodeValidator.CodeValidator5(
+                r"^(3[47]d{13})$", CreditCardValidator.__LUHN_VALIDATOR
+            )
+        )
 
     @staticmethod
     def createRangeValidator(
@@ -106,7 +139,7 @@ class CreditCardValidator:
                 if valueLength == length:
                     return True
             return False
-        return valueLength >= range.minLen and valueLength <= range.maxLen
+        return range.minLen <= valueLength <= range.maxLen
 
     def validate(self, card: str) -> typing.Any:
         if card is None or len(card) == 0:
@@ -119,7 +152,7 @@ class CreditCardValidator:
         return None
 
     def isValid(self, card: str) -> bool:
-        if card == None or len(card) == 0:
+        if card is None or len(card) == 0:
             return False
         for cardType in self.__cardTypes:
             if cardType.isValid(card):
@@ -142,7 +175,7 @@ class CreditCardValidator:
             1,
             0,
             None,
-            [CodeValidator(1, LUHN_VALIDATOR, maxLen, None, minLen, "(\\d+)")],
+            [CodeValidator(1, LUHN_VALIDATOR, maxLen, None, minLen, r"(\d+)")],
         )
 
     def __init__(
@@ -169,3 +202,6 @@ class CreditCardValidator:
 
     def __isOn(self, options: int, flag: int) -> bool:
         return (options & flag) > 0
+
+
+CreditCardValidator.initialize_fields()

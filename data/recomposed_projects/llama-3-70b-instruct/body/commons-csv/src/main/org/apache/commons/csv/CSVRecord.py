@@ -113,7 +113,7 @@ class CSVRecord:
             )
         try:
             return self.__values[index.intValue()]
-        except ArrayIndexOutOfBoundsException as e:
+        except IndexError as e:
             raise ValueError(
                 String.format(
                     "Index for header '%s' is %d but CSVRecord only has %d values!",

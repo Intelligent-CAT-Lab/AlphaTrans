@@ -49,7 +49,7 @@ class PercentValidator(BigDecimalValidator):
         return PercentValidator(True)
 
     def __init__(self, strict: bool) -> None:
-        super().__init__(strict, PERCENT_FORMAT, True)
+        super().__init__(strict, self.PERCENT_FORMAT, True)
 
     @staticmethod
     def getInstance() -> BigDecimalValidator:

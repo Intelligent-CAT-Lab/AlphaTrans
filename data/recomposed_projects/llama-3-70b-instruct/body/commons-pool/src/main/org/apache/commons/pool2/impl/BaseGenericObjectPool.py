@@ -134,10 +134,6 @@ class Evictor:
 
 class BaseGenericObjectPool(BaseObject, ABC):
 
-    __EVICTION_POLICY_TYPE_NAME: str = None  # LLM could not translate this field
-
-    evictionIterator: EvictionIterator = None
-
     _abandonedConfig: AbandonedConfig = None
 
     destroyedByBorrowValidationCount: int = 0
@@ -189,6 +185,9 @@ class BaseGenericObjectPool(BaseObject, ABC):
     __DEFAULT_REMOVE_ABANDONED_TIMEOUT: datetime.timedelta = datetime.timedelta(
         seconds=2147483647
     )
+    __EVICTION_POLICY_TYPE_NAME: str = None  # LLM could not translate this field
+
+    evictionIterator: EvictionIterator = None
 
     @staticmethod
     def initialize_fields() -> None:
@@ -426,9 +425,9 @@ class BaseGenericObjectPool(BaseObject, ABC):
         try:
             try:
                 self.__setEvictionPolicy1(evictionPolicyClassName, classLoader)
-            except (ClassCastException, ClassNotFoundException) as e:
+            except (TypeError, ClassNotFoundException) as e:
                 self.__setEvictionPolicy1(evictionPolicyClassName, epClassLoader)
-        except ClassCastException as e:
+        except TypeError as e:
             raise ValueError(
                 "Class "
                 + evictionPolicyClassName

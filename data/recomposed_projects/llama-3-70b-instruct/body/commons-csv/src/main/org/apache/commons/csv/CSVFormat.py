@@ -237,34 +237,30 @@ class Builder:
 class Predefined:
 
     TDF: Predefined = None
-    RFC4180: Predefined = None
-    PostgreSQLText: Predefined = None
-    PostgreSQLCsv: Predefined = None
-    Oracle: Predefined = None
-    MySQL: Predefined = None
-    MongoDBTsv: Predefined = None
-    MongoDBCsv: Predefined = None
-    InformixUnloadCsv: Predefined = None
-    InformixUnload: Predefined = None
-    Excel: Predefined = None
-    Default: Predefined = None
-    __format: CSVFormat = None
 
-    @staticmethod
-    def initialize_fields() -> None:
-        Predefined.TDF: Predefined = None
-        Predefined.RFC4180: Predefined = None
-        Predefined.PostgreSQLText: Predefined = None
-        Predefined.PostgreSQLCsv: Predefined = None
-        Predefined.Oracle: Predefined = None
-        Predefined.MySQL: Predefined = None
-        Predefined.MongoDBTsv: Predefined = None
-        Predefined.MongoDBCsv: Predefined = None
-        Predefined.InformixUnloadCsv: Predefined = None
-        Predefined.InformixUnload: Predefined = None
-        Predefined.Excel: Predefined = None
-        Predefined.Default: Predefined = None
-        Predefined.__format: CSVFormat = None
+    RFC4180: Predefined = None
+
+    PostgreSQLText: Predefined = None
+
+    PostgreSQLCsv: Predefined = None
+
+    Oracle: Predefined = None
+
+    MySQL: Predefined = None
+
+    MongoDBTsv: Predefined = None
+
+    MongoDBCsv: Predefined = None
+
+    InformixUnloadCsv: Predefined = None
+
+    InformixUnload: Predefined = None
+
+    Excel: Predefined = None
+
+    Default: Predefined = None
+
+    __format: CSVFormat = None
 
     def getFormat(self) -> CSVFormat:
         return self.__format
@@ -350,7 +346,8 @@ class CSVFormat:
             False,
             None,
             Constants.CRLF,
-        )        
+        )
+
         TDF: CSVFormat = (
             CSVFormat.DEFAULT.builder()
             .setDelimiter0(Constants.TAB)
@@ -454,8 +451,6 @@ class CSVFormat:
             .set_allow_missing_column_names(True)
             .build()
         )
-
-        
 
     def withTrim1(self, trim: bool) -> CSVFormat:
         return self.builder().setTrim(trim).build()
@@ -1252,7 +1247,5 @@ class CSVFormat:
     def copy(self) -> CSVFormat:
         return self.builder().build()
 
-
-Predefined.initialize_fields()
 
 CSVFormat.initialize_fields()

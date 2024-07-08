@@ -155,7 +155,7 @@ class MoneyFormatter:
     @staticmethod
     def checkNotNull(object: typing.Any, message: str) -> None:
         if object is None:
-            raise NullPointerException(message)
+            raise RuntimeError(message)
 
     def getPrinterParser(self) -> MultiPrinterParser:
         return self.__printerParser

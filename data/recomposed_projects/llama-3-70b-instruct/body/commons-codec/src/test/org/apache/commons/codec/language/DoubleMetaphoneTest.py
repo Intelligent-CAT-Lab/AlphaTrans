@@ -14,6 +14,10 @@ from src.main.org.apache.commons.codec.language.DoubleMetaphone import *
 
 class DoubleMetaphoneTest(StringEncoderAbstractTest, unittest.TestCase):
 
+    __MATCHES: typing.List[typing.List[str]] = (
+        None  # LLM could not translate this field
+    )
+
     __FIXTURE: typing.List[typing.List[str]] = (
         None  # LLM could not translate this field
     )

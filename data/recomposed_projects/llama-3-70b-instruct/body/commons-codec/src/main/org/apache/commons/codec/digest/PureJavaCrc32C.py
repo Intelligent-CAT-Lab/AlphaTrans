@@ -7,6 +7,22 @@ from typing import *
 
 class PureJavaCrc32C:
 
+    __T: typing.List[int] = None  # LLM could not translate this field
+
+    __T8_7_start: int = None  # LLM could not translate this field
+
+    __T8_6_start: int = None  # LLM could not translate this field
+
+    __T8_5_start: int = None  # LLM could not translate this field
+
+    __T8_4_start: int = None  # LLM could not translate this field
+
+    __T8_3_start: int = None  # LLM could not translate this field
+
+    __T8_2_start: int = None  # LLM could not translate this field
+
+    __T8_1_start: int = None  # LLM could not translate this field
+
     __T8_0_start: int = None  # LLM could not translate this field
 
     __crc: int = 0

@@ -12,45 +12,6 @@ from src.main.org.apache.commons.codec.binary.StringUtils import *
 
 class Base32(BaseNCodec):
 
-    __DECODE_TABLE: typing.List[int] = None  # LLM could not translate this field
-
-    __ENCODE_TABLE: typing.List[int] = [
-        65,
-        66,
-        67,
-        68,
-        69,
-        70,
-        71,
-        72,
-        73,
-        74,
-        75,
-        76,
-        77,
-        78,
-        79,
-        80,
-        81,
-        82,
-        83,
-        84,
-        85,
-        86,
-        87,
-        88,
-        89,
-        90,
-        50,
-        51,
-        52,
-        53,
-        54,
-        55,
-    ]
-    __BYTES_PER_UNENCODED_BLOCK: int = 5
-    __BYTES_PER_ENCODED_BLOCK: int = 8
-    __BITS_PER_ENCODED_BYTE: int = 5
     __lineSeparator: typing.List[int] = None
 
     __encodeTable: typing.List[int] = None
@@ -100,6 +61,47 @@ class Base32(BaseNCodec):
         85,
         86,
     ]
+    __HEX_DECODE_TABLE: typing.List[int] = None  # LLM could not translate this field
+
+    __ENCODE_TABLE: typing.List[int] = [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+    ]
+    __DECODE_TABLE: typing.List[int] = None  # LLM could not translate this field
+
+    __BYTES_PER_UNENCODED_BLOCK: int = 5
+    __BYTES_PER_ENCODED_BLOCK: int = 8
+    __BITS_PER_ENCODED_BYTE: int = 5
 
     def isInAlphabet0(self, octet: int) -> bool:
         return (

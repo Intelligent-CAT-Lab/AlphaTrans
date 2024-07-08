@@ -545,6 +545,6 @@ TypeVariableInvocationHandler.run_static_init()
 
 ClassOwnership.initialize_fields()
 
-JavaVersion.initialize_fields()
-
 JavaVersion.run_static_init()
+
+JavaVersion.initialize_fields()

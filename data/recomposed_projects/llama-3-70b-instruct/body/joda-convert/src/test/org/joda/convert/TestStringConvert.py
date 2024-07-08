@@ -374,7 +374,7 @@ class TestStringConvert(unittest.TestCase):
 
     def test_convert_annotationSuperFactorySubViaSub2(self) -> None:
         test: StringConvert = StringConvert.StringConvert1()
-        with self.assertRaises(ClassCastException):
+        with self.assertRaises(TypeError):
             test.convertFromString(SuperFactorySub.class_, "25m")
 
     def test_convert_annotationSuperFactorySubViaSub1(self) -> None:

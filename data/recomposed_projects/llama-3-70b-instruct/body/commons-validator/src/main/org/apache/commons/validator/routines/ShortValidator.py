@@ -60,7 +60,7 @@ class ShortValidator(AbstractNumberValidator):
 
     @staticmethod
     def ShortValidator1() -> ShortValidator:
-        return ShortValidator(True, STANDARD_FORMAT)
+        return ShortValidator(True, ShortValidator.STANDARD_FORMAT)
 
     def __init__(self, strict: bool, formatType: int) -> None:
         super().__init__(strict, formatType, False)

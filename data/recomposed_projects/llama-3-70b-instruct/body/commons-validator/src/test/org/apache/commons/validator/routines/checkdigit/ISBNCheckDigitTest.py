@@ -10,8 +10,8 @@ from src.main.org.apache.commons.validator.routines.checkdigit.ISBNCheckDigit im
 
 class ISBNCheckDigitTest(AbstractCheckDigitTest):
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self._routine = ISBNCheckDigit.ISBN_CHECK_DIGIT
         self._valid = [
             "9780072129519",

@@ -9,15 +9,13 @@ from typing import *
 
 class B64:
 
-    B64T_STRING: str = None
+    B64T_STRING: str = (
+        "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    )
     B64T_ARRAY: typing.List[str] = None
 
     @staticmethod
     def initialize_fields() -> None:
-        B64.B64T_STRING: str = (
-            "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-        )
-
         B64.B64T_ARRAY: typing.List[str] = list(B64T_STRING)
 
     @staticmethod

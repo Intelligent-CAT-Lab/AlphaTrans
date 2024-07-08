@@ -9,16 +9,13 @@ from typing import *
 class EngineState:
 
     __state: ChunkState = None
+
     __stackLen: int = 0
 
     __cvStack: typing.List[typing.List[int]] = [None] * 54
     __flags: int = 0
 
     __key: typing.List[int] = None
-
-    @staticmethod
-    def initialize_fields() -> None:
-        EngineState.__state: ChunkState = None
 
     def __popCV(self) -> typing.List[int]:
         return self.__cvStack[self.__stackLen - 1]
@@ -78,12 +75,16 @@ class ChunkState:
 
     __blockLength: int = 0
 
-    __block: typing.List[int] = [0] * BLOCK_LEN
+    __block: typing.List[int] = None
     __flags: int = 0
 
     __chunkCounter: int = 0
 
     __chainingValue: typing.List[int] = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        ChunkState.__block: typing.List[int] = [0] * ChunkState.__BLOCK_LEN
 
     def output(self) -> Output:
         blockWords = Blake3.unpackInts(self.__block, BLOCK_INTS)
@@ -202,6 +203,7 @@ class Blake3:
         [11, 15, 5, 0, 1, 9, 8, 6, 14, 10, 2, 12, 3, 4, 7, 13],
     ]
     __engineState: EngineState = None
+
     __DERIVE_KEY_MATERIAL: int = 1 << 6
     __DERIVE_KEY_CONTEXT: int = 1 << 5
     __KEYED_HASH: int = 1 << 4
@@ -227,10 +229,6 @@ class Blake3:
     __BLOCK_LEN: int = 64
     __INT_BYTES: int = 4
     __KEY_INTS: int = __KEY_LEN // __INT_BYTES
-
-    @staticmethod
-    def initialize_fields() -> None:
-        Blake3.__engineState: EngineState = None
 
     @staticmethod
     def keyedHash(key: typing.List[int], data: typing.List[int]) -> typing.List[int]:
@@ -397,6 +395,4 @@ class Blake3:
         self.__engineState = EngineState(key, flags)
 
 
-EngineState.initialize_fields()
-
-Blake3.initialize_fields()
+ChunkState.initialize_fields()

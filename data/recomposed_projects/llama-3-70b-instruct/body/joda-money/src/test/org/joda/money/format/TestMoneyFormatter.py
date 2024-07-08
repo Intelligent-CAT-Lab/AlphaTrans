@@ -103,7 +103,7 @@ class TestMoneyFormatter(unittest.TestCase):
             self.__iParseTest.parse("", -1)
 
     def test_parse_CharSequenceInt_nullCharSequence(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             self.__iParseTest.parse(None, 0)
 
     def test_parse_CharSequenceInt_cannotParse(self) -> None:
@@ -335,7 +335,7 @@ class TestMoneyFormatter(unittest.TestCase):
         ]
 
     def test_parseMoney_CharSequence_nullCharSequence(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             self.__iParseTest.parseMoney(None)
 
     def test_parseMoney_CharSequence_cannotParse(self) -> None:
@@ -360,7 +360,7 @@ class TestMoneyFormatter(unittest.TestCase):
         self.assertEqual(self.MONEY_GBP_12_34, test)
 
     def test_parseBigMoney_CharSequence_nullCharSequence(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             self.__iParseTest.parseBigMoney(None)
 
     def test_parseBigMoney_CharSequence_cannotParse(self) -> None:
@@ -401,11 +401,11 @@ class TestMoneyFormatter(unittest.TestCase):
         self.assertEqual(self.MONEY_GBP_12_34.toBigMoney(), test)
 
     def test_printIO_AppendableBigMoneyProvider_nullBigMoneyProvider(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             self.__iPrintTest.printIO(IOAppendable(), None)
 
     def test_printIO_AppendableBigMoneyProvider_nullAppendable(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             self.__iPrintTest.printIO(None, self.MONEY_GBP_12_34)
 
     def test_printIO_AppendableBigMoneyProvider_cannotPrint(self) -> None:
@@ -422,11 +422,11 @@ class TestMoneyFormatter(unittest.TestCase):
         self.assertEqual("GBP hello", buf.getvalue())
 
     def test_print_AppendableBigMoneyProvider_nullBigMoneyProvider(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__iPrintTest.print1(StringBuilder(), None)
 
     def test_print_AppendableBigMoneyProvider_nullAppendable(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             self.__iPrintTest.print1(None, self.MONEY_GBP_12_34)
 
     def test_print_AppendableBigMoneyProvider_cannotPrint(self) -> None:
@@ -447,7 +447,7 @@ class TestMoneyFormatter(unittest.TestCase):
         self.assertEqual("GBP hello", buf.toString())
 
     def test_print_BigMoneyProvider_nullBigMoneyProvider(self) -> None:
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             self.__iPrintTest.print0(None)
 
     def test_print_BigMoneyProvider_cannotPrint(self) -> None:
@@ -458,7 +458,7 @@ class TestMoneyFormatter(unittest.TestCase):
         self.assertEqual("GBP hello", self.__iPrintTest.print0(self.MONEY_GBP_12_34))
 
     def test_withLocale_nullLocale(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             self.__iPrintTest.withLocale(None)
 
     def test_withLocale(self) -> None:

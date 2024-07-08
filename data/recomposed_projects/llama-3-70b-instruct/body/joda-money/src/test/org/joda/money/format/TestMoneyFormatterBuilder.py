@@ -311,7 +311,7 @@ class TestMoneyFormatterBuilder(unittest.TestCase):
         pass  # LLM could not translate this method
 
     def test_appendAmount_MoneyAmountStyle_null(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             self.__iBuilder.appendAmount1(None)
 
     def test_appendAmountLocalized_JPY_2345(self) -> None:

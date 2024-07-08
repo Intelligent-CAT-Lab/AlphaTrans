@@ -75,21 +75,6 @@ class LazyHolder:
 
 class DomainValidator:
 
-    __GENERIC_TLDS: typing.List[str] = None  # LLM could not translate this field
-
-    __INFRASTRUCTURE_TLDS: typing.List[str] = ["arpa"]
-    __hostnameRegex: RegexValidator = RegexValidator.RegexValidator3(DOMAIN_LABEL_REGEX)
-    __allowLocal: bool = False
-
-    __UNEXPECTED_ENUM_VALUE: str = "Unexpected enum value: "
-    __DOMAIN_NAME_REGEX: str = (
-        "^(?:" + DOMAIN_LABEL_REGEX + "\\.)+" + "(" + TOP_LABEL_REGEX + ")\\.?$"
-    )
-    __TOP_LABEL_REGEX: str = "\\p{Alpha}(?>[\\p{Alnum}-]{0,61}\\p{Alnum})?"
-    __DOMAIN_LABEL_REGEX: str = "\\p{Alnum}(?>[\\p{Alnum}-]{0,61}\\p{Alnum})?"
-    __serialVersionUID: int = -4407125112880174009
-    __EMPTY_STRING_ARRAY: typing.List[str] = []
-    __MAX_DOMAIN_LENGTH: int = 253
     mylocalTLDsMinus: typing.List[str] = None
 
     mylocalTLDsPlus: typing.List[str] = None
@@ -106,8 +91,6 @@ class DomainValidator:
     __localTLDsMinus: typing.List[str] = None
     __genericTLDsMinus: typing.List[str] = None
     __countryCodeTLDsMinus: typing.List[str] = None
-    __genericTLDsPlus: typing.List[str] = __EMPTY_STRING_ARRAY
-    __countryCodeTLDsPlus: typing.List[str] = __EMPTY_STRING_ARRAY
     __inUse: bool = False
     __LOCAL_TLDS: typing.List[str] = ["localdomain", "localhost"]
     __COUNTRY_CODE_TLDS: typing.List[str] = [
@@ -418,6 +401,23 @@ class DomainValidator:
         "zm",
         "zw",
     ]
+    __GENERIC_TLDS: typing.List[str] = None  # LLM could not translate this field
+
+    __INFRASTRUCTURE_TLDS: typing.List[str] = ["arpa"]
+    __allowLocal: bool = False
+
+    __UNEXPECTED_ENUM_VALUE: str = "Unexpected enum value: "
+    __TOP_LABEL_REGEX: str = "\\p{Alpha}(?>[\\p{Alnum}-]{0,61}\\p{Alnum})?"
+    __DOMAIN_LABEL_REGEX: str = "\\p{Alnum}(?>[\\p{Alnum}-]{0,61}\\p{Alnum})?"
+    __serialVersionUID: int = -4407125112880174009
+    __EMPTY_STRING_ARRAY: typing.List[str] = []
+    __MAX_DOMAIN_LENGTH: int = 253
+    __genericTLDsPlus: typing.List[str] = __EMPTY_STRING_ARRAY
+    __countryCodeTLDsPlus: typing.List[str] = __EMPTY_STRING_ARRAY
+    __hostnameRegex: RegexValidator = RegexValidator(__DOMAIN_LABEL_REGEX)
+    __DOMAIN_NAME_REGEX: str = (
+        f"^(?:{__DOMAIN_LABEL_REGEX}\\.)+({__TOP_LABEL_REGEX})\\.?$"
+    )
     __domainRegex: RegexValidator = RegexValidator.RegexValidator3(__DOMAIN_NAME_REGEX)
 
     @staticmethod

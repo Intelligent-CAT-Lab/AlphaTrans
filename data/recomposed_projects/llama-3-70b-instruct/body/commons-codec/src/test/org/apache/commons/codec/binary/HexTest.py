@@ -145,7 +145,7 @@ class HexTest(unittest.TestCase):
 
         pass  # LLM could not translate this method
 
-    def testEncodeClassCastException(self) -> None:
+    def testEncodeTypeError(self) -> None:
 
         pass  # LLM could not translate this method
 
@@ -202,7 +202,7 @@ class HexTest(unittest.TestCase):
     def testDecodeHexCharArrayOddCharacters1(self) -> None:
         self.__checkDecodeHexCharArrayOddCharacters0(["A"])
 
-    def testDecodeClassCastException(self) -> None:
+    def testDecodeTypeError(self) -> None:
 
         pass  # LLM could not translate this method
 
@@ -257,7 +257,7 @@ class HexTest(unittest.TestCase):
         assertTrue(Hex(2, None, None).toString().indexOf(Hex.DEFAULT_CHARSET_NAME) >= 0)
 
     def testCustomCharsetBadName(self) -> None:
-        with self.assertRaises(UnsupportedCharsetException):
+        with self.assertRaises(ValueError):
             Hex.Hex0(self.__BAD_ENCODING_NAME)
 
     def testCustomCharset0(self) -> None:

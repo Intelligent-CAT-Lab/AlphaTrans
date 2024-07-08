@@ -60,7 +60,7 @@ class DoubleValidator(AbstractNumberValidator):
 
     @staticmethod
     def DoubleValidator1() -> DoubleValidator:
-        return DoubleValidator(True, STANDARD_FORMAT)
+        return DoubleValidator(True, DoubleValidator.STANDARD_FORMAT)
 
     def __init__(self, strict: bool, formatType: int) -> None:
         super().__init__(strict, formatType, True)

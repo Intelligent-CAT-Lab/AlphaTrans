@@ -10,8 +10,8 @@ from src.main.org.apache.commons.validator.routines.checkdigit.ModulusTenCheckDi
 
 class ModulusTenEAN13CheckDigitTest(AbstractCheckDigitTest):
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self._routine = ModulusTenCheckDigit.ModulusTenCheckDigit1([1, 3], True)
         self._valid = [
             "9780072129519",

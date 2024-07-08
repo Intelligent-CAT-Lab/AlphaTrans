@@ -93,7 +93,7 @@ class Hex(BinaryDecoder, BinaryEncoder):
             return self.decode1(object)
         try:
             return Hex.decodeHex0(object)
-        except ClassCastException as e:
+        except TypeError as e:
             raise DecoderException(e.getMessage(), e)
 
     def decode1(self, buffer: typing.Union[bytearray, memoryview]) -> typing.List[int]:

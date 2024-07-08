@@ -28,6 +28,15 @@ class QuotedPrintableCodec:
 
     __charset: str = ""
 
+    @staticmethod
+    def run_static_init():
+        for i in range(33, 61):
+            QuotedPrintableCodec.__PRINTABLE_CHARS[i] = True
+        for i in range(62, 127):
+            QuotedPrintableCodec.__PRINTABLE_CHARS[i] = True
+        QuotedPrintableCodec.__PRINTABLE_CHARS[QuotedPrintableCodec.__TAB] = True
+        QuotedPrintableCodec.__PRINTABLE_CHARS[QuotedPrintableCodec.__SPACE] = True
+
     def encode4(self, sourceStr: str, sourceCharset: str) -> str:
         if sourceStr is None:
             return None

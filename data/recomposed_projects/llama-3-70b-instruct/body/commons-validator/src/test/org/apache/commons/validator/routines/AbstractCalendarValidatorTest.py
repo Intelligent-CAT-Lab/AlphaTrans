@@ -86,12 +86,12 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
             AbstractCalendarValidatorTest._createDate(None, 20050101, 0),
         ]
 
-    def _tearDown(self) -> None:
-        super()._tearDown()
+    def tearDown(self) -> None:
+        super().tearDown()
         self._validator = None
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
 
     @staticmethod
     def _createDate(

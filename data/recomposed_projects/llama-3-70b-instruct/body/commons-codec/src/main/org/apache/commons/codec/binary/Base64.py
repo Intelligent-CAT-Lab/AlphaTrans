@@ -12,6 +12,17 @@ from src.main.org.apache.commons.codec.binary.StringUtils import *
 
 class Base64(BaseNCodec):
 
+    __encodeSize: int = 0
+
+    __decodeSize: int = 0
+
+    __lineSeparator: typing.List[int] = None
+
+    __encodeTable: typing.List[int] = None
+
+    __MASK_2BITS: int = 0x3
+    __MASK_4BITS: int = 0xF
+    __MASK_6BITS: int = 0x3F
     __DECODE_TABLE: typing.List[int] = None  # LLM could not translate this field
 
     __URL_SAFE_ENCODE_TABLE: typing.List[int] = [
@@ -149,18 +160,7 @@ class Base64(BaseNCodec):
     __BYTES_PER_ENCODED_BLOCK: int = 4
     __BYTES_PER_UNENCODED_BLOCK: int = 3
     __BITS_PER_ENCODED_BYTE: int = 6
-    __encodeSize: int = 0
-
-    __decodeSize: int = 0
-
-    __lineSeparator: typing.List[int] = None
-
     __decodeTable: typing.List[int] = __DECODE_TABLE
-    __encodeTable: typing.List[int] = None
-
-    __MASK_2BITS: int = 0x3
-    __MASK_4BITS: int = 0xF
-    __MASK_6BITS: int = 0x3F
 
     def _isInAlphabet0(self, octet: int) -> bool:
         return (

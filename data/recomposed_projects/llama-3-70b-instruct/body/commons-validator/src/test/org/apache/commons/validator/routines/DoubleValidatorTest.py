@@ -12,8 +12,8 @@ from src.main.org.apache.commons.validator.routines.DoubleValidator import *
 
 class DoubleValidatorTest(AbstractNumberValidatorTest):
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self._validator = DoubleValidator(False, 0)
         self._strictValidator = DoubleValidator.DoubleValidator1()
         self._testPattern = "#,###.#"

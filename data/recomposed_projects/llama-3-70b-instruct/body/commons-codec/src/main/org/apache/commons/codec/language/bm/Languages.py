@@ -139,8 +139,6 @@ class SomeLanguages(LanguageSet):
 class Languages:
 
     ANY_LANGUAGE: LanguageSet = None
-    ANY_LANGUAGE: LanguageSet = None
-    NO_LANGUAGES: LanguageSet = None
     NO_LANGUAGES: LanguageSet = None
     ANY: str = "any"
     __languages: typing.Set[str] = None
@@ -148,23 +146,17 @@ class Languages:
     __LANGUAGES: typing.Dict[NameType, Languages] = {}
 
     @staticmethod
-    def initialize_fields() -> None:
-        Languages.ANY_LANGUAGE: LanguageSet = AnyLanguage()
-
-        Languages.ANY_LANGUAGE: LanguageSet = AnyLanguage()
-
-        Languages.NO_LANGUAGES: LanguageSet = NoLanguage()
-
-        Languages.NO_LANGUAGES: LanguageSet = NoLanguage()
-
-        Languages.__LANGUAGES: typing.Dict[NameType, Languages] = {}
-
-    @staticmethod
     def run_static_init():
         for s in NameType:
             Languages.__LANGUAGES[s] = Languages.getInstance1(
                 Languages.__langResourceName(s)
             )
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Languages.ANY_LANGUAGE: LanguageSet = AnyLanguage()
+
+        Languages.NO_LANGUAGES: LanguageSet = NoLanguage()
 
     def getLanguages(self) -> typing.Set[str]:
         return self.__languages
@@ -201,6 +193,6 @@ class Languages:
         )
 
 
-Languages.initialize_fields()
-
 Languages.run_static_init()
+
+Languages.initialize_fields()

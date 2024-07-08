@@ -39,20 +39,24 @@ class StringConvert:
         typing.Type[typing.Any], TypedStringConverter[typing.Any]
     ] = {}
     __factories: typing.List[StringConverterFactory] = []
-    __CACHED_NULL: TypedStringConverter[typing.Any] = TypedStringConverter[typing.Any]()
-
-    @staticmethod
-    def initialize_fields() -> None:
-        StringConvert.INSTANCE: StringConvert = StringConvert.StringConvert1()
+    __CACHED_NULL: TypedStringConverter[typing.Any] = None
 
     @staticmethod
     def run_static_init():
         log = None
         try:
             log = System.getProperty("org.joda.convert.debug")
-        except SecurityException as ex:
+        except PermissionError as ex:
             pass
         LOG = "true".equalsIgnoreCase(log)
+
+    @staticmethod
+    def initialize_fields() -> None:
+        StringConvert.INSTANCE: StringConvert = StringConvert.StringConvert1()
+
+        StringConvert.__CACHED_NULL: TypedStringConverter[typing.Any] = (
+            TypedStringConverter[typing.Any]()
+        )
 
     def toString(self) -> str:
         return self.__class__.__name__
@@ -415,6 +419,6 @@ class StringConvert:
                 System.err.println("tryRegisterGuava2: " + ex)
 
 
-StringConvert.initialize_fields()
-
 StringConvert.run_static_init()
+
+StringConvert.initialize_fields()

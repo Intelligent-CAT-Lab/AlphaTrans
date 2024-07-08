@@ -14,8 +14,8 @@ class VerhoeffCheckDigitTest(AbstractCheckDigitTest):
 
         pass  # LLM could not translate this method
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self._routine = VerhoeffCheckDigit.VERHOEFF_CHECK_DIGIT
         self._valid = ["15", "1428570", "12345678902"]
 

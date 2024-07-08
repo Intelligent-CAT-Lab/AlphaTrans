@@ -24,9 +24,14 @@ class BooleanArrayStringConverter(TypedStringConverter, ABC):
 class BooleanArrayStringConverterFactory(StringConverterFactory):
 
     INSTANCE: StringConverterFactory = None
+    INSTANCE: StringConverterFactory = None
 
     @staticmethod
     def initialize_fields() -> None:
+        BooleanArrayStringConverterFactory.INSTANCE: StringConverterFactory = (
+            BooleanArrayStringConverterFactory()
+        )
+
         BooleanArrayStringConverterFactory.INSTANCE: StringConverterFactory = (
             BooleanArrayStringConverterFactory()
         )

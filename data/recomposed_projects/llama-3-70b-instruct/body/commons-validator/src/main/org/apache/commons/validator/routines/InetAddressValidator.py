@@ -80,7 +80,7 @@ class InetAddressValidator:
                 octetInt = 0
                 try:
                     octetInt = int(octet, self.__BASE_16)
-                except NumberFormatException:
+                except ValueError:
                     return False
                 if octetInt < 0 or octetInt > self.__MAX_UNSIGNED_SHORT:
                     return False

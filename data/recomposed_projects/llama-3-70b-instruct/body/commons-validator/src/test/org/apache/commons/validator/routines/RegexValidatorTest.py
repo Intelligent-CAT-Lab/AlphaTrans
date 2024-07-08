@@ -28,10 +28,10 @@ class RegexValidatorTest(unittest.TestCase):
     )
     __MULTIPLE_REGEX: typing.List[str] = [__REGEX_1, __REGEX_2, __REGEX_3]
 
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         super().tearDown()
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         super().setUp()
 
     def testToString(self) -> None:

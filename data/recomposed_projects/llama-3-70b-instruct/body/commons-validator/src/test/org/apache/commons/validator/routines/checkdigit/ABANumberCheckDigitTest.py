@@ -11,8 +11,8 @@ from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import
 
 class ABANumberCheckDigitTest(AbstractCheckDigitTest):
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self._routine = ABANumberCheckDigit.ABAN_CHECK_DIGIT
         self._valid = [
             "123456780",
