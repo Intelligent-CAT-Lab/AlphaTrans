@@ -537,9 +537,9 @@ def generate_prompt(data, schema, class_, fragment_, args, fragment_type, model)
         instruction += '\n\n'
 
     dependencies = {}
-    dependencies_path = f'data/dependencies/{args.project_name}/traversal.json'
+    dependencies_path = f'data/dependencies/{args.project_name}/dependencies.json'
     if args.translate_evosuite:
-        dependencies_path = f'data/dependencies-evosuite/{args.project_name}/traversal.json'
+        dependencies_path = f'data/dependencies-evosuite/{args.project_name}/dependencies.json'
     with open(dependencies_path, 'r') as f:
         dependencies = json.load(f)
     

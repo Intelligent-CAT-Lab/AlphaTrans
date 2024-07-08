@@ -242,7 +242,7 @@ def main(args):
                          'CloneNotSupportedError': 'NotImplementedError', 'IllegalStateException': 'RuntimeError', 'UnsupportedEncodingException': 'ValueError',
                          'UnsupportedEncodingError': 'ValueError', 'NullPointerException': 'RuntimeError', 'NoSuchElementException': 'RuntimeError',
                          'NumberFormatException': 'ValueError', 'ClassCastException': 'TypeError', 'ArrayIndexOutOfBoundsException': 'IndexError',
-                         'UnsupportedCharsetException': 'ValueError', 'SecurityException': 'PermissionError'}
+                         'UnsupportedCharsetException': 'ValueError', 'SecurityException': 'PermissionError', 'SecurityError': 'PermissionError',}
         
         for key in exception_map:
             if key in recomposed_file:
