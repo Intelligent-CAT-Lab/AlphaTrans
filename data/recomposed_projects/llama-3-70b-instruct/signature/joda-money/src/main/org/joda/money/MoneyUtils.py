@@ -98,7 +98,7 @@ class MoneyUtils:
     @staticmethod
     def checkNotNull(object: typing.Any, message: str) -> None:
         if object is None:
-            raise NullPointerException(message)
+            raise RuntimeError(message)
 
     def __init__(self) -> None:
         pass

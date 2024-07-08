@@ -23,15 +23,15 @@ class ISINValidator:
     )
 
     @staticmethod
+    def run_static_init():
+        ISINValidator.__CCODES.sort()
+        ISINValidator.__SPECIALS.sort()
+
+    @staticmethod
     def initialize_fields() -> None:
         ISINValidator.__ISIN_VALIDATOR_TRUE: ISINValidator = ISINValidator(True)
 
         ISINValidator.__ISIN_VALIDATOR_FALSE: ISINValidator = ISINValidator(False)
-
-    @staticmethod
-    def run_static_init():
-        ISINValidator.__CCODES.sort()
-        ISINValidator.__SPECIALS.sort()
 
     def validate(self, code: str) -> typing.Any:
         validate = self.__VALIDATOR.validate(code)
@@ -63,6 +63,6 @@ class ISINValidator:
         self.__checkCountryCode = checkCountryCode
 
 
-ISINValidator.initialize_fields()
-
 ISINValidator.run_static_init()
+
+ISINValidator.initialize_fields()

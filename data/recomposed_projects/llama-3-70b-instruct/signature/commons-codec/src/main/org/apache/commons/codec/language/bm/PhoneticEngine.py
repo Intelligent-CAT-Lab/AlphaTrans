@@ -110,8 +110,13 @@ class RulesApplication:
         i: int,
         maxPhonemes: int,
     ) -> None:
-
-        pass  # LLM could not translate this method
+        if not finalRules:
+            raise ValueError("finalRules")
+        self.__finalRules = finalRules
+        self.__phonemeBuilder = phonemeBuilder
+        self.__input = input
+        self.__i = i
+        self.__maxPhonemes = maxPhonemes
 
 
 class PhoneticEngine:

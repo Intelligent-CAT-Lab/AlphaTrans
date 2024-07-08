@@ -66,7 +66,9 @@ class BigDecimalValidator(AbstractNumberValidator):
 
     @staticmethod
     def BigDecimalValidator1(strict: bool) -> BigDecimalValidator:
-        return BigDecimalValidator(strict, STANDARD_FORMAT, True)
+        return BigDecimalValidator(
+            strict, AbstractNumberValidator.STANDARD_FORMAT, True
+        )
 
     def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:
         super().__init__(strict, formatType, allowFractions)

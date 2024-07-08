@@ -58,7 +58,7 @@ class ByteValidator(AbstractNumberValidator):
 
     @staticmethod
     def ByteValidator1() -> ByteValidator:
-        return ByteValidator(True, STANDARD_FORMAT)
+        return ByteValidator(True, AbstractNumberValidator.STANDARD_FORMAT)
 
     def __init__(self, strict: bool, formatType: int) -> None:
         super().__init__(strict, formatType, False)

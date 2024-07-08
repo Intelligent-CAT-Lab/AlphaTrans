@@ -15,8 +15,7 @@ class PureJavaCrc32:
         self.___reset()
 
     def getValue(self) -> int:
-
-        pass  # LLM could not translate this method
+        return (~self.__crc) & 0xFFFFFFFF
 
     def update1(self, b: int) -> None:
 

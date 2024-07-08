@@ -68,8 +68,8 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
         )
         locale.setlocale(locale.LC_ALL, origDefault)
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self.__calValidator = CalendarValidator.CalendarValidator1()
         self._validator = self.__calValidator
 

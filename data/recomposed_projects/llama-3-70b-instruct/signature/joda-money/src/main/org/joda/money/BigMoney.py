@@ -19,6 +19,10 @@ from src.main.org.joda.money.Ser import *
 
 class BigMoney:
 
+    __amount: decimal.Decimal = None
+
+    __currency: CurrencyUnit = None
+
     __PARSE_REGEX: re.Pattern = re.compile("[+-]?[0-9]*[.]?[0-9]*")
     __serialVersionUID: int = 1
 
@@ -52,8 +56,6 @@ class BigMoney:
     def __init__(
         self, constructorId: int, amount: decimal.Decimal, currency: CurrencyUnit
     ) -> None:
-        self.__currency: CurrencyUnit = None
-        self.__amount: decimal.Decimal = None
         if constructorId == 0:
             assert currency is not None, "Joda-Money bug: Currency must not be null"
             assert amount is not None, "Joda-Money bug: Amount must not be null"

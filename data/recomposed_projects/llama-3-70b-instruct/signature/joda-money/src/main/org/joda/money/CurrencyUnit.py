@@ -28,11 +28,38 @@ class CurrencyUnit:
     JPY: CurrencyUnit = None
     EUR: CurrencyUnit = None
     USD: CurrencyUnit = None
+    __decimalPlaces: int = 0
+
+    __numericCode: int = 0
+
+    __code: str = ""
+
     __currenciesByCountry: typing.Dict[str, CurrencyUnit] = {}
     __currenciesByNumericCode: typing.Dict[int, CurrencyUnit] = {}
     __currenciesByCode: typing.Dict[str, CurrencyUnit] = {}
     __CODE: re.Pattern = re.compile("[A-Z][A-Z][A-Z]")
     __serialVersionUID: int = 327835287287
+
+    @staticmethod
+    def run_static_init():
+        try:
+            try:
+                cls_name = os.environ.get(
+                    "org.joda.money.CurrencyUnitDataProvider",
+                    "org.joda.money.DefaultCurrencyUnitDataProvider",
+                )
+                cls = type(cls_name, (CurrencyUnitDataProvider,), {})
+                cls()._registerCurrencies()
+            except PermissionError as ex:
+                DefaultCurrencyUnitDataProvider()._registerCurrencies()
+        except RuntimeError as ex:
+            print(f"ERROR: {ex}")
+            traceback.print_exc()
+            raise ex
+        except Exception as ex:
+            print(f"ERROR: {ex}")
+            traceback.print_exc()
+            raise RuntimeError(str(ex), ex)
 
     @staticmethod
     def initialize_fields() -> None:
@@ -49,27 +76,6 @@ class CurrencyUnit:
         CurrencyUnit.EUR: CurrencyUnit = CurrencyUnit.of1("EUR")
 
         CurrencyUnit.USD: CurrencyUnit = CurrencyUnit.of1("USD")
-
-    @staticmethod
-    def run_static_init():
-        try:
-            try:
-                cls_name = os.environ.get(
-                    "org.joda.money.CurrencyUnitDataProvider",
-                    "org.joda.money.DefaultCurrencyUnitDataProvider",
-                )
-                cls = type(cls_name, (CurrencyUnitDataProvider,), {})
-                cls()._registerCurrencies()
-            except SecurityError as ex:
-                DefaultCurrencyUnitDataProvider()._registerCurrencies()
-        except RuntimeError as ex:
-            print(f"ERROR: {ex}")
-            traceback.print_exc()
-            raise ex
-        except Exception as ex:
-            print(f"ERROR: {ex}")
-            traceback.print_exc()
-            raise RuntimeError(str(ex), ex)
 
     def toString(self) -> str:
         return self.__code
@@ -286,15 +292,12 @@ class CurrencyUnit:
         raise InvalidObjectException("Serialization delegate required")
 
     def __init__(self, code: str, numericCode: int, decimalPlaces: int) -> None:
-        self.__code: str = ""
-        self.__numericCode: int = 0
-        self.__decimalPlaces: int = 0
         assert code is not None, "Joda-Money bug: Currency code must not be null"
         self.__code = code
         self.__numericCode = numericCode
         self.__decimalPlaces = decimalPlaces
 
 
-CurrencyUnit.initialize_fields()
-
 CurrencyUnit.run_static_init()
+
+CurrencyUnit.initialize_fields()

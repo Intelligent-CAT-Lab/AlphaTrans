@@ -52,7 +52,7 @@ class PercentCodec(BinaryDecoder, BinaryEncoder):
                     u = Utils.digit16(bytes[i + 1])
                     l = Utils.digit16(bytes[i + 2])
                     buffer.put((u << 4) + l)
-                except ArrayIndexOutOfBoundsException as e:
+                except IndexError as e:
                     raise DecoderException("Invalid percent decoding: ", e)
             elif self.__plusForSpace and b == "+":
                 buffer.put(" ")

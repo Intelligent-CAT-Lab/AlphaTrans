@@ -10,8 +10,8 @@ from src.main.org.apache.commons.validator.routines.checkdigit.ISSNCheckDigit im
 
 class ISSNCheckDigitTest(AbstractCheckDigitTest):
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self._routine = ISSNCheckDigit.ISSN_CHECK_DIGIT
         self._valid = [
             "03178471",

@@ -14,6 +14,8 @@ from src.main.org.joda.money.format.MoneyPrinter import *
 
 class LiteralPrinterParser(MoneyParser, MoneyPrinter):
 
+    __literal: str = ""
+
     __serialVersionUID: int = 1
 
     def toString(self) -> str:
@@ -38,5 +40,4 @@ class LiteralPrinterParser(MoneyParser, MoneyPrinter):
         appendable.append(self.__literal)
 
     def __init__(self, literal: str) -> None:
-        self.__literal: str = ""
         self.__literal = literal

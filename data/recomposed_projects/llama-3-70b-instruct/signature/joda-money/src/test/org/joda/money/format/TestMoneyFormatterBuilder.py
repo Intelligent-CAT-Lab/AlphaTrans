@@ -24,6 +24,8 @@ from src.main.org.joda.money.format.MoneyPrintContext import *
 
 class TestMoneyFormatterBuilder(unittest.TestCase):
 
+    __iBuilder: MoneyFormatterBuilder = None
+
     __FR_GROUP: str = FR_SYMBOLS.getGroupingSeparator()
     __FR_SYMBOLS: typing.Union[decimal.Decimal, str] = decimal.DecimalSymbols(
         Locale.FRANCE
@@ -46,9 +48,6 @@ class TestMoneyFormatterBuilder(unittest.TestCase):
     GBP_234_56: Money = Money.parse("GBP 234.56")
     GBP_23_45: Money = Money.parse("GBP 23.45")
     GBP_2_34: Money = Money.parse("GBP 2.34")
-
-    def __init__(self) -> None:
-        self.__iBuilder: MoneyFormatterBuilder = None
 
     def test_toFormatter_Locale(self) -> None:
         test: MoneyFormatter = self.__iBuilder.toFormatter1(self.__TEST_FR_LOCALE)
@@ -291,7 +290,7 @@ class TestMoneyFormatterBuilder(unittest.TestCase):
         pass  # LLM could not translate this method
 
     def test_appendAmount_MoneyAmountStyle_null(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             self.__iBuilder.appendAmount1(None)
 
     def test_appendAmountLocalized_JPY_2345(self) -> None:

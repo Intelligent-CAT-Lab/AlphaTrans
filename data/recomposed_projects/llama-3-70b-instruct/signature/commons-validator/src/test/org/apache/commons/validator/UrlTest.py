@@ -111,7 +111,7 @@ class UrlTest(unittest.TestCase):
         testUrlQuery,
     ]
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         for index in range(len(self.testPartsIndex) - 1):
             self.testPartsIndex[index] = 0
 

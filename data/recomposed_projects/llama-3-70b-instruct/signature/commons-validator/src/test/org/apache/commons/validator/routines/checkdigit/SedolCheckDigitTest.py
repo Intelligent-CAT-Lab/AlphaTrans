@@ -20,8 +20,8 @@ class SedolCheckDigitTest(AbstractCheckDigitTest):
         "B07LF5F",
     ]
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self._routine = SedolCheckDigit.SEDOL_CHECK_DIGIT
         self._valid = [
             "0263494",

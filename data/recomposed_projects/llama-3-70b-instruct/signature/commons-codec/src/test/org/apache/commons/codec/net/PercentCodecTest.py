@@ -98,7 +98,7 @@ class PercentCodecTest(unittest.TestCase):
             percent_codec.decode0(encoded[:-1])  # exclude one byte
         except Exception as e:
             assert isinstance(e, DecoderException) and isinstance(
-                e.getCause(), ArrayIndexOutOfBoundsException
+                e.getCause(), IndexError
             )
 
     def testConfigurablePercentEncoder(self) -> None:

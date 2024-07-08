@@ -69,7 +69,7 @@ class FloatValidator(AbstractNumberValidator):
 
     @staticmethod
     def FloatValidator1() -> FloatValidator:
-        return FloatValidator(True, STANDARD_FORMAT)
+        return FloatValidator(True, AbstractNumberValidator.STANDARD_FORMAT)
 
     def __init__(self, strict: bool, formatType: int) -> None:
         super().__init__(strict, formatType, True)

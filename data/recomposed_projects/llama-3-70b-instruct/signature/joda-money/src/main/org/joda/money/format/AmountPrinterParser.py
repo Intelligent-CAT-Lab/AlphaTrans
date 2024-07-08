@@ -17,6 +17,8 @@ from src.main.org.joda.money.format.MoneyPrinter import *
 
 class AmountPrinterParser(MoneyParser, MoneyPrinter):
 
+    __style: MoneyAmountStyle = None
+
     __serialVersionUID: int = 1
 
     def toString(self) -> str:
@@ -160,5 +162,4 @@ class AmountPrinterParser(MoneyParser, MoneyPrinter):
         return remaining % groupingSize == 0
 
     def __init__(self, style: MoneyAmountStyle) -> None:
-        self.__style: MoneyAmountStyle = None
         self.__style = style

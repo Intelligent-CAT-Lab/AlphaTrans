@@ -15,8 +15,8 @@ class CUSIPCheckDigitTest(AbstractCheckDigitTest):
     __validCheckDigits: typing.List[str] = ["DUS0421C5"]
     __invalidCheckDigits: typing.List[str] = ["DUS0421CW", "DUS0421CN", "DUS0421CE"]
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self._routine = CUSIPCheckDigit.CUSIP_CHECK_DIGIT
         self._valid = [
             "037833100",

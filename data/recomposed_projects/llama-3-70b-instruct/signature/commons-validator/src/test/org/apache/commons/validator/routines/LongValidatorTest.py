@@ -22,8 +22,8 @@ class LongValidatorTest(AbstractNumberValidatorTest):
     __LONG_MAX_VAL: int = 9223372036854775807
     __LONG_MIN_VAL: int = -9223372036854775808
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
 
         self._validator = LongValidator(False, 0)
         self._strictValidator = LongValidator.LongValidator1()

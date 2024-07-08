@@ -35,7 +35,7 @@ class AbstractItr(ABC):
 
     def next(self) -> typing.Any:
         if self.next == None:
-            raise NoSuchElementException()
+            raise RuntimeError()
         self.lastRet = self.next
         x = self.nextItem
         self.advance()
@@ -154,7 +154,7 @@ class LinkedBlockingDeque(Deque):
     def removeLast(self) -> typing.Any:
         x = self.pollLast0()
         if x == None:
-            raise NoSuchElementException()
+            raise RuntimeError()
         return x
 
     def removeFirstOccurrence(self, o: typing.Any) -> bool:
@@ -175,7 +175,7 @@ class LinkedBlockingDeque(Deque):
     def removeFirst(self) -> typing.Any:
         x = self.pollFirst0()
         if x == None:
-            raise NoSuchElementException()
+            raise RuntimeError()
         return x
 
     def push(self, e: typing.Any) -> None:
@@ -216,13 +216,13 @@ class LinkedBlockingDeque(Deque):
     def getLast(self) -> typing.Any:
         x = self.peekLast()
         if x == None:
-            raise NoSuchElementException()
+            raise RuntimeError()
         return x
 
     def getFirst(self) -> typing.Any:
         x = self.peekFirst()
         if x == None:
-            raise NoSuchElementException()
+            raise RuntimeError()
         return x
 
     def element(self) -> typing.Any:

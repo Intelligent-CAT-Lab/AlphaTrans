@@ -154,8 +154,11 @@ class BaseNCodecTest(unittest.TestCase):
 
     @staticmethod
     def getPresumableFreeMemory() -> int:
+        import gc
 
-        pass  # LLM could not translate this method
+        gc.collect()
+        allocatedMemory = get_memory_info().rss - get_memory_info().available
+        return get_memory_info().limit - allocatedMemory
 
     @staticmethod
     def __assumeCanAllocateBufferSize(size: int) -> None:

@@ -26,10 +26,14 @@ class RPattern(ABC):
 
 class Phoneme(PhonemeExpr):
 
-    COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = lambda o1, o2: 0
+    COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = None
     __languages: LanguageSet = None
 
     __phonemeText: str = ""
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Phoneme.COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = lambda o1, o2: 0
 
     def toString(self) -> str:
         return self.__phonemeText + "[" + self.__languages + "]"
@@ -75,8 +79,15 @@ class Phoneme(PhonemeExpr):
         languages: LanguageSet,
         phonemeRight: Phoneme,
     ) -> None:
-
-        pass  # LLM could not translate this method
+        if constructorId == 0:
+            self.__languages = languages
+            self.__phonemeText = phonemeText + phonemeRight.__phonemeText
+        elif constructorId == 1:
+            self.__languages = languages
+            self.__phonemeText = phonemeText + phonemeRight.__phonemeText
+        else:
+            self.__phonemeText = phonemeText
+            self.__languages = languages
 
 
 class PhonemeList(PhonemeExpr):
@@ -112,10 +123,6 @@ class Rule:
     __DOUBLE_QUOTE: str = '"'
 
     @staticmethod
-    def initialize_fields() -> None:
-        Rule.ALL_STRINGS_RMATCHER: RPattern = RPattern()
-
-    @staticmethod
     def run_static_init():
         for s in NameType:
             rts = {}
@@ -147,6 +154,10 @@ class Rule:
                         )
                 rts[rt] = rs
             Rule.__RULES[s] = rts
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Rule.ALL_STRINGS_RMATCHER: RPattern = RPattern()
 
     def patternAndContextMatches(self, input: str, i: int) -> bool:
         if i < 0:
@@ -251,8 +262,71 @@ class Rule:
 
     @staticmethod
     def __pattern(regex: str) -> RPattern:
+        starts_with = regex.startswith("^")
+        ends_with = regex.endswith("$")
+        content = regex[
+            1 if starts_with else 0 : len(regex) - 1 if ends_with else len(regex)
+        ]
+        boxes = "[" in content
 
-        pass  # LLM could not translate this method
+        if not boxes:
+            if starts_with and ends_with:
+                if not content:
+                    return RPattern(lambda input: len(input) == 0)
+                return RPattern(lambda input: input == content)
+            if (starts_with or ends_with) and not content:
+                return Rule.ALL_STRINGS_RMATCHER
+            if starts_with:
+                return RPattern(lambda input: input.startswith(content))
+            if ends_with:
+                return RPattern(lambda input: input.endswith(content))
+        else:
+            starts_with_box = content.startswith("[")
+            ends_with_box = content.endswith("]")
+
+            if starts_with_box and ends_with_box:
+                box_content = content[1 : len(content) - 1]
+                if "[" not in box_content:
+                    negate = box_content.startswith("^")
+                    if negate:
+                        box_content = box_content[1:]
+                    b_content = box_content
+                    should_match = not negate
+
+                    if starts_with and ends_with:
+                        return RPattern(
+                            lambda input: len(input) == 1
+                            and (
+                                b_content.index(input[0])
+                                if input[0] in b_content
+                                else -1
+                            )
+                            >= 0
+                            == should_match
+                        )
+                    if starts_with:
+                        return RPattern(
+                            lambda input: len(input) > 0
+                            and (
+                                b_content.index(input[0])
+                                if input[0] in b_content
+                                else -1
+                            )
+                            >= 0
+                            == should_match
+                        )
+                    if ends_with:
+                        return RPattern(
+                            lambda input: len(input) > 0
+                            and (
+                                b_content.index(input[-1])
+                                if input[-1] in b_content
+                                else -1
+                            )
+                            >= 0
+                            == should_match
+                        )
+            return RPattern(lambda input: re.compile(regex).finditer(input) != None)
 
     @staticmethod
     def __parseRules(
@@ -336,8 +410,19 @@ class Rule:
 
     @staticmethod
     def __parsePhonemeExpr(ph: str) -> PhonemeExpr:
+        if ph.startswith("("):  # we have a bracketed list of options
+            if not ph.endswith(")"):
+                raise ValueError("Phoneme starts with '(' so must end with ')'")
 
-        pass  # LLM could not translate this method
+            phs = []
+            body = ph[1:-1]
+            for part in body.split("|"):
+                phs.append(Rule.__parsePhoneme(part))
+            if body.startswith("|") or body.endswith("|"):
+                phs.append(Phoneme(2, "", Languages.ANY_LANGUAGE, None))
+
+            return PhonemeList(phs)
+        return Rule.__parsePhoneme(ph)
 
     @staticmethod
     def __parsePhoneme(ph: str) -> Phoneme:
@@ -383,10 +468,14 @@ class Rule:
 
     @staticmethod
     def __contains(chars: str, input: str) -> bool:
+        for char in chars:
+            if char == input:
+                return True
+        return False
 
-        pass  # LLM could not translate this method
 
-
-Rule.initialize_fields()
+Phoneme.initialize_fields()
 
 Rule.run_static_init()
+
+Rule.initialize_fields()

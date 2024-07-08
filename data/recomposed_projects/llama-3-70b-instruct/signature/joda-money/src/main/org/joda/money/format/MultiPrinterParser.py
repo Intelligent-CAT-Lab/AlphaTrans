@@ -15,6 +15,10 @@ from src.main.org.joda.money.format.MoneyPrinter import *
 
 class MultiPrinterParser(MoneyParser, MoneyPrinter):
 
+    __parsers: typing.List[MoneyParser] = None
+
+    __printers: typing.List[MoneyPrinter] = None
+
     __serialVersionUID: int = 1
 
     def toString(self) -> str:
@@ -65,7 +69,5 @@ class MultiPrinterParser(MoneyParser, MoneyPrinter):
     def __init__(
         self, printers: typing.List[MoneyPrinter], parsers: typing.List[MoneyParser]
     ) -> None:
-        self.__printers: typing.List[MoneyPrinter] = None
-        self.__parsers: typing.List[MoneyParser] = None
         self.__printers = printers
         self.__parsers = parsers

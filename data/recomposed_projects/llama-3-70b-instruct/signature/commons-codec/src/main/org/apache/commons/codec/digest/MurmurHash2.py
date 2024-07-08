@@ -28,8 +28,30 @@ class MurmurHash2:
 
     @staticmethod
     def hash640(data: typing.List[int], length: int, seed: int) -> int:
+        h = (seed & 0xFFFFFFFF) ^ (length * MurmurHash2.__M64)
 
-        pass  # LLM could not translate this method
+        nblocks = length >> 3
+
+        for i in range(nblocks):
+            index = i << 3
+            k = MurmurHash2.__getLittleEndianLong(data, index)
+
+            k *= MurmurHash2.__M64
+            k ^= k >> MurmurHash2.__R64
+            k *= MurmurHash2.__M64
+
+            h ^= k
+            h *= MurmurHash2.__M64
+
+        index = nblocks << 3
+        for i in range(length - index):
+            h ^= (data[index + i] & 0xFF) << ((length - index - i) * 8)
+
+        h ^= h >> MurmurHash2.__R64
+        h *= MurmurHash2.__M64
+        h ^= h >> MurmurHash2.__R64
+
+        return h
 
     @staticmethod
     def hash323(text: str, from_: int, length: int) -> int:
@@ -92,8 +114,12 @@ class MurmurHash2:
 
     @staticmethod
     def __getLittleEndianInt(data: typing.List[int], index: int) -> int:
-
-        pass  # LLM could not translate this method
+        return (
+            ((data[index] & 0xFF))
+            | ((data[index + 1] & 0xFF) << 8)
+            | ((data[index + 2] & 0xFF) << 16)
+            | ((data[index + 3] & 0xFF) << 24)
+        )
 
     def __init__(self) -> None:
         pass

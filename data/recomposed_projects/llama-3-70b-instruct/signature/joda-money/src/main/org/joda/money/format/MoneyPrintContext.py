@@ -9,6 +9,8 @@ from src.main.org.joda.money.format.MoneyFormatter import *
 
 class MoneyPrintContext:
 
+    __locale: typing.Any = None
+
     def setLocale(self, locale: typing.Any) -> None:
         MoneyFormatter.checkNotNull(locale, "Locale must not be null")
         self.__locale = locale
@@ -17,6 +19,5 @@ class MoneyPrintContext:
         return self.__locale
 
     def __init__(self, locale: typing.Any) -> None:
-        self.__locale: typing.Any = None
         MoneyFormatter.checkNotNull(locale, "Locale must not be null")
         self.__locale = locale

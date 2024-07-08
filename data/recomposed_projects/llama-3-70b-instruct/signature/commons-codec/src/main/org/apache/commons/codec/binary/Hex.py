@@ -219,8 +219,23 @@ class Hex(BinaryDecoder, BinaryEncoder):
     def decodeHex1(
         data: typing.List[str], out: typing.List[int], outOffset: int
     ) -> int:
+        len_data = len(data)
 
-        pass  # LLM could not translate this method
+        if (len_data & 0x01) != 0:
+            raise DecoderException("Odd number of characters.", None)
+
+        out_len = len_data >> 1
+        if len(out) - outOffset < out_len:
+            raise DecoderException(
+                "Output array is not large enough to accommodate decoded data.", None
+            )
+
+        for i in range(outOffset, outOffset + out_len):
+            f = Hex._toDigit(data[i * 2], i * 2) << 4
+            f = f | Hex._toDigit(data[i * 2 + 1], i * 2 + 1)
+            out[i] = f & 0xFF
+
+        return out_len
 
     @staticmethod
     def decodeHex0(data: typing.List[str]) -> typing.List[int]:

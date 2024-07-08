@@ -21,8 +21,7 @@ class BaseNTestData:
 
     @staticmethod
     def bytesContain(bytes: typing.List[int], c: int) -> bool:
-
-        pass  # LLM could not translate this method
+        return c in bytes
 
     @staticmethod
     def randomData(codec: BaseNCodec, size: int) -> typing.List[typing.List[int]]:

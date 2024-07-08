@@ -808,7 +808,7 @@ class Base64Test(unittest.TestCase):
         self.assertIsNotNone(base64)
 
     def testCodeIntegerNull(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             Base64.encodeInteger(None)
 
     def testCodeIntegerEdgeCases(self) -> None:
@@ -881,7 +881,7 @@ class Base64Test(unittest.TestCase):
         )
         invalidString: str = validString + chr(0)  # append null
 
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             Base64.isBase642(nullString)
             self.fail("Base64.isStringBase64() should not be null-safe.")
 

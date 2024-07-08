@@ -82,7 +82,7 @@ class QCodecTest(unittest.TestCase):
             pass
 
     def testInvalidEncoding(self) -> None:
-        with self.assertRaises(UnsupportedCharsetException):
+        with self.assertRaises(ValueError):
             QCodec.QCodec0("NONSENSE")
 
     def testEncodeObjects(self) -> None:

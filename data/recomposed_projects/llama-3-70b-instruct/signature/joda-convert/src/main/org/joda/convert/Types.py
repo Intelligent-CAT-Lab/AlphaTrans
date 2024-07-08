@@ -500,7 +500,7 @@ class Types:
     @staticmethod
     def __checkNotNull(reference: typing.Any) -> typing.Any:
         if reference is None:
-            raise NullPointerException()
+            raise RuntimeError()
         return reference
 
     @staticmethod
@@ -558,6 +558,6 @@ TypeVariableInvocationHandler.run_static_init()
 
 ClassOwnership.initialize_fields()
 
-JavaVersion.initialize_fields()
-
 JavaVersion.run_static_init()
+
+JavaVersion.initialize_fields()

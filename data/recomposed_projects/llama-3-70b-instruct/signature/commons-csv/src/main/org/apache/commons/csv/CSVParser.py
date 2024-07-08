@@ -29,14 +29,14 @@ class CSVRecordIterator:
 
     def next(self) -> CSVRecord:
         if CSVParser.this.isClosed():
-            raise NoSuchElementException("CSVParser has been closed")
+            raise RuntimeError("CSVParser has been closed")
         next = self.__current
         self.__current = None
 
         if next == None:
             next = self.__getNextRecord()
             if next == None:
-                raise NoSuchElementException("No more CSV records available")
+                raise RuntimeError("No more CSV records available")
 
         return next
 

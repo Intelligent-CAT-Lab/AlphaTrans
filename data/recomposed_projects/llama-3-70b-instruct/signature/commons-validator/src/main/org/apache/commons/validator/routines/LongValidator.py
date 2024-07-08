@@ -58,7 +58,7 @@ class LongValidator(AbstractNumberValidator):
 
     @staticmethod
     def LongValidator1() -> LongValidator:
-        return LongValidator(True, STANDARD_FORMAT)
+        return LongValidator(True, AbstractNumberValidator.STANDARD_FORMAT)
 
     def __init__(self, strict: bool, formatType: int) -> None:
         super().__init__(strict, formatType, False)

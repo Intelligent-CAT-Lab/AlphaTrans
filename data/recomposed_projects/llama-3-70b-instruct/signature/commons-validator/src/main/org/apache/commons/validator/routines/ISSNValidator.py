@@ -13,15 +13,15 @@ from src.main.org.apache.commons.validator.routines.checkdigit.ISSNCheckDigit im
 class ISSNValidator:
 
     __ISSN_VALIDATOR: ISSNValidator = None
-    __EAN_VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(
-        EAN_ISSN_REGEX, EAN_ISSN_LEN, EAN13CheckDigit.EAN13_CHECK_DIGIT
-    )
     __EAN_ISSN_LEN: int = 13
     __EAN_ISSN_REGEX: str = "^(977)(?:(\\d{10}))$"
     __ISSN_PREFIX: str = "977"
     __ISSN_LEN: int = 8
     __ISSN_REGEX: str = "(?:ISSN )?(\\d{4})-(\\d{3}[0-9X])$"
     __serialVersionUID: int = 4319515687976420405
+    __EAN_VALIDATOR: CodeValidator = CodeValidator4(
+        __EAN_ISSN_REGEX, __EAN_ISSN_LEN, EAN13CheckDigit.EAN13_CHECK_DIGIT
+    )
     __VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(
         __ISSN_REGEX, __ISSN_LEN, ISSNCheckDigit.ISSN_CHECK_DIGIT
     )

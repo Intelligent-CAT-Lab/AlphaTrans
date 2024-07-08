@@ -12,8 +12,8 @@ from src.main.org.apache.commons.validator.routines.BigIntegerValidator import *
 
 class BigIntegerValidatorTest(AbstractNumberValidatorTest):
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
 
         self._validator = BigIntegerValidator(False, 0)
         self._strictValidator = BigIntegerValidator.BigIntegerValidator1()

@@ -330,9 +330,9 @@ class CSVFormatTest(unittest.TestCase):
             .getAllowDuplicateHeaderNames()
         )
 
-    def testFormatThrowsNullPointerException(self) -> None:
+    def testFormatThrowsRuntimeError(self) -> None:
         csvFormat = CSVFormat.MYSQL
-        with pytest.raises(NullPointerException):
+        with pytest.raises(RuntimeError):
             csvFormat.format(None)
 
     def testFormat(self) -> None:

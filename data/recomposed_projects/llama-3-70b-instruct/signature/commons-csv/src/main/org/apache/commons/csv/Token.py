@@ -26,7 +26,11 @@ class Token:
 
     isReady: bool = False
 
-    type: Type = INVALID
+    type: typing.Type = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        type: typing.Type = Type.INVALID
 
     def toString(self) -> str:
         return self.type.name() + " [" + self.content + "]"
@@ -36,3 +40,6 @@ class Token:
         self.type = Type.INVALID
         self.isReady = False
         self.isQuoted = False
+
+
+Token.initialize_fields()

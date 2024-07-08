@@ -17,7 +17,6 @@ class XXHash32:
 
     __seed: int = 0
 
-    __buffer: typing.List[int] = [0] * BUF_SIZE
     __state: typing.List[int] = [0, 0, 0, 0]
     __oneByte: typing.List[int] = [0]
     __PRIME5: int = 374761393
@@ -27,6 +26,11 @@ class XXHash32:
     __PRIME1: int = 2654435761
     __ROTATE_BITS: int = 13
     __BUF_SIZE: int = 16
+    __buffer: typing.List[int] = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        XXHash32.__buffer: typing.List[int] = [0] * XXHash32.__BUF_SIZE
 
     def getValue(self) -> int:
 
@@ -113,5 +117,12 @@ class XXHash32:
 
     @staticmethod
     def __getInt(buffer: typing.List[int], idx: int) -> int:
+        return (
+            ((buffer[idx] & 0xFF))
+            | ((buffer[idx + 1] & 0xFF) << 8)
+            | ((buffer[idx + 2] & 0xFF) << 16)
+            | ((buffer[idx + 3] & 0xFF) << 24)
+        )
 
-        pass  # LLM could not translate this method
+
+XXHash32.initialize_fields()

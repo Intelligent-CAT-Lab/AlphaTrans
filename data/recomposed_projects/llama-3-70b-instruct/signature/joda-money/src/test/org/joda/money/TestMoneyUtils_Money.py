@@ -123,7 +123,7 @@ class TestMoneyUtils_Money(unittest.TestCase):
         self.assertFalse(MoneyUtils.isZero(self.__GBP_M30))
 
     def test_checkNotNull_null(self) -> None:
-        with self.assertRaises(NullPointerException) as ex:
+        with self.assertRaises(RuntimeError) as ex:
             MoneyUtils.checkNotNull(None, "Hello")
         self.assertEqual("Hello", ex.exception.getMessage())
 

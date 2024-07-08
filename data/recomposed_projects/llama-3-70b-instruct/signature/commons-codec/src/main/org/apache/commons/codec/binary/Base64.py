@@ -12,6 +12,17 @@ from src.main.org.apache.commons.codec.binary.StringUtils import *
 
 class Base64(BaseNCodec):
 
+    __encodeSize: int = 0
+
+    __decodeSize: int = 0
+
+    __lineSeparator: typing.List[int] = None
+
+    __encodeTable: typing.List[int] = None
+
+    __MASK_2BITS: int = 0x3
+    __MASK_4BITS: int = 0xF
+    __MASK_6BITS: int = 0x3F
     __DECODE_TABLE: typing.List[int] = None  # LLM could not translate this field
 
     __URL_SAFE_ENCODE_TABLE: typing.List[int] = [
@@ -149,18 +160,7 @@ class Base64(BaseNCodec):
     __BYTES_PER_ENCODED_BLOCK: int = 4
     __BYTES_PER_UNENCODED_BLOCK: int = 3
     __BITS_PER_ENCODED_BYTE: int = 6
-    __encodeSize: int = 0
-
-    __decodeSize: int = 0
-
-    __lineSeparator: typing.List[int] = None
-
     __decodeTable: typing.List[int] = __DECODE_TABLE
-    __encodeTable: typing.List[int] = None
-
-    __MASK_2BITS: int = 0x3
-    __MASK_4BITS: int = 0xF
-    __MASK_6BITS: int = 0x3F
 
     def _isInAlphabet0(self, octet: int) -> bool:
         return (
@@ -240,8 +240,24 @@ class Base64(BaseNCodec):
 
     @staticmethod
     def toIntegerBytes(bigInt: int) -> typing.List[int]:
+        bitlen = bigInt.bit_length()
+        bitlen = ((bitlen + 7) >> 3) << 3
+        bigBytes = bigInt.to_bytes((bitlen + 7) // 8, "big")
 
-        pass  # LLM could not translate this method
+        if ((bigInt.bit_length() % 8) != 0) and (
+            ((bigInt.bit_length() // 8) + 1) == (bitlen // 8)
+        ):
+            return list(bigBytes)
+        startSrc = 0
+        len_ = len(bigBytes)
+
+        if (bigInt.bit_length() % 8) == 0:
+            startSrc = 1
+            len_ -= 1
+        startDst = bitlen // 8 - len_  # to pad w/ nulls as per spec
+        resizedBytes = bytearray(bitlen // 8)
+        resizedBytes[startDst : startDst + len_] = bigBytes[startSrc : startSrc + len_]
+        return list(resizedBytes)
 
     @staticmethod
     def isBase642(base64: str) -> bool:
@@ -249,8 +265,10 @@ class Base64(BaseNCodec):
 
     @staticmethod
     def isBase641(arrayOctet: typing.List[int]) -> bool:
-
-        pass  # LLM could not translate this method
+        for element in arrayOctet:
+            if not Base64.isBase640(element) and not BaseNCodec._isWhiteSpace(element):
+                return False
+        return True
 
     @staticmethod
     def isBase640(octet: int) -> bool:

@@ -1,4 +1,5 @@
 from __future__ import annotations
+import copy
 import re
 import io
 import typing
@@ -23,8 +24,70 @@ class IncrementalHash32x86:
         )
 
     def add(self, data: typing.List[int], offset: int, length: int) -> None:
+        if length <= 0:
+            return
+        self.__totalLen += length
 
-        pass  # LLM could not translate this method
+        if self.__unprocessedLength + length - self.__BLOCK_SIZE < 0:
+            data[offset : offset + length].copy(
+                self.__unprocessed[
+                    self.__unprocessedLength : self.__unprocessedLength + length
+                ]
+            )
+            self.__unprocessedLength += length
+            return
+
+        newOffset = 0
+        newLength = 0
+        if self.__unprocessedLength > 0:
+            k = 0
+            if self.__unprocessedLength == 1:
+                k = self.__orBytes(
+                    self.__unprocessed[0],
+                    data[offset],
+                    data[offset + 1],
+                    data[offset + 2],
+                )
+            elif self.__unprocessedLength == 2:
+                k = self.__orBytes(
+                    self.__unprocessed[0],
+                    self.__unprocessed[1],
+                    data[offset],
+                    data[offset + 1],
+                )
+            elif self.__unprocessedLength == 3:
+                k = self.__orBytes(
+                    self.__unprocessed[0],
+                    self.__unprocessed[1],
+                    self.__unprocessed[2],
+                    data[offset],
+                )
+            else:
+                raise Exception(
+                    "Unprocessed length should be 1, 2, or 3: "
+                    + str(self.__unprocessedLength)
+                )
+            self.__hash = self.__mix32(k, self.__hash)
+            consumed = self.__BLOCK_SIZE - self.__unprocessedLength
+            newOffset = offset + consumed
+            newLength = length - consumed
+        else:
+            newOffset = offset
+            newLength = length
+
+        nblocks = newLength >> 2
+
+        for i in range(nblocks):
+            index = newOffset + (i << 2)
+            k = self.__getLittleEndianInt(data, index)
+            self.__hash = self.__mix32(k, self.__hash)
+
+        consumed = nblocks << 2
+        self.__unprocessedLength = newLength - consumed
+        if self.__unprocessedLength != 0:
+            data[
+                newOffset + consumed : newOffset + consumed + self.__unprocessedLength
+            ].copy(self.__unprocessed[0 : self.__unprocessedLength])
 
     def start(self, seed: int) -> None:
         self.__unprocessedLength = self.__totalLen = 0
@@ -119,8 +182,36 @@ class MurmurHash3:
 
     @staticmethod
     def hash645(data: typing.List[int], offset: int, length: int, seed: int) -> int:
+        hash = seed
+        nblocks = length >> 3
 
-        pass  # LLM could not translate this method
+        for i in range(nblocks):
+            index = offset + (i << 3)
+            k = MurmurHash3.__getLittleEndianLong(data, index)
+
+            k *= MurmurHash3.__C1
+            k = k << MurmurHash3.__R1 | k >> 64 - MurmurHash3.__R1
+            k *= MurmurHash3.__C2
+            hash ^= k
+            hash = (
+                hash << MurmurHash3.__R2 | hash >> 64 - MurmurHash3.__R2
+            ) * MurmurHash3.__M + MurmurHash3.__N1
+
+        k1 = 0
+        index = offset + (nblocks << 3)
+        tail = offset + length - index
+        for i in range(tail):
+            k1 ^= (data[index + i] & 0xFF) << (i * 8)
+
+        k1 *= MurmurHash3.__C1
+        k1 = k1 << MurmurHash3.__R1 | k1 >> 64 - MurmurHash3.__R1
+        k1 *= MurmurHash3.__C2
+        hash ^= k1
+
+        hash ^= length
+        hash = MurmurHash3.__fmix64(hash)
+
+        return hash
 
     @staticmethod
     def hash644(data: typing.List[int], offset: int, length: int) -> int:
@@ -147,8 +238,21 @@ class MurmurHash3:
 
     @staticmethod
     def hash641(data: int) -> int:
-
-        pass  # LLM could not translate this method
+        k1 = (
+            (data << 24)
+            | ((data & 0xFF00) << 8)
+            | ((data & 0xFF0000) >> 8)
+            | (data >> 24)
+        ) & 0xFFFFFFFF
+        length = MurmurHash3.INTEGER_BYTES
+        hash = MurmurHash3.DEFAULT_SEED
+        k1 *= MurmurHash3.__C1
+        k1 = (k1 << MurmurHash3.__R1) | (k1 >> (64 - MurmurHash3.__R1))
+        k1 *= MurmurHash3.__C2
+        hash ^= k1
+        hash ^= length
+        hash = MurmurHash3.__fmix64(hash)
+        return hash
 
     @staticmethod
     def hash640(data: int) -> int:
@@ -166,8 +270,31 @@ class MurmurHash3:
 
     @staticmethod
     def hash328(data: typing.List[int], offset: int, length: int, seed: int) -> int:
+        hash = seed
+        nblocks = length >> 2
 
-        pass  # LLM could not translate this method
+        for i in range(nblocks):
+            index = offset + (i << 2)
+            k = MurmurHash3.__getLittleEndianInt(data, index)
+            hash = MurmurHash3.__mix32(k, hash)
+
+        index = offset + (nblocks << 2)
+        k1 = 0
+        switch_length = offset + length - index
+        if switch_length == 3:
+            k1 ^= data[index + 2] << 16
+        if switch_length >= 2:
+            k1 ^= data[index + 1] << 8
+        if switch_length >= 1:
+            k1 ^= data[index]
+
+        k1 *= MurmurHash3.__C1_32
+        k1 = k1 << MurmurHash3.__R1_32 | k1 >> (32 - MurmurHash3.__R1_32)
+        k1 *= MurmurHash3.__C2_32
+        hash ^= k1
+
+        hash ^= length
+        return MurmurHash3.__fmix32(hash)
 
     @staticmethod
     def hash327(data: typing.List[int], length: int, seed: int) -> int:
@@ -190,8 +317,7 @@ class MurmurHash3:
     def hash128x641(
         data: typing.List[int], offset: int, length: int, seed: int
     ) -> typing.List[int]:
-
-        pass  # LLM could not translate this method
+        return MurmurHash3.__hash128x64Internal(data, offset, length, seed & 0xFFFFFFFF)
 
     @staticmethod
     def hash128x640(data: typing.List[int]) -> typing.List[int]:
@@ -203,8 +329,31 @@ class MurmurHash3:
 
     @staticmethod
     def hash32x861(data: typing.List[int], offset: int, length: int, seed: int) -> int:
+        hash = seed
+        nblocks = length >> 2
 
-        pass  # LLM could not translate this method
+        for i in range(nblocks):
+            index = offset + (i << 2)
+            k = MurmurHash3.__getLittleEndianInt(data, index)
+            hash = MurmurHash3.__mix32(k, hash)
+
+        index = offset + (nblocks << 2)
+        k1 = 0
+        switch_length = offset + length - index
+        if switch_length == 3:
+            k1 ^= (data[index + 2] & 0xFF) << 16
+        if switch_length >= 2:
+            k1 ^= (data[index + 1] & 0xFF) << 8
+        if switch_length >= 1:
+            k1 ^= data[index] & 0xFF
+
+        k1 *= MurmurHash3.__C1_32
+        k1 = k1 << MurmurHash3.__R1_32 | k1 >> (32 - MurmurHash3.__R1_32)
+        k1 *= MurmurHash3.__C2_32
+        hash ^= k1
+
+        hash ^= length
+        return MurmurHash3.__fmix32(hash)
 
     @staticmethod
     def hash32x860(data: typing.List[int]) -> int:
@@ -274,8 +423,12 @@ class MurmurHash3:
 
     @staticmethod
     def __getLittleEndianInt(data: typing.List[int], index: int) -> int:
-
-        pass  # LLM could not translate this method
+        return (
+            ((data[index] & 0xFF))
+            | ((data[index + 1] & 0xFF) << 8)
+            | ((data[index + 2] & 0xFF) << 16)
+            | ((data[index + 3] & 0xFF) << 24)
+        )
 
     @staticmethod
     def __getLittleEndianLong(data: typing.List[int], index: int) -> int:

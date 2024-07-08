@@ -20,7 +20,7 @@ class Base16OutputStreamTest(unittest.TestCase):
     __STRING_FIXTURE: str = "Hello World"
 
     def testWriteToNullCoverage(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             bout = io.BytesIO()
             with Base16OutputStream.Base16OutputStream3(bout) as out:
                 out.write0(None, 0, 0)

@@ -35,8 +35,12 @@ class StringUtils:
 
     @staticmethod
     def newString1(bytes: typing.List[int], charsetName: str) -> str:
-
-        pass  # LLM could not translate this method
+        if bytes is None:
+            return None
+        try:
+            return str(bytes, charsetName)
+        except LookupError as e:
+            raise StringUtils.__newRuntimeError(charsetName, e)
 
     @staticmethod
     def getBytesUtf8(string: str) -> typing.List[int]:

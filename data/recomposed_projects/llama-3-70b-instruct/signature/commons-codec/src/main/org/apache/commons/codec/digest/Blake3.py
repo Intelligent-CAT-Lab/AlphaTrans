@@ -75,12 +75,16 @@ class ChunkState:
 
     __blockLength: int = 0
 
-    __block: typing.List[int] = [0] * BLOCK_LEN
+    __block: typing.List[int] = None
     __flags: int = 0
 
     __chunkCounter: int = 0
 
     __chainingValue: typing.List[int] = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        ChunkState.__block: typing.List[int] = [0] * ChunkState.__BLOCK_LEN
 
     def output(self) -> Output:
         blockWords = Blake3.__unpackInts(self.__block, Blake3.__BLOCK_INTS)
@@ -363,8 +367,20 @@ class Blake3:
 
     @staticmethod
     def __checkBufferArgs(buffer: typing.List[int], offset: int, length: int) -> None:
-
-        pass  # LLM could not translate this method
+        if buffer is None:
+            raise ValueError("Buffer must not be None")
+        if offset < 0:
+            raise IndexError("Offset must be non-negative")
+        if length < 0:
+            raise IndexError("Length must be non-negative")
+        buffer_length = len(buffer)
+        if offset > buffer_length - length:
+            raise IndexError(
+                f"Offset {offset} and length {length} out of bounds with buffer length {buffer_length}"
+            )
 
     def __init__(self, key: typing.List[int], flags: int) -> None:
         self.__engineState = EngineState(key, flags)
+
+
+ChunkState.initialize_fields()

@@ -113,8 +113,7 @@ class Soundex(StringEncoder):
         return self.__soundexMapping[index]
 
     def __hasMarker(self, mapping: typing.List[str]) -> bool:
-
-        pass  # LLM could not translate this method
+        return any(ch == self.SILENT_MARKER for ch in mapping)
 
 
 Soundex.initialize_fields()

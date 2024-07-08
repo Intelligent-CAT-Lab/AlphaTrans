@@ -1,4 +1,5 @@
 from __future__ import annotations
+import copy
 import re
 from io import BytesIO
 import io
@@ -23,6 +24,22 @@ class URLCodec(BinaryDecoder, BinaryEncoder, StringDecoder, StringEncoder):
     _charset: str = ""
 
     __WWW_FORM_URL_SAFE: typing.List[bool] = [False] * 256
+
+    @staticmethod
+    def run_static_init():
+        for i in range(ord("a"), ord("z") + 1):
+            URLCodec.__WWW_FORM_URL_SAFE[i] = True
+        for i in range(ord("A"), ord("Z") + 1):
+            URLCodec.__WWW_FORM_URL_SAFE[i] = True
+        for i in range(ord("0"), ord("9") + 1):
+            URLCodec.__WWW_FORM_URL_SAFE[i] = True
+        URLCodec.__WWW_FORM_URL_SAFE[ord("-")] = True
+        URLCodec.__WWW_FORM_URL_SAFE[ord("_")] = True
+        URLCodec.__WWW_FORM_URL_SAFE[ord(".")] = True
+        URLCodec.__WWW_FORM_URL_SAFE[ord("*")] = True
+        URLCodec.__WWW_FORM_URL_SAFE[ord(" ")] = True
+
+        URLCodec._WWW_FORM_URL = URLCodec.__WWW_FORM_URL_SAFE.copy()
 
     def getEncoding(self) -> str:
         return self._charset

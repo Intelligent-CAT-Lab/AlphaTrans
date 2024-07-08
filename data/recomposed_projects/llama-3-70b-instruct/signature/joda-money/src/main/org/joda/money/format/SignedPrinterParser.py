@@ -16,6 +16,12 @@ from src.main.org.joda.money.format.MultiPrinterParser import *
 
 class SignedPrinterParser(MoneyParser, MoneyPrinter):
 
+    __whenNegative: MoneyFormatter = None
+
+    __whenZero: MoneyFormatter = None
+
+    __whenPositive: MoneyFormatter = None
+
     __serialVersionUID: int = 1
 
     def toString(self) -> str:
@@ -82,9 +88,6 @@ class SignedPrinterParser(MoneyParser, MoneyPrinter):
         whenZero: MoneyFormatter,
         whenNegative: MoneyFormatter,
     ) -> None:
-        self.__whenPositive: MoneyFormatter = None
-        self.__whenZero: MoneyFormatter = None
-        self.__whenNegative: MoneyFormatter = None
         self.__whenPositive = whenPositive
         self.__whenZero = whenZero
         self.__whenNegative = whenNegative

@@ -15,6 +15,9 @@ class Ser:
     CURRENCY_UNIT: int = 67
     MONEY: int = 77
     BIG_MONEY: int = 66
+    __object: typing.Any = None
+
+    __type: int = 0
 
     def readExternal(self, in_: pickle.Unpickler) -> None:
         self.__type = in_.read_byte()
@@ -46,8 +49,6 @@ class Ser:
         raise InvalidClassException("Joda-Money bug: Serialization broken")
 
     def __init__(self, constructorId: int, object: typing.Any, type: int) -> None:
-        self.__type: int = 0
-        self.__object: typing.Any = None
         if constructorId == 0:
             self.__type = type
             self.__object = object

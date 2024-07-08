@@ -21,8 +21,8 @@ class IntegerValidatorTest(AbstractNumberValidatorTest):
     __INT_MAX_VAL: int = 2147483647
     __INT_MIN_VAL: int = -2147483648
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
 
         self._validator = IntegerValidator(False, 0)
         self._strictValidator = IntegerValidator.IntegerValidator1()

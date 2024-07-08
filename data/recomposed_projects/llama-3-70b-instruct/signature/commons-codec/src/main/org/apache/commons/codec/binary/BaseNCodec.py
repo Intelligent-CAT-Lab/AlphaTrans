@@ -96,8 +96,13 @@ class BaseNCodec(BinaryDecoder, BinaryEncoder, ABC):
         return self.__decodingPolicy
 
     def _ensureBufferSize(self, size: int, context: Context) -> typing.List[int]:
-
-        pass  # LLM could not translate this method
+        if context.buffer is None:
+            context.buffer = [0] * max(size, self._getDefaultBufferSize())
+            context.pos = 0
+            context.readPos = 0
+        elif context.pos + size - len(context.buffer) > 0:
+            context.buffer = self.__resizeBuffer(context, context.pos + size)
+        return context.buffer
 
     def encodeToString(self, pArray: typing.List[int]) -> str:
         return StringUtils.newStringUtf8(self.encode0(pArray))
@@ -196,8 +201,15 @@ class BaseNCodec(BinaryDecoder, BinaryEncoder, ABC):
 
     @staticmethod
     def __createPositiveCapacity(minCapacity: int) -> int:
-
-        pass  # LLM could not translate this method
+        if minCapacity < 0:
+            raise MemoryError(
+                f"Unable to allocate array size: {minCapacity & 0xffffffff}"
+            )
+        return (
+            minCapacity
+            if minCapacity > BaseNCodec.__MAX_BUFFER_SIZE
+            else BaseNCodec.__MAX_BUFFER_SIZE
+        )
 
     @staticmethod
     def __compareUnsigned(x: int, y: int) -> int:

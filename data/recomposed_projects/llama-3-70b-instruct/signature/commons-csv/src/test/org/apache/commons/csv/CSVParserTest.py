@@ -140,37 +140,37 @@ class CSVParserTest(unittest.TestCase):
             self.assertEqual("xyz", csvRecord.get1(1))
 
     def testParseUrlCharsetNullFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVParser.parse5(
                 URL("https://commons.apache.org"), Charset.defaultCharset(), None
             )
 
     def testParseStringNullFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVParser.parse4("csv data", None)
 
     def testParserUrlNullCharsetFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVParser.parse5(URL("https://commons.apache.org"), None, CSVFormat.DEFAULT)
 
     def testParseNullUrlCharsetFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVParser.parse5(None, Charset.defaultCharset(), CSVFormat.DEFAULT)
 
     def testParseNullStringFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVParser.parse4(None, CSVFormat.DEFAULT)
 
     def testParseNullPathFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVParser.parse2(None, Charset.defaultCharset(), CSVFormat.DEFAULT)
 
     def testParseNullFileFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVParser.parse0(None, Charset.defaultCharset(), CSVFormat.DEFAULT)
 
     def testParseFileNullFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVParser.parse0(
                 pathlib.Path("CSVFileParser/test.csv"), Charset.defaultCharset(), None
             )
@@ -187,11 +187,11 @@ class CSVParserTest(unittest.TestCase):
             self.assertIsNone(parser.getHeaderMap())
 
     def testNewCSVParserReaderNullFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVParser.CSVParser1(StringReader(""), None)
 
     def testNewCSVParserNullReaderFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVParser.CSVParser1(None, CSVFormat.DEFAULT)
 
     def testMultipleIterators(self) -> None:

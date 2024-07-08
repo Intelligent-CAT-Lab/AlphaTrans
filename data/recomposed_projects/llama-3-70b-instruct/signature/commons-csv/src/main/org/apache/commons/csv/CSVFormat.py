@@ -259,8 +259,7 @@ class Predefined:
 
 class CSVFormat:
 
-    TDF: CSVFormat = None
-    MYSQL: CSVFormat = None
+    INFORMIX_UNLOAD_CSV: CSVFormat = None
     DEFAULT: CSVFormat = None
     __trim: bool = False
 
@@ -301,91 +300,24 @@ class CSVFormat:
     __duplicateHeaderMode: DuplicateHeaderMode = None
 
     serialVersionUID: int = 2
-    RFC4180: CSVFormat = DEFAULT.builder().setIgnoreEmptyLines(False).build()
-    POSTGRESQL_TEXT: CSVFormat = (
-        DEFAULT.builder()
-        .setDelimiter0(TAB)
-        .setEscape0(BACKSLASH)
-        .setIgnoreEmptyLines(False)
-        .setQuote1(None)
-        .setRecordSeparator0(LF)
-        .setNullString(Constants.SQL_NULL_STRING)
-        .setQuoteMode(QuoteMode.ALL_NON_NULL)
-        .build()
-    )
-    POSTGRESQL_CSV: CSVFormat = (
-        DEFAULT.builder()
-        .setDelimiter1(COMMA)
-        .setEscape1(None)
-        .setIgnoreEmptyLines(False)
-        .setQuote1(DOUBLE_QUOTE_CHAR)
-        .setRecordSeparator0(LF)
-        .setNullString(EMPTY)
-        .setQuoteMode(QuoteMode.ALL_NON_NULL)
-        .build()
-    )
+    TDF: CSVFormat = None
+    RFC4180: CSVFormat = None
+    POSTGRESQL_TEXT: CSVFormat = None
+    POSTGRESQL_CSV: CSVFormat = None
     ORACLE: CSVFormat = None
-    MONGODB_TSV: CSVFormat = (
-        DEFAULT.builder()
-        .setDelimiter0(TAB)
-        .setEscape1(DOUBLE_QUOTE_CHAR)
-        .setQuote1(DOUBLE_QUOTE_CHAR)
-        .setQuoteMode(QuoteMode.MINIMAL)
-        .setSkipHeaderRecord(False)
-        .build()
-    )
-    MONGODB_CSV: CSVFormat = (
-        DEFAULT.builder()
-        .setDelimiter1(COMMA)
-        .setEscape1(DOUBLE_QUOTE_CHAR)
-        .setQuote1(DOUBLE_QUOTE_CHAR)
-        .setQuoteMode(QuoteMode.MINIMAL)
-        .setSkipHeaderRecord(False)
-        .build()
-    )
-    INFORMIX_UNLOAD_CSV: CSVFormat = (
-        DEFAULT.builder()
-        .setDelimiter1(COMMA)
-        .setQuote1(DOUBLE_QUOTE_CHAR)
-        .setRecordSeparator0(LF)
-        .build()
-    )
-    INFORMIX_UNLOAD: CSVFormat = (
-        DEFAULT.builder()
-        .setDelimiter0(PIPE)
-        .setEscape0(BACKSLASH)
-        .setQuote1(DOUBLE_QUOTE_CHAR)
-        .setRecordSeparator0(LF)
-        .build()
-    )
-    EXCEL: CSVFormat = (
-        DEFAULT.builder()
-        .setIgnoreEmptyLines(False)
-        .setAllowMissingColumnNames(True)
-        .build()
-    )
+    MYSQL: CSVFormat = None
+    MONGODB_TSV: CSVFormat = None
+    MONGODB_CSV: CSVFormat = None
+    INFORMIX_UNLOAD: CSVFormat = None
+    EXCEL: CSVFormat = None
 
     @staticmethod
     def initialize_fields() -> None:
-        CSVFormat.TDF: CSVFormat = Predefined.TDF
-
-        CSVFormat.MYSQL: CSVFormat = (
-            CSVFormat.builder()
-            .setDelimiter0(TAB)
-            .setEscape0(BACKSLASH)
-            .setIgnoreEmptyLines(False)
-            .setQuote1(None)
-            .setRecordSeparator0(LF)
-            .setNullString(Constants.SQL_NULL_STRING)
-            .setQuoteMode(QuoteMode.ALL_NON_NULL)
-            .build()
-        )
-
-        CSVFormat.DEFAULT: CSVFormat = CSVFormat(
+        CSVFormat.INFORMIX_UNLOAD_CSV: CSVFormat = CSVFormat(
             0,
             False,
             False,
-            COMMA,
+            Constants.COMMA,
             None,
             None,
             False,
@@ -393,7 +325,7 @@ class CSVFormat:
             None,
             None,
             False,
-            DOUBLE_QUOTE_CHAR,
+            Constants.DOUBLE_QUOTE_CHAR,
             None,
             True,
             DuplicateHeaderMode.ALLOW_ALL,
@@ -401,19 +333,125 @@ class CSVFormat:
             False,
             False,
             None,
-            CRLF,
+            Constants.LF,
+        )
+
+        CSVFormat.DEFAULT: CSVFormat = CSVFormat(
+            0,
+            False,
+            False,
+            Constants.COMMA,
+            None,
+            None,
+            False,
+            False,
+            None,
+            None,
+            False,
+            Constants.DOUBLE_QUOTE_CHAR,
+            None,
+            True,
+            DuplicateHeaderMode.ALLOW_ALL,
+            None,
+            False,
+            False,
+            None,
+            Constants.CRLF,
+        )
+
+        CSVFormat.TDF: CSVFormat = (
+            CSVFormat.DEFAULT.builder()
+            .setDelimiter0(Constants.TAB)
+            .setIgnoreSurroundingSpaces(True)
+            .build()
+        )
+
+        CSVFormat.RFC4180: CSVFormat = (
+            CSVFormat.DEFAULT.builder().set_ignore_empty_lines(False).build()
+        )
+
+        CSVFormat.POSTGRESQL_TEXT: CSVFormat = (
+            CSVFormat.DEFAULT.builder()
+            .setDelimiter0(Constants.TAB)
+            .setEscape0(Constants.BACKSLASH)
+            .setIgnoreEmptyLines(False)
+            .setQuote1(None)
+            .setRecordSeparator0(Constants.LF)
+            .setNullString(Constants.SQL_NULL_STRING)
+            .setQuoteMode(QuoteMode.ALL_NON_NULL)
+            .build()
+        )
+
+        CSVFormat.POSTGRESQL_CSV: CSVFormat = (
+            CSVFormat.DEFAULT.builder()
+            .setDelimiter1(Constants.COMMA)
+            .setEscape1(None)
+            .setIgnoreEmptyLines(False)
+            .setQuote1(Constants.DOUBLE_QUOTE_CHAR)
+            .setRecordSeparator0(Constants.LF)
+            .setNullString(Constants.EMPTY)
+            .setQuoteMode(QuoteMode.ALL_NON_NULL)
+            .build()
         )
 
         CSVFormat.ORACLE: CSVFormat = (
             CSVFormat.DEFAULT.builder()
-            .setDelimiter1(COMMA)
-            .setEscape0(BACKSLASH)
+            .setDelimiter1(Constants.COMMA)
+            .setEscape0(Constants.BACKSLASH)
             .setIgnoreEmptyLines(False)
-            .setQuote1(DOUBLE_QUOTE_CHAR)
+            .setQuote1(Constants.DOUBLE_QUOTE_CHAR)
             .setNullString(Constants.SQL_NULL_STRING)
             .setTrim(True)
-            .setRecordSeparator1(System.lineSeparator())
+            .setRecordSeparator1(os.linesep)
             .setQuoteMode(QuoteMode.MINIMAL)
+            .build()
+        )
+
+        CSVFormat.MYSQL: CSVFormat = (
+            CSVFormat.DEFAULT.builder()
+            .setDelimiter0(Constants.TAB)
+            .setEscape0(Constants.BACKSLASH)
+            .setIgnoreEmptyLines(False)
+            .setQuote1(None)
+            .setRecordSeparator0(Constants.LF)
+            .setNullString(Constants.SQL_NULL_STRING)
+            .setQuoteMode(QuoteMode.ALL_NON_NULL)
+            .build()
+        )
+
+        CSVFormat.MONGODB_TSV: CSVFormat = (
+            CSVFormat.DEFAULT.builder()
+            .setDelimiter0(Constants.TAB)
+            .setEscape1(Constants.DOUBLE_QUOTE_CHAR)
+            .setQuote1(Constants.DOUBLE_QUOTE_CHAR)
+            .setQuoteMode(QuoteMode.MINIMAL)
+            .setSkipHeaderRecord(False)
+            .build()
+        )
+
+        CSVFormat.MONGODB_CSV: CSVFormat = (
+            CSVFormat.DEFAULT.builder()
+            .setDelimiter1(Constants.COMMA)
+            .setEscape1(Constants.DOUBLE_QUOTE_CHAR)
+            .setQuote1(Constants.DOUBLE_QUOTE_CHAR)
+            .setQuoteMode(QuoteMode.MINIMAL)
+            .setSkipHeaderRecord(False)
+            .build()
+        )
+
+        CSVFormat.INFORMIX_UNLOAD: CSVFormat = (
+            CSVFormat.DEFAULT.builder()
+            .setDelimiter0(Constants.PIPE)
+            .setEscape0(Constants.BACKSLASH)
+            .setQuote1(Constants.DOUBLE_QUOTE_CHAR)
+            .setRecordSeparator0(Constants.LF)
+            .build()
+        )
+
+        CSVFormat.EXCEL: CSVFormat = (
+            CSVFormat.DEFAULT.builder()
+            .set_ignore_empty_lines(False)
+            .set_allow_missing_column_names(True)
             .build()
         )
 

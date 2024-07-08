@@ -1,4 +1,5 @@
 from __future__ import annotations
+import math
 import re
 import os
 import unittest
@@ -116,7 +117,7 @@ class QuotedPrintableCodecTest(unittest.TestCase):
         pass  # LLM could not translate this method
 
     def testInvalidEncoding(self) -> None:
-        with self.assertRaises(UnsupportedCharsetException):
+        with self.assertRaises(ValueError):
             QuotedPrintableCodec.QuotedPrintableCodec0("NONSENSE")
 
     def testEncodeObjects(self) -> None:

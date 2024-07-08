@@ -76,7 +76,7 @@ class EmailValidator:
 
             try:
                 iIpSegment = int(ipSegment)
-            except NumberFormatException as e:
+            except ValueError as e:
                 return False
 
             if iIpSegment > 255:  # CHECKSTYLE IGNORE MagicNumber

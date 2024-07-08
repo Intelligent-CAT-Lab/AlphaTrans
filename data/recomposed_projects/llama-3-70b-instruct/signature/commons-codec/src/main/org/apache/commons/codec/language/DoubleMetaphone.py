@@ -467,12 +467,29 @@ class DoubleMetaphone(StringEncoder):
         return index + 2 if self._charAt(value, index + 1) == "R" else index + 1
 
     def __handleP(self, value: str, result: DoubleMetaphoneResult, index: int) -> int:
-
-        pass  # LLM could not translate this method
+        if self._charAt(value, index + 1) == "H":
+            result.append0("F")
+            index += 2
+        else:
+            result.append0("P")
+            index = (
+                index + 2
+                if self._contains(value, index + 1, 1, ["P", "B"])
+                else index + 1
+            )
+        return index
 
     def __handleL(self, value: str, result: DoubleMetaphoneResult, index: int) -> int:
-
-        pass  # LLM could not translate this method
+        if self._charAt(value, index + 1) == "L":
+            if self.__conditionL0(value, index):
+                result.appendPrimary0("L")
+            else:
+                result.append0("L")
+            index += 2
+        else:
+            index += 1
+            result.append0("L")
+        return index
 
     def __handleJ(
         self, value: str, result: DoubleMetaphoneResult, index: int, slavoGermanic: bool

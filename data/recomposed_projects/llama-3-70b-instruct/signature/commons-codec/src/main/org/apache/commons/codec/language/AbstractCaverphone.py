@@ -11,8 +11,12 @@ from src.main.org.apache.commons.codec.StringEncoder import *
 class AbstractCaverphone(StringEncoder, ABC):
 
     def encode(self, source: typing.Any) -> typing.Any:
-
-        pass  # LLM could not translate this method
+        if not isinstance(source, str):
+            raise EncoderException(
+                "Parameter supplied to Caverphone encode is not of type java.lang.String",
+                None,
+            )
+        return self.encode(str(source))
 
     def isEncodeEqual(self, str1: str, str2: str) -> bool:
         return self.encode(str1) == self.encode(str2)

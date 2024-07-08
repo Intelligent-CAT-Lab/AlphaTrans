@@ -10,7 +10,11 @@ from src.main.org.apache.commons.codec.language.Caverphone2 import *
 
 class Caverphone(StringEncoder):
 
-    __encoder: Caverphone2 = Caverphone2()
+    __encoder: Caverphone2 = None
+
+    @staticmethod
+    def initialize_fields() -> None:
+        Caverphone.__encoder: Caverphone2 = Caverphone2()
 
     def isCaverphoneEqual(self, str1: str, str2: str) -> bool:
         return self.caverphone(str1) == self.caverphone(str2)
@@ -31,3 +35,6 @@ class Caverphone(StringEncoder):
 
     def __init__(self) -> None:
         pass
+
+
+Caverphone.initialize_fields()

@@ -20,6 +20,26 @@ class MoneyAmountStyle:
     ASCII_DECIMAL_POINT_NO_GROUPING: MoneyAmountStyle = None
     ASCII_DECIMAL_POINT_GROUP3_SPACE: MoneyAmountStyle = None
     ASCII_DECIMAL_POINT_GROUP3_COMMA: MoneyAmountStyle = None
+    __absValue: bool = False
+
+    __forceDecimalPoint: bool = False
+
+    __extendedGroupingSize: int = 0
+
+    __groupingSize: int = 0
+
+    __groupingCharacter: int = 0
+
+    __groupingStyle: GroupingStyle = None
+
+    __decimalPointCharacter: int = 0
+
+    __negativeCharacter: int = 0
+
+    __positiveCharacter: int = 0
+
+    __zeroCharacter: int = 0
+
     __serialVersionUID: int = 1
     __LOCALIZED_CACHE: typing.Dict[typing.Any, MoneyAmountStyle] = {}
 
@@ -424,16 +444,6 @@ class MoneyAmountStyle:
         forceDecimalPoint: bool,
         absValue: bool,
     ) -> None:
-        self.__zeroCharacter: int = 0
-        self.__positiveCharacter: int = 0
-        self.__negativeCharacter: int = 0
-        self.__decimalPointCharacter: int = 0
-        self.__groupingStyle: GroupingStyle = None
-        self.__groupingCharacter: int = 0
-        self.__groupingSize: int = 0
-        self.__extendedGroupingSize: int = 0
-        self.__forceDecimalPoint: bool = False
-        self.__absValue: bool = False
         self.__zeroCharacter = zeroCharacter
         self.__positiveCharacter = positiveCharacter
         self.__negativeCharacter = negativeCharacter

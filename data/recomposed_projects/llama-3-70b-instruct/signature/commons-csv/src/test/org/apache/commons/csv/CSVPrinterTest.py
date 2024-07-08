@@ -495,11 +495,11 @@ class CSVPrinterTest(unittest.TestCase):
             printer.flush()
 
     def testNewCsvPrinterNullAppendableFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVPrinter(None, CSVFormat.DEFAULT)
 
     def testNewCsvPrinterAppendableNullFormat(self) -> None:
-        with self.assertRaises(NullPointerException):
+        with self.assertRaises(RuntimeError):
             CSVPrinter(StringWriter(), None)
 
     def testMySqlNullStringDefault(self) -> None:

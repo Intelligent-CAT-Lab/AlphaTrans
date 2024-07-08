@@ -36,8 +36,8 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
     def testZeroSum(self) -> None:
         self.assertEqual(0, self._routine.calculate(self._zeroSum))
 
-    def _setUp(self) -> None:
-        super()._setUp()
+    def setUp(self) -> None:
+        super().setUp()
         self._routine = IBANCheckDigit.IBAN_CHECK_DIGIT
         self._valid = [
             "AD1200012030200359100100",  # Andorra
