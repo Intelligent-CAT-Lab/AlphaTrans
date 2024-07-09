@@ -1,3 +1,4 @@
+import numbers
 import java # type: ignore
 import abc
 import io
@@ -45,10 +46,6 @@ class JavaHandler:
         if hasattr(x, 'toArray'):
             return JavaHandler.list_to_list(x, id_map, target_object)
 
-        # Array
-        if hasattr(x, 'length'):
-            return JavaHandler.array_to_list(x, id_map, target_object)
-
         # handle exception objects
         if x.getClass().getName().endswith("Exception"):
             return ExceptionHandler.instance_mapping(x)
@@ -61,13 +58,19 @@ class JavaHandler:
                 if str(x).endswith("Exception"):
                     return ExceptionHandler.mapping(x)
                 
-                # return other classes as they are
-                return java.type(str(x))
+                # return other classes after mapping if possible
+                return ClassMapping.get(str(x), java.type(str(x)))
         except:
             pass
 
         # handle StringBuilder
         if x.getClass().getName() == "java.lang.StringBuilder":
+            obj = x.toString()
+            id_map[id] = obj
+            return 
+        
+        # handle StringBuffer
+        if x.getClass().getName() == "java.lang.StringBuffer":
             obj = x.toString()
             id_map[id] = obj
             return obj
@@ -80,7 +83,14 @@ class JavaHandler:
         if x.getClass().getName() == "java.io.StringWriter":
             return JavaHandler.stringwriter_to_stringio(x, id_map, target_object)
 
-        raise ValueError("Unknown Java object type: " + repr(x))
+        # Array
+        # placed at the end since hasattr(x, 'length') is too broad
+        # TODO: can we try using getClass().getName()?
+        if hasattr(x, 'length'):
+            return JavaHandler.array_to_list(x, id_map, target_object)
+        
+        print("[JavaHandler.mapping] Unknown Java object type: " + repr(x))
+        return x # return untranslated object
 
     def properties_to_dict(x, id_map, target_object=None):
         D = dict()
@@ -166,11 +176,8 @@ class JavaHandler:
     def getJavaId(obj):
         return JavaHandler.IntegrationUtils.getIdentityHashCode(obj)
 
-    def valueToObject(obj, class_descriptor: str, idMap=None):
-        if not idMap:
-            return JavaHandler.IntegrationUtils.valueToObject(obj, class_descriptor)
-        
-        return JavaHandler.IntegrationUtils.valueToObject(obj, class_descriptor, idMap)
+    def valueToObject(*args):
+        return JavaHandler.IntegrationUtils.valueToObject(*args)
 
     def getPyFromJ(obj):
         return JavaHandler.IntegrationUtils.getPyFromJ(obj)
@@ -196,10 +203,19 @@ class ExceptionHandler:
         exception_name = x.getClass().getName().split(".")[-1]
         exception_message = str(x).split(":", 1)[-1].strip()
         if exception_name in ExceptionHandler.exception_map:
+            exception_message = exception_message.replace('"', '\\"')
             return eval(f"{{ExceptionHandler.exception_map[exception_name]['target']}}(\"{{exception_message}}\")")
         
         # return the same object if the exception is not in the mapping
         return x
+
+ClassMapping = {{
+    "java.lang.String"      : str,
+    "java.lang.Object"      : object,
+    "java.lang.Boolean"     : bool,
+    "java.lang.Number"      : numbers.Number,
+    "java.lang.Class"       : type,
+}}
 
 
 class StaticFieldRedirector(abc.ABCMeta):
@@ -216,7 +232,7 @@ class StaticFieldRedirector(abc.ABCMeta):
         except AttributeError:
             pass
 
-        return getattr(cls.javaClz, StaticFieldRedirector.unmangle_name(name))
+        return JavaHandler.mapping(getattr(cls.javaClz, StaticFieldRedirector.unmangle_name(name)))
 
     def __setattr__(cls, name, value):
         cleaned_name = StaticFieldRedirector.unmangle_name(name)        

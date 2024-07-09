@@ -36,13 +36,13 @@ def l2_validation(members_to_validate: list[list]):
         if fragment_name == class_:
             fragment_name = '__init__'
         
-        if schema_name in components:
-            if class_ in components[schema_name]:
-                components[schema_name][class_].append(fragment_name)
+        if full_schema_name in components:
+            if class_ in components[full_schema_name]:
+                components[full_schema_name][class_].append(fragment_name)
             else:
-                components[schema_name][class_] = [fragment_name]
+                components[full_schema_name][class_] = [fragment_name]
         else:
-            components[schema_name] = {class_: [fragment_name]}
+            components[full_schema_name] = {class_: [fragment_name]}
             
     print("Deriving compositional tests for the following components:", components)
 

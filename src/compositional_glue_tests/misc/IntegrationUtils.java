@@ -11,13 +11,14 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Value;
 
 /** Provides utility methods for integration with GraalVM. */
 public final class IntegrationUtils {{
-  private static final Map<Integer, Value> jToPyMap = new HashMap<>(); 
+  private static final Map<Integer, Value> jToPyMap = new HashMap<>();
   private static final Map<Long, Object> pyToJMap = new HashMap<>();
-  
+
   public static void putObjectsToMaps(Object javaObj, Value pyObj) {{
     jToPyMap.put(getIdentityHashCode(javaObj), pyObj);
     pyToJMap.put(getPythonObjectId(pyObj), javaObj);
@@ -34,15 +35,29 @@ public final class IntegrationUtils {{
   private IntegrationUtils() {{}}
 
   public static Object valueToObject(Value value, String classDescriptor) {{
-    return valueToObject(value, classDescriptor, new HashMap<>(), null);
+    return valueToObject(value, classDescriptor, new HashMap<>(), null, null);
   }}
 
   public static Object valueToObject(Value value, String classDescriptor, Map<Long, Object> idMap) {{
-    return valueToObject(value, classDescriptor, idMap, null);
+    return valueToObject(value, classDescriptor, idMap, null, null);
   }}
 
   public static Object valueToObject(
       Value value, String classDescriptor, Map<Long, Object> idMap, Object targetObject) {{
+    return valueToObject(value, classDescriptor, idMap, null, targetObject);
+  }}
+
+  public static <T> Object valueToObject(
+      Value value, String classDescriptor, Map<Long, Object> idMap, Class<T> clazz) {{
+    return valueToObject(value, classDescriptor, idMap, clazz, null);
+  }}
+
+  public static <T> Object valueToObject(
+      Value value,
+      String classDescriptor,
+      Map<Long, Object> idMap,
+      Class<T> clazz,
+      Object targetObject) {{
     // Nullify
     if (value.isNull()) {{
       return null;
@@ -53,17 +68,29 @@ public final class IntegrationUtils {{
       return value.asHostObject();
     }}
 
+    boolean skipMap = false; // skip procedures related to the map (due to possible type-conflicts)
+
     // check if the object has already been mapped
     Long id = getPythonObjectId(value);
     if (idMap.containsKey(id)) {{
-      return idMap.get(id);
+      Object objFromIdMap = idMap.get(id);
+
+      // skipMap if there is a type-mismatch
+      if (hasTypeMismatch(classDescriptor, objFromIdMap)) {{
+        skipMap = true;
+      }} else {{
+        return objFromIdMap;
+      }}
     }}
 
     // try to take the target object from the py-J map if it is null
+    // unless there is a type-mismatch
     if (targetObject == null) {{
-      targetObject = getJFromPy(value);
+      Object objFromPyJMap = getJFromPy(value);
+      if (objFromPyJMap != null && !hasTypeMismatch(classDescriptor, objFromPyJMap)) {{
+        targetObject = objFromPyJMap;
+      }}
     }}
-
 
     // return the 'javaObj' member if it exists, which is a Java object
     // but first call 'pyToJ' on the javaObj
@@ -78,14 +105,32 @@ public final class IntegrationUtils {{
     // Get the "primary" class name, i.e., everything before <...>
     String primaryClassName = classDescriptor.split("<")[0];
 
+    // handle arrays
+    if (value.hasArrayElements() && classDescriptor.endsWith("[]")) {{
+      String innerClassName = classDescriptor.substring(0, classDescriptor.length() - 2);
+
+      int length = (int) value.getArraySize();
+      T[] result = (T[]) Array.newInstance(clazz, length);
+
+      if (targetObject != null && targetObject.getClass().isArray()) {{
+        result = (T[]) targetObject;
+      }}
+
+      if (!skipMap) idMap.put(id, result);
+      for (int i = 0; i < length; i++) {{
+        result[i] = (T) valueToObject(value.getArrayElement(i), innerClassName, idMap);
+      }}
+
+      if (!skipMap) putObjectsToMaps(result, value);
+      return result;
+    }}
+
     // handle lists
-    // need not check `primaryClassName.equals("List")` because arrays are handled separately
+    // need not check `primaryClassName.equals("List")` because arrays are already handled before
     if (value.hasArrayElements()) {{
       String innerClassName = "";
       if (classDescriptor.contains("<")) {{
-        innerClassName =
-            classDescriptor.substring(
-                classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
+        innerClassName = classDescriptor.substring(classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
       }}
       List<Object> list = new ArrayList<>();
 
@@ -94,12 +139,12 @@ public final class IntegrationUtils {{
         list.clear();
       }}
 
-      idMap.put(id, list);
+      if (!skipMap) idMap.put(id, list);
       for (int i = 0; i < value.getArraySize(); i++) {{
         list.add(valueToObject(value.getArrayElement(i), innerClassName, idMap));
       }}
 
-      putObjectsToMaps(list, value);
+      if (!skipMap) putObjectsToMaps(list, value);
       return list;
     }}
 
@@ -172,6 +217,18 @@ public final class IntegrationUtils {{
         sb.append(str);
         return sb;
       }}
+      if (classDescriptor.equals("StringBuffer")) {{
+        String str = value.asString();
+        StringBuffer sb = new StringBuffer();
+
+        if (targetObject != null) {{
+          sb = (StringBuffer) targetObject;
+          sb.setLength(0);
+        }}
+
+        sb.append(str);
+        return sb;
+      }}
 
       // Default to "String"
       return value.asString();
@@ -192,11 +249,44 @@ public final class IntegrationUtils {{
       return value.as(Number.class);
     }}
 
-    throw new RuntimeException("Unhandled type: " + value);
-  }}
+    // handle Error objects
+    if (value.isException()) {{
+      try {{
+        value.throwException();
+      }} catch (PolyglotException e) {{
+        try {{
+          return ExceptionHandler.handle(e, "");
+        }} catch (Throwable t) {{
+        }}
+      }}
+    }}
 
-  public static <T> Object valueToArray(Value value, Class<T> arrayClass) {{
-    return value.as(arrayClass);
+    // handle python classes
+    Value valueType = value.getMember("__class__");
+    String ValueTypeName = valueType.getMember("__name__").asString();
+    Value valueTypeType = valueType.getMember("__class__");
+    String ValueTypeTypeName = valueTypeType.getMember("__name__").asString();
+    if (ValueTypeName.equals("type") || ValueTypeTypeName.equals("type")) {{
+      String className = value.getMember("__name__").asString();
+      switch (className) {{
+        case "str":
+          return String.class;
+        case "type":
+          return Class.class;
+        case "object":
+          return Object.class;
+        case "bool":
+          return Boolean.class;
+        case "Number":
+          return Number.class;
+        // TODO: handle other classes
+        default:
+          break;
+      }}
+    }}
+
+    System.out.println("[valueToObject] Unhandled Python object type: " + value);
+    return value; // return untranslated value
   }}
 
   private static String[] extractTypesFromMap(String input) {{
@@ -224,14 +314,13 @@ public final class IntegrationUtils {{
       if (splitIndex != -1) {{
         String something = insideBrackets.substring(0, splitIndex).trim();
         String somethingElse = insideBrackets.substring(splitIndex + 1).trim();
-        return new String[] {{something, somethingElse}};
+        return new String[] {{ something, somethingElse }};
       }}
     }}
     return null; // Return null if no match is found
   }}
 
-  private static Value JavaHandler =
-      ContextInitializer.getPythonClass("java_handler.py", "JavaHandler");
+  private static Value JavaHandler = ContextInitializer.getPythonClass("java_handler.py", "JavaHandler");
 
   public static Value mapToPython(Object obj) {{
     return JavaHandler.invokeMember("mapping", obj);
@@ -251,5 +340,15 @@ public final class IntegrationUtils {{
 
   public static Long getPythonObjectId(Value obj) {{
     return JavaHandler.invokeMember("getPythonId", obj).asLong();
+  }}
+
+  public static boolean hasTypeMismatch(String classDescriptor, Object obj) {{
+    if (classDescriptor.endsWith("[]") && !obj.getClass().isArray()) {{
+      return true;
+    }}
+    if (classDescriptor.contains("List") && !(obj instanceof List)) {{
+      return true;
+    }}
+    return false;
   }}
 }}
