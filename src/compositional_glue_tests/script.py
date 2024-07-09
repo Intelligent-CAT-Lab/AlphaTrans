@@ -5,7 +5,7 @@ import json
 import keyword
 import xml.etree.ElementTree as ET
  
-from src.compositional_glue_tests.utils import IMMUTABLES, default_type_value, get_enum_field_body, get_method_parameter_types, schema_filter, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
+from src.compositional_glue_tests.utils import IMMUTABLES, get_enum_field_body, get_method_parameter_types, publicize_methods_of_anoymous_classes, schema_filter, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
 from src.compositional_glue_tests.constants import *
 
 ERROR = "error"
@@ -117,7 +117,7 @@ class Project:
                 imports_from_schema = filter(
                     lambda imp: not any(x in imp for x in [
                         'commons.io', 'commons.logging', 'opentest4j', 'com.google',
-                        'pytest' # we "should not" need pytest. TODO: Is this ok?
+                        'pytest', # we "should not" need pytest. TODO: Is this ok?
                     ]),
                     schema_data['python_imports']
                 )
@@ -179,25 +179,31 @@ class Project:
                         class_name_for_import = f"{outer_class_name}${class_name_for_import}"
                         outer_class_name = schema_data['classes'][outer_class_name]['nested_inside']
                         
-                    python_file_contents.append(f"    javaClz = java.type(\"{self.package}{subpackage}.{class_name_for_import}\")")
-           
-                    # add default constructor
-                    python_file_contents.append("\n".join([
-                        f"    @staticmethod",
-                        f"    def getDefaultInstance():",
-                        f"        return {_class}.__new__({_class})"
-                    ]))
-                    
-                    # modify __getattr__ method to handle cases like 
-                    # static field access from 'self'
-                    python_file_contents.append("\n".join([
-                        f"    def __getattr__(self, name):",
-                        f"        try:",
-                        f"            return object.__getattribute__(self, name)",
-                        f"        except AttributeError:",
-                        f"            pass",
-                        f"        return getattr(self.javaClz, name)"
-                    ]))
+                    # skip instrumenting classes that are enclosed in methods
+                    if not Schema.is_class_enclosed_in_method(_class, schema_data):
+                        python_file_contents.append(f"    javaClz = java.type(\"{self.package}{subpackage}.{class_name_for_import}\")")
+            
+                        # add default constructor
+                        python_file_contents.append("\n".join([
+                            f"    @staticmethod",
+                            f"    def getDefaultInstance(javaObj):",
+                            f"        obj = {_class}.__new__({_class})",
+                            f"        obj.javaObj = javaObj",
+                            f"        return obj"
+                        ]))
+                        
+                        # modify __getattr__ method to handle cases like 
+                        # static field access from 'self'
+                        python_file_contents.append("\n".join([
+                            f"    def __getattr__(self, name):",
+                            f"        try:",
+                            f"            return object.__getattribute__(self, name)",
+                            f"        except AttributeError:",
+                            f"            pass",
+                            f"        return getattr(self.javaClz, name)"
+                        ]))
+                    else:
+                        python_file_contents.append("    pass") # in case there is no method to add!
                     
                 # write the new contents to the python file
                 python_file_path = "".join([
@@ -255,13 +261,15 @@ class Project:
             method_content.append("\n".join([
                 f"        idMapPyToJ = JavaHandler.valueToObject(dict(), \"Map\")",
                 f"        " + "\n        ".join(translated_args),
+                f"        idMapJToPy = dict()",
                 f"        try:",
                 f"            self.javaObj = {java_call}",
+                f"            self.javaObj.setPythonObject(self)",
+                f"            idMapJToPy = " + ("self.javaObj.jToPy()" if not is_static else "dict()"),
                 f"        except:",
                 f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
                 f"        finally:",
-                f"            self.javaObj.setPythonObject(self)",
-                f"            idMapJToPy = " + ("self.javaObj.jToPy()" if not is_static else "dict()"),
+                f"            pass",
                 "            " + "\n            ".join(retranslated_args)
             ]))
         elif 'void' in method_schema_data['return_types'][0]:
@@ -348,6 +356,7 @@ class CompositionalTest:
             schema_object = Schema(schema, self.project, schema_data)
             schema_name_full = schema.split('.')[-2]
             schema_name = schema_name_full.split('_python_partial')[0]
+            schema_file_name = ".".join(schema.split('.')[:-1])
             
             # get the classes to process
             if schema not in self.schemas_to_process:
@@ -355,7 +364,7 @@ class CompositionalTest:
                 classes_to_process = []
             else:
                 classes_to_process = []
-                for _class in components[schema_name]:
+                for _class in components[schema_file_name]:
                     if _class not in schema_data['classes']:
                         raise ValueError(f"Class {_class} not found in schema {schema}!")
                     classes_to_process.append(_class)
@@ -375,7 +384,7 @@ class CompositionalTest:
                     continue
 
                 # get the methods to process
-                if schema_name not in components or _class not in components[schema_name] or components[schema_name][_class] == []:
+                if schema_file_name not in components or _class not in components[schema_file_name] or components[schema_file_name][_class] == []:
                     # Process all methods if no methods are provided
                     # or no class or schema was provided to begin with
                     methods_to_process = list(schema_data['classes'][_class]['methods'].keys())
@@ -392,7 +401,7 @@ class CompositionalTest:
                         
                         _available_methods.append((_method, _method_name))
                     
-                    for _method in components[schema_name][_class]:
+                    for _method in components[schema_file_name][_class]:
                         for m in _available_methods:
                             if m[1] == _method:
                                 # check if the method is supported for testing
@@ -493,7 +502,7 @@ class CompositionalTest:
         else:
             self.schemas_to_process = []
             for schema in schemas_to_process:
-                mathing_schemas = [s for s in self.project_schemas if s.endswith(f'.{schema}_python_partial.json')]
+                mathing_schemas = [s for s in self.project_schemas if schema in s]
                 if not mathing_schemas:
                     raise ValueError(f"Schema for {schema} not found!")
                 self.schemas_to_process.extend(mathing_schemas)
@@ -772,12 +781,6 @@ class SyncMethod:
         self.reverse = reverse
         self.fields = []
         
-        # put the 'javaObj' field into the python object
-        if not self.reverse:
-            pass
-        else:
-            self.fields.append("this.obj.putMember(\"javaObj\", this);")
-        
     def add_field(self, field_name: str, field_schema_data: dict):
         field_type = field_schema_data['types'][0][0].strip()
         
@@ -794,7 +797,7 @@ class SyncMethod:
             field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True, target_object=field_name)
             self.fields.append(f"{field_name} = ({formatted_field_type}) {field_from_python};")
         else:
-            self.fields.append(f"this.obj.putMember(\"{python_field_name}\", IntegrationUtils.mapToPython({field_name}, idMap, this.obj.getMember(\"{python_field_name}\")));")
+            self.fields.append(f"this.obj.invokeMember(\"__setattr__\", \"{python_field_name}\", IntegrationUtils.mapToPython({field_name}, idMap, this.obj.getMember(\"{python_field_name}\")));")
     
     def get_body(self):
         fields_body = "\n".join(self.fields)
@@ -803,6 +806,9 @@ class SyncMethod:
             return f"""
             public java.util.Map pyToJ() {{
                 java.util.Map idMap = new java.util.HashMap();
+                return pyToJ(idMap);
+            }}
+            public java.util.Map pyToJ(java.util.Map idMap) {{
                 {fields_body}
                 return idMap;
             }}
@@ -877,9 +883,6 @@ class Schema:
             "name": class_name,
             "declaration": class_declaration,
             "fields": [],
-            # ----- TODO: Possibly do not need uninitialized fields -----
-            "unitialized_fields": [],
-            # -----------------------------------------------------------
             "methods": [],
             "pyToJ": SyncMethod(class_name) if not (is_interface) else None,
             "jToPy": SyncMethod(class_name, reverse=True) if not (is_interface) else None,
@@ -909,9 +912,8 @@ class Schema:
                 # ------------------------------------------------
                 
                 # 'transient' so that it is not part of serialization
-                f"private transient Value obj = {class_obj['classref']}.invokeMember(\"getDefaultInstance\");"
+                f"private transient Value obj = {class_obj['classref']}.invokeMember(\"getDefaultInstance\", this);"
             ]
-            unititialized_fields_body = "".join(class_obj["unitialized_fields"])
 
             # add getPythonObject() and setPythonObject() methods
             class_obj["methods"].append(f"""
@@ -945,8 +947,7 @@ class Schema:
         if not is_enum:
             class_obj["fields"] = value_fields + class_obj["fields"]
         else:
-            # TODO: FIXME!!
-            # add an ";" to the last field
+            # add an ";" to the last field (TODO: this may not be required anymore)
             class_obj["fields"][-1] += ';'
             
             class_obj["fields"] = class_obj["fields"] + value_fields
@@ -960,6 +961,7 @@ class Schema:
             )
 
         # check if the class has a static initializer
+        # TODO: Static initializer should be at the correct position with respect to other (static) fields
         if "static_initializers" in class_schema_data:
             static_initializer = "".join([
                 "".join(class_schema_data['static_initializers'][initializer]["body"])
@@ -1044,11 +1046,6 @@ class Schema:
         if not skip_body:
             class_obj["fields"].append(field_body)
 
-        # check if this field was not initialized (except for fields of enums)
-        if not field_of_enum:
-            if '=' not in field_body:
-                class_obj["unitialized_fields"].append(f"{field_name} = {default_type_value[field_type]};")
-
     def __add_method_to_class(self, class_obj: dict, method_name: str, method_schema_data: dict, dont_process: bool = False):
         method_body = "".join(method_schema_data['body'])
         # check if the method is not implemented
@@ -1063,6 +1060,8 @@ class Schema:
         method_signature = method_body[:method_body.find('{')+1]
         method_content = method_body[method_body.find('{')+1:method_body.rfind('}')]
         is_constructor = method_schema_data['is_constructor']
+        is_static = 'static' in method_schema_data['modifiers']
+        is_void = 'void' in method_schema_data['return_types'][0]
         method_name = method_name.split(':', 1)[1].strip() if not is_constructor else "__init__"
 
         # if method is private, take mangling into account
@@ -1077,7 +1076,8 @@ class Schema:
         # if method name is a keyword, add an underscore at the end
         if keyword.iskeyword(method_name):
             method_name += "_"
-            
+        
+        method_content = publicize_methods_of_anoymous_classes(method_content)
         method_content_super, method_content_without_super = Schema.split_method_content_at_super(method_content)
         
         # handle the presence of exceptions
@@ -1162,47 +1162,50 @@ class Schema:
         else:
             python_call = f"{caller}.invokeMember(\"{method_name}\"{', ' + args_buildup if args_buildup else ''})"
 
-        if is_constructor:
-            final_method_content += f"Value idMapJToPy = jToPy();{translated_args}{python_call};java.util.Map idMapPyToJ = pyToJ();{retranslated_args}"
-        elif 'void' in method_signature:
-            if 'static' in method_schema_data['modifiers']:
-                final_method_content += f"{translated_args}{python_call};{retranslated_args}" # no need to sync for static methods
-            else:
-                final_method_content += f"Value idMapJToPy = jToPy();{translated_args}{python_call};java.util.Map idMapPyToJ = pyToJ();{retranslated_args}"
+        jToPy = "".join([
+            f"Value idMapJToPy = ",
+            "jToPy()" if not is_static else 'IntegrationUtils.mapToPython(new java.util.HashMap())',
+            ";",
+            translated_args
+        ])
+        pyToJ0 = "java.util.Map idMapPyToJ = new java.util.HashMap();"
+        pyToJ1 = "".join([
+            "pyToJ(idMapPyToJ);" if not is_static else "",
+            retranslated_args
+        ])
+
+        if is_void:
+            content = f"{python_call};"
         else:
             return_type = method_schema_data['return_types'][0][0]
             
             # remove any <> in the return type
             return_type = return_type.replace('<>', '').strip()
-            
-            return_type_casted = type_mapping(python_call, return_type)
-            
-            final_method_content += "".join([
-                f"Value idMapJToPy = " + (
-                    "jToPy()" if 'static' not in method_schema_data['modifiers'] else 'IntegrationUtils.mapToPython(new java.util.HashMap())'
-                ) + ";",
-                translated_args,
-                f"{return_type} val = ({return_type}) {return_type_casted};",
-                "java.util.Map idMapPyToJ = " + (
-                    "pyToJ()" if 'static' not in method_schema_data['modifiers'] else 'new java.util.HashMap()'
-                ) + ";",
-                retranslated_args,
-                f"return val;"
-            ])
+            return_type_casted = type_mapping(python_call, return_type, include_idMap=True, idMap_name="idMapPyToJ")
+
+            content = f"{return_type} val = ({return_type}) {return_type_casted};"
         
         # exception handling        
         if exception_name:            
-            final_method_content = f"""
+            final_method_content += "".join([f"""
+            {jToPy}
+            {pyToJ0}
             try {{
-                {final_method_content}
+                {content}
+                {pyToJ1}
+                {'return val;' if not is_void else ''}
             }} catch (PolyglotException e) {{
                 throw ({exception_name}) ExceptionHandler.handle(e, "{class_obj['name']}.{method_name}");
             }} finally {{
-                pyToJ();
-                {retranslated_args}
-            }}
-            """
+                {pyToJ1}
+            }}"""
+            ])
+
             self.__exceptions.append((exception_name, f"{class_obj['name']}.{method_name}"))
+        else:
+            final_method_content += "".join([jToPy, pyToJ0, content, pyToJ1])
+            if not is_void:
+                final_method_content = final_method_content + f"\nreturn val;"
             
         class_obj["methods"].append(f"{method_signature}\n{final_method_content}\n}}")
         

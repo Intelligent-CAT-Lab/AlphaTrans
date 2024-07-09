@@ -1,25 +1,8 @@
 import subprocess
 import json
+import re
 from src.compositional_glue_tests.constants import *
 
-
-class default_type_value_class(dict):
-    constants = {
-        "char": "'\\0'",
-        "int": "0",
-        "boolean": "false",
-        "float": "0",
-        "double": "0",
-        "long": "0",
-    }
-    
-    def __getitem__(self, key):
-        if key in self.constants:
-            return self.constants[key]
-        
-        return "null"
-    
-default_type_value = default_type_value_class()
 
 IMMUTABLES =  ['int', 'double', 'float', 'long', 'boolean', 'char', 'String']
 
@@ -34,16 +17,18 @@ def type_mapping(obj: str, target_type: str, include_idMap=False, calling_from_p
     calling_from_python: Whether this will be called from Python (so that the JavaHandler is used).
     target_object: The target object which will receive the converted value.    
     """
-    # handle arrays separately (TODO: This may not work in general)
+    target_type_reduced = None
+
+    # handle arrays separately
     if target_type.endswith("[]"):
+        if calling_from_python:
+            return obj # TODO: handle arrays in Python when doing the conversion! (remove this line)
+
         # if the target type is an array, ensure there is no <...> in the type
         if "<" in target_type:
             target_type = target_type[:target_type.index("<")] + "[]"
           
-        if calling_from_python:
-            return obj
-        else:
-            return f"IntegrationUtils.valueToArray({obj}, {target_type}.class)"
+        target_type_reduced = target_type[:-2].strip()
     
     caller = "JavaHandler.valueToObject" if calling_from_python else "IntegrationUtils.valueToObject"
 
@@ -52,7 +37,9 @@ def type_mapping(obj: str, target_type: str, include_idMap=False, calling_from_p
         args=", ".join([
             obj,
             f'"{target_type}"'
-        ] + ([idMap_name] if include_idMap else [])
+        ]
+        + ([idMap_name] if include_idMap else [])
+        + ([f'{target_type_reduced}.class'] if target_type_reduced else [])
         + ([target_object] if target_object else [])
     ))
 
@@ -173,7 +160,9 @@ def get_enum_field_body(field_name: str, field_schema: dict, schema_data: dict) 
     start = field_schema['start']
     end = field_schema['end']
     field_body = "".join(lst[start-1:end])
-    
+
+    field_body = publicize_methods_of_anoymous_classes(field_body)
+
     # return immediately if the field body ends with ';'
     if field_body.strip().endswith(";"):
         return field_body
@@ -187,6 +176,36 @@ def get_enum_field_body(field_name: str, field_schema: dict, schema_data: dict) 
     
     # check what the first non-whitespace character is
     if line.strip()[0] == ';':
-        field_body += ';'
+        field_body += ';'       
             
     return field_body
+
+
+def publicize_methods_of_anoymous_classes(body: str) -> str:
+    """
+    Publicize methods of anonymous classes.
+    """
+    # find overridden methods in the field body (if the field is an anonymous class)
+    if "@Override" in body:
+        # get all positions of @Override in the field body
+        override_pos = [m.start() for m in re.finditer('@Override', body)]
+        
+        for pos in override_pos:
+            # get the method signature
+            method_signature_start = pos + len("@Override")
+            method_signature_end = body.find("{", method_signature_start)
+            method_signature = body[method_signature_start:method_signature_end].strip()
+            
+            # check if the method is public and make it so if it is not
+            if "public" not in method_signature:
+                # check if the method was private or protected
+                if "private" in method_signature:
+                    method_signature = method_signature.replace("private", "public")
+                elif "protected" in method_signature:
+                    method_signature = method_signature.replace("protected", "public")
+                else:
+                    method_signature = "public " + method_signature
+                    
+            body = body[:method_signature_start] + "\n" + method_signature + body[method_signature_end:]
+
+    return body
