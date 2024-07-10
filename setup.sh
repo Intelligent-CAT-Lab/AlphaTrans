@@ -69,6 +69,26 @@ function download_java_projects() {
     cd java_projects/joda-convert;
     git reset --hard v2.2.3;
     cd $main;
+
+    git clone https://github.com/apache/commons-exec.git java_projects/commons-exec;
+    cd java_projects/commons-exec;
+    git reset --hard rel/commons-exec-1.4.0;
+    cd $main;
+
+    git clone https://github.com/FasterXML/jackson-core.git java_projects/jackson-core;
+    cd java_projects/jackson-core;
+    git reset --hard jackson-core-2.12.0;
+    cd $main;
+
+    git clone https://github.com/fusesource/jansi.git java_projects/jansi;
+    cd java_projects/jansi;
+    git reset --hard 045fd56;
+    cd $main;
+
+    git clone https://github.com/stleary/JSON-java.git java_projects/JSON-java;
+    cd java_projects/JSON-java;
+    git reset --hard 20240303;
+    cd $main;
 }
 
 function build_java_projects() {
