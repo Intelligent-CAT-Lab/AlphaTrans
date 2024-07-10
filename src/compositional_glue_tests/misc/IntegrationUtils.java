@@ -59,7 +59,7 @@ public final class IntegrationUtils {{
       Class<T> clazz,
       Object targetObject) {{
     // Nullify
-    if (value.isNull()) {{
+    if (value == null || value.isNull()) {{
       return null;
     }}
 
