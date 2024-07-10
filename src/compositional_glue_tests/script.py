@@ -39,6 +39,16 @@ class Project:
         self.glue_dir = os.path.join(self.root_dir, OUTPUT_DIR, self.name)
 
         self.__initialize_java_project()
+        
+        # traverse the schemas
+        self.project_schemas = list(filter(schema_filter, os.listdir(f'{self.schema_dir}/{self.name}')))
+
+        # create a set of all project classes
+        self.project_classes = set()
+        for schema in self.project_schemas:
+            with open(f'{self.schema_dir}/{self.name}/{schema}') as f:
+                data = json.load(f)
+            self.project_classes.update(data['classes'].keys())
 
     def __initialize_java_project(self):
         """       
@@ -349,7 +359,7 @@ class CompositionalTest:
         # list of exception-method pairs to map (from all schemas)
         self.__exceptions = []
 
-        for schema in self.project_schemas:
+        for schema in self.project.project_schemas:
             with open(f'{self.project.schema_dir}/{self.project.name}/{schema}') as f:
                 schema_data = json.load(f)
                 
@@ -495,14 +505,12 @@ class CompositionalTest:
         Set up the schemas to process for the project.
         If no schemas are provided, all schemas in the project will be processed.
         """
-        self.project_schemas = list(filter(schema_filter, os.listdir(f'{self.project.schema_dir}/{self.project.name}')))
-        
         if not schemas_to_process:
-            self.schemas_to_process = self.project_schemas
+            self.schemas_to_process = self.project.project_schemas
         else:
             self.schemas_to_process = []
             for schema in schemas_to_process:
-                mathing_schemas = [s for s in self.project_schemas if schema in s]
+                mathing_schemas = [s for s in self.project.project_schemas if schema in s]
                 if not mathing_schemas:
                     raise ValueError(f"Schema for {schema} not found!")
                 self.schemas_to_process.extend(mathing_schemas)
@@ -548,7 +556,7 @@ class CompositionalTest:
         classes_to_map = []
         imports = []
         
-        for schema in self.project_schemas:
+        for schema in self.project.project_schemas:
             with open(f'{self.project.schema_dir}/{self.project.name}/{schema}') as f:
                 data = json.load(f)
 
@@ -774,11 +782,14 @@ class CompositionalTest:
 class SyncMethod:
     """
     A class to manage the pyToJ and jToPy (reverse=True) methods.
+    
+    If call_super is True, the super class methods will be called as well.
     """
     
-    def __init__(self, class_name: str, reverse: bool = False):
+    def __init__(self, class_name: str, reverse: bool = False, call_super: bool = False):
         self.class_name = class_name
         self.reverse = reverse
+        self.call_super = call_super
         self.fields = []
         
     def add_field(self, field_name: str, field_schema_data: dict):
@@ -809,6 +820,7 @@ class SyncMethod:
                 return pyToJ(idMap);
             }}
             public java.util.Map pyToJ(java.util.Map idMap) {{
+                {"super.pyToJ(idMap);" if self.call_super else ""}
                 {fields_body}
                 return idMap;
             }}
@@ -820,6 +832,7 @@ class SyncMethod:
                 return jToPy(idMap);
             }}
             public Value jToPy(Value idMap) {{
+                {"super.jToPy(idMap);" if self.call_super else ""}
                 {fields_body}
                 return idMap;
             }}
@@ -864,6 +877,11 @@ class Schema:
         is_abstract = class_schema_data['is_abstract']
         is_in_test_dir = '/test/' in self.schema_data['path']
 
+        extends_project_class = False
+        if class_schema_data['extends']:
+            if class_schema_data['extends'][0] in self.project.project_classes:
+                extends_project_class = True 
+
         python_file_dir = self.subpackage.replace('.', '/')
         python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
         current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
@@ -884,8 +902,8 @@ class Schema:
             "declaration": class_declaration,
             "fields": [],
             "methods": [],
-            "pyToJ": SyncMethod(class_name) if not (is_interface) else None,
-            "jToPy": SyncMethod(class_name, reverse=True) if not (is_interface) else None,
+            "pyToJ": SyncMethod(class_name, call_super=extends_project_class) if not (is_interface) else None,
+            "jToPy": SyncMethod(class_name, reverse=True, call_super=extends_project_class) if not (is_interface) else None,
             "nests": [],
             "is_interface": is_interface,
             "is_enum": is_enum,
