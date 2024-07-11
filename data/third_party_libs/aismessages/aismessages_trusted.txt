@@ -1,0 +1,88 @@
+import dk.tbsalling.aismessages.AISInputStreamReader
+import dk.tbsalling.aismessages.ais.exceptions.UnsupportedMessageType
+import dk.tbsalling.aismessages.ais.messages.AISMessage
+import dk.tbsalling.aismessages.ais.messages.CachedDecodedValues
+import dk.tbsalling.aismessages.ais.messages.Metadata
+import dk.tbsalling.aismessages.ais.messages.asm.ApplicationSpecificMessage
+import dk.tbsalling.aismessages.ais.messages.asm.InlandShipStaticAndVoyageRelatedData
+import dk.tbsalling.aismessages.ais.messages.asm.NumberOfPersonsOnBoard
+import dk.tbsalling.aismessages.ais.messages.asm.UnknownApplicationSpecificMessage
+import dk.tbsalling.aismessages.ais.messages.types.*
+import dk.tbsalling.aismessages.ais.messages.types.AISMessageType
+import dk.tbsalling.aismessages.ais.messages.types.AidType
+import dk.tbsalling.aismessages.ais.messages.types.CommunicationState
+import dk.tbsalling.aismessages.ais.messages.types.IMO
+import dk.tbsalling.aismessages.ais.messages.types.ITDMACommunicationState
+import dk.tbsalling.aismessages.ais.messages.types.MMSI
+import dk.tbsalling.aismessages.ais.messages.types.ManeuverIndicator
+import dk.tbsalling.aismessages.ais.messages.types.NavigationStatus
+import dk.tbsalling.aismessages.ais.messages.types.PositionFixingDevice
+import dk.tbsalling.aismessages.ais.messages.types.SOTDMACommunicationState
+import dk.tbsalling.aismessages.ais.messages.types.ShipType
+import dk.tbsalling.aismessages.ais.messages.types.SyncState
+import dk.tbsalling.aismessages.ais.messages.types.TransponderClass
+import dk.tbsalling.aismessages.ais.messages.types.TxRxMode
+import dk.tbsalling.aismessages.nmea.NMEAMessageHandler
+import dk.tbsalling.aismessages.nmea.NMEAMessageInputStreamReader
+import dk.tbsalling.aismessages.nmea.NMEAMessageSocketClient
+import dk.tbsalling.aismessages.nmea.exceptions.InvalidMessage
+import dk.tbsalling.aismessages.nmea.exceptions.NMEAParseException
+import dk.tbsalling.aismessages.nmea.exceptions.UnsupportedMessageType
+import dk.tbsalling.aismessages.nmea.messages.NMEAMessage
+import dk.tbsalling.test.helpers.ArgumentCaptor
+import java.io.BufferedReader
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.ObjectOutputStream
+import java.io.Serializable
+import java.lang.ref.WeakReference
+import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.Method
+import java.net.InetAddress
+import java.net.InetSocketAddress
+import java.net.Socket
+import java.net.SocketAddress
+import java.net.UnknownHostException
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
+import java.util.ArrayList
+import java.util.Arrays
+import java.util.HashMap
+import java.util.LinkedList
+import java.util.List
+import java.util.Map
+import java.util.Optional
+import java.util.TreeMap
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.function.BiFunction
+import java.util.function.Consumer
+import java.util.function.Function
+import java.util.function.Supplier
+import java.util.logging.Logger
+import java.util.stream.IntStream
+import org.junit.BeforeClass
+import org.junit.Test
+import static dk.tbsalling.aismessages.ais.Decoders.*
+import static dk.tbsalling.aismessages.ais.Decoders.BIT_DECODER
+import static dk.tbsalling.aismessages.ais.Decoders.BOOLEAN_DECODER
+import static dk.tbsalling.aismessages.ais.Decoders.FLOAT_DECODER
+import static dk.tbsalling.aismessages.ais.Decoders.STRING_DECODER
+import static dk.tbsalling.aismessages.ais.Decoders.UNSIGNED_FLOAT_DECODER
+import static dk.tbsalling.aismessages.ais.Decoders.UNSIGNED_INTEGER_DECODER
+import static dk.tbsalling.aismessages.ais.Decoders.UNSIGNED_LONG_DECODER
+import static java.lang.String.format
+import static java.util.Arrays.stream
+import static java.util.Objects.requireNonNull
+import static org.junit.Assert.*
+import static org.junit.Assert.assertEquals
+import static org.junit.Assert.assertFalse
+import static org.junit.Assert.assertNotEquals
+import static org.junit.Assert.assertNotNull
+import static org.junit.Assert.assertNull
+import static org.junit.Assert.assertTrue
