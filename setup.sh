@@ -89,6 +89,16 @@ function download_java_projects() {
     cd java_projects/JSON-java;
     git reset --hard 20240303;
     cd $main;
+
+    git clone https://github.com/tbsalling/aismessages.git java_projects/aismessages;
+    cd java_projects/aismessages;
+    git reset --hard aismessages-2.2.4;
+    cd $main;
+
+    git clone https://github.com/lemire/javaewah.git java_projects/javaewah;
+    cd java_projects/javaewah;
+    git reset --hard JavaEWAH-1.2.3;
+    cd $main;
 }
 
 function build_java_projects() {
