@@ -52,6 +52,9 @@ def create_schema(args):
         if callable_name in ['<clinit>', '<obinit>']:
             continue
 
+        if start.endswith('0:0:0:0') or end.endswith('0:0:0:0'):
+            continue
+
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
         path = projects_dir + path[path.find(project):]
 
