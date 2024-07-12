@@ -1,15 +1,18 @@
 import argparse
 import json
 from dotenv import load_dotenv
-import torch
 import tqdm
 import subprocess
 import os
 import re
 from subprocess import Popen
 import logging
-from transformers import (
-    LlamaForCausalLM, CodeLlamaTokenizer,
+from genai.client import Client
+from genai.credentials import Credentials
+from genai.schema import (
+    DecodingMethod,
+    TextGenerationParameters,
+    TextGenerationReturnOptions,
 )
 
 
@@ -43,15 +46,6 @@ def main(args):
     type_description = {}
     with open(f"data/type_resolution/{args.project_name}/type_description.json", "r") as f:
         type_description = json.load(f)
-
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
-    if args.model_name == 'codellama-13b-instruct':
-        kwargs = {}
-        kwargs["torch_dtype"] = torch.float16
-        tokenizer = CodeLlamaTokenizer.from_pretrained("codellama/CodeLlama-13b-Instruct-hf", cache_dir='/home/shared/huggingface')
-        model = LlamaForCausalLM.from_pretrained("codellama/CodeLlama-13b-Instruct-hf", cache_dir='/home/shared/huggingface', device_map='auto', **kwargs)
-        logging.info(f'Loaded model: {args.model_name}')
 
     index = 0
     max_attempts = 5
@@ -90,49 +84,55 @@ def main(args):
             pbar.update(1)
             continue
 
-        icl = f"{args.from_lang} type:\nString\n\n{args.to_lang} type:\nstr\n\n"
-        system_message = f"You are an expert {args.to_lang} programmer and assistant."
-        instruction = f"Translate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:\n\n{args.from_lang} type:\n" + type_ + f"\n\n{args.to_lang} type:\n\n"
+        index += 1
+
+        icl = f"{args.from_lang} type:\nString\n\n{args.to_lang} type:\nstr"
+        instruction = f"### Instruction:\nTranslate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:\n\n{args.from_lang} type:\n" + type_ + f"\n\n### Response:\n{args.to_lang} type:\n\n"
 
         if args.type == 'source_description':
             description = type_description[type_]['summarized_text'].replace('\n', '')
-            instruction = instruction.replace(f'Translate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:', f"Translate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above. A description of {args.from_lang} type is give as well:\n\nType Description:\n{description}")
+            instruction = instruction.replace(f'### Instruction:\nTranslate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:', f"### Instruction:\nTranslate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above. A description of {args.from_lang} type is given as well:\n\nType Description:\n{description}")
 
             if include_feedback:
-                instruction = instruction.replace(f'A description of {args.from_lang} type is give as well:\n\nType Description:\n{description}', f'Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\nA description of {args.from_lang} type is give as well:\n\nType Description:\n{description}')
+                instruction = instruction.replace(f'A description of {args.from_lang} type is given as well:\n\nType Description:\n{description}', f'Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\nA description of {args.from_lang} type is give as well:\n\nType Description:\n{description}')
 
         elif args.type == 'simple':
             if include_feedback:
-                instruction = instruction.replace(f'Translate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:', f'Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\nTranslate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:')
+                instruction = instruction.replace(f'### Instruction:\nTranslate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:', f'Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\n### Instruction:\nTranslate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:')
 
-        prompt = f"<s>{icl}[INST] <<SYS>>\n{system_message}\n<</SYS>>\n\n{instruction}[/INST]"
+        prompt = f"{icl}\n\n{instruction}"
 
         logging.info('*' * 100)
         logging.info(prompt)
         logging.info('*' * 100)
 
-        input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
+        client = Client(credentials=Credentials.from_env())
+        model_id = "deepseek-ai/deepseek-coder-33b-instruct"
 
-        raw_output = model.generate(
-            input_tokens,
-            max_new_tokens=100,
-            do_sample=True,
-            output_scores=True,
-            return_dict_in_generate=True,
-            pad_token_id=tokenizer.eos_token_id,
-            top_p=0.95,
-            temperature=0.2,
-        )
+        parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
+                                                min_new_tokens=1,
+                                                max_new_tokens=1024,
+                                                return_options=TextGenerationReturnOptions(
+                                                    input_text=True,
+                                                ),
+                                                time_limit=60000,
+                                            )
 
-        generation = tokenizer.decode(raw_output.sequences[0])
-        generation = generation.replace(prompt, '').replace('<s>', '').replace('</s>', '').replace(f'{args.to_lang} type:', '').replace(f'{args.from_lang} type:', '').strip().split('\n')
+        for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
+            generation = response.results[0].input_text + response.results[0].generated_text
 
-        if len(generation) == 0:
+        generation = generation[generation.find('### Response:') + len('### Response:'):].strip()
+
+        generation = generation.replace('```python', '```')
+        pattern = r'```((?:[^`]|`[^`]|``[^`])*?)```'
+        match = re.search(pattern, generation, re.DOTALL)
+
+        if not match:
             logging.info(f"Failed to translate {type_}... trying again")
             max_attempts -= 1
             continue
 
-        generation = generation[0].strip()
+        generation = match.group(1).strip()
 
         if generation == '':
             logging.info(f"Failed to translate {type_}... trying again")
@@ -228,7 +228,8 @@ def main(args):
 
     logging.info(f"Total success: {total_success}")
     logging.info(f"Total failed: {total_failed}")
-    logging.info(f"Average attempts to overturn: {sum(total_overturning_attempts) / len(total_overturning_attempts)}")
+    if total_overturning_attempts != []:
+        logging.info(f"Average attempts to overturn: {sum(total_overturning_attempts) / len(total_overturning_attempts)}")
 
 
 if __name__ == '__main__':
