@@ -35,7 +35,7 @@ class IncrementalHash32x86:
 
     def finalise(
         self,
-        hash: int,
+        hash_: int,
         unprocessedLength: int,
         unprocessed: typing.List[int],
         totalLen: int,
@@ -53,7 +53,7 @@ class IncrementalHash32(IncrementalHash32x86):
     # Class Methods Begin
     def finalise(
         self,
-        hash: int,
+        hash_: int,
         unprocessedLength: int,
         unprocessed: typing.List[int],
         totalLen: int,
@@ -181,15 +181,15 @@ class MurmurHash3:
         pass
 
     @staticmethod
-    def __fmix64(hash: int) -> int:
+    def __fmix64(hash_: int) -> int:
         pass
 
     @staticmethod
-    def __fmix32(hash: int) -> int:
+    def __fmix32(hash_: int) -> int:
         pass
 
     @staticmethod
-    def __mix32(k: int, hash: int) -> int:
+    def __mix32(k: int, hash_: int) -> int:
         pass
 
     @staticmethod

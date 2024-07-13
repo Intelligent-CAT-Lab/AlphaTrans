@@ -234,7 +234,7 @@ class HelpFormatter:
     def _findWrapPos(self, text: str, width: int, startPos: int) -> int:
         pass
 
-    def _createPadding(self, len: int) -> str:
+    def _createPadding(self, len_: int) -> str:
         pass
 
     def __renderWrappedTextBlock(

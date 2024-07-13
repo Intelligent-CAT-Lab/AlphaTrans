@@ -1,0 +1,2 @@
+class OpenVmsProcessingEnvironment:
+    pass

@@ -21,10 +21,16 @@ class RefinedSoundex(StringEncoder):
     # Class Fields End
 
     # Class Methods Begin
-    def soundex(self, str: str) -> str:
+    def encode(self, str_: str) -> str:
         pass
 
-    def encode1(self, str: str) -> str:
+    def encode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def soundex(self, str_: str) -> str:
+        pass
+
+    def encode1(self, str_: str) -> str:
         pass
 
     def encode0(self, obj: typing.Any) -> typing.Any:

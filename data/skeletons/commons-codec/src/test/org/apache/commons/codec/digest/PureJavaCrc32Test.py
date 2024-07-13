@@ -21,13 +21,13 @@ class Table:
         pass
 
     @staticmethod
-    def main(args: typing.List[str]) -> None:
+    def main(args: typing.List[typing.List[str]]) -> None:
         pass
 
     def __init__(self, nBits: int, nTables: int, polynomial: int) -> None:
         pass
 
-    def toStrings(self, nameformat: str) -> typing.List[str]:
+    def toStrings(self, nameformat: str) -> typing.List[typing.List[str]]:
         pass
 
     # Class Methods End
@@ -58,7 +58,7 @@ class PerformanceTest:
 
     # Class Methods Begin
     @staticmethod
-    def main(args: typing.List[str]) -> None:
+    def main(args: typing.List[typing.List[str]]) -> None:
         pass
 
     @staticmethod
@@ -69,7 +69,7 @@ class PerformanceTest:
     def __doBench2(
         clazz: typing.Type[typing.Any],
         numThreads: int,
-        bytes: typing.List[int],
+        bytes_: typing.List[int],
         size: int,
     ) -> BenchResult:
         pass
@@ -77,7 +77,7 @@ class PerformanceTest:
     @staticmethod
     def __doBench1(
         crcs: typing.List[typing.Type[typing.Any]],
-        bytes: typing.List[int],
+        bytes_: typing.List[int],
         size: int,
         out: typing.IO,
     ) -> None:
@@ -108,7 +108,7 @@ class PureJavaCrc32Test(unittest.TestCase):
     def __checkSame(self) -> None:
         pass
 
-    def __checkOnBytes(self, bytes: typing.List[int], print: bool) -> None:
+    def __checkOnBytes(self, bytes_: typing.List[int], print_: bool) -> None:
         pass
 
     # Class Methods End

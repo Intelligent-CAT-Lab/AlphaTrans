@@ -27,25 +27,43 @@ class Hex(BinaryDecoder, BinaryEncoder):
     def toString(self) -> str:
         pass
 
+    def encode(self, object_: typing.Any) -> typing.Any:
+        pass
+
+    def encode(self, array: typing.List[int]) -> typing.List[int]:
+        pass
+
+    def decode(self, object_: typing.Any) -> typing.Any:
+        pass
+
+    def decode(self, array: typing.List[int]) -> typing.List[int]:
+        pass
+
     def getCharsetName(self) -> str:
         pass
 
     def getCharset(self) -> str:
         pass
 
-    def encode2(self, object: typing.Any) -> typing.Any:
+    def encode2(self, object_: typing.Any) -> typing.Any:
         pass
 
     def encode1(self, array: typing.Union[bytearray, memoryview]) -> typing.List[int]:
         pass
 
+    def encode(self, array: typing.Union[bytearray, memoryview]) -> typing.List[int]:
+        pass
+
     def encode0(self, array: typing.List[int]) -> typing.List[int]:
         pass
 
-    def decode2(self, object: typing.Any) -> typing.Any:
+    def decode2(self, object_: typing.Any) -> typing.Any:
         pass
 
     def decode1(self, buffer: typing.Union[bytearray, memoryview]) -> typing.List[int]:
+        pass
+
+    def decode(self, buffer: typing.Union[bytearray, memoryview]) -> typing.List[int]:
         pass
 
     def decode0(self, array: typing.List[int]) -> typing.List[int]:

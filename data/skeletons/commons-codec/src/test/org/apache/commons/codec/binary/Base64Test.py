@@ -24,7 +24,7 @@ class Base64Test(unittest.TestCase):
 
     # Class Fields Begin
     __CHARSET_UTF8: str = None
-    BASE64_IMPOSSIBLE_CASES: typing.List[str] = None
+    BASE64_IMPOSSIBLE_CASES: typing.List[typing.List[str]] = None
     __STANDARD_ENCODE_TABLE: typing.List[int] = None
     __random: random.Random = None
     # Class Fields End

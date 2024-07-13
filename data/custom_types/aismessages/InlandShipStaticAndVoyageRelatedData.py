@@ -1,0 +1,2 @@
+class InlandShipStaticAndVoyageRelatedData:
+    pass

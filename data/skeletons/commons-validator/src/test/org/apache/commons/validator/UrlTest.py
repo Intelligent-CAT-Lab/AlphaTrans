@@ -34,7 +34,7 @@ class UrlTest(unittest.TestCase):
         pass
 
     @staticmethod
-    def main(argv: typing.List[str]) -> None:
+    def main(argv: typing.List[typing.List[str]]) -> None:
         pass
 
     def testValidateUrl(self) -> None:

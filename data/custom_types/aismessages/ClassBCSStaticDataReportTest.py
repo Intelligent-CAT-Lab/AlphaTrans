@@ -1,0 +1,2 @@
+class ClassBCSStaticDataReportTest:
+    pass

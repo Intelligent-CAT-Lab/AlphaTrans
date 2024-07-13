@@ -20,7 +20,7 @@ class ValidatorResources:
     __ARGS_PATTERN: str = None
     __serialVersionUID: int = None
     __VALIDATOR_RULES: str = None
-    __REGISTRATIONS: typing.List[str] = None
+    __REGISTRATIONS: typing.List[typing.List[str]] = None
     __log: logging.Logger = None
     _defaultLocale: typing.Any = None
     # Class Fields End

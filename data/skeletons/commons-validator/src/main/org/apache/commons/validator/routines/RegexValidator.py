@@ -22,7 +22,7 @@ class RegexValidator:
     def validate(self, value: str) -> str:
         pass
 
-    def match(self, value: str) -> typing.List[str]:
+    def match(self, value: str) -> typing.List[typing.List[str]]:
         pass
 
     def isValid(self, value: str) -> bool:
@@ -37,10 +37,12 @@ class RegexValidator:
         pass
 
     @staticmethod
-    def RegexValidator1(regexs: typing.List[str]) -> RegexValidator:
+    def RegexValidator1(regexs: typing.List[typing.List[str]]) -> RegexValidator:
         pass
 
-    def __init__(self, regexs: typing.List[str], caseSensitive: bool) -> None:
+    def __init__(
+        self, regexs: typing.List[typing.List[str]], caseSensitive: bool
+    ) -> None:
         pass
 
     # Class Methods End

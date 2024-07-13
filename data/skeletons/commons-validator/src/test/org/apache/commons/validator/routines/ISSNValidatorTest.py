@@ -16,8 +16,8 @@ class ISSNValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     __VALIDATOR: ISSNValidator = None
-    __validFormat: typing.List[str] = None
-    __invalidFormat: typing.List[str] = None
+    __validFormat: typing.List[typing.List[str]] = None
+    __invalidFormat: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin

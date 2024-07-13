@@ -54,9 +54,9 @@ class Rule:
 
     # Class Fields Begin
     __pattern: str = None
-    __replacementAtStart: typing.List[str] = None
-    __replacementBeforeVowel: typing.List[str] = None
-    __replacementDefault: typing.List[str] = None
+    __replacementAtStart: typing.List[typing.List[str]] = None
+    __replacementBeforeVowel: typing.List[typing.List[str]] = None
+    __replacementDefault: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin
@@ -66,7 +66,9 @@ class Rule:
     def matches(self, context: str) -> bool:
         pass
 
-    def getReplacements(self, context: str, atStart: bool) -> typing.List[str]:
+    def getReplacements(
+        self, context: str, atStart: bool
+    ) -> typing.List[typing.List[str]]:
         pass
 
     def getPatternLength(self) -> int:
@@ -102,6 +104,12 @@ class DaitchMokotoffSoundex(StringEncoder):
     # Class Fields End
 
     # Class Methods Begin
+    def encode(self, source: str) -> str:
+        pass
+
+    def encode(self, obj: typing.Any) -> typing.Any:
+        pass
+
     def soundex0(self, source: str) -> str:
         pass
 
@@ -118,14 +126,14 @@ class DaitchMokotoffSoundex(StringEncoder):
     def __init__(self, folding: bool) -> None:
         pass
 
-    def __soundex1(self, source: str, branching: bool) -> typing.List[str]:
+    def __soundex1(self, source: str, branching: bool) -> typing.List[typing.List[str]]:
         pass
 
-    def __cleanup(self, input: str) -> str:
+    def __cleanup(self, input_: str) -> str:
         pass
 
     @staticmethod
-    def __stripQuotes(str: str) -> str:
+    def __stripQuotes(str_: str) -> str:
         pass
 
     @staticmethod

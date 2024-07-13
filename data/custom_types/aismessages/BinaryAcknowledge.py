@@ -1,0 +1,2 @@
+class BinaryAcknowledge:
+    pass

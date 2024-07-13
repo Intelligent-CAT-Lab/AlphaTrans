@@ -1,0 +1,2 @@
+class AnsiTest:
+    pass

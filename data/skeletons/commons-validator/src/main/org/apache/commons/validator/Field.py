@@ -88,7 +88,7 @@ class Field:
     def getIndexedProperty(self) -> str:
         pass
 
-    def setProperty(self, property: str) -> None:
+    def setProperty(self, property_: str) -> None:
         pass
 
     def getProperty(self) -> str:

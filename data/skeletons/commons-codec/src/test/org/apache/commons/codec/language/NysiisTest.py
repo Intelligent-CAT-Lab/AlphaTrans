@@ -80,7 +80,9 @@ class NysiisTest(StringEncoderAbstractTest, unittest.TestCase):
     def _createStringEncoder(self) -> Nysiis:
         pass
 
-    def __encodeAll(self, strings: typing.List[str], expectedEncoding: str) -> None:
+    def __encodeAll(
+        self, strings: typing.List[typing.List[str]], expectedEncoding: str
+    ) -> None:
         pass
 
     def __assertEncodings(self, testValues: typing.List[typing.List[str]]) -> None:

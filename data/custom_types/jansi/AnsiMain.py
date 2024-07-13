@@ -1,0 +1,2 @@
+class AnsiMain:
+    pass

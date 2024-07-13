@@ -1,0 +1,2 @@
+class BinaryMessageSingleSlot:
+    pass

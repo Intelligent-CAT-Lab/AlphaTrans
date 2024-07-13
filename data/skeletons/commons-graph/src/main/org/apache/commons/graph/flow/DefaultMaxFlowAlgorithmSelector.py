@@ -53,7 +53,7 @@ class MapperWrapper(Mapper):
     # Class Fields End
 
     # Class Methods Begin
-    def map(self, input: EdgeWrapper[typing.Any]) -> typing.Any:
+    def map_(self, input_: EdgeWrapper[typing.Any]) -> typing.Any:
         pass
 
     def __init__(

@@ -162,38 +162,19 @@
                             "131-139:format4"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testFormat(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testFormat(self) -> None:",
-                        "        ",
-                        "        origDefault = locale.getdefaultlocale()",
-                        "        locale.setlocale(locale.LC_ALL, 'en_GB.utf8')",
-                        "",
-                        "        cal20050101 = self._createCalendar(self._GMT, 20051231, 11500)",
-                        "        self.assertIsNone(self._calValidator.format0(None), \"null\")",
-                        "        self.assertEqual(self._calValidator.format0(cal20050101), \"31/12/05\", \"default\")",
-                        "        self.assertEqual(self._calValidator.format2(cal20050101, locale.US), \"12/31/05\", \"locale\")",
-                        "        self.assertEqual(self._calValidator.format1(cal20050101, \"yyyy-MM-dd HH:mm\"), \"2005-12-31 01:15\", \"patternA\")",
-                        "        self.assertEqual(self._calValidator.format1(cal20050101, \"yyyy-MM-dd z\"), \"2005-12-31 GMT\", \"patternB\")",
-                        "        self.assertEqual(self._calValidator.format3(cal20050101, \"dd MMM yyyy\", locale.GERMAN), \"31 Dez 2005\", \"both\")",
-                        "",
-                        "        self.assertEqual(self._calValidator.format0(cal20050101, self._EST), \"30/12/05\", \"EST default\")",
-                        "        self.assertEqual(self._calValidator.format2(cal20050101, locale.US, self._EST), \"12/30/05\", \"EST locale\")",
-                        "        self.assertEqual(self._calValidator.format1(cal20050101, \"yyyy-MM-dd HH:mm\", self._EST), \"2005-12-30 20:15\", \"EST patternA\")",
-                        "        self.assertEqual(self._calValidator.format1(cal20050101, \"yyyy-MM-dd z\", self._EST), \"2005-12-30 EST\", \"EST patternB\")",
-                        "        self.assertEqual(self._calValidator.format4(cal20050101, \"dd MMM yyyy\", locale.GERMAN, self._EST), \"30 Dez 2005\", \"EST both\")",
-                        "",
-                        "        locale.setlocale(locale.LC_ALL, origDefault)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 23.364269018173218,
-                    "generation_timestamp": "2024-06-29T00:20:13.281725",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -234,21 +215,19 @@
                             "101-103:CalendarValidator1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def _setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def _setUp(self) -> None:",
-                        "         self.__calValidator = CalendarValidator.CalendarValidator1()",
-                        "         self._validator = self.__calValidator"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 3.3976407051086426,
-                    "generation_timestamp": "2024-06-29T00:20:16.684165",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -321,56 +300,19 @@
                             "220-232:adjustToTimeZone"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testAdjustToTimeZone(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testAdjustToTimeZone(self) -> None:",
-                        "        ",
-                        "        calEST = self._createCalendar(self._EST, self.__DATE_2005_11_23, self.__TIME_12_03_45)",
-                        "        dateEST = calEST.getTime()",
-                        "",
-                        "        calGMT = self._createCalendar(self._GMT, self.__DATE_2005_11_23, self.__TIME_12_03_45)",
-                        "        dateGMT = calGMT.getTime()",
-                        "",
-                        "        calCET = self._createCalendar(self._EET, self.__DATE_2005_11_23, self.__TIME_12_03_45)",
-                        "        dateCET = calCET.getTime()",
-                        "",
-                        "        assert dateGMT.getTime() != dateCET.getTime(), \"Check GMT != CET\"",
-                        "        assert dateGMT.getTime() != dateEST.getTime(), \"Check GMT != EST\"",
-                        "        assert dateCET.getTime() != dateEST.getTime(), \"Check CET != EST\"",
-                        "",
-                        "        CalendarValidator.adjustToTimeZone(calEST, self._GMT)",
-                        "        assert dateGMT == calEST.getTime(), \"EST to GMT\"",
-                        "        assert dateEST != calEST.getTime(), \"Check EST = GMT\"",
-                        "        CalendarValidator.adjustToTimeZone(calEST, self._EST)",
-                        "        assert dateEST == calEST.getTime(), \"back to EST\"",
-                        "        assert dateGMT != calEST.getTime(), \"Check EST != GMT\"",
-                        "",
-                        "        CalendarValidator.adjustToTimeZone(calCET, self._GMT)",
-                        "        assert dateGMT == calCET.getTime(), \"CET to GMT\"",
-                        "        assert dateCET != calCET.getTime(), \"Check CET = GMT\"",
-                        "        CalendarValidator.adjustToTimeZone(calCET, self._EET)",
-                        "        assert dateCET == calCET.getTime(), \"back to CET\"",
-                        "        assert dateGMT != calCET.getTime(), \"Check CET != GMT\"",
-                        "",
-                        "        calUTC = self._createCalendar(self._UTC, self.__DATE_2005_11_23, self.__TIME_12_03_45)",
-                        "        assert self._UTC.hasSameRules(self._GMT), \"SAME: UTC = GMT\"",
-                        "        assert calUTC.getTime() == calGMT.getTime(), \"SAME: Check time (A)\"",
-                        "        assert self._GMT != calUTC.getTimeZone(), \"SAME: Check GMT(A)\"",
-                        "        assert self._UTC == calUTC.getTimeZone(), \"SAME: Check UTC(A)\"",
-                        "        CalendarValidator.adjustToTimeZone(calUTC, self._GMT)",
-                        "        assert calUTC.getTime() == calGMT.getTime(), \"SAME: Check time (B)\"",
-                        "        assert self._GMT == calUTC.getTimeZone(), \"SAME: Check GMT(B)\"",
-                        "        assert self._UTC != calUTC.getTimeZone(), \"SAME: Check UTC(B)\""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 30.680530071258545,
-                    "generation_timestamp": "2024-06-29T00:20:47.373607",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -423,29 +365,19 @@
                             "90-92:isValid2"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testDateTimeStyle(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testDateTimeStyle(self) -> None:",
-                        "        ",
-                        "        origDefault = locale.getdefaultlocale()",
-                        "        locale.setlocale(locale.LC_ALL, 'en_GB.utf8')",
-                        "",
-                        "        dateTimeValidator = AbstractCalendarValidator(True, locale.SHORT, locale.SHORT)",
-                        "        dateTimeValidator.processParsedValue = lambda value, formatter: value",
-                        "        self.assertTrue(\"validate(A) default\", dateTimeValidator.isValid0(\"31/12/05 14:23\"))",
-                        "        self.assertTrue(\"validate(A) locale \", dateTimeValidator.isValid2(\"12/31/05 2:23 PM\", locale.US))",
-                        "",
-                        "        locale.setlocale(locale.LC_ALL, origDefault)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 14.216707944869995,
-                    "generation_timestamp": "2024-06-29T00:21:01.598355",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -605,13 +537,15 @@
                             "303-305:compareYears"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testCompare(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "failed",
+                    "translation_status": "pending",
                     "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -788,13 +722,15 @@
                             "210-212:validate7"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testCalendarValidatorMethods(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [],
-                    "translation_status": "failed",
+                    "translation_status": "pending",
                     "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -832,20 +768,19 @@
                             "136-138:AbstractCalendarValidatorTest"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def __init__(self, name: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def __init__(self, name: str) -> None:",
-                        "         super().__init__(name)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 7.953600645065308,
-                    "generation_timestamp": "2024-06-29T00:31:15.380777",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -870,16 +805,14 @@
                         "    __calValidator: CalendarValidator = None",
                         ""
                     ],
-                    "translation": [
-                        "    __calValidator: CalendarValidator = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-06-28T21:07:17.367125",
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -904,15 +837,14 @@
                         "    __TIME_12_03_45: int = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __TIME_12_03_45: int = 120345"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.2128427028656006,
-                    "generation_timestamp": "2024-06-28T21:07:18.581910",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -937,19 +869,19 @@
                         "    __DATE_2005_11_23: int = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __DATE_2005_11_23: int = 20051123"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.5190410614013672,
-                    "generation_timestamp": "2024-06-28T21:07:20.102402",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
             },
+            "is_enum": false,
             "python_class_declaration": "class CalendarValidatorTest(AbstractCalendarValidatorTest):\n\n"
         },
         "new AbstractCalendarValidator(...) { ... }": {
@@ -988,7 +920,8 @@
                         "value",
                         "formatter"
                     ],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false
                 },
                 "238-239:": {
                     "start": 238,
@@ -1012,7 +945,8 @@
                         "dateStyle",
                         "timeStyle"
                     ],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false
                 }
             },
             "fields": {

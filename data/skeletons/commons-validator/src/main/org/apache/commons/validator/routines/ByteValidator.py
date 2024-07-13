@@ -24,22 +24,22 @@ class ByteValidator(AbstractNumberValidator):
     ) -> typing.Any:
         pass
 
-    def maxValue1(self, value: int, max: int) -> bool:
+    def maxValue1(self, value: int, max_: int) -> bool:
         pass
 
-    def maxValue0(self, value: int, max: int) -> bool:
+    def maxValue0(self, value: int, max_: int) -> bool:
         pass
 
-    def minValue1(self, value: int, min: int) -> bool:
+    def minValue1(self, value: int, min_: int) -> bool:
         pass
 
-    def minValue0(self, value: int, min: int) -> bool:
+    def minValue0(self, value: int, min_: int) -> bool:
         pass
 
-    def isInRange1(self, value: int, min: int, max: int) -> bool:
+    def isInRange1(self, value: int, min_: int, max_: int) -> bool:
         pass
 
-    def isInRange0(self, value: int, min: int, max: int) -> bool:
+    def isInRange0(self, value: int, min_: int, max_: int) -> bool:
         pass
 
     def validate3(self, value: str, pattern: str, locale: typing.Any) -> int:

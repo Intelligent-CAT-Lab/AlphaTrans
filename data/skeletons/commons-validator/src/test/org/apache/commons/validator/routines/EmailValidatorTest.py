@@ -102,7 +102,7 @@ class EmailValidatorTest(unittest.TestCase):
         pass
 
     @staticmethod
-    def main(args: typing.List[str]) -> None:
+    def main(args: typing.List[typing.List[str]]) -> None:
         pass
 
     # Class Methods End

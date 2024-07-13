@@ -64,23 +64,19 @@
                             "53-81:evaluateMatch"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def withKFactor(self, kFactor: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def withKFactor(self, kFactor: int) -> None:",
-                        "         for player in self.__tournamentGraph.getVertices0():",
-                        "             for opponent in self.__tournamentGraph.getOutbound(player):",
-                        "                 gameResult = self.__tournamentGraph.getEdge(player, opponent)",
-                        "                 self.__evaluateMatch(player, gameResult, opponent, kFactor)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 3.9458768367767334,
-                    "generation_timestamp": "2024-07-02T02:27:09.897462",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -112,20 +108,19 @@
                             "92-99:withKFactor"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def withDefaultKFactor(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def withDefaultKFactor(self) -> None:",
-                        "         self.withKFactor(self.__DEFAULT_K_FACTOR)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.3293540477752686,
-                    "generation_timestamp": "2024-07-02T02:27:11.230382",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -156,21 +151,19 @@
                         "playerRanking"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def __init__(self, tournamentGraph: DirectedGraph[typing.Any, GameResult], playerRanking: PlayersRank[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def __init__(self, tournamentGraph: DirectedGraph[typing.Any, GameResult], playerRanking: PlayersRank[typing.Any]) -> None:",
-                        "         self.__tournamentGraph = tournamentGraph",
-                        "         self.__playerRanking = playerRanking"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.6546299457550049,
-                    "generation_timestamp": "2024-07-02T02:26:45.657819",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -202,21 +195,19 @@
                         "eFactor"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def __updateRanking(self, player: typing.Any, kFactor: float, sFactor: float, eFactor: float) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def __updateRanking(self, player: typing.Any, kFactor: float, sFactor: float, eFactor: float) -> None:",
-                        "         newRanking = self.__playerRanking.getRanking(player) + (kFactor * (sFactor - eFactor))",
-                        "         self.__playerRanking.updateRanking(player, newRanking)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 3.7567508220672607,
-                    "generation_timestamp": "2024-07-02T02:26:49.418354",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -289,39 +280,19 @@
                             "83-86:updateRanking"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def __evaluateMatch(self, playerA: typing.Any, gameResult: GameResult, playerB: typing.Any, kFactor: int) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def __evaluateMatch(self, playerA: typing.Any, gameResult: GameResult, playerB: typing.Any, kFactor: int) -> bool:",
-                        "         qA = self.__calculateQFactor(playerA)",
-                        "         qB = self.__calculateQFactor(playerB)",
-                        "",
-                        "         eA = self.__calculateEFactor(qA, qB)",
-                        "         eB = self.__calculateEFactor(qB, qA)",
-                        "",
-                        "         sA: float",
-                        "         sB: float",
-                        "         if gameResult == GameResult.WIN:",
-                        "             sA = 1",
-                        "             sB = 0",
-                        "         elif gameResult == GameResult.DRAW:",
-                        "             sA = 0.5",
-                        "             sB = 0.5",
-                        "         else:",
-                        "             raise ValueError(\"Input GameResult not accepted\")",
-                        "",
-                        "         self.__updateRanking(playerA, kFactor, sA, eA)",
-                        "         self.__updateRanking(playerB, kFactor, sB, eB)",
-                        "         return True"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 11.728082180023193,
-                    "generation_timestamp": "2024-07-02T02:27:05.087023",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -350,21 +321,19 @@
                         "player"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def __calculateQFactor(self, player: typing.Any) -> float:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def __calculateQFactor(self, player: typing.Any) -> float:",
-                        "         ranking = self.__playerRanking.getRanking(player)",
-                        "         return pow(self.__DEFAULT_POW_BASE, ranking / self.__DEFAULT_DIVISOR)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 2.5539159774780273,
-                    "generation_timestamp": "2024-07-02T02:26:51.975836",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -394,22 +363,20 @@
                         "qB"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def __calculateEFactor(qA: float, qB: float) -> float:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    @staticmethod",
-                        "    def __calculateEFactor(qA: float, qB: float) -> float:",
-                        "         return qA / (qA + qB)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.3736844062805176,
-                    "generation_timestamp": "2024-07-02T02:26:53.354406",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -435,16 +402,14 @@
                         "    __playerRanking: PlayersRank[typing.Any] = None",
                         ""
                     ],
-                    "translation": [
-                        "    __playerRanking: PlayersRank[typing.Any] = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-07-02T02:00:18.280440",
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -468,16 +433,14 @@
                         "    __tournamentGraph: DirectedGraph[typing.Any, GameResult] = None",
                         ""
                     ],
-                    "translation": [
-                        "    __tournamentGraph: DirectedGraph[typing.Any, GameResult] = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-07-02T02:00:18.281202",
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -502,15 +465,14 @@
                         "    __DEFAULT_K_FACTOR: int = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __DEFAULT_K_FACTOR: int = 32"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.5332188606262207,
-                    "generation_timestamp": "2024-07-02T02:00:19.815179",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -535,15 +497,14 @@
                         "    __DEFAULT_DIVISOR: float = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __DEFAULT_DIVISOR: float = 400"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.9252612590789795,
-                    "generation_timestamp": "2024-07-02T02:00:21.745006",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -568,19 +529,19 @@
                         "    __DEFAULT_POW_BASE: float = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __DEFAULT_POW_BASE: float = 10.0"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.5146722793579102,
-                    "generation_timestamp": "2024-07-02T02:00:23.264348",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
             },
+            "is_enum": false,
             "python_class_declaration": "class DefaultKFactorBuilder(KFactorBuilder):\n\n"
         }
     },

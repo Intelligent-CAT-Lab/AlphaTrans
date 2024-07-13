@@ -22,7 +22,9 @@ class JiraCsv253Test(unittest.TestCase):
     def testHandleAbsentValues(self) -> None:
         pass
 
-    def __assertArrayEqual(self, expected: typing.List[str], actual: CSVRecord) -> None:
+    def __assertArrayEqual(
+        self, expected: typing.List[typing.List[str]], actual: CSVRecord
+    ) -> None:
         pass
 
     # Class Methods End

@@ -107,18 +107,18 @@ class MurmurHash3Test(unittest.TestCase):
 
     @staticmethod
     def __assertIncrementalHash32x86(
-        bytes: typing.List[int], seed: int, blocks: typing.List[int]
+        bytes_: typing.List[int], seed: int, blocks: typing.List[int]
     ) -> None:
         pass
 
     @staticmethod
     def __assertIncrementalHash32(
-        bytes: typing.List[int], seed: int, blocks: typing.List[int]
+        bytes_: typing.List[int], seed: int, blocks: typing.List[int]
     ) -> None:
         pass
 
     @staticmethod
-    def __negativeBytes(bytes: typing.List[int], start: int, length: int) -> bool:
+    def __negativeBytes(bytes_: typing.List[int], start: int, length: int) -> bool:
         pass
 
     @staticmethod

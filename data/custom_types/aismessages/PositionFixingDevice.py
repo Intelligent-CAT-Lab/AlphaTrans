@@ -1,0 +1,2 @@
+class PositionFixingDevice:
+    pass

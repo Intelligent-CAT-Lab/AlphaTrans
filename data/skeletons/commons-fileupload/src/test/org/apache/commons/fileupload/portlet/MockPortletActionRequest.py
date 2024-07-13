@@ -102,7 +102,7 @@ class MockPortletActionRequest:
     ]:
         pass
 
-    def getParameterValues(self, arg0: str) -> typing.List[str]:
+    def getParameterValues(self, arg0: str) -> typing.List[typing.List[str]]:
         pass
 
     def getParameterNames(

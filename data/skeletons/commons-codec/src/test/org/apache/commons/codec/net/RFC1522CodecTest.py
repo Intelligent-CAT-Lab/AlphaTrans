@@ -21,10 +21,10 @@ class RFC1522TestCodec(RFC1522Codec):
     def _getEncoding(self) -> str:
         pass
 
-    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:
+    def _doEncoding(self, bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
-    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:
+    def _doDecoding(self, bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
     # Class Methods End

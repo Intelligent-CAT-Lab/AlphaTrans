@@ -32,6 +32,24 @@ class QuotedPrintableCodec:
     # Class Fields End
 
     # Class Methods Begin
+    def decode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def encode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def decode(self, sourceStr: str) -> str:
+        pass
+
+    def encode(self, sourceStr: str) -> str:
+        pass
+
+    def decode(self, bytes_: typing.List[int]) -> typing.List[int]:
+        pass
+
+    def encode(self, bytes_: typing.List[int]) -> typing.List[int]:
+        pass
+
     def encode4(self, sourceStr: str, sourceCharset: str) -> str:
         pass
 
@@ -62,25 +80,25 @@ class QuotedPrintableCodec:
     def encode1(self, sourceStr: str) -> str:
         pass
 
-    def decode0(self, bytes: typing.List[int]) -> typing.List[int]:
+    def decode0(self, bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
-    def encode0(self, bytes: typing.List[int]) -> typing.List[int]:
+    def encode0(self, bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod
-    def decodeQuotedPrintable(bytes: typing.List[int]) -> typing.List[int]:
+    def decodeQuotedPrintable(bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod
     def encodeQuotedPrintable2(
-        printable: typing.List[bool], bytes: typing.List[int], strict: bool
+        printable: typing.List[bool], bytes_: typing.List[int], strict: bool
     ) -> typing.List[int]:
         pass
 
     @staticmethod
     def encodeQuotedPrintable1(
-        printable: typing.List[bool], bytes: typing.List[int]
+        printable: typing.List[bool], bytes_: typing.List[int]
     ) -> typing.List[int]:
         pass
 
@@ -116,7 +134,7 @@ class QuotedPrintableCodec:
         pass
 
     @staticmethod
-    def __getUnsignedOctet(index: int, bytes: typing.List[int]) -> int:
+    def __getUnsignedOctet(index: int, bytes_: typing.List[int]) -> int:
         pass
 
     @staticmethod

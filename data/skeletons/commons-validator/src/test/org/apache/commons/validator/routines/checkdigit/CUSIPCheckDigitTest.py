@@ -14,8 +14,8 @@ import io
 class CUSIPCheckDigitTest(AbstractCheckDigitTest):
 
     # Class Fields Begin
-    __invalidCheckDigits: typing.List[str] = None
-    __validCheckDigits: typing.List[str] = None
+    __invalidCheckDigits: typing.List[typing.List[str]] = None
+    __validCheckDigits: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin

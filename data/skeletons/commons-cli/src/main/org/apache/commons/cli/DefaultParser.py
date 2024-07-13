@@ -65,7 +65,7 @@ class DefaultParser(CommandLineParser):
     def parse3(
         self,
         options: Options,
-        arguments: typing.List[str],
+        arguments: typing.List[typing.List[str]],
         properties: typing.Union[configparser.ConfigParser, typing.Dict],
         stopAtNonOption: bool,
     ) -> CommandLine:
@@ -74,17 +74,22 @@ class DefaultParser(CommandLineParser):
     def parse2(
         self,
         options: Options,
-        arguments: typing.List[str],
+        arguments: typing.List[typing.List[str]],
         properties: typing.Union[configparser.ConfigParser, typing.Dict],
     ) -> CommandLine:
         pass
 
     def parse1(
-        self, options: Options, arguments: typing.List[str], stopAtNonOption: bool
+        self,
+        options: Options,
+        arguments: typing.List[typing.List[str]],
+        stopAtNonOption: bool,
     ) -> CommandLine:
         pass
 
-    def parse0(self, options: Options, arguments: typing.List[str]) -> CommandLine:
+    def parse0(
+        self, options: Options, arguments: typing.List[typing.List[str]]
+    ) -> CommandLine:
         pass
 
     def _handleConcatenatedOptions(self, token: str) -> None:

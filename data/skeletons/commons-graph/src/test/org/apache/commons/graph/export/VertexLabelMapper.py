@@ -15,7 +15,7 @@ class VertexLabelMapper(Mapper):
     # Class Fields End
 
     # Class Methods Begin
-    def map(self, input: BaseLabeledVertex) -> str:
+    def map_(self, input_: BaseLabeledVertex) -> str:
         pass
 
     # Class Methods End

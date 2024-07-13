@@ -16,7 +16,7 @@ class Objects:
 
     # Class Methods Begin
     @staticmethod
-    def hash(
+    def hash_(
         initialNonZeroOddNumber: int,
         multiplierNonZeroOddNumber: int,
         objs: typing.List[typing.Any],

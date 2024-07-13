@@ -53,7 +53,7 @@ class JiraCsv288Test(unittest.TestCase):
     def testParseWithABADelimiter(self) -> None:
         pass
 
-    def __print(self, csvRecord: CSVRecord, csvPrinter: CSVPrinter) -> None:
+    def __print_(self, csvRecord: CSVRecord, csvPrinter: CSVPrinter) -> None:
         pass
 
     # Class Methods End

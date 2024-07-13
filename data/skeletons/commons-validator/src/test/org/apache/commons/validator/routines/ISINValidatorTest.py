@@ -15,9 +15,9 @@ class ISINValidatorTest(unittest.TestCase):
     # Class Fields Begin
     __VALIDATOR_TRUE: ISINValidator = None
     __VALIDATOR_FALSE: ISINValidator = None
-    __validFormat: typing.List[str] = None
-    __invalidFormat: typing.List[str] = None
-    __invalidFormatTrue: typing.List[str] = None
+    __validFormat: typing.List[typing.List[str]] = None
+    __invalidFormat: typing.List[typing.List[str]] = None
+    __invalidFormatTrue: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin

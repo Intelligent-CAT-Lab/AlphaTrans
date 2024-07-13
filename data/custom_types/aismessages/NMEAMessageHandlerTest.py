@@ -1,0 +1,2 @@
+class NMEAMessageHandlerTest:
+    pass

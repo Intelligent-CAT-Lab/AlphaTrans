@@ -17,10 +17,16 @@ class MatchRatingApproachEncoder(StringEncoder):
     __EMPTY: str = None
     __PLAIN_ASCII: str = None
     __UNICODE: str = None
-    __DOUBLE_CONSONANT: typing.List[str] = None
+    __DOUBLE_CONSONANT: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin
+    def encode(self, name: str) -> str:
+        pass
+
+    def encode(self, pObject: typing.Any) -> typing.Any:
+        pass
+
     def isEncodeEquals(self, name1: str, name2: str) -> bool:
         pass
 

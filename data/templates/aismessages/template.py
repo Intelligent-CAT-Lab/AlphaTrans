@@ -1,0 +1,128 @@
+from data.custom_types.aismessages.Metadata import Metadata
+from data.custom_types.aismessages.IceClass import IceClass
+from data.custom_types.aismessages.AidToNavigationReport import AidToNavigationReport
+from data.custom_types.aismessages.LongRangeBroadcastMessage import LongRangeBroadcastMessage
+from data.custom_types.aismessages.PositionReportClassAResponseToInterrogationTest import PositionReportClassAResponseToInterrogationTest
+from data.custom_types.aismessages.BerthingData import BerthingData
+from data.custom_types.aismessages.AssignedModeCommand import AssignedModeCommand
+from data.custom_types.aismessages.DataReport import DataReport
+from data.custom_types.aismessages.AISMessage import AISMessage
+from data.custom_types.aismessages.NMEAMessageSocketClient import NMEAMessageSocketClient
+from data.custom_types.aismessages.AidToNavigationReportTest import AidToNavigationReportTest
+from data.custom_types.aismessages.ApplicationSpecificMessage import ApplicationSpecificMessage
+from data.custom_types.aismessages.SOTDMACommunicationState import SOTDMACommunicationState
+from data.custom_types.aismessages.StandardSARAircraftPositionReport import StandardSARAircraftPositionReport
+from data.custom_types.aismessages.AddressedBinaryMessage import AddressedBinaryMessage
+from data.custom_types.aismessages.CachedDecodedValues import CachedDecodedValues
+from data.custom_types.aismessages.StandardClassBCSPositionReport import StandardClassBCSPositionReport
+from data.custom_types.aismessages.DecodersTest import DecodersTest
+from data.custom_types.aismessages.InlandShipStaticAndVoyageRelatedData import InlandShipStaticAndVoyageRelatedData
+from data.custom_types.aismessages.ShipAndVoyageData import ShipAndVoyageData
+from data.custom_types.aismessages.InvalidMessage import InvalidMessage
+from data.custom_types.aismessages.NMEAMessageInputStreamReader import NMEAMessageInputStreamReader
+from data.custom_types.aismessages.TxRxMode import TxRxMode
+from data.custom_types.aismessages.SafetyRelatedBroadcastMessage import SafetyRelatedBroadcastMessage
+from data.custom_types.aismessages.IMO import IMO
+from data.custom_types.aismessages.TransponderClass import TransponderClass
+from data.custom_types.aismessages.AISMessageTest import AISMessageTest
+from data.custom_types.aismessages.MooringPosition import MooringPosition
+from data.custom_types.aismessages.UTCAndDateInquiry import UTCAndDateInquiry
+from data.custom_types.aismessages.InvalidAISMessage import InvalidAISMessage
+from data.custom_types.aismessages.InterrogationTest import InterrogationTest
+from data.custom_types.aismessages.ReportingInterval import ReportingInterval
+from data.custom_types.aismessages.BaseStationReport import BaseStationReport
+from data.custom_types.aismessages.NavigationStatus import NavigationStatus
+from data.custom_types.aismessages.NMEAMessageHandler import NMEAMessageHandler
+from data.custom_types.aismessages.SyncState import SyncState
+from data.custom_types.aismessages.BinaryMessageSingleSlot import BinaryMessageSingleSlot
+from data.custom_types.aismessages.Interrogation import Interrogation
+from data.custom_types.aismessages.BaseStationReportTest import BaseStationReportTest
+from data.custom_types.aismessages.ExtendedShipStaticAndVoyageRelatedData import ExtendedShipStaticAndVoyageRelatedData
+from data.custom_types.aismessages.SolasEquipmentStatus import SolasEquipmentStatus
+from data.custom_types.aismessages.SafetyRelatedAcknowledge import SafetyRelatedAcknowledge
+from data.custom_types.aismessages.ClassBCSStaticDataReport import ClassBCSStaticDataReport
+from data.custom_types.aismessages.NMEAParseException import NMEAParseException
+from data.custom_types.aismessages.BinaryBroadcastMessageTest import BinaryBroadcastMessageTest
+from data.custom_types.aismessages.AISMessageType import AISMessageType
+from data.custom_types.aismessages.PositionReport import PositionReport
+from data.custom_types.aismessages.AddressedBinaryMessageTest import AddressedBinaryMessageTest
+from data.custom_types.aismessages.NMEAMessageInputStreamReaderTest import NMEAMessageInputStreamReaderTest
+from data.custom_types.aismessages.NMEAMessageHandlerTest import NMEAMessageHandlerTest
+from data.custom_types.aismessages.UTCAndDateResponse import UTCAndDateResponse
+from data.custom_types.aismessages.BallastStatus import BallastStatus
+from data.custom_types.aismessages.PositionReportClassAResponseToInterrogation import PositionReportClassAResponseToInterrogation
+from data.custom_types.aismessages.StationType import StationType
+from data.custom_types.aismessages.ArgumentCaptor import ArgumentCaptor
+from data.custom_types.aismessages.GroupAssignmentCommand import GroupAssignmentCommand
+from data.custom_types.aismessages.AddressedSafetyRelatedMessage import AddressedSafetyRelatedMessage
+from data.custom_types.aismessages.SimpleDemoApp import SimpleDemoApp
+from data.custom_types.aismessages.StaticDataReport import StaticDataReport
+from data.custom_types.aismessages.LongRangeBroadcastMessageTest import LongRangeBroadcastMessageTest
+from data.custom_types.aismessages.BinaryMessageMultipleSlot import BinaryMessageMultipleSlot
+from data.custom_types.aismessages.ManeuverIndicator import ManeuverIndicator
+from data.custom_types.aismessages.Error import Error
+from data.custom_types.aismessages.ExtendedDynamicDataReport import ExtendedDynamicDataReport
+from data.custom_types.aismessages.InvalidMessageTest import InvalidMessageTest
+from data.custom_types.aismessages.ShipType import ShipType
+from data.custom_types.aismessages.DynamicDataReport import DynamicDataReport
+from data.custom_types.aismessages.ExtendedClassBEquipmentPositionReport import ExtendedClassBEquipmentPositionReport
+from data.custom_types.aismessages.UnsupportedMessageType import UnsupportedMessageType
+from data.custom_types.aismessages.DataLinkManagementTest import DataLinkManagementTest
+from data.custom_types.aismessages.BunkerOilStatus import BunkerOilStatus
+from data.custom_types.aismessages.Decoders import Decoders
+from data.custom_types.aismessages.AISInputStreamReader import AISInputStreamReader
+from data.custom_types.aismessages.UnknownApplicationSpecificMessage import UnknownApplicationSpecificMessage
+from data.custom_types.aismessages.PositionReportClassAScheduled import PositionReportClassAScheduled
+from data.custom_types.aismessages.StandardClassBCSPositionReportTest import StandardClassBCSPositionReportTest
+from data.custom_types.aismessages.PositionFixingDevice import PositionFixingDevice
+from data.custom_types.aismessages.ServiceStatus import ServiceStatus
+from data.custom_types.aismessages.AidType import AidType
+from data.custom_types.aismessages.ShipAndVoyageDataTest import ShipAndVoyageDataTest
+from data.custom_types.aismessages.PositionReportClassAScheduledTest import PositionReportClassAScheduledTest
+from data.custom_types.aismessages.PositionReportClassAAssignedScheduleTest import PositionReportClassAAssignedScheduleTest
+from data.custom_types.aismessages.DataLinkManagement import DataLinkManagement
+from data.custom_types.aismessages.NMEAMessage import NMEAMessage
+from data.custom_types.aismessages.NumberOfPersonsOnBoard import NumberOfPersonsOnBoard
+from data.custom_types.aismessages.SocketDemoApp import SocketDemoApp
+from data.custom_types.aismessages.PositionReportClassAAssignedSchedule import PositionReportClassAAssignedSchedule
+from data.custom_types.aismessages.GNSSBinaryBroadcastMessage import GNSSBinaryBroadcastMessage
+from data.custom_types.aismessages.CommunicationState import CommunicationState
+from data.custom_types.aismessages.BinaryBroadcastMessage import BinaryBroadcastMessage
+from data.custom_types.aismessages.ChannelManagement import ChannelManagement
+from data.custom_types.aismessages.BinaryAcknowledge import BinaryAcknowledge
+from data.custom_types.aismessages.ClassBCSStaticDataReportTest import ClassBCSStaticDataReportTest
+from data.custom_types.aismessages.ITDMACommunicationState import ITDMACommunicationState
+from data.custom_types.aismessages.MMSI import MMSI
+from typing import *
+import collections
+import typing
+import sqlalchemy
+import builtins
+import io
+import sys
+import itertools
+import urllib
+import copy
+import datetime
+import functools
+import os
+import pickle
+import numbers
+from numbers import *
+import re
+import decimal
+import enum
+import uuid
+import math
+import threading
+import ipaddress
+import socket
+import http
+import random
+import idna
+import locale
+import weakref
+import concurrent
+import asyncio
+def main(a: <placeholder>):
+    pass

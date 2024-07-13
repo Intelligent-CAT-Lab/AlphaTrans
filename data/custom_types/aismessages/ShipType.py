@@ -1,0 +1,2 @@
+class ShipType:
+    pass

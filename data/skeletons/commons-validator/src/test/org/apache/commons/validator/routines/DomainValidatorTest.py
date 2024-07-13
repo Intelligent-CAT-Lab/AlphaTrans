@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
+import enum
 import unittest
 import os
 import typing
@@ -23,7 +24,7 @@ class DomainValidatorTest(unittest.TestCase):
         pass
 
     @staticmethod
-    def main(a: typing.List[str]) -> None:
+    def main(a: typing.List[typing.List[str]]) -> None:
         pass
 
     def testGetArray(self) -> None:
@@ -84,7 +85,7 @@ class DomainValidatorTest(unittest.TestCase):
         pass
 
     @staticmethod
-    def __isSortedLowerCase1(name: str, array: typing.List[str]) -> bool:
+    def __isSortedLowerCase1(name: str, array: typing.List[typing.List[str]]) -> bool:
         pass
 
     @staticmethod
@@ -97,7 +98,7 @@ class DomainValidatorTest(unittest.TestCase):
 
     @staticmethod
     def __isInIanaList1(
-        name: str, array: typing.List[str], ianaTlds: typing.Set[str]
+        name: str, array: typing.List[typing.List[str]], ianaTlds: typing.Set[str]
     ) -> bool:
         pass
 
@@ -122,7 +123,7 @@ class DomainValidatorTest(unittest.TestCase):
         pass
 
     @staticmethod
-    def __printMap(header: str, map: typing.Dict[str, str], string: str) -> None:
+    def __printMap(header: str, map_: typing.Dict[str, str], string: str) -> None:
         pass
 
     # Class Methods End

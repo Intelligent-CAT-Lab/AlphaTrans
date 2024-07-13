@@ -36,7 +36,7 @@ class XXHash32Test(unittest.TestCase):
 
     @staticmethod
     def __copy(
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         output: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter],
         buffersize: int,
     ) -> int:
@@ -44,7 +44,7 @@ class XXHash32Test(unittest.TestCase):
 
     @staticmethod
     def __toByteArray(
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]
+        input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]
     ) -> typing.List[int]:
         pass
 

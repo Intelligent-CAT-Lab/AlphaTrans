@@ -27,8 +27,8 @@ class Builder:
     __delimiter: str = None
     __duplicateHeaderMode: DuplicateHeaderMode = None
     __escapeCharacter: str = None
-    __headerComments: typing.List[str] = None
-    __headers: typing.List[str] = None
+    __headerComments: typing.List[typing.List[str]] = None
+    __headers: typing.List[typing.List[str]] = None
     __ignoreEmptyLines: bool = None
     __ignoreHeaderCase: bool = None
     __ignoreSurroundingSpaces: bool = None
@@ -82,7 +82,9 @@ class Builder:
     def setIgnoreEmptyLines(self, ignoreEmptyLines: bool) -> Builder:
         pass
 
-    def setHeaderComments1(self, headerComments: typing.List[str]) -> Builder:
+    def setHeaderComments1(
+        self, headerComments: typing.List[typing.List[str]]
+    ) -> Builder:
         pass
 
     def setHeaderComments0(self, headerComments: typing.List[typing.Any]) -> Builder:
@@ -156,7 +158,7 @@ class Predefined:
     def getFormat(self) -> CSVFormat:
         pass
 
-    def __init__(self, format: CSVFormat) -> None:
+    def __init__(self, format_: CSVFormat) -> None:
         pass
 
     # Class Methods End
@@ -177,8 +179,8 @@ class CSVFormat:
     __commentMarker: str = None
     __delimiter: str = None
     __escapeCharacter: str = None
-    __headers: typing.List[str] = None
-    __headerComments: typing.List[str] = None
+    __headers: typing.List[typing.List[str]] = None
+    __headerComments: typing.List[typing.List[str]] = None
     __ignoreEmptyLines: bool = None
     __ignoreHeaderCase: bool = None
     __ignoreSurroundingSpaces: bool = None
@@ -388,10 +390,10 @@ class CSVFormat:
     def getIgnoreEmptyLines(self) -> bool:
         pass
 
-    def getHeaderComments(self) -> typing.List[str]:
+    def getHeaderComments(self) -> typing.List[typing.List[str]]:
         pass
 
-    def getHeader(self) -> typing.List[str]:
+    def getHeader(self) -> typing.List[typing.List[str]]:
         pass
 
     def getEscapeCharacter(self) -> str:
@@ -412,7 +414,7 @@ class CSVFormat:
     def getAllowMissingColumnNames(self) -> bool:
         pass
 
-    def format(self, values: typing.List[typing.Any]) -> str:
+    def format_(self, values: typing.List[typing.Any]) -> str:
         pass
 
     def builder(self) -> Builder:
@@ -435,7 +437,7 @@ class CSVFormat:
         quoteMode: QuoteMode,
         ignoreEmptyLines: bool,
         duplicateHeaderMode: DuplicateHeaderMode,
-        header: typing.List[str],
+        header: typing.List[typing.List[str]],
         allowMissingColumnNames: bool,
         trailingDelimiter: bool,
         headerComments: typing.List[typing.Any],
@@ -444,7 +446,7 @@ class CSVFormat:
         pass
 
     @staticmethod
-    def valueOf(format: str) -> CSVFormat:
+    def valueOf(format_: str) -> CSVFormat:
         pass
 
     @staticmethod
@@ -452,7 +454,7 @@ class CSVFormat:
         pass
 
     @staticmethod
-    def toStringArray(values: typing.List[typing.Any]) -> typing.List[str]:
+    def toStringArray(values: typing.List[typing.Any]) -> typing.List[typing.List[str]]:
         pass
 
     @staticmethod
@@ -475,7 +477,7 @@ class CSVFormat:
 
     def __printWithQuotes0(
         self,
-        object: typing.Any,
+        object_: typing.Any,
         charSeq: str,
         out: typing.Union[typing.List, io.TextIOBase],
         newRecord: bool,
@@ -504,7 +506,7 @@ class CSVFormat:
 
     def __print3(
         self,
-        object: typing.Any,
+        object_: typing.Any,
         value: str,
         out: typing.Union[typing.List, io.TextIOBase],
         newRecord: bool,

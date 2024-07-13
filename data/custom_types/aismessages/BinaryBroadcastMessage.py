@@ -1,0 +1,2 @@
+class BinaryBroadcastMessage:
+    pass

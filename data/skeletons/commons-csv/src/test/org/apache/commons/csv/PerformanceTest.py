@@ -46,7 +46,7 @@ class CSVParserFactory(ABC):
 class PerformanceTest:
 
     # Class Fields Begin
-    __PROPERTY_NAMES: typing.List[str] = None
+    __PROPERTY_NAMES: typing.List[typing.List[str]] = None
     __max: int = None
     __num: int = None
     __ELAPSED_TIMES: typing.List[int] = None
@@ -57,7 +57,7 @@ class PerformanceTest:
 
     # Class Methods Begin
     @staticmethod
-    def main(args: typing.List[str]) -> None:
+    def main(args: typing.List[typing.List[str]]) -> None:
         pass
 
     @staticmethod
@@ -113,7 +113,7 @@ class PerformanceTest:
         pass
 
     @staticmethod
-    def __createTestCSVLexer(test: str, input: ExtendedBufferedReader) -> Lexer:
+    def __createTestCSVLexer(test: str, input_: ExtendedBufferedReader) -> Lexer:
         pass
 
     @staticmethod

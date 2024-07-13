@@ -21,7 +21,7 @@ class BaseNTestData:
 
     # Class Methods Begin
     @staticmethod
-    def bytesContain(bytes: typing.List[int], c: int) -> bool:
+    def bytesContain(bytes_: typing.List[int], c: int) -> bool:
         pass
 
     @staticmethod
@@ -42,7 +42,7 @@ class BaseNTestData:
         pass
 
     @staticmethod
-    def __resizeArray(bytes: typing.List[int]) -> typing.List[int]:
+    def __resizeArray(bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod

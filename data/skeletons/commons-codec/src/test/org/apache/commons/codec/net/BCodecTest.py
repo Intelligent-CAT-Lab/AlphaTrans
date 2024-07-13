@@ -18,7 +18,7 @@ import io
 class BCodecTest(unittest.TestCase):
 
     # Class Fields Begin
-    __BASE64_IMPOSSIBLE_CASES: typing.List[str] = None
+    __BASE64_IMPOSSIBLE_CASES: typing.List[typing.List[str]] = None
     SWISS_GERMAN_STUFF_UNICODE: typing.List[int] = None
     RUSSIAN_STUFF_UNICODE: typing.List[int] = None
     # Class Fields End

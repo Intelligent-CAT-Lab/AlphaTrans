@@ -16,31 +16,31 @@ class StringUtils:
 
     # Class Methods Begin
     @staticmethod
-    def newStringUtf8(bytes: typing.List[int]) -> str:
+    def newStringUtf8(bytes_: typing.List[int]) -> str:
         pass
 
     @staticmethod
-    def newStringUtf16Le(bytes: typing.List[int]) -> str:
+    def newStringUtf16Le(bytes_: typing.List[int]) -> str:
         pass
 
     @staticmethod
-    def newStringUtf16Be(bytes: typing.List[int]) -> str:
+    def newStringUtf16Be(bytes_: typing.List[int]) -> str:
         pass
 
     @staticmethod
-    def newStringUtf16(bytes: typing.List[int]) -> str:
+    def newStringUtf16(bytes_: typing.List[int]) -> str:
         pass
 
     @staticmethod
-    def newStringUsAscii(bytes: typing.List[int]) -> str:
+    def newStringUsAscii(bytes_: typing.List[int]) -> str:
         pass
 
     @staticmethod
-    def newStringIso8859_1(bytes: typing.List[int]) -> str:
+    def newStringIso8859_1(bytes_: typing.List[int]) -> str:
         pass
 
     @staticmethod
-    def newString1(bytes: typing.List[int], charsetName: str) -> str:
+    def newString1(bytes_: typing.List[int], charsetName: str) -> str:
         pass
 
     @staticmethod
@@ -80,7 +80,7 @@ class StringUtils:
         pass
 
     @staticmethod
-    def __newString0(bytes: typing.List[int], charset: str) -> str:
+    def __newString0(bytes_: typing.List[int], charset: str) -> str:
         pass
 
     @staticmethod

@@ -51,7 +51,7 @@ class PrimTestCase(unittest.TestCase):
 
     @staticmethod
     def __internalPrimAssertion(
-        input: UndirectedMutableGraph[
+        input_: UndirectedMutableGraph[
             BaseLabeledVertex, BaseLabeledWeightedEdge[float]
         ],
         source: BaseLabeledVertex,

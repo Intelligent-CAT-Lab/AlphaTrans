@@ -19,7 +19,7 @@ class Constants:
     CRLF: str = None
     DOUBLE_QUOTE_CHAR: str = None
     EMPTY: str = None
-    EMPTY_STRING_ARRAY: typing.List[str] = None
+    EMPTY_STRING_ARRAY: typing.List[typing.List[str]] = None
     END_OF_STREAM: int = None
     FF: str = None
     LF: str = None

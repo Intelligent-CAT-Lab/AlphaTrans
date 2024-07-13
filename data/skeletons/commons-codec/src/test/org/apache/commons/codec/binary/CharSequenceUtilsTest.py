@@ -38,7 +38,7 @@ class TestData:
         toffset: int,
         ignoreCase: bool,
         other: str,
-        len: int,
+        len_: int,
     ) -> None:
         pass
 
@@ -51,7 +51,7 @@ class RunTest(ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def run(self, data: TestData, id: str) -> None:
+    def run(self, data: TestData, id_: str) -> None:
         pass
 
     def invoke(self) -> bool:

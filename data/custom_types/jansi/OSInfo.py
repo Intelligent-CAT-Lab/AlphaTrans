@@ -1,0 +1,2 @@
+class OSInfo:
+    pass

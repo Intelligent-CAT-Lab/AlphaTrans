@@ -15,11 +15,11 @@ import io
 class IBANValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
-    __invalidIBANFormat: typing.List[str] = None
+    __invalidIBANFormat: typing.List[typing.List[str]] = None
     __VALIDATOR: IBANValidator = None
     __IBAN_PART: str = None
     __IBAN_PAT: re.Pattern = None
-    __validIBANFormat: typing.List[str] = None
+    __validIBANFormat: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin
@@ -64,7 +64,7 @@ class IBANValidatorTest(unittest.TestCase):
         pass
 
     @staticmethod
-    def __formatToRE(type: str, len: int) -> str:
+    def __formatToRE(type_: str, len_: int) -> str:
         pass
 
     @staticmethod

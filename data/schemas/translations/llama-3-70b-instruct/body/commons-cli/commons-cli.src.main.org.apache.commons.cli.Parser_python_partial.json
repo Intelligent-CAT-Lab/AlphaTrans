@@ -88,21 +88,19 @@
                             "260-262:getRequiredOptions"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def _setOptions(self, options: Options) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def _setOptions(self, options: Options) -> None:",
-                        "         self.__options = options",
-                        "         self.__requiredOptions = list(options.getRequiredOptions())"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.5998668670654297,
-                    "generation_timestamp": "2024-07-02T09:30:38.331685",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -215,47 +213,19 @@
                             "324-338:updateRequiredOptions"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def _processProperties(self, properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def _processProperties(self, properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> None:",
-                        "         if properties is None:",
-                        "             return",
-                        "",
-                        "         for option in properties:",
-                        "             opt: Option = self._getOptions().getOption(option)",
-                        "",
-                        "             if opt is None:",
-                        "                 raise UnrecognizedOptionException(\"Default option wasn't defined\", option)",
-                        "",
-                        "             group: OptionGroup = self._getOptions().getOptionGroup(opt)",
-                        "             selected: bool = group is not None and group.getSelected() is not None",
-                        "",
-                        "             if not self._cmd.hasOption2(option) and not selected:",
-                        "                 value: str = properties[option]",
-                        "",
-                        "                 if opt.hasArg():",
-                        "                     if opt.getValues() is None or len(opt.getValues()) == 0:",
-                        "                         try:",
-                        "                             opt.addValueForProcessing(value)",
-                        "                         except RuntimeException:",
-                        "                             pass",
-                        "                 elif not (\"yes\".equalsIgnoreCase(value)",
-                        "                         or \"true\".equalsIgnoreCase(value)",
-                        "                         or \"1\".equalsIgnoreCase(value)):",
-                        "                     continue",
-                        "",
-                        "                 self._cmd._addOption(opt)",
-                        "                 self.__updateRequiredOptions(opt)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 18.71331286430359,
-                    "generation_timestamp": "2024-07-01T22:24:00.789445",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -345,32 +315,19 @@
                             "99-101:addOption"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def _processOption(self, arg: str, iter: typing.Iterator[str]) -> None:\n",
+                        "    def _processOption(self, arg: str, iter_: typing.Iterator[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def _processOption(self, arg: str, iter: typing.Iterator[str]) -> None:",
-                        "         hasOption: bool = self._getOptions().hasOption(arg)",
-                        "",
-                        "         if not hasOption:",
-                        "             raise UnrecognizedOptionException(\"Unrecognized option: \" + arg, arg)",
-                        "",
-                        "         opt: Option = self._getOptions().getOption(arg).clone()",
-                        "",
-                        "         self.__updateRequiredOptions(opt)",
-                        "",
-                        "         if opt.hasArg():",
-                        "             self.processArgs(opt, iter)",
-                        "",
-                        "         self._cmd._addOption(opt)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 7.111430883407593,
-                    "generation_timestamp": "2024-07-01T22:24:07.911884",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -454,34 +411,19 @@
                             "42-49:MissingArgumentException1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def processArgs(self, opt: Option, iter: typing.Iterator[str]) -> None:\n",
+                        "    def processArgs(self, opt: Option, iter_: typing.Iterator[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def processArgs(self, opt: Option, iter: typing.Iterator[str]) -> None:",
-                        "         while iter.hasNext():",
-                        "             str = iter.next()",
-                        "",
-                        "             if self._getOptions().hasOption(str) and str.startswith(\"-\"):",
-                        "                 iter.previous()",
-                        "                 break",
-                        "",
-                        "             try:",
-                        "                 opt.addValueForProcessing(Util.stripLeadingAndTrailingQuotes(str))",
-                        "             except RuntimeException as exp:",
-                        "                 iter.previous()",
-                        "                 break",
-                        "",
-                        "         if opt.getValues() == None and not opt.hasOptionalArg():",
-                        "             raise MissingArgumentException.MissingArgumentException1(1, None, opt)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 8.018687963485718,
-                    "generation_timestamp": "2024-07-01T22:23:32.854733",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -646,71 +588,19 @@
                             "49-53:checkRequiredOptions"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def parse3(self, options: Options, arguments: typing.List[str], properties: typing.Union[configparser.ConfigParser, typing.Dict], stopAtNonOption: bool) -> CommandLine:\n",
+                        "    def parse3(self, options: Options, arguments: typing.List[typing.List[str]], properties: typing.Union[configparser.ConfigParser, typing.Dict], stopAtNonOption: bool) -> CommandLine:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def parse3(self, options: Options, arguments: typing.List[str], properties: typing.Union[configparser.ConfigParser, typing.Dict], stopAtNonOption: bool) -> CommandLine:",
-                        "         for opt in options.helpOptions():",
-                        "             opt.clearValues()",
-                        "",
-                        "         for group in options.getOptionGroups():",
-                        "             group.setSelected(None)",
-                        "",
-                        "         self._setOptions(options)",
-                        "",
-                        "         self._cmd = CommandLine()",
-                        "",
-                        "         eatTheRest: bool = False",
-                        "",
-                        "         if arguments is None:",
-                        "             arguments = []",
-                        "",
-                        "         tokenList: typing.List[str] = list(self._flatten(self._getOptions(), arguments, stopAtNonOption))",
-                        "",
-                        "         iterator: typing.Iterator[str] = tokenList.__iter__()",
-                        "",
-                        "         while iterator.hasNext():",
-                        "             t: str = iterator.next()",
-                        "",
-                        "             if t == \"--\":",
-                        "                 eatTheRest = True",
-                        "             elif t == \"-\":",
-                        "                 if stopAtNonOption:",
-                        "                     eatTheRest = True",
-                        "                 else:",
-                        "                     self._cmd._addArg(t)",
-                        "             elif t.startswith(\"-\"):",
-                        "                 if stopAtNonOption and not self._getOptions().hasOption(t):",
-                        "                     eatTheRest = True",
-                        "                     self._cmd._addArg(t)",
-                        "                 else:",
-                        "                     self._processOption(t, iterator)",
-                        "             else:",
-                        "                 self._cmd._addArg(t)",
-                        "",
-                        "                 if stopAtNonOption:",
-                        "                     eatTheRest = True",
-                        "",
-                        "             if eatTheRest:",
-                        "                 while iterator.hasNext():",
-                        "                     str: str = iterator.next()",
-                        "",
-                        "                     if str != \"--\":",
-                        "                         self._cmd._addArg(str)",
-                        "",
-                        "         self._processProperties(properties)",
-                        "         self._checkRequiredOptions()",
-                        "",
-                        "         return self._cmd"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 24.276148080825806,
-                    "generation_timestamp": "2024-07-02T09:40:00.728616",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -748,20 +638,19 @@
                             "140-210:parse3"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def parse2(self, options: Options, arguments: typing.List[str], properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> CommandLine:\n",
+                        "    def parse2(self, options: Options, arguments: typing.List[typing.List[str]], properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> CommandLine:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def parse2(self, options: Options, arguments: typing.List[str], properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> CommandLine:",
-                        "         return self.parse3(options, arguments, properties, False)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.8162460327148438,
-                    "generation_timestamp": "2024-07-01T22:24:36.139352",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -799,20 +688,19 @@
                             "140-210:parse3"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def parse1(self, options: Options, arguments: typing.List[str], stopAtNonOption: bool) -> CommandLine:\n",
+                        "    def parse1(self, options: Options, arguments: typing.List[typing.List[str]], stopAtNonOption: bool) -> CommandLine:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def parse1(self, options: Options, arguments: typing.List[str], stopAtNonOption: bool) -> CommandLine:",
-                        "         return self.parse3(options, arguments, None, stopAtNonOption)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.9563729763031006,
-                    "generation_timestamp": "2024-07-01T22:24:38.099180",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -848,20 +736,19 @@
                             "140-210:parse3"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def parse0(self, options: Options, arguments: typing.List[str]) -> CommandLine:\n",
+                        "    def parse0(self, options: Options, arguments: typing.List[typing.List[str]]) -> CommandLine:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def parse0(self, options: Options, arguments: typing.List[str]) -> CommandLine:",
-                        "         return self.parse3(options, arguments, None, False)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.8884930610656738,
-                    "generation_timestamp": "2024-07-01T22:24:39.989681",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -887,20 +774,19 @@
                     "signature": "getRequiredOptions()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def _getRequiredOptions(self) -> typing.List[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def _getRequiredOptions(self) -> typing.List[typing.Any]:",
-                        "         return self.__requiredOptions"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0.8678748607635498,
-                    "generation_timestamp": "2024-07-01T22:23:23.803718",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -926,20 +812,19 @@
                     "signature": "getOptions()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def _getOptions(self) -> Options:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def _getOptions(self) -> Options:",
-                        "         return self.__options"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.0122880935668945,
-                    "generation_timestamp": "2024-07-01T22:23:24.824045",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -978,21 +863,19 @@
                             "68-75:MissingOptionException1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def _checkRequiredOptions(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def _checkRequiredOptions(self) -> None:",
-                        "         if not self._getRequiredOptions().isEmpty():",
-                        "             raise MissingOptionException.MissingOptionException1(1, self._getRequiredOptions(), None)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 2.7043120861053467,
-                    "generation_timestamp": "2024-07-01T22:23:35.564268",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1068,29 +951,19 @@
                             "95-105:setSelected"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def __updateRequiredOptions(self, opt: Option) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def __updateRequiredOptions(self, opt: Option) -> None:",
-                        "         if opt.isRequired():",
-                        "             self._getRequiredOptions().remove(opt.getKey())",
-                        "",
-                        "         if self._getOptions().getOptionGroup(opt) is not None:",
-                        "             group: OptionGroup = self._getOptions().getOptionGroup(opt)",
-                        "",
-                        "             if group.isRequired():",
-                        "                 self._getRequiredOptions().remove(group)",
-                        "",
-                        "             group.setSelected(opt)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 6.494802236557007,
-                    "generation_timestamp": "2024-07-01T22:23:42.067229",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1120,20 +993,19 @@
                         "stopAtNonOption"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def _flatten(self, opts: Options, arguments: typing.List[str], stopAtNonOption: bool) -> typing.List[str]:\n",
+                        "    def _flatten(self, opts: Options, arguments: typing.List[typing.List[str]], stopAtNonOption: bool) -> typing.List[typing.List[str]]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def _flatten(self, opts: Options, arguments: typing.List[str], stopAtNonOption: bool) -> typing.List[str]:",
-                        "         return self.flatten(opts, arguments, stopAtNonOption)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.4840707778930664,
-                    "generation_timestamp": "2024-07-01T22:24:09.398470",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -1158,16 +1030,14 @@
                         "    _cmd: CommandLine = None",
                         ""
                     ],
-                    "translation": [
-                        "    _cmd: CommandLine = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-07-01T22:14:59.436690",
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1190,16 +1060,14 @@
                         "    __requiredOptions: typing.List[typing.Any] = None",
                         ""
                     ],
-                    "translation": [
-                        "    __requiredOptions: typing.List[typing.Any] = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-07-01T22:14:59.439291",
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1222,20 +1090,19 @@
                         "    __options: Options = None",
                         ""
                     ],
-                    "translation": [
-                        "    __options: Options = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-07-01T22:14:59.441491",
+                    "generation_timestamp": 0,
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
             },
+            "is_enum": false,
             "python_class_declaration": "class Parser(CommandLineParser, ABC):\n\n"
         }
     },

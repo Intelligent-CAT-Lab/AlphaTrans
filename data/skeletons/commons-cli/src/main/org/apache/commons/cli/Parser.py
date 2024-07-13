@@ -37,16 +37,16 @@ class Parser(CommandLineParser, ABC):
     ) -> None:
         pass
 
-    def _processOption(self, arg: str, iter: typing.Iterator[str]) -> None:
+    def _processOption(self, arg: str, iter_: typing.Iterator[str]) -> None:
         pass
 
-    def processArgs(self, opt: Option, iter: typing.Iterator[str]) -> None:
+    def processArgs(self, opt: Option, iter_: typing.Iterator[str]) -> None:
         pass
 
     def parse3(
         self,
         options: Options,
-        arguments: typing.List[str],
+        arguments: typing.List[typing.List[str]],
         properties: typing.Union[configparser.ConfigParser, typing.Dict],
         stopAtNonOption: bool,
     ) -> CommandLine:
@@ -55,17 +55,22 @@ class Parser(CommandLineParser, ABC):
     def parse2(
         self,
         options: Options,
-        arguments: typing.List[str],
+        arguments: typing.List[typing.List[str]],
         properties: typing.Union[configparser.ConfigParser, typing.Dict],
     ) -> CommandLine:
         pass
 
     def parse1(
-        self, options: Options, arguments: typing.List[str], stopAtNonOption: bool
+        self,
+        options: Options,
+        arguments: typing.List[typing.List[str]],
+        stopAtNonOption: bool,
     ) -> CommandLine:
         pass
 
-    def parse0(self, options: Options, arguments: typing.List[str]) -> CommandLine:
+    def parse0(
+        self, options: Options, arguments: typing.List[typing.List[str]]
+    ) -> CommandLine:
         pass
 
     def _getRequiredOptions(self) -> typing.List[typing.Any]:
@@ -81,8 +86,11 @@ class Parser(CommandLineParser, ABC):
         pass
 
     def _flatten(
-        self, opts: Options, arguments: typing.List[str], stopAtNonOption: bool
-    ) -> typing.List[str]:
+        self,
+        opts: Options,
+        arguments: typing.List[typing.List[str]],
+        stopAtNonOption: bool,
+    ) -> typing.List[typing.List[str]]:
         pass
 
     # Class Methods End

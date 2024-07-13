@@ -313,13 +313,13 @@ class CSVPrinterTest(unittest.TestCase):
         pass
 
     def __tryFormat(
-        self, list: typing.List[str], quote: str, escape: str, expected: str
+        self, list_: typing.List[str], quote: str, escape: str, expected: str
     ) -> None:
         pass
 
     def __toFirstRecordValues(
-        self, expected: str, format: CSVFormat
-    ) -> typing.List[str]:
+        self, expected: str, format_: CSVFormat
+    ) -> typing.List[typing.List[str]]:
         pass
 
     def __randStr(self) -> str:
@@ -333,10 +333,10 @@ class CSVPrinterTest(unittest.TestCase):
     ) -> typing.List[typing.Any]:
         pass
 
-    def __doRandom(self, format: CSVFormat, iter: int) -> None:
+    def __doRandom(self, format_: CSVFormat, iter_: int) -> None:
         pass
 
-    def __doOneRandom(self, format: CSVFormat) -> None:
+    def __doOneRandom(self, format_: CSVFormat) -> None:
         pass
 
     def __createTempPath(self) -> Path:

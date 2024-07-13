@@ -19,10 +19,10 @@ class CacheSubSequencePerformanceTest(unittest.TestCase):
     def __cacheSubSequence(self, cached: str) -> str:
         pass
 
-    def __test2(self, input: str) -> None:
+    def __test2(self, input_: str) -> None:
         pass
 
-    def __test1(self, input: str, times: int) -> None:
+    def __test1(self, input_: str, times: int) -> None:
         pass
 
     # Class Methods End

@@ -22,7 +22,7 @@ class RegexValidatorTest(unittest.TestCase):
     __REGEX_1: str = None
     __REGEX_2: str = None
     __REGEX_3: str = None
-    __MULTIPLE_REGEX: typing.List[str] = None
+    __MULTIPLE_REGEX: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin
@@ -57,7 +57,10 @@ class RegexValidatorTest(unittest.TestCase):
         pass
 
     def __checkArray(
-        self, label: str, expect: typing.List[str], result: typing.List[str]
+        self,
+        label: str,
+        expect: typing.List[typing.List[str]],
+        result: typing.List[typing.List[str]],
     ) -> None:
         pass
 

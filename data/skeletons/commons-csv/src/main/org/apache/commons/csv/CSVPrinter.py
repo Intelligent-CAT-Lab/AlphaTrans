@@ -49,7 +49,7 @@ class CSVPrinter(io.BufferedIOBase):
     def printComment(self, comment: str) -> None:
         pass
 
-    def print(self, value: typing.Any) -> None:
+    def print_(self, value: typing.Any) -> None:
         pass
 
     def getOut(self) -> typing.Union[typing.List, io.TextIOBase]:
@@ -62,7 +62,7 @@ class CSVPrinter(io.BufferedIOBase):
         pass
 
     def __init__(
-        self, appendable: typing.Union[typing.List, io.TextIOBase], format: CSVFormat
+        self, appendable: typing.Union[typing.List, io.TextIOBase], format_: CSVFormat
     ) -> None:
         pass
 

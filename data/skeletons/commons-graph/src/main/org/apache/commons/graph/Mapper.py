@@ -15,7 +15,7 @@ class Mapper(ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def map(self, input: typing.Any) -> typing.Any:
+    def map_(self, input_: typing.Any) -> typing.Any:
         pass
 
     # Class Methods End

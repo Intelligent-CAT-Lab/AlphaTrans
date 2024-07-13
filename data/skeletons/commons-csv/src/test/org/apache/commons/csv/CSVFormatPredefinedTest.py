@@ -46,7 +46,7 @@ class CSVFormatPredefinedTest(unittest.TestCase):
     def testDefault(self) -> None:
         pass
 
-    def __test(self, format: CSVFormat, enumName: str) -> None:
+    def __test(self, format_: CSVFormat, enumName: str) -> None:
         pass
 
     # Class Methods End

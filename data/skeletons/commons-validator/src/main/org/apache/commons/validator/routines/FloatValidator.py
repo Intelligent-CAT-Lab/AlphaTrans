@@ -24,22 +24,22 @@ class FloatValidator(AbstractNumberValidator):
     ) -> typing.Any:
         pass
 
-    def maxValue1(self, value: float, max: float) -> bool:
+    def maxValue1(self, value: float, max_: float) -> bool:
         pass
 
-    def maxValue0(self, value: float, max: float) -> bool:
+    def maxValue0(self, value: float, max_: float) -> bool:
         pass
 
-    def minValue1(self, value: float, min: float) -> bool:
+    def minValue1(self, value: float, min_: float) -> bool:
         pass
 
-    def minValue0(self, value: float, min: float) -> bool:
+    def minValue0(self, value: float, min_: float) -> bool:
         pass
 
-    def isInRange1(self, value: float, min: float, max: float) -> bool:
+    def isInRange1(self, value: float, min_: float, max_: float) -> bool:
         pass
 
-    def isInRange0(self, value: float, min: float, max: float) -> bool:
+    def isInRange0(self, value: float, min_: float, max_: float) -> bool:
         pass
 
     def validate3(self, value: str, pattern: str, locale: typing.Any) -> float:

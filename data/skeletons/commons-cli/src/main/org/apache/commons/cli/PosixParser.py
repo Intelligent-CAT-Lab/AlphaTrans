@@ -26,8 +26,11 @@ class PosixParser(Parser):
 
     # Class Methods Begin
     def _flatten(
-        self, options: Options, arguments: typing.List[str], stopAtNonOption: bool
-    ) -> typing.List[str]:
+        self,
+        options: Options,
+        arguments: typing.List[typing.List[str]],
+        stopAtNonOption: bool,
+    ) -> typing.List[typing.List[str]]:
         pass
 
     def _burstToken(self, token: str, stopAtNonOption: bool) -> None:
@@ -42,7 +45,7 @@ class PosixParser(Parser):
     def __init(self) -> None:
         pass
 
-    def __gobble(self, iter: typing.Iterator[str]) -> None:
+    def __gobble(self, iter_: typing.Iterator[str]) -> None:
         pass
 
     # Class Methods End

@@ -20,7 +20,7 @@ class Codec105ErrorInputStream:
     def read(self) -> int:
         pass
 
-    def read1(self, b: typing.List[int], pos: int, len: int) -> int:
+    def read1(self, b: typing.List[int], pos: int, len_: int) -> int:
         pass
 
     def read0(self) -> int:

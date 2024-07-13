@@ -117,7 +117,9 @@ class MetaphoneTest(StringEncoderAbstractTest, unittest.TestCase):
     def assertMetaphoneEqual(self, pairs: typing.List[typing.List[str]]) -> None:
         pass
 
-    def assertIsMetaphoneEqual(self, source: str, matches: typing.List[str]) -> None:
+    def assertIsMetaphoneEqual(
+        self, source: str, matches: typing.List[typing.List[str]]
+    ) -> None:
         pass
 
     # Class Methods End

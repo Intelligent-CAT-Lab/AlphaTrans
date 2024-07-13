@@ -14,10 +14,10 @@ import io
 class ISBNValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
-    __validISBN10Format: typing.List[str] = None
-    __invalidISBN10Format: typing.List[str] = None
-    __validISBN13Format: typing.List[str] = None
-    __invalidISBN13Format: typing.List[str] = None
+    __validISBN10Format: typing.List[typing.List[str]] = None
+    __invalidISBN10Format: typing.List[typing.List[str]] = None
+    __validISBN13Format: typing.List[typing.List[str]] = None
+    __invalidISBN13Format: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin

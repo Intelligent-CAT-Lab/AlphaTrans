@@ -1,0 +1,2 @@
+class SafetyRelatedAcknowledge:
+    pass

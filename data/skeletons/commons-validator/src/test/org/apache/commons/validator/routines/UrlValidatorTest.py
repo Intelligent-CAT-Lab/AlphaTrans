@@ -28,7 +28,7 @@ class UrlValidatorTest(unittest.TestCase):
     testUrlParts: typing.List[typing.Any] = None
     testUrlPartsOptions: typing.List[typing.Any] = None
     testPartsIndex: typing.List[int] = None
-    __schemes: typing.List[str] = None
+    __schemes: typing.List[typing.List[str]] = None
     testScheme: typing.List[ResultPair] = None
     # Class Fields End
 
@@ -136,7 +136,7 @@ class UrlValidatorTest(unittest.TestCase):
         pass
 
     @staticmethod
-    def main(args: typing.List[str]) -> None:
+    def main(args: typing.List[typing.List[str]]) -> None:
         pass
 
     @staticmethod

@@ -34,8 +34,8 @@ class JiraCsv93Test(unittest.TestCase):
         self,
         csvFormat: CSVFormat,
         objects: typing.List[typing.Any],
-        format: str,
-        data: typing.List[str],
+        format_: str,
+        data: typing.List[typing.List[str]],
     ) -> None:
         pass
 

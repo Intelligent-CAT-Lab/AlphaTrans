@@ -94,60 +94,20 @@
                         "out"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def decode(data: typing.List[int], out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    @staticmethod",
-                        "    def decode(data: typing.List[int], out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> int:",
-                        "        ",
-                        "        outLen = 0",
-                        "        cache = [0] * Base64Decoder.__INPUT_BYTES_PER_CHUNK",
-                        "        cachedBytes = 0",
-                        "",
-                        "        for b in data:",
-                        "            d = Base64Decoder.__DECODING_TABLE[Base64Decoder.__MASK_BYTE_UNSIGNED & b]",
-                        "            if d == Base64Decoder.__INVALID_BYTE:",
-                        "                continue",
-                        "            cache[cachedBytes] = d",
-                        "            cachedBytes += 1",
-                        "            if cachedBytes == Base64Decoder.__INPUT_BYTES_PER_CHUNK:",
-                        "                b1 = cache[0]",
-                        "                b2 = cache[1]",
-                        "                b3 = cache[2]",
-                        "                b4 = cache[3]",
-                        "                if b1 == Base64Decoder.__PAD_BYTE or b2 == Base64Decoder.__PAD_BYTE:",
-                        "                    raise IOError(",
-                        "                        \"Invalid Base64 input: incorrect padding, first two bytes cannot be\"",
-                        "                        + \" padding\")",
-                        "                out.write((b1 << 2) | (b2 >> 4))",
-                        "                outLen += 1",
-                        "                if b3 != Base64Decoder.__PAD_BYTE:",
-                        "                    out.write((b2 << 4) | (b3 >> 2))",
-                        "                    outLen += 1",
-                        "                    if b4 != Base64Decoder.__PAD_BYTE:",
-                        "                        out.write((b3 << 6) | b4)",
-                        "                        outLen += 1",
-                        "                else:",
-                        "                    if b4 != Base64Decoder.__PAD_BYTE:",
-                        "                        raise IOError(",
-                        "                            \"Invalid Base64 input: incorrect padding, 4th byte must be padding if\"",
-                        "                            + \" 3rd byte is\")",
-                        "                cachedBytes = 0",
-                        "",
-                        "        if cachedBytes != 0:",
-                        "            raise IOError(\"Invalid Base64 input: truncated\")",
-                        "",
-                        "        return outLen"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 21.525139570236206,
-                    "generation_timestamp": "2024-06-28T20:30:12.957009",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -171,20 +131,19 @@
                     "signature": "Base64Decoder()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def __init__(self) -> None:",
-                        "         pass"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 2.736021041870117,
-                    "generation_timestamp": "2024-06-28T20:30:15.694693",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -211,15 +170,14 @@
                         "    __DECODING_TABLE: typing.List[int] = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __DECODING_TABLE: typing.List[int] = [0] * (2 ** 8)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 4.225337743759155,
-                    "generation_timestamp": "2024-06-28T20:24:38.425872",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -244,15 +202,14 @@
                         "    __PADDING: int = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __PADDING: int = ord('=')"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 4.245861291885376,
-                    "generation_timestamp": "2024-06-28T20:24:42.673392",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -342,19 +299,14 @@
                         "    __ENCODING_TABLE: typing.List[int] = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __ENCODING_TABLE: typing.List[int] = [",
-                        "        65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,",
-                        "        97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,",
-                        "        48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 43, 47",
-                        "    ]"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 11.0560941696167,
-                    "generation_timestamp": "2024-06-28T20:24:53.732402",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -379,15 +331,14 @@
                         "    __INPUT_BYTES_PER_CHUNK: int = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __INPUT_BYTES_PER_CHUNK: int = 4"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.4933934211730957,
-                    "generation_timestamp": "2024-06-28T20:24:55.228763",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -412,15 +363,14 @@
                         "    __MASK_BYTE_UNSIGNED: int = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __MASK_BYTE_UNSIGNED: int = 0xFF"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.1023788452148438,
-                    "generation_timestamp": "2024-06-28T20:24:56.334186",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -445,15 +395,14 @@
                         "    __PAD_BYTE: int = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __PAD_BYTE: int = -2"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.0376605987548828,
-                    "generation_timestamp": "2024-06-28T20:24:57.374132",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -478,15 +427,14 @@
                         "    __INVALID_BYTE: int = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __INVALID_BYTE: int = -1"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 6.403271675109863,
-                    "generation_timestamp": "2024-06-28T20:25:03.779894",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -507,28 +455,19 @@
                         "    }\n"
                     ],
                     "partial_translation": [],
-                    "translation": [
-                        "    @staticmethod",
-                        "    def run_static_init():",
-                        "        ",
-                        "        for i in range(len(Base64Decoder.__DECODING_TABLE)):",
-                        "            Base64Decoder.__DECODING_TABLE[i] = Base64Decoder.__INVALID_BYTE",
-                        "        ",
-                        "        for i in range(len(Base64Decoder.__ENCODING_TABLE)):",
-                        "            Base64Decoder.__DECODING_TABLE[Base64Decoder.__ENCODING_TABLE[i]] = i",
-                        "        ",
-                        "        Base64Decoder.__DECODING_TABLE[Base64Decoder.__PADDING] = Base64Decoder.__PAD_BYTE"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 6.9447808265686035,
-                    "generation_timestamp": "2024-06-28T20:25:10.728153",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
             },
+            "is_enum": false,
             "python_class_declaration": "class Base64Decoder:\n\n"
         }
     },

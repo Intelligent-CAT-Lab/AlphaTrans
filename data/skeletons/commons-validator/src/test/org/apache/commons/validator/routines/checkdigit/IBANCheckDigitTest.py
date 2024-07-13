@@ -23,7 +23,9 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
     def _removeCheckDigit(self, code: str) -> str:
         pass
 
-    def _createInvalidCodes(self, codes: typing.List[str]) -> typing.List[str]:
+    def _createInvalidCodes(
+        self, codes: typing.List[typing.List[str]]
+    ) -> typing.List[typing.List[str]]:
         pass
 
     def testZeroSum(self) -> None:

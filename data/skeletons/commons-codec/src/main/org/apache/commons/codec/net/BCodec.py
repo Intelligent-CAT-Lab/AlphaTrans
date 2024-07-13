@@ -25,10 +25,22 @@ class BCodec(StringDecoder, StringEncoder, RFC1522Codec):
     # Class Fields End
 
     # Class Methods Begin
-    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:
+    def decode(self, value: typing.Any) -> typing.Any:
         pass
 
-    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:
+    def encode(self, value: typing.Any) -> typing.Any:
+        pass
+
+    def decode(self, value: str) -> str:
+        pass
+
+    def encode(self, strSource: str) -> str:
+        pass
+
+    def _doDecoding(self, bytes_: typing.List[int]) -> typing.List[int]:
+        pass
+
+    def _doEncoding(self, bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
     def _getEncoding(self) -> str:
@@ -56,6 +68,9 @@ class BCodec(StringDecoder, StringEncoder, RFC1522Codec):
         pass
 
     def encode0(self, strSource: str, sourceCharset: str) -> str:
+        pass
+
+    def encode(self, strSource: str, sourceCharset: str) -> str:
         pass
 
     def isStrictDecoding(self) -> bool:

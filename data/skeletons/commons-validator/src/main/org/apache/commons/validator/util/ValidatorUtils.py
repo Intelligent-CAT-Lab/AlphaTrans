@@ -23,7 +23,7 @@ class ValidatorUtils:
 
     # Class Methods Begin
     @staticmethod
-    def copyMap(map: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def copyMap(map_: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         pass
 
     @staticmethod

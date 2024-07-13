@@ -1,0 +1,2 @@
+class AidToNavigationReport:
+    pass

@@ -73,7 +73,7 @@ class CreditCardValidator:
         pass
 
     @staticmethod
-    def validLength(valueLength: int, range: CreditCardRange) -> bool:
+    def validLength(valueLength: int, range_: CreditCardRange) -> bool:
         pass
 
     def validate(self, card: str) -> typing.Any:

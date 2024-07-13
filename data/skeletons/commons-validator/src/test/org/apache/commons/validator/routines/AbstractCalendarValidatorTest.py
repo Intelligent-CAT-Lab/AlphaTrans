@@ -16,16 +16,16 @@ from abc import ABC
 class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
 
     # Class Fields Begin
-    _localeInvalid: typing.List[str] = None
+    _localeInvalid: typing.List[typing.List[str]] = None
     _validator: AbstractCalendarValidator = None
     _GMT: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = None
     _EST: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = None
     _EET: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = None
     _UTC: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = None
-    _patternValid: typing.List[str] = None
-    _localeValid: typing.List[str] = None
+    _patternValid: typing.List[typing.List[str]] = None
+    _localeValid: typing.List[typing.List[str]] = None
     _patternExpect: typing.List[typing.Union[datetime.date, datetime.datetime]] = None
-    _patternInvalid: typing.List[str] = None
+    _patternInvalid: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin

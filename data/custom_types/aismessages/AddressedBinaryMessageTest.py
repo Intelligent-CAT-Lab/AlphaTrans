@@ -1,0 +1,2 @@
+class AddressedBinaryMessageTest:
+    pass

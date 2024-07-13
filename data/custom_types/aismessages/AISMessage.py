@@ -1,0 +1,2 @@
+class AISMessage:
+    pass

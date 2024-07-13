@@ -1,0 +1,2 @@
+class InvalidMessageTest:
+    pass

@@ -1,0 +1,2 @@
+class AnsiOutputStreamTest:
+    pass

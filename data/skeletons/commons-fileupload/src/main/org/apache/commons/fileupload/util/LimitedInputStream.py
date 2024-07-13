@@ -28,7 +28,7 @@ class LimitedInputStream(ABC):
     def isClosed(self) -> bool:
         pass
 
-    def read1(self, b: typing.List[int], off: int, len: int) -> int:
+    def read1(self, b: typing.List[int], off: int, len_: int) -> int:
         pass
 
     def read0(self) -> int:

@@ -1,0 +1,2 @@
+class CommandLauncherProxy:
+    pass

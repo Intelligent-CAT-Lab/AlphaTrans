@@ -30,7 +30,7 @@ class Builder:
     def valueSeparator0(self) -> Builder:
         pass
 
-    def type(self, type: typing.Type[typing.Any]) -> Builder:
+    def type_(self, type_: typing.Type[typing.Any]) -> Builder:
         pass
 
     def required1(self, required: bool) -> Builder:
@@ -97,7 +97,7 @@ class Option:
     def toString(self) -> str:
         pass
 
-    def setType1(self, type: typing.Any) -> None:
+    def setType1(self, type_: typing.Any) -> None:
         pass
 
     def hashCode(self) -> int:
@@ -115,7 +115,7 @@ class Option:
     def setValueSeparator(self, sep: str) -> None:
         pass
 
-    def setType0(self, type: typing.Type[typing.Any]) -> None:
+    def setType0(self, type_: typing.Type[typing.Any]) -> None:
         pass
 
     def setRequired(self, required: bool) -> None:
@@ -163,7 +163,7 @@ class Option:
     def getValueSeparator(self) -> str:
         pass
 
-    def getValues(self) -> typing.List[str]:
+    def getValues(self) -> typing.List[typing.List[str]]:
         pass
 
     def getValue2(self, defaultValue: str) -> str:

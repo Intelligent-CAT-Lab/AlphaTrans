@@ -63,17 +63,23 @@ class DoubleMetaphone(StringEncoder):
 
     # Class Fields Begin
     __VOWELS: str = None
-    __SILENT_START: typing.List[str] = None
-    __L_R_N_M_B_H_F_V_W_SPACE: typing.List[str] = None
-    __ES_EP_EB_EL_EY_IB_IL_IN_IE_EI_ER: typing.List[str] = None
-    __L_T_K_S_N_M_B_Z: typing.List[str] = None
+    __SILENT_START: typing.List[typing.List[str]] = None
+    __L_R_N_M_B_H_F_V_W_SPACE: typing.List[typing.List[str]] = None
+    __ES_EP_EB_EL_EY_IB_IL_IN_IE_EI_ER: typing.List[typing.List[str]] = None
+    __L_T_K_S_N_M_B_Z: typing.List[typing.List[str]] = None
     __maxCodeLen: int = None
     # Class Fields End
 
     # Class Methods Begin
+    def encode(self, value: str) -> str:
+        pass
+
+    def encode(self, obj: typing.Any) -> typing.Any:
+        pass
+
     @staticmethod
     def _contains(
-        value: str, start: int, length: int, criteria: typing.List[str]
+        value: str, start: int, length: int, criteria: typing.List[typing.List[str]]
     ) -> bool:
         pass
 
@@ -109,7 +115,7 @@ class DoubleMetaphone(StringEncoder):
     def __init__(self) -> None:
         pass
 
-    def __cleanInput(self, input: str) -> str:
+    def __cleanInput(self, input_: str) -> str:
         pass
 
     def __isSilentStart(self, value: str) -> bool:

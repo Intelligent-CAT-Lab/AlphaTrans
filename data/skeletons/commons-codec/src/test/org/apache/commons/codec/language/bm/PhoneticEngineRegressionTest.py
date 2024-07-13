@@ -32,7 +32,7 @@ class PhoneticEngineRegressionTest(unittest.TestCase):
         pass
 
     @staticmethod
-    def __encode(args: typing.Dict[str, str], concat: bool, input: str) -> str:
+    def __encode(args: typing.Dict[str, str], concat: bool, input_: str) -> str:
         pass
 
     # Class Methods End

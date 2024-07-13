@@ -111,7 +111,7 @@ class DefaultPooledObject:
     def allocate(self) -> bool:
         pass
 
-    def __init__(self, object: typing.Any) -> None:
+    def __init__(self, object_: typing.Any) -> None:
         pass
 
     def __now(self) -> datetime.datetime:

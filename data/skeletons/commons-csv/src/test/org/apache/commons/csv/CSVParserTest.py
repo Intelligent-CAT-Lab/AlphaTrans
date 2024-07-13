@@ -247,10 +247,10 @@ class CSVParserTest(unittest.TestCase):
     def __validateLineNumbers(self, lineSeparator: str) -> None:
         pass
 
-    def __testCSV141Ok(self, format: CSVFormat) -> None:
+    def __testCSV141Ok(self, format_: CSVFormat) -> None:
         pass
 
-    def __testCSV141Failure(self, format: CSVFormat, failParseRecordNo: int) -> None:
+    def __testCSV141Failure(self, format_: CSVFormat, failParseRecordNo: int) -> None:
         pass
 
     def __parseFully(self, parser: CSVParser) -> None:

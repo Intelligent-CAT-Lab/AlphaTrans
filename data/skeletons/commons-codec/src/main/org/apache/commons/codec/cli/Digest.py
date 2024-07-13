@@ -13,8 +13,8 @@ class Digest:
 
     # Class Fields Begin
     __algorithm: str = None
-    __args: typing.List[str] = None
-    __inputs: typing.List[str] = None
+    __args: typing.List[typing.List[str]] = None
+    __inputs: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin
@@ -27,7 +27,7 @@ class Digest:
     def __println0(self, prefix: str, digest: typing.List[int]) -> None:
         pass
 
-    def __init__(self, args: typing.List[str]) -> None:
+    def __init__(self, args: typing.List[typing.List[str]]) -> None:
         pass
 
     # Class Methods End

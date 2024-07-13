@@ -35,7 +35,9 @@ class StringEncoderAbstractTest(ABC, unittest.TestCase):
     def getStringEncoder(self) -> typing.Any:
         pass
 
-    def _checkEncodingVariations(self, expected: str, data: typing.List[str]) -> None:
+    def _checkEncodingVariations(
+        self, expected: str, data: typing.List[typing.List[str]]
+    ) -> None:
         pass
 
     def _checkEncodings(self, data: typing.List[typing.List[str]]) -> None:

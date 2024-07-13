@@ -19,8 +19,8 @@ import io
 class Base64Codec13Test(unittest.TestCase):
 
     # Class Fields Begin
-    __STRINGS: typing.List[str] = None
-    __CHUNKED_STRINGS: typing.List[str] = None
+    __STRINGS: typing.List[typing.List[str]] = None
+    __CHUNKED_STRINGS: typing.List[typing.List[str]] = None
     __BYTES: typing.List[typing.List[int]] = None
     # Class Fields End
 

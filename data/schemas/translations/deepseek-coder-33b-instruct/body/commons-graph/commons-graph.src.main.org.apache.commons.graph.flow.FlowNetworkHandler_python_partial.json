@@ -128,16 +128,15 @@
                     "signature": "onCompleted()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def onCompleted(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def onCompleted(self) -> typing.Any:",
-                        "         return self.__maxFlow"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -172,18 +171,15 @@
                         "graph"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def discoverGraph(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def discoverGraph(self, graph: DirectedGraph[typing.Any, typing.Any]) -> None:",
-                        "        ",
-                        "        self.__predecessors = PredecessorsList[typing.Any, typing.Any, typing.Any](graph, self.__weightOperations, self.__weightedEdges)",
-                        "        self.__foundAugmentingPath = False"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -224,21 +220,15 @@
                         "tail"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def discoverEdge(self, head: typing.Any, edge: typing.Any, tail: typing.Any) -> VisitState:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def discoverEdge(self, head: typing.Any, edge: typing.Any, tail: typing.Any) -> VisitState:",
-                        "        ",
-                        "        residualEdgeCapacity = self.__residualEdgeCapacities.get(edge)",
-                        "        if self.__weightOperations.compare(residualEdgeCapacity, self.__weightOperations.identity()) <= 0:",
-                        "            return VisitState.SKIP",
-                        "        self.__predecessors.addPredecessor(tail, head)",
-                        "        return VisitState.CONTINUE"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -274,21 +264,15 @@
                         "vertex"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def finishVertex(self, vertex: typing.Any) -> VisitState:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def finishVertex(self, vertex: typing.Any) -> VisitState:",
-                        "        ",
-                        "        if vertex == self.__target:",
-                        "            self.__foundAugmentingPath = True",
-                        "            return VisitState.ABORT",
-                        "        ",
-                        "        return VisitState.CONTINUE"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -326,17 +310,15 @@
                             "110-116:finishVertex"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def discoverVertex(self, vertex: typing.Any) -> VisitState:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def discoverVertex(self, vertex: typing.Any) -> VisitState:",
-                        "        ",
-                        "        return self.finishVertex(vertex)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -388,33 +370,15 @@
                     "signature": "updateResidualNetworkWithCurrentAugmentingPath()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def updateResidualNetworkWithCurrentAugmentingPath(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def updateResidualNetworkWithCurrentAugmentingPath(self) -> None:",
-                        "        ",
-                        "        augmentingPath = self.__predecessors.buildPath0(self.__source, self.__target)",
-                        "",
-                        "        flowIncrement = None",
-                        "        for edge in augmentingPath.getEdges():",
-                        "            edgeCapacity = self.__residualEdgeCapacities.get(edge)",
-                        "            if flowIncrement is None or self.__weightOperations.compare(edgeCapacity, flowIncrement) < 0:",
-                        "                flowIncrement = edgeCapacity",
-                        "",
-                        "        self.__maxFlow = self.__weightOperations.append(self.__maxFlow, flowIncrement)",
-                        "        for edge in augmentingPath.getEdges():",
-                        "            directCapacity = self.__residualEdgeCapacities.get(edge)",
-                        "            self.__residualEdgeCapacities[edge] = self.__weightOperations.append(directCapacity, self.__weightOperations.inverse(flowIncrement))",
-                        "",
-                        "            vertexPair = self.__flowNetwork.getVertices1(edge)",
-                        "            inverseEdge = self.__flowNetwork.getEdge(vertexPair.getTail(), vertexPair.getHead())",
-                        "            inverseCapacity = self.__residualEdgeCapacities.get(inverseEdge)",
-                        "            self.__residualEdgeCapacities[inverseEdge] = self.__weightOperations.append(inverseCapacity, flowIncrement)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -442,16 +406,15 @@
                     "signature": "hasAugmentingPath()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def hasAugmentingPath(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def hasAugmentingPath(self) -> bool:",
-                        "         return self.__foundAugmentingPath"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -502,28 +465,15 @@
                         "weightedEdges"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def __init__(self, flowNetwork: DirectedGraph[typing.Any, typing.Any], source: typing.Any, target: typing.Any, weightOperations: OrderedMonoid[typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def __init__(self, flowNetwork: DirectedGraph[typing.Any, typing.Any], source: typing.Any, target: typing.Any, weightOperations: OrderedMonoid[typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:",
-                        "        ",
-                        "        self.__flowNetwork = flowNetwork",
-                        "        self.__source = source",
-                        "        self.__target = target",
-                        "        self.__weightOperations = weightOperations",
-                        "        self.__weightedEdges = weightedEdges",
-                        "",
-                        "        self.__maxFlow = self.__weightOperations.identity()",
-                        "",
-                        "        for edge in self.__flowNetwork.getEdges():",
-                        "            self.__residualEdgeCapacities[edge] = self.__weightedEdges.map(edge)",
-                        "",
-                        "        self.__predecessors = None"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -552,12 +502,10 @@
                         "    __foundAugmentingPath: bool = False",
                         ""
                     ],
-                    "translation": [
-                        "    __foundAugmentingPath: bool = False",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -584,12 +532,10 @@
                         "    __predecessors: PredecessorsList[typing.Any, typing,Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [
-                        "    __predecessors: PredecessorsList[typing.Any, typing,Any, typing.Any] = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -617,11 +563,10 @@
                         "    __residualEdgeCapacities: typing.Dict[typing.Any, typing.Any] = {}",
                         ""
                     ],
-                    "translation": [
-                        "    __residualEdgeCapacities: Dict[typing.Any, typing.Any] = {}"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -648,12 +593,10 @@
                         "    __maxFlow: typing.Any = None",
                         ""
                     ],
-                    "translation": [
-                        "    __maxFlow: typing.Any = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -681,12 +624,10 @@
                         "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [
-                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -714,12 +655,10 @@
                         "    __weightOperations: OrderedMonoid[typing.Any] = None",
                         ""
                     ],
-                    "translation": [
-                        "    __weightOperations: OrderedMonoid[typing.Any] = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -747,12 +686,10 @@
                         "    __target: typing.Any = None",
                         ""
                     ],
-                    "translation": [
-                        "    __target: typing.Any = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -780,12 +717,10 @@
                         "    __source: typing.Any = None",
                         ""
                     ],
-                    "translation": [
-                        "    __source: typing.Any = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -813,12 +748,10 @@
                         "    __flowNetwork: DirectedGraph[typing.Any, typing.Any] = None",
                         ""
                     ],
-                    "translation": [
-                        "    __flowNetwork: DirectedGraph[typing.Any, typing.Any] = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -827,6 +760,7 @@
                     "include_implementation": true
                 }
             },
+            "is_enum": false,
             "python_class_declaration": "class FlowNetworkHandler:\n\n"
         }
     },

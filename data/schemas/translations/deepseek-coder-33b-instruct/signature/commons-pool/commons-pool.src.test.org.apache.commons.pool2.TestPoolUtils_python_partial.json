@@ -196,41 +196,19 @@
                         "args"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def invoke(self, proxy: typing.Any, method: typing.Union[inspect.Signature, typing.Callable], args: typing.List[typing.Any]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def invoke(self, proxy: typing.Any, method: typing.Union[inspect.Signature, typing.Callable], args: typing.List[typing.Any]) -> typing.Any:",
-                        "        ",
-                        "        if self.__calledMethods is None:",
-                        "            return None",
-                        "        ",
-                        "        self.__calledMethods.append(method.__name__)",
-                        "        ",
-                        "        if method.__annotations__['return'] == bool:",
-                        "            return False",
-                        "        ",
-                        "        if method.__annotations__['return'] == int:",
-                        "            return 0",
-                        "        ",
-                        "        if method.__annotations__['return'] == long:",
-                        "            return 0",
-                        "        ",
-                        "        if method.__annotations__['return'] == object:",
-                        "            return object()",
-                        "        ",
-                        "        if method.__annotations__['return'] == PooledObject:",
-                        "            return DefaultPooledObject(object())",
-                        "        ",
-                        "        return None"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 18.452637195587158,
-                    "generation_timestamp": "2024-06-28T21:38:11.767556",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -256,20 +234,19 @@
                         "calledMethods"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def __init__(self, calledMethods: typing.List[str]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def __init__(self, calledMethods: typing.List[str]) -> None:",
-                        "         self.__calledMethods = calledMethods"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 2.5538530349731445,
-                    "generation_timestamp": "2024-06-28T21:38:14.324557",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -295,20 +272,19 @@
                         "    __calledMethods: typing.List[str] = None",
                         ""
                     ],
-                    "translation": [
-                        "    __calledMethods: typing.List[str] = None",
-                        ""
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-06-28T20:34:28.043729",
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
             },
+            "is_enum": false,
             "python_class_declaration": "class MethodCallLogger(typing.Callable):\n\n"
         },
         "TestPoolUtils": {
@@ -362,23 +338,19 @@
                             "TimerHolder"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testTimerHolder(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testTimerHolder(self) -> None:",
-                        "        ",
-                        "        h = PoolUtils.TimerHolder()",
-                        "        assert h is not None",
-                        "        assert PoolUtils.TimerHolder.MIN_IDLE_TIMER is not None"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 5.286839962005615,
-                    "generation_timestamp": "2024-06-28T21:38:19.619913",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -434,36 +406,19 @@
                             "152-173:invokeEveryMethod2"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testSynchronizedPoolObjectPool(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testSynchronizedPoolObjectPool(self) -> None:",
-                        "        ",
-                        "        with self.assertRaises(",
-                        "                IllegalArgumentException,",
-                        "                msg=\"PoolUtils.synchronizedPool(ObjectPool) must not allow a null pool.\"):",
-                        "            PoolUtils.synchronizedPool1(None)",
-                        "",
-                        "        calledMethods = []",
-                        "        try:",
-                        "            op = self.__createProxy1(ObjectPool, calledMethods)",
-                        "            sop = PoolUtils.synchronizedPool1(op)",
-                        "            expectedMethods = self.__invokeEveryMethod2(sop)",
-                        "            self.assertEqual(expectedMethods, calledMethods)",
-                        "        finally:",
-                        "            if 'op' in locals() and isinstance(op, ObjectPool):",
-                        "                op.close()",
-                        "            if 'sop' in locals() and isinstance(sop, ObjectPool):",
-                        "                sop.close()"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 9.48808741569519,
-                    "generation_timestamp": "2024-06-28T21:40:36.509661",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -519,36 +474,19 @@
                             "104-132:invokeEveryMethod0"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testSynchronizedPoolKeyedObjectPool(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testSynchronizedPoolKeyedObjectPool(self) -> None:",
-                        "        ",
-                        "        with self.assertRaises(",
-                        "                IllegalArgumentException,",
-                        "                msg=\"PoolUtils.synchronizedPool(KeyedObjectPool) must not allow a null pool.\"):",
-                        "            PoolUtils.synchronizedPool0(None)",
-                        "",
-                        "        calledMethods = []",
-                        "        try:",
-                        "            kop = self.__createProxy1(KeyedObjectPool, calledMethods)",
-                        "            skop = PoolUtils.synchronizedPool0(kop)",
-                        "            expectedMethods = self.__invokeEveryMethod0(skop)",
-                        "            self.assertEqual(expectedMethods, calledMethods)",
-                        "        finally:",
-                        "            if 'kop' in locals() and hasattr(kop, 'close'):",
-                        "                kop.close()",
-                        "            if 'skop' in locals() and hasattr(skop, 'close'):",
-                        "                skop.close()"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 9.875927448272705,
-                    "generation_timestamp": "2024-06-28T21:40:46.395687",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -605,38 +543,19 @@
                             "1439-1445:prefill2"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testPrefillObjectPool(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testPrefillObjectPool(self) -> None:",
-                        "        ",
-                        "        with pytest.raises(",
-                        "                Exception,",
-                        "                match=\"PoolUtils.prefill(ObjectPool,int) must not allow null pool.\"):",
-                        "            PoolUtils.prefill2(None, 1)",
-                        "",
-                        "        calledMethods = []",
-                        "        try:",
-                        "            pool = self.__createProxy1(ObjectPool, calledMethods)",
-                        "",
-                        "            PoolUtils.prefill2(pool, 0)",
-                        "            expectedMethods = ['addObjects']",
-                        "            assert expectedMethods == calledMethods",
-                        "",
-                        "            calledMethods.clear()",
-                        "            PoolUtils.prefill2(pool, 3)",
-                        "            assert expectedMethods == calledMethods",
-                        "        finally:",
-                        "            pool.close()"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 8.361514329910278,
-                    "generation_timestamp": "2024-06-28T21:40:54.774036",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -703,46 +622,19 @@
                             "1396-1403:prefill0"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testPrefillKeyedObjectPoolCollection(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testPrefillKeyedObjectPoolCollection(self) -> None:",
-                        "        ",
-                        "        try:",
-                        "            with self.__createProxy1(KeyedObjectPool, None) as pool:",
-                        "                with pytest.raises(",
-                        "                        IllegalArgumentException,",
-                        "                        match=\"PoolUtils.prefill(KeyedObjectPool,Collection,int) must not accept null keys.\"):",
-                        "                    PoolUtils.prefill0(pool, None, 1)",
-                        "        except Exception as e:",
-                        "            print(e)",
-                        "",
-                        "        calledMethods = []",
-                        "        try:",
-                        "            with self.__createProxy1(KeyedObjectPool, calledMethods) as pool:",
-                        "                keys = set()",
-                        "                PoolUtils.prefill0(pool, keys, 0)",
-                        "                expectedMethods = [\"addObjects0\"]",
-                        "                assert expectedMethods == calledMethods",
-                        "",
-                        "                calledMethods.clear()",
-                        "                keys.add(\"one\")",
-                        "                keys.add(\"two\")",
-                        "                keys.add(\"three\")",
-                        "                count = 3",
-                        "                PoolUtils.prefill0(pool, keys, count)",
-                        "                assert expectedMethods == calledMethods",
-                        "        except Exception as e:",
-                        "            print(e)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 13.285065174102783,
-                    "generation_timestamp": "2024-06-28T21:41:08.068627",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -776,23 +668,19 @@
                             "1539-1539:PoolUtils"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testJavaBeanInstantiation(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testJavaBeanInstantiation(self) -> None:",
-                        "        ",
-                        "        # The Java code is testing if the instantiation of a new PoolUtils object is not null.",
-                        "        # In Python, we can simply create an instance of the class and assert that it is not None.",
-                        "        assert PoolUtils() is not None"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 2.6877007484436035,
-                    "generation_timestamp": "2024-06-28T21:38:22.317563",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -841,27 +729,19 @@
                             "1251-1253:erodingPool0"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testErodingPoolKeyedObjectPoolDefaultFactor(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testErodingPoolKeyedObjectPoolDefaultFactor(self) -> None:",
-                        "        ",
-                        "        try:",
-                        "            internalPool = self.__createProxy0(KeyedObjectPool, lambda arg0, arg1, arg2: None)",
-                        "            pool = PoolUtils.erodingPool0(internalPool)",
-                        "            expectedToString = \"ErodingKeyedObjectPool{factor=ErodingFactor{factor=1.0, idleHighWaterMark=1},\" + \" keyedPool=\" + str(internalPool) + \"}\"",
-                        "            self.assertEqual(expectedToString, pool.toString())",
-                        "        finally:",
-                        "            internalPool.close()"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 9.695460557937622,
-                    "generation_timestamp": "2024-06-28T21:38:51.575098",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -909,32 +789,19 @@
                             "1336-1338:erodingPool3"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testErodingObjectPoolDefaultFactor(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testErodingObjectPoolDefaultFactor(self) -> None:",
-                        "        ",
-                        "        try:",
-                        "            internal_pool = self.__createProxy0(ObjectPool, lambda arg0, arg1, arg2: None)",
-                        "            pool = PoolUtils.erodingPool3(internal_pool)",
-                        "            expected_to_string = (",
-                        "                \"ErodingObjectPool{factor=ErodingFactor{factor=1.0, idleHighWaterMark=1}, pool=\"",
-                        "                + str(internal_pool)",
-                        "                + \"}\"",
-                        "            )",
-                        "            self.assertEqual(expected_to_string, pool.to_string())",
-                        "        finally:",
-                        "            pool.close()",
-                        "            internal_pool.close()"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 60.30886888504028,
-                    "generation_timestamp": "2024-06-28T21:39:51.899116",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -993,51 +860,19 @@
                             "1227-1234:checkRethrow"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testCheckRethrow(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testCheckRethrow(self) -> None:",
-                        "        ",
-                        "        try:",
-                        "            PoolUtils.checkRethrow(Exception())",
-                        "            pytest.fail(",
-                        "                \"PoolUtils.checkRethrow(Throwable) must rethrow only ThreadDeath and\"",
-                        "                + \" VirtualMachineError.\")",
-                        "        except (ThreadDeath, VirtualMachineError):",
-                        "            pass",
-                        "        except:",
-                        "            pytest.fail(",
-                        "                \"PoolUtils.checkRethrow(Throwable) must rethrow only ThreadDeath and\"",
-                        "                + \" VirtualMachineError.\")",
-                        "",
-                        "        try:",
-                        "            PoolUtils.checkRethrow(ThreadDeath())",
-                        "            pytest.fail(\"PoolUtils.checkRethrow(Throwable) must rethrow ThreadDeath.\")",
-                        "        except ThreadDeath:",
-                        "            pass",
-                        "        except:",
-                        "            pytest.fail(",
-                        "                \"PoolUtils.checkRethrow(Throwable) must rethrow only ThreadDeath and\"",
-                        "                + \" VirtualMachineError.\")",
-                        "",
-                        "        try:",
-                        "            PoolUtils.checkRethrow(InternalError())  # InternalError extends VirtualMachineError",
-                        "            pytest.fail(\"PoolUtils.checkRethrow(Throwable) must rethrow VirtualMachineError.\")",
-                        "        except VirtualMachineError:",
-                        "            pass",
-                        "        except:",
-                        "            pytest.fail(",
-                        "                \"PoolUtils.checkRethrow(Throwable) must rethrow only ThreadDeath and\"",
-                        "                + \" VirtualMachineError.\")"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 13.667016744613647,
-                    "generation_timestamp": "2024-06-28T21:38:35.994005",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1094,37 +929,19 @@
                             "1168-1186:checkMinIdle1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testCheckMinIdleKeyedObjectPoolKeysNulls(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testCheckMinIdleKeyedObjectPoolKeysNulls(self) -> None:",
-                        "        ",
-                        "        try:",
-                        "            with self.__createProxy1(KeyedObjectPool, None) as pool:",
-                        "                with self.assertRaises(",
-                        "                        IllegalArgumentException,",
-                        "                        msg=\"PoolUtils.checkMinIdle(KeyedObjectPool,Collection,int,long) must not accept\"",
-                        "                            + \" null keys.\"):",
-                        "                    PoolUtils.checkMinIdle1(pool, None, 1, 1)",
-                        "        except Exception as e:",
-                        "            pass",
-                        "",
-                        "        try:",
-                        "            with self.__createProxy1(KeyedObjectPool, None) as pool:",
-                        "                PoolUtils.checkMinIdle1(pool, [], 1, 1)",
-                        "        except IllegalArgumentException:",
-                        "            self.fail(",
-                        "                    \"PoolUtils.checkMinIdle(KeyedObjectPool,Collection,int,long) must accept empty\"",
-                        "                            + \" lists.\")"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 9.208446502685547,
-                    "generation_timestamp": "2024-06-28T21:41:17.288128",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1195,44 +1012,19 @@
                             "1131-1148:checkMinIdle0"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testCheckMinIdleKeyedObjectPoolKeys(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testCheckMinIdleKeyedObjectPoolKeys(self) -> None:",
-                        "        ",
-                        "        afe = None",
-                        "        triesLeft = 3",
-                        "        while triesLeft > 0:",
-                        "            afe = None",
-                        "            calledMethods = []",
-                        "            try:",
-                        "                pool = self.__createProxy1(KeyedObjectPool, calledMethods)",
-                        "                keys = [\"one\", \"two\"]",
-                        "                tasks = PoolUtils.checkMinIdle0(pool, keys, 1, self.__CHECK_PERIOD)",
-                        "",
-                        "                time.sleep(self.__CHECK_SLEEP_PERIOD / 1000.0)  # will check CHECK_COUNT more times.",
-                        "                for task in tasks.values():",
-                        "                    task.cancel()",
-                        "",
-                        "                expectedMethods = []",
-                        "                for i in range(self.__CHECK_COUNT * len(keys)):",
-                        "                    expectedMethods.append(\"getNumIdle1\")",
-                        "                    expectedMethods.append(\"addObject\")",
-                        "                self.assertEqual(expectedMethods, calledMethods)  # may fail because of the thread scheduler",
-                        "            except AssertionError as e:",
-                        "                afe = e",
-                        "            triesLeft -= 1",
-                        "        if afe is not None:",
-                        "            raise afe"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 15.606910943984985,
-                    "generation_timestamp": "2024-06-28T21:41:32.909258",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1265,22 +1057,20 @@
                         "handler"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def __createProxy0(clazz: typing.Type[typing.Any], handler: typing.Callable) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    @staticmethod",
-                        "    def __createProxy0(clazz: typing.Type[typing.Any], handler: typing.Callable) -> typing.Any:",
-                        "         return Proxy.newProxyInstance(clazz.getClassLoader(), [clazz], handler)"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 5.864277124404907,
-                    "generation_timestamp": "2024-06-28T21:38:41.863647",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1323,35 +1113,20 @@
                         "pof"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def __invokeEveryMethod3(pof: PooledObjectFactory[typing.Any]) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    @staticmethod",
-                        "    def __invokeEveryMethod3(pof: PooledObjectFactory[typing.Any]) -> typing.List[str]:",
-                        "        ",
-                        "        pof.activateObject(None)",
-                        "        pof.destroyObject(None)",
-                        "        pof.makeObject()",
-                        "        pof.passivateObject(None)",
-                        "        pof.validateObject(None)",
-                        "        pof.toString()",
-                        "",
-                        "        return [\"activateObject\",",
-                        "                \"destroyObject\",",
-                        "                \"makeObject\",",
-                        "                \"passivateObject\",",
-                        "                \"validateObject\",",
-                        "                \"toString\"]"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 8.997329950332642,
-                    "generation_timestamp": "2024-06-28T21:40:00.901189",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1399,41 +1174,20 @@
                         "op"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def __invokeEveryMethod2(op: ObjectPool[object]) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    @staticmethod",
-                        "    def __invokeEveryMethod2(op: ObjectPool[object]) -> typing.List[str]:",
-                        "        ",
-                        "        op.addObject()",
-                        "        op.borrowObject()",
-                        "        op.clear()",
-                        "        op.close()",
-                        "        op.getNumActive()",
-                        "        op.getNumIdle()",
-                        "        op.invalidateObject0(object())",
-                        "        op.returnObject(object())",
-                        "        op.toString()",
-                        "",
-                        "        return [\"addObject\",",
-                        "                \"borrowObject\",",
-                        "                \"clear\",",
-                        "                \"close\",",
-                        "                \"getNumActive\",",
-                        "                \"getNumIdle\",",
-                        "                \"invalidateObject0\",",
-                        "                \"returnObject\",",
-                        "                \"toString\"]"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 6.4371442794799805,
-                    "generation_timestamp": "2024-06-28T21:40:07.341746",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1476,35 +1230,20 @@
                         "kpof"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def __invokeEveryMethod1(kpof: KeyedPooledObjectFactory[typing.Any, typing.Any]) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    @staticmethod",
-                        "    def __invokeEveryMethod1(kpof: KeyedPooledObjectFactory[typing.Any, typing.Any]) -> typing.List[str]:",
-                        "        ",
-                        "        kpof.activateObject(None, None)",
-                        "        kpof.destroyObject0(None, None)",
-                        "        kpof.makeObject(None)",
-                        "        kpof.passivateObject(None, None)",
-                        "        kpof.validateObject(None, None)",
-                        "        kpof.toString()",
-                        "",
-                        "        return [\"activateObject\",",
-                        "                \"destroyObject0\",",
-                        "                \"makeObject\",",
-                        "                \"passivateObject\",",
-                        "                \"validateObject\",",
-                        "                \"toString\"]"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 6.9611496925354,
-                    "generation_timestamp": "2024-06-28T21:40:14.306424",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1559,49 +1298,20 @@
                         "kop"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def __invokeEveryMethod0(kop: KeyedObjectPool[object, typing.Any]) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    @staticmethod",
-                        "    def __invokeEveryMethod0(kop: KeyedObjectPool[object, typing.Any]) -> typing.List[str]:",
-                        "        ",
-                        "        kop.addObject(None)",
-                        "        kop.borrowObject(None)",
-                        "        kop.clear0()",
-                        "        kop.clear1(None)",
-                        "        kop.close()",
-                        "        kop.getNumActive0()",
-                        "        kop.getNumActive1(None)",
-                        "        kop.getNumIdle0()",
-                        "        kop.getNumIdle1(None)",
-                        "        kop.invalidateObject0(None, object())",
-                        "        kop.returnObject(None, object())",
-                        "        kop.toString()",
-                        "",
-                        "        return [",
-                        "            \"addObject\",",
-                        "            \"borrowObject\",",
-                        "            \"clear0\",",
-                        "            \"clear1\",",
-                        "            \"close\",",
-                        "            \"getNumActive0\",",
-                        "            \"getNumActive1\",",
-                        "            \"getNumIdle0\",",
-                        "            \"getNumIdle1\",",
-                        "            \"invalidateObject0\",",
-                        "            \"returnObject\",",
-                        "            \"toString\"",
-                        "        ]"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 9.615658521652222,
-                    "generation_timestamp": "2024-06-28T21:40:23.925684",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1642,22 +1352,20 @@
                             "52-54:MethodCallLogger"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def __createProxy1(clazz: typing.Type[typing.Any], logger: typing.List[str]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    @staticmethod",
-                        "    def __createProxy1(clazz: typing.Type[typing.Any], logger: typing.List[str]) -> typing.Any:",
-                        "         return TestPoolUtils.__createProxy0(clazz, MethodCallLogger(logger))"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 3.0790462493896484,
-                    "generation_timestamp": "2024-06-28T21:40:27.010064",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
@@ -1685,15 +1393,14 @@
                         "    __CHECK_SLEEP_PERIOD: int = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __CHECK_SLEEP_PERIOD: int = __CHECK_PERIOD * (__CHECK_COUNT - 1) + __CHECK_PERIOD / 2"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 2.2307004928588867,
-                    "generation_timestamp": "2024-07-06T21:26:27.980579",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1718,15 +1425,14 @@
                         "    __CHECK_COUNT: int = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __CHECK_COUNT: int = 4"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.067943811416626,
-                    "generation_timestamp": "2024-06-28T20:34:31.180076",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 },
@@ -1751,19 +1457,19 @@
                         "    __CHECK_PERIOD: int = <placeholder>",
                         ""
                     ],
-                    "translation": [
-                        "    __CHECK_PERIOD: int = 300"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 1.1042430400848389,
-                    "generation_timestamp": "2024-06-28T20:34:32.287624",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": false
                 }
             },
+            "is_enum": false,
             "python_class_declaration": "class TestPoolUtils(unittest.TestCase):\n\n"
         },
         "new Executable(...) { ... }": {
@@ -1775,7 +1481,148 @@
             "nests": [],
             "implements": [],
             "extends": [],
-            "methods": {},
+            "methods": {
+                "235-237:execute": {
+                    "start": 235,
+                    "end": 237,
+                    "body": [
+                        "            assertThrows(\n",
+                        "                    IllegalArgumentException.class,\n",
+                        "                    () -> PoolUtils.checkMinIdle1(pool, (Collection<?>) null, 1, 1),\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "execute()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.PoolUtils",
+                            "PoolUtils",
+                            "1168-1186:checkMinIdle1"
+                        ]
+                    ],
+                    "is_overload": true
+                },
+                "323-325:execute": {
+                    "start": 323,
+                    "end": 325,
+                    "body": [
+                        "            assertThrows(\n",
+                        "                    IllegalArgumentException.class,\n",
+                        "                    () -> PoolUtils.prefill0(pool, (Collection<String>) null, 1),\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "execute()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.PoolUtils",
+                            "PoolUtils",
+                            "1396-1403:prefill0"
+                        ]
+                    ],
+                    "is_overload": true
+                },
+                "353-355:execute": {
+                    "start": 353,
+                    "end": 355,
+                    "body": [
+                        "        assertThrows(\n",
+                        "                IllegalArgumentException.class,\n",
+                        "                () -> PoolUtils.prefill2(null, 1),\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "execute()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.PoolUtils",
+                            "PoolUtils",
+                            "1439-1445:prefill2"
+                        ]
+                    ],
+                    "is_overload": true
+                },
+                "375-377:execute": {
+                    "start": 375,
+                    "end": 377,
+                    "body": [
+                        "        assertThrows(\n",
+                        "                IllegalArgumentException.class,\n",
+                        "                () -> PoolUtils.synchronizedPool0((KeyedObjectPool<Object, Object>) null),\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "execute()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.PoolUtils",
+                            "PoolUtils",
+                            "1475-1487:synchronizedPool0"
+                        ]
+                    ],
+                    "is_overload": true
+                },
+                "392-394:execute": {
+                    "start": 392,
+                    "end": 394,
+                    "body": [
+                        "        assertThrows(\n",
+                        "                IllegalArgumentException.class,\n",
+                        "                () -> PoolUtils.synchronizedPool1((ObjectPool<Object>) null),\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "execute()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.PoolUtils",
+                            "PoolUtils",
+                            "1502-1519:synchronizedPool1"
+                        ]
+                    ],
+                    "is_overload": true
+                }
+            },
             "fields": {}
         },
         "new InvocationHandler(...) { ... }": {
@@ -1787,7 +1634,60 @@
             "nests": [],
             "implements": [],
             "extends": [],
-            "methods": {},
+            "methods": {
+                "285-287:invoke": {
+                    "start": 285,
+                    "end": 287,
+                    "body": [
+                        "        try (@SuppressWarnings(\"unchecked\")\n",
+                        "                        final ObjectPool<Object> internalPool =\n",
+                        "                                createProxy0(ObjectPool.class, (arg0, arg1, arg2) -> null);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "invoke(Object, Method, Object[])",
+                    "parameters": [
+                        "arg0",
+                        "arg1",
+                        "arg2"
+                    ],
+                    "calls": [],
+                    "is_overload": true
+                },
+                "299-301:invoke": {
+                    "start": 299,
+                    "end": 301,
+                    "body": [
+                        "        try (@SuppressWarnings(\"unchecked\")\n",
+                        "                        final KeyedObjectPool<Object, Object> internalPool =\n",
+                        "                                createProxy0(KeyedObjectPool.class, (arg0, arg1, arg2) -> null);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "invoke(Object, Method, Object[])",
+                    "parameters": [
+                        "arg0",
+                        "arg1",
+                        "arg2"
+                    ],
+                    "calls": [],
+                    "is_overload": true
+                }
+            },
             "fields": {}
         }
     },

@@ -94,7 +94,7 @@ class CreditCardValidator:
     def _luhnCheck(self, cardNumber: str) -> bool:
         pass
 
-    def addAllowedCardType(self, type: CreditCardType) -> None:
+    def addAllowedCardType(self, type_: CreditCardType) -> None:
         pass
 
     def isValid(self, card: str) -> bool:

@@ -1,0 +1,2 @@
+class InputStreamPumper:
+    pass

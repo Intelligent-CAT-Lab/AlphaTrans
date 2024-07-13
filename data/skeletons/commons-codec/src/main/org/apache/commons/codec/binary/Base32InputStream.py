@@ -22,7 +22,7 @@ class Base32InputStream(BaseNCodecInputStream):
     # Class Methods Begin
     def __init__(
         self,
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         doEncode: bool,
         lineLength: int,
         lineSeparator: typing.List[int],
@@ -32,7 +32,7 @@ class Base32InputStream(BaseNCodecInputStream):
 
     @staticmethod
     def Base32InputStream2(
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         doEncode: bool,
         lineLength: int,
         lineSeparator: typing.List[int],

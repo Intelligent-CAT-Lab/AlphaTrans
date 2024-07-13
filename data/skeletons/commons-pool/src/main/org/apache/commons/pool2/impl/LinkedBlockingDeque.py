@@ -26,7 +26,7 @@ class AbstractItr(ABC):
     def remove(self) -> None:
         pass
 
-    def next(self) -> typing.Any:
+    def next_(self) -> typing.Any:
         pass
 
     def hasNext(self) -> bool:

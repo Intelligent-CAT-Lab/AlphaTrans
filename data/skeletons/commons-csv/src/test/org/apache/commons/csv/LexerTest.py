@@ -34,7 +34,7 @@ class LexerTest(unittest.TestCase):
     def setUp(self) -> None:
         pass
 
-    def __createLexer(self, input: str, format: CSVFormat) -> Lexer:
+    def __createLexer(self, input_: str, format_: CSVFormat) -> Lexer:
         pass
 
     # Class Methods End

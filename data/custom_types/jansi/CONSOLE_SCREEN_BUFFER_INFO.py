@@ -1,0 +1,2 @@
+class CONSOLE_SCREEN_BUFFER_INFO:
+    pass

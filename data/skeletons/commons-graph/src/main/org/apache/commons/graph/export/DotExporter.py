@@ -39,10 +39,12 @@ class DotExporter(AbstractExporter):
     def _startGraph(self, name: str) -> None:
         pass
 
-    def _enlistVerticesProperty(self, name: str, type: typing.Type[typing.Any]) -> None:
+    def _enlistVerticesProperty(
+        self, name: str, type_: typing.Type[typing.Any]
+    ) -> None:
         pass
 
-    def _enlistEdgesProperty(self, name: str, type: typing.Type[typing.Any]) -> None:
+    def _enlistEdgesProperty(self, name: str, type_: typing.Type[typing.Any]) -> None:
         pass
 
     def _endSerialization(self) -> None:

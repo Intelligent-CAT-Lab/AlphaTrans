@@ -62,6 +62,18 @@ class BaseNCodec(BinaryDecoder, BinaryEncoder, ABC):
     # Class Fields End
 
     # Class Methods Begin
+    def encode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def encode(self, pArray: typing.List[int]) -> typing.List[int]:
+        pass
+
+    def decode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def decode(self, pArray: typing.List[int]) -> typing.List[int]:
+        pass
+
     def isStrictDecoding(self) -> bool:
         pass
 

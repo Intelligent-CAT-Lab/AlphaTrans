@@ -32,10 +32,16 @@ class Soundex(StringEncoder):
     def getMaxLength(self) -> int:
         pass
 
-    def soundex(self, str: str) -> str:
+    def encode(self, str_: str) -> str:
         pass
 
-    def encode1(self, str: str) -> str:
+    def encode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def soundex(self, str_: str) -> str:
+        pass
+
+    def encode1(self, str_: str) -> str:
         pass
 
     def encode0(self, obj: typing.Any) -> typing.Any:
@@ -53,7 +59,7 @@ class Soundex(StringEncoder):
     ) -> None:
         pass
 
-    def __map(self, ch: str) -> str:
+    def __map_(self, ch: str) -> str:
         pass
 
     def __hasMarker(self, mapping: typing.List[str]) -> bool:

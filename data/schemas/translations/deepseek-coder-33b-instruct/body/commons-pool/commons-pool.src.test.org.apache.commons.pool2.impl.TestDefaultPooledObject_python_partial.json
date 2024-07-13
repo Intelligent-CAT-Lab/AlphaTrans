@@ -144,51 +144,15 @@
                     "signature": "testGetIdleTimeMillis()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testGetIdleTimeMillis(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [
-                        "    def testGetIdleTimeMillis(self) -> None:",
-                        "        ",
-                        "        dpo = DefaultPooledObject(object())",
-                        "        negativeIdleTimeReturned = [False]",
-                        "        executor = ThreadPoolExecutor(max_workers=(os.cpu_count() * 3))",
-                        "        ",
-                        "        def allocateAndDeallocateTask() -> None:",
-                        "            for _ in range(10000):",
-                        "                if dpo.getIdleDuration().isNegative() or dpo.getIdleTime().isNegative():",
-                        "                    negativeIdleTimeReturned[0] = True",
-                        "                    break",
-                        "            dpo.allocate()",
-                        "            for _ in range(10000):",
-                        "                if dpo.getIdleDuration().isNegative() or dpo.getIdleTime().isNegative():",
-                        "                    negativeIdleTimeReturned[0] = True",
-                        "                    break",
-                        "            dpo.deallocate()",
-                        "        ",
-                        "        def getIdleTimeTask() -> None:",
-                        "            for _ in range(10000):",
-                        "                if dpo.getIdleDuration().isNegative() or dpo.getIdleTime().isNegative():",
-                        "                    negativeIdleTimeReturned[0] = True",
-                        "                    break",
-                        "        ",
-                        "        probabilityOfAllocationTask = 0.7",
-                        "        futures = []",
-                        "        for _ in range(10000):",
-                        "            randomTask = allocateAndDeallocateTask if random.random() < probabilityOfAllocationTask else getIdleTimeTask",
-                        "            futures.append(executor.submit(randomTask))",
-                        "        ",
-                        "        for future in futures:",
-                        "            future.result()",
-                        "        ",
-                        "        self.assertFalse(",
-                        "            negativeIdleTimeReturned[0],",
-                        "            \"DefaultPooledObject.getIdleTimeMillis() returned a negative value\"",
-                        "        )"
-                    ],
-                    "translation_status": "success",
-                    "syntactical_validation_status": "success",
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
@@ -198,6 +162,7 @@
                 }
             },
             "fields": {},
+            "is_enum": false,
             "python_class_declaration": "class TestDefaultPooledObject(unittest.TestCase):\n\n"
         },
         "new Runnable(...) { ... }": {
@@ -209,7 +174,76 @@
             "nests": [],
             "implements": [],
             "extends": [],
-            "methods": {},
+            "methods": {
+                "44-64:run": {
+                    "start": 44,
+                    "end": 64,
+                    "body": [
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true
+                },
+                "65-73:run": {
+                    "start": 65,
+                    "end": 73,
+                    "body": [
+                        "        final Runnable getIdleTimeTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i = 0; i < 10000; i++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true
+                }
+            },
             "fields": {}
         }
     },

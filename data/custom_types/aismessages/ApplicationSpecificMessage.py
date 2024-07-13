@@ -1,0 +1,2 @@
+class ApplicationSpecificMessage:
+    pass

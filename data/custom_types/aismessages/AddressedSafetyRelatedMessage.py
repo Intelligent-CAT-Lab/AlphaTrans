@@ -1,0 +1,2 @@
+class AddressedSafetyRelatedMessage:
+    pass

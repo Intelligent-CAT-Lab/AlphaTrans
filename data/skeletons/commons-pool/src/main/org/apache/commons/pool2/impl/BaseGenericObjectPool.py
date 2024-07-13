@@ -31,7 +31,7 @@ class EvictionIterator:
     def remove(self) -> None:
         pass
 
-    def next(self) -> PooledObject[typing.Any]:
+    def next_(self) -> PooledObject[typing.Any]:
         pass
 
     def hasNext(self) -> bool:

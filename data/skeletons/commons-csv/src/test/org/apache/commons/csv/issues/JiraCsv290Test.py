@@ -23,7 +23,7 @@ class JiraCsv290Test(unittest.TestCase):
     def testPostgresqlCsv(self) -> None:
         pass
 
-    def __testHelper(self, filename: str, format: CSVFormat) -> None:
+    def __testHelper(self, filename: str, format_: CSVFormat) -> None:
         pass
 
     # Class Methods End

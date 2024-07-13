@@ -1,0 +1,2 @@
+class Erase:
+    pass

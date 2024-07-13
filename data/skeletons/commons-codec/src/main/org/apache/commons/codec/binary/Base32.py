@@ -91,12 +91,12 @@ class Base32(BaseNCodec):
         pass
 
     def encode2(
-        self, input: typing.List[int], inPos: int, inAvail: int, context: Context
+        self, input_: typing.List[int], inPos: int, inAvail: int, context: Context
     ) -> None:
         pass
 
     def decode1(
-        self, input: typing.List[int], inPos: int, inAvail: int, context: Context
+        self, input_: typing.List[int], inPos: int, inAvail: int, context: Context
     ) -> None:
         pass
 

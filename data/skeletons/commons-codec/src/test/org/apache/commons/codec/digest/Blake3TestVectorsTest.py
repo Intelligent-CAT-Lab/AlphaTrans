@@ -47,7 +47,7 @@ class Blake3TestVectorsTest(unittest.TestCase):
         pass
 
     def __init__(
-        self, inputLength: int, hash: str, keyedHash: str, deriveKey: str
+        self, inputLength: int, hash_: str, keyedHash: str, deriveKey: str
     ) -> None:
         pass
 

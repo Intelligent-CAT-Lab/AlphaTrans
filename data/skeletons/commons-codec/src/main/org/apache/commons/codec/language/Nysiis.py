@@ -36,13 +36,19 @@ class Nysiis(StringEncoder):
     # Class Fields End
 
     # Class Methods Begin
-    def nysiis(self, str: str) -> str:
+    def encode(self, str_: str) -> str:
+        pass
+
+    def encode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def nysiis(self, str_: str) -> str:
         pass
 
     def isStrict(self) -> bool:
         pass
 
-    def encode1(self, str: str) -> str:
+    def encode1(self, str_: str) -> str:
         pass
 
     def encode0(self, obj: typing.Any) -> typing.Any:
@@ -57,7 +63,7 @@ class Nysiis(StringEncoder):
 
     @staticmethod
     def __transcodeRemaining(
-        prev: str, curr: str, next: str, aNext: str
+        prev: str, curr: str, next_: str, aNext: str
     ) -> typing.List[str]:
         pass
 

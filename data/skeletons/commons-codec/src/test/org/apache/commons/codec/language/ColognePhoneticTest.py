@@ -17,7 +17,7 @@ class ColognePhoneticTest(StringEncoderAbstractTest, unittest.TestCase):
 
     # Class Fields Begin
     __TESTSET: typing.Set[str] = None
-    __MATCHES: typing.List[str] = None
+    __MATCHES: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin
@@ -65,7 +65,7 @@ class ColognePhoneticTest(StringEncoderAbstractTest, unittest.TestCase):
         pass
 
     @staticmethod
-    def main(args: typing.List[str]) -> None:
+    def main(args: typing.List[typing.List[str]]) -> None:
         pass
 
     @staticmethod

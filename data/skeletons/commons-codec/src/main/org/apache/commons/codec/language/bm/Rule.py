@@ -32,7 +32,7 @@ class RPattern(ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def isMatch(self, input: str) -> bool:
+    def isMatch(self, input_: str) -> bool:
         pass
 
     # Class Methods End
@@ -65,7 +65,7 @@ class Phoneme(PhonemeExpr):
     def getLanguages(self) -> LanguageSet:
         pass
 
-    def append(self, str: str) -> Phoneme:
+    def append(self, str_: str) -> Phoneme:
         pass
 
     @staticmethod
@@ -125,7 +125,7 @@ class Rule:
     # Class Fields End
 
     # Class Methods Begin
-    def patternAndContextMatches(self, input: str, i: int) -> bool:
+    def patternAndContextMatches(self, input_: str, i: int) -> bool:
         pass
 
     def getRContext(self) -> RPattern:
@@ -168,11 +168,11 @@ class Rule:
         pass
 
     @staticmethod
-    def __stripQuotes(str: str) -> str:
+    def __stripQuotes(str_: str) -> str:
         pass
 
     @staticmethod
-    def __startsWith(input: str, prefix: str) -> bool:
+    def __startsWith(input_: str, prefix: str) -> bool:
         pass
 
     @staticmethod
@@ -194,7 +194,7 @@ class Rule:
         pass
 
     @staticmethod
-    def __endsWith(input: str, suffix: str) -> bool:
+    def __endsWith(input_: str, suffix: str) -> bool:
         pass
 
     @staticmethod
@@ -210,7 +210,7 @@ class Rule:
         pass
 
     @staticmethod
-    def __contains(chars: str, input: str) -> bool:
+    def __contains(chars: str, input_: str) -> bool:
         pass
 
     # Class Methods End

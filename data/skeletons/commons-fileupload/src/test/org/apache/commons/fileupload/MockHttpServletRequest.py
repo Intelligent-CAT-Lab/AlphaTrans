@@ -21,7 +21,7 @@ class MyServletInputStream:
     # Class Fields End
 
     # Class Methods Begin
-    def read1(self, b: typing.List[int], off: int, len: int) -> int:
+    def read1(self, b: typing.List[int], off: int, len_: int) -> int:
         pass
 
     def read0(self) -> int:
@@ -110,7 +110,7 @@ class MockHttpServletRequest:
     def getParameterMap(self) -> typing.Dict[str, typing.List[str]]:
         pass
 
-    def getParameterValues(self, arg0: str) -> typing.List[str]:
+    def getParameterValues(self, arg0: str) -> typing.List[typing.List[str]]:
         pass
 
     def getParameterNames(

@@ -20,7 +20,7 @@ class CSVRecord:
     __characterPosition: int = None
     __comment: str = None
     __recordNumber: int = None
-    __values: typing.List[str] = None
+    __values: typing.List[typing.List[str]] = None
     __parser: CSVParser = None
     # Class Fields End
 
@@ -31,7 +31,7 @@ class CSVRecord:
     def iterator(self) -> typing.Iterator[str]:
         pass
 
-    def values(self) -> typing.List[str]:
+    def values(self) -> typing.List[typing.List[str]]:
         pass
 
     def toMap(self) -> typing.Dict[str, str]:
@@ -46,7 +46,7 @@ class CSVRecord:
     def size(self) -> int:
         pass
 
-    def putIn(self, map: typing.Any) -> typing.Any:
+    def putIn(self, map_: typing.Any) -> typing.Any:
         pass
 
     def isSet1(self, name: str) -> bool:
@@ -91,7 +91,7 @@ class CSVRecord:
     def __init__(
         self,
         parser: CSVParser,
-        values: typing.List[str],
+        values: typing.List[typing.List[str]],
         comment: str,
         recordNumber: int,
         characterPosition: int,

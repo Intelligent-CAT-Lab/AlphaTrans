@@ -32,10 +32,16 @@ class XXHash32:
     def getValue(self) -> int:
         pass
 
+    def update(self, b: typing.List[int], off: int, len_: int) -> None:
+        pass
+
+    def update(self, b: int) -> None:
+        pass
+
     def reset(self) -> None:
         pass
 
-    def update1(self, b: typing.List[int], off: int, len: int) -> None:
+    def update1(self, b: typing.List[int], off: int, len_: int) -> None:
         pass
 
     def update0(self, b: int) -> None:
