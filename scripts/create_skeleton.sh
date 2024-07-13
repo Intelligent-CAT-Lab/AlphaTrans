@@ -3,11 +3,11 @@
 
 pwd=$(pwd)
 
-for model in 'deepseek-coder-33b-instruct' 'granite-34b-code-instruct' 'llama-3-70b-instruct';
+for model in 'deepseek-coder-33b-instruct' 'llama-3-70b-instruct';
 do
     for type in 'body' 'signature';
     do
-        for project in 'commons-cli' 'commons-codec' 'commons-csv' 'commons-validator' 'commons-fileupload' 'commons-pool' 'commons-graph' 'joda-money' 'joda-convert';
+        for project in 'commons-cli' 'commons-codec' 'commons-csv' 'commons-validator' 'commons-fileupload' 'commons-pool' 'commons-graph' 'commons-exec' 'jansi';
         do
             echo "creating skeleton for $project"
             export PYTHONPATH=$pwd/data/skeletons/$project

@@ -2,6 +2,7 @@ import os
 import json
 import argparse
 from collections import defaultdict
+import keyword
 
 
 def split_with_nested_commas(s):
@@ -22,12 +23,18 @@ def split_with_nested_commas(s):
     return result
 
 
-def get_dependency_path(dependent_class, project_name):
-    if os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'):
-    # if os.path.exists(f'java_projects/cleaned_final_projects_evosuite/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'):
+def get_dependency_path(dependent_class, project_name, is_evosuite):
+
+    src_fname = f'java_projects/cleaned_final_projects/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'
+    test_fname = f'java_projects/cleaned_final_projects/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'
+
+    if is_evosuite:
+        src_fname = f'java_projects/cleaned_final_projects_evosuite/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'
+        test_fname = f'java_projects/cleaned_final_projects_evosuite/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'
+
+    if os.path.exists(src_fname):
         return f'src.main.{dependent_class}'
-    elif os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'):
-    # elif os.path.exists(f'java_projects/cleaned_final_projects_evosuite/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'):
+    elif os.path.exists(test_fname):
         return f'src.test.{dependent_class}'
     else:
         return f'src.main.{dependent_class}'
@@ -38,6 +45,7 @@ def remove_duplicate_methods(schema):
     for class_ in schema['classes']:
         duplicate_methods.setdefault(class_, {})
         for method in schema['classes'][class_]['methods']:
+            schema['classes'][class_]['methods'][method]['is_overload'] = False
             method_name = method.split(':')[1].strip()
             duplicate_methods[class_].setdefault(method_name, [])
             duplicate_methods[class_][method_name].append(method)
@@ -46,7 +54,7 @@ def remove_duplicate_methods(schema):
         for method_name in duplicate_methods[class_]:
             if len(duplicate_methods[class_][method_name]) > 1:
                 for k in duplicate_methods[class_][method_name]:
-                    schema['classes'][class_]['methods'].pop(k)
+                    schema['classes'][class_]['methods'][k]['is_overload'] = True
     
     return schema
 
@@ -70,11 +78,11 @@ def get_dependency_cycle(dependencies):
     return cycles, class_path
 
 
-def has_child_parent_dept(dependent_files, class_path, project_name):
+def has_child_parent_dept(dependent_files, class_path, project_name, is_evosuite=False):
     verified_dependent_files = []
     for class_1, class_2 in dependent_files:
-        class_1_path = get_dependency_path(class_path[class_1], project_name)
-        class_2_path = get_dependency_path(class_path[class_2], project_name)
+        class_1_path = get_dependency_path(class_path[class_1], project_name, is_evosuite)
+        class_2_path = get_dependency_path(class_path[class_2], project_name, is_evosuite)
 
         class_1_schema_name = f'data/schemas/{project_name}/{project_name}.{class_1_path}.json'
         class_2_schema_name = f'data/schemas/{project_name}/{project_name}.{class_2_path}.json'
@@ -112,27 +120,33 @@ def main(args):
     with open(f'data/type_resolution/universal_type_map_final.json', 'r') as f:
         extracted_types = json.load(f)
     
+    reserved_tokens = dir(__builtins__) + keyword.kwlist
+    
     extracted_types = {k.split('.')[-1]: v for k, v in extracted_types.items()}
 
     schemas = os.listdir(f'data/schemas/{args.project_name}')
 
     dependencies_dir = 'data/dependencies'
-    # dependencies_dir = 'data/dependencies-evosuite'
+    if args.evosuite:
+        dependencies_dir = 'data/dependencies-evosuite'
 
     dependencies = {}
     with open(f'{dependencies_dir}/{args.project_name}/dependencies.json', 'r') as f:
         dependencies = json.load(f)
 
     dependent_files, class_path = get_dependency_cycle(dependencies)
-    verified_dependent_files = has_child_parent_dept(dependent_files, class_path, args.project_name)
+    verified_dependent_files = has_child_parent_dept(dependent_files, class_path, args.project_name, args.evosuite)
 
     for schema_fname in schemas:
 
         if 'python_partial' in schema_fname:
             continue
 
-        # if not schema_fname.endswith('ESTest.json'):
-        #     continue
+        if args.evosuite and not schema_fname.endswith('ESTest.json'):
+            continue
+
+        if not args.evosuite and 'ESTest' in schema_fname:
+            continue
 
         schema_path = f'data/schemas/{args.project_name}/{schema_fname}'
         
@@ -174,6 +188,17 @@ def main(args):
             if 'new' in class_ or '{' in class_: # skip nested and nameless classes
                 continue
 
+            source_class_declaration = ''
+            with open(schema['path'], 'r') as f:
+                source_class_declaration = ''.join(f.readlines()[schema['classes'][class_]['start']-1:schema['classes'][class_]['end']])
+            
+            if 'enum' in source_class_declaration:
+                schema['classes'][class_]['is_enum'] = True
+            else:
+                schema['classes'][class_]['is_enum'] = False
+
+            dependencies.setdefault(class_, [])
+
             main_class = class_
             if schema['classes'][class_]['nested_inside'] != []:
                 main_class = schema['classes'][class_]['nested_inside']
@@ -192,7 +217,7 @@ def main(args):
                 class_name = class_.split('(')[0].replace('new ', '').strip()
 
             class_declaration = ''
-            exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum', 'Iterator', 'Iterable', 'scaffolding'}
+            exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum', 'Iterator', 'Iterable', 'scaffolding', 'Supplier'}
             if schema['classes'][class_]['extends'] != []:
                 schema['classes'][class_]['extends'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
@@ -234,6 +259,14 @@ def main(args):
                 python_imports.append('import unittest')
                 python_imports.append('import pytest')
             
+            # if schema['classes'][class_]['is_enum']:
+            #     if '):' not in class_declaration:
+            #         class_declaration = class_declaration.replace(':', '(enum.Enum):')
+            #     elif '():' in class_declaration:
+            #         class_declaration = class_declaration.replace('():', '(enum.Enum):')
+            #     else:
+            #         class_declaration = class_declaration.replace('):', ', enum.Enum):')
+            
             skeleton += class_declaration
 
             target_schema['classes'][class_]['python_class_declaration'] = class_declaration
@@ -244,6 +277,7 @@ def main(args):
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['translation'] = []
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['translation_status'] = 'pending'
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['syntactical_validation_status'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['execution_validation_status'] = 'pending'
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['test_validation_status'] = 'pending'
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['graal_validation_status'] = 'pending'
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['elapsed_time'] = 0
@@ -311,6 +345,7 @@ def main(args):
                 target_schema['classes'][class_]['fields'][field]['translation'] = []
                 target_schema['classes'][class_]['fields'][field]['translation_status'] = 'pending'
                 target_schema['classes'][class_]['fields'][field]['syntactical_validation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['execution_validation_status'] = 'pending'
                 target_schema['classes'][class_]['fields'][field]['test_validation_status'] = 'pending'
                 target_schema['classes'][class_]['fields'][field]['graal_validation_status'] = 'pending'
                 target_schema['classes'][class_]['fields'][field]['elapsed_time'] = 0
@@ -329,8 +364,8 @@ def main(args):
                 if method_name.strip() == '':
                     continue
 
-                if method_name in ['from']:
-                    method_name = 'from_'
+                if method_name in reserved_tokens:
+                    method_name = f'{method_name}_'
 
                 is_empty_class = False
 
@@ -368,8 +403,7 @@ def main(args):
                     
                     parameters = schema["classes"][class_]["methods"][method]["parameters"]
                     param_types = [(x, y) for x, y in zip(parameters, parameter_types)]
-                    param_types = [('in_', y) if x == 'in' else (x, y) for x, y in param_types]
-                    param_types = [('from_', y) if x == 'from' else (x, y) for x, y in param_types]
+                    param_types = [(f'{x}_', y) if x in reserved_tokens else (x, y) for x, y in param_types]
 
                     if class_ == method_name:
                         skeleton += '\tdef __init__(self, ' + ', '.join([x + f': {y.strip()}' for x, y in param_types]) + ') -> '
@@ -401,6 +435,7 @@ def main(args):
                 target_schema['classes'][class_]['methods'][method]['translation'] = []
                 target_schema['classes'][class_]['methods'][method]['translation_status'] = 'pending'
                 target_schema['classes'][class_]['methods'][method]['syntactical_validation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['execution_validation_status'] = 'pending'
                 target_schema['classes'][class_]['methods'][method]['test_validation_status'] = 'pending'
                 target_schema['classes'][class_]['methods'][method]['graal_validation_status'] = 'pending'
                 target_schema['classes'][class_]['methods'][method]['elapsed_time'] = 0
@@ -422,7 +457,7 @@ def main(args):
                       'os': 'import os\n', 'pickle': 'import pickle\n', 'itertools': 'import itertools\n', 'sys': 'import sys\n', 'collections': 'import collections\n', 
                       'unittest.TestCase': 'import unittest\n', 'uuid': 'import uuid\n', 'tempfile': 'import tempfile\n', 'typing': 'import typing\n', 'BytesIO': 'from io import BytesIO\n',
                       'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n', 'zoneinfo': 'import zoneinfo\n',
-                      'urllib': 'import urllib\n', 'logging': 'import logging\n'}
+                      'urllib': 'import urllib\n', 'logging': 'import logging\n', 'Enum': 'import enum\n'}
 
         for key in import_map:
             if key in skeleton and import_map[key] not in skeleton:
@@ -434,7 +469,7 @@ def main(args):
                 if len(dependent_class) != 2:
                     continue
 
-                path = get_dependency_path(dependent_class[1], args.project_name)
+                path = get_dependency_path(dependent_class[1], args.project_name, args.evosuite)
                 skip = False
                 for class_1, class_1_schema_name, class_2, class_2_schema_name, is_child in verified_dependent_files:
                     if is_child == 1 and schema_fname == class_2_schema_name.split('/')[-1] and class_1 in path:
@@ -519,6 +554,7 @@ if __name__ == '__main__':
     parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project')
     parser.add_argument('--model_name', type=str, dest='model_name', help='name of the model')
     parser.add_argument('--type', type=str, dest='type', help='prompt type signature/body')
+    parser.add_argument('--evosuite', action='store_true', dest='evosuite', help='use evosuite dependencies')
     args = parser.parse_args()
     
     main(args)
