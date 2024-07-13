@@ -52,6 +52,8 @@ def create_schema(args):
         if callable_name in ['<clinit>', '<obinit>']:
             continue
 
+        assert '<clinit>' not in callable_name and '<obinit>' not in callable_name
+
         if start.endswith('0:0:0:0') or end.endswith('0:0:0:0'):
             continue
 
@@ -192,6 +194,9 @@ def create_schema(args):
     for line in lines:
         res_row = line.split('|')[1:-1]
         interface_name, interface_loc, callable_name, modifier, return_type, return_type_qualified_name, siganture, start, end = [x.strip() for x in res_row]
+
+        if callable_name in ['<clinit>', '<obinit>']:
+            continue
 
         if callable_name == 'null' and modifier == 'null' and return_type == 'null' and return_type_qualified_name == 'null' and siganture == 'null':
             path = interface_loc[interface_loc.find(':')+1:interface_loc.find(':', interface_loc.find(':')+1)]
