@@ -99,6 +99,21 @@ function download_java_projects() {
     cd java_projects/original_projects/javaewah;
     git reset --hard JavaEWAH-1.2.3;
     cd $main;
+
+    git clone https://github.com/fasseg/exp4j.git java_projects/original_projects/exp4j;
+    cd java_projects/original_projects/exp4j;
+    git reset --hard 4657309;
+    cd $main;
+
+    git clone https://github.com/lemire/JavaFastPFOR.git java_projects/original_projects/JavaFastPFOR;
+    cd java_projects/original_projects/JavaFastPFOR;
+    git reset --hard 0ecdda9;
+    cd $main;
+
+    git clone https://github.com/gbenroscience/ParserNG.git java_projects/ParserNG;
+    cd java_projects/original_projects/ParserNG;
+    git reset --hard v0.1.9;
+    cd $main;
 }
 
 function build_java_projects() {
