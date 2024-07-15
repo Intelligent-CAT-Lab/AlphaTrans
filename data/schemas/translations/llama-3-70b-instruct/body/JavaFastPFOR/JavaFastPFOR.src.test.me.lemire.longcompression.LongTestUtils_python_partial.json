@@ -1,0 +1,1054 @@
+{
+    "path": "java_projects/cleaned_final_projects/JavaFastPFOR/src/test/java/me/lemire/longcompression/LongTestUtils.java",
+    "imports": {
+        "13-13:import Arrays": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "15-15:import IntWrapper": {
+            "start": 15,
+            "end": 15,
+            "body": [
+                "import me.lemire.integercompression.IntWrapper;\n"
+            ]
+        },
+        "10-10:import static Assert.assertArrayEquals": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import static org.junit.Assert.assertArrayEquals;\n"
+            ]
+        },
+        "11-11:import static Assert.assertTrue": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import static org.junit.Assert.assertTrue;\n"
+            ]
+        }
+    },
+    "classes": {
+        "LongTestUtils": {
+            "start": 20,
+            "end": 20,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "130-132:longToBinaryWithLeading": {
+                    "start": 130,
+                    "end": 132,
+                    "body": [
+                        "\tpublic static String longToBinaryWithLeading(long l) {\n",
+                        "\t\treturn String.format(\"%64s\", Long.toBinaryString(l)).replace(' ', '0');\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "longToBinaryWithLeading(long)",
+                    "parameters": [
+                        "l"
+                    ],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def longToBinaryWithLeading(l: int) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "121-128:uncompressHeadless": {
+                    "start": 121,
+                    "end": 128,
+                    "body": [
+                        "    protected static long[] uncompressHeadless(SkippableLongCODEC codec, long[] data, int len) {\n",
+                        "        long[] outBuf = new long[len + 1024];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.headlessUncompress(data, inPos, data.length, outBuf, outPos,len);\n",
+                        "        if(outPos.get() < len) throw new RuntimeException(\"Insufficient output.\");\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "uncompressHeadless(SkippableLongCODEC, long[], int)",
+                    "parameters": [
+                        "codec",
+                        "data",
+                        "len"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.SkippableLongCODEC",
+                            "SkippableLongCODEC",
+                            "67-69:headlessUncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _uncompressHeadless(codec: SkippableLongCODEC, data: typing.List[int], len_: int) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "113-119:compressHeadless": {
+                    "start": 113,
+                    "end": 119,
+                    "body": [
+                        "    protected static long[] compressHeadless(SkippableLongCODEC codec, long[] data) {\n",
+                        "        long[] outBuf = new long[data.length * 4];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.headlessCompress(data, inPos, data.length, outBuf, outPos);\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "compressHeadless(SkippableLongCODEC, long[])",
+                    "parameters": [
+                        "codec",
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.SkippableLongCODEC",
+                            "SkippableLongCODEC",
+                            "45-47:headlessCompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _compressHeadless(codec: SkippableLongCODEC, data: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "105-111:uncompress": {
+                    "start": 105,
+                    "end": 111,
+                    "body": [
+                        "    protected static long[] uncompress(ByteLongCODEC codec, byte[] data, int len) {\n",
+                        "        long[] outBuf = new long[len + 1024];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.uncompress(data, inPos, data.length, outBuf, outPos);\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "uncompress(ByteLongCODEC, byte[], int)",
+                    "parameters": [
+                        "codec",
+                        "data",
+                        "len"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.ByteLongCODEC",
+                            "ByteLongCODEC",
+                            "59-61:uncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _uncompress(codec: ByteLongCODEC, data: typing.List[int], len_: int) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "97-103:compress": {
+                    "start": 97,
+                    "end": 103,
+                    "body": [
+                        "    protected static byte[] compress(ByteLongCODEC codec, long[] data) {\n",
+                        "        byte[] outBuf = new byte[data.length * 4 * 4];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.compress(data, inPos, data.length, outBuf, outPos);\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "compress(ByteLongCODEC, long[])",
+                    "parameters": [
+                        "codec",
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.ByteLongCODEC",
+                            "ByteLongCODEC",
+                            "38-40:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _compress(codec: ByteLongCODEC, data: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "87-93:uncompress": {
+                    "start": 87,
+                    "end": 93,
+                    "body": [
+                        "    protected static long[] uncompress(LongCODEC codec, long[] data, int len) {\n",
+                        "        long[] outBuf = new long[len + 1024];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.uncompress(data, inPos, data.length, outBuf, outPos);\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "uncompress(LongCODEC, long[], int)",
+                    "parameters": [
+                        "codec",
+                        "data",
+                        "len"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "59-61:uncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _uncompress(codec: LongCODEC, data: typing.List[int], len_: int) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "79-85:compress": {
+                    "start": 79,
+                    "end": 85,
+                    "body": [
+                        "    protected static long[] compress(LongCODEC codec, long[] data) {\n",
+                        "        long[] outBuf = new long[data.length * 8];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.compress(data, inPos, data.length, outBuf, outPos);\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "compress(LongCODEC, long[])",
+                    "parameters": [
+                        "codec",
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "38-40:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _compress(codec: LongCODEC, data: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "50-77:assertSymmetry": {
+                    "start": 50,
+                    "end": 77,
+                    "body": [
+                        "    public static void assertSymmetry(LongCODEC codec, long... orig) {\n",
+                        "        // There are some cases that compressed array is bigger than original\n",
+                        "        // array.  So output array for compress must be larger.\n",
+                        "        //\n",
+                        "        // Example:\n",
+                        "        //  - VariableByte compresses an array like [ -1 ].\n",
+                        "        //  - Composition compresses a short array.\n",
+                        "        final int EXTEND = 1;\n",
+                        "\n",
+                        "        long[] compressed = new long[orig.length + EXTEND];\n",
+                        "        IntWrapper c_inpos = new IntWrapper(0);\n",
+                        "        IntWrapper c_outpos = new IntWrapper(0);\n",
+                        "        codec.compress(orig, c_inpos, orig.length, compressed,\n",
+                        "                c_outpos);\n",
+                        "\n",
+                        "        assertTrue(c_outpos.get() <= orig.length + EXTEND);\n",
+                        "\n",
+                        "        // Uncompress an array.\n",
+                        "        long[] uncompressed = new long[orig.length];\n",
+                        "        IntWrapper u_inpos = new IntWrapper(0);\n",
+                        "        IntWrapper u_outpos = new IntWrapper(0);\n",
+                        "        codec.uncompress(compressed, u_inpos, c_outpos.get(),\n",
+                        "                uncompressed, u_outpos);\n",
+                        "\n",
+                        "        // Compare between uncompressed and orig arrays.\n",
+                        "        long[] target = Arrays.copyOf(uncompressed, u_outpos.get());\n",
+                        "        assertArrayEquals(orig, target);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "assertSymmetry(LongCODEC, long[])",
+                    "parameters": [
+                        "codec",
+                        "orig"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "38-40:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "59-61:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def assertSymmetry(codec: LongCODEC, orig: typing.List[int]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "33-42:dumpIntArrayAsHex": {
+                    "start": 33,
+                    "end": 42,
+                    "body": [
+                        "    protected static void dumpIntArrayAsHex(long[] data, String label) {\n",
+                        "        System.out.print(label);\n",
+                        "        for (int i = 0; i < data.length; ++i) {\n",
+                        "            if (i % 8 == 0) {\n",
+                        "                System.out.println();\n",
+                        "            }\n",
+                        "            System.out.format(\" %1$08X\", data[i]);\n",
+                        "        }\n",
+                        "        System.out.println();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "dumpIntArrayAsHex(long[], String)",
+                    "parameters": [
+                        "data",
+                        "label"
+                    ],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _dumpIntArrayAsHex(data: typing.List[int], label: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "22-31:dumpIntArray": {
+                    "start": 22,
+                    "end": 31,
+                    "body": [
+                        "    protected static void dumpIntArray(long[] data, String label) {\n",
+                        "        System.out.print(label);\n",
+                        "        for (int i = 0; i < data.length; ++i) {\n",
+                        "            if (i % 6 == 0) {\n",
+                        "                System.out.println();\n",
+                        "            }\n",
+                        "            System.out.format(\" %1$11d\", data[i]);\n",
+                        "        }\n",
+                        "        System.out.println();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "dumpIntArray(long[], String)",
+                    "parameters": [
+                        "data",
+                        "label"
+                    ],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _dumpIntArray(data: typing.List[int], label: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "130-130:longToBinaryWithLeading": {
+                    "start": 130,
+                    "end": 130,
+                    "body": [
+                        "\tpublic static String longToBinaryWithLeading(long l) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "longToBinaryWithLeading(long)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def longToBinaryWithLeading() -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "121-121:uncompressHeadless": {
+                    "start": 121,
+                    "end": 121,
+                    "body": [
+                        "    protected static long[] uncompressHeadless(SkippableLongCODEC codec, long[] data, int len) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "uncompressHeadless(SkippableLongCODEC, long[], int)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _uncompressHeadless() -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "113-113:compressHeadless": {
+                    "start": 113,
+                    "end": 113,
+                    "body": [
+                        "    protected static long[] compressHeadless(SkippableLongCODEC codec, long[] data) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "compressHeadless(SkippableLongCODEC, long[])",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _compressHeadless() -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "105-105:uncompress": {
+                    "start": 105,
+                    "end": 105,
+                    "body": [
+                        "    protected static long[] uncompress(ByteLongCODEC codec, byte[] data, int len) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "uncompress(ByteLongCODEC, byte[], int)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _uncompress() -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "97-97:compress": {
+                    "start": 97,
+                    "end": 97,
+                    "body": [
+                        "    protected static byte[] compress(ByteLongCODEC codec, long[] data) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "compress(ByteLongCODEC, long[])",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _compress() -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "87-87:uncompress": {
+                    "start": 87,
+                    "end": 87,
+                    "body": [
+                        "    protected static long[] uncompress(LongCODEC codec, long[] data, int len) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "uncompress(LongCODEC, long[], int)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _uncompress() -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "79-79:compress": {
+                    "start": 79,
+                    "end": 79,
+                    "body": [
+                        "    protected static long[] compress(LongCODEC codec, long[] data) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "compress(LongCODEC, long[])",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _compress() -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "50-50:assertSymmetry": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "    public static void assertSymmetry(LongCODEC codec, long... orig) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "assertSymmetry(LongCODEC, long[])",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def assertSymmetry() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "33-33:dumpIntArrayAsHex": {
+                    "start": 33,
+                    "end": 33,
+                    "body": [
+                        "    protected static void dumpIntArrayAsHex(long[] data, String label) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "dumpIntArrayAsHex(long[], String)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _dumpIntArrayAsHex() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "22-22:dumpIntArray": {
+                    "start": 22,
+                    "end": 22,
+                    "body": [
+                        "    protected static void dumpIntArray(long[] data, String label) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "dumpIntArray(long[], String)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _dumpIntArray() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class LongTestUtils:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.longcompression.ByteLongCODEC import *",
+        "from src.main.me.lemire.longcompression.LongCODEC import *",
+        "from src.main.me.lemire.longcompression.SkippableLongCODEC import *"
+    ]
+}
