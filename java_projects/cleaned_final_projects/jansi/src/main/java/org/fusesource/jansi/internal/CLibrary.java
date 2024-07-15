@@ -99,7 +99,7 @@ public class CLibrary {
      *
      * @see <a href="http://man7.org/linux/man-pages/man3/ioctl.3p.html">IOCTL(3P) man-page</a>
      */
-    public static native int ioctl(int filedes, long request, int[] params);
+    // public static native int ioctl(int filedes, long request, int[] params);
 
     public static native int ioctl(int filedes, long request, WinSize params);
 
