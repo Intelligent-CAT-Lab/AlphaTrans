@@ -1,0 +1,2 @@
+class AdhocTest:
+    pass

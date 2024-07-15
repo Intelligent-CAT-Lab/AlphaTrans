@@ -1,0 +1,2 @@
+class IntCompressor:
+    pass

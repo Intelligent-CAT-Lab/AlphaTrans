@@ -1,0 +1,2 @@
+class ClusteredDataGenerator:
+    pass

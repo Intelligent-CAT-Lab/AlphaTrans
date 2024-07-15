@@ -1,0 +1,2 @@
+class FastPFOR:
+    pass

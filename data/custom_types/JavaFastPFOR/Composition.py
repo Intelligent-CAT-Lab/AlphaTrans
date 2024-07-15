@@ -1,0 +1,2 @@
+class Composition:
+    pass

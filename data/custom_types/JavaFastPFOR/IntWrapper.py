@@ -1,0 +1,2 @@
+class IntWrapper:
+    pass

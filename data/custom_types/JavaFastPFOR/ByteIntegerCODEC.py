@@ -1,0 +1,2 @@
+class ByteIntegerCODEC:
+    pass

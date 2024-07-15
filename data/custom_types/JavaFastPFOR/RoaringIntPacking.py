@@ -1,0 +1,2 @@
+class RoaringIntPacking:
+    pass

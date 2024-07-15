@@ -1,0 +1,2 @@
+class Encoder:
+    pass
