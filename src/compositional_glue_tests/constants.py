@@ -3,33 +3,15 @@ OUTPUT_DIR = "java_projects/compositional_glue_tests"
 TRANSLATION_DIR = "data/translated_projects" # was: "data/verified_projects"
 SKELETON_DIR = "data/skeletons"
 SCHEMAS_DIR = "data/schemas"
+CALLGRAPH_DIR = "data/call_graphs"
 
 DIR_DEPTH = "../" * (len(list(filter(None, ORIGINAL_DIR.split("/")))) + 1) # the depth of a glued project from the root directory of this repository
 SCRIPT_DIR_DEPTH = "../../" # the depth of this script from the root directory of this repository
 
 paths = dict()
-paths.update({k: {
-        "main": f"main/java/org/apache/commons/{v}/",
-        "test": f"test/java/org/apache/commons/{v}/",
-    } for k, v in (
-    ("commons-cli", "cli"),
-    ("commons-codec", "codec"),
-    ("commons-csv", "csv"),
-    ("commons-fileupload", "fileupload"),
-    ("commons-graph", "graph"),
-    ("commons-pool", "pool2"),
-    ("commons-validator", "validator"),
-)})
-paths.update({k: {
-        "main": f"main/java/org/joda/{v}/",
-        "test": f"test/java/org/joda/{v}/",
-    } for k, v in (
-    ("joda-convert", "convert"),
-    ("joda-money", "money"),
-)})
+package_names = dict()
 
-package_names = {}
-package_names.update({k: f"org.apache.commons.{v}" for k, v in (
+commons_projects = [
     ("commons-cli", "cli"),
     ("commons-codec", "codec"),
     ("commons-csv", "csv"),
@@ -37,8 +19,24 @@ package_names.update({k: f"org.apache.commons.{v}" for k, v in (
     ("commons-graph", "graph"),
     ("commons-pool", "pool2"),
     ("commons-validator", "validator"),
-)})
-package_names.update({k: f"org.joda.{v}" for k, v in (
-    ("joda-convert", "convert"),
-    ("joda-money", "money"),
-)})
+    ("commons-exec", "exec")
+]
+
+for project, code in commons_projects:
+    paths[project] = {
+        "main": f"main/java/org/apache/commons/{code}/",
+        "test": f"test/java/org/apache/commons/{code}/",
+    }
+    package_names[project] = f"org.apache.commons.{code}"
+
+paths["jansi"] = {
+    "main": "src/main/java/org/fusesource/jansi/",
+    "test": "src/test/java/org/fusesource/jansi/",
+}
+package_names["jansi"] = "org.fusesource.jansi"
+
+paths["javafastpfor"] = {
+    "main": "src/main/java/com/kamikaze/pfordelta/",
+    "test": "src/test/java/com/kamikaze/pfordelta/",
+}
+package_names["javafastpfor"] = "com.kamikaze.pfordelta"

@@ -89,7 +89,7 @@ class JavaHandler:
         if hasattr(x, 'length'):
             return JavaHandler.array_to_list(x, id_map, target_object)
         
-        print("[JavaHandler.mapping] Unknown Java object type: " + repr(x))
+        print("[JavaHandler.mapping] Unhandled Java object type: " + repr(x))
         return x # return untranslated object
 
     def properties_to_dict(x, id_map, target_object=None):
