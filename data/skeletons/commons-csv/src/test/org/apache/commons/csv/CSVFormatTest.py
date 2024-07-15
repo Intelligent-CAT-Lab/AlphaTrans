@@ -5,6 +5,8 @@ from src.main.org.apache.commons.csv.QuoteMode import *
 from src.main.org.apache.commons.csv.DuplicateHeaderMode import *
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import enum
+import unittest
 import typing
 from typing import *
 import io
@@ -35,7 +37,7 @@ class Header:
     # Class Methods End
 
 
-class CSVFormatTest:
+class CSVFormatTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End
@@ -289,12 +291,12 @@ class CSVFormatTest:
         pass
 
     def __assertNotEquals1(
-        self, name: str, type: str, left: typing.Any, right: typing.Any
+        self, name: str, type_: str, left: typing.Any, right: typing.Any
     ) -> None:
         pass
 
     @staticmethod
-    def __copy(format: CSVFormat) -> CSVFormat:
+    def __copy(format_: CSVFormat) -> CSVFormat:
         pass
 
     @staticmethod

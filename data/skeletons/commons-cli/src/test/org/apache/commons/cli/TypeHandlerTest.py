@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.cli.TypeHandler import *
 from src.main.org.apache.commons.cli.PatternOptionBuilder import *
+import unittest
 import typing
 from typing import *
 import numbers
@@ -34,7 +35,7 @@ class NotInstantiable:
     # Class Methods End
 
 
-class TypeHandlerTest:
+class TypeHandlerTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

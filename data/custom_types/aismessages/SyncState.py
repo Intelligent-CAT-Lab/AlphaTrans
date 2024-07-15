@@ -1,0 +1,2 @@
+class SyncState:
+    pass

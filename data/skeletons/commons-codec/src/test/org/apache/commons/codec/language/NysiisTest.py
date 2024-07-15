@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.language.Nysiis import *
 from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
+import unittest
 import typing
 from typing import *
 import io
@@ -12,7 +13,7 @@ import io
 # Imports End
 
 
-class NysiisTest(StringEncoderAbstractTest):
+class NysiisTest(StringEncoderAbstractTest, unittest.TestCase):
 
     # Class Fields Begin
     __fullNysiis: Nysiis = None
@@ -79,7 +80,9 @@ class NysiisTest(StringEncoderAbstractTest):
     def _createStringEncoder(self) -> Nysiis:
         pass
 
-    def __encodeAll(self, strings: typing.List[str], expectedEncoding: str) -> None:
+    def __encodeAll(
+        self, strings: typing.List[typing.List[str]], expectedEncoding: str
+    ) -> None:
         pass
 
     def __assertEncodings(self, testValues: typing.List[typing.List[str]]) -> None:

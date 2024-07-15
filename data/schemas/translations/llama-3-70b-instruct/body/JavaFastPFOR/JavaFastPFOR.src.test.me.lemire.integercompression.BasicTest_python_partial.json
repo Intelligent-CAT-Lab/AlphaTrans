@@ -1,0 +1,3432 @@
+{
+    "path": "java_projects/cleaned_final_projects/JavaFastPFOR/src/test/java/me/lemire/integercompression/BasicTest.java",
+    "imports": {
+        "11-11:import Random": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import java.util.Random;\n"
+            ]
+        },
+        "10-10:import Arrays": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "21-21:import Test": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "16-16:import IntegratedIntegerCODEC": {
+            "start": 16,
+            "end": 16,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedIntegerCODEC;\n"
+            ]
+        },
+        "13-13:import Delta": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import me.lemire.integercompression.differential.Delta;\n"
+            ]
+        },
+        "14-14:import IntegratedBinaryPacking": {
+            "start": 14,
+            "end": 14,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedBinaryPacking;\n"
+            ]
+        },
+        "15-15:import IntegratedComposition": {
+            "start": 15,
+            "end": 15,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedComposition;\n"
+            ]
+        },
+        "17-17:import IntegratedVariableByte": {
+            "start": 17,
+            "end": 17,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedVariableByte;\n"
+            ]
+        },
+        "18-18:import XorBinaryPacking": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import me.lemire.integercompression.differential.XorBinaryPacking;\n"
+            ]
+        },
+        "19-19:import ClusteredDataGenerator": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import me.lemire.integercompression.synth.ClusteredDataGenerator;\n"
+            ]
+        },
+        "23-23:import static Assert.*": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.Assert.*;\n"
+            ]
+        }
+    },
+    "classes": {
+        "BasicTest": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "666-681:fastPfor128Test": {
+                    "start": 666,
+                    "end": 681,
+                    "body": [
+                        "    public void fastPfor128Test() {\n",
+                        "        // proposed by Stefan Ackermann (https://github.com/Stivo)\n",
+                        "        FastPFOR128 codec1 = FastPFOR128.FastPFOR1281();\n",
+                        "        FastPFOR128 codec2 = FastPFOR128.FastPFOR1281();\n",
+                        "        int N = FastPFOR128.BLOCK_SIZE;\n",
+                        "        int[] data = new int[N];\n",
+                        "        for (int i = 0; i < N; i++)\n",
+                        "            data[i] = 0;\n",
+                        "        data[126] = -1;\n",
+                        "        int[] comp = TestUtils.compress(codec1, Arrays.copyOf(data, N));\n",
+                        "        int[] answer = TestUtils.uncompress(codec2, comp, N);\n",
+                        "        for (int k = 0; k < N; ++k)\n",
+                        "            if (answer[k] != data[k])\n",
+                        "                throw new RuntimeException(\"bug \" + k + \" \" + answer[k]\n",
+                        "                        + \" != \" + data[k]);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "fastPfor128Test()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR128",
+                            "FastPFOR128",
+                            "71-73:FastPFOR1281"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "133-139:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "141-147:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def fastPfor128Test(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "645-660:fastPforTest": {
+                    "start": 645,
+                    "end": 660,
+                    "body": [
+                        "    public void fastPforTest() {\n",
+                        "        // proposed by Stefan Ackermann (https://github.com/Stivo)\n",
+                        "        FastPFOR codec1 = FastPFOR.FastPFOR1();\n",
+                        "        FastPFOR codec2 = FastPFOR.FastPFOR1();\n",
+                        "        int N = FastPFOR.BLOCK_SIZE;\n",
+                        "        int[] data = new int[N];\n",
+                        "        for (int i = 0; i < N; i++)\n",
+                        "            data[i] = 0;\n",
+                        "        data[126] = -1;\n",
+                        "        int[] comp = TestUtils.compress(codec1, Arrays.copyOf(data, N));\n",
+                        "        int[] answer = TestUtils.uncompress(codec2, comp, N);\n",
+                        "        for (int k = 0; k < N; ++k)\n",
+                        "            if (answer[k] != data[k])\n",
+                        "                throw new RuntimeException(\"bug \" + k + \" \" + answer[k]\n",
+                        "                        + \" != \" + data[k]);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "fastPforTest()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "90-92:FastPFOR1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "133-139:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "141-147:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def fastPforTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "520-571:testUnsortedExample": {
+                    "start": 520,
+                    "end": 571,
+                    "body": [
+                        "    public void testUnsortedExample() {\n",
+                        "        testUnsorted(new VariableByte());\n",
+                        "        testUnsorted(new IntegratedVariableByte());\n",
+                        "        testUnsorted(new Composition(new BinaryPacking(), new VariableByte()));\n",
+                        "        testUnsorted(new Composition(new NewPFD(), new VariableByte()));\n",
+                        "        testUnsorted(new Composition(new NewPFDS9(), new VariableByte()));\n",
+                        "        testUnsorted(new Composition(new NewPFDS16(), new VariableByte()));\n",
+                        "        testUnsorted(new Composition(new OptPFD(), new VariableByte()));\n",
+                        "        testUnsorted(new Composition(new OptPFDS9(), new VariableByte()));\n",
+                        "        testUnsorted(new Composition(new OptPFDS16(), new VariableByte()));\n",
+                        "        testUnsorted(new Composition(FastPFOR128.FastPFOR1281(), new VariableByte()));\n",
+                        "        testUnsorted(new Composition(FastPFOR.FastPFOR1(), new VariableByte()));\n",
+                        "\n",
+                        "        testUnsorted(new IntegratedComposition(new IntegratedBinaryPacking(),\n",
+                        "                new IntegratedVariableByte()));\n",
+                        "        testUnsorted(new Composition(new IntegratedBinaryPacking(),\n",
+                        "                new VariableByte()));\n",
+                        "\n",
+                        "        testUnsorted2(new VariableByte());\n",
+                        "        testUnsorted2(new IntegratedVariableByte());\n",
+                        "        testUnsorted2(new Composition(new BinaryPacking(), new VariableByte()));\n",
+                        "        testUnsorted2(new Composition(new NewPFD(), new VariableByte()));\n",
+                        "        testUnsorted2(new Composition(new NewPFDS9(), new VariableByte()));\n",
+                        "        testUnsorted2(new Composition(new NewPFDS16(), new VariableByte()));\n",
+                        "        testUnsorted2(new Composition(new OptPFD(), new VariableByte()));\n",
+                        "        testUnsorted2(new Composition(new OptPFDS9(), new VariableByte()));\n",
+                        "        testUnsorted2(new Composition(new OptPFDS16(), new VariableByte()));\n",
+                        "        testUnsorted2(new Composition(FastPFOR128.FastPFOR1281(), new VariableByte()));\n",
+                        "        testUnsorted2(new Composition(FastPFOR.FastPFOR1(), new VariableByte()));\n",
+                        "\n",
+                        "        testUnsorted3(new IntegratedComposition(new IntegratedBinaryPacking(),\n",
+                        "                new IntegratedVariableByte()));\n",
+                        "        testUnsorted3(new Composition(new IntegratedBinaryPacking(),\n",
+                        "                new VariableByte()));\n",
+                        "        testUnsorted3(new VariableByte());\n",
+                        "        testUnsorted3(new IntegratedVariableByte());\n",
+                        "        testUnsorted3(new Composition(new BinaryPacking(), new VariableByte()));\n",
+                        "        testUnsorted3(new Composition(new NewPFD(), new VariableByte()));\n",
+                        "        testUnsorted3(new Composition(new NewPFDS9(), new VariableByte()));\n",
+                        "        testUnsorted3(new Composition(new NewPFDS16(), new VariableByte()));\n",
+                        "        testUnsorted3(new Composition(new OptPFD(), new VariableByte()));\n",
+                        "        testUnsorted3(new Composition(new OptPFDS9(), new VariableByte()));\n",
+                        "        testUnsorted3(new Composition(new OptPFDS16(), new VariableByte()));\n",
+                        "        testUnsorted3(new Composition(FastPFOR128.FastPFOR1281(), new VariableByte()));\n",
+                        "        testUnsorted3(new Composition(FastPFOR.FastPFOR1(), new VariableByte()));\n",
+                        "\n",
+                        "        testUnsorted2(new IntegratedComposition(new IntegratedBinaryPacking(),\n",
+                        "                new IntegratedVariableByte()));\n",
+                        "        testUnsorted2(new Composition(new IntegratedBinaryPacking(),\n",
+                        "                new VariableByte()));\n",
+                        "\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsortedExample()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "577-605:testUnsorted"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "VariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "IntegratedVariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                            "Composition",
+                            "31-34:Composition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                            "BinaryPacking",
+                            "BinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFD",
+                            "NewPFD",
+                            "45-46:NewPFD"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS9",
+                            "NewPFDS9",
+                            "43-44:NewPFDS9"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS16",
+                            "NewPFDS16",
+                            "44-45:NewPFDS16"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFD",
+                            "OptPFD",
+                            "43-44:OptPFD"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFDS9",
+                            "OptPFDS9",
+                            "42-43:OptPFDS9"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFDS16",
+                            "OptPFDS16",
+                            "42-43:OptPFDS16"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR128",
+                            "FastPFOR128",
+                            "71-73:FastPFOR1281"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "90-92:FastPFOR1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedComposition",
+                            "IntegratedComposition",
+                            "33-37:IntegratedComposition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedBinaryPacking",
+                            "IntegratedBinaryPacking",
+                            "IntegratedBinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "607-622:testUnsorted2"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "624-639:testUnsorted3"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def testUnsortedExample(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "360-388:zeroinzerouttest": {
+                    "start": 360,
+                    "end": 388,
+                    "body": [
+                        "    public void zeroinzerouttest() {\n",
+                        "        testZeroInZeroOut(new IntegratedBinaryPacking());\n",
+                        "        testZeroInZeroOut(new IntegratedVariableByte());\n",
+                        "        testZeroInZeroOut(new BinaryPacking());\n",
+                        "        testZeroInZeroOut(new NewPFD());\n",
+                        "        testZeroInZeroOut(new NewPFDS9());\n",
+                        "        testZeroInZeroOut(new NewPFDS16());\n",
+                        "        testZeroInZeroOut(new OptPFD());\n",
+                        "        testZeroInZeroOut(new OptPFDS9());\n",
+                        "        testZeroInZeroOut(new OptPFDS16());\n",
+                        "        testZeroInZeroOut(FastPFOR128.FastPFOR1281());\n",
+                        "        testZeroInZeroOut(FastPFOR.FastPFOR1());\n",
+                        "        testZeroInZeroOut(new VariableByte());\n",
+                        "        testZeroInZeroOut(new Composition(new IntegratedBinaryPacking(),\n",
+                        "                new VariableByte()));\n",
+                        "        testZeroInZeroOut(new Composition(new BinaryPacking(),\n",
+                        "                new VariableByte()));\n",
+                        "        testZeroInZeroOut(new Composition(new NewPFD(), new VariableByte()));\n",
+                        "        testZeroInZeroOut(new Composition(new NewPFDS9(), new VariableByte()));\n",
+                        "        testZeroInZeroOut(new Composition(new NewPFDS16(), new VariableByte()));\n",
+                        "        testZeroInZeroOut(new Composition(new OptPFD(), new VariableByte()));\n",
+                        "        testZeroInZeroOut(new Composition(new OptPFDS9(), new VariableByte()));\n",
+                        "        testZeroInZeroOut(new Composition(new OptPFDS16(), new VariableByte()));\n",
+                        "        testZeroInZeroOut(new Composition(FastPFOR128.FastPFOR1281(), new VariableByte()));\n",
+                        "        testZeroInZeroOut(new Composition(FastPFOR.FastPFOR1(), new VariableByte()));\n",
+                        "\n",
+                        "        testZeroInZeroOut(new IntegratedComposition(\n",
+                        "                new IntegratedBinaryPacking(), new IntegratedVariableByte()));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "zeroinzerouttest()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "401-413:testZeroInZeroOut"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedBinaryPacking",
+                            "IntegratedBinaryPacking",
+                            "IntegratedBinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "IntegratedVariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                            "BinaryPacking",
+                            "BinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFD",
+                            "NewPFD",
+                            "45-46:NewPFD"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS9",
+                            "NewPFDS9",
+                            "43-44:NewPFDS9"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS16",
+                            "NewPFDS16",
+                            "44-45:NewPFDS16"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFD",
+                            "OptPFD",
+                            "43-44:OptPFD"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFDS9",
+                            "OptPFDS9",
+                            "42-43:OptPFDS9"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFDS16",
+                            "OptPFDS16",
+                            "42-43:OptPFDS16"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR128",
+                            "FastPFOR128",
+                            "71-73:FastPFOR1281"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "90-92:FastPFOR1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "VariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                            "Composition",
+                            "31-34:Composition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedComposition",
+                            "IntegratedComposition",
+                            "33-37:IntegratedComposition"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def zeroinzerouttest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "343-354:spuriousouttest": {
+                    "start": 343,
+                    "end": 354,
+                    "body": [
+                        "    public void spuriousouttest() {\n",
+                        "        testSpurious(new IntegratedBinaryPacking());\n",
+                        "        testSpurious(new BinaryPacking());\n",
+                        "        testSpurious(new NewPFD());\n",
+                        "        testSpurious(new NewPFDS9());\n",
+                        "        testSpurious(new NewPFDS16());\n",
+                        "        testSpurious(new OptPFD());\n",
+                        "        testSpurious(new OptPFDS9());\n",
+                        "        testSpurious(new OptPFDS16());\n",
+                        "        testSpurious(FastPFOR128.FastPFOR1281());\n",
+                        "        testSpurious(FastPFOR.FastPFOR1());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "spuriousouttest()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "390-399:testSpurious"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedBinaryPacking",
+                            "IntegratedBinaryPacking",
+                            "IntegratedBinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                            "BinaryPacking",
+                            "BinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFD",
+                            "NewPFD",
+                            "45-46:NewPFD"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS9",
+                            "NewPFDS9",
+                            "43-44:NewPFDS9"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS16",
+                            "NewPFDS16",
+                            "44-45:NewPFDS16"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFD",
+                            "OptPFD",
+                            "43-44:OptPFD"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFDS9",
+                            "OptPFDS9",
+                            "42-43:OptPFDS9"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFDS16",
+                            "OptPFDS16",
+                            "42-43:OptPFDS16"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR128",
+                            "FastPFOR128",
+                            "71-73:FastPFOR1281"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "90-92:FastPFOR1"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def spuriousouttest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "333-337:basictest": {
+                    "start": 333,
+                    "end": 337,
+                    "body": [
+                        "    public void basictest() {\n",
+                        "        test(5, 10);\n",
+                        "        test(5, 14);\n",
+                        "        test(2, 18);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "basictest()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "427-474:test"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def basictest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "307-327:verifyWithExceptions": {
+                    "start": 307,
+                    "end": 327,
+                    "body": [
+                        "    public void verifyWithExceptions() {\n",
+                        "        final int N = 32;\n",
+                        "        final int TIMES = 1000;\n",
+                        "        Random r = new Random();\n",
+                        "        int[] data = new int[N];\n",
+                        "        int[] compressed = new int[N];\n",
+                        "        int[] uncompressed = new int[N];\n",
+                        "        for (int bit = 0; bit < 31; ++bit) {\n",
+                        "            for (int t = 0; t < TIMES; ++t) {\n",
+                        "                for (int k = 0; k < N; ++k) {\n",
+                        "                    data[k] = r.nextInt();\n",
+                        "                }\n",
+                        "                BitPacking.fastpack(data, 0, compressed, 0, bit);\n",
+                        "                BitPacking.fastunpack(compressed, 0, uncompressed, 0, bit);\n",
+                        "\n",
+                        "                // Check assertions.\n",
+                        "                maskArray(data, ((1 << bit) - 1));\n",
+                        "                assertArrayEquals(data, uncompressed);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "verifyWithExceptions()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "42-148:fastpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "3021-3127:fastunpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "297-301:maskArray"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def verifyWithExceptions(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "272-289:verifyWithoutMask": {
+                    "start": 272,
+                    "end": 289,
+                    "body": [
+                        "    public void verifyWithoutMask() {\n",
+                        "        final int N = 32;\n",
+                        "        final int TIMES = 1000;\n",
+                        "        Random r = new Random();\n",
+                        "        int[] data = new int[N];\n",
+                        "        int[] compressed = new int[N];\n",
+                        "        int[] uncompressed = new int[N];\n",
+                        "        for (int bit = 0; bit < 31; ++bit) {\n",
+                        "            for (int t = 0; t < TIMES; ++t) {\n",
+                        "                for (int k = 0; k < N; ++k) {\n",
+                        "                    data[k] = r.nextInt(1 << bit);\n",
+                        "                }\n",
+                        "                BitPacking.fastpackwithoutmask(data, 0, compressed, 0, bit);\n",
+                        "                BitPacking.fastunpack(compressed, 0, uncompressed, 0, bit);\n",
+                        "                assertArrayEquals(uncompressed, data);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "verifyWithoutMask()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "1706-1812:fastpackwithoutmask"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "3021-3127:fastunpack"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def verifyWithoutMask(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "249-266:verifyBitPacking": {
+                    "start": 249,
+                    "end": 266,
+                    "body": [
+                        "    public void verifyBitPacking() {\n",
+                        "        final int N = 32;\n",
+                        "        final int TIMES = 1000;\n",
+                        "        Random r = new Random();\n",
+                        "        int[] data = new int[N];\n",
+                        "        int[] compressed = new int[N];\n",
+                        "        int[] uncompressed = new int[N];\n",
+                        "        for (int bit = 0; bit < 31; ++bit) {\n",
+                        "            for (int t = 0; t < TIMES; ++t) {\n",
+                        "                for (int k = 0; k < N; ++k) {\n",
+                        "                    data[k] = r.nextInt(1 << bit);\n",
+                        "                }\n",
+                        "                BitPacking.fastpack(data, 0, compressed, 0, bit);\n",
+                        "                BitPacking.fastunpack(compressed, 0, uncompressed, 0, bit);\n",
+                        "                assertArrayEquals(uncompressed, data);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "verifyBitPacking()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "42-148:fastpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "3021-3127:fastunpack"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def verifyBitPacking(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "235-243:checkXorBinaryPacking3": {
+                    "start": 235,
+                    "end": 243,
+                    "body": [
+                        "    public void checkXorBinaryPacking3() {\n",
+                        "        IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),\n",
+                        "                new IntegratedVariableByte());\n",
+                        "        IntegerCODEC co = new IntegratedComposition(new XorBinaryPacking(),\n",
+                        "                new IntegratedVariableByte());\n",
+                        "        test(c, co, 5, 10);\n",
+                        "        test(c, co, 5, 14);\n",
+                        "        test(c, co, 2, 18);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkXorBinaryPacking3()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedComposition",
+                            "IntegratedComposition",
+                            "33-37:IntegratedComposition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.XorBinaryPacking",
+                            "XorBinaryPacking",
+                            "XorBinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "IntegratedVariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "415-425:test"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkXorBinaryPacking3(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "225-229:checkXorBinaryPacking2": {
+                    "start": 225,
+                    "end": 229,
+                    "body": [
+                        "    public void checkXorBinaryPacking2() {\n",
+                        "        IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),\n",
+                        "                new IntegratedVariableByte());\n",
+                        "        testUnsorted(c);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkXorBinaryPacking2()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedComposition",
+                            "IntegratedComposition",
+                            "33-37:IntegratedComposition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.XorBinaryPacking",
+                            "XorBinaryPacking",
+                            "XorBinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "IntegratedVariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "577-605:testUnsorted"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkXorBinaryPacking2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "215-219:checkXorBinaryPacking1": {
+                    "start": 215,
+                    "end": 219,
+                    "body": [
+                        "    public void checkXorBinaryPacking1() {\n",
+                        "        IntegerCODEC c = new IntegratedComposition(new XorBinaryPacking(),\n",
+                        "                new IntegratedVariableByte());\n",
+                        "        testZeroInZeroOut(c);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkXorBinaryPacking1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedComposition",
+                            "IntegratedComposition",
+                            "33-37:IntegratedComposition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.XorBinaryPacking",
+                            "XorBinaryPacking",
+                            "XorBinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "IntegratedVariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "401-413:testZeroInZeroOut"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkXorBinaryPacking1(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "206-209:checkXorBinaryPacking": {
+                    "start": 206,
+                    "end": 209,
+                    "body": [
+                        "    public void checkXorBinaryPacking() {\n",
+                        "        testZeroInZeroOut(new XorBinaryPacking());\n",
+                        "        testSpurious(new XorBinaryPacking());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkXorBinaryPacking()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "401-413:testZeroInZeroOut"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.XorBinaryPacking",
+                            "XorBinaryPacking",
+                            "XorBinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "390-399:testSpurious"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkXorBinaryPacking(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "185-200:checkDeltaZigzagPacking": {
+                    "start": 185,
+                    "end": 200,
+                    "body": [
+                        "    public void checkDeltaZigzagPacking() {\n",
+                        "        DeltaZigzagBinaryPacking codec = new DeltaZigzagBinaryPacking();\n",
+                        "        testZeroInZeroOut(codec);\n",
+                        "        testSpurious(codec);\n",
+                        "\n",
+                        "        IntegerCODEC compo = new Composition(new DeltaZigzagBinaryPacking(),\n",
+                        "                new VariableByte());\n",
+                        "        IntegerCODEC compo2 = new Composition(new DeltaZigzagBinaryPacking(),\n",
+                        "                new VariableByte());\n",
+                        "\n",
+                        "        testZeroInZeroOut(compo);\n",
+                        "        testUnsorted(compo);\n",
+                        "        test(compo, compo2, 5, 10);\n",
+                        "        test(compo, compo2, 5, 14);\n",
+                        "        test(compo, compo2, 2, 18);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkDeltaZigzagPacking()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagBinaryPacking",
+                            "DeltaZigzagBinaryPacking",
+                            "DeltaZigzagBinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                            "Composition",
+                            "31-34:Composition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "VariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "401-413:testZeroInZeroOut"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "390-399:testSpurious"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "577-605:testUnsorted"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "415-425:test"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkDeltaZigzagPacking(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "171-179:checkDeltaZigzagVB": {
+                    "start": 171,
+                    "end": 179,
+                    "body": [
+                        "    public void checkDeltaZigzagVB() {\n",
+                        "        DeltaZigzagVariableByte codec = new DeltaZigzagVariableByte();\n",
+                        "        DeltaZigzagVariableByte codeco = new DeltaZigzagVariableByte();\n",
+                        "\n",
+                        "        testZeroInZeroOut(codec);\n",
+                        "        test(codec, codeco, 5, 10);\n",
+                        "        test(codec, codeco, 5, 14);\n",
+                        "        test(codec, codeco, 2, 18);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkDeltaZigzagVB()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagVariableByte",
+                            "DeltaZigzagVariableByte",
+                            "DeltaZigzagVariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "401-413:testZeroInZeroOut"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "415-425:test"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkDeltaZigzagVB(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "118-165:varyingLengthTest2": {
+                    "start": 118,
+                    "end": 165,
+                    "body": [
+                        "    public void varyingLengthTest2() {\n",
+                        "        int N = 128;\n",
+                        "        int[] data = new int[N];\n",
+                        "        data[127] = -1;\n",
+                        "        for (IntegerCODEC c : codecs) {\n",
+                        "            System.out.println(\"[BasicTest.varyingLengthTest2] codec = \" + c);\n",
+                        "            try {\n",
+                        "                // CODEC Simple9 is limited to \"small\" integers.\n",
+                        "                if (c.getClass().equals(\n",
+                        "                        Class.forName(\"me.lemire.integercompression.Simple9\")))\n",
+                        "                    continue;\n",
+                        "            } catch (ClassNotFoundException e) {\n",
+                        "                e.printStackTrace();\n",
+                        "            }\n",
+                        "            try {\n",
+                        "                // CODEC Simple16 is limited to \"small\" integers.\n",
+                        "                if (c.getClass().equals(\n",
+                        "                        Class.forName(\"me.lemire.integercompression.Simple16\")))\n",
+                        "                    continue;\n",
+                        "            } catch (ClassNotFoundException e) {\n",
+                        "                e.printStackTrace();\n",
+                        "            }\n",
+                        "            try {\n",
+                        "                // CODEC GroupSimple9 is limited to \"small\" integers.\n",
+                        "                if (c.getClass().equals(\n",
+                        "                        Class.forName(\"me.lemire.integercompression.GroupSimple9\")))\n",
+                        "                    continue;\n",
+                        "            } catch (ClassNotFoundException e) {\n",
+                        "                e.printStackTrace();\n",
+                        "            }\n",
+                        "\n",
+                        "            for (int L = 1; L <= 128; L++) {\n",
+                        "                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "            for (int L = 128; L <= N; L *= 2) {\n",
+                        "                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest2()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "133-139:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "141-147:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def varyingLengthTest2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "84-112:varyingLengthTest": {
+                    "start": 84,
+                    "end": 112,
+                    "body": [
+                        "    public void varyingLengthTest() {\n",
+                        "        int N = 4096;\n",
+                        "        int[] data = new int[N];\n",
+                        "        for (int k = 0; k < N; ++k)\n",
+                        "            data[k] = k;\n",
+                        "        for (IntegerCODEC c : codecs) {\n",
+                        "            System.out.println(\"[BasicTest.varyingLengthTest] codec = \" + c);\n",
+                        "            for (int L = 1; L <= 128; L++) {\n",
+                        "                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "            for (int L = 128; L <= N; L *= 2) {\n",
+                        "                int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k]) {\n",
+                        "                        System.out.println(Arrays.toString(Arrays.copyOf(\n",
+                        "                                answer, L)));\n",
+                        "                        System.out.println(Arrays.toString(Arrays.copyOf(data,\n",
+                        "                                L)));\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "                    }\n",
+                        "            }\n",
+                        "\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "133-139:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "141-147:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def varyingLengthTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "57-79:saulTest": {
+                    "start": 57,
+                    "end": 79,
+                    "body": [
+                        "\tpublic void saulTest() {\n",
+                        "\t\tfor (IntegerCODEC C : codecs) {\n",
+                        "\t\t\tfor (int x = 0; x < 50; ++x) {\n",
+                        "\t\t\t\tint[] a = { 2, 3, 4, 5 };\n",
+                        "\t\t\t\tint[] b = new int[90];\n",
+                        "\t\t\t\tint[] c = new int[a.length];\n",
+                        "\n",
+                        "\t\t\t\tIntWrapper aOffset = new IntWrapper(0);\n",
+                        "\t\t\t\tIntWrapper bOffset = new IntWrapper(x);\n",
+                        "\t\t\t\tC.compress(a, aOffset, a.length, b, bOffset);\n",
+                        "\t\t\t\tint len = bOffset.get() - x;\n",
+                        "\n",
+                        "\t\t\t\tbOffset.set(x);\n",
+                        "\t\t\t\tIntWrapper cOffset = new IntWrapper(0);\n",
+                        "\t\t\t\tC.uncompress(b, bOffset, len, c, cOffset);\n",
+                        "\t\t\t\tif(!Arrays.equals(a, c)) {\n",
+                        "\t\t\t\t\tSystem.out.println(\"Problem with \"+C);\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tassertArrayEquals(a, c);\n",
+                        "\n",
+                        "\t\t\t}\n",
+                        "\t\t}\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "saulTest()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "36-38:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "57-59:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def saulTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "577-605:testUnsorted": {
+                    "start": 577,
+                    "end": 605,
+                    "body": [
+                        "    public void testUnsorted(IntegerCODEC codec) {\n",
+                        "        int[] lengths = { 133, 1026, 1333333 };\n",
+                        "        for (int N : lengths) {\n",
+                        "            int[] data = new int[N];\n",
+                        "            // initialize the data (most will be small)\n",
+                        "            for (int k = 0; k < N; k += 1)\n",
+                        "                data[k] = 3;\n",
+                        "            // throw some larger values\n",
+                        "            for (int k = 0; k < N; k += 5)\n",
+                        "                data[k] = 100;\n",
+                        "            for (int k = 0; k < N; k += 533)\n",
+                        "                data[k] = 10000;\n",
+                        "            data[5] = -311;\n",
+                        "            // could need more compressing\n",
+                        "            int[] compressed = new int[(int) Math.ceil(N * 1.01) + 1024];\n",
+                        "            IntWrapper inputoffset = new IntWrapper(0);\n",
+                        "            IntWrapper outputoffset = new IntWrapper(0);\n",
+                        "            codec.compress(data, inputoffset, data.length, compressed,\n",
+                        "                    outputoffset);\n",
+                        "            // we can repack the data: (optional)\n",
+                        "            compressed = Arrays.copyOf(compressed, outputoffset.intValue());\n",
+                        "\n",
+                        "            int[] recovered = new int[N];\n",
+                        "            IntWrapper recoffset = new IntWrapper(0);\n",
+                        "            codec.uncompress(compressed, new IntWrapper(0), compressed.length,\n",
+                        "                    recovered, recoffset);\n",
+                        "            assertArrayEquals(data, recovered);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted(IntegerCODEC)",
+                    "parameters": [
+                        "codec"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "36-38:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "57-59:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def testUnsorted(self, codec: IntegerCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "297-301:maskArray": {
+                    "start": 297,
+                    "end": 301,
+                    "body": [
+                        "    public static void maskArray(int[] array, int mask) {\n",
+                        "        for (int i = 0, end = array.length; i < end; ++i) {\n",
+                        "            array[i] &= mask;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "maskArray(int[], int)",
+                    "parameters": [
+                        "array",
+                        "mask"
+                    ],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def maskArray(array: typing.List[int], mask: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "624-639:testUnsorted3": {
+                    "start": 624,
+                    "end": 639,
+                    "body": [
+                        "    private void testUnsorted3(IntegerCODEC codec) {\n",
+                        "        int[] data = new int[128];\n",
+                        "        data[127] = -1;\n",
+                        "        int[] compressed = new int[1024];\n",
+                        "        IntWrapper inputoffset = new IntWrapper(0);\n",
+                        "        IntWrapper outputoffset = new IntWrapper(0);\n",
+                        "        codec.compress(data, inputoffset, data.length, compressed, outputoffset);\n",
+                        "        // we can repack the data: (optional)\n",
+                        "        compressed = Arrays.copyOf(compressed, outputoffset.intValue());\n",
+                        "\n",
+                        "        int[] recovered = new int[128];\n",
+                        "        IntWrapper recoffset = new IntWrapper(0);\n",
+                        "        codec.uncompress(compressed, new IntWrapper(0), compressed.length,\n",
+                        "                recovered, recoffset);\n",
+                        "        assertArrayEquals(data, recovered);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted3(IntegerCODEC)",
+                    "parameters": [
+                        "codec"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "36-38:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "57-59:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def __testUnsorted3(self, codec: IntegerCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "607-622:testUnsorted2": {
+                    "start": 607,
+                    "end": 622,
+                    "body": [
+                        "    private void testUnsorted2(IntegerCODEC codec) {\n",
+                        "        int[] data = new int[128];\n",
+                        "        data[5] = -1;\n",
+                        "        int[] compressed = new int[1024];\n",
+                        "        IntWrapper inputoffset = new IntWrapper(0);\n",
+                        "        IntWrapper outputoffset = new IntWrapper(0);\n",
+                        "        codec.compress(data, inputoffset, data.length, compressed, outputoffset);\n",
+                        "        // we can repack the data: (optional)\n",
+                        "        compressed = Arrays.copyOf(compressed, outputoffset.intValue());\n",
+                        "\n",
+                        "        int[] recovered = new int[128];\n",
+                        "        IntWrapper recoffset = new IntWrapper(0);\n",
+                        "        codec.uncompress(compressed, new IntWrapper(0), compressed.length,\n",
+                        "                recovered, recoffset);\n",
+                        "        assertArrayEquals(data, recovered);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted2(IntegerCODEC)",
+                    "parameters": [
+                        "codec"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "36-38:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "57-59:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def __testUnsorted2(self, codec: IntegerCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "476-514:testCodec": {
+                    "start": 476,
+                    "end": 514,
+                    "body": [
+                        "    private static void testCodec(IntegerCODEC c, IntegerCODEC co,\n",
+                        "            int[][] data, int max) {\n",
+                        "        int N = data.length;\n",
+                        "        int maxlength = 0;\n",
+                        "        for (int k = 0; k < N; ++k) {\n",
+                        "            if (data[k].length > maxlength)\n",
+                        "                maxlength = data[k].length;\n",
+                        "        }\n",
+                        "        int[] buffer = new int[maxlength + 1024];\n",
+                        "        int[] dataout = new int[4 * maxlength + 1024];\n",
+                        "        // 4x + 1024 to account for the possibility of some negative\n",
+                        "        // compression.\n",
+                        "        IntWrapper inpos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outpos = IntWrapper.IntWrapper1();\n",
+                        "        for (int k = 0; k < N; ++k) {\n",
+                        "            int[] backupdata = Arrays.copyOf(data[k], data[k].length);\n",
+                        "\n",
+                        "            inpos.set(1);\n",
+                        "            outpos.set(0);\n",
+                        "            if (!(c instanceof IntegratedIntegerCODEC)) {\n",
+                        "                Delta.delta(backupdata);\n",
+                        "            }\n",
+                        "            c.compress(backupdata, inpos, backupdata.length - inpos.get(),\n",
+                        "                    dataout, outpos);\n",
+                        "            final int thiscompsize = outpos.get() + 1;\n",
+                        "            inpos.set(0);\n",
+                        "            outpos.set(1);\n",
+                        "            buffer[0] = backupdata[0];\n",
+                        "            co.uncompress(dataout, inpos, thiscompsize - 1, buffer, outpos);\n",
+                        "            if (!(c instanceof IntegratedIntegerCODEC))\n",
+                        "                Delta.fastinverseDelta(buffer);\n",
+                        "\n",
+                        "            // Check assertions.\n",
+                        "            assertEquals(\"length is not match\", outpos.get(), data[k].length);\n",
+                        "            int[] bufferCutout = Arrays.copyOf(buffer, outpos.get());\n",
+                        "            assertArrayEquals(\"failed to reconstruct original data\", data[k],\n",
+                        "                    bufferCutout);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec(IntegerCODEC, IntegerCODEC, int[][], int)",
+                    "parameters": [
+                        "c",
+                        "co",
+                        "data",
+                        "max"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.Delta",
+                            "Delta",
+                            "24-28:delta"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "36-38:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "57-59:uncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.Delta",
+                            "Delta",
+                            "97-113:fastinverseDelta"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testCodec(c: IntegerCODEC, co: IntegerCODEC, data: typing.List[typing.List[int]], max_: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "427-474:test": {
+                    "start": 427,
+                    "end": 474,
+                    "body": [
+                        "    private static void test(int N, int nbr) {\n",
+                        "        ClusteredDataGenerator cdg = new ClusteredDataGenerator();\n",
+                        "        System.out.println(\"[BasicTest.test] N = \" + N + \" \" + nbr);\n",
+                        "        for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 4) {\n",
+                        "            int[][] data = new int[N][];\n",
+                        "            int max = (1 << (nbr + sparsity));\n",
+                        "            for (int k = 0; k < N; ++k) {\n",
+                        "                data[k] = cdg.generateClustered((1 << nbr), max);\n",
+                        "            }\n",
+                        "\n",
+                        "            testCodec(new IntegratedComposition(new IntegratedBinaryPacking(),\n",
+                        "                    new IntegratedVariableByte()),\n",
+                        "                    new IntegratedComposition(new IntegratedBinaryPacking(),\n",
+                        "                            new IntegratedVariableByte()), data, max);\n",
+                        "            testCodec(new JustCopy(), new JustCopy(), data, max);\n",
+                        "            testCodec(new VariableByte(), new VariableByte(), data, max);\n",
+                        "            testCodec(new IntegratedVariableByte(),\n",
+                        "                    new IntegratedVariableByte(), data, max);\n",
+                        "            testCodec(new Composition(new BinaryPacking(), new VariableByte()),\n",
+                        "                    new Composition(new BinaryPacking(), new VariableByte()),\n",
+                        "                    data, max);\n",
+                        "            testCodec(new Composition(new NewPFD(), new VariableByte()),\n",
+                        "                    new Composition(new NewPFD(), new VariableByte()), data,\n",
+                        "                    max);\n",
+                        "            testCodec(new Composition(new NewPFDS9(), new VariableByte()),\n",
+                        "                    new Composition(new NewPFDS9(), new VariableByte()), data,\n",
+                        "                    max);\n",
+                        "            testCodec(new Composition(new NewPFDS16(), new VariableByte()),\n",
+                        "                    new Composition(new NewPFDS16(), new VariableByte()), data,\n",
+                        "                    max);\n",
+                        "            testCodec(new Composition(new OptPFD(), new VariableByte()),\n",
+                        "                    new Composition(new OptPFD(), new VariableByte()), data,\n",
+                        "                    max);\n",
+                        "            testCodec(new Composition(new OptPFDS9(), new VariableByte()),\n",
+                        "                    new Composition(new OptPFDS9(), new VariableByte()), data,\n",
+                        "                    max);\n",
+                        "            testCodec(new Composition(new OptPFDS16(), new VariableByte()),\n",
+                        "                    new Composition(new OptPFDS16(), new VariableByte()), data,\n",
+                        "                    max);\n",
+                        "            testCodec(new Composition(FastPFOR128.FastPFOR1281(), new VariableByte()),\n",
+                        "                    new Composition(FastPFOR128.FastPFOR1281(), new VariableByte()),\n",
+                        "                    data, max);\n",
+                        "            testCodec(new Composition(FastPFOR.FastPFOR1(), new VariableByte()),\n",
+                        "                    new Composition(FastPFOR.FastPFOR1(), new VariableByte()),\n",
+                        "                    data, max);\n",
+                        "            testCodec(new Simple9(), new Simple9(), data, max);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test(int, int)",
+                    "parameters": [
+                        "N",
+                        "nbr"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.ClusteredDataGenerator",
+                            "ClusteredDataGenerator",
+                            "25-26:ClusteredDataGenerator"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.ClusteredDataGenerator",
+                            "ClusteredDataGenerator",
+                            "69-73:generateClustered"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "476-514:testCodec"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedComposition",
+                            "IntegratedComposition",
+                            "33-37:IntegratedComposition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedBinaryPacking",
+                            "IntegratedBinaryPacking",
+                            "IntegratedBinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "IntegratedVariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.JustCopy",
+                            "JustCopy",
+                            "JustCopy"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "VariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                            "Composition",
+                            "31-34:Composition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                            "BinaryPacking",
+                            "BinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFD",
+                            "NewPFD",
+                            "45-46:NewPFD"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS9",
+                            "NewPFDS9",
+                            "43-44:NewPFDS9"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS16",
+                            "NewPFDS16",
+                            "44-45:NewPFDS16"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFD",
+                            "OptPFD",
+                            "43-44:OptPFD"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFDS9",
+                            "OptPFDS9",
+                            "42-43:OptPFDS9"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFDS16",
+                            "OptPFDS16",
+                            "42-43:OptPFDS16"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR128",
+                            "FastPFOR128",
+                            "71-73:FastPFOR1281"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "90-92:FastPFOR1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Simple9",
+                            "Simple9",
+                            "Simple9"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __test(N: int, nbr: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "415-425:test": {
+                    "start": 415,
+                    "end": 425,
+                    "body": [
+                        "    private static void test(IntegerCODEC c, IntegerCODEC co, int N, int nbr) {\n",
+                        "        ClusteredDataGenerator cdg = new ClusteredDataGenerator();\n",
+                        "        for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 4) {\n",
+                        "            int[][] data = new int[N][];\n",
+                        "            int max = (1 << (nbr + sparsity));\n",
+                        "            for (int k = 0; k < N; ++k) {\n",
+                        "                data[k] = cdg.generateClustered((1 << nbr), max);\n",
+                        "            }\n",
+                        "            testCodec(c, co, data, max);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test(IntegerCODEC, IntegerCODEC, int, int)",
+                    "parameters": [
+                        "c",
+                        "co",
+                        "N",
+                        "nbr"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.ClusteredDataGenerator",
+                            "ClusteredDataGenerator",
+                            "25-26:ClusteredDataGenerator"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.ClusteredDataGenerator",
+                            "ClusteredDataGenerator",
+                            "69-73:generateClustered"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                            "BasicTest",
+                            "476-514:testCodec"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __test(c: IntegerCODEC, co: IntegerCODEC, N: int, nbr: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "401-413:testZeroInZeroOut": {
+                    "start": 401,
+                    "end": 413,
+                    "body": [
+                        "    private static void testZeroInZeroOut(IntegerCODEC c) {\n",
+                        "        int[] x = new int[0];\n",
+                        "        int[] y = new int[0];\n",
+                        "        IntWrapper i0 = new IntWrapper(0);\n",
+                        "        IntWrapper i1 = new IntWrapper(0);\n",
+                        "        c.compress(x, i0, 0, y, i1);\n",
+                        "        assertEquals(0, i1.intValue());\n",
+                        "\n",
+                        "        int[] out = new int[0];\n",
+                        "        IntWrapper outpos = new IntWrapper(0);\n",
+                        "        c.uncompress(y, i1, 0, out, outpos);\n",
+                        "        assertEquals(0, outpos.intValue());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testZeroInZeroOut(IntegerCODEC)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "36-38:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "57-59:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testZeroInZeroOut(c: IntegerCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "390-399:testSpurious": {
+                    "start": 390,
+                    "end": 399,
+                    "body": [
+                        "    private static void testSpurious(IntegerCODEC c) {\n",
+                        "        int[] x = new int[1024];\n",
+                        "        int[] y = new int[0];\n",
+                        "        IntWrapper i0 = new IntWrapper(0);\n",
+                        "        IntWrapper i1 = new IntWrapper(0);\n",
+                        "        for (int inlength = 0; inlength < 32; ++inlength) {\n",
+                        "            c.compress(x, i0, inlength, y, i1);\n",
+                        "            assertEquals(0, i1.intValue());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSpurious(IntegerCODEC)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "36-38:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testSpurious(c: IntegerCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "666-666:fastPfor128Test": {
+                    "start": 666,
+                    "end": 666,
+                    "body": [
+                        "    public void fastPfor128Test() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "fastPfor128Test()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def fastPfor128Test(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "645-645:fastPforTest": {
+                    "start": 645,
+                    "end": 645,
+                    "body": [
+                        "    public void fastPforTest() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "fastPforTest()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def fastPforTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "577-577:testUnsorted": {
+                    "start": 577,
+                    "end": 577,
+                    "body": [
+                        "    public void testUnsorted(IntegerCODEC codec) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted(IntegerCODEC)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def testUnsorted(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "520-520:testUnsortedExample": {
+                    "start": 520,
+                    "end": 520,
+                    "body": [
+                        "    public void testUnsortedExample() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsortedExample()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def testUnsortedExample(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "360-360:zeroinzerouttest": {
+                    "start": 360,
+                    "end": 360,
+                    "body": [
+                        "    public void zeroinzerouttest() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "zeroinzerouttest()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def zeroinzerouttest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "343-343:spuriousouttest": {
+                    "start": 343,
+                    "end": 343,
+                    "body": [
+                        "    public void spuriousouttest() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "spuriousouttest()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def spuriousouttest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "333-333:basictest": {
+                    "start": 333,
+                    "end": 333,
+                    "body": [
+                        "    public void basictest() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "basictest()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def basictest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "307-307:verifyWithExceptions": {
+                    "start": 307,
+                    "end": 307,
+                    "body": [
+                        "    public void verifyWithExceptions() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "verifyWithExceptions()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def verifyWithExceptions(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "297-297:maskArray": {
+                    "start": 297,
+                    "end": 297,
+                    "body": [
+                        "    public static void maskArray(int[] array, int mask) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "maskArray(int[], int)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def maskArray() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "272-272:verifyWithoutMask": {
+                    "start": 272,
+                    "end": 272,
+                    "body": [
+                        "    public void verifyWithoutMask() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "verifyWithoutMask()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def verifyWithoutMask(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "249-249:verifyBitPacking": {
+                    "start": 249,
+                    "end": 249,
+                    "body": [
+                        "    public void verifyBitPacking() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "verifyBitPacking()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def verifyBitPacking(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "235-235:checkXorBinaryPacking3": {
+                    "start": 235,
+                    "end": 235,
+                    "body": [
+                        "    public void checkXorBinaryPacking3() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkXorBinaryPacking3()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkXorBinaryPacking3(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "225-225:checkXorBinaryPacking2": {
+                    "start": 225,
+                    "end": 225,
+                    "body": [
+                        "    public void checkXorBinaryPacking2() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkXorBinaryPacking2()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkXorBinaryPacking2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "215-215:checkXorBinaryPacking1": {
+                    "start": 215,
+                    "end": 215,
+                    "body": [
+                        "    public void checkXorBinaryPacking1() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkXorBinaryPacking1()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkXorBinaryPacking1(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "206-206:checkXorBinaryPacking": {
+                    "start": 206,
+                    "end": 206,
+                    "body": [
+                        "    public void checkXorBinaryPacking() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkXorBinaryPacking()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkXorBinaryPacking(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "185-185:checkDeltaZigzagPacking": {
+                    "start": 185,
+                    "end": 185,
+                    "body": [
+                        "    public void checkDeltaZigzagPacking() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkDeltaZigzagPacking()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkDeltaZigzagPacking(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "171-171:checkDeltaZigzagVB": {
+                    "start": 171,
+                    "end": 171,
+                    "body": [
+                        "    public void checkDeltaZigzagVB() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkDeltaZigzagVB()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def checkDeltaZigzagVB(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "118-118:varyingLengthTest2": {
+                    "start": 118,
+                    "end": 118,
+                    "body": [
+                        "    public void varyingLengthTest2() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest2()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def varyingLengthTest2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "84-84:varyingLengthTest": {
+                    "start": 84,
+                    "end": 84,
+                    "body": [
+                        "    public void varyingLengthTest() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def varyingLengthTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "57-57:saulTest": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "\tpublic void saulTest() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "saulTest()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def saulTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "624-624:testUnsorted3": {
+                    "start": 624,
+                    "end": 624,
+                    "body": [
+                        "    private void testUnsorted3(IntegerCODEC codec) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted3(IntegerCODEC)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def __testUnsorted3(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "607-607:testUnsorted2": {
+                    "start": 607,
+                    "end": 607,
+                    "body": [
+                        "    private void testUnsorted2(IntegerCODEC codec) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted2(IntegerCODEC)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def __testUnsorted2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "476-478:testCodec": {
+                    "start": 476,
+                    "end": 478,
+                    "body": [
+                        "    private static void testCodec(IntegerCODEC c, IntegerCODEC co,\n",
+                        "            int[][] data, int max) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec(IntegerCODEC, IntegerCODEC, int[][], int)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testCodec() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "427-427:test": {
+                    "start": 427,
+                    "end": 427,
+                    "body": [
+                        "    private static void test(int N, int nbr) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test(int, int)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __test() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "415-415:test": {
+                    "start": 415,
+                    "end": 415,
+                    "body": [
+                        "    private static void test(IntegerCODEC c, IntegerCODEC co, int N, int nbr) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test(IntegerCODEC, IntegerCODEC, int, int)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __test() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "401-401:testZeroInZeroOut": {
+                    "start": 401,
+                    "end": 401,
+                    "body": [
+                        "    private static void testZeroInZeroOut(IntegerCODEC c) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testZeroInZeroOut(IntegerCODEC)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testZeroInZeroOut() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "390-390:testSpurious": {
+                    "start": 390,
+                    "end": 390,
+                    "body": [
+                        "    private static void testSpurious(IntegerCODEC c) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSpurious(IntegerCODEC)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testSpurious() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "32-51:codecs": {
+                    "start": 32,
+                    "end": 51,
+                    "body": [
+                        "    final IntegerCODEC[] codecs = {\n",
+                        "            new IntegratedComposition(new IntegratedBinaryPacking(),\n",
+                        "                    new IntegratedVariableByte()),\n",
+                        "            new JustCopy(),\n",
+                        "            new VariableByte(),\n",
+                        "            new GroupSimple9(),\n",
+                        "            new IntegratedVariableByte(),\n",
+                        "            new Composition(new BinaryPacking(), new VariableByte()),\n",
+                        "            new Composition(new NewPFD(), new VariableByte()),\n",
+                        "            new Composition(new NewPFDS16(), new VariableByte()),\n",
+                        "            new Composition(new OptPFDS9(), new VariableByte()),\n",
+                        "            new Composition(new OptPFDS16(), new VariableByte()),\n",
+                        "            new Composition(FastPFOR128.FastPFOR1281(), new VariableByte()),\n",
+                        "            new Composition(FastPFOR.FastPFOR1(), new VariableByte()),\n",
+                        "            new Simple9(),\n",
+                        "            new Simple16(),\n",
+                        "            new GroupSimple9(),\n",
+                        "            new Composition(new XorBinaryPacking(), new VariableByte()),\n",
+                        "            new Composition(new DeltaZigzagBinaryPacking(),\n",
+                        "\t\t\t\t\tnew DeltaZigzagVariableByte()) };\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "IntegerCODEC[]",
+                            "IntegerCODEC[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    codecs: typing.List[IntegerCODEC] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class BasicTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import unittest",
+        "from src.main.me.lemire.integercompression.BinaryPacking import *",
+        "from src.main.me.lemire.integercompression.BitPacking import *",
+        "from src.main.me.lemire.integercompression.Composition import *",
+        "from src.main.me.lemire.integercompression.DeltaZigzagBinaryPacking import *",
+        "from src.main.me.lemire.integercompression.DeltaZigzagVariableByte import *",
+        "from src.main.me.lemire.integercompression.FastPFOR import *",
+        "from src.main.me.lemire.integercompression.FastPFOR128 import *",
+        "from src.main.me.lemire.integercompression.GroupSimple9 import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.JustCopy import *",
+        "from src.main.me.lemire.integercompression.NewPFD import *",
+        "from src.main.me.lemire.integercompression.NewPFDS16 import *",
+        "from src.main.me.lemire.integercompression.NewPFDS9 import *",
+        "from src.main.me.lemire.integercompression.OptPFD import *",
+        "from src.main.me.lemire.integercompression.OptPFDS16 import *",
+        "from src.main.me.lemire.integercompression.OptPFDS9 import *",
+        "from src.main.me.lemire.integercompression.Simple16 import *",
+        "from src.main.me.lemire.integercompression.Simple9 import *",
+        "from src.test.me.lemire.integercompression.TestUtils import *",
+        "from src.main.me.lemire.integercompression.VariableByte import *",
+        "from src.main.me.lemire.integercompression.differential.Delta import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedBinaryPacking import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedComposition import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedVariableByte import *",
+        "from src.main.me.lemire.integercompression.differential.XorBinaryPacking import *",
+        "from src.main.me.lemire.integercompression.synth.ClusteredDataGenerator import *"
+    ]
+}

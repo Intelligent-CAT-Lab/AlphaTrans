@@ -42,7 +42,7 @@ class Lang:
     # Class Fields End
 
     # Class Methods Begin
-    def guessLanguages(self, input: str) -> LanguageSet:
+    def guessLanguages(self, input_: str) -> LanguageSet:
         pass
 
     def guessLanguage(self, text: str) -> str:

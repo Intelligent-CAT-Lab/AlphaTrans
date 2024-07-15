@@ -58,7 +58,7 @@ class ChunkState:
     def output(self) -> Output:
         pass
 
-    def update(self, input: typing.List[int], offset: int, length: int) -> None:
+    def update(self, input_: typing.List[int], offset: int, length: int) -> None:
         pass
 
     def startFlag(self) -> int:
@@ -132,7 +132,7 @@ class Blake3:
         pass
 
     @staticmethod
-    def hash(data: typing.List[int]) -> typing.List[int]:
+    def hash_(data: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod
@@ -194,7 +194,7 @@ class Blake3:
         pass
 
     @staticmethod
-    def __round(
+    def __round_(
         state: typing.List[int], msg: typing.List[int], schedule: typing.List[int]
     ) -> None:
         pass
@@ -214,7 +214,7 @@ class Blake3:
         pass
 
     @staticmethod
-    def __packInt(value: int, dst: typing.List[int], off: int, len: int) -> None:
+    def __packInt(value: int, dst: typing.List[int], off: int, len_: int) -> None:
         pass
 
     @staticmethod

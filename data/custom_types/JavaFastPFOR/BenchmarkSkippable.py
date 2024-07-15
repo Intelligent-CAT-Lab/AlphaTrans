@@ -1,0 +1,2 @@
+class BenchmarkSkippable:
+    pass

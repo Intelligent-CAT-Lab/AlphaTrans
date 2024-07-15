@@ -21,11 +21,11 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
     _maxPlusOne: typing.Union[int, float, numbers.Number] = None
     _min: typing.Union[int, float, numbers.Number] = None
     _minMinusOne: typing.Union[int, float, numbers.Number] = None
-    _invalid: typing.List[str] = None
-    _valid: typing.List[str] = None
+    _invalid: typing.List[typing.List[str]] = None
+    _valid: typing.List[typing.List[str]] = None
     _validCompare: typing.List[typing.Union[int, float, numbers.Number]] = None
-    _invalidStrict: typing.List[str] = None
-    _validStrict: typing.List[str] = None
+    _invalidStrict: typing.List[typing.List[str]] = None
+    _validStrict: typing.List[typing.List[str]] = None
     _validStrictCompare: typing.List[typing.Union[int, float, numbers.Number]] = None
     _testPattern: str = None
     _testNumber: typing.Union[int, float, numbers.Number] = None

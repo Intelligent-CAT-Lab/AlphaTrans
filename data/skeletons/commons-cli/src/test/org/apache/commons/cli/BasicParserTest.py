@@ -4,12 +4,13 @@ from __future__ import annotations
 from src.test.org.apache.commons.cli.ParserTestCase import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.BasicParser import *
+import unittest
 import io
 
 # Imports End
 
 
-class BasicParserTest(ParserTestCase):
+class BasicParserTest(ParserTestCase, unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

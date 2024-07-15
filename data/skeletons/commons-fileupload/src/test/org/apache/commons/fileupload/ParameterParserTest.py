@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.fileupload.ParameterParser import *
+import unittest
 import typing
 from typing import *
 import io
@@ -9,7 +10,7 @@ import io
 # Imports End
 
 
-class ParameterParserTest:
+class ParameterParserTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

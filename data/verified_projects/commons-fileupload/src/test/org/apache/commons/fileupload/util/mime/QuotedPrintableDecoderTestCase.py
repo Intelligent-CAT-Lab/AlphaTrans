@@ -1,25 +1,23 @@
-# Imports Begin
+import pytest
+
 import unittest
 from io import BytesIO
 from src.main.org.apache.commons.fileupload.util.mime.QuotedPrintableDecoder import QuotedPrintableDecoder
 
-# Imports End
-
 
 class QuotedPrintableDecoderTestCase(unittest.TestCase):
 
-    # Class Fields Begin
     __US_ASCII_CHARSET: str = "US-ASCII"
-    # Class Fields End
 
-    # Class Methods Begin
-    def test_emptyDecode(self) -> None:
+    @pytest.mark.test
+    def testEmptyDecode(self) -> None:
         try:
             self.__assertEncoded("", "")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_plainDecode(self) -> None:
+    @pytest.mark.test
+    def testPlainDecode(self) -> None:
         try:
             self.__assertEncoded(
                 "The quick brown fox jumps over the lazy dog.",
@@ -28,13 +26,15 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_basicEncodeDecode(self) -> None:
+    @pytest.mark.test
+    def testBasicEncodeDecode(self) -> None:
         try:
             self.__assertEncoded("= Hello there =\r\n", "=3D Hello there =3D=0D=0A")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_invalidQuotedPrintableEncoding(self) -> None:
+    @pytest.mark.test
+    def testInvalidQuotedPrintableEncoding(self) -> None:
         try:
             self.__assertIOException(
                 "truncated escape sequence",
@@ -43,24 +43,28 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_unsafeDecode(self) -> None:
+    @pytest.mark.test
+    def testUnsafeDecode(self) -> None:
         try:
             self.__assertEncoded("=\r\n", "=3D=0D=0A")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_unsafeDecodeLowerCase(self) -> None:
+    @pytest.mark.test
+    def testUnsafeDecodeLowerCase(self) -> None:
         try:
             self.__assertEncoded("=\r\n", "=3d=0d=0a")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_invalidCharDecode(self) -> None:
+    @pytest.mark.test
+    def testInvalidCharDecode(self) -> None:
         with self.assertRaises(Exception) as context:
             self.__assertEncoded("=\r\n", "=3D=XD=XA")
         self.assertTrue(isinstance(context.exception, IOError) or isinstance(context.exception, OSError))
 
-    def test_SoftLineBreakDecode(self) -> None:
+    @pytest.mark.test
+    def testSoftLineBreakDecode(self) -> None:
         try:
             self.__assertEncoded(
                 "If you believe that truth=beauty, then surely mathematics is the most beautiful"
@@ -71,19 +75,22 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_invalidSoftBreak1(self) -> None:
+    @pytest.mark.test
+    def testInvalidSoftBreak1(self) -> None:
         try:
             self.__assertIOException("CR must be followed by LF", "=\r\r")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_invalidSoftBreak2(self) -> None:
+    @pytest.mark.test
+    def testInvalidSoftBreak2(self) -> None:
         try:
             self.__assertIOException("CR must be followed by LF", "=\rn")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_truncatedEscape(self) -> None:
+    @pytest.mark.test
+    def testTruncatedEscape(self) -> None:
         try:
             self.__assertIOException("truncated", "=1")
         except Exception as e:
@@ -96,11 +103,10 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
         encoded_data = encoded.encode(QuotedPrintableDecoderTestCase.__US_ASCII_CHARSET)
         try:
             QuotedPrintableDecoder.decode(encoded_data, out)
-            QuotedPrintableDecoderTestCase.fail("Expected IO-related Exception")
+            unittest.TestCase().fail("Expected IO-related Exception")
         except (IOError, OSError) as e:
             em = str(e)
-            QuotedPrintableDecoderTestCase.assertIn(messageText, em, f"Expected to find {messageText} in '{em}'")
-        # LLM could not translate method body
+            unittest.TestCase().assertIn(messageText, em, f"Expected to find {messageText} in '{em}'")
 
     @staticmethod
     def __assertEncoded(clearText: str, encoded: str) -> None:
@@ -109,7 +115,4 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
         encoded_data = encoded.encode(QuotedPrintableDecoderTestCase.__US_ASCII_CHARSET)
         QuotedPrintableDecoder.decode(encoded_data, out)
         actual = out.getvalue()
-        QuotedPrintableDecoderTestCase.assertEqual(expected, actual)
-        # LLM could not translate method body
-
-    # Class Methods End
+        unittest.TestCase().assertEqual(expected, actual)

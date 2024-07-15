@@ -1,0 +1,2 @@
+class ProcessDestroyer:
+    pass

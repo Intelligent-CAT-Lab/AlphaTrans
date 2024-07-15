@@ -1,16 +1,11 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.ISBNCheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import AbstractCheckDigitTest
 
 class ISBNCheckDigitTest(AbstractCheckDigitTest):
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-
+    __test__ = True
     
     def setUp(self) -> None:
         try:
@@ -30,7 +25,8 @@ class ISBNCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_InvalidLength(self) -> None:
+    @pytest.mark.test
+    def testInvalidLength(self) -> None:
         self.assertFalse(self._routine.isValid("123456789"), "isValid() Lth 9")
         self.assertFalse(self._routine.isValid("12345678901"), "isValid() Lth 11")
         self.assertFalse(self._routine.isValid("123456789012"), "isValid() Lth 12")

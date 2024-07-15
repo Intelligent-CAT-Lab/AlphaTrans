@@ -1,207 +1,223 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.BasicParser import *
 import unittest
 from src.test.org.apache.commons.cli.ParserTestCase import ParserTestCase
 
-# Imports End
-
 
 class BasicParserTest(ParserTestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    @classmethod
-    def setUpClass(cls):
-        pass
+    __test__ = True
 
     def setUp(self) -> None:
         super().setUp()
-        self.__parser = BasicParser()
+        self._parser = BasicParser()
 
     @unittest.skip("not supported by the BasicParser")
-    def test_AmbiguousLongWithoutEqualSingleDash(self) -> None:
+    @pytest.mark.test
+    def testAmbiguousLongWithoutEqualSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_AmbiguousPartialLongOption1(self) -> None:
+    @pytest.mark.test
+    def testAmbiguousPartialLongOption1(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_AmbiguousPartialLongOption2(self) -> None:
+    @pytest.mark.test
+    def testAmbiguousPartialLongOption2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_AmbiguousPartialLongOption3(self) -> None:
+    @pytest.mark.test
+    def testAmbiguousPartialLongOption3(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_AmbiguousPartialLongOption4(self) -> None:
+    @pytest.mark.test
+    def testAmbiguousPartialLongOption4(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_Bursting(self) -> None:
+    @pytest.mark.test
+    def testBursting(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_DoubleDash2(self) -> None:
+    @pytest.mark.test
+    def testDoubleDash2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_LongOptionWithEqualsQuoteHandling(self) -> None:
+    @pytest.mark.test
+    def testLongOptionWithEqualsQuoteHandling(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_LongWithEqualDoubleDash(self) -> None:
+    @pytest.mark.test
+    def testLongWithEqualDoubleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_LongWithEqualSingleDash(self) -> None:
+    @pytest.mark.test
+    def testLongWithEqualSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_LongWithoutEqualSingleDash(self) -> None:
+    @pytest.mark.test
+    def testLongWithoutEqualSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_MissingArgWithBursting(self) -> None:
+    @pytest.mark.test
+    def testMissingArgWithBursting(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser (CLI-184)")
-    def test_NegativeOption(self) -> None:
+    @pytest.mark.test
+    def testNegativeOption(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_PartialLongOptionSingleDash(self) -> None:
+    @pytest.mark.test
+    def testPartialLongOptionSingleDash(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_PropertiesOption1(self) -> None:
+    @pytest.mark.test
+    def testPropertiesOption1(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
     
     @unittest.skip("not supported by the BasicParser")
-    def test_PropertiesOption2(self) -> None:
+    @pytest.mark.test
+    def testPropertiesOption2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_ShortOptionConcatenatedQuoteHandling(self) -> None:
+    @pytest.mark.test
+    def testShortOptionConcatenatedQuoteHandling(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_ShortWithEqual(self) -> None:
+    @pytest.mark.test
+    def testShortWithEqual(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_ShortWithoutEqual(self) -> None:
+    @pytest.mark.test
+    def testShortWithoutEqual(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_StopBursting(self) -> None:
+    @pytest.mark.test
+    def testStopBursting(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_StopBursting2(self) -> None:
+    @pytest.mark.test
+    def testStopBursting2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_UnambiguousPartialLongOption1(self) -> None:
+    @pytest.mark.test
+    def testUnambiguousPartialLongOption1(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_UnambiguousPartialLongOption2(self) -> None:
+    @pytest.mark.test
+    def testUnambiguousPartialLongOption2(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_UnambiguousPartialLongOption3(self) -> None:
+    @pytest.mark.test
+    def testUnambiguousPartialLongOption3(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_UnambiguousPartialLongOption4(self) -> None:
+    @pytest.mark.test
+    def testUnambiguousPartialLongOption4(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
     @unittest.skip("not supported by the BasicParser")
-    def test_UnrecognizedOptionWithBursting(self) -> None:
+    @pytest.mark.test
+    def testUnrecognizedOptionWithBursting(self) -> None:
         try:
             pass
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-    
-
-    # Class Methods End

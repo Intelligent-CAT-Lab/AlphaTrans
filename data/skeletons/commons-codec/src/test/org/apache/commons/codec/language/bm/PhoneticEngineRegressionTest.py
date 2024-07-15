@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.language.bm.RuleType import *
 from src.main.org.apache.commons.codec.language.bm.PhoneticEngine import *
 from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.language.bm.Languages import *
+import unittest
 import typing
 from typing import *
 import io
@@ -12,7 +13,7 @@ import io
 # Imports End
 
 
-class PhoneticEngineRegressionTest:
+class PhoneticEngineRegressionTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End
@@ -31,7 +32,7 @@ class PhoneticEngineRegressionTest:
         pass
 
     @staticmethod
-    def __encode(args: typing.Dict[str, str], concat: bool, input: str) -> str:
+    def __encode(args: typing.Dict[str, str], concat: bool, input_: str) -> str:
         pass
 
     # Class Methods End

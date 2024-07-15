@@ -1,2 +1,0 @@
-class TypedAdapter:
-    pass

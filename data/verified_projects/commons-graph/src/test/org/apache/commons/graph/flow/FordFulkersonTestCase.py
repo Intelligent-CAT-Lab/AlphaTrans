@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.test.org.apache.commons.graph.model.BaseLabeledWeightedEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -17,11 +18,13 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-# Imports End
+
+
 
 class FordFulkersonTestCase(unittest.TestCase):
 
-    def test_FindMaxFlowAndVerify(self) -> None:
+    @pytest.mark.test
+    def testFindMaxFlowAndVerify(self) -> None:
         a = BaseLabeledVertex("A")
         d = BaseLabeledVertex("D")
 
@@ -40,7 +43,8 @@ class FordFulkersonTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
 
-    def test_NotConnected(self) -> None:
+    @pytest.mark.test
+    def testNotConnected(self) -> None:
         a = BaseLabeledVertex("A")
         d = BaseLabeledVertex("D")
 
@@ -59,7 +63,8 @@ class FordFulkersonTestCase(unittest.TestCase):
         self.assertEqual(actual, expected)
     
     
-    def test_NotConnected_2(self) -> None:
+    @pytest.mark.test
+    def testNotConnected_2(self) -> None:
         a = BaseLabeledVertex("A")
         d = BaseLabeledVertex("D")
 
@@ -78,7 +83,8 @@ class FordFulkersonTestCase(unittest.TestCase):
         self.assertEqual(actual, expected)
 
     
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             a = BaseLabeledVertex("A")
             d = BaseLabeledVertex("D")
@@ -90,7 +96,8 @@ class FordFulkersonTestCase(unittest.TestCase):
                 .applyingFordFulkerson(IntegerWeightBaseOperations())
 
     
-    def test_NullGraphAndVertices(self) -> None:
+    @pytest.mark.test
+    def testNullGraphAndVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findMaxFlow(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -99,7 +106,8 @@ class FordFulkersonTestCase(unittest.TestCase):
                 .applyingFordFulkerson(IntegerWeightBaseOperations())
 
     
-    def test_NullVertices(self) -> None:
+    @pytest.mark.test
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = DirectedMutableGraph()
             CommonsGraph.findMaxFlow(graph)\
@@ -108,7 +116,6 @@ class FordFulkersonTestCase(unittest.TestCase):
                 .to(None)\
                 .applyingFordFulkerson(IntegerWeightBaseOperations())
 
-    # Class Methods End
 
 
 class GraphConnectionFordFulkersonTestCaseTestFindMaxFlowAndVerify(AbstractGraphConnection):

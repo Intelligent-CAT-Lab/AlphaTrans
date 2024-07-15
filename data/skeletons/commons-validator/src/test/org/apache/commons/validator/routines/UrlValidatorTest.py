@@ -5,19 +5,31 @@ from src.main.org.apache.commons.validator.routines.UrlValidator import *
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
 from src.test.org.apache.commons.validator.ResultPair import *
+import unittest
 import typing
 from typing import *
 import io
+import pathlib
 
 # Imports End
 
 
-class UrlValidatorTest:
+class UrlValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     __printStatus: bool = None
     __printIndex: bool = None
-    __schemes: typing.List[str] = None
+    testUrlScheme: typing.List[ResultPair] = None
+    testUrlAuthority: typing.List[ResultPair] = None
+    testUrlPort: typing.List[ResultPair] = None
+    testPath: typing.List[ResultPair] = None
+    testUrlPathOptions: typing.List[ResultPair] = None
+    testUrlQuery: typing.List[ResultPair] = None
+    testUrlParts: typing.List[typing.Any] = None
+    testUrlPartsOptions: typing.List[typing.Any] = None
+    testPartsIndex: typing.List[int] = None
+    __schemes: typing.List[typing.List[str]] = None
+    testScheme: typing.List[ResultPair] = None
     # Class Fields End
 
     # Class Methods Begin
@@ -124,7 +136,7 @@ class UrlValidatorTest:
         pass
 
     @staticmethod
-    def main(args: typing.List[str]) -> None:
+    def main(args: typing.List[typing.List[str]]) -> None:
         pass
 
     @staticmethod

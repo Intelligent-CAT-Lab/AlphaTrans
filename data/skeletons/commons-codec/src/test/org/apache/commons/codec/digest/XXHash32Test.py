@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.digest.XXHash32 import *
+import unittest
 import typing
 from typing import *
 from io import BytesIO
@@ -12,7 +13,7 @@ import pathlib
 # Imports End
 
 
-class XXHash32Test:
+class XXHash32Test(unittest.TestCase):
 
     # Class Fields Begin
     __file: pathlib.Path = None
@@ -35,7 +36,7 @@ class XXHash32Test:
 
     @staticmethod
     def __copy(
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         output: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter],
         buffersize: int,
     ) -> int:
@@ -43,7 +44,7 @@ class XXHash32Test:
 
     @staticmethod
     def __toByteArray(
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]
+        input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]
     ) -> typing.List[int]:
         pass
 

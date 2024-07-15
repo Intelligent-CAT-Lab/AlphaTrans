@@ -1,2 +1,0 @@
-class SuperFactorySub:
-    pass

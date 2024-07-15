@@ -10,6 +10,7 @@ from src.main.org.apache.commons.pool2.PoolUtils import *
 from src.main.org.apache.commons.pool2.ObjectPool import *
 from src.main.org.apache.commons.pool2.KeyedPooledObjectFactory import *
 from src.main.org.apache.commons.pool2.KeyedObjectPool import *
+import unittest
 import typing
 from typing import *
 import io
@@ -38,7 +39,7 @@ class MethodCallLogger(typing.Callable):
     # Class Methods End
 
 
-class TestPoolUtils:
+class TestPoolUtils(unittest.TestCase):
 
     # Class Fields Begin
     __CHECK_PERIOD: int = None

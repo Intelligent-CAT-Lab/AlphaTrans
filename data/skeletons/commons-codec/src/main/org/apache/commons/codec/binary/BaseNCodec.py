@@ -19,6 +19,14 @@ from abc import ABC
 class Context:
 
     # Class Fields Begin
+    ibitWorkArea: int = None
+    lbitWorkArea: int = None
+    buffer: typing.List[int] = None
+    pos: int = None
+    readPos: int = None
+    eof: bool = None
+    currentLinePos: int = None
+    modulus: int = None
     # Class Fields End
 
     # Class Methods Begin
@@ -54,6 +62,18 @@ class BaseNCodec(BinaryDecoder, BinaryEncoder, ABC):
     # Class Fields End
 
     # Class Methods Begin
+    def encode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def encode(self, pArray: typing.List[int]) -> typing.List[int]:
+        pass
+
+    def decode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def decode(self, pArray: typing.List[int]) -> typing.List[int]:
+        pass
+
     def isStrictDecoding(self) -> bool:
         pass
 

@@ -1,32 +1,32 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.OptionBuilder import *
 from src.main.org.apache.commons.cli.Option import *
 import unittest
 from typing import *
-# Imports End
 
 
 class OptionBuilderTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
 
-    # Class Methods Begin
-    def test_BaseOptionCharOpt(self) -> None:
+    @pytest.mark.test
+    def testBaseOptionCharOpt(self) -> None:
         base = OptionBuilder.withDescription("option description").create1('o')
         self.assertEqual("o", base.getOpt())
         self.assertEqual("option description", base.getDescription())
         self.assertFalse(base.hasArg())
 
     
-    def test_BaseOptionStringOpt(self) -> None:
+    @pytest.mark.test
+    def testBaseOptionStringOpt(self) -> None:
         base = OptionBuilder.withDescription("option description").create2("o")
         self.assertEqual("o", base.getOpt())
         self.assertEqual("option description", base.getDescription())
         self.assertFalse(base.hasArg())
 
     
-    def test_BuilderIsResettedAlways(self) -> None:
+    @pytest.mark.test
+    def testBuilderIsResettedAlways(self) -> None:
         try:
             OptionBuilder.withDescription("JUnit").create1('"')
             self.fail("ValueError expected")
@@ -45,7 +45,8 @@ class OptionBuilderTest(unittest.TestCase):
         )
 
 
-    def test_CompleteOption(self) -> None:
+    @pytest.mark.test
+    def testCompleteOption(self) -> None:
         simple = OptionBuilder.withLongOpt("simple option")\
                               .hasArg0()\
                               .isRequired0()\
@@ -62,13 +63,15 @@ class OptionBuilderTest(unittest.TestCase):
         self.assertTrue(simple.hasArgs())
 
 
-    def test_CreateIncompleteOption(self) -> None:
+    @pytest.mark.test
+    def testCreateIncompleteOption(self) -> None:
         with self.assertRaises(ValueError):
             OptionBuilder.hasArg0().create0()
         OptionBuilder.create2("opt")
 
 
-    def test_IllegalOptions(self) -> None:
+    @pytest.mark.test
+    def testIllegalOptions(self) -> None:
         try:
             OptionBuilder.withDescription("option description").create1('"')
             self.fail("ValueError not caught")
@@ -85,12 +88,14 @@ class OptionBuilderTest(unittest.TestCase):
             self.fail("IllegalArgumentException caught")
 
 
-    def test_OptionArgNumbers(self) -> None:
+    @pytest.mark.test
+    def testOptionArgNumbers(self) -> None:
         opt = OptionBuilder.withDescription("option description").hasArgs1(2).create1('o')
         self.assertEqual(2, opt.getArgs())
     
     
-    def test_SpecialOptChars(self) -> None:
+    @pytest.mark.test
+    def testSpecialOptChars(self) -> None:
         try:
             opt1 = OptionBuilder.withDescription("help options").create1("?")
             self.assertEqual("?", opt1.getOpt())
@@ -107,7 +112,8 @@ class OptionBuilderTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_TwoCompleteOptions(self) -> None:
+    @pytest.mark.test
+    def testTwoCompleteOptions(self) -> None:
 
         simple = OptionBuilder.withLongOpt("simple option")\
                               .hasArg0()\
@@ -138,4 +144,3 @@ class OptionBuilderTest(unittest.TestCase):
         self.assertFalse(simple.isRequired())
         self.assertFalse(simple.hasArgs())
 
-    # Class Methods End

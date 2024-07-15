@@ -1,0 +1,2 @@
+class StandardClassBCSPositionReportTest:
+    pass

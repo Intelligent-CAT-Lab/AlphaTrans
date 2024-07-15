@@ -5,6 +5,7 @@ from src.main.org.apache.commons.validator.FormSet import *
 
 # from src.main.org.apache.commons.logging.LogFactory import *
 # from src.main.org.apache.commons.logging.Log import *
+import logging
 import typing
 from typing import *
 import io
@@ -19,7 +20,7 @@ class ValidatorResources:
     __ARGS_PATTERN: str = None
     __serialVersionUID: int = None
     __VALIDATOR_RULES: str = None
-    __REGISTRATIONS: typing.List[str] = None
+    __REGISTRATIONS: typing.List[typing.List[str]] = None
     __log: logging.Logger = None
     _defaultLocale: typing.Any = None
     # Class Fields End

@@ -21,10 +21,10 @@ class CodeValidator:
     # Class Fields End
 
     # Class Methods Begin
-    def validate(self, input: str) -> typing.Any:
+    def validate(self, input_: str) -> typing.Any:
         pass
 
-    def isValid(self, input: str) -> bool:
+    def isValid(self, input_: str) -> bool:
         pass
 
     def getRegexValidator(self) -> RegexValidator:

@@ -25,13 +25,13 @@ class BigDecimalValidator(AbstractNumberValidator):
     ) -> typing.Any:
         pass
 
-    def maxValue(self, value: decimal.Decimal, max: float) -> bool:
+    def maxValue(self, value: decimal.Decimal, max_: float) -> bool:
         pass
 
-    def minValue(self, value: decimal.Decimal, min: float) -> bool:
+    def minValue(self, value: decimal.Decimal, min_: float) -> bool:
         pass
 
-    def isInRange(self, value: decimal.Decimal, min: float, max: float) -> bool:
+    def isInRange(self, value: decimal.Decimal, min_: float, max_: float) -> bool:
         pass
 
     def validate3(

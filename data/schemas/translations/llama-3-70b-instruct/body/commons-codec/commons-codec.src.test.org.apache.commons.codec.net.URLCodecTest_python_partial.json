@@ -1,0 +1,1316 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-codec/src/test/java/org/apache/commons/codec/net/URLCodecTest.java",
+    "imports": {
+        "29-29:import UnsupportedEncodingException": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.io.UnsupportedEncodingException;\n"
+            ]
+        },
+        "30-30:import StandardCharsets": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.nio.charset.StandardCharsets;\n"
+            ]
+        },
+        "25-25:import DecoderException": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.codec.DecoderException;\n"
+            ]
+        },
+        "26-26:import EncoderException": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.codec.EncoderException;\n"
+            ]
+        },
+        "27-27:import Test": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "24-24:import CharEncoding": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.codec.CharEncoding;\n"
+            ]
+        },
+        "22-22:import static Assert.fail": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.Assert.fail;\n"
+            ]
+        },
+        "20-20:import static Assert.assertEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "21-21:import static Assert.assertNull": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.Assert.assertNull;\n"
+            ]
+        }
+    },
+    "classes": {
+        "URLCodecTest": {
+            "start": 33,
+            "end": 33,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "267-275:testDefaultEncoding": {
+                    "start": 267,
+                    "end": 275,
+                    "body": [
+                        "    public void testDefaultEncoding() throws Exception {\n",
+                        "        final String plain = \"Hello there!\";\n",
+                        "        final URLCodec urlCodec = new URLCodec(\"UnicodeBig\");\n",
+                        "        urlCodec.encode2(plain); // To work around a weird quirk in Java 1.2.2\n",
+                        "        final String encoded1 = urlCodec.encode1(plain, \"UnicodeBig\");\n",
+                        "        final String encoded2 = urlCodec.encode2(plain);\n",
+                        "        assertEquals(encoded1, encoded2);\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDefaultEncoding()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "88-90:URLCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "219-225:encode1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "241-250:encode2"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testDefaultEncoding(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "243-264:testDecodeObjects": {
+                    "start": 243,
+                    "end": 264,
+                    "body": [
+                        "    public void testDecodeObjects() throws Exception {\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        final String plain = \"Hello+there%21\";\n",
+                        "        String decoded = (String) urlCodec.decode3((Object) plain);\n",
+                        "        assertEquals(\"Basic URL decoding test\", \"Hello there!\", decoded);\n",
+                        "\n",
+                        "        final byte[] plainBA = plain.getBytes(StandardCharsets.UTF_8);\n",
+                        "        final byte[] decodedBA = (byte[]) urlCodec.decode3((Object) plainBA);\n",
+                        "        decoded = new String(decodedBA);\n",
+                        "        assertEquals(\"Basic URL decoding test\", \"Hello there!\", decoded);\n",
+                        "\n",
+                        "        final Object result = urlCodec.decode3((Object) null);\n",
+                        "        assertNull(\"Decoding a null Object should return null\", result);\n",
+                        "\n",
+                        "        try {\n",
+                        "            final Object dObj = Double.valueOf(3.0d);\n",
+                        "            urlCodec.decode3(dObj);\n",
+                        "            fail(\"Trying to url encode a Double object should cause an exception.\");\n",
+                        "        } catch (final DecoderException ee) {\n",
+                        "        }\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDecodeObjects()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "341-353:decode3"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testDecodeObjects(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "226-240:testInvalidEncoding": {
+                    "start": 226,
+                    "end": 240,
+                    "body": [
+                        "    public void testInvalidEncoding() {\n",
+                        "        final URLCodec urlCodec = new URLCodec(\"NONSENSE\");\n",
+                        "        final String plain = \"Hello there!\";\n",
+                        "        try {\n",
+                        "            urlCodec.encode2(plain);\n",
+                        "            fail(\"We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.\");\n",
+                        "        } catch (final EncoderException ee) {\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            urlCodec.decode2(plain);\n",
+                        "            fail(\"We set the encoding to a bogus NONSENSE vlaue, this shouldn't have worked.\");\n",
+                        "        } catch (final DecoderException ee) {\n",
+                        "        }\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testInvalidEncoding()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "88-90:URLCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "241-250:encode2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "289-298:decode2"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testInvalidEncoding(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "202-223:testEncodeObjects": {
+                    "start": 202,
+                    "end": 223,
+                    "body": [
+                        "    public void testEncodeObjects() throws Exception {\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        final String plain = \"Hello there!\";\n",
+                        "        String encoded = (String) urlCodec.encode3((Object) plain);\n",
+                        "        assertEquals(\"Basic URL encoding test\", \"Hello+there%21\", encoded);\n",
+                        "\n",
+                        "        final byte[] plainBA = plain.getBytes(StandardCharsets.UTF_8);\n",
+                        "        final byte[] encodedBA = (byte[]) urlCodec.encode3((Object) plainBA);\n",
+                        "        encoded = new String(encodedBA);\n",
+                        "        assertEquals(\"Basic URL encoding test\", \"Hello+there%21\", encoded);\n",
+                        "\n",
+                        "        final Object result = urlCodec.encode3((Object) null);\n",
+                        "        assertNull(\"Encoding a null Object should return null\", result);\n",
+                        "\n",
+                        "        try {\n",
+                        "            final Object dObj = Double.valueOf(3.0d);\n",
+                        "            urlCodec.encode3(dObj);\n",
+                        "            fail(\"Trying to url encode a Double object should cause an exception.\");\n",
+                        "        } catch (final EncoderException ee) {\n",
+                        "        }\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEncodeObjects()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "313-325:encode3"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEncodeObjects(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "194-199:testDecodeStringWithNull": {
+                    "start": 194,
+                    "end": 199,
+                    "body": [
+                        "    public void testDecodeStringWithNull() throws Exception {\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        final String test = null;\n",
+                        "        final String result = urlCodec.decode1(test, \"charset\");\n",
+                        "        assertNull(\"Result should be null\", result);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDecodeStringWithNull()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "267-273:decode1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testDecodeStringWithNull(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "186-191:testEncodeStringWithNull": {
+                    "start": 186,
+                    "end": 191,
+                    "body": [
+                        "    public void testEncodeStringWithNull() throws Exception {\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        final String test = null;\n",
+                        "        final String result = urlCodec.encode1(test, \"charset\");\n",
+                        "        assertNull(\"Result should be null\", result);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEncodeStringWithNull()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "219-225:encode1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEncodeStringWithNull(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "179-183:testDecodeWithNullArray": {
+                    "start": 179,
+                    "end": 183,
+                    "body": [
+                        "    public void testDecodeWithNullArray() throws Exception {\n",
+                        "        final byte[] plain = null;\n",
+                        "        final byte[] result = URLCodec.decodeUrl(plain);\n",
+                        "        assertNull(\"Result should be null\", result);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDecodeWithNullArray()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "148-170:decodeUrl"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testDecodeWithNullArray(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "168-176:testEncodeUrlWithNullBitSet": {
+                    "start": 168,
+                    "end": 176,
+                    "body": [
+                        "    public void testEncodeUrlWithNullBitSet() throws Exception {\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        final String plain = \"Hello there!\";\n",
+                        "        final String encoded =\n",
+                        "                new String(URLCodec.encodeUrl(null, plain.getBytes(StandardCharsets.UTF_8)));\n",
+                        "        assertEquals(\"Basic URL encoding test\", \"Hello+there%21\", encoded);\n",
+                        "        assertEquals(\"Basic URL decoding test\", plain, urlCodec.decode2(encoded));\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEncodeUrlWithNullBitSet()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "110-138:encodeUrl"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "289-298:decode2"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEncodeUrlWithNullBitSet(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "159-165:testEncodeNull": {
+                    "start": 159,
+                    "end": 165,
+                    "body": [
+                        "    public void testEncodeNull() throws Exception {\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        final byte[] plain = null;\n",
+                        "        final byte[] encoded = urlCodec.encode0(plain);\n",
+                        "        assertNull(\"Encoding a null string should return null\", encoded);\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEncodeNull()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "184-186:encode0"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEncodeNull(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "146-156:testDecodeInvalidContent": {
+                    "start": 146,
+                    "end": 156,
+                    "body": [
+                        "    public void testDecodeInvalidContent() throws UnsupportedEncodingException, DecoderException {\n",
+                        "        final String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        final byte[] input = ch_msg.getBytes(StandardCharsets.ISO_8859_1);\n",
+                        "        final byte[] output = urlCodec.decode0(input);\n",
+                        "        assertEquals(input.length, output.length);\n",
+                        "        for (int i = 0; i < input.length; i++) {\n",
+                        "            assertEquals(input[i], output[i]);\n",
+                        "        }\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDecodeInvalidContent()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "45-53:constructString"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "201-203:decode0"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testDecodeInvalidContent(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "120-143:testDecodeInvalid": {
+                    "start": 120,
+                    "end": 143,
+                    "body": [
+                        "    public void testDecodeInvalid() throws Exception {\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        try {\n",
+                        "            urlCodec.decode2(\"%\");\n",
+                        "            fail(\"DecoderException should have been thrown\");\n",
+                        "        } catch (final DecoderException e) {\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            urlCodec.decode2(\"%A\");\n",
+                        "            fail(\"DecoderException should have been thrown\");\n",
+                        "        } catch (final DecoderException e) {\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            urlCodec.decode2(\"%WW\");\n",
+                        "            fail(\"DecoderException should have been thrown\");\n",
+                        "        } catch (final DecoderException e) {\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            urlCodec.decode2(\"%0W\");\n",
+                        "            fail(\"DecoderException should have been thrown\");\n",
+                        "        } catch (final DecoderException e) {\n",
+                        "        }\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDecodeInvalid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "289-298:decode2"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testDecodeInvalid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "112-117:testEncodeDecodeNull": {
+                    "start": 112,
+                    "end": 117,
+                    "body": [
+                        "    public void testEncodeDecodeNull() throws Exception {\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        assertNull(\"Null string URL encoding test\", urlCodec.encode2((String) null));\n",
+                        "        assertNull(\"Null string URL decoding test\", urlCodec.decode2((String) null));\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEncodeDecodeNull()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "241-250:encode2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "289-298:decode2"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEncodeDecodeNull(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "99-109:testUnsafeEncodeDecode": {
+                    "start": 99,
+                    "end": 109,
+                    "body": [
+                        "    public void testUnsafeEncodeDecode() throws Exception {\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        final String plain = \"~!@#$%^&()+{}\\\"\\\\;:`,/[]\";\n",
+                        "        final String encoded = urlCodec.encode2(plain);\n",
+                        "        assertEquals(\n",
+                        "                \"Unsafe chars URL encoding test\",\n",
+                        "                \"%7E%21%40%23%24%25%5E%26%28%29%2B%7B%7D%22%5C%3B%3A%60%2C%2F%5B%5D\",\n",
+                        "                encoded);\n",
+                        "        assertEquals(\"Unsafe chars URL decoding test\", plain, urlCodec.decode2(encoded));\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsafeEncodeDecode()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "241-250:encode2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "289-298:decode2"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testUnsafeEncodeDecode(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "89-96:testSafeCharEncodeDecode": {
+                    "start": 89,
+                    "end": 96,
+                    "body": [
+                        "    public void testSafeCharEncodeDecode() throws Exception {\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        final String plain = \"abc123_-.*\";\n",
+                        "        final String encoded = urlCodec.encode2(plain);\n",
+                        "        assertEquals(\"Safe chars URL encoding test\", plain, encoded);\n",
+                        "        assertEquals(\"Safe chars URL decoding test\", plain, urlCodec.decode2(encoded));\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSafeCharEncodeDecode()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "241-250:encode2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "289-298:decode2"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSafeCharEncodeDecode(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "79-86:testBasicEncodeDecode": {
+                    "start": 79,
+                    "end": 86,
+                    "body": [
+                        "    public void testBasicEncodeDecode() throws Exception {\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        final String plain = \"Hello there!\";\n",
+                        "        final String encoded = urlCodec.encode2(plain);\n",
+                        "        assertEquals(\"Basic URL encoding test\", \"Hello+there%21\", encoded);\n",
+                        "        assertEquals(\"Basic URL decoding test\", plain, urlCodec.decode2(encoded));\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBasicEncodeDecode()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "241-250:encode2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "289-298:decode2"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testBasicEncodeDecode(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "56-76:testUTF8RoundTrip": {
+                    "start": 56,
+                    "end": 76,
+                    "body": [
+                        "    public void testUTF8RoundTrip() throws Exception {\n",
+                        "\n",
+                        "        final String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);\n",
+                        "        final String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);\n",
+                        "\n",
+                        "        final URLCodec urlCodec = URLCodec.URLCodec1();\n",
+                        "        this.validateState(urlCodec);\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                \"%D0%92%D1%81%D0%B5%D0%BC_%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82\",\n",
+                        "                urlCodec.encode1(ru_msg, CharEncoding.UTF_8));\n",
+                        "        assertEquals(\"Gr%C3%BCezi_z%C3%A4m%C3%A4\", urlCodec.encode1(ch_msg, CharEncoding.UTF_8));\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                ru_msg,\n",
+                        "                urlCodec.decode1(urlCodec.encode1(ru_msg, CharEncoding.UTF_8), CharEncoding.UTF_8));\n",
+                        "        assertEquals(\n",
+                        "                ch_msg,\n",
+                        "                urlCodec.decode1(urlCodec.encode1(ch_msg, CharEncoding.UTF_8), CharEncoding.UTF_8));\n",
+                        "        this.validateState(urlCodec);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUTF8RoundTrip()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "45-53:constructString"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "92-94:URLCodec1"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                            "URLCodecTest",
+                            "43-43:validateState"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "219-225:encode1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                            "URLCodec",
+                            "267-273:decode1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testUTF8RoundTrip(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "45-53:constructString": {
+                    "start": 45,
+                    "end": 53,
+                    "body": [
+                        "    private String constructString(final int[] unicodeChars) {\n",
+                        "        final StringBuilder buffer = new StringBuilder();\n",
+                        "        if (unicodeChars != null) {\n",
+                        "            for (final int unicodeChar : unicodeChars) {\n",
+                        "                buffer.append((char) unicodeChar);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return buffer.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "constructString(int[])",
+                    "parameters": [
+                        "unicodeChars"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __constructString(self, unicodeChars: typing.List[int]) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "43-43:validateState": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private void validateState(final URLCodec urlCodec) {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "validateState(URLCodec)",
+                    "parameters": [
+                        "urlCodec"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __validateState(self, urlCodec: URLCodec) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "39-41:RUSSIAN_STUFF_UNICODE": {
+                    "start": 39,
+                    "end": 41,
+                    "body": [
+                        "    static final int RUSSIAN_STUFF_UNICODE[] = {\n",
+                        "        0x412, 0x441, 0x435, 0x43C, 0x5F, 0x43F, 0x440, 0x438, 0x432, 0x435, 0x442\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    RUSSIAN_STUFF_UNICODE: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                },
+                "35-37:SWISS_GERMAN_STUFF_UNICODE": {
+                    "start": 35,
+                    "end": 37,
+                    "body": [
+                        "    static final int SWISS_GERMAN_STUFF_UNICODE[] = {\n",
+                        "        0x47, 0x72, 0xFC, 0x65, 0x7A, 0x69, 0x5F, 0x7A, 0xE4, 0x6D, 0xE4\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    SWISS_GERMAN_STUFF_UNICODE: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class URLCodecTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import unittest",
+        "from src.main.org.apache.commons.codec.CharEncoding import *",
+        "from src.main.org.apache.commons.codec.DecoderException import *",
+        "from src.main.org.apache.commons.codec.EncoderException import *",
+        "from src.main.org.apache.commons.codec.net.URLCodec import *"
+    ]
+}

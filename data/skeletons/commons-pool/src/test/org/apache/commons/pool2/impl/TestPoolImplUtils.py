@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.pool2.PooledObject import *
 from src.main.org.apache.commons.pool2.BasePooledObjectFactory import *
 from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *
+import unittest
 import datetime
 import typing
 from typing import *
@@ -98,7 +99,7 @@ class NotSimpleFactory(FactoryF):
     # Class Methods End
 
 
-class TestPoolImplUtils:
+class TestPoolImplUtils(unittest.TestCase):
 
     # Class Fields Begin
     __INSTANT_1: datetime.datetime = None

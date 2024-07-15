@@ -1,0 +1,2 @@
+class UTCAndDateResponse:
+    pass

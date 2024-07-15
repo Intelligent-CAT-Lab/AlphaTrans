@@ -1,23 +1,22 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
 
-# Imports End
-
 
 class ArgumentIsOptionTest(unittest.TestCase):
 
-    # Class Methods Begin
     def setUp(self) -> None:
 
         self.__options = Options().addOption1("p", False, "Option p")\
             .addOption1("attr", True, "Option accepts argument")
         self.__parser = PosixParser()
     
-    def test_Option(self) -> None:
+    @pytest.mark.test
+    def testOption(self) -> None:
 
         try:
             args = ["-p"]
@@ -28,7 +27,8 @@ class ArgumentIsOptionTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_OptionAndOptionWithArgument(self) -> None:
+    @pytest.mark.test
+    def testOptionAndOptionWithArgument(self) -> None:
 
         try:
             args = ["-p", "-attr", "p"]
@@ -40,7 +40,8 @@ class ArgumentIsOptionTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_OptionWithArgument(self) -> None:
+    @pytest.mark.test
+    def testOptionWithArgument(self) -> None:
 
         try:
             args = ["-attr", "p"]
@@ -51,5 +52,3 @@ class ArgumentIsOptionTest(unittest.TestCase):
             self.assertEqual(0, len(cl.getArgs()), "Confirm all arguments recognized")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End

@@ -29,7 +29,7 @@ class ItemInputStream:
     def isClosed(self) -> bool:
         pass
 
-    def skip(self, bytes: int) -> int:
+    def skip(self, bytes_: int) -> int:
         pass
 
     def read(self) -> int:
@@ -44,7 +44,7 @@ class ItemInputStream:
     def close0(self) -> None:
         pass
 
-    def read1(self, b: typing.List[int], off: int, len: int) -> int:
+    def read1(self, b: typing.List[int], off: int, len_: int) -> int:
         pass
 
     def read0(self) -> int:
@@ -144,14 +144,14 @@ class MultipartStream:
     # Class Methods Begin
     @staticmethod
     def MultipartStream3(
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         boundary: typing.List[int],
     ) -> MultipartStream:
         pass
 
     @staticmethod
     def MultipartStream1(
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         boundary: typing.List[int],
         bufSize: int,
     ) -> MultipartStream:
@@ -191,7 +191,7 @@ class MultipartStream:
 
     @staticmethod
     def MultipartStream2(
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         boundary: typing.List[int],
         pNotifier: ProgressNotifier,
     ) -> MultipartStream:
@@ -199,7 +199,7 @@ class MultipartStream:
 
     def __init__(
         self,
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         boundary: typing.List[int],
         bufSize: int,
         pNotifier: ProgressNotifier,

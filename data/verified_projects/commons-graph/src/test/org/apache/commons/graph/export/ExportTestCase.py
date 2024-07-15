@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
 from src.main.org.apache.commons.graph.builder.AbstractGraphConnection import *
@@ -13,19 +14,16 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 
-from VertexLabelMapper import VertexLabelMapper
-from EdgeLabelMapper import EdgeLabelMapper
-from EdgeWeightMapper import EdgeWeightMapper
+from src.test.org.apache.commons.graph.export.VertexLabelMapper import VertexLabelMapper
+from src.test.org.apache.commons.graph.export.EdgeLabelMapper import EdgeLabelMapper
+from src.test.org.apache.commons.graph.export.EdgeWeightMapper import EdgeWeightMapper
 import unittest
 import sys
-# Imports End
 
 class ExportTestCase(unittest.TestCase):
 
-    # Class Methods Begin
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.__actual = None
+    
+    __actual = None
     
     
     def setUp(self) -> None:
@@ -38,7 +36,8 @@ class ExportTestCase(unittest.TestCase):
         self.__actual = None
 
 
-    def test_ShouldPrintDotFormat(self) -> None:
+    @pytest.mark.test
+    def testShouldPrintDotFormat(self) -> None:
         CommonsGraph.export(self.__actual)\
             .withName("DotFormatGraph")\
             .usingDotNotation()\
@@ -47,7 +46,6 @@ class ExportTestCase(unittest.TestCase):
             .withEdgeLabels(EdgeLabelMapper())\
             .to1(sys.stdout)
 
-    # Class Methods End
 
 
 class GraphConnectionExportTestShouldPrintDotFormat(AbstractGraphConnection):
@@ -73,7 +71,3 @@ class GraphConnectionExportTestShouldPrintDotFormat(AbstractGraphConnection):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-    # Class Methods End
-
-

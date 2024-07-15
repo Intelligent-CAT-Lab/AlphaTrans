@@ -1,19 +1,15 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.Option import *
 import unittest
 import typing
 from typing import *
 
-# Imports End
-
 class OptionTest(unittest.TestCase):
-    #Inner Classes Start
     class DefaultOption(Option):
-        # Class Fields Begin
-        __serialVersionUID: int = 1
-        # Class Fields End
 
-        # Class Methods Begin
+        __serialVersionUID: int = 1
+
         def __init__(self, opt: str, description: str, defaultValue: str) -> None:
             super().__init__(-1, None, None, None, False, None)
             self.__defaultValue = defaultValue
@@ -28,14 +24,11 @@ class OptionTest(unittest.TestCase):
                 else self.__defaultValue
             )
         
-        # Class Methods End
     
     class TestOption(Option):
-        # Class Fields Begin
-        __serialVersionUID: int = 1
-        # Class Fields End
 
-        # Class Methods Begin
+        __serialVersionUID: int = 1
+
         def __init__(self, opt, hasArg, description):
             super().__init__(-1, opt, None, description, hasArg, None)
 
@@ -44,11 +37,7 @@ class OptionTest(unittest.TestCase):
             self.addValueForProcessing(value)
             return True
 
-        # Class Methods End
 
-    # Inner Classes End
-        
-    # Class Methods Begin
     @staticmethod
     def __checkOption(
         option: Option,
@@ -62,49 +51,56 @@ class OptionTest(unittest.TestCase):
         valueSeparator: str,
         cls: typing.Type[typing.Any],
     ) -> None:
-        OptionTest.assertEqual(opt, option.getOpt())
-        OptionTest.assertEqual(description, option.getDescription())
-        OptionTest.assertEqual(longOpt, option.getLongOpt())
-        OptionTest.assertEqual(numArgs, option.getArgs())
-        OptionTest.assertEqual(argName, option.getArgName())
-        OptionTest.assertEqual(required, option.isRequired())
+        unittest.TestCase().assertEqual(opt, option.getOpt())
+        unittest.TestCase().assertEqual(description, option.getDescription())
+        unittest.TestCase().assertEqual(longOpt, option.getLongOpt())
+        unittest.TestCase().assertEqual(numArgs, option.getArgs())
+        unittest.TestCase().assertEqual(argName, option.getArgName())
+        unittest.TestCase().assertEqual(required, option.isRequired())
 
-        OptionTest.assertEqual(optionalArg, option.hasOptionalArg())
-        OptionTest.assertEqual(valueSeparator, option.getValueSeparator())
-        OptionTest.assertEqual(cls, type(option))
+        unittest.TestCase().assertEqual(optionalArg, option.hasOptionalArg())
+        unittest.TestCase().assertEqual(valueSeparator, option.getValueSeparator())
+        unittest.TestCase().assertEqual(cls, type(option))
     
 
-    def test_BuilderInsufficientParams1(self) -> None:
+    @pytest.mark.test
+    def testBuilderInsufficientParams1(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder0().desc("desc").build()
 
     
-    def test_BuilderInsufficientParams2(self) -> None:
+    @pytest.mark.test
+    def testBuilderInsufficientParams2(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder1(None).desc("desc").build()
     
     
-    def test_BuilderInvalidOptionName1(self) -> None:
+    @pytest.mark.test
+    def testBuilderInvalidOptionName1(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder0().option("invalid?")
     
     
-    def test_BuilderInvalidOptionName2(self) -> None:
+    @pytest.mark.test
+    def testBuilderInvalidOptionName2(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder0().option("invalid@")
     
     
-    def test_BuilderInvalidOptionName3(self) -> None:
+    @pytest.mark.test
+    def testBuilderInvalidOptionName3(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder1("invalid?")
     
     
-    def test_BuilderInvalidOptionName4(self) -> None:
+    @pytest.mark.test
+    def testBuilderInvalidOptionName4(self) -> None:
         with self.assertRaises(ValueError):
             Option.builder1("invalid@")
     
     
-    def test_BuilderMethods(self) -> None:
+    @pytest.mark.test
+    def testBuilderMethods(self) -> None:
         defaultSeparator = '\x00'
 
         self.__checkOption(
@@ -275,7 +271,8 @@ class OptionTest(unittest.TestCase):
                 int)
     
     
-    def test_Clear(self) -> None:
+    @pytest.mark.test
+    def testClear(self) -> None:
         option = OptionTest.TestOption("x", True, "")
         self.assertEqual(0, len(option.getValuesList()))
         option.addValue("a")
@@ -284,7 +281,8 @@ class OptionTest(unittest.TestCase):
         self.assertEqual(0, len(option.getValuesList()))
 
     
-    def test_Clone(self) -> None:
+    @pytest.mark.test
+    def testClone(self) -> None:
         a = OptionTest.TestOption("a", True, "")
         b = a.clone()
         self.assertEqual(a, b)
@@ -299,7 +297,8 @@ class OptionTest(unittest.TestCase):
         self.assertEqual(2, len(b.getValues()))
 
     
-    def test_GetValue(self) -> None:
+    @pytest.mark.test
+    def testGetValue(self) -> None:
         option = Option.Option1("f", None)
         option.setArgs(Option.UNLIMITED_VALUES)
 
@@ -313,7 +312,8 @@ class OptionTest(unittest.TestCase):
         self.assertEqual("foo", option.getValue2("default"))
 
     
-    def test_HasArgName(self) -> None:
+    @pytest.mark.test
+    def testHasArgName(self) -> None:
         option = Option.Option1("f", None)
 
         option.setArgName(None)
@@ -326,7 +326,8 @@ class OptionTest(unittest.TestCase):
         self.assertTrue(option.hasArgName())
 
 
-    def test_HasArgs(self) -> None:
+    @pytest.mark.test
+    def testHasArgs(self) -> None:
         option = Option.Option1("f", None)
 
         option.setArgs(0)
@@ -345,7 +346,8 @@ class OptionTest(unittest.TestCase):
         self.assertFalse(option.hasArgs())
     
     
-    def test_HashCode(self) -> None:
+    @pytest.mark.test
+    def testHashCode(self) -> None:
         self.assertNotEqual(
                 Option.builder1("test").build().hashCode(),\
                 Option.builder1("test2").build().hashCode())
@@ -357,11 +359,9 @@ class OptionTest(unittest.TestCase):
                 Option.builder1("test").longOpt("long test").build().hashCode())
     
     
-    def test_Subclass(self) -> None:
+    @pytest.mark.test
+    def testSubclass(self) -> None:
         option = OptionTest.DefaultOption("f", "file", "myfile.txt")
         clone = option.clone()
         self.assertEqual("myfile.txt", clone.getValue0())
         self.assertEqual(OptionTest.DefaultOption, type(clone))
-    
-    # Class Methods End
-

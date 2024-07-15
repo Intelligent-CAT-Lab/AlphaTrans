@@ -1,13 +1,11 @@
-# Imports Begin
+import pytest
+
 import typing
 from typing import *
 from src.main.org.apache.commons.fileupload.FileUploadBase import FileUploadBase
 from io import BufferedReader
 from io import BytesIO
 import sys
-
-
-# Imports End
 
 
 class MockHttpServletRequest:
@@ -30,11 +28,9 @@ class MockHttpServletRequest:
     def mock_http_servlet_request(request_data, strContentType):
         return MockHttpServletRequest(0, BytesIO(request_data), strContentType, len(request_data))
 
-    # Class Methods Begin
     def getRealPath(self, arg0: str) -> str:
 
         return None  
-        # LLM could not translate method body
 
     def getLocalAddr(self) -> str:
 
@@ -62,13 +58,11 @@ class MockHttpServletRequest:
 
     def getLocales(self) -> typing.Iterator[typing.Any]:
 
-        return None  
-        # LLM could not translate method body
+        return None
 
     def getLocale(self) -> typing.Any:
 
-        return None  
-        # LLM could not translate method body
+        return None
 
     def removeAttribute(self, arg0: str) -> None:
 
@@ -92,8 +86,7 @@ class MockHttpServletRequest:
 
     def getServerPort(self) -> int:
 
-        return 0  
-        # LLM could not translate method body
+        return 0
 
     def getServerName(self) -> str:
 
@@ -109,8 +102,7 @@ class MockHttpServletRequest:
 
     def getParameterMap(self) -> typing.Dict[str, typing.List[str]]:
 
-        return None  
-        # LLM could not translate method body
+        return None
 
     def getParameterValues(self, arg0: str) -> typing.List[str]:
 
@@ -118,8 +110,7 @@ class MockHttpServletRequest:
 
     def getParameterNames(self) -> typing.Iterator[str]:
 
-        return None  
-        # LLM could not translate method body
+        return None
 
     def getParameter(self, arg0: str) -> str:
 
@@ -152,7 +143,6 @@ class MockHttpServletRequest:
     def setCharacterEncoding(self, arg0: str) -> None:
 
         pass
-        # LLM raises wrong exception
 
     def getCharacterEncoding(self) -> str:
 
@@ -161,12 +151,10 @@ class MockHttpServletRequest:
     def getAttributeNames(self) -> typing.Iterator[str]:
 
         return None
-        # LLM could not translate method body
 
     def getAttribute(self, arg0: str) -> object:
 
         return None
-        # LLM could not translate method body
 
     def isRequestedSessionIdFromURL(self) -> bool:
 
@@ -202,8 +190,7 @@ class MockHttpServletRequest:
 
     def getRemoteUser(self) -> str:
 
-        return None  
-        # LLM could not translate method body
+        return None
 
     def getQueryString(self) -> str:
 
@@ -211,13 +198,11 @@ class MockHttpServletRequest:
 
     def getContextPath(self) -> str:
 
-        return None  
-        # LLM could not translate method body
+        return None
 
     def getPathTranslated(self) -> str:
 
-        return None  
-        # LLM could not translate method body
+        return None
 
     def getPathInfo(self) -> str:
 
@@ -229,12 +214,11 @@ class MockHttpServletRequest:
 
     def getHeaderNames(self) -> typing.Iterator[str]:
 
-        return None  # LLM could not translate method body
+        return None
 
     def getHeaders(self, headerName: str) -> typing.Iterator[str]:
 
         return None
-        # LLM could not translate method body
 
     def getHeader(self, headerName: str) -> str:
 
@@ -249,12 +233,7 @@ class MockHttpServletRequest:
         return None
 
 
-    # Class Methods End
-
-
     class MyServletInputStream:
-
-
 
         def __init__(self, pStream, readLimit):
             self._in = pStream

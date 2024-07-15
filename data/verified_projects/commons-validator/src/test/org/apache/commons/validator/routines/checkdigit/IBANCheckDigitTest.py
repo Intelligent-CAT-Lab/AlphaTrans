@@ -1,17 +1,13 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.IBANCheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import AbstractCheckDigitTest
 from typing import List
 
 class IBANCheckDigitTest(AbstractCheckDigitTest):
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-    
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self._checkDigitLth = 2
+    __test__ = True
+    _checkDigitLth = 2
 
     
     def setUp(self) -> None:
@@ -105,11 +101,6 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
                 "ZZ97ZZZZZZZZZZZZZZZZZZZZZZZZZ40",
                 "ZZ98ZZZZZZZZZZZZZZZZZZZZZZZZZ22",
             ]
-            """
-            *  sources
-            *  https://intranet.birmingham.ac.uk/finance/documents/public/IBAN.pdf
-            *  http://www.paymentscouncil.org.uk/resources_and_publications/ibans_in_europe/
-            """
             self._invalid = [
                 "510007+47061BE63",
                 "IE01AIBK93118702569045",
@@ -122,7 +113,8 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
     
-    def test_ZeroSum(self) -> None:
+    @pytest.mark.test
+    def testZeroSum(self) -> None:
         pass
 
     
@@ -149,7 +141,8 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
         return code[2:4]
 
     
-    def test_Other(self):
+    @pytest.mark.test
+    def testOther(self):
         with open("IBANtests.txt", "r") as file:
             for line in file:
                 line = line.strip()

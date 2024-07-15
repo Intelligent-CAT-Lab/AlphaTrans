@@ -38,11 +38,11 @@ class PoolImplUtils:
         pass
 
     @staticmethod
-    def min(a: datetime.datetime, b: datetime.datetime) -> datetime.datetime:
+    def min_(a: datetime.datetime, b: datetime.datetime) -> datetime.datetime:
         pass
 
     @staticmethod
-    def max(a: datetime.datetime, b: datetime.datetime) -> datetime.datetime:
+    def max_(a: datetime.datetime, b: datetime.datetime) -> datetime.datetime:
         pass
 
     @staticmethod
@@ -57,13 +57,13 @@ class PoolImplUtils:
 
     @staticmethod
     def __getParameterizedType(
-        type: typing.Type[typing.Any], clazz: typing.Type[typing.Any]
+        type_: typing.Type[typing.Any], clazz: typing.Type[typing.Any]
     ) -> typing.Generic[typing.TypeVar("T")]:
         pass
 
     @staticmethod
     def __getGenericType(
-        type: typing.Type[typing.Any], clazz: typing.Type[typing.Any]
+        type_: typing.Type[typing.Any], clazz: typing.Type[typing.Any]
     ) -> typing.Any:
         pass
 

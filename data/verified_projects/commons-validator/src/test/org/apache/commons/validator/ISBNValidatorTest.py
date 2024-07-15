@@ -1,3 +1,5 @@
+import pytest
+
 import unittest
 from src.main.org.apache.commons.validator.ISBNValidator import *
 
@@ -8,12 +10,10 @@ class ISBNValidatorTest(unittest.TestCase):
     __VALID_ISBN_SPACES = "1 930110 99 5"
     __VALID_ISBN_X = "0-201-63385-X"
     __INVALID_ISBN = "068-556-98-45"
-
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
     
 
-    def test_IsValid(self) -> None:
+    @pytest.mark.test
+    def testIsValid(self) -> None:
         try:
             validator = ISBNValidator()
             self.assertFalse(validator.isValid(None))

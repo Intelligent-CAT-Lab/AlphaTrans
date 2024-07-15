@@ -1,2 +1,0 @@
-class OptionalDoubleStringConverter:
-    pass

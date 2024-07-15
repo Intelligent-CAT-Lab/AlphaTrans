@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.graph.elo.GameResult import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -11,16 +12,12 @@ from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-from SimplePlayersRank import SimplePlayersRank
-# Imports End
+from src.test.org.apache.commons.graph.elo.SimplePlayersRank import SimplePlayersRank
 
 class EloTestCase(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def test_PerformElo(self) -> None:
+    @pytest.mark.test
+    def testPerformElo(self) -> None:
         tournament = CommonsGraph.newDirectedMutableGraph(
             GraphConnectionEloTestCaseTestPerformElo()
         )
@@ -31,8 +28,6 @@ class EloTestCase(unittest.TestCase):
             .wherePlayersAreRankedIn(playersRank).withKFactor(80)
         
         print(playersRank)
-
-    # Class Methods End
 
 
 class GraphConnectionEloTestCaseTestPerformElo(AbstractGraphConnection):
@@ -74,7 +69,3 @@ class GraphConnectionEloTestCaseTestPerformElo(AbstractGraphConnection):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-    # Class Methods End
-
-

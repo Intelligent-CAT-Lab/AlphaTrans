@@ -25,10 +25,22 @@ class QCodec(StringDecoder, StringEncoder, RFC1522Codec):
     # Class Fields End
 
     # Class Methods Begin
-    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:
+    def decode(self, obj: typing.Any) -> typing.Any:
         pass
 
-    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:
+    def encode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def decode(self, str_: str) -> str:
+        pass
+
+    def encode(self, sourceStr: str) -> str:
+        pass
+
+    def _doDecoding(self, bytes_: typing.List[int]) -> typing.List[int]:
+        pass
+
+    def _doEncoding(self, bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
     def _getEncoding(self) -> str:
@@ -52,7 +64,7 @@ class QCodec(StringDecoder, StringEncoder, RFC1522Codec):
     def encode3(self, obj: typing.Any) -> typing.Any:
         pass
 
-    def decode0(self, str: str) -> str:
+    def decode0(self, str_: str) -> str:
         pass
 
     def encode2(self, sourceStr: str) -> str:

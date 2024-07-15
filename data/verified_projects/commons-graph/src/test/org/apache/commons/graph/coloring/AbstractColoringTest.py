@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *
 from src.main.org.apache.commons.graph.coloring.ColoredVertices import *
 from src.main.org.apache.commons.graph.VertexPair import *
@@ -8,14 +9,10 @@ from typing import *
 import random
 from abc import ABC
 
-# Imports End
-
 
 class AbstractColoringTest(unittest.TestCase, ABC):
 
-    def __init__(self):
-        pass
-    
+    __test__ = False
     
     def _checkColoring(
         self,
@@ -49,5 +46,3 @@ class AbstractColoringTest(unittest.TestCase, ABC):
         for j in range(colorNumber):
             colors.add(j)
         return colors
-
-    # Class Methods End

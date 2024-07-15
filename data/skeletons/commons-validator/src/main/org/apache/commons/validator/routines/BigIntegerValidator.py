@@ -24,13 +24,13 @@ class BigIntegerValidator(AbstractNumberValidator):
     ) -> typing.Any:
         pass
 
-    def maxValue(self, value: int, max: int) -> bool:
+    def maxValue(self, value: int, max_: int) -> bool:
         pass
 
-    def minValue(self, value: int, min: int) -> bool:
+    def minValue(self, value: int, min_: int) -> bool:
         pass
 
-    def isInRange(self, value: int, min: int, max: int) -> bool:
+    def isInRange(self, value: int, min_: int, max_: int) -> bool:
         pass
 
     def validate3(self, value: str, pattern: str, locale: typing.Any) -> int:

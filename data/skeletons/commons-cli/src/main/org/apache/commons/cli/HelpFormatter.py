@@ -234,12 +234,12 @@ class HelpFormatter:
     def _findWrapPos(self, text: str, width: int, startPos: int) -> int:
         pass
 
-    def _createPadding(self, len: int) -> str:
+    def _createPadding(self, len_: int) -> str:
         pass
 
     def __renderWrappedTextBlock(
         self, sb: str, width: int, nextLineTabStop: int, text: str
-    ) -> io.TextIOBase:
+    ) -> typing.Union[typing.List, io.TextIOBase]:
         pass
 
     def __appendOptionGroup(self, buff: str, group: OptionGroup) -> None:

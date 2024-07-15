@@ -4,12 +4,13 @@ from __future__ import annotations
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
+import unittest
 import io
 
 # Imports End
 
 
-class BugCLI18Test:
+class BugCLI18Test(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

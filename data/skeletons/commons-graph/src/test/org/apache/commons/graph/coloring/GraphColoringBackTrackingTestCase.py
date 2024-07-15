@@ -17,13 +17,14 @@ from src.test.org.apache.commons.graph.coloring.AbstractColoringTest import *
 from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.UndirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import numbers
 import io
 
 # Imports End
 
 
-class GraphColoringBackTrackingTestCase(AbstractColoringTest):
+class GraphColoringBackTrackingTestCase(AbstractColoringTest, unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

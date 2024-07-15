@@ -1,0 +1,31 @@
+from __future__ import annotations
+import re
+import unittest
+import pytest
+import io
+import typing
+from typing import *
+import unittest
+from src.main.org.apache.commons.csv.CSVFormat import *
+from src.main.org.apache.commons.csv.CSVParser import *
+from src.main.org.apache.commons.csv.CSVRecord import *
+from src.main.org.apache.commons.csv.QuoteMode import *
+
+
+class JiraCsv253Test(unittest.TestCase):
+
+    def testHandleAbsentValues(self) -> None:
+        source = '"John",,"Doe"\n' + ',"AA",123\n' + '"John",90,\n' + '"",,90'
+        csvFormat = (
+            CSVFormat.DEFAULT.builder().setQuoteMode(QuoteMode.NON_NUMERIC).build()
+        )
+        with CSVParser(csvFormat.parse(StringReader(source))) as parser:
+            csvRecords = parser.iterator()
+            self.__assertArrayEqual(["John", None, "Doe"], csvRecords.next())
+            self.__assertArrayEqual([None, "AA", "123"], csvRecords.next())
+            self.__assertArrayEqual(["John", "90", None], csvRecords.next())
+            self.__assertArrayEqual(["", None, "90"], csvRecords.next())
+
+    def __assertArrayEqual(self, expected: typing.List[str], actual: CSVRecord) -> None:
+        for i in range(len(expected)):
+            self.assertEqual(expected[i], actual.get1(i))

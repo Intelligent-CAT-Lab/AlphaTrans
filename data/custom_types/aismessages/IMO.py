@@ -1,0 +1,2 @@
+class IMO:
+    pass

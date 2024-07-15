@@ -1,63 +1,54 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.BigIntegerValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import AbstractNumberValidatorTest
 from decimal import Decimal
 
 class BigIntegerValidatorTest(AbstractNumberValidatorTest):
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
         try:
             super().setUp()
-            
             self._validator = BigIntegerValidator(False, 0)
             self._strictValidator = BigIntegerValidator.BigIntegerValidator1()
-
             self._testPattern = "#,###"
-
             self._max = None
             self._maxPlusOne = None
             self._min = None
             self._minMinusOne = None
-
             self._invalidStrict = [None, "", "X", "X12", "12X", "1X2", "1.2"]
-
             self._invalid = [None, "", "X", "X12"]
-
             self._testNumber = Decimal("1234")
             self._testZero = Decimal("0")
-
             self._validStrict = ["0", "1234", "1,234"]
-            self._validStrictCompare = [self._testZero, self._testNumber, self._testNumber]
-
+            self._validStrictCompare = [
+                Decimal("0"),
+                Decimal("1234"),
+                Decimal("1234")
+            ]
             self._valid = ["0", "1234", "1,234", "1,234.5", "1234X"]
             self._validCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber
+                Decimal("0"),
+                Decimal("1234"),
+                Decimal("1234"),
+                Decimal("1234"),
+                Decimal("1234")
             ]
-
             self._testStringUS = "1,234"
             self._testStringDE = "1.234"
-
-            self._localeValue = self._testStringDE
+            self._localeValue = "1.234"
             self._localePattern = "#.###"
             self._testLocale = 'de_DE.UTF-8'
-            self._localeExpected = self._testNumber
+            self._localeExpected = Decimal("1234")
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_BigIntegerValidatorMethods(self) -> None:
+    @pytest.mark.test
+    def testBigIntegerValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -145,7 +136,8 @@ class BigIntegerValidatorTest(AbstractNumberValidatorTest):
         )
 
     
-    def test_BigIntegerRangeMinMax(self) -> None:
+    @pytest.mark.test
+    def testBigIntegerRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")

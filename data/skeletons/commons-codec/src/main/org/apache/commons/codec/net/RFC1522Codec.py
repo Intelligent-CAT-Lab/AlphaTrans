@@ -30,10 +30,10 @@ class RFC1522Codec(ABC):
     def _encodeText0(self, text: str, charset: str) -> str:
         pass
 
-    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:
+    def _doDecoding(self, bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
-    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:
+    def _doEncoding(self, bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
     def _getEncoding(self) -> str:

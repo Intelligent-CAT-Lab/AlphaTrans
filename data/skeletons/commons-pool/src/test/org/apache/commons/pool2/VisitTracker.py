@@ -56,7 +56,7 @@ class VisitTracker:
     def activate(self) -> None:
         pass
 
-    def __init__(self, constructorId: int, key: typing.Any, id: int) -> None:
+    def __init__(self, constructorId: int, key: typing.Any, id_: int) -> None:
         pass
 
     def __fail(self, message: str) -> None:

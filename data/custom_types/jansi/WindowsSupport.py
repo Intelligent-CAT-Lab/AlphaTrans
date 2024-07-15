@@ -1,0 +1,2 @@
+class WindowsSupport:
+    pass

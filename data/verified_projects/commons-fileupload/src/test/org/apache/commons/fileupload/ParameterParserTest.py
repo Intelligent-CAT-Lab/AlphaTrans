@@ -1,19 +1,14 @@
-# Imports Begin
+import pytest
+
 import unittest
 from typing import *
 from src.main.org.apache.commons.fileupload.ParameterParser import ParameterParser
 
-# Imports End
-
 
 class ParameterParserTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-
-    def test_Parsing(self) -> None:
+    @pytest.mark.test
+    def testParsing(self) -> None:
         
         s = "test; test1 =  stuff   ; test2 =  \"stuff; stuff\"; test3=\"stuff"
         parser = ParameterParser()
@@ -47,18 +42,18 @@ class ParameterParserTest(unittest.TestCase):
         s = " = stuff "
         params = parser.parse1(s, ';')
         self.assertEqual(0, len(params))
-        # LLM could not translate method body
 
-    def test_ContentTypeParsing(self) -> None:
+    @pytest.mark.test
+    def testContentTypeParsing(self) -> None:
 
         s = "text/plain; Charset=UTF-8"
         parser = ParameterParser()
         parser.setLowerCaseNames(True)
         params = parser.parse1(s, ';')
         self.assertEqual("UTF-8", params.get("charset"))
-        # LLM could not translate method body
 
-    def test_ParsingEscapedChars(self) -> None:
+    @pytest.mark.test
+    def testParsingEscapedChars(self) -> None:
 
         s = "param = \"stuff\\\"; more stuff\""
         parser = ParameterParser()
@@ -71,9 +66,9 @@ class ParameterParserTest(unittest.TestCase):
         self.assertEqual(2, len(params))
         self.assertEqual("stuff\\\\", params.get("param"))
         self.assertIsNone(params.get("anotherparam"))
-        # LLM could not translate method body
 
-    def test_FileUpload139(self) -> None:
+    @pytest.mark.test
+    def testFileUpload139(self) -> None:
 
         parser = ParameterParser()
 
@@ -89,7 +84,8 @@ class ParameterParserTest(unittest.TestCase):
         params = parser.parse0(s, [',', ';'])
         self.assertEqual("BbC04y", params.get("boundary"))
 
-    def test_fileUpload199(self) -> None:
+    @pytest.mark.test
+    def testFileUpload199(self) -> None:
 
         parser = ParameterParser()
         s = (
@@ -103,5 +99,3 @@ class ParameterParserTest(unittest.TestCase):
             "If you can read this you understand the example.",
             params.get("filename")
         )
-
-    # Class Methods End

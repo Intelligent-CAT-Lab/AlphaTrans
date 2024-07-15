@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.PatternOptionBuilder import *
 from src.main.org.apache.commons.cli.Options import *
@@ -11,16 +12,11 @@ from pathlib import Path
 from urllib.parse import urlparse
 import datetime
 
-# Imports End
-
 
 class PatternOptionBuilderTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def test_ClassPattern(self) -> None:
+    @pytest.mark.test
+    def testClassPattern(self) -> None:
         try:
             options = PatternOptionBuilder.parsePattern("c+d+")
             parser = PosixParser()
@@ -37,12 +33,14 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_EmptyPattern(self) -> None:
+    @pytest.mark.test
+    def testEmptyPattern(self) -> None:
         options = PatternOptionBuilder.parsePattern("")
         self.assertEquals(len(options.getOptions()), 0)
 
 
-    def test_ExistingFilePattern(self) -> None:
+    @pytest.mark.test
+    def testExistingFilePattern(self) -> None:
         try:
             options = PatternOptionBuilder.parsePattern("g<")
             parser = PosixParser()
@@ -63,7 +61,8 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
      
-    def test_ExistingFilePatternFileNotExist(self) -> None:
+    @pytest.mark.test
+    def testExistingFilePatternFileNotExist(self) -> None:
         try:
             options = self.parsePattern("f<")
             parser = PosixParser()
@@ -74,7 +73,8 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_NumberPattern(self) -> None:
+    @pytest.mark.test
+    def testNumberPattern(self) -> None:
         try:
             options = PatternOptionBuilder.parsePattern("n%d%x%")
             parser = PosixParser()
@@ -91,7 +91,8 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_ObjectPattern(self) -> None:
+    @pytest.mark.test
+    def testObjectPattern(self) -> None:
         try:
             options = PatternOptionBuilder.parsePattern("o@i@n@")
             parser = PosixParser()
@@ -114,7 +115,8 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_RequiredOption(self) -> None:
+    @pytest.mark.test
+    def testRequiredOption(self) -> None:
         try:
             options = PatternOptionBuilder.parsePattern("!n%m%")
             parser = PosixParser()
@@ -128,7 +130,8 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_SimplePattern(self) -> None:
+    @pytest.mark.test
+    def testSimplePattern(self) -> None:
         try:
             options = PatternOptionBuilder.parsePattern("a:b@cde>f+n%t/m*z#")
             args = [
@@ -210,7 +213,8 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_UntypedPattern(self) -> None:
+    @pytest.mark.test
+    def testUntypedPattern(self) -> None:
         try:
             options = PatternOptionBuilder.parsePattern("abc")
             parser = PosixParser()
@@ -226,7 +230,8 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_URLPattern(self) -> None:
+    @pytest.mark.test
+    def testURLPattern(self) -> None:
         try:
             options = PatternOptionBuilder.parsePattern("u/v/")
             parser = PosixParser()
@@ -243,5 +248,3 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.assertIsNone(line.getOptionObject1("v"), "v value")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End

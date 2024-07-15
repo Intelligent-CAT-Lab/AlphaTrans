@@ -1,0 +1,2 @@
+class Argument:
+    pass

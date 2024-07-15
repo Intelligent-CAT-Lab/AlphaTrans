@@ -17,13 +17,14 @@ from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.UndirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import typing
+import unittest
 import numbers
 import io
 
 # Imports End
 
 
-class GraphColoringTestCase(AbstractColoringTest):
+class GraphColoringTestCase(AbstractColoringTest, unittest.TestCase):
 
     # Class Fields Begin
     __colors: typing.Set[int] = None

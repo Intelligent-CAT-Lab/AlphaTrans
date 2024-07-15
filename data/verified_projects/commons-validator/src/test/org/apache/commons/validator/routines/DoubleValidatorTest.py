@@ -1,16 +1,12 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.DoubleValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import AbstractNumberValidatorTest
 
 
 class DoubleValidatorTest(AbstractNumberValidatorTest):
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
@@ -18,43 +14,43 @@ class DoubleValidatorTest(AbstractNumberValidatorTest):
             super().setUp()
             self._validator = DoubleValidator(False, 0)
             self._strictValidator = DoubleValidator.DoubleValidator1()
-
             self._testPattern = "#,###.#"
-
             self._max = None
             self._maxPlusOne = None
             self._min = None
             self._minMinusOne = None
-
             self._invalidStrict = [None, "", "X", "X12", "12X", "1X2"]
-
             self._invalid = [None, "", "X", "X12"]
-
             self._testNumber = 1234.5
             self._testZero = 0
             self._validStrict = ["0", "1234.5", "1,234.5"]
-            self._validStrictCompare = [self._testZero, self._testNumber, self._testNumber]
-            self._valid = ["0", "1234.5", "1,234.5", "1,234.5", "1234.5X"]
-            self._validCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber
+            self._validStrictCompare = [0, 1234.5, 1,234.5]
+            self._valid = [
+                "0",
+                "1234.5",
+                "1,234.5",
+                "1,234.5",
+                "1234.5X"
             ]
-
+            self._validCompare = [
+                0,
+                1234.5,
+                1234.5,
+                1234.5,
+                1234.5
+            ]
             self._testStringUS = "1,234.5"
             self._testStringDE = "1.234,5"
-
-            self._localeValue = self._testStringDE
+            self._localeValue = "1.234,5"
             self._localePattern = "#.###,#"
             self._testLocale = 'de_DE.UTF-8'
-            self._localeExpected = self._testNumber
+            self._localeExpected = 1234.5
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_DoubleValidatorMethods(self) -> None:
+    @pytest.mark.test
+    def testDoubleValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -136,7 +132,8 @@ class DoubleValidatorTest(AbstractNumberValidatorTest):
         )
 
     
-    def test_DoubleRangeMinMax(self) -> None:
+    @pytest.mark.test
+    def testDoubleRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")

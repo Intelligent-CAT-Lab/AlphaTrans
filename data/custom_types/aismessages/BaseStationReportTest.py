@@ -1,0 +1,2 @@
+class BaseStationReportTest:
+    pass

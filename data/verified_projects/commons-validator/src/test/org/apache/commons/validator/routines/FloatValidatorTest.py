@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.FloatValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import AbstractNumberValidatorTest
 import sys
@@ -5,13 +7,7 @@ import sys
 
 class FloatValidatorTest(AbstractNumberValidatorTest):
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
@@ -19,42 +15,47 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
             super().setUp()
             self._validator = FloatValidator(False, 0)
             self._strictValidator = FloatValidator.FloatValidator1()
-            
             self._testPattern = "#,###.#"
-            
             self._max = float(FloatValidator.MAX_VALUE)
-            self._maxPlusOne = float(self._max * 10)
+            self._maxPlusOne = float(float(FloatValidator.MAX_VALUE) * 10)
             self._min = float(FloatValidator.MAX_VALUE * -1)
-            self._minMinusOne = float(self._min * 10)
-            
+            self._minMinusOne = float(float(FloatValidator.MAX_VALUE * -1) * 10)
             self._invalidStrict = [None, "", "X", "X12", "12X", "1X2"]
             self._invalid = [None, "", "X", "X12"]
-            
             self._testNumber = float(1234.5)
             self._testZero = float(0)
             self._validStrict = ["0", "1234.5", "1,234.5"]
-            self._validStrictCompare = [self._testZero, self._testNumber, self._testNumber]
-            self._valid = ["0", "1234.5", "1,234.5", "1,234.5", "1234.5X"]
-            self._validCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber
+            self._validStrictCompare = [
+                float(0),
+                float(1234.5),
+                float(1234.5)
             ]
-            
+            self._valid = [
+                "0",
+                "1234.5",
+                "1,234.5",
+                "1,234.5",
+                "1234.5X"
+            ]
+            self._validCompare = [
+                float(0),
+                float(1234.5),
+                float(1234.5),
+                float(1234.5),
+                float(1234.5)
+            ]
             self._testStringUS = "1,234.5"
             self._testStringDE = "1.234,5"
-            
-            self._localeValue = self._testStringDE
+            self._localeValue = "1.234,5"
             self._localePattern = "#.###,#"
             self._testLocale = 'de_DE.UTF-8'
-            self._localeExpected = self._testNumber
+            self._localeExpected = float(1234.5)
         except Exception as e:
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_FloatValidatorMethods(self) -> None:
+    @pytest.mark.test
+    def testFloatValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -136,7 +137,8 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
 
 
-    def test_FloatSmallestValues(self) -> None:
+    @pytest.mark.test
+    def testFloatSmallestValues(self) -> None:
         pattern = "#.#################################################################"
         precision = max(len(pattern.split('.')[1]), 500)
 
@@ -171,7 +173,8 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         )
     
 
-    def test_FloatRangeMinMax(self) -> None:
+    @pytest.mark.test
+    def testFloatRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")

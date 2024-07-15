@@ -1,2 +1,0 @@
-class TestMoneyFormatter:
-    pass

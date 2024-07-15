@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -19,15 +20,13 @@ import logging
 from typing import *
 from io import StringIO
 from textwrap import dedent
-# Imports End
 
 class GraphColoringBackTrackingTestCase(AbstractColoringTest):
 
-    # Class Fields Begin
-    # Class Fields End
+    __test__ = True
 
-    # Class Methods Begin
-    def test_CrawnGraph(self) -> None:
+    @pytest.mark.test
+    def testCrawnGraph(self) -> None:
         g = UndirectedMutableGrap()
 
         GraphUtils.buildCrownGraph(6, g)
@@ -39,7 +38,8 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest):
         self._checkColoring(g, coloredVertices)
 
     
-    def test_CromaticNumber(self) -> None:
+    @pytest.mark.test
+    def testCromaticNumber(self) -> None:
         two = BaseLabeledVertex("2")
 
         g = CommonsGraph.newUndirectedMutableGraph(
@@ -57,7 +57,8 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest):
         self._checkColoring(g, coloredVertices)
 
     
-    def test_CromaticNumberBiparted(self) -> None:
+    @pytest.mark.test
+    def testCromaticNumberBiparted(self) -> None:
         g1 = UndirectedMutableGraph()
 
         GraphUtils.buildBipartedGraph(100, g1)
@@ -69,7 +70,8 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest):
         self._checkColoring(g1, coloredVertices)
 
     
-    def test_CromaticNumberComplete(self) -> None:
+    @pytest.mark.test
+    def testCromaticNumberComplete(self) -> None:
         g1 = UndirectedMutableGraph()
 
         GraphUtils.buildCompleteGraph(100, g1)
@@ -81,7 +83,8 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest):
         self._checkColoring(g1, coloredVertices)
 
     
-    def test_CromaticNumberSparseGraph(self) -> None:
+    @pytest.mark.test
+    def testCromaticNumberSparseGraph(self) -> None:
         g1 = UndirectedMutableGraph()
 
         for i in range(100):
@@ -94,7 +97,8 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest):
         self._checkColoring(g1, coloredVertices)
     
     
-    def test_EmptyGraph(self) -> None:
+    @pytest.mark.test
+    def testEmptyGraph(self) -> None:
         g = UndirectedMutableGraph()
 
         coloredVertices = CommonsGraph.coloring(g)\
@@ -103,7 +107,8 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest):
         self.assertEqual(0, coloredVertices.getRequiredColors())
 
     
-    def test_NotEnoughtColorGraph(self) -> None:
+    @pytest.mark.test
+    def testNotEnoughtColorGraph(self) -> None:
         with self.assertRaises(NotEnoughColorsException):
             two = BaseLabeledVertex("2")
 
@@ -114,20 +119,23 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest):
                 .withColors(self._createColorsList(1)).applyingBackTrackingAlgorithm0()
 
     
-    def test_NullColorGraph(self) -> None:
+    @pytest.mark.test
+    def testNullColorGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             g = UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]()
             CommonsGraph.coloring(g)\
                 .withColors(None).applyingBackTrackingAlgorithm0()
 
     
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.coloring(None)\
                 .withColors(None).applyingBackTrackingAlgorithm0()
 
     
-    def test_Sudoku(self) -> None:
+    @pytest.mark.test
+    def testSudoku(self) -> None:
         try:
             g1 = UndirectedMutableGraph()
             grid = GraphUtils.buildSudokuGraph(g1)
@@ -158,7 +166,8 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SudokuWithConstraints(self) -> None:
+    @pytest.mark.test
+    def testSudokuWithConstraints(self) -> None:
         try:
             g1 = UndirectedMutableGraph()
             grid = GraphUtils.buildSudokuGraph(g1)
@@ -197,8 +206,6 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest):
             logger.debug(result)
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End
 
 
 class GraphConnectionGraphColoringBackTrackingTestCase(AbstractGraphConnection):

@@ -30,6 +30,24 @@ class URLCodec(BinaryDecoder, BinaryEncoder, StringDecoder, StringEncoder):
     def getEncoding(self) -> str:
         pass
 
+    def decode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def encode(self, obj: typing.Any) -> typing.Any:
+        pass
+
+    def decode(self, str_: str) -> str:
+        pass
+
+    def encode(self, str_: str) -> str:
+        pass
+
+    def decode(self, bytes_: typing.List[int]) -> typing.List[int]:
+        pass
+
+    def encode(self, bytes_: typing.List[int]) -> typing.List[int]:
+        pass
+
     def getDefaultCharset(self) -> str:
         pass
 
@@ -39,31 +57,37 @@ class URLCodec(BinaryDecoder, BinaryEncoder, StringDecoder, StringEncoder):
     def encode3(self, obj: typing.Any) -> typing.Any:
         pass
 
-    def decode2(self, str: str) -> str:
+    def decode2(self, str_: str) -> str:
         pass
 
-    def decode1(self, str: str, charsetName: str) -> str:
+    def decode1(self, str_: str, charsetName: str) -> str:
         pass
 
-    def encode2(self, str: str) -> str:
+    def decode(self, str_: str, charsetName: str) -> str:
         pass
 
-    def encode1(self, str: str, charsetName: str) -> str:
+    def encode2(self, str_: str) -> str:
         pass
 
-    def decode0(self, bytes: typing.List[int]) -> typing.List[int]:
+    def encode1(self, str_: str, charsetName: str) -> str:
         pass
 
-    def encode0(self, bytes: typing.List[int]) -> typing.List[int]:
+    def encode(self, str_: str, charsetName: str) -> str:
+        pass
+
+    def decode0(self, bytes_: typing.List[int]) -> typing.List[int]:
+        pass
+
+    def encode0(self, bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod
-    def decodeUrl(bytes: typing.List[int]) -> typing.List[int]:
+    def decodeUrl(bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod
     def encodeUrl(
-        urlsafe: typing.List[bool], bytes: typing.List[int]
+        urlsafe: typing.List[bool], bytes_: typing.List[int]
     ) -> typing.List[int]:
         pass
 

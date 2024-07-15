@@ -16,7 +16,7 @@ from io import IOBase
 class CSVPrinter(io.BufferedIOBase):
 
     # Class Fields Begin
-    __appendable: io.TextIOBase = None
+    __appendable: typing.Union[typing.List, io.TextIOBase] = None
     __format: CSVFormat = None
     __newRecord: bool = None
     # Class Fields End
@@ -49,10 +49,10 @@ class CSVPrinter(io.BufferedIOBase):
     def printComment(self, comment: str) -> None:
         pass
 
-    def print(self, value: typing.Any) -> None:
+    def print_(self, value: typing.Any) -> None:
         pass
 
-    def getOut(self) -> io.TextIOBase:
+    def getOut(self) -> typing.Union[typing.List, io.TextIOBase]:
         pass
 
     def close1(self, flush: bool) -> None:
@@ -61,7 +61,9 @@ class CSVPrinter(io.BufferedIOBase):
     def close0(self) -> None:
         pass
 
-    def __init__(self, appendable: io.TextIOBase, format: CSVFormat) -> None:
+    def __init__(
+        self, appendable: typing.Union[typing.List, io.TextIOBase], format_: CSVFormat
+    ) -> None:
         pass
 
     def __printRecordObject(self, value: typing.Any) -> None:

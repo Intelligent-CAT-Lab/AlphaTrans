@@ -1,2 +1,0 @@
-class BadInteger:
-    pass

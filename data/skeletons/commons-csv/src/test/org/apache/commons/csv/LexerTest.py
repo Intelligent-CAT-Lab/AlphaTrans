@@ -6,12 +6,13 @@ from src.main.org.apache.commons.csv.Lexer import *
 from src.main.org.apache.commons.csv.ExtendedBufferedReader import *
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import unittest
 import io
 
 # Imports End
 
 
-class LexerTest:
+class LexerTest(unittest.TestCase):
 
     # Class Fields Begin
     __formatWithEscaping: CSVFormat = None
@@ -33,7 +34,7 @@ class LexerTest:
     def setUp(self) -> None:
         pass
 
-    def __createLexer(self, input: str, format: CSVFormat) -> Lexer:
+    def __createLexer(self, input_: str, format_: CSVFormat) -> Lexer:
         pass
 
     # Class Methods End

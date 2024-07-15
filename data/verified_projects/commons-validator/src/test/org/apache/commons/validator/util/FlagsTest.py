@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.util.Flags import *
 import unittest
 
@@ -12,17 +14,20 @@ class FlagsTest(unittest.TestCase):
         super().__init__(methodName)
     
 
-    def test_HashCode(self) -> None:
+    @pytest.mark.test
+    def testHashCode(self) -> None:
         f = Flags(1, 45)
         self.assertEqual(f.hashCode(), 45)
     
 
-    def test_GetFlags(self) -> None:
+    @pytest.mark.test
+    def testGetFlags(self) -> None:
         f = Flags(1, 45)
         self.assertEquals(f.getFlags(), 45)
     
 
-    def test_IsOnOff(self) -> None:
+    @pytest.mark.test
+    def testIsOnOff(self) -> None:
         f = Flags(0, 0)
         f.turnOn(FlagsTest.__LONG_FLAG)
         f.turnOn(FlagsTest.__INT_FLAG)
@@ -35,54 +40,64 @@ class FlagsTest(unittest.TestCase):
         self.assertTrue(f.isOff(FlagsTest.__LONG_FLAG_2))
     
 
-    def test_TurnOnOff(self) -> None:
+    @pytest.mark.test
+    def testTurnOnOff(self) -> None:
         pass
 
     
-    def test_TurnOff(self) -> None:
+    @pytest.mark.test
+    def testTurnOff(self) -> None:
         pass
 
 
-    def test_TurnOffAll(self) -> None:
+    @pytest.mark.test
+    def testTurnOffAll(self) -> None:
         f = Flags(1, 98432)
         f.turnOffAll()
         self.assertEqual(0, f.getFlags())
 
     
-    def test_Clear(self) -> None:
+    @pytest.mark.test
+    def testClear(self) -> None:
         f = Flags(1, 98432)
         f.clear()
         self.assertEqual(0, f.getFlags())
     
 
-    def test_TurnOnAll(self) -> None:
+    @pytest.mark.test
+    def testTurnOnAll(self) -> None:
         f = Flags(0, 0)
         f.turnOnAll()
         self.assertEqual(~0, f.getFlags())
     
 
-    def test_IsOn_isFalseWhenNotAllFlagsInArgumentAreOn(self) -> None:
+    @pytest.mark.test
+    def testIsOn_isFalseWhenNotAllFlagsInArgumentAreOn(self) -> None:
         first = Flags(1, 1)
         firstAndSecond = 3
 
         self.assertFalse(first.isOn(firstAndSecond))
     
 
-    def test_IsOn_isTrueWhenHighOrderBitIsSetAndQueried(self) -> None:
+    @pytest.mark.test
+    def testIsOn_isTrueWhenHighOrderBitIsSetAndQueried(self) -> None:
         allOn = Flags(1, ~0)
         highOrderBit = 0x8000000000000000
 
         self.assertTrue(allOn.isOn(highOrderBit))
     
 
-    def test_Clone(self) -> None:
+    @pytest.mark.test
+    def testClone(self) -> None:
         pass
     
 
-    def test_EqualsObject(self) -> None:
+    @pytest.mark.test
+    def testEqualsObject(self) -> None:
         pass
 
 
+    @pytest.mark.test
     def testToString(self) -> None:
         f = Flags(0, 0)
         s = f.toString()

@@ -16,12 +16,13 @@ from src.main.org.apache.commons.graph.SpanningTree import *
 from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import io
 
 # Imports End
 
 
-class PrimTestCase:
+class PrimTestCase(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End
@@ -50,7 +51,7 @@ class PrimTestCase:
 
     @staticmethod
     def __internalPrimAssertion(
-        input: UndirectedMutableGraph[
+        input_: UndirectedMutableGraph[
             BaseLabeledVertex, BaseLabeledWeightedEdge[float]
         ],
         source: BaseLabeledVertex,

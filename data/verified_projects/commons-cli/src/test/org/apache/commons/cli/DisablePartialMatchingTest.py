@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.DefaultParser import *
@@ -6,16 +7,11 @@ from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
 
-# Imports End
-
 
 class DisablePartialMatchingTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def test_DisablePartialMatching(self) -> None:
+    @pytest.mark.test
+    def testDisablePartialMatching(self) -> None:
         try:
             parser = DefaultParser(0, False, None)
             options = Options()
@@ -39,7 +35,8 @@ class DisablePartialMatchingTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    def test_RegularPartialMatching(self) -> None:
+    @pytest.mark.test
+    def testRegularPartialMatching(self) -> None:
         try:
             parser = DefaultParser(2, False, None)
             options = Options()
@@ -62,5 +59,3 @@ class DisablePartialMatchingTest(unittest.TestCase):
             )
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End

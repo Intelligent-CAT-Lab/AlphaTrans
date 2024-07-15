@@ -1,0 +1,2 @@
+class JansiLoaderTest:
+    pass

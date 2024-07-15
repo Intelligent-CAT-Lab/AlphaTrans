@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.codec.net.RFC1522Codec import *
 from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.CharEncoding import *
+import unittest
 import typing
 from typing import *
 import io
@@ -20,16 +21,16 @@ class RFC1522TestCodec(RFC1522Codec):
     def _getEncoding(self) -> str:
         pass
 
-    def _doEncoding(self, bytes: typing.List[int]) -> typing.List[int]:
+    def _doEncoding(self, bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
-    def _doDecoding(self, bytes: typing.List[int]) -> typing.List[int]:
+    def _doDecoding(self, bytes_: typing.List[int]) -> typing.List[int]:
         pass
 
     # Class Methods End
 
 
-class RFC1522CodecTest:
+class RFC1522CodecTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

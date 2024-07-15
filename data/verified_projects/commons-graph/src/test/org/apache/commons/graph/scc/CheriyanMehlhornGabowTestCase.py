@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -11,27 +12,29 @@ from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-import typing
 from typing import *
-# Imports End
+
 
 class CheriyanMehlhornGabowTestCase(unittest.TestCase):
 
-    def test_EmptyGraph(self) -> None:
+    @pytest.mark.test
+    def testEmptyGraph(self) -> None:
         graph = DirectedMutableGraph()
 
         CommonsGraph.findStronglyConnectedComponent(graph)\
             .applyingCheriyanMehlhornGabow()
 
     
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = None
             CommonsGraph.findStronglyConnectedComponent(graph)\
                 .applyingCheriyanMehlhornGabow()
 
     
-    def test_Sparse(self) -> None:
+    @pytest.mark.test
+    def testSparse(self) -> None:
         graph = CommonsGraph.newDirectedMutableGraph(
             GraphConnectionCheriyanMehlhornGabowTestCaseTestSparse()
         )
@@ -44,7 +47,8 @@ class CheriyanMehlhornGabowTestCase(unittest.TestCase):
         self.assertEqual(len(actual), expected)
 
     
-    def test_VerifyHasStronglyConnectedComponents(self) -> None:
+    @pytest.mark.test
+    def testVerifyHasStronglyConnectedComponents(self) -> None:
         a = BaseLabeledVertex("A")
         b = BaseLabeledVertex("B")
         c = BaseLabeledVertex("C")
@@ -75,7 +79,6 @@ class CheriyanMehlhornGabowTestCase(unittest.TestCase):
         self.assertFalse(len(actual) == 0)
         self.assertEqual(expected, actual)
 
-    # Class Methods End
 
 
 class GraphConnectionCheriyanMehlhornGabowTestCaseTestSparse(AbstractGraphConnection):

@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
 from src.main.org.apache.commons.graph.builder.AbstractGraphConnection import *
@@ -22,15 +23,12 @@ import unittest
 import pickle
 from typing import *
 import os
-# Imports End
+
 
 class GraphSerializationTestCase(unittest.TestCase):
 
-    # Class Fields Begin
     __FILE_NAME: str = "target/serializedGraph.dat"
-    # Class Fields End
 
-    # Class Methods Begin
 
     @staticmethod
     def __buildGraphConnections() -> GraphConnection:
@@ -51,7 +49,7 @@ class GraphSerializationTestCase(unittest.TestCase):
             with open(GraphSerializationTestCase.__FILE_NAME, "rb") as fin:
                 cloned = pickle.load(fin)
 
-            GraphSerializationTestCase.assertEqual(g, cloned)
+            unittest.TestCase().assertEqual(g, cloned)
 
         except (FileNotFoundError, IOError, OSError, ModuleNotFoundError, ImportError) as e:
             # Fail the test case with the appropriate error message
@@ -64,7 +62,8 @@ class GraphSerializationTestCase(unittest.TestCase):
             os.remove(f)
 
     
-    def test_SerializeDirectedGraph(self) -> None:
+    @pytest.mark.test
+    def testSerializeDirectedGraph(self) -> None:
         try:
             g = CommonsGraph.newDirectedMutableGraph(GraphSerializationTestCase\
                 .__buildGraphConnections())
@@ -73,7 +72,8 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SerializeDirectedWeightdGraph(self) -> None:
+    @pytest.mark.test
+    def testSerializeDirectedWeightdGraph(self) -> None:
         try:
             g = CommonsGraph.newDirectedMutableGraph(GraphSerializationTestCase\
                 .__buildWeightedGraphConnections())
@@ -82,7 +82,8 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SerializePath(self) -> None:
+    @pytest.mark.test
+    def testSerializePath(self) -> None:
         try:
             start = BaseLabeledVertex("start")
             goal = BaseLabeledVertex("goal")
@@ -107,7 +108,8 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_SerializeSpanningTree(self) -> None:
+    @pytest.mark.test
+    def testSerializeSpanningTree(self) -> None:
         try:
             spanningTree = MutableSpanningTree(
                 DoubleWeightBaseOperations(), BaseWeightedEdge()
@@ -121,7 +123,8 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_SerializeSyncronyzedDirectedWeightdGraph(self) -> None:
+    @pytest.mark.test
+    def testSerializeSyncronyzedDirectedWeightdGraph(self) -> None:
         try:
             g = CommonsGraph.synchronize2(
                 CommonsGraph.newDirectedMutableGraph(GraphSerializationTestCase\
@@ -133,7 +136,8 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SerializeUndirectedGraph(self) -> None:
+    @pytest.mark.test
+    def testSerializeUndirectedGraph(self) -> None:
         try:
             g = CommonsGraph.newUndirectedMutableGraph(GraphSerializationTestCase\
                 .__buildGraphConnections())
@@ -143,7 +147,8 @@ class GraphSerializationTestCase(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_SerializeUndirectedWeightdGraph(self) -> None:
+    @pytest.mark.test
+    def testSerializeUndirectedWeightdGraph(self) -> None:
         try:
             g = CommonsGraph.newUndirectedMutableGraph(GraphSerializationTestCase\
                 .__buildWeightedGraphConnections())
@@ -152,7 +157,6 @@ class GraphSerializationTestCase(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
-    # Class Methods End
 
 
 class GraphConnectionGraphSerializationTestCaseBuildGraphConnections(AbstractGraphConnection):

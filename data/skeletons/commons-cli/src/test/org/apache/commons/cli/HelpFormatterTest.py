@@ -5,13 +5,14 @@ from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.OptionGroup import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
+import unittest
 import os
 import io
 
 # Imports End
 
 
-class HelpFormatterTest:
+class HelpFormatterTest(unittest.TestCase):
 
     # Class Fields Begin
     __EOL: str = None

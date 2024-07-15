@@ -5,13 +5,14 @@ from src.main.org.apache.commons.codec.language.DaitchMokotoffSoundex import *
 from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
+import unittest
 import os
 import io
 
 # Imports End
 
 
-class DaitchMokotoffSoundexTest(StringEncoderAbstractTest):
+class DaitchMokotoffSoundexTest(StringEncoderAbstractTest, unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

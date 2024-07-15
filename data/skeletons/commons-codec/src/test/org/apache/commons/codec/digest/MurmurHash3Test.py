@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.codec.digest.MurmurHash3 import *
 from src.main.org.apache.commons.codec.binary.StringUtils import *
+import unittest
 import typing
 from typing import *
 import io
@@ -10,7 +11,7 @@ import io
 # Imports End
 
 
-class MurmurHash3Test:
+class MurmurHash3Test(unittest.TestCase):
 
     # Class Fields Begin
     __RANDOM_BYTES: typing.List[int] = None
@@ -106,18 +107,18 @@ class MurmurHash3Test:
 
     @staticmethod
     def __assertIncrementalHash32x86(
-        bytes: typing.List[int], seed: int, blocks: typing.List[int]
+        bytes_: typing.List[int], seed: int, blocks: typing.List[int]
     ) -> None:
         pass
 
     @staticmethod
     def __assertIncrementalHash32(
-        bytes: typing.List[int], seed: int, blocks: typing.List[int]
+        bytes_: typing.List[int], seed: int, blocks: typing.List[int]
     ) -> None:
         pass
 
     @staticmethod
-    def __negativeBytes(bytes: typing.List[int], start: int, length: int) -> bool:
+    def __negativeBytes(bytes_: typing.List[int], start: int, length: int) -> bool:
         pass
 
     @staticmethod

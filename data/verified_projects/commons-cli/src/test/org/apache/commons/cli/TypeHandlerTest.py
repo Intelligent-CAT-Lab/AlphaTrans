@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.TypeHandler import *
 from src.main.org.apache.commons.cli.PatternOptionBuilder import *
 from src.main.org.apache.commons.cli.ParseException import *
@@ -6,7 +7,6 @@ import unittest
 from urllib.parse import ParseResult, SplitResult, DefragResult, urlunparse
 from typing import *
 
-# Imports End
 
 class TypeHandlerTest(unittest.TestCase):
 
@@ -17,8 +17,9 @@ class TypeHandlerTest(unittest.TestCase):
         def __init__(self) -> None:
             raise AssertionError("This class should not be instantiated.")
 
-    # Class Methods Begin
-    def test_CreateValueClass(self) -> None:
+    
+    @pytest.mark.test
+    def testCreateValueClass(self) -> None:
         try:
             clazz = TypeHandler.createValue0(
                 self.Instantiable.__name__, PatternOptionBuilder.CLASS_VALUE)
@@ -27,7 +28,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_CreateValueClass_notFound(self) -> None:
+    @pytest.mark.test
+    def testCreateValueClass_notFound(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0("what ever", PatternOptionBuilder.CLASS_VALUE)
@@ -35,7 +37,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
 
     
-    def test_CreateValueDate(self) -> None:
+    @pytest.mark.test
+    def testCreateValueDate(self) -> None:
         try:
             with self.assertRaises((RuntimeError, NotImplementedError)):
                 TypeHandler.createValue0("what ever", PatternOptionBuilder.DATE_VALUE)
@@ -43,7 +46,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected RuntimeError or NotImplementedError, got: {e}")
     
     
-    def test_CreateValueExistingFile(self) -> None:
+    @pytest.mark.test
+    def testCreateValueExistingFile(self) -> None:
         try:
             with TypeHandler.createValue0(
                 "src/test/resources/org/apache/commons/cli/existing-readable.file",
@@ -54,7 +58,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_CreateValueExistingFile_nonExistingFile(self) -> None:
+    @pytest.mark.test
+    def testCreateValueExistingFile_nonExistingFile(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0(
@@ -64,7 +69,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
     
     
-    def test_CreateValueFile(self) -> None:
+    @pytest.mark.test
+    def testCreateValueFile(self) -> None:
         try:
             result = TypeHandler.createValue0(
                 "some-file.txt", PatternOptionBuilder.FILE_VALUE
@@ -74,7 +80,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_CreateValueFiles(self) -> None:
+    @pytest.mark.test
+    def testCreateValueFiles(self) -> None:
         try:
             with self.assertRaises((RuntimeError, NotImplementedError)):
                 TypeHandler.createValue0("some.files", PatternOptionBuilder.FILES_VALUE)
@@ -82,7 +89,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected RuntimeError or NotImplementedError, got: {e}")
     
     
-    def test_CreateValueInteger_failure(self) -> None:
+    @pytest.mark.test
+    def testCreateValueInteger_failure(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0("just-a-string", int)
@@ -90,7 +98,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
 
     
-    def test_CreateValueNumber_Double(self) -> None:
+    @pytest.mark.test
+    def testCreateValueNumber_Double(self) -> None:
         try:
             self.assertEqual(
                 1.5, TypeHandler.createValue0("1.5", PatternOptionBuilder.NUMBER_VALUE)
@@ -99,7 +108,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_CreateValueNumber_Long(self) -> None:
+    @pytest.mark.test
+    def testCreateValueNumber_Long(self) -> None:
         try:
             self.assertEqual(
                 15, TypeHandler.createValue0("15", PatternOptionBuilder.NUMBER_VALUE)
@@ -108,7 +118,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_CreateValueNumber_noNumber(self) -> None:
+    @pytest.mark.test
+    def testCreateValueNumber_noNumber(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0("not a number", PatternOptionBuilder.NUMBER_VALUE)
@@ -116,7 +127,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
     
     
-    def test_CreateValueObject_InstantiableClass(self) -> None:
+    @pytest.mark.test
+    def testCreateValueObject_InstantiableClass(self) -> None:
         try:
             result = TypeHandler.createValue0(
                 self.Instantiable.__name__, PatternOptionBuilder.OBJECT_VALUE)
@@ -125,7 +137,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
 
-    def test_CreateValueObject_notInstantiableClass(self) -> None:
+    @pytest.mark.test
+    def testCreateValueObject_notInstantiableClass(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0(self.NotInstantiable.__name__, PatternOptionBuilder.OBJECT_VALUE)
@@ -133,7 +146,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
 
     
-    def test_CreateValueObject_unknownClass(self) -> None:
+    @pytest.mark.test
+    def testCreateValueObject_unknownClass(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0("unknown", PatternOptionBuilder.OBJECT_VALUE)
@@ -141,7 +155,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
 
     
-    def test_CreateValueString(self) -> None:
+    @pytest.mark.test
+    def testCreateValueString(self) -> None:
         try:
             self.assertEqual(
                 "String",
@@ -151,7 +166,8 @@ class TypeHandlerTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_CreateValueURL(self) -> None:
+    @pytest.mark.test
+    def testCreateValueURL(self) -> None:
         try:
             urlString = "https://commons.apache.org"
             result = TypeHandler.createValue0(urlString, PatternOptionBuilder.URL_VALUE)
@@ -162,12 +178,10 @@ class TypeHandlerTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
     
-    def test_CreateValueURL_malformed(self) -> None:
+    @pytest.mark.test
+    def testCreateValueURL_malformed(self) -> None:
         try:
             with self.assertRaises(ParseException):
                 TypeHandler.createValue0("malformed-url", PatternOptionBuilder.URL_VALUE)
         except Exception as e:
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
-
-    # Class Methods End
-

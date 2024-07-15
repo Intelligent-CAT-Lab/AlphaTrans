@@ -1,0 +1,2 @@
+class UniformDataGenerator:
+    pass

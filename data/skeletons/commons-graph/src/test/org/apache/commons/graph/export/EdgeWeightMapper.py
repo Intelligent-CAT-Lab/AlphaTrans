@@ -15,7 +15,7 @@ class EdgeWeightMapper(Mapper):
     # Class Fields End
 
     # Class Methods Begin
-    def map(self, input: BaseLabeledWeightedEdge[float]) -> float:
+    def map_(self, input_: BaseLabeledWeightedEdge[float]) -> float:
         pass
 
     # Class Methods End

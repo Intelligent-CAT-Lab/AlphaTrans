@@ -1,0 +1,2 @@
+class TestLongVariableByte:
+    pass

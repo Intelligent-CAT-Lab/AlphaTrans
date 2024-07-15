@@ -1,20 +1,16 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
 import unittest
 import io
 
-# Imports End
-
 
 class BugCLI18Test(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def test_CLI18(self) -> None:
+    @pytest.mark.test
+    def testCLI18(self) -> None:
         options = Options()
         options.addOption0(Option(0, "a", "aaa", "aaaaaaa", False, None))
         options.addOption0(
@@ -49,5 +45,3 @@ class BugCLI18Test(unittest.TestCase):
                 "rarrr",
             True
         )
-
-    # Class Methods End

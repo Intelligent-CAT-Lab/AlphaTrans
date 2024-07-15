@@ -1,2 +1,0 @@
-class new ClassOwnership(...) { ... }:
-    pass

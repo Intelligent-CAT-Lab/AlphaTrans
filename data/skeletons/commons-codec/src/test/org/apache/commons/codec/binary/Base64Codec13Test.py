@@ -8,6 +8,7 @@ from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.Decoder import *
 from src.main.org.apache.commons.codec.BinaryEncoder import *
 from src.main.org.apache.commons.codec.BinaryDecoder import *
+import unittest
 import typing
 from typing import *
 import io
@@ -15,11 +16,11 @@ import io
 # Imports End
 
 
-class Base64Codec13Test:
+class Base64Codec13Test(unittest.TestCase):
 
     # Class Fields Begin
-    __STRINGS: typing.List[str] = None
-    __CHUNKED_STRINGS: typing.List[str] = None
+    __STRINGS: typing.List[typing.List[str]] = None
+    __CHUNKED_STRINGS: typing.List[typing.List[str]] = None
     __BYTES: typing.List[typing.List[int]] = None
     # Class Fields End
 

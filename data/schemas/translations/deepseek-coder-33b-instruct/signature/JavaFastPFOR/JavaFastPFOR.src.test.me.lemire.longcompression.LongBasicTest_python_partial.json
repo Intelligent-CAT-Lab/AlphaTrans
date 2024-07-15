@@ -1,0 +1,1522 @@
+{
+    "path": "java_projects/cleaned_final_projects/JavaFastPFOR/src/test/java/me/lemire/longcompression/LongBasicTest.java",
+    "imports": {
+        "13-13:import Arrays": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "15-15:import Test": {
+            "start": 15,
+            "end": 15,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "17-17:import BinaryPacking": {
+            "start": 17,
+            "end": 17,
+            "body": [
+                "import me.lemire.integercompression.BinaryPacking;\n"
+            ]
+        },
+        "21-21:import IntWrapper": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import me.lemire.integercompression.IntWrapper;\n"
+            ]
+        },
+        "18-18:import Composition": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import me.lemire.integercompression.Composition;\n"
+            ]
+        },
+        "19-19:import FastPFOR": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import me.lemire.integercompression.FastPFOR;\n"
+            ]
+        },
+        "20-20:import FastPFOR128": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import me.lemire.integercompression.FastPFOR128;\n"
+            ]
+        },
+        "22-22:import JustCopy": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import me.lemire.integercompression.JustCopy;\n"
+            ]
+        },
+        "23-23:import NewPFD": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import me.lemire.integercompression.NewPFD;\n"
+            ]
+        },
+        "24-24:import NewPFDS16": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import me.lemire.integercompression.NewPFDS16;\n"
+            ]
+        },
+        "25-25:import NewPFDS9": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import me.lemire.integercompression.NewPFDS9;\n"
+            ]
+        },
+        "26-26:import OptPFD": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import me.lemire.integercompression.OptPFD;\n"
+            ]
+        },
+        "27-27:import OptPFDS16": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import me.lemire.integercompression.OptPFDS16;\n"
+            ]
+        },
+        "28-28:import OptPFDS9": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import me.lemire.integercompression.OptPFDS9;\n"
+            ]
+        },
+        "29-29:import Simple9": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import me.lemire.integercompression.Simple9;\n"
+            ]
+        },
+        "30-30:import VariableByte": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import me.lemire.integercompression.VariableByte;\n"
+            ]
+        },
+        "31-31:import Delta": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import me.lemire.integercompression.differential.Delta;\n"
+            ]
+        },
+        "32-32:import IntegratedBinaryPacking": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedBinaryPacking;\n"
+            ]
+        },
+        "33-33:import IntegratedComposition": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedComposition;\n"
+            ]
+        },
+        "34-34:import IntegratedVariableByte": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedVariableByte;\n"
+            ]
+        },
+        "35-35:import LongDelta": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import me.lemire.longcompression.differential.LongDelta;\n"
+            ]
+        },
+        "36-36:import LongClusteredDataGenerator": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import me.lemire.longcompression.synth.LongClusteredDataGenerator;\n"
+            ]
+        },
+        "10-10:import static Assert.assertArrayEquals": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import static org.junit.Assert.assertArrayEquals;\n"
+            ]
+        },
+        "11-11:import static Assert.assertEquals": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        }
+    },
+    "classes": {
+        "LongBasicTest": {
+            "start": 44,
+            "end": 44,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "330-345:fastPfor128Test": {
+                    "start": 330,
+                    "end": 345,
+                    "body": [
+                        "    public void fastPfor128Test() {\n",
+                        "        // proposed by Stefan Ackermann (https://github.com/Stivo)\n",
+                        "    \tfor (LongCODEC codec : codecs) {\n",
+                        "\t        int N = FastPFOR128.BLOCK_SIZE;\n",
+                        "\t        long[] data = new long[N];\n",
+                        "\t        for (int i = 0; i < N; i++)\n",
+                        "\t            data[i] = 0;\n",
+                        "\t        data[126] = -1;\n",
+                        "\t        long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));\n",
+                        "\t        long[] answer = LongTestUtils.uncompress(codec, comp, N);\n",
+                        "\t        for (int k = 0; k < N; ++k)\n",
+                        "\t            if (answer[k] != data[k])\n",
+                        "\t                throw new RuntimeException(\"bug \" + k + \" \" + answer[k]\n",
+                        "\t                        + \" != \" + data[k]);\n",
+                        "    \t}\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "fastPfor128Test()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "79-85:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "87-93:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def fastPfor128Test(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "309-324:fastPforTest": {
+                    "start": 309,
+                    "end": 324,
+                    "body": [
+                        "    public void fastPforTest() {\n",
+                        "        // proposed by Stefan Ackermann (https://github.com/Stivo)\n",
+                        "    \tfor (LongCODEC codec : codecs) {\n",
+                        "\t        int N = FastPFOR.BLOCK_SIZE;\n",
+                        "\t        long[] data = new long[N];\n",
+                        "\t        for (int i = 0; i < N; i++)\n",
+                        "\t            data[i] = 0;\n",
+                        "\t        data[126] = -1;\n",
+                        "\t        long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));\n",
+                        "\t        long[] answer = LongTestUtils.uncompress(codec, comp, N);\n",
+                        "\t        for (int k = 0; k < N; ++k)\n",
+                        "\t            if (answer[k] != data[k])\n",
+                        "\t                throw new RuntimeException(\"bug \" + k + \" \" + answer[k]\n",
+                        "\t                        + \" != \" + data[k]);\n",
+                        "    \t}\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "fastPforTest()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "79-85:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "87-93:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def fastPforTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "115-162:varyingLengthTest2": {
+                    "start": 115,
+                    "end": 162,
+                    "body": [
+                        "    public void varyingLengthTest2() {\n",
+                        "        int N = 128;\n",
+                        "        long[] data = new long[N];\n",
+                        "        data[127] = -1;\n",
+                        "        for (LongCODEC c : codecs) {\n",
+                        "            System.out.println(\"[BasicTest.varyingLengthTest2] codec = \" + c);\n",
+                        "            try {\n",
+                        "                // CODEC Simple9 is limited to \"small\" integers.\n",
+                        "                if (c.getClass().equals(\n",
+                        "                        Class.forName(\"me.lemire.integercompression.Simple9\")))\n",
+                        "                    continue;\n",
+                        "            } catch (ClassNotFoundException e) {\n",
+                        "                e.printStackTrace();\n",
+                        "            }\n",
+                        "            try {\n",
+                        "                // CODEC Simple16 is limited to \"small\" integers.\n",
+                        "                if (c.getClass().equals(\n",
+                        "                        Class.forName(\"me.lemire.integercompression.Simple16\")))\n",
+                        "                    continue;\n",
+                        "            } catch (ClassNotFoundException e) {\n",
+                        "                e.printStackTrace();\n",
+                        "            }\n",
+                        "            try {\n",
+                        "                // CODEC GroupSimple9 is limited to \"small\" integers.\n",
+                        "                if (c.getClass().equals(\n",
+                        "                        Class.forName(\"me.lemire.integercompression.GroupSimple9\")))\n",
+                        "                    continue;\n",
+                        "            } catch (ClassNotFoundException e) {\n",
+                        "                e.printStackTrace();\n",
+                        "            }\n",
+                        "\n",
+                        "            for (int L = 1; L <= 128; L++) {\n",
+                        "                long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));\n",
+                        "                long[] answer = LongTestUtils.uncompress(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "            for (int L = 128; L <= N; L *= 2) {\n",
+                        "                long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));\n",
+                        "                long[] answer = LongTestUtils.uncompress(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest2()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "79-85:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "87-93:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def varyingLengthTest2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "81-109:varyingLengthTest": {
+                    "start": 81,
+                    "end": 109,
+                    "body": [
+                        "    public void varyingLengthTest() {\n",
+                        "        int N = 4096;\n",
+                        "        long[] data = new long[N];\n",
+                        "        for (int k = 0; k < N; ++k)\n",
+                        "            data[k] = k;\n",
+                        "        for (LongCODEC c : codecs) {\n",
+                        "            System.out.println(\"[BasicTest.varyingLengthTest] codec = \" + c);\n",
+                        "            for (int L = 1; L <= 128; L++) {\n",
+                        "                long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));\n",
+                        "                long[] answer = LongTestUtils.uncompress(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "            for (int L = 128; L <= N; L *= 2) {\n",
+                        "                long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));\n",
+                        "                long[] answer = LongTestUtils.uncompress(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k]) {\n",
+                        "                        System.out.println(Arrays.toString(Arrays.copyOf(\n",
+                        "                                answer, L)));\n",
+                        "                        System.out.println(Arrays.toString(Arrays.copyOf(data,\n",
+                        "                                L)));\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "                    }\n",
+                        "            }\n",
+                        "\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "79-85:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "87-93:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def varyingLengthTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "54-76:saulTest": {
+                    "start": 54,
+                    "end": 76,
+                    "body": [
+                        "\tpublic void saulTest() {\n",
+                        "\t\tfor (LongCODEC C : codecs) {\n",
+                        "\t\t\tfor (int x = 0; x < 50; ++x) {\n",
+                        "\t\t\t\tlong[] a = { 2, 3, 4, 5 };\n",
+                        "\t\t\t\tlong[] b = new long[90];\n",
+                        "\t\t\t\tlong[] c = new long[a.length];\n",
+                        "\n",
+                        "\t\t\t\tIntWrapper aOffset = new IntWrapper(0);\n",
+                        "\t\t\t\tIntWrapper bOffset = new IntWrapper(x);\n",
+                        "\t\t\t\tC.compress(a, aOffset, a.length, b, bOffset);\n",
+                        "\t\t\t\tint len = bOffset.get() - x;\n",
+                        "\n",
+                        "\t\t\t\tbOffset.set(x);\n",
+                        "\t\t\t\tIntWrapper cOffset = new IntWrapper(0);\n",
+                        "\t\t\t\tC.uncompress(b, bOffset, len, c, cOffset);\n",
+                        "\t\t\t\tif(!Arrays.equals(a, c)) {\n",
+                        "\t\t\t\t\tSystem.out.println(\"Problem with \"+C);\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tassertArrayEquals(a, c);\n",
+                        "\n",
+                        "\t\t\t}\n",
+                        "\t\t}\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "saulTest()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "38-40:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "59-61:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def saulTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "241-269:testUnsorted": {
+                    "start": 241,
+                    "end": 269,
+                    "body": [
+                        "    public void testUnsorted(LongCODEC codec) {\n",
+                        "        int[] lengths = { 133, 1026, 1333333 };\n",
+                        "        for (int N : lengths) {\n",
+                        "            long[] data = new long[N];\n",
+                        "            // initialize the data (most will be small)\n",
+                        "            for (int k = 0; k < N; k += 1)\n",
+                        "                data[k] = 3;\n",
+                        "            // throw some larger values\n",
+                        "            for (int k = 0; k < N; k += 5)\n",
+                        "                data[k] = 100;\n",
+                        "            for (int k = 0; k < N; k += 533)\n",
+                        "                data[k] = 10000;\n",
+                        "            data[5] = -311;\n",
+                        "            // could need more compressing\n",
+                        "            long[] compressed = new long[(int) Math.ceil(N * 1.01) + 1024];\n",
+                        "            IntWrapper inputoffset = new IntWrapper(0);\n",
+                        "            IntWrapper outputoffset = new IntWrapper(0);\n",
+                        "            codec.compress(data, inputoffset, data.length, compressed,\n",
+                        "                    outputoffset);\n",
+                        "            // we can repack the data: (optional)\n",
+                        "            compressed = Arrays.copyOf(compressed, outputoffset.intValue());\n",
+                        "\n",
+                        "            long[] recovered = new long[N];\n",
+                        "            IntWrapper recoffset = new IntWrapper(0);\n",
+                        "            codec.uncompress(compressed, new IntWrapper(0), compressed.length,\n",
+                        "                    recovered, recoffset);\n",
+                        "            assertArrayEquals(data, recovered);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted(LongCODEC)",
+                    "parameters": [
+                        "codec"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "38-40:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "59-61:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def testUnsorted(self, codec: LongCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "288-303:testUnsorted3": {
+                    "start": 288,
+                    "end": 303,
+                    "body": [
+                        "    private void testUnsorted3(LongCODEC codec) {\n",
+                        "        long[] data = new long[128];\n",
+                        "        data[127] = -1;\n",
+                        "        long[] compressed = new long[1024];\n",
+                        "        IntWrapper inputoffset = new IntWrapper(0);\n",
+                        "        IntWrapper outputoffset = new IntWrapper(0);\n",
+                        "        codec.compress(data, inputoffset, data.length, compressed, outputoffset);\n",
+                        "        // we can repack the data: (optional)\n",
+                        "        compressed = Arrays.copyOf(compressed, outputoffset.intValue());\n",
+                        "\n",
+                        "        long[] recovered = new long[128];\n",
+                        "        IntWrapper recoffset = new IntWrapper(0);\n",
+                        "        codec.uncompress(compressed, new IntWrapper(0), compressed.length,\n",
+                        "                recovered, recoffset);\n",
+                        "        assertArrayEquals(data, recovered);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted3(LongCODEC)",
+                    "parameters": [
+                        "codec"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "38-40:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "59-61:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def __testUnsorted3(self, codec: LongCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "271-286:testUnsorted2": {
+                    "start": 271,
+                    "end": 286,
+                    "body": [
+                        "    private void testUnsorted2(LongCODEC codec) {\n",
+                        "        long[] data = new long[128];\n",
+                        "        data[5] = -1;\n",
+                        "        long[] compressed = new long[1024];\n",
+                        "        IntWrapper inputoffset = new IntWrapper(0);\n",
+                        "        IntWrapper outputoffset = new IntWrapper(0);\n",
+                        "        codec.compress(data, inputoffset, data.length, compressed, outputoffset);\n",
+                        "        // we can repack the data: (optional)\n",
+                        "        compressed = Arrays.copyOf(compressed, outputoffset.intValue());\n",
+                        "\n",
+                        "        long[] recovered = new long[128];\n",
+                        "        IntWrapper recoffset = new IntWrapper(0);\n",
+                        "        codec.uncompress(compressed, new IntWrapper(0), compressed.length,\n",
+                        "                recovered, recoffset);\n",
+                        "        assertArrayEquals(data, recovered);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted2(LongCODEC)",
+                    "parameters": [
+                        "codec"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "38-40:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "59-61:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def __testUnsorted2(self, codec: LongCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "197-235:testCodec": {
+                    "start": 197,
+                    "end": 235,
+                    "body": [
+                        "    private static void testCodec(LongCODEC c, LongCODEC co,\n",
+                        "            long[][] data, long max) {\n",
+                        "        int N = data.length;\n",
+                        "        int maxlength = 0;\n",
+                        "        for (int k = 0; k < N; ++k) {\n",
+                        "            if (data[k].length > maxlength)\n",
+                        "                maxlength = data[k].length;\n",
+                        "        }\n",
+                        "        long[] buffer = new long[maxlength + 1024];\n",
+                        "        long[] dataout = new long[4 * maxlength + 1024];\n",
+                        "        // 4x + 1024 to account for the possibility of some negative\n",
+                        "        // compression.\n",
+                        "        IntWrapper inpos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outpos = IntWrapper.IntWrapper1();\n",
+                        "        for (int k = 0; k < N; ++k) {\n",
+                        "            long[] backupdata = Arrays.copyOf(data[k], data[k].length);\n",
+                        "\n",
+                        "            inpos.set(1);\n",
+                        "            outpos.set(0);\n",
+                        "            if (!(c instanceof IntegratedLongCODEC)) {\n",
+                        "                LongDelta.delta(backupdata);\n",
+                        "            }\n",
+                        "            c.compress(backupdata, inpos, backupdata.length - inpos.get(),\n",
+                        "                    dataout, outpos);\n",
+                        "            final int thiscompsize = outpos.get() + 1;\n",
+                        "            inpos.set(0);\n",
+                        "            outpos.set(1);\n",
+                        "            buffer[0] = backupdata[0];\n",
+                        "            co.uncompress(dataout, inpos, thiscompsize - 1, buffer, outpos);\n",
+                        "            if (!(c instanceof IntegratedLongCODEC))\n",
+                        "            \tLongDelta.fastinverseDelta(buffer);\n",
+                        "\n",
+                        "            // Check assertions.\n",
+                        "            assertEquals(\"length is not match\", outpos.get(), data[k].length);\n",
+                        "            long[] bufferCutout = Arrays.copyOf(buffer, outpos.get());\n",
+                        "            assertArrayEquals(\"failed to reconstruct original data\", data[k],\n",
+                        "                    bufferCutout);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec(LongCODEC, LongCODEC, long[][], long)",
+                    "parameters": [
+                        "c",
+                        "co",
+                        "data",
+                        "max"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.differential.LongDelta",
+                            "LongDelta",
+                            "24-28:delta"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "38-40:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "59-61:uncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.differential.LongDelta",
+                            "LongDelta",
+                            "97-113:fastinverseDelta"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testCodec(c: LongCODEC, co: LongCODEC, data: typing.List[typing.List[int]], max_: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "183-195:testZeroInZeroOut": {
+                    "start": 183,
+                    "end": 195,
+                    "body": [
+                        "    private static void testZeroInZeroOut(LongCODEC c) {\n",
+                        "        long[] x = new long[0];\n",
+                        "        long[] y = new long[0];\n",
+                        "        IntWrapper i0 = new IntWrapper(0);\n",
+                        "        IntWrapper i1 = new IntWrapper(0);\n",
+                        "        c.compress(x, i0, 0, y, i1);\n",
+                        "        assertEquals(0, i1.intValue());\n",
+                        "\n",
+                        "        long[] out = new long[0];\n",
+                        "        IntWrapper outpos = new IntWrapper(0);\n",
+                        "        c.uncompress(y, i1, 0, out, outpos);\n",
+                        "        assertEquals(0, outpos.intValue());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testZeroInZeroOut(LongCODEC)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "38-40:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "59-61:uncompress"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testZeroInZeroOut(c: LongCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "172-181:testSpurious": {
+                    "start": 172,
+                    "end": 181,
+                    "body": [
+                        "    private static void testSpurious(LongCODEC c) {\n",
+                        "        long[] x = new long[1024];\n",
+                        "        long[] y = new long[0];\n",
+                        "        IntWrapper i0 = new IntWrapper(0);\n",
+                        "        IntWrapper i1 = new IntWrapper(0);\n",
+                        "        for (int inlength = 0; inlength < 32; ++inlength) {\n",
+                        "            c.compress(x, i0, inlength, y, i1);\n",
+                        "            assertEquals(0, i1.intValue());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSpurious(LongCODEC)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "38-40:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testSpurious(c: LongCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "330-330:fastPfor128Test": {
+                    "start": 330,
+                    "end": 330,
+                    "body": [
+                        "    public void fastPfor128Test() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "fastPfor128Test()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def fastPfor128Test(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "309-309:fastPforTest": {
+                    "start": 309,
+                    "end": 309,
+                    "body": [
+                        "    public void fastPforTest() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "fastPforTest()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def fastPforTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "241-241:testUnsorted": {
+                    "start": 241,
+                    "end": 241,
+                    "body": [
+                        "    public void testUnsorted(LongCODEC codec) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted(LongCODEC)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def testUnsorted(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "115-115:varyingLengthTest2": {
+                    "start": 115,
+                    "end": 115,
+                    "body": [
+                        "    public void varyingLengthTest2() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest2()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def varyingLengthTest2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "81-81:varyingLengthTest": {
+                    "start": 81,
+                    "end": 81,
+                    "body": [
+                        "    public void varyingLengthTest() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def varyingLengthTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "54-54:saulTest": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "\tpublic void saulTest() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "saulTest()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def saulTest(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "288-288:testUnsorted3": {
+                    "start": 288,
+                    "end": 288,
+                    "body": [
+                        "    private void testUnsorted3(LongCODEC codec) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted3(LongCODEC)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def __testUnsorted3(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "271-271:testUnsorted2": {
+                    "start": 271,
+                    "end": 271,
+                    "body": [
+                        "    private void testUnsorted2(LongCODEC codec) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsorted2(LongCODEC)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def __testUnsorted2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "197-199:testCodec": {
+                    "start": 197,
+                    "end": 199,
+                    "body": [
+                        "    private static void testCodec(LongCODEC c, LongCODEC co,\n",
+                        "            long[][] data, long max) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec(LongCODEC, LongCODEC, long[][], long)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testCodec() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "183-183:testZeroInZeroOut": {
+                    "start": 183,
+                    "end": 183,
+                    "body": [
+                        "    private static void testZeroInZeroOut(LongCODEC c) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testZeroInZeroOut(LongCODEC)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testZeroInZeroOut() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "172-172:testSpurious": {
+                    "start": 172,
+                    "end": 172,
+                    "body": [
+                        "    private static void testSpurious(LongCODEC c) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSpurious(LongCODEC)",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testSpurious() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {
+                "45-48:codecs": {
+                    "start": 45,
+                    "end": 48,
+                    "body": [
+                        "    final LongCODEC[] codecs = {\n",
+                        "            new LongJustCopy(),\n",
+                        "            new LongVariableByte(),\n",
+                        "            LongAs2IntsCodec.LongAs2IntsCodec1()};\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "LongCODEC[]",
+                            "LongCODEC[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    codecs: typing.List[LongCODEC] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class LongBasicTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import unittest",
+        "from src.main.me.lemire.integercompression.FastPFOR import *",
+        "from src.main.me.lemire.integercompression.FastPFOR128 import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.longcompression.IntegratedLongCODEC import *",
+        "from src.main.me.lemire.longcompression.LongAs2IntsCodec import *",
+        "from src.main.me.lemire.longcompression.LongCODEC import *",
+        "from src.main.me.lemire.longcompression.LongJustCopy import *",
+        "from src.test.me.lemire.longcompression.LongTestUtils import *",
+        "from src.main.me.lemire.longcompression.LongVariableByte import *",
+        "from src.main.me.lemire.longcompression.differential.LongDelta import *"
+    ]
+}

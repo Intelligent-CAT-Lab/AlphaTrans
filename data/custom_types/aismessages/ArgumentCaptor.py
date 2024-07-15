@@ -1,0 +1,2 @@
+class ArgumentCaptor:
+    pass

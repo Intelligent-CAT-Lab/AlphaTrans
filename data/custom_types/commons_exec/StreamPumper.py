@@ -1,0 +1,2 @@
+class StreamPumper:
+    pass

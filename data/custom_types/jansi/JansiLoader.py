@@ -1,0 +1,2 @@
+class JansiLoader:
+    pass

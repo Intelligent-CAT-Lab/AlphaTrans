@@ -1,16 +1,12 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.ModulusTenCheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import AbstractCheckDigitTest
 
 
 class ModulusTenEAN13CheckDigitTest(AbstractCheckDigitTest):
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:

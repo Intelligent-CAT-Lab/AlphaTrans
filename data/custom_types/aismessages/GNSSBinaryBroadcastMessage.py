@@ -1,0 +1,2 @@
+class GNSSBinaryBroadcastMessage:
+    pass

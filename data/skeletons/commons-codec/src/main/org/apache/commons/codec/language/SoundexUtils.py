@@ -23,7 +23,7 @@ class SoundexUtils:
         pass
 
     @staticmethod
-    def clean(str: str) -> str:
+    def clean(str_: str) -> str:
         pass
 
     # Class Methods End

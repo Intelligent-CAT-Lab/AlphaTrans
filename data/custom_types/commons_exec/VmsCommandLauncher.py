@@ -1,0 +1,2 @@
+class VmsCommandLauncher:
+    pass

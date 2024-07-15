@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.codec.language.Metaphone import *
 from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
+import unittest
 import typing
 from typing import *
 import io
@@ -11,7 +12,7 @@ import io
 # Imports End
 
 
-class MetaphoneTest(StringEncoderAbstractTest):
+class MetaphoneTest(StringEncoderAbstractTest, unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End
@@ -116,7 +117,9 @@ class MetaphoneTest(StringEncoderAbstractTest):
     def assertMetaphoneEqual(self, pairs: typing.List[typing.List[str]]) -> None:
         pass
 
-    def assertIsMetaphoneEqual(self, source: str, matches: typing.List[str]) -> None:
+    def assertIsMetaphoneEqual(
+        self, source: str, matches: typing.List[typing.List[str]]
+    ) -> None:
         pass
 
     # Class Methods End

@@ -19,11 +19,16 @@ class CommandLineParser(ABC):
 
     # Class Methods Begin
     def parse1(
-        self, options: Options, arguments: typing.List[str], stopAtNonOption: bool
+        self,
+        options: Options,
+        arguments: typing.List[typing.List[str]],
+        stopAtNonOption: bool,
     ) -> CommandLine:
         pass
 
-    def parse0(self, options: Options, arguments: typing.List[str]) -> CommandLine:
+    def parse0(
+        self, options: Options, arguments: typing.List[typing.List[str]]
+    ) -> CommandLine:
         pass
 
     # Class Methods End

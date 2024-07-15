@@ -2,12 +2,13 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.digest.B64 import *
+import unittest
 import io
 
 # Imports End
 
 
-class B64Test:
+class B64Test(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

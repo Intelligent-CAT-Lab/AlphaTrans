@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.Parser import *
 from src.main.org.apache.commons.cli.Options import *
@@ -12,16 +13,10 @@ import unittest
 import os
 import io
 
-# Imports End
-
-
 class ApplicationTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def test_Ant(self) -> None:
+    @pytest.mark.test
+    def testAnt(self) -> None:
 
         try:
             parser = GnuParser()
@@ -68,7 +63,8 @@ class ApplicationTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_Groovy(self) -> None:
+    @pytest.mark.test
+    def testGroovy(self) -> None:
 
         try:
             options = Options()
@@ -157,7 +153,8 @@ class ApplicationTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
 
-    def test_Ls(self) -> None:
+    @pytest.mark.test
+    def testLs(self) -> None:
 
         try:
             parser = PosixParser()
@@ -192,7 +189,8 @@ class ApplicationTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_Man(self) -> None:
+    @pytest.mark.test
+    def testMan(self) -> None:
 
         cmdLine = "man [-c|-f|-k|-w|-tZT device] [-adlhu7V] [-Mpath] [-Ppager] [-Slist] [-msystem]" + \
                   " [-pstring] [-Llocale] [-eextension] [section] page ..."
@@ -350,7 +348,8 @@ class ApplicationTest(unittest.TestCase):
         )
 
     
-    def test_NLT(self) -> None:
+    @pytest.mark.test
+    def testNLT(self) -> None:
 
         try:
             help = Option(0, "h", "help", "print this message", False, None)
@@ -422,8 +421,3 @@ class ApplicationTest(unittest.TestCase):
             self.assertEqual(line.getOptionValue4("file"), "filename")
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    
-
-
-    # Class Methods End

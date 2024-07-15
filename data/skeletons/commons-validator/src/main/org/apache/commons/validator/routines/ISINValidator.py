@@ -19,8 +19,8 @@ class ISINValidator:
     __VALIDATOR: CodeValidator = None
     __ISIN_VALIDATOR_FALSE: ISINValidator = None
     __ISIN_VALIDATOR_TRUE: ISINValidator = None
-    __CCODES: typing.List[str] = None
-    __SPECIALS: typing.List[str] = None
+    __CCODES: typing.List[typing.List[str]] = None
+    __SPECIALS: typing.List[typing.List[str]] = None
     __checkCountryCode: bool = None
     # Class Fields End
 

@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.LongValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import AbstractNumberValidatorTest
 import sys
@@ -15,29 +17,19 @@ class LongValidatorTest(AbstractNumberValidatorTest):
     __LONG_MIN_1 = str(-sys.maxsize - 1 - 1)
     __NINES = "9999999999999999999999999999999999999"
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
         try:
             super().setUp()
-
             self._validator = LongValidator(False, 0)
             self._strictValidator = LongValidator.LongValidator1()
-
             self._testPattern = "#,###"
-
             self._max = None
             self._maxPlusOne = None
             self._min = None
             self._minMinusOne = None
-
             self._invalidStrict = [
                 None,
                 "",
@@ -50,7 +42,6 @@ class LongValidatorTest(AbstractNumberValidatorTest):
                 LongValidatorTest.__LONG_MIN_1,
                 LongValidatorTest.__NINES
             ]
-
             self._invalid = [
                 None,
                 "",
@@ -61,7 +52,6 @@ class LongValidatorTest(AbstractNumberValidatorTest):
                 LongValidatorTest.__LONG_MIN_1,
                 LongValidatorTest.__NINES
             ]
-
             self._testNumber = 1234
             self._testZero = 0
             self._validStrict = [
@@ -72,9 +62,9 @@ class LongValidatorTest(AbstractNumberValidatorTest):
                 LongValidatorTest.__LONG_MIN
             ]
             self._validStrictCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
+                0,
+                1234,
+                1234,
                 LongValidatorTest.__LONG_MAX_VAL,
                 LongValidatorTest.__LONG_MIN_VAL
             ]
@@ -90,29 +80,28 @@ class LongValidatorTest(AbstractNumberValidatorTest):
                 LongValidatorTest.__LONG_MIN_0
             ]
             self._validCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
+                0,
+                1234,
+                1234,
+                1234,
+                1234,
                 LongValidatorTest.__LONG_MAX_VAL,
                 LongValidatorTest.__LONG_MIN_VAL,
                 LongValidatorTest.__LONG_MAX_VAL,
                 LongValidatorTest.__LONG_MIN_VAL
             ]
-
             self._testStringUS = "1,234"
             self._testStringDE = "1.234"
-
-            self._localeValue = self._testStringDE
+            self._localeValue = "1.234"
             self._localePattern = "#.###"
             self._testLocale = 'de_DE.UTF-8'
-            self._localeExpected = self._testNumber
+            self._localeExpected = 1234
         except Exception as e:
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_LongValidatorMethods(self) -> None:
+    @pytest.mark.test
+    def testLongValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -194,7 +183,8 @@ class LongValidatorTest(AbstractNumberValidatorTest):
         )
     
 
-    def test_LongRangeMinMax(self) -> None:
+    @pytest.mark.test
+    def testLongRangeMinMax(self) -> None:
         validator = self._strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")

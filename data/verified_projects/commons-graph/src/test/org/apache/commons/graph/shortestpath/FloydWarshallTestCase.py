@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
 from src.main.org.apache.commons.graph.weight.Monoid import *
@@ -21,9 +22,6 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-import pathlib
-
-# Imports End
 
 
 class FloydWarshallTestCase(unittest.TestCase):
@@ -128,13 +126,15 @@ class FloydWarshallTestCase(unittest.TestCase):
             self.assertEqual(expected, wp)
     
 
-    def test_DirectedShortestPath(self) -> None:
+    @pytest.mark.test
+    def testDirectedShortestPath(self) -> None:
         self.__findShortestPathAndVerify(
             DirectedMutableGraph()
         )
     
     
-    def test_NotConnectGraph(self) -> None:
+    @pytest.mark.test
+    def testNotConnectGraph(self) -> None:
         with self.assertRaises(PathNotFoundException):
             graph = UndirectedMutableGraph()
 
@@ -150,7 +150,8 @@ class FloydWarshallTestCase(unittest.TestCase):
             p.findShortestPath(a, b)
 
     
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findShortestPath(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -159,9 +160,8 @@ class FloydWarshallTestCase(unittest.TestCase):
                 .applyingDijkstra(DoubleWeightBaseOperations())
 
     
-    def test_UndirectedShortestPath(self) -> None:
+    @pytest.mark.test
+    def testUndirectedShortestPath(self) -> None:
         self.__findShortestPathAndVerify(
             UndirectedMutableGraph()
         )
-
-    # Class Methods End

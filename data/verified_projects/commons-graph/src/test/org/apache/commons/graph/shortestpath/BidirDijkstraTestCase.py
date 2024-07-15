@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
 from src.main.org.apache.commons.graph.builder.AbstractGraphConnection import *
@@ -25,12 +26,10 @@ from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
 import random
 from typing import *
-import pathlib
-# Imports End
+
 
 class BidirDijkstraTestCase(unittest.TestCase):
 
-    # Class Fields Begin
     __TIMES = 10
     __NODES = 5000
     __EDGES = 100000
@@ -39,9 +38,8 @@ class BidirDijkstraTestCase(unittest.TestCase):
     __graph = None
     __vertices = []
     __weightOperations = None
-    # Class Fields End
+    
 
-    # Class Methods Begin
     @classmethod
     def setUpClass(cls) -> None:
         BidirDijkstraTestCase.__weightOperations = DoubleWeightBaseOperations()
@@ -51,7 +49,8 @@ class BidirDijkstraTestCase(unittest.TestCase):
         )
 
     
-    def test_CompareToUnidirectional(self) -> None:
+    @pytest.mark.test
+    def testCompareToUnidirectional(self) -> None:
         r = random.Random()
         for ii in range(self.__TIMES):
             s = BidirDijkstraTestCase\
@@ -79,7 +78,8 @@ class BidirDijkstraTestCase(unittest.TestCase):
             self.assertEqual(pathUni.getWeight(), pathBi.getWeight())
 
     
-    def test_FindShortestPathAndVerify(self) -> None:
+    @pytest.mark.test
+    def testFindShortestPathAndVerify(self) -> None:
         graph = DirectedMutableGraph()
 
         one = BaseLabeledVertex("1")
@@ -129,7 +129,8 @@ class BidirDijkstraTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     
-    def test_NotConnectGraph(self) -> None:
+    @pytest.mark.test
+    def testNotConnectGraph(self) -> None:
         with self.assertRaises(PathNotFoundException):
             graph = UndirectedMutableGraph()
 
@@ -146,7 +147,8 @@ class BidirDijkstraTestCase(unittest.TestCase):
                 .applyingBidirectionalDijkstra(DoubleWeightBaseOperations())
 
     
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findShortestPath(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -155,7 +157,8 @@ class BidirDijkstraTestCase(unittest.TestCase):
                 .applyingBidirectionalDijkstra(DoubleWeightBaseOperations())
     
     
-    def test_NullMonoid(self) -> None:
+    @pytest.mark.test
+    def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 
@@ -171,7 +174,8 @@ class BidirDijkstraTestCase(unittest.TestCase):
                 .applyingBidirectionalDijkstra(None)
 
     
-    def test_NullVertices(self) -> None:
+    @pytest.mark.test
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 
@@ -182,7 +186,8 @@ class BidirDijkstraTestCase(unittest.TestCase):
                 .applyingBidirectionalDijkstra(DoubleWeightBaseOperations())
 
     
-    def test_VerifyThreeNodePath(self) -> None:
+    @pytest.mark.test
+    def testVerifyThreeNodePath(self) -> None:
         graph = DirectedMutableGraph()
 
         a = BaseLabeledVertex("a")
@@ -215,7 +220,8 @@ class BidirDijkstraTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
-    def test_VerifyTwoNodePath(self) -> None:
+    @pytest.mark.test
+    def testVerifyTwoNodePath(self) -> None:
         graph = DirectedMutableGraph()
 
         one = BaseLabeledVertex("1")
@@ -243,7 +249,7 @@ class BidirDijkstraTestCase(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    # Class Methods End
+
 
 
 class GraphConnectionBidirDijkstraTestCaseSetUp(AbstractGraphConnection):

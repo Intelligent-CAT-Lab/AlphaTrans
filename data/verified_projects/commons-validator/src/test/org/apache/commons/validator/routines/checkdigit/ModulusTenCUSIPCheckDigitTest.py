@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.ModulusTenCheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import AbstractCheckDigitTest
 
@@ -7,13 +9,7 @@ class ModulusTenCUSIPCheckDigitTest(AbstractCheckDigitTest):
     __invalidCheckDigits = ["DUS0421CW", "DUS0421CN", "DUS0421CE"]
     __validCheckDigits = ["DUS0421C5"]
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
@@ -37,7 +33,8 @@ class ModulusTenCUSIPCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_VALIDATOR_336_InvalidCheckDigits(self) -> None:
+    @pytest.mark.test
+    def testVALIDATOR_336_InvalidCheckDigits(self) -> None:
         for i in range(len(ModulusTenCUSIPCheckDigitTest.__invalidCheckDigits)):
             invalidCheckDigit = ModulusTenCUSIPCheckDigitTest.__invalidCheckDigits[i]
             self.assertFalse(
@@ -46,7 +43,8 @@ class ModulusTenCUSIPCheckDigitTest(AbstractCheckDigitTest):
             )
     
 
-    def test_VALIDATOR_336_ValidCheckDigits(self) -> None:
+    @pytest.mark.test
+    def testVALIDATOR_336_ValidCheckDigits(self) -> None:
         for i in range(len(ModulusTenCUSIPCheckDigitTest.__validCheckDigits)):
             validCheckDigit = ModulusTenCUSIPCheckDigitTest.__validCheckDigits[i]
             self.assertTrue(

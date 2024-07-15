@@ -1,0 +1,131 @@
+## Licensed to the Apache Software Foundation (ASF) under one
+## or more contributor license agreements.  See the NOTICE file
+## distributed with this work for additional information
+## regarding copyright ownership.  The ASF licenses this file
+## to you under the Apache License, Version 2.0 (the
+## "License"); you may not use this file except in compliance
+## with the License.  You may obtain a copy of the License at
+##
+##  http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing,
+## software distributed under the License is distributed on an
+## "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+## KIND, either express or implied.  See the License for the
+## specific language governing permissions and limitations
+## under the License.
+              ${project.name} ${version} RELEASE NOTES
+
+The ${developmentTeam} is pleased to announce the release of ${project.name} ${version}.
+
+Apache Commons Pool provides an object-pooling API and a number of object pool implementations.
+Version 2 contains a completely re-written pooling implementation compared to the 1.x series.
+In addition to performance and scalability improvements, version 2 includes robust instance
+tracking and pool monitoring. 
+
+Version 2.7.x and up requires Java 8 or above.
+Version 2.6.x requires Java 7 or above.
+Version 2.5.x requires Java 7 or above.
+Version 2.0 requires 6 or above. 
+
+No client code changes are required to migrate from versions 2.0-2.3 to version 2.4.3.
+Users of version 1.x should consult the migration guide on the Commons Pool web site.
+
+NOTE: The MBean interfaces (DefaultPooledObjectInfoMBean, GenericKeyedObjectPoolMXBean
+      and GenericKeyedObjectPoolMXBean) exist only to define the attributes and methods
+      that will be made available via JMX. They must not be implemented by clients as
+      they are subject to change between major, minor and patch version releases of
+      Commons Pool. Clients that implement any of these interfaces may not, therefore,
+      be able to upgrade to a new minor or patch release without requiring code
+      changes.
+
+## N.B. the available variables are described here:
+## http://maven.apache.org/plugins/maven-changes-plugin/examples/using-a-custom-announcement-template.html
+##
+## Hack to get line breaks to work in release description. For this to work, each line break in the
+## release description attribute in changes.xml needs to be preceded by a single space.
+#set( $desc = $release.description )
+#set( $desc2 = $desc.replace($esc.newline, "  ") )
+#set( $d = $desc2.replace("  ",$esc.newline) )
+${d}
+
+## set up indent sizes. Only change indent1
+#set($props=${project.properties})
+#set($jiralen=$props.get("commons.jira.id").length())
+## indent1 =   POOL-nnnn:
+#set($blanklen=$jiralen+6)## +6 for "-nnnn:"
+## must be at least as long as the longest JIRA id
+#set($blanks="                                  ")
+#set($indent1=$blanks.substring(0,$blanklen))
+## indent2 allows for issue wrapper
+#set($indent2="$indent1   ")
+##
+#macro ( processaction )
+## Use replaceAll to fix up LF-only line ends on Windows.
+#set($action=$actionItem.getAction().replaceAll("\n","
+"))
+## Fix up indentation for multi-line action descriptions
+#set($action=$action.replaceAll("(?m)^  +",$indent2))
+#if ($actionItem.getIssue())
+#set($issue="$actionItem.getIssue():")
+## Pad shorter issue numbers
+#if ($issue.length() < $indent1.length())#set ($issue="$issue ")#end
+#if ($issue.length() < $indent1.length())#set ($issue="$issue ")#end
+#if ($issue.length() < $indent1.length())#set ($issue="$issue ")#end
+#else
+#set($issue=$indent1)
+#end
+#if ($actionItem.getDueTo())
+#set($dueto=" Thanks to $actionItem.getDueTo().")
+#else
+#set($dueto="")
+#end
+o $issue ${action}$dueto
+#set($action="")
+#set($issue="")
+#set($dueto="")
+#end
+##
+#if ($release.getActions().size() == 0)
+No changes defined in this version.
+#else
+Changes in version ${version} include:
+
+#if ($release.getActions('add').size() !=0)
+New features:
+#foreach($actionItem in $release.getActions('add'))
+#processaction()
+#end 
+#end
+
+#if ($release.getActions('fix').size() !=0)
+Fixed Bugs:
+#foreach($actionItem in $release.getActions('fix'))
+#processaction()
+#end
+#end
+
+#if ($release.getActions('update').size() !=0)
+Changes:
+#foreach($actionItem in $release.getActions('update'))
+#processaction()
+#end
+#end
+
+#if ($release.getActions('remove').size() !=0)
+Removed:
+#foreach($actionItem in $release.getActions('remove'))
+#processaction()
+#end
+#end
+## End of main loop
+#end
+
+For complete information on ${project.name}, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache ${project.name} website:
+
+${project.url}
+
+Download page: ${project.url}download_pool.cgi
+
+-----------------------------------------------------------------------------------------------

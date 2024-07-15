@@ -1,52 +1,77 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.TimeValidator import *
 import unittest
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from locale import LC_TIME, getlocale, setlocale
 
+
+def createTime(zone, time, millisecond):
+    if zone is None:
+        calendar = datetime.utcnow()
+    else:
+        calendar = datetime.now(zone)
+    hour = (time // 10000) * 10000
+    min = (time // 100) * 100 - hour
+    sec = time - (hour + min)
+    calendar = calendar.replace(
+        year=1970, month=1, day=1,
+        hour=hour // 10000,
+        minute=min // 100,
+        second=sec,
+        microsecond=millisecond * 1000
+    )
+    return calendar
+
+
+def createDate(zone, time, millisecond):
+    calendar = createTime(zone, time, millisecond)
+    return calendar
+
+
 class TimeValidatorTest(unittest.TestCase):
 
     _GMT = ZoneInfo('Etc/GMT')  # 0 offset
     _EST = ZoneInfo('US/Eastern')  # - 5 hours
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self._validator = None
+    _validator = None
 
-        self._patternValid = [
-            "23-59-59", "00-00-00", "00-00-01", "0-0-0", "1-12-1", "10-49-18", "16-23-46"
-        ]
-        self._patternExpect = [
-            TimeValidatorTest.__createDate(None, 235959, 0),
-            TimeValidatorTest.__createDate(None, 0, 0),
-            TimeValidatorTest.__createDate(None, 1, 0),
-            TimeValidatorTest.__createDate(None, 0, 0),
-            TimeValidatorTest.__createDate(None, 11201, 0),
-            TimeValidatorTest.__createDate(None, 104918, 0),
-            TimeValidatorTest.__createDate(None, 162346, 0)
-        ]
-        self._localeValid = ["23:59", "00:00", "00:01", "0:0", "1:12", "10:49", "16:23"]
-        self._localeExpect = [
-            TimeValidatorTest.__createDate(None, 235900, 0),
-            TimeValidatorTest.__createDate(None, 0, 0),
-            TimeValidatorTest.__createDate(None, 100, 0),
-            TimeValidatorTest.__createDate(None, 0, 0),
-            TimeValidatorTest.__createDate(None, 11200, 0),
-            TimeValidatorTest.__createDate(None, 104900, 0),
-            TimeValidatorTest.__createDate(None, 162300, 0)
-        ]
-        self._patternInvalid = [
-            "24-00-00", "24-00-01", "25-02-03", "10-61-31", "10-01-61",
-            "05:02-29", "0X-01:01", "05-0X-01", "10-01-0X", "01:01:05",
-            "10-10", "10--10", "10-10-"
-        ]
-        self._localeInvalid = [
-            "24:00", "24:00", "25:02", "10:61", "05-02", "0X:01", "05:0X",
-            "01-01", "10:", "10::1", "10:1:"
-        ]
+    _patternValid = [
+        "23-59-59", "00-00-00", "00-00-01", "0-0-0", "1-12-1", "10-49-18", "16-23-46"
+    ]
+    _patternExpect = [
+        createDate(None, 235959, 0),
+        createDate(None, 0, 0),
+        createDate(None, 1, 0),
+        createDate(None, 0, 0),
+        createDate(None, 11201, 0),
+        createDate(None, 104918, 0),
+        createDate(None, 162346, 0)
+    ]
+    _localeValid = ["23:59", "00:00", "00:01", "0:0", "1:12", "10:49", "16:23"]
+    _localeExpect = [
+        createDate(None, 235900, 0),
+        createDate(None, 0, 0),
+        createDate(None, 100, 0),
+        createDate(None, 0, 0),
+        createDate(None, 11200, 0),
+        createDate(None, 104900, 0),
+        createDate(None, 162300, 0)
+    ]
+    _patternInvalid = [
+        "24-00-00", "24-00-01", "25-02-03", "10-61-31", "10-01-61",
+        "05:02-29", "0X-01:01", "05-0X-01", "10-01-0X", "01:01:05",
+        "10-10", "10--10", "10-10-"
+    ]
+    _localeInvalid = [
+        "24:00", "24:00", "25:02", "10:61", "05-02", "0X:01", "05:0X",
+        "01-01", "10:", "10::1", "10:1:"
+    ]
 
-        self.__origDefault = None
-        self.__defaultZone = None
+    __origDefault = None
+    __defaultZone = None
+
 
     
     def setUp(self) -> None:
@@ -68,7 +93,8 @@ class TimeValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
-    def test_PatternValid(self) -> None:
+    @pytest.mark.test
+    def testPatternValid(self) -> None:
         for i in range(len(self._patternValid)):
             text = f"{i} value=[{self._patternValid[i]}] failed "
             calendar = self._validator.validate2(self._patternValid[i], "HH-mm-ss")
@@ -88,7 +114,8 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
-    def test_PatternInvalid(self) -> None:
+    @pytest.mark.test
+    def testPatternInvalid(self) -> None:
         for i in range(len(self._patternInvalid)):
             text = f"{i} value=[{self._patternInvalid[i]}] passed "
             date = self._validator.validate2(self._patternInvalid[i], "HH-mm-ss")
@@ -102,7 +129,8 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
-    def test_LocaleValid(self) -> None:
+    @pytest.mark.test
+    def testLocaleValid(self) -> None:
         for i in range(len(self._localeValid)):
             text = f"{i} value=[{self._localeValid[i]}] failed "
             calendar = self._validator.validate4(self._localeValid[i], 'en_GB.UTF-8')
@@ -122,7 +150,8 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
-    def test_LocaleInvalid(self) -> None:
+    @pytest.mark.test
+    def testLocaleInvalid(self) -> None:
         for i in range(len(self._localeInvalid)):
             text = f"{i} value=[{self._localeInvalid[i]}] passed "
             date = self._validator.validate4(self._localeInvalid[i], 'en_US.UTF-8')
@@ -136,7 +165,8 @@ class TimeValidatorTest(unittest.TestCase):
             )
 
     
-    def test_TimeZone(self) -> None:
+    @pytest.mark.test
+    def testTimeZone(self) -> None:
         setlocale(LC_TIME, 'en_GB.UTF-8')
 
         result = None
@@ -307,7 +337,8 @@ class TimeValidatorTest(unittest.TestCase):
         )
         result = None
 
-    def test_Format(self) -> None:
+    @pytest.mark.test
+    def testFormat(self) -> None:
         self.__origDefault = 'en_GB.UTF-8'
 
         test = TimeValidator.getInstance().validate2("16:49:23", "HH:mm:ss")
@@ -331,7 +362,8 @@ class TimeValidatorTest(unittest.TestCase):
             "Format default"
         )
 
-    def test_Compare(self) -> None:
+    @pytest.mark.test
+    def testCompare(self) -> None:
         testTime = 154523
         min = 100
         hour = 10000
@@ -503,4 +535,3 @@ class TimeValidatorTest(unittest.TestCase):
     def __createDate(zone, time, millisecond):
         calendar = TimeValidatorTest.__createTime(zone, time, millisecond)
         return calendar
-

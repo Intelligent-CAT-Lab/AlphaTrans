@@ -4,12 +4,13 @@ from __future__ import annotations
 from src.main.org.apache.commons.csv.QuoteMode import *
 from src.main.org.apache.commons.csv.CSVPrinter import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import unittest
 import io
 
 # Imports End
 
 
-class JiraCsv203Test:
+class JiraCsv203Test(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

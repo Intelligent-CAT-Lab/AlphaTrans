@@ -2,16 +2,18 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.PooledSoftReference import *
+import unittest
 import io
 
 # Imports End
 
 
-class TestPooledSoftReference:
+class TestPooledSoftReference(unittest.TestCase):
 
     # Class Fields Begin
     __REFERENT: str = None
     __REFERENT2: str = None
+    ref: PooledSoftReference[str] = None
     # Class Fields End
 
     # Class Methods Begin

@@ -11,7 +11,7 @@ import io
 # Imports End
 
 
-class SuperVertex(Iterable):
+class SuperVertex:
 
     # Class Fields Begin
     __graph: Graph[typing.Any, typing.Any] = None

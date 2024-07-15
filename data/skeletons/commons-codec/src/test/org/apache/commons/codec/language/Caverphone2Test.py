@@ -5,12 +5,13 @@ from src.main.org.apache.commons.codec.language.Caverphone2 import *
 from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
+import unittest
 import io
 
 # Imports End
 
 
-class Caverphone2Test(StringEncoderAbstractTest):
+class Caverphone2Test(StringEncoderAbstractTest, unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

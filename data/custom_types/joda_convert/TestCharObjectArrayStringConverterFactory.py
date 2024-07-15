@@ -1,2 +1,0 @@
-class TestCharObjectArrayStringConverterFactory:
-    pass

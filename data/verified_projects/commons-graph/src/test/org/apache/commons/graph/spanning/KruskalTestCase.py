@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
 from src.main.org.apache.commons.graph.weight.Monoid import *
@@ -16,12 +17,12 @@ from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
 
-# Imports End
 
 
 class KruskalTestCase(unittest.TestCase):
 
-    def test_DisconnectedMinimumSpanningTree(self) -> None:
+    @pytest.mark.test
+    def testDisconnectedMinimumSpanningTree(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("A")
@@ -56,7 +57,8 @@ class KruskalTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
-    def test_EmptyGraph(self) -> None:
+    @pytest.mark.test
+    def testEmptyGraph(self) -> None:
         with self.assertRaises(RuntimeError):
             input = UndirectedMutableGraph()
 
@@ -66,7 +68,8 @@ class KruskalTestCase(unittest.TestCase):
                 .applyingKruskalAlgorithm(DoubleWeightBaseOperations())
 
     
-    def test_NotExistVertex(self) -> None:
+    @pytest.mark.test
+    def testNotExistVertex(self) -> None:
         with self.assertRaises(RuntimeError):
             input = UndirectedMutableGraph()
 
@@ -75,7 +78,8 @@ class KruskalTestCase(unittest.TestCase):
                 .fromSource(BaseLabeledVertex("NOT EXIST"))
 
     
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.minimumSpanningTree(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -83,7 +87,8 @@ class KruskalTestCase(unittest.TestCase):
                 .applyingKruskalAlgorithm(DoubleWeightBaseOperations())
 
     
-    def test_NullMonoid(self) -> None:
+    @pytest.mark.test
+    def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = None
             a = None
@@ -100,7 +105,8 @@ class KruskalTestCase(unittest.TestCase):
                 .applyingKruskalAlgorithm(None)
 
     
-    def test_NullVertex(self) -> None:
+    @pytest.mark.test
+    def testNullVertex(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = UndirectedMutableGraph()
             CommonsGraph.minimumSpanningTree(input)\
@@ -109,7 +115,8 @@ class KruskalTestCase(unittest.TestCase):
                 .applyingKruskalAlgorithm(DoubleWeightBaseOperations())
 
     
-    def test_P4NonUniformWeightsMinimumSpanningTree(self) -> None:
+    @pytest.mark.test
+    def testP4NonUniformWeightsMinimumSpanningTree(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("A")
@@ -145,7 +152,8 @@ class KruskalTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     
-    def test_P4UniformWeightsMinimumSpanningTree(self) -> None:
+    @pytest.mark.test
+    def testP4UniformWeightsMinimumSpanningTree(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("A")
@@ -181,7 +189,8 @@ class KruskalTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
-    def test_VerifyNotConnectedMinimumSpanningTree(self) -> None:
+    @pytest.mark.test
+    def testVerifyNotConnectedMinimumSpanningTree(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("A")
@@ -213,7 +222,8 @@ class KruskalTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     
-    def test_VerifyWikipediaMinimumSpanningTree(self) -> None:
+    @pytest.mark.test
+    def testVerifyWikipediaMinimumSpanningTree(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("A")

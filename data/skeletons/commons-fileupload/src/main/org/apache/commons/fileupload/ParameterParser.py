@@ -32,10 +32,10 @@ class ParameterParser:
     ) -> typing.Dict[str, str]:
         pass
 
-    def parse1(self, str: str, separator: str) -> typing.Dict[str, str]:
+    def parse1(self, str_: str, separator: str) -> typing.Dict[str, str]:
         pass
 
-    def parse0(self, str: str, separators: typing.List[str]) -> typing.Dict[str, str]:
+    def parse0(self, str_: str, separators: typing.List[str]) -> typing.Dict[str, str]:
         pass
 
     def setLowerCaseNames(self, b: bool) -> None:

@@ -1,0 +1,2 @@
+class CommandLauncherFactory:
+    pass

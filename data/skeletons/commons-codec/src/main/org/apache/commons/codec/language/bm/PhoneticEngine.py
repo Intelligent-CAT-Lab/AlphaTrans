@@ -29,7 +29,7 @@ class PhonemeBuilder:
     def apply(self, phonemeExpr: PhonemeExpr, maxPhonemes: int) -> None:
         pass
 
-    def append(self, str: str) -> None:
+    def append(self, str_: str) -> None:
         pass
 
     def __init__(
@@ -71,7 +71,7 @@ class RulesApplication:
     def __init__(
         self,
         finalRules: typing.Dict[str, typing.List[Rule]],
-        input: str,
+        input_: str,
         phonemeBuilder: PhonemeBuilder,
         i: int,
         maxPhonemes: int,
@@ -109,10 +109,10 @@ class PhoneticEngine:
     def getLang(self) -> Lang:
         pass
 
-    def encode1(self, input: str, languageSet: LanguageSet) -> str:
+    def encode1(self, input_: str, languageSet: LanguageSet) -> str:
         pass
 
-    def encode0(self, input: str) -> str:
+    def encode0(self, input_: str) -> str:
         pass
 
     def __init__(

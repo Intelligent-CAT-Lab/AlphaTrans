@@ -1,0 +1,2 @@
+class ManeuverIndicator:
+    pass

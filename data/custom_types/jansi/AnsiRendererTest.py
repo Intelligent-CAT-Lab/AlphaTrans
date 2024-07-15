@@ -1,0 +1,2 @@
+class AnsiRendererTest:
+    pass

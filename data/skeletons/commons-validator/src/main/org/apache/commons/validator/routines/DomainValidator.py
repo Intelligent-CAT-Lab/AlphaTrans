@@ -47,11 +47,11 @@ class Item:
 
     # Class Fields Begin
     type: ArrayType = None
-    values: typing.List[str] = None
+    values: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin
-    def __init__(self, type: ArrayType, values: typing.List[str]) -> None:
+    def __init__(self, type_: ArrayType, values: typing.List[typing.List[str]]) -> None:
         pass
 
     # Class Methods End
@@ -71,25 +71,25 @@ class LazyHolder:
 class DomainValidator:
 
     # Class Fields Begin
-    mycountryCodeTLDsMinus: typing.List[str] = None
-    mycountryCodeTLDsPlus: typing.List[str] = None
-    mygenericTLDsPlus: typing.List[str] = None
-    mygenericTLDsMinus: typing.List[str] = None
-    mylocalTLDsPlus: typing.List[str] = None
-    mylocalTLDsMinus: typing.List[str] = None
-    __COUNTRY_CODE_TLDS: typing.List[str] = None
-    __LOCAL_TLDS: typing.List[str] = None
+    mycountryCodeTLDsMinus: typing.List[typing.List[str]] = None
+    mycountryCodeTLDsPlus: typing.List[typing.List[str]] = None
+    mygenericTLDsPlus: typing.List[typing.List[str]] = None
+    mygenericTLDsMinus: typing.List[typing.List[str]] = None
+    mylocalTLDsPlus: typing.List[typing.List[str]] = None
+    mylocalTLDsMinus: typing.List[typing.List[str]] = None
+    __COUNTRY_CODE_TLDS: typing.List[typing.List[str]] = None
+    __LOCAL_TLDS: typing.List[typing.List[str]] = None
     __inUse: bool = None
-    __countryCodeTLDsPlus: typing.List[str] = None
-    __genericTLDsPlus: typing.List[str] = None
-    __countryCodeTLDsMinus: typing.List[str] = None
-    __genericTLDsMinus: typing.List[str] = None
-    __localTLDsMinus: typing.List[str] = None
-    __localTLDsPlus: typing.List[str] = None
-    __INFRASTRUCTURE_TLDS: typing.List[str] = None
-    __GENERIC_TLDS: typing.List[str] = None
+    __countryCodeTLDsPlus: typing.List[typing.List[str]] = None
+    __genericTLDsPlus: typing.List[typing.List[str]] = None
+    __countryCodeTLDsMinus: typing.List[typing.List[str]] = None
+    __genericTLDsMinus: typing.List[typing.List[str]] = None
+    __localTLDsMinus: typing.List[typing.List[str]] = None
+    __localTLDsPlus: typing.List[typing.List[str]] = None
+    __INFRASTRUCTURE_TLDS: typing.List[typing.List[str]] = None
+    __GENERIC_TLDS: typing.List[typing.List[str]] = None
     __MAX_DOMAIN_LENGTH: int = None
-    __EMPTY_STRING_ARRAY: typing.List[str] = None
+    __EMPTY_STRING_ARRAY: typing.List[typing.List[str]] = None
     __serialVersionUID: int = None
     __DOMAIN_LABEL_REGEX: str = None
     __TOP_LABEL_REGEX: str = None
@@ -102,18 +102,20 @@ class DomainValidator:
 
     # Class Methods Begin
     @staticmethod
-    def unicodeToASCII(input: str) -> str:
+    def unicodeToASCII(input_: str) -> str:
         pass
 
-    def getOverrides(self, table: ArrayType) -> typing.List[str]:
-        pass
-
-    @staticmethod
-    def getTLDEntries(table: ArrayType) -> typing.List[str]:
+    def getOverrides(self, table: ArrayType) -> typing.List[typing.List[str]]:
         pass
 
     @staticmethod
-    def updateTLDOverride(table: ArrayType, tlds: typing.List[str]) -> None:
+    def getTLDEntries(table: ArrayType) -> typing.List[typing.List[str]]:
+        pass
+
+    @staticmethod
+    def updateTLDOverride(
+        table: ArrayType, tlds: typing.List[typing.List[str]]
+    ) -> None:
         pass
 
     def isAllowLocal(self) -> bool:
@@ -158,14 +160,14 @@ class DomainValidator:
         pass
 
     @staticmethod
-    def __arrayContains(sortedArray: typing.List[str], key: str) -> bool:
+    def __arrayContains(sortedArray: typing.List[typing.List[str]], key: str) -> bool:
         pass
 
     @staticmethod
-    def __isOnlyASCII(input: str) -> bool:
+    def __isOnlyASCII(input_: str) -> bool:
         pass
 
-    def __chompLeadingDot(self, str: str) -> str:
+    def __chompLeadingDot(self, str_: str) -> str:
         pass
 
     # Class Methods End

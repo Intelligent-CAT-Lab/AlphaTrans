@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.EmailValidator import *
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
 from src.test.org.apache.commons.validator.ResultPair import *
+import unittest
 import os
 import typing
 from typing import *
@@ -12,7 +13,7 @@ import io
 # Imports End
 
 
-class EmailValidatorTest:
+class EmailValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
     __testEmailFromPerl: typing.List[ResultPair] = None
@@ -101,7 +102,7 @@ class EmailValidatorTest:
         pass
 
     @staticmethod
-    def main(args: typing.List[str]) -> None:
+    def main(args: typing.List[typing.List[str]]) -> None:
         pass
 
     # Class Methods End

@@ -5,9 +5,14 @@ import argparse
 def main(args):
 
     project = args.project_name
+    projects_dir = 'java_projects/cleaned_final_projects/'
+    # projects_dir = 'java_projects/cleaned_final_projects_evosuite/'
+
+    query_outputs_dir = 'data/query_outputs'
+    # query_outputs_dir = 'data/query_outputs-evosuite'
 
     method_call_graph = []
-    with open(f'data/query_outputs/{project}/{project}_call_graph.txt') as f:
+    with open(f'{query_outputs_dir}/{project}/{project}_call_graph.txt') as f:
         method_call_graph = f.readlines()
     
     for line in method_call_graph:
@@ -17,6 +22,9 @@ def main(args):
             continue
 
         call_location, caller_name, caller_location, callee_name, callee_location = splitted_line
+
+        # if 'ESTest' not in call_location:
+        #     continue
 
         if call_location == caller_location:
             continue
@@ -30,8 +38,78 @@ def main(args):
         caller_path = caller_location[caller_location.find(':')+1:caller_location.find(':', caller_location.find(':')+1)]
         caller_path = caller_path[caller_path.find(project):]
 
-        caller_start_line = int(caller_location[caller_location.find(':', caller_location.find(':')+1)+1:].split(':')[0])
-        callee_start_line = int(callee_location[callee_location.find(':', callee_location.find(':')+1)+1:].split(':')[0])
+        caller_start_line = int(caller_location[caller_location.find(':', caller_location.find(':')+1)+1:].split(':')[0]) - 1
+        caller_end_line = caller_start_line + 5
+
+        callable_body = ''
+        with open(f'{projects_dir}/{caller_path}', 'r') as f:
+            callable_body = f.readlines()[caller_start_line-1:caller_end_line]
+        
+        # print(call_location, caller_name, callee_name, callable_body, caller_start_line, caller_end_line, flush=True)
+        # print(caller_location)
+        # print(callee_location)
+        # print('-------------------' * 10, flush=True)
+
+        start_terminations = ['*/', '@', '}']
+        end_terminations = [';', '}', '*/', '{']
+        searched = False
+        while not (any([callable_body[0].strip().startswith(x) for x in start_terminations]) 
+                or any([callable_body[0].strip().endswith(x) for x in end_terminations])):
+
+            searched = True
+            
+            callable_body = ''
+            with open(f'{projects_dir}/{caller_path}', 'r') as f:
+                callable_body = f.readlines()[caller_start_line-1:caller_end_line]
+            caller_start_line -= 1
+        
+        if searched:
+            caller_start_line += 2
+
+            callable_body = ''
+            with open(f'{projects_dir}/{caller_path}', 'r') as f:
+                callable_body = f.readlines()[caller_start_line-1:caller_end_line]
+            
+            for i in range(len(callable_body)):
+                if callable_body[i].strip() == '':
+                    caller_start_line += 1
+                if callable_body[i].strip() != '':
+                    break
+        else:
+            caller_start_line += 1
+
+        callee_start_line = int(callee_location[callee_location.find(':', callee_location.find(':')+1)+1:].split(':')[0]) - 1
+        callee_end_line = callee_start_line + 5
+
+        callable_body = ''
+        with open(f'{projects_dir}/{callee_path}', 'r') as f:
+            callable_body = f.readlines()[callee_start_line-1:callee_end_line]
+
+        searched = False
+        while not (any([callable_body[0].strip().startswith(x) for x in start_terminations]) 
+                or any([callable_body[0].strip().endswith(x) for x in end_terminations])):
+
+            searched = True
+            
+            callable_body = ''
+            with open(f'{projects_dir}/{callee_path}', 'r') as f:
+                callable_body = f.readlines()[callee_start_line-1:callee_end_line]
+            callee_start_line -= 1
+        
+        if searched:
+            callee_start_line += 2
+
+            callable_body = ''
+            with open(f'{projects_dir}/{callee_path}', 'r') as f:
+                callable_body = f.readlines()[callee_start_line-1:callee_end_line]
+            
+            for i in range(len(callable_body)):
+                if callable_body[i].strip() == '':
+                    callee_start_line += 1
+                if callable_body[i].strip() != '':
+                    break
+        else:
+            callee_start_line += 1
 
         caller_schema_name = caller_path[caller_path.find(project):].replace('/', '.').replace('.java', '')
         callee_schema_name = callee_path[callee_path.find(project):].replace('/', '.').replace('.java', '')

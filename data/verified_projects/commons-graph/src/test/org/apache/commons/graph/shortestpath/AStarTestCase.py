@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
 from src.main.org.apache.commons.graph.weight.Monoid import *
@@ -19,12 +20,12 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-import pathlib
-# Imports End
+
 
 class AStarTestCase(unittest.TestCase):
 
-    def test_FindShortestPathAndVerify(self) -> None:
+    @pytest.mark.test
+    def testFindShortestPathAndVerify(self) -> None:
         graph = UndirectedMutableGraph()
 
         start = BaseLabeledVertex("start")
@@ -102,7 +103,8 @@ class AStarTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
-    def test_NotConnectGraph(self) -> None:
+    @pytest.mark.test
+    def testNotConnectGraph(self) -> None:
         with self.assertRaises(PathNotFoundException):
             graph = UndirectedMutableGraph()
 
@@ -123,7 +125,8 @@ class AStarTestCase(unittest.TestCase):
                 .withHeuristic(heuristic)
 
 
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findShortestPath(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -133,7 +136,8 @@ class AStarTestCase(unittest.TestCase):
                 .withHeuristic(None)
 
     
-    def test_NullHeuristic(self) -> None:
+    @pytest.mark.test
+    def testNullHeuristic(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 
@@ -145,7 +149,8 @@ class AStarTestCase(unittest.TestCase):
                 .withHeuristic(None)
     
     
-    def test_NullMonoid(self) -> None:
+    @pytest.mark.test
+    def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 
@@ -170,7 +175,8 @@ class AStarTestCase(unittest.TestCase):
                 .withHeuristic(heuristic)
 
     
-    def test_NullVertices(self) -> None:
+    @pytest.mark.test
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 
@@ -213,8 +219,3 @@ class HeuristicAStarTestCaseTestNullMonoid(Heuristic):
     def __init__(self, heuristics, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.heuristics = heuristics
-
-
-
-
-

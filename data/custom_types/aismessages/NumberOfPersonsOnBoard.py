@@ -1,0 +1,2 @@
+class NumberOfPersonsOnBoard:
+    pass

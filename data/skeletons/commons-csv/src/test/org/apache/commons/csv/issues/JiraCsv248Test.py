@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.csv.CSVRecord import *
 from src.main.org.apache.commons.csv.CSVParser import *
+import unittest
 import typing
 from typing import *
 from io import BytesIO
@@ -12,7 +13,7 @@ from io import StringIO
 # Imports End
 
 
-class JiraCsv248Test:
+class JiraCsv248Test(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

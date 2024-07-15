@@ -9,6 +9,7 @@ from src.main.org.apache.commons.csv.DuplicateHeaderMode import *
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVRecord import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import urllib
 import os
 import typing
 from typing import *
@@ -21,7 +22,7 @@ import pathlib
 # Imports End
 
 
-class CSVRecordIterator(Iterator):
+class CSVRecordIterator:
 
     # Class Fields Begin
     __current: CSVRecord = None
@@ -31,7 +32,7 @@ class CSVRecordIterator(Iterator):
     def remove(self) -> None:
         pass
 
-    def next(self) -> CSVRecord:
+    def next_(self) -> CSVRecord:
         pass
 
     def hasNext(self) -> bool:
@@ -59,7 +60,7 @@ class Headers:
     # Class Methods End
 
 
-class CSVParser(Iterable):
+class CSVParser:
 
     # Class Fields Begin
     __headerComment: str = None
@@ -90,19 +91,19 @@ class CSVParser(Iterable):
             str,
         ],
         charset: str,
-        format: CSVFormat,
+        format_: CSVFormat,
     ) -> CSVParser:
         pass
 
     @staticmethod
-    def parse2(path: Path, charset: str, format: CSVFormat) -> CSVParser:
+    def parse2(path: Path, charset: str, format_: CSVFormat) -> CSVParser:
         pass
 
     @staticmethod
     def parse1(
         inputStream: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         charset: str,
-        format: CSVFormat,
+        format_: CSVFormat,
     ) -> CSVParser:
         pass
 
@@ -147,37 +148,37 @@ class CSVParser(Iterable):
 
     @staticmethod
     def CSVParser1(
-        reader: typing.Union[io.TextIOWrapper, io.BufferedReader], format: CSVFormat
+        reader: typing.Union[io.TextIOWrapper, io.BufferedReader], format_: CSVFormat
     ) -> CSVParser:
         pass
 
     def __init__(
         self,
         reader: typing.Union[io.TextIOWrapper, io.BufferedReader],
-        format: CSVFormat,
+        format_: CSVFormat,
         characterOffset: int,
         recordNumber: int,
     ) -> None:
         pass
 
     @staticmethod
-    def parse4(string: str, format: CSVFormat) -> CSVParser:
+    def parse4(string: str, format_: CSVFormat) -> CSVParser:
         pass
 
     @staticmethod
     def parse3(
-        reader: typing.Union[io.TextIOWrapper, io.BufferedReader], format: CSVFormat
+        reader: typing.Union[io.TextIOWrapper, io.BufferedReader], format_: CSVFormat
     ) -> CSVParser:
         pass
 
     @staticmethod
-    def parse0(file: pathlib.Path, charset: str, format: CSVFormat) -> CSVParser:
+    def parse0(file: pathlib.Path, charset: str, format_: CSVFormat) -> CSVParser:
         pass
 
     def __isStrictQuoteMode(self) -> bool:
         pass
 
-    def __handleNull(self, input: str) -> str:
+    def __handleNull(self, input_: str) -> str:
         pass
 
     def __createHeaders(self) -> Headers:

@@ -1,0 +1,2 @@
+class DynamicDataReport:
+    pass

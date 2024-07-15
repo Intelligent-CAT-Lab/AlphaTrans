@@ -35,7 +35,7 @@ class AbstractNumberValidator(AbstractFormatValidator, ABC):
     def _getFormat1(self, locale: typing.Any) -> typing.Union[str, datetime.datetime]:
         pass
 
-    def _determineScale(self, format: typing.Any) -> int:
+    def _determineScale(self, format_: typing.Any) -> int:
         pass
 
     def _getFormat0(
@@ -49,22 +49,22 @@ class AbstractNumberValidator(AbstractFormatValidator, ABC):
     def maxValue(
         self,
         value: typing.Union[int, float, numbers.Number],
-        max: typing.Union[int, float, numbers.Number],
+        max_: typing.Union[int, float, numbers.Number],
     ) -> bool:
         pass
 
     def minValue(
         self,
         value: typing.Union[int, float, numbers.Number],
-        min: typing.Union[int, float, numbers.Number],
+        min_: typing.Union[int, float, numbers.Number],
     ) -> bool:
         pass
 
     def isInRange(
         self,
         value: typing.Union[int, float, numbers.Number],
-        min: typing.Union[int, float, numbers.Number],
-        max: typing.Union[int, float, numbers.Number],
+        min_: typing.Union[int, float, numbers.Number],
+        max_: typing.Union[int, float, numbers.Number],
     ) -> bool:
         pass
 

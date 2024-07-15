@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.pool2.proxy.ProxySource import *
 from src.main.org.apache.commons.pool2.ObjectPool import *
+import unittest
 import datetime
 import typing
 from typing import *
@@ -44,7 +45,7 @@ class TestObjectImpl(TestObject):
     # Class Methods End
 
 
-class BaseTestProxiedObjectPool(ABC):
+class BaseTestProxiedObjectPool(ABC, unittest.TestCase):
 
     # Class Fields Begin
     __DATA1: str = None

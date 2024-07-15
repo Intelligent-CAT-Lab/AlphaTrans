@@ -1,0 +1,2 @@
+class WINDOW_BUFFER_SIZE_RECORD:
+    pass

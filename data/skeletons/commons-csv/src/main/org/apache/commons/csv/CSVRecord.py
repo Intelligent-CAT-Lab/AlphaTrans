@@ -13,14 +13,14 @@ import io
 # Imports End
 
 
-class CSVRecord(Iterable):
+class CSVRecord:
 
     # Class Fields Begin
     __serialVersionUID: int = None
     __characterPosition: int = None
     __comment: str = None
     __recordNumber: int = None
-    __values: typing.List[str] = None
+    __values: typing.List[typing.List[str]] = None
     __parser: CSVParser = None
     # Class Fields End
 
@@ -31,7 +31,7 @@ class CSVRecord(Iterable):
     def iterator(self) -> typing.Iterator[str]:
         pass
 
-    def values(self) -> typing.List[str]:
+    def values(self) -> typing.List[typing.List[str]]:
         pass
 
     def toMap(self) -> typing.Dict[str, str]:
@@ -46,7 +46,7 @@ class CSVRecord(Iterable):
     def size(self) -> int:
         pass
 
-    def putIn(self, map: typing.Any) -> typing.Any:
+    def putIn(self, map_: typing.Any) -> typing.Any:
         pass
 
     def isSet1(self, name: str) -> bool:
@@ -91,7 +91,7 @@ class CSVRecord(Iterable):
     def __init__(
         self,
         parser: CSVParser,
-        values: typing.List[str],
+        values: typing.List[typing.List[str]],
         comment: str,
         recordNumber: int,
         characterPosition: int,

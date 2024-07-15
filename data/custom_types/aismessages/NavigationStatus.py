@@ -1,0 +1,2 @@
+class NavigationStatus:
+    pass

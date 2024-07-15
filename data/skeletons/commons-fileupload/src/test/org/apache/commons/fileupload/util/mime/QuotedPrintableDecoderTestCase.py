@@ -2,12 +2,13 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.fileupload.util.mime.QuotedPrintableDecoder import *
+import unittest
 import io
 
 # Imports End
 
 
-class QuotedPrintableDecoderTestCase:
+class QuotedPrintableDecoderTestCase(unittest.TestCase):
 
     # Class Fields Begin
     __US_ASCII_CHARSET: str = None

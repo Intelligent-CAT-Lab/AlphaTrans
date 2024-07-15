@@ -3,12 +3,13 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.fileupload.ProgressListener import *
 from src.main.org.apache.commons.fileupload.MultipartStream import *
+import unittest
 import io
 
 # Imports End
 
 
-class MultipartStreamTest:
+class MultipartStreamTest(unittest.TestCase):
 
     # Class Fields Begin
     __BOUNDARY_TEXT: str = None

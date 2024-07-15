@@ -1,0 +1,2 @@
+class InvalidAISMessage:
+    pass

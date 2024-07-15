@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.codec.digest.Blake3 import *
 from src.main.org.apache.commons.codec.binary.Hex import *
 from src.main.org.apache.commons.codec.DecoderException import *
+import unittest
 import typing
 from typing import *
 import io
@@ -11,7 +12,7 @@ import io
 # Imports End
 
 
-class Blake3TestVectorsTest:
+class Blake3TestVectorsTest(unittest.TestCase):
 
     # Class Fields Begin
     __hasher: Blake3 = None
@@ -46,7 +47,7 @@ class Blake3TestVectorsTest:
         pass
 
     def __init__(
-        self, inputLength: int, hash: str, keyedHash: str, deriveKey: str
+        self, inputLength: int, hash_: str, keyedHash: str, deriveKey: str
     ) -> None:
         pass
 

@@ -10,6 +10,7 @@ from src.test.org.apache.commons.codec.binary.Base32Test import *
 from src.main.org.apache.commons.codec.binary.Base32OutputStream import *
 from src.main.org.apache.commons.codec.binary.Base32 import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
+import unittest
 import typing
 from typing import *
 import io
@@ -17,7 +18,7 @@ import io
 # Imports End
 
 
-class Base32OutputStreamTest:
+class Base32OutputStreamTest(unittest.TestCase):
 
     # Class Fields Begin
     __CR_LF: typing.List[int] = None

@@ -31,7 +31,7 @@ class BaseNCodecOutputStream:
     def write1(self, i: int) -> None:
         pass
 
-    def write0(self, array: typing.List[int], offset: int, len: int) -> None:
+    def write0(self, array: typing.List[int], offset: int, len_: int) -> None:
         pass
 
     def isStrictDecoding(self) -> bool:

@@ -24,51 +24,51 @@ class GenericValidator:
 
     # Class Methods Begin
     @staticmethod
-    def maxValue3(value: float, max: float) -> bool:
+    def maxValue3(value: float, max_: float) -> bool:
         pass
 
     @staticmethod
-    def maxValue2(value: float, max: float) -> bool:
+    def maxValue2(value: float, max_: float) -> bool:
         pass
 
     @staticmethod
-    def maxValue1(value: int, max: int) -> bool:
+    def maxValue1(value: int, max_: int) -> bool:
         pass
 
     @staticmethod
-    def maxValue0(value: int, max: int) -> bool:
+    def maxValue0(value: int, max_: int) -> bool:
         pass
 
     @staticmethod
-    def minValue3(value: float, min: float) -> bool:
+    def minValue3(value: float, min_: float) -> bool:
         pass
 
     @staticmethod
-    def minValue2(value: float, min: float) -> bool:
+    def minValue2(value: float, min_: float) -> bool:
         pass
 
     @staticmethod
-    def minValue1(value: int, min: int) -> bool:
+    def minValue1(value: int, min_: int) -> bool:
         pass
 
     @staticmethod
-    def minValue0(value: int, min: int) -> bool:
+    def minValue0(value: int, min_: int) -> bool:
         pass
 
     @staticmethod
-    def minLength1(value: str, min: int, lineEndLength: int) -> bool:
+    def minLength1(value: str, min_: int, lineEndLength: int) -> bool:
         pass
 
     @staticmethod
-    def minLength0(value: str, min: int) -> bool:
+    def minLength0(value: str, min_: int) -> bool:
         pass
 
     @staticmethod
-    def maxLength1(value: str, max: int, lineEndLength: int) -> bool:
+    def maxLength1(value: str, max_: int, lineEndLength: int) -> bool:
         pass
 
     @staticmethod
-    def maxLength0(value: str, max: int) -> bool:
+    def maxLength0(value: str, max_: int) -> bool:
         pass
 
     @staticmethod
@@ -84,27 +84,27 @@ class GenericValidator:
         pass
 
     @staticmethod
-    def isInRange5(value: float, min: float, max: float) -> bool:
+    def isInRange5(value: float, min_: float, max_: float) -> bool:
         pass
 
     @staticmethod
-    def isInRange4(value: int, min: int, max: int) -> bool:
+    def isInRange4(value: int, min_: int, max_: int) -> bool:
         pass
 
     @staticmethod
-    def isInRange3(value: int, min: int, max: int) -> bool:
+    def isInRange3(value: int, min_: int, max_: int) -> bool:
         pass
 
     @staticmethod
-    def isInRange2(value: float, min: float, max: float) -> bool:
+    def isInRange2(value: float, min_: float, max_: float) -> bool:
         pass
 
     @staticmethod
-    def isInRange1(value: int, min: int, max: int) -> bool:
+    def isInRange1(value: int, min_: int, max_: int) -> bool:
         pass
 
     @staticmethod
-    def isInRange0(value: int, min: int, max: int) -> bool:
+    def isInRange0(value: int, min_: int, max_: int) -> bool:
         pass
 
     @staticmethod

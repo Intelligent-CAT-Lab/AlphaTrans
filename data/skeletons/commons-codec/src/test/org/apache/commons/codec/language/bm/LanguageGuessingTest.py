@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.language.bm.Languages import *
 from src.main.org.apache.commons.codec.language.bm.Lang import *
+import unittest
 import typing
 from typing import *
 import io
@@ -11,7 +12,7 @@ import io
 # Imports End
 
 
-class LanguageGuessingTest:
+class LanguageGuessingTest(unittest.TestCase):
 
     # Class Fields Begin
     __lang: Lang = None

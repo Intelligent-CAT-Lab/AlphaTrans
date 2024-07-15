@@ -7,6 +7,7 @@ from src.main.org.apache.commons.codec.binary.BaseNCodec import *
 from src.main.org.apache.commons.codec.binary.Base32 import *
 from src.main.org.apache.commons.codec.DecoderException import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
+import unittest
 import os
 import typing
 from typing import *
@@ -15,16 +16,16 @@ import io
 # Imports End
 
 
-class Base32Test:
+class Base32Test(unittest.TestCase):
 
     # Class Fields Begin
     __BASE32_TEST_CASES_CHUNKED: typing.List[typing.List[str]] = None
     __BASE32_PAD_TEST_CASES: typing.List[typing.List[str]] = None
     __CHARSET_UTF8: str = None
     __BASE32_TEST_CASES: typing.List[typing.List[str]] = None
-    BASE32_IMPOSSIBLE_CASES: typing.List[str] = None
-    __BASE32_IMPOSSIBLE_CASES_CHUNKED: typing.List[str] = None
-    __BASE32HEX_IMPOSSIBLE_CASES: typing.List[str] = None
+    BASE32_IMPOSSIBLE_CASES: typing.List[typing.List[str]] = None
+    __BASE32_IMPOSSIBLE_CASES_CHUNKED: typing.List[typing.List[str]] = None
+    __BASE32HEX_IMPOSSIBLE_CASES: typing.List[typing.List[str]] = None
     __ENCODE_TABLE: typing.List[int] = None
     __BASE32_BINARY_TEST_CASES: typing.List[typing.List[typing.Any]] = None
     __BASE32HEX_TEST_CASES: typing.List[typing.List[str]] = None
@@ -114,7 +115,7 @@ class Base32Test:
         pass
 
     def __testImpossibleCases(
-        self, codec: Base32, impossible_cases: typing.List[str]
+        self, codec: Base32, impossible_cases: typing.List[typing.List[str]]
     ) -> None:
         pass
 

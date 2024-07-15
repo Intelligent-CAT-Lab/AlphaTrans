@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.AbstractCalendarValidator import *
+import zoneinfo
 import datetime
 import typing
 from typing import *
@@ -25,89 +26,99 @@ class DateValidator(AbstractCalendarValidator):
 
     def compareYears(
         self,
-        value: typing.Union[datetime.date, datetime.datetime],
-        compare: typing.Union[datetime.date, datetime.datetime],
-        timeZone: datetime.timezone,
+        value: typing.Union[datetime.datetime, datetime.date],
+        compare: typing.Union[datetime.datetime, datetime.date],
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> int:
         pass
 
     def compareQuarters1(
         self,
-        value: typing.Union[datetime.date, datetime.datetime],
-        compare: typing.Union[datetime.date, datetime.datetime],
-        timeZone: datetime.timezone,
+        value: typing.Union[datetime.datetime, datetime.date],
+        compare: typing.Union[datetime.datetime, datetime.date],
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
         monthOfFirstQuarter: int,
     ) -> int:
         pass
 
     def compareQuarters0(
         self,
-        value: typing.Union[datetime.date, datetime.datetime],
-        compare: typing.Union[datetime.date, datetime.datetime],
-        timeZone: datetime.timezone,
+        value: typing.Union[datetime.datetime, datetime.date],
+        compare: typing.Union[datetime.datetime, datetime.date],
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> int:
         pass
 
     def compareMonths(
         self,
-        value: typing.Union[datetime.date, datetime.datetime],
-        compare: typing.Union[datetime.date, datetime.datetime],
-        timeZone: datetime.timezone,
+        value: typing.Union[datetime.datetime, datetime.date],
+        compare: typing.Union[datetime.datetime, datetime.date],
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> int:
         pass
 
     def compareWeeks(
         self,
-        value: typing.Union[datetime.date, datetime.datetime],
-        compare: typing.Union[datetime.date, datetime.datetime],
-        timeZone: datetime.timezone,
+        value: typing.Union[datetime.datetime, datetime.date],
+        compare: typing.Union[datetime.datetime, datetime.date],
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> int:
         pass
 
     def compareDates(
         self,
-        value: typing.Union[datetime.date, datetime.datetime],
-        compare: typing.Union[datetime.date, datetime.datetime],
-        timeZone: datetime.timezone,
+        value: typing.Union[datetime.datetime, datetime.date],
+        compare: typing.Union[datetime.datetime, datetime.date],
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> int:
         pass
 
     def validate7(
-        self, value: str, pattern: str, locale: typing.Any, timeZone: datetime.timezone
-    ) -> typing.Union[datetime.date, datetime.datetime]:
+        self,
+        value: str,
+        pattern: str,
+        locale: typing.Any,
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
+    ) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     def validate6(
         self, value: str, pattern: str, locale: typing.Any
-    ) -> typing.Union[datetime.date, datetime.datetime]:
+    ) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     def validate5(
-        self, value: str, locale: typing.Any, timeZone: datetime.timezone
-    ) -> typing.Union[datetime.date, datetime.datetime]:
+        self,
+        value: str,
+        locale: typing.Any,
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
+    ) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     def validate4(
         self, value: str, locale: typing.Any
-    ) -> typing.Union[datetime.date, datetime.datetime]:
+    ) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     def validate3(
-        self, value: str, pattern: str, timeZone: datetime.timezone
-    ) -> typing.Union[datetime.date, datetime.datetime]:
+        self,
+        value: str,
+        pattern: str,
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
+    ) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     def validate2(
         self, value: str, pattern: str
-    ) -> typing.Union[datetime.date, datetime.datetime]:
+    ) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     def validate1(
-        self, value: str, timeZone: datetime.timezone
-    ) -> typing.Union[datetime.date, datetime.datetime]:
+        self, value: str, timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]
+    ) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
-    def validate0(self, value: str) -> typing.Union[datetime.date, datetime.datetime]:
+    def validate0(self, value: str) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     @staticmethod
@@ -123,8 +134,8 @@ class DateValidator(AbstractCalendarValidator):
 
     def __getCalendar(
         self,
-        value: typing.Union[datetime.date, datetime.datetime],
-        timeZone: datetime.timezone,
+        value: typing.Union[datetime.datetime, datetime.date],
+        timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
     ) -> typing.Union[
         datetime.datetime,
         datetime.date,

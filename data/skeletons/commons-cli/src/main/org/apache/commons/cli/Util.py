@@ -11,16 +11,16 @@ import io
 class Util:
 
     # Class Fields Begin
-    EMPTY_STRING_ARRAY: typing.List[str] = None
+    EMPTY_STRING_ARRAY: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin
     @staticmethod
-    def stripLeadingHyphens(str: str) -> str:
+    def stripLeadingHyphens(str_: str) -> str:
         pass
 
     @staticmethod
-    def stripLeadingAndTrailingQuotes(str: str) -> str:
+    def stripLeadingAndTrailingQuotes(str_: str) -> str:
         pass
 
     # Class Methods End

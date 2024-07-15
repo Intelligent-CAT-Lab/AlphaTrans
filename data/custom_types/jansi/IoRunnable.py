@@ -1,0 +1,2 @@
+class IoRunnable:
+    pass

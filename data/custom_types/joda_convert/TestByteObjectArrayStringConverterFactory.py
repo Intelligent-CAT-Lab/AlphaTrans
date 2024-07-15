@@ -1,2 +1,0 @@
-class TestByteObjectArrayStringConverterFactory:
-    pass

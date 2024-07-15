@@ -1,2 +1,0 @@
-class TypeTokenStringConverter:
-    pass

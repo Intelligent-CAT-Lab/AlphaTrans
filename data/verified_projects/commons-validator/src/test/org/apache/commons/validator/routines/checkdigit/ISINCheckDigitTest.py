@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import AbstractCheckDigitTest
 
@@ -14,13 +16,7 @@ class ISINCheckDigitTest(AbstractCheckDigitTest):
     ]
 
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
@@ -41,14 +37,13 @@ class ISINCheckDigitTest(AbstractCheckDigitTest):
                 "XS0000000009", # ditto
                 "AA0000000006", # ditto
             ]
-            self._invalid = [
-                "0378#3100"
-            ]
+            self._invalid = ["0378#3100"]
         except Exception as e:
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_VALIDATOR_345(self) -> None:
+    @pytest.mark.test
+    def testVALIDATOR_345(self) -> None:
         for i in range(len(ISINCheckDigitTest.__invalidCheckDigits)):
             invalidCheckDigit = ISINCheckDigitTest.__invalidCheckDigits[i]
             self.assertFalse(

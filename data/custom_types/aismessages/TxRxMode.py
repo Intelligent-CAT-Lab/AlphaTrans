@@ -1,0 +1,2 @@
+class TxRxMode:
+    pass

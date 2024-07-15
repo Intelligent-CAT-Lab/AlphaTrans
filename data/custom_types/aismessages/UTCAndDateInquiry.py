@@ -1,0 +1,2 @@
+class UTCAndDateInquiry:
+    pass

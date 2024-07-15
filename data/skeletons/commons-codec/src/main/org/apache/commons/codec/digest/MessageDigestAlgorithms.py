@@ -28,7 +28,7 @@ class MessageDigestAlgorithms:
 
     # Class Methods Begin
     @staticmethod
-    def values() -> typing.List[str]:
+    def values() -> typing.List[typing.List[str]]:
         pass
 
     def __init__(self) -> None:

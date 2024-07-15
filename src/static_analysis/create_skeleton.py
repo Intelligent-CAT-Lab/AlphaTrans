@@ -2,6 +2,7 @@ import os
 import json
 import argparse
 from collections import defaultdict
+import keyword
 
 
 def split_with_nested_commas(s):
@@ -22,10 +23,18 @@ def split_with_nested_commas(s):
     return result
 
 
-def get_dependency_path(dependent_class, project_name):
-    if os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'):
+def get_dependency_path(dependent_class, project_name, is_evosuite):
+
+    src_fname = f'java_projects/cleaned_final_projects/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'
+    test_fname = f'java_projects/cleaned_final_projects/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'
+
+    if is_evosuite:
+        src_fname = f'java_projects/cleaned_final_projects_evosuite/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'
+        test_fname = f'java_projects/cleaned_final_projects_evosuite/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'
+
+    if os.path.exists(src_fname):
         return f'src.main.{dependent_class}'
-    elif os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'):
+    elif os.path.exists(test_fname):
         return f'src.test.{dependent_class}'
     else:
         return f'src.main.{dependent_class}'
@@ -36,6 +45,7 @@ def remove_duplicate_methods(schema):
     for class_ in schema['classes']:
         duplicate_methods.setdefault(class_, {})
         for method in schema['classes'][class_]['methods']:
+            schema['classes'][class_]['methods'][method]['is_overload'] = False
             method_name = method.split(':')[1].strip()
             duplicate_methods[class_].setdefault(method_name, [])
             duplicate_methods[class_][method_name].append(method)
@@ -44,7 +54,7 @@ def remove_duplicate_methods(schema):
         for method_name in duplicate_methods[class_]:
             if len(duplicate_methods[class_][method_name]) > 1:
                 for k in duplicate_methods[class_][method_name]:
-                    schema['classes'][class_]['methods'].pop(k)
+                    schema['classes'][class_]['methods'][k]['is_overload'] = True
     
     return schema
 
@@ -54,6 +64,8 @@ def get_dependency_cycle(dependencies):
     class_path = {}
     for key, value in dependencies.items():
         for pair in value:
+            # if pair[0] == '':
+            #     continue
             adjacency_list[key].append(pair[0])
             class_path[pair[0]] = pair[1]
 
@@ -66,11 +78,11 @@ def get_dependency_cycle(dependencies):
     return cycles, class_path
 
 
-def has_child_parent_dept(dependent_files, class_path, project_name):
+def has_child_parent_dept(dependent_files, class_path, project_name, is_evosuite=False):
     verified_dependent_files = []
     for class_1, class_2 in dependent_files:
-        class_1_path = get_dependency_path(class_path[class_1], project_name)
-        class_2_path = get_dependency_path(class_path[class_2], project_name)
+        class_1_path = get_dependency_path(class_path[class_1], project_name, is_evosuite)
+        class_2_path = get_dependency_path(class_path[class_2], project_name, is_evosuite)
 
         class_1_schema_name = f'data/schemas/{project_name}/{project_name}.{class_1_path}.json'
         class_2_schema_name = f'data/schemas/{project_name}/{project_name}.{class_2_path}.json'
@@ -108,20 +120,32 @@ def main(args):
     with open(f'data/type_resolution/universal_type_map_final.json', 'r') as f:
         extracted_types = json.load(f)
     
+    reserved_tokens = dir(__builtins__) + keyword.kwlist
+    
     extracted_types = {k.split('.')[-1]: v for k, v in extracted_types.items()}
 
     schemas = os.listdir(f'data/schemas/{args.project_name}')
 
+    dependencies_dir = 'data/dependencies'
+    if args.evosuite:
+        dependencies_dir = 'data/dependencies-evosuite'
+
     dependencies = {}
-    with open(f'data/dependencies/{args.project_name}/dependencies.json', 'r') as f:
+    with open(f'{dependencies_dir}/{args.project_name}/dependencies.json', 'r') as f:
         dependencies = json.load(f)
 
     dependent_files, class_path = get_dependency_cycle(dependencies)
-    verified_dependent_files = has_child_parent_dept(dependent_files, class_path, args.project_name)
+    verified_dependent_files = has_child_parent_dept(dependent_files, class_path, args.project_name, args.evosuite)
 
     for schema_fname in schemas:
 
         if 'python_partial' in schema_fname:
+            continue
+
+        if args.evosuite and not schema_fname.endswith('ESTest.json'):
+            continue
+
+        if not args.evosuite and 'ESTest' in schema_fname:
             continue
 
         schema_path = f'data/schemas/{args.project_name}/{schema_fname}'
@@ -137,7 +161,8 @@ def main(args):
         skeleton += '# Imports End\n\n'
 
         target_schema = schema.copy()
-
+        python_imports = []
+        python_imports.append('from __future__ import annotations')
         class_order = []
         while len(class_order) != len(schema['classes']):
             for class_ in schema['classes']:
@@ -163,6 +188,17 @@ def main(args):
             if 'new' in class_ or '{' in class_: # skip nested and nameless classes
                 continue
 
+            source_class_declaration = ''
+            with open(schema['path'], 'r') as f:
+                source_class_declaration = ''.join(f.readlines()[schema['classes'][class_]['start']-1:schema['classes'][class_]['end']])
+            
+            if 'enum' in source_class_declaration:
+                schema['classes'][class_]['is_enum'] = True
+            else:
+                schema['classes'][class_]['is_enum'] = False
+
+            dependencies.setdefault(class_, [])
+
             main_class = class_
             if schema['classes'][class_]['nested_inside'] != []:
                 main_class = schema['classes'][class_]['nested_inside']
@@ -181,17 +217,15 @@ def main(args):
                 class_name = class_.split('(')[0].replace('new ', '').strip()
 
             class_declaration = ''
-            exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum'}
+            exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum', 'Iterator', 'Iterable', 'scaffolding', 'Supplier'}
             if schema['classes'][class_]['extends'] != []:
                 schema['classes'][class_]['extends'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [extracted_types[cls_name] if cls_name in extracted_types and cls_name not in class_path else cls_name for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [cls_name for cls_name in schema['classes'][class_]['extends'] if not any(substring in cls_name for substring in exceptional_superclasses) and cls_name != class_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
-                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
                     class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends'] + ['ABC']) + '):\n\n'
                 else:
-                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends']) + '):\n\n'
                     class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['extends']) + '):\n\n'
             elif schema['classes'][class_]['implements'] != []:
                 schema['classes'][class_]['implements'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['implements']]
@@ -199,20 +233,57 @@ def main(args):
                 schema['classes'][class_]['implements'] = [extracted_types[cls_name] if cls_name in extracted_types and cls_name not in class_path else cls_name for cls_name in schema['classes'][class_]['implements']]
                 schema['classes'][class_]['implements'] = [cls_name for cls_name in schema['classes'][class_]['implements'] if not any(substring in cls_name for substring in exceptional_superclasses) and cls_name != class_name]
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
-                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
                     class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements'] + ['ABC']) + '):\n\n'
                 else:
-                    skeleton += 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements']) + '):\n\n'
                     class_declaration = 'class ' + class_name + '(' + ', '.join(schema['classes'][class_]['implements']) + '):\n\n'
             else:
                 if schema['classes'][class_]['is_abstract'] or schema['classes'][class_]['is_interface']:
-                    skeleton += 'class ' + class_name + '(ABC):\n\n'
                     class_declaration = 'class ' + class_name + '(ABC):\n\n'
                 else:
-                    skeleton += 'class ' + class_name + ':\n\n'
                     class_declaration = 'class ' + class_name + ':\n\n'
+
+            is_test_class = False
+            for method_ in schema['classes'][class_]['methods']:
+                if 'Test' in [x.split('(')[0] for x in schema['classes'][class_]['methods'][method_]['annotations']]:
+                    is_test_class = True
+                    break
+
+            if 'src.test' in schema_fname and is_test_class:
+                if '):' not in class_declaration:
+                    class_declaration = class_declaration.replace(':', '(unittest.TestCase):')
+                elif '():' in class_declaration:
+                    class_declaration = class_declaration.replace('():', '(unittest.TestCase):')
+                else:
+                    class_declaration = class_declaration.replace('):', ', unittest.TestCase):')
+            if 'src.test' in schema_fname and 'import unittest' not in python_imports:
+                python_imports.append('import unittest')
+                python_imports.append('import pytest')
             
+            # if schema['classes'][class_]['is_enum']:
+            #     if '):' not in class_declaration:
+            #         class_declaration = class_declaration.replace(':', '(enum.Enum):')
+            #     elif '():' in class_declaration:
+            #         class_declaration = class_declaration.replace('():', '(enum.Enum):')
+            #     else:
+            #         class_declaration = class_declaration.replace('):', ', enum.Enum):')
+            
+            skeleton += class_declaration
+
             target_schema['classes'][class_]['python_class_declaration'] = class_declaration
+
+            if 'static_initializers' in target_schema['classes'][class_]:
+                for static_initializer_se in target_schema['classes'][class_]['static_initializers']:
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['partial_translation'] = []
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['translation'] = []
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['translation_status'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['syntactical_validation_status'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['execution_validation_status'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['test_validation_status'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['graal_validation_status'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['elapsed_time'] = 0
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['generation_timestamp'] = 0
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['include_implementation'] = True if args.type == 'body' else False
 
             is_empty_class = True
             skeleton += '\t# Class Fields Begin\n'
@@ -232,16 +303,55 @@ def main(args):
 
                 field_body = field_name + f': {field_type} = '
                 if '=' not in ''.join(schema['classes'][class_]['fields'][field]['body']):
-                    field_body += 'None\n'
+                    if field_type == 'str' and 'char' in [y for x in schema['classes'][class_]['fields'][field]['types'] for y in x]:
+                        field_body += "'\\u0000'\n"
+                    elif field_type == 'str':
+                        field_body += "''\n"
+                    elif field_type == 'int':
+                        field_body += '0\n'
+                    elif field_type == 'float':
+                        field_body += '0.0\n'
+                    elif field_type == 'bool':
+                        field_body += 'False\n'
+                    elif field_type == 'List':
+                        field_body += '[]\n'
+                    elif field_type == 'Dict':
+                        field_body += '{}\n'
+                    else:
+                        field_body += 'None\n'
+
+                elif '=' in ''.join(schema['classes'][class_]['fields'][field]['body']) and (field_type.startswith('typing.List') or field_type.startswith('List')):
+                    if 'new ArrayList' in ''.join(schema['classes'][class_]['fields'][field]['body']):
+                        field_body += '[]\n'
+                    elif 'new LinkedList' in ''.join(schema['classes'][class_]['fields'][field]['body']):
+                        field_body += '[]\n'
+                    else:
+                        field_body += '<placeholder>\n'
+
+                elif '=' in ''.join(schema['classes'][class_]['fields'][field]['body']) and (field_type.startswith('typing.Dict') or field_type.startswith('Dict')):
+                    if 'new LinkedHashMap' in ''.join(schema['classes'][class_]['fields'][field]['body']):
+                        field_body += '{}\n'
+                    elif 'new HashMap' in ''.join(schema['classes'][class_]['fields'][field]['body']):
+                        field_body += '{}\n'
+                    elif 'new EnumMap' in ''.join(schema['classes'][class_]['fields'][field]['body']):
+                        field_body += '{}\n'
+                    else:
+                        field_body += '<placeholder>\n'
+
                 else:
                     field_body += '<placeholder>\n'
 
-                target_schema['classes'][class_]['fields'][field]['partial_translation'] = f'    {field_body}'
+                target_schema['classes'][class_]['fields'][field]['partial_translation'] = f'    {field_body}'.split('\n')
                 target_schema['classes'][class_]['fields'][field]['translation'] = []
                 target_schema['classes'][class_]['fields'][field]['translation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['syntactical_validation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['execution_validation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['test_validation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['graal_validation_status'] = 'pending'
                 target_schema['classes'][class_]['fields'][field]['elapsed_time'] = 0
                 target_schema['classes'][class_]['fields'][field]['generation_timestamp'] = 0
-                target_schema['classes'][class_]['fields'][field]['model_name'] = 'deepseek-coder-33b-instruct'
+                target_schema['classes'][class_]['fields'][field]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
+                target_schema['classes'][class_]['fields'][field]['include_implementation'] = True if args.type == 'body' else False
 
                 skeleton += f'\t{field_name}: {field_type} = None\n'
             skeleton += '\t# Class Fields End\n\n'
@@ -254,8 +364,8 @@ def main(args):
                 if method_name.strip() == '':
                     continue
 
-                if method_name in ['from']:
-                    method_name = 'from_'
+                if method_name in reserved_tokens:
+                    method_name = f'{method_name}_'
 
                 is_empty_class = False
 
@@ -293,8 +403,7 @@ def main(args):
                     
                     parameters = schema["classes"][class_]["methods"][method]["parameters"]
                     param_types = [(x, y) for x, y in zip(parameters, parameter_types)]
-                    param_types = [('in_', y) if x == 'in' else (x, y) for x, y in param_types]
-                    param_types = [('from_', y) if x == 'from' else (x, y) for x, y in param_types]
+                    param_types = [(f'{x}_', y) if x in reserved_tokens else (x, y) for x, y in param_types]
 
                     if class_ == method_name:
                         skeleton += '\tdef __init__(self, ' + ', '.join([x + f': {y.strip()}' for x, y in param_types]) + ') -> '
@@ -325,9 +434,14 @@ def main(args):
                 target_schema['classes'][class_]['methods'][method]['partial_translation'] = current_method
                 target_schema['classes'][class_]['methods'][method]['translation'] = []
                 target_schema['classes'][class_]['methods'][method]['translation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['syntactical_validation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['execution_validation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['test_validation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['graal_validation_status'] = 'pending'
                 target_schema['classes'][class_]['methods'][method]['elapsed_time'] = 0
                 target_schema['classes'][class_]['methods'][method]['generation_timestamp'] = 0
-                target_schema['classes'][class_]['methods'][method]['model_name'] = 'deepseek-coder-33b-instruct'
+                target_schema['classes'][class_]['methods'][method]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
+                target_schema['classes'][class_]['methods'][method]['include_implementation'] = True if args.type == 'body' else False
 
                 assert '<placeholder>' not in ''.join(current_method)
 
@@ -342,10 +456,9 @@ def main(args):
                       'Dict': 'import typing\nfrom typing import *\n', 'List': 'import typing\nfrom typing import *\n', 'Union': 'import typing\nfrom typing import *\n', 'datetime': 'import datetime\n', 
                       'os': 'import os\n', 'pickle': 'import pickle\n', 'itertools': 'import itertools\n', 'sys': 'import sys\n', 'collections': 'import collections\n', 
                       'unittest.TestCase': 'import unittest\n', 'uuid': 'import uuid\n', 'tempfile': 'import tempfile\n', 'typing': 'import typing\n', 'BytesIO': 'from io import BytesIO\n',
-                      'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n'}
+                      'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n', 'zoneinfo': 'import zoneinfo\n',
+                      'urllib': 'import urllib\n', 'logging': 'import logging\n', 'Enum': 'import enum\n'}
 
-        python_imports = []
-        python_imports.append('from __future__ import annotations')
         for key in import_map:
             if key in skeleton and import_map[key] not in skeleton:
                 skeleton = skeleton.replace('# Imports Begin\n', '# Imports Begin\n' + import_map[key])
@@ -356,7 +469,7 @@ def main(args):
                 if len(dependent_class) != 2:
                     continue
 
-                path = get_dependency_path(dependent_class[1], args.project_name)
+                path = get_dependency_path(dependent_class[1], args.project_name, args.evosuite)
                 skip = False
                 for class_1, class_1_schema_name, class_2, class_2_schema_name, is_child in verified_dependent_files:
                     if is_child == 1 and schema_fname == class_2_schema_name.split('/')[-1] and class_1 in path:
@@ -380,15 +493,16 @@ def main(args):
         skeleton_lines = skeleton.split('\n')
         for i in range(len(skeleton_lines)):
             current_line = skeleton_lines[i]
-            for exceptional_import in ['commons.io', 'commons.logging', 'opentest4j', 'com.google']:
+            for exceptional_import in ['commons.io', 'commons.logging', 'opentest4j', 'com.google', 'org.evosuite', 'scaffolding']:
                 if exceptional_import in current_line:
                     skeleton_lines[i] = f'# {current_line}'
-                    if f'from {exceptional_import} import *' in python_imports:
-                        python_imports[python_imports.index(f'from {path} import *')] = f'# {path}'
+                    if current_line in python_imports:
+                        python_imports[python_imports.index(current_line)] = f'# {current_line}'
                 if 'joda.convert' in current_line and args.project_name == 'joda-money': # resolving these dependencies later
                     skeleton_lines[i] = f'# {current_line}'
-                    if f'from {path} import *' in python_imports:
-                        python_imports[python_imports.index(f'from {path} import *')] = f'# {path}'
+                    for import_ in python_imports:
+                        if 'joda.convert' in import_ and '#' not in import_:
+                            python_imports[python_imports.index(import_)] = f'# {import_}'
 
         target_schema['python_imports'] = python_imports
 
@@ -400,7 +514,7 @@ def main(args):
         formatted_schema_fname = '.'.join(schema_fname.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
         os.makedirs(f'data/skeletons/{args.project_name}/{sub_dir}', exist_ok=True)
-        file_path = f"data/skeletons/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_translation', '')}.py"
+        file_path = f"data/skeletons/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1]}.py"
         with open(file_path, 'w') as f:
             f.write(skeleton)
         
@@ -417,7 +531,8 @@ def main(args):
         with open(fp, 'w') as f:
             f.write('')
 
-        with open(f'data/schemas/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
+        os.makedirs(f'data/schemas/translations/{args.model_name}/{args.type}/{args.project_name}', exist_ok=True)
+        with open(f'data/schemas/translations/{args.model_name}/{args.type}/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
             json.dump(target_schema, f, indent=4)
 
     # find all .py files in a given directory
@@ -437,6 +552,9 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a class skeleton')
     parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project')
+    parser.add_argument('--model_name', type=str, dest='model_name', help='name of the model')
+    parser.add_argument('--type', type=str, dest='type', help='prompt type signature/body')
+    parser.add_argument('--evosuite', action='store_true', dest='evosuite', help='use evosuite dependencies')
     args = parser.parse_args()
     
     main(args)

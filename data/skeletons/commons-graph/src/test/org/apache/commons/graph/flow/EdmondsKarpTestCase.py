@@ -18,12 +18,13 @@ from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
+import unittest
 import io
 
 # Imports End
 
 
-class EdmondsKarpTestCase:
+class EdmondsKarpTestCase(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

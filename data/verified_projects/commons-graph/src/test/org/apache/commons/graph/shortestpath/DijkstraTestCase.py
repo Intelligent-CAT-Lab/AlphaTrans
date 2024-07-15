@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
 from src.main.org.apache.commons.graph.weight.Monoid import *
@@ -18,14 +19,12 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-import pathlib
-
-# Imports End
 
 
 class DijkstraTestCase(unittest.TestCase):
     
-    def test_FindShortestPathAndVerify(self) -> None:
+    @pytest.mark.test
+    def testFindShortestPathAndVerify(self) -> None:
         graph = DirectedMutableGraph()
 
         one = BaseLabeledVertex("1")
@@ -81,7 +80,8 @@ class DijkstraTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
-    def test_NotConnectGraph(self) -> None:
+    @pytest.mark.test
+    def testNotConnectGraph(self) -> None:
         with self.assertRaises(PathNotFoundException):
             graph = UndirectedMutableGraph()
 
@@ -98,7 +98,8 @@ class DijkstraTestCase(unittest.TestCase):
                 .applyingDijkstra(DoubleWeightBaseOperations())
 
 
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findShortestPath(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -107,7 +108,8 @@ class DijkstraTestCase(unittest.TestCase):
                 .applyingDijkstra(DoubleWeightBaseOperations())
     
     
-    def test_NullMonoid(self) -> None:
+    @pytest.mark.test
+    def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 
@@ -123,7 +125,8 @@ class DijkstraTestCase(unittest.TestCase):
                 .applyingDijkstra(None)
 
     
-    def test_NullVertices(self) -> None:
+    @pytest.mark.test
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 

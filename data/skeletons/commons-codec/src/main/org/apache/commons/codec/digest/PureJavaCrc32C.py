@@ -24,6 +24,12 @@ class PureJavaCrc32C:
     # Class Fields End
 
     # Class Methods Begin
+    def update(self, b: int) -> None:
+        pass
+
+    def update(self, b: typing.List[int], off: int, len_: int) -> None:
+        pass
+
     def reset(self) -> None:
         pass
 
@@ -33,7 +39,7 @@ class PureJavaCrc32C:
     def update1(self, b: int) -> None:
         pass
 
-    def update0(self, b: typing.List[int], off: int, len: int) -> None:
+    def update0(self, b: typing.List[int], off: int, len_: int) -> None:
         pass
 
     def __init__(self) -> None:

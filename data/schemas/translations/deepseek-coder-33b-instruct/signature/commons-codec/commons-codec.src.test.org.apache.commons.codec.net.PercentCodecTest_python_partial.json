@@ -1,0 +1,826 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-codec/src/test/java/org/apache/commons/codec/net/PercentCodecTest.java",
+    "imports": {
+        "31-31:import StandardCharsets": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.nio.charset.StandardCharsets;\n"
+            ]
+        },
+        "32-32:import Arrays": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "25-25:import DecoderException": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.codec.DecoderException;\n"
+            ]
+        },
+        "26-26:import EncoderException": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.codec.EncoderException;\n"
+            ]
+        },
+        "29-29:import Test": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "28-28:import Ignore": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.junit.Ignore;\n"
+            ]
+        },
+        "27-27:import Assert": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.junit.Assert;\n"
+            ]
+        },
+        "21-21:import static Assert.assertEquals": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "22-22:import static Assert.assertNull": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.Assert.assertNull;\n"
+            ]
+        },
+        "20-20:import static Assert.assertArrayEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.Assert.assertArrayEquals;\n"
+            ]
+        },
+        "23-23:import static Assert.assertTrue": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.Assert.assertTrue;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PercentCodecTest": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "154-166:testUnsafeCharEncodeDecode": {
+                    "start": 154,
+                    "end": 166,
+                    "body": [
+                        "    public void testUnsafeCharEncodeDecode() throws Exception {\n",
+                        "        final PercentCodec percentCodec = new PercentCodec(1, false, null);\n",
+                        "        final String input = \"\\u03B1\\u03B2\\u03B3\\u03B4\\u03B5\\u03B6% \";\n",
+                        "        final byte[] encoded = percentCodec.encode0(input.getBytes(StandardCharsets.UTF_8));\n",
+                        "        final String encodedS = new String(encoded, StandardCharsets.UTF_8);\n",
+                        "        final byte[] decoded = percentCodec.decode0(encoded);\n",
+                        "        final String decodedS = new String(decoded, StandardCharsets.UTF_8);\n",
+                        "        assertEquals(\n",
+                        "                \"Basic PercentCodec unsafe char encoding test\",\n",
+                        "                \"%CE%B1%CE%B2%CE%B3%CE%B4%CE%B5%CE%B6%25 \",\n",
+                        "                encodedS);\n",
+                        "        assertEquals(\"Basic PercentCodec unsafe char decoding test\", input, decodedS);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testUnsafeCharEncodeDecode()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "125-136:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "199-222:decode0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testUnsafeCharEncodeDecode(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "141-151:testSafeCharEncodeDecodeObject": {
+                    "start": 141,
+                    "end": 151,
+                    "body": [
+                        "    public void testSafeCharEncodeDecodeObject() throws Exception {\n",
+                        "        final PercentCodec percentCodec = new PercentCodec(0, true, null);\n",
+                        "        final String input = \"abc123_-.*\";\n",
+                        "        final Object encoded =\n",
+                        "                percentCodec.encode1((Object) input.getBytes(StandardCharsets.UTF_8));\n",
+                        "        final String encodedS = new String((byte[]) encoded, StandardCharsets.UTF_8);\n",
+                        "        final Object decoded = percentCodec.decode1(encoded);\n",
+                        "        final String decodedS = new String((byte[]) decoded, StandardCharsets.UTF_8);\n",
+                        "        assertEquals(\"Basic PercentCodec safe char encoding test\", input, encodedS);\n",
+                        "        assertEquals(\"Basic PercentCodec safe char decoding test\", input, decodedS);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSafeCharEncodeDecodeObject()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "246-255:encode1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "269-278:decode1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSafeCharEncodeDecodeObject(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "127-138:testPercentEncoderDecoderWithPlusForSpace": {
+                    "start": 127,
+                    "end": 138,
+                    "body": [
+                        "    public void testPercentEncoderDecoderWithPlusForSpace() throws Exception {\n",
+                        "        final String input = \"a b c d\";\n",
+                        "        final PercentCodec percentCodec = new PercentCodec(0, true, null);\n",
+                        "        final byte[] encoded = percentCodec.encode0(input.getBytes(StandardCharsets.UTF_8));\n",
+                        "        final String encodedS = new String(encoded, StandardCharsets.UTF_8);\n",
+                        "        assertEquals(\"PercentCodec plus for space encoding test\", \"a+b+c+d\", encodedS);\n",
+                        "        final byte[] decode = percentCodec.decode0(encoded);\n",
+                        "        assertEquals(\n",
+                        "                \"PercentCodec plus for space decoding test\",\n",
+                        "                new String(decode, StandardCharsets.UTF_8),\n",
+                        "                input);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPercentEncoderDecoderWithPlusForSpace()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "125-136:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "199-222:decode0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testPercentEncoderDecoderWithPlusForSpace(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "115-124:testPercentEncoderDecoderWithNullOrEmptyInput": {
+                    "start": 115,
+                    "end": 124,
+                    "body": [
+                        "    public void testPercentEncoderDecoderWithNullOrEmptyInput() throws Exception {\n",
+                        "        final PercentCodec percentCodec = new PercentCodec(0, true, null);\n",
+                        "        assertNull(\"Null input value encoding test\", percentCodec.encode0(null));\n",
+                        "        assertNull(\"Null input value decoding test\", percentCodec.decode0(null));\n",
+                        "        final byte[] emptyInput = \"\".getBytes(StandardCharsets.UTF_8);\n",
+                        "        assertEquals(\n",
+                        "                \"Empty input value encoding test\", percentCodec.encode0(emptyInput), emptyInput);\n",
+                        "        assertArrayEquals(\n",
+                        "                \"Empty input value decoding test\", percentCodec.decode0(emptyInput), emptyInput);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPercentEncoderDecoderWithNullOrEmptyInput()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "125-136:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "199-222:decode0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testPercentEncoderDecoderWithNullOrEmptyInput(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "109-112:testEncodeUnsupportedObject": {
+                    "start": 109,
+                    "end": 112,
+                    "body": [
+                        "    public void testEncodeUnsupportedObject() throws Exception {\n",
+                        "        final PercentCodec percentCodec = new PercentCodec(1, false, null);\n",
+                        "        percentCodec.encode1(\"test\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = EncoderException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEncodeUnsupportedObject()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "246-255:encode1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEncodeUnsupportedObject(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "103-106:testEncodeNullObject": {
+                    "start": 103,
+                    "end": 106,
+                    "body": [
+                        "    public void testEncodeNullObject() throws Exception {\n",
+                        "        final PercentCodec percentCodec = new PercentCodec(1, false, null);\n",
+                        "        assertNull(percentCodec.encode1((Object) null));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEncodeNullObject()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "246-255:encode1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEncodeNullObject(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "97-100:testDecodeUnsupportedObject": {
+                    "start": 97,
+                    "end": 100,
+                    "body": [
+                        "    public void testDecodeUnsupportedObject() throws Exception {\n",
+                        "        final PercentCodec percentCodec = new PercentCodec(1, false, null);\n",
+                        "        percentCodec.decode1(\"test\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = DecoderException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDecodeUnsupportedObject()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "269-278:decode1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testDecodeUnsupportedObject(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "91-94:testDecodeNullObject": {
+                    "start": 91,
+                    "end": 94,
+                    "body": [
+                        "    public void testDecodeNullObject() throws Exception {\n",
+                        "        final PercentCodec percentCodec = new PercentCodec(1, false, null);\n",
+                        "        assertNull(percentCodec.decode1((Object) null));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDecodeNullObject()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "269-278:decode1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testDecodeNullObject(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "77-88:testDecodeInvalidEncodedResultDecoding": {
+                    "start": 77,
+                    "end": 88,
+                    "body": [
+                        "    public void testDecodeInvalidEncodedResultDecoding() throws Exception {\n",
+                        "        final String inputS = \"\\u03B1\\u03B2\";\n",
+                        "        final PercentCodec percentCodec = new PercentCodec(1, false, null);\n",
+                        "        final byte[] encoded = percentCodec.encode0(inputS.getBytes(StandardCharsets.UTF_8));\n",
+                        "        try {\n",
+                        "            percentCodec.decode0(Arrays.copyOf(encoded, encoded.length - 1)); // exclude one byte\n",
+                        "        } catch (final Exception e) {\n",
+                        "            assertTrue(\n",
+                        "                    DecoderException.class.isInstance(e)\n",
+                        "                            && ArrayIndexOutOfBoundsException.class.isInstance(e.getCause()));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testDecodeInvalidEncodedResultDecoding()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "125-136:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "199-222:decode0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testDecodeInvalidEncodedResultDecoding(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "59-74:testConfigurablePercentEncoder": {
+                    "start": 59,
+                    "end": 74,
+                    "body": [
+                        "    public void testConfigurablePercentEncoder() throws Exception {\n",
+                        "        final String input = \"abc123_-.*\\u03B1\\u03B2\";\n",
+                        "        final PercentCodec percentCodec =\n",
+                        "                new PercentCodec(0, false, \"abcdef\".getBytes(StandardCharsets.UTF_8));\n",
+                        "        final byte[] encoded = percentCodec.encode0(input.getBytes(StandardCharsets.UTF_8));\n",
+                        "        final String encodedS = new String(encoded, StandardCharsets.UTF_8);\n",
+                        "        assertEquals(\n",
+                        "                \"Configurable PercentCodec encoding test\",\n",
+                        "                \"%61%62%63123_-.*%CE%B1%CE%B2\",\n",
+                        "                encodedS);\n",
+                        "        final byte[] decoded = percentCodec.decode0(encoded);\n",
+                        "        assertEquals(\n",
+                        "                \"Configurable PercentCodec decoding test\",\n",
+                        "                new String(decoded, StandardCharsets.UTF_8),\n",
+                        "                input);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testConfigurablePercentEncoder()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "125-136:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "199-222:decode0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testConfigurablePercentEncoder(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "51-56:testBasicSpace": {
+                    "start": 51,
+                    "end": 56,
+                    "body": [
+                        "    public void testBasicSpace() throws Exception {\n",
+                        "        final PercentCodec percentCodec = new PercentCodec(1, false, null);\n",
+                        "        final String input = \" \";\n",
+                        "        final byte[] encoded = percentCodec.encode0(input.getBytes(StandardCharsets.UTF_8));\n",
+                        "        Assert.assertArrayEquals(\"%20\".getBytes(StandardCharsets.UTF_8), encoded);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Ignore",
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBasicSpace()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "125-136:encode0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testBasicSpace(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                },
+                "38-47:testBasicEncodeDecode": {
+                    "start": 38,
+                    "end": 47,
+                    "body": [
+                        "    public void testBasicEncodeDecode() throws Exception {\n",
+                        "        final PercentCodec percentCodec = new PercentCodec(1, false, null);\n",
+                        "        final String input = \"abcdABCD\";\n",
+                        "        final byte[] encoded = percentCodec.encode0(input.getBytes(StandardCharsets.UTF_8));\n",
+                        "        final String encodedS = new String(encoded, StandardCharsets.UTF_8);\n",
+                        "        final byte[] decoded = percentCodec.decode0(encoded);\n",
+                        "        final String decodedS = new String(decoded, StandardCharsets.UTF_8);\n",
+                        "        assertEquals(\"Basic PercentCodec encoding test\", input, encodedS);\n",
+                        "        assertEquals(\"Basic PercentCodec decoding test\", input, decodedS);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBasicEncodeDecode()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "63-74:PercentCodec"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "125-136:encode0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                            "PercentCodec",
+                            "199-222:decode0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testBasicEncodeDecode(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class PercentCodecTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import unittest",
+        "from src.main.org.apache.commons.codec.DecoderException import *",
+        "from src.main.org.apache.commons.codec.net.PercentCodec import *"
+    ]
+}

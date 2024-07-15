@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
 import unittest
 import re
@@ -33,8 +35,6 @@ class RegexValidatorTest(unittest.TestCase):
         "$"
     __MULTIPLE_REGEX = [__REGEX_1, __REGEX_2, __REGEX_3]
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
 
     
     def setUp(self) -> None:
@@ -51,7 +51,8 @@ class RegexValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
-    def test_Single(self) -> None:
+    @pytest.mark.test
+    def testSingle(self) -> None:
         sensitive = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX)
         insensitive = RegexValidator.RegexValidator2(RegexValidatorTest.__REGEX, False)
 
@@ -129,7 +130,8 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
-    def test_MultipleSensitive(self) -> None:
+    @pytest.mark.test
+    def testMultipleSensitive(self) -> None:
         multiple = RegexValidator.RegexValidator1(RegexValidatorTest.__MULTIPLE_REGEX)
         single1 = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX_1)
         single2 = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX_2)
@@ -220,7 +222,8 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
-    def test_MultipleInsensitive(self) -> None:
+    @pytest.mark.test
+    def testMultipleInsensitive(self) -> None:
         multiple = RegexValidator(RegexValidatorTest.__MULTIPLE_REGEX, False)
         single1 = RegexValidator.RegexValidator2(RegexValidatorTest.__REGEX_1, False)
         single2 = RegexValidator.RegexValidator2(RegexValidatorTest.__REGEX_2, False)
@@ -311,7 +314,8 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
-    def test_NullValue(self) -> None:
+    @pytest.mark.test
+    def testNullValue(self) -> None:
         validator = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX)
         self.assertEqual(
             False,
@@ -330,7 +334,8 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
-    def test_MissingRegex(self) -> None:
+    @pytest.mark.test
+    def testMissingRegex(self) -> None:
         with self.assertRaises(ValueError) as context:
             RegexValidator.RegexValidator3(None)
         self.assertEqual(
@@ -382,13 +387,15 @@ class RegexValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Exceptions(self) -> None:
+    @pytest.mark.test
+    def testExceptions(self) -> None:
         invalidRegex = "^([abCD12]*$"
         with self.assertRaises(re.error):
             RegexValidator.RegexValidator3(invalidRegex)
 
     
-    def test_ToString(self) -> None:
+    @pytest.mark.test
+    def testToString(self) -> None:
         single = RegexValidator.RegexValidator3(RegexValidatorTest.__REGEX)
         self.assertEqual(
             "RegexValidator{" + RegexValidatorTest.__REGEX + "}",

@@ -23,7 +23,7 @@ class Validator:
     # Class Fields End
 
     # Class Methods Begin
-    def __init__(self, cc: str, len: int, format: str) -> None:
+    def __init__(self, cc: str, len_: int, format_: str) -> None:
         pass
 
     # Class Methods End
@@ -38,7 +38,7 @@ class IBANValidator:
     # Class Fields End
 
     # Class Methods Begin
-    def setValidator1(self, countryCode: str, length: int, format: str) -> Validator:
+    def setValidator1(self, countryCode: str, length: int, format_: str) -> Validator:
         pass
 
     def setValidator0(self, validator: Validator) -> Validator:

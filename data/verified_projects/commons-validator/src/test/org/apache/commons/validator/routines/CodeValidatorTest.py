@@ -1,13 +1,11 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit import *
 from src.main.org.apache.commons.validator.routines.CodeValidator import *
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
 import unittest
 
 class CodeValidatorTest(unittest.TestCase):
-
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-
     
     def setUp(self) -> None:
         try:
@@ -23,7 +21,8 @@ class CodeValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when tearing down the test: {e}")
 
     
-    def test_CheckDigit(self) -> None:
+    @pytest.mark.test
+    def testCheckDigit(self) -> None:
         validator = CodeValidator(3, None, -1, None, -1, None)
         invalidEAN = "9781930110992"
         validEAN = "9781930110991"
@@ -45,7 +44,8 @@ class CodeValidatorTest(unittest.TestCase):
         self.assertIsNone(validator.validate("978193011099X"), "EAN CheckDigit ex")
 
     
-    def test_Length(self):
+    @pytest.mark.test
+    def testLength(self):
         validator = CodeValidator(3, None, -1, None, -1, None)
         length_10 = "1234567890"
         length_11 = "12345678901"
@@ -102,7 +102,8 @@ class CodeValidatorTest(unittest.TestCase):
         self.assertIsNone(validator.validate(length_12), "Exact 11 - 12")
 
     
-    def test_Regex(self):
+    @pytest.mark.test
+    def testRegex(self):
         validator = CodeValidator(3, None, -1, None, -1, None)
 
         value2 = "12"
@@ -146,7 +147,8 @@ class CodeValidatorTest(unittest.TestCase):
         self.assertEqual("123456", validator.validate("123456"), "Reformat 2 123456")
 
     
-    def test_NoInput(self):
+    @pytest.mark.test
+    def testNoInput(self):
         validator = CodeValidator(3, None, -1, None, -1, None)
         self.assertIsNone(validator.validate(None), "Null")
         self.assertIsNone(validator.validate(""), "Zero Length")
@@ -154,19 +156,22 @@ class CodeValidatorTest(unittest.TestCase):
         self.assertEqual("A", validator.validate(" A  "), "Trimmed")
 
     
-    def test_Validator294_1(self):
+    @pytest.mark.test
+    def testValidator294_1(self):
         validator = CodeValidator(3, None, -1, None, 0, None)
         self.assertIsNone(validator.validate(None), "Null")
         validator = CodeValidator(3, None, 0, None, -1, None)
         self.assertIsNone(validator.validate(None), "Null")
 
     
-    def test_Validator294_2(self):
+    @pytest.mark.test
+    def testValidator294_2(self):
         validator = CodeValidator(3, None, 0, None, -1, None)
         self.assertIsNone(validator.validate(None), "Null")
 
     
-    def test_Constructors(self):
+    @pytest.mark.test
+    def testConstructors(self):
         validator = None
         regex = RegexValidator.RegexValidator3("^[0-9]*$")
 

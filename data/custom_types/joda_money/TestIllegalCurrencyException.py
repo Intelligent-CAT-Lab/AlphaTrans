@@ -1,2 +1,0 @@
-class TestIllegalCurrencyException:
-    pass

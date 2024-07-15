@@ -1,0 +1,2 @@
+class Interrogation:
+    pass

@@ -3,8 +3,8 @@ import os
 
 projects_dir = sys.argv[1]
 project = sys.argv[2]
-os.system(f'rm -rf preprocessed_1/{project}')
-temp_project_path = f'preprocessed_1/'
+os.system(f'rm -rf java_projects/preprocessed_1/{project}')
+temp_project_path = f'java_projects/preprocessed_1/'
 os.makedirs(temp_project_path, exist_ok=True)
 os.system(f'cp -r {projects_dir}/{project} {temp_project_path}')
 
@@ -820,7 +820,7 @@ def main():
     # for path in overloaded_constructors:
     #     for constructor in overloaded_constructors[path]:
     #         print(path, constructor)
-    #     print()
+    #     print('-'*50)
     call_sites = get_constructor_call_sites()
     overloaded_constructors, new_constructors = rewrite_overloaded_constructors(overloaded_constructors)
     rewrite_call_sites(overloaded_constructors, call_sites, new_constructors)

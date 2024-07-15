@@ -18,8 +18,11 @@ class GnuParser(Parser):
 
     # Class Methods Begin
     def _flatten(
-        self, options: Options, arguments: typing.List[str], stopAtNonOption: bool
-    ) -> typing.List[str]:
+        self,
+        options: Options,
+        arguments: typing.List[typing.List[str]],
+        stopAtNonOption: bool,
+    ) -> typing.List[typing.List[str]]:
         pass
 
     # Class Methods End

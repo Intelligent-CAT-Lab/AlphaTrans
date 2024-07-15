@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.BaseNCodec import *
+import unittest
 import typing
 from typing import *
 import io
@@ -34,9 +35,10 @@ class NoOpBaseNCodec(BaseNCodec):
     # Class Methods End
 
 
-class BaseNCodecTest:
+class BaseNCodecTest(unittest.TestCase):
 
     # Class Fields Begin
+    codec: BaseNCodec = None
     # Class Fields End
 
     # Class Methods Begin

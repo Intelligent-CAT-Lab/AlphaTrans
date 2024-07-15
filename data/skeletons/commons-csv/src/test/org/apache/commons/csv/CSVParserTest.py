@@ -7,6 +7,7 @@ from src.main.org.apache.commons.csv.CSVRecord import *
 from src.main.org.apache.commons.csv.CSVPrinter import *
 from src.main.org.apache.commons.csv.CSVParser import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import unittest
 import os
 import typing
 from typing import *
@@ -17,7 +18,7 @@ import pathlib
 # Imports End
 
 
-class CSVParserTest:
+class CSVParserTest(unittest.TestCase):
 
     # Class Fields Begin
     __UTF_8: str = None
@@ -246,10 +247,10 @@ class CSVParserTest:
     def __validateLineNumbers(self, lineSeparator: str) -> None:
         pass
 
-    def __testCSV141Ok(self, format: CSVFormat) -> None:
+    def __testCSV141Ok(self, format_: CSVFormat) -> None:
         pass
 
-    def __testCSV141Failure(self, format: CSVFormat, failParseRecordNo: int) -> None:
+    def __testCSV141Failure(self, format_: CSVFormat, failParseRecordNo: int) -> None:
         pass
 
     def __parseFully(self, parser: CSVParser) -> None:

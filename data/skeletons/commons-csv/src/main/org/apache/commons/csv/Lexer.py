@@ -94,7 +94,7 @@ class Lexer:
     def getCharacterPosition(self) -> int:
         pass
 
-    def __init__(self, format: CSVFormat, reader: ExtendedBufferedReader) -> None:
+    def __init__(self, format_: CSVFormat, reader: ExtendedBufferedReader) -> None:
         pass
 
     # Class Methods End

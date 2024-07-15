@@ -4,13 +4,14 @@ from __future__ import annotations
 from src.main.org.apache.commons.csv.CSVRecord import *
 from src.main.org.apache.commons.csv.CSVParser import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+import unittest
 import os
 import io
 
 # Imports End
 
 
-class JiraCsv290Test:
+class JiraCsv290Test(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End
@@ -22,7 +23,7 @@ class JiraCsv290Test:
     def testPostgresqlCsv(self) -> None:
         pass
 
-    def __testHelper(self, filename: str, format: CSVFormat) -> None:
+    def __testHelper(self, filename: str, format_: CSVFormat) -> None:
         pass
 
     # Class Methods End

@@ -36,7 +36,7 @@ class UrlValidator:
     __options: int = None
     __allowedSchemes: typing.Set[str] = None
     __authorityValidator: RegexValidator = None
-    __DEFAULT_SCHEMES: typing.List[str] = None
+    __DEFAULT_SCHEMES: typing.List[typing.List[str]] = None
     __DEFAULT_URL_VALIDATOR: UrlValidator = None
     __domainValidator: DomainValidator = None
     __serialVersionUID: int = None
@@ -74,7 +74,7 @@ class UrlValidator:
         pass
 
     @staticmethod
-    def UrlValidator5(schemes: typing.List[str]) -> UrlValidator:
+    def UrlValidator5(schemes: typing.List[typing.List[str]]) -> UrlValidator:
         pass
 
     @staticmethod
@@ -82,7 +82,9 @@ class UrlValidator:
         pass
 
     @staticmethod
-    def UrlValidator3(schemes: typing.List[str], options: int) -> UrlValidator:
+    def UrlValidator3(
+        schemes: typing.List[typing.List[str]], options: int
+    ) -> UrlValidator:
         pass
 
     @staticmethod
@@ -91,13 +93,15 @@ class UrlValidator:
 
     @staticmethod
     def UrlValidator1(
-        schemes: typing.List[str], authorityValidator: RegexValidator, options: int
+        schemes: typing.List[typing.List[str]],
+        authorityValidator: RegexValidator,
+        options: int,
     ) -> UrlValidator:
         pass
 
     def __init__(
         self,
-        schemes: typing.List[str],
+        schemes: typing.List[typing.List[str]],
         authorityValidator: RegexValidator,
         options: int,
         domainValidator: DomainValidator,

@@ -1,0 +1,2 @@
+class IntegratedBitPacking:
+    pass

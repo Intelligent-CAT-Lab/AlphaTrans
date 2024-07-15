@@ -1,16 +1,15 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
 import unittest
 import os
 import io
 
-# Imports End
 
 
 class BugCLI162Test(unittest.TestCase):
 
-    # Class Fields Begin
     __CR: str = os.linesep
 
     __OPT: str = "-"
@@ -86,15 +85,15 @@ class BugCLI162Test(unittest.TestCase):
                     __PMODE_OUT +\
                     ", " +\
                     __PMODE_UNK
-    # Class Fields End
-
-    # Class Methods Begin
+    
+    
     def setUp(self) -> None:
         self.__formatter = HelpFormatter()
         self.__sw = io.StringIO()
 
 
-    def test_InfiniteLoop(self) -> None:
+    @pytest.mark.test
+    def testInfiniteLoop(self) -> None:
         options = Options()
         options.addOption3("h", "help", False, "This is a looooong description")
         self.__formatter.printHelp2(
@@ -124,7 +123,8 @@ class BugCLI162Test(unittest.TestCase):
         self.assertEqual(expected, self.__sw.getvalue())
 
     
-    def test_LongLineChunking(self) -> None:
+    @pytest.mark.test
+    def testLongLineChunking(self) -> None:
         options = Options()
         options.addOption3(
             "x",
@@ -189,7 +189,8 @@ class BugCLI162Test(unittest.TestCase):
         )
 
     
-    def test_LongLineChunkingIndentIgnored(self) -> None:
+    @pytest.mark.test
+    def testLongLineChunkingIndentIgnored(self) -> None:
         options = Options()
         options.addOption3("x", "extralongarg", False, "This description is Long.")
         self.__formatter.printHelp2(
@@ -221,5 +222,3 @@ class BugCLI162Test(unittest.TestCase):
         self.assertEqual(
             expected, self.__sw.getvalue(), "Long arguments did not split as expected"
         )
-
-    # Class Methods End

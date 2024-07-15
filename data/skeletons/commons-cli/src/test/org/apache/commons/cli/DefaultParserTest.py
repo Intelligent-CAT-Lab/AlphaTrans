@@ -6,12 +6,13 @@ from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.DefaultParser import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.CommandLine import *
+import unittest
 import io
 
 # Imports End
 
 
-class DefaultParserTest(ParserTestCase):
+class DefaultParserTest(ParserTestCase, unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

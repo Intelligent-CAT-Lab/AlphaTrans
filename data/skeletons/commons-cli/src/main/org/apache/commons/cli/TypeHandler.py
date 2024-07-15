@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.cli.PatternOptionBuilder import *
 from src.main.org.apache.commons.cli.ParseException import *
+import urllib
 import datetime
 import typing
 from typing import *
@@ -20,20 +21,20 @@ class TypeHandler:
 
     # Class Methods Begin
     @staticmethod
-    def createValue0(str: str, clazz: typing.Type[typing.Any]) -> typing.Any:
+    def createValue0(str_: str, clazz: typing.Type[typing.Any]) -> typing.Any:
         pass
 
     @staticmethod
-    def openFile(str: str) -> typing.Union[io.FileIO, io.BufferedReader]:
+    def openFile(str_: str) -> typing.Union[io.FileIO, io.BufferedReader]:
         pass
 
     @staticmethod
-    def createValue1(str: str, obj: typing.Any) -> typing.Any:
+    def createValue1(str_: str, obj: typing.Any) -> typing.Any:
         pass
 
     @staticmethod
     def createURL(
-        str: str,
+        str_: str,
     ) -> typing.Union[
         urllib.parse.ParseResult,
         urllib.parse.SplitResult,
@@ -47,19 +48,19 @@ class TypeHandler:
         pass
 
     @staticmethod
-    def createNumber(str: str) -> typing.Union[int, float, numbers.Number]:
+    def createNumber(str_: str) -> typing.Union[int, float, numbers.Number]:
         pass
 
     @staticmethod
-    def createFiles(str: str) -> typing.List[pathlib.Path]:
+    def createFiles(str_: str) -> typing.List[pathlib.Path]:
         pass
 
     @staticmethod
-    def createFile(str: str) -> pathlib.Path:
+    def createFile(str_: str) -> pathlib.Path:
         pass
 
     @staticmethod
-    def createDate(str: str) -> typing.Union[datetime.date, datetime.datetime]:
+    def createDate(str_: str) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     @staticmethod

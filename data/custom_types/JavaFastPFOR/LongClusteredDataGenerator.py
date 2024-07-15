@@ -1,0 +1,2 @@
+class LongClusteredDataGenerator:
+    pass

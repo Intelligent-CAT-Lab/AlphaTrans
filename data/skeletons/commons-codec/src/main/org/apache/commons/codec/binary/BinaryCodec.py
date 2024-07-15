@@ -29,7 +29,19 @@ class BinaryCodec(BinaryDecoder, BinaryEncoder):
     # Class Fields End
 
     # Class Methods Begin
-    def toByteArray(self, ascii: str) -> typing.List[int]:
+    def encode(self, raw: typing.Any) -> typing.Any:
+        pass
+
+    def encode(self, raw: typing.List[int]) -> typing.List[int]:
+        pass
+
+    def decode(self, ascii_: typing.Any) -> typing.Any:
+        pass
+
+    def decode(self, ascii_: typing.List[int]) -> typing.List[int]:
+        pass
+
+    def toByteArray(self, ascii_: str) -> typing.List[int]:
         pass
 
     def encode1(self, raw: typing.Any) -> typing.Any:
@@ -38,10 +50,10 @@ class BinaryCodec(BinaryDecoder, BinaryEncoder):
     def encode0(self, raw: typing.List[int]) -> typing.List[int]:
         pass
 
-    def decode1(self, ascii: typing.Any) -> typing.Any:
+    def decode1(self, ascii_: typing.Any) -> typing.Any:
         pass
 
-    def decode0(self, ascii: typing.List[int]) -> typing.List[int]:
+    def decode0(self, ascii_: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod
@@ -57,11 +69,11 @@ class BinaryCodec(BinaryDecoder, BinaryEncoder):
         pass
 
     @staticmethod
-    def fromAscii1(ascii: typing.List[str]) -> typing.List[int]:
+    def fromAscii1(ascii_: typing.List[str]) -> typing.List[int]:
         pass
 
     @staticmethod
-    def fromAscii0(ascii: typing.List[int]) -> typing.List[int]:
+    def fromAscii0(ascii_: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod

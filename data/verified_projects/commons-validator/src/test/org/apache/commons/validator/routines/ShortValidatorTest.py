@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.ShortValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import AbstractNumberValidatorTest
 import sys
@@ -5,58 +7,67 @@ import sys
 
 class ShortValidatorTest(AbstractNumberValidatorTest):
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
         try:
             super().setUp()
-
             self._validator = ShortValidator(False, 0)
             self._strictValidator = ShortValidator.ShortValidator1()
-
             self._testPattern = "#,###"
-
             self._max = sys.maxsize
             self._maxPlusOne = sys.maxsize + 1
             self._min = -sys.maxsize - 1
             self._minMinusOne = -sys.maxsize - 1 - 1
-
-            self._invalidStrict = [None, "", "X", "X12", "12X", "1X2", "1.2"]
-
+            self._invalidStrict = [
+                None,
+                "",
+                "X",
+                "X12",
+                "12X",
+                "1X2",
+                "1.2"
+            ]
             self._invalid = [None, "", "X", "X12"]
-
             self._testNumber = 1234
             self._testZero = 0
-            self._validStrict = ["0", "1234", "1,234"]
-            self._validStrictCompare = [self._testZero, self._testNumber, self._testNumber]
-            self._valid = ["0", "1234", "1,234", "1,234.5", "1234X"]
-            self._validCompare = [
-                self._testZero,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber,
-                self._testNumber
+            self._validStrict = [
+                "0",
+                "1234",
+                "1,234"
             ]
-
+            self._validStrictCompare = [
+                0, 
+                1234,
+                1234
+            ]
+            self._valid = [
+                "0",
+                "1234",
+                "1,234",
+                "1,234.5",
+                "1234X"
+            ]
+            self._validCompare = [
+                0,
+                1234,
+                1234,
+                1234,
+                1234
+            ]
             self._testStringUS = "1,234"
             self._testStringDE = "1.234"
-
-            self._localeValue = self._testStringDE
+            self._localeValue = "1.234"
             self._localePattern = "#.###"
             self._testLocale = 'de_DE.UTF-8'
-            self._localeExpected = self._testNumber
+            self._localeExpected = 1234
         except Exception as e:
             self._fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_ShortValidatorMethods(self) -> None:
+    @pytest.mark.test
+    def testShortValidatorMethods(self) -> None:
         locale = 'de_DE.UTF-8'
         pattern = "0,00,00"
         patternVal = "1,23,45"
@@ -138,6 +149,7 @@ class ShortValidatorTest(AbstractNumberValidatorTest):
         )
     
 
+    @pytest.mark.test
     def testShortRangeMinMax(self) -> None:
         validator = ShortValidator(self._strictValidator)
         number9 = validator.validate1("9", "#")

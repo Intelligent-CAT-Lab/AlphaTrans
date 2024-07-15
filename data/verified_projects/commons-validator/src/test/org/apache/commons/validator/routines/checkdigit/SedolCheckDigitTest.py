@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.SedolCheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import AbstractCheckDigitTest
 
@@ -12,13 +14,7 @@ class SedolCheckDigitTest(AbstractCheckDigitTest):
         "B07LF5F", # proper check digit is '5', see above
     ]
 
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
+    __test__ = True
 
     
     def setUp(self) -> None:
@@ -38,7 +34,8 @@ class SedolCheckDigitTest(AbstractCheckDigitTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
     
 
-    def test_VALIDATOR_346(self) -> None:
+    @pytest.mark.test
+    def testVALIDATOR_346(self) -> None:
         for i in range(len(SedolCheckDigitTest.__invalidCheckDigits)):
             invalidCheckDigit = SedolCheckDigitTest.__invalidCheckDigits[i]
             self.assertFalse(

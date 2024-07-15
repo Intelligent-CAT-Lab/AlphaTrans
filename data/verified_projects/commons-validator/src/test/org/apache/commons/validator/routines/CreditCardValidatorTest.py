@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.checkdigit.LuhnCheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
 from src.main.org.apache.commons.validator.routines.RegexValidator import *
@@ -53,12 +55,10 @@ class CreditCardValidatorTest(unittest.TestCase):
         "4417123456789112",  # invalid check digit
     ]
 
-    
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
 
     
-    def test_IsValid(self) -> None:
+    @pytest.mark.test
+    def testIsValid(self) -> None:
         ccv = CreditCardValidator.CreditCardValidator0()
 
         self.assertIsNone(ccv.validate(None))
@@ -87,7 +87,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertFalse(ccv.isValid("4417123456789113"))
 
 
-    def test_AddAllowedCardType(self) -> None:
+    @pytest.mark.test
+    def testAddAllowedCardType(self) -> None:
         ccv = CreditCardValidator(0, CreditCardValidator.NONE, None, None)
         self.assertFalse(ccv.isValid(CreditCardValidatorTest.__VALID_VISA))
         self.assertFalse(ccv.isValid(CreditCardValidatorTest.__VALID_AMEX))
@@ -96,7 +97,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertFalse(ccv.isValid(CreditCardValidatorTest.__VALID_DINERS))
 
     
-    def test_ArrayConstructor(self) -> None:
+    @pytest.mark.test
+    def testArrayConstructor(self) -> None:
         ccv = CreditCardValidator(
             1,
             0,
@@ -126,7 +128,8 @@ class CreditCardValidatorTest(unittest.TestCase):
             pass
 
     
-    def test_AmexValidator(self) -> None:
+    @pytest.mark.test
+    def testAmexValidator(self) -> None:
         validator = CreditCardValidator.AMEX_VALIDATOR
         regex = validator.getRegexValidator()
 
@@ -173,7 +176,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertTrue(validator.isValid("378734493671000"), "Valid-D")
 
     
-    def test_AmexOption(self) -> None:
+    @pytest.mark.test
+    def testAmexOption(self) -> None:
         validator = CreditCardValidator(0, CreditCardValidator.AMEX, None, None)
         self.assertFalse(validator.isValid(CreditCardValidatorTest.__ERROR_AMEX), "Invalid")
         self.assertIsNone(validator.validate(CreditCardValidatorTest.__ERROR_AMEX), "validate()")
@@ -196,7 +200,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         )
 
     
-    def test_DinersValidator(self) -> None:
+    @pytest.mark.test
+    def testDinersValidator(self) -> None:
         validator = CreditCardValidator.DINERS_VALIDATOR
         regex = validator.getRegexValidator()
 
@@ -266,7 +271,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertTrue(validator.isValid("36432685260294"), "Valid-C")
 
 
-    def test_DinersOption(self) -> None:
+    @pytest.mark.test
+    def testDinersOption(self) -> None:
         validator = CreditCardValidator(0, CreditCardValidator.DINERS, None, None)
         self.assertFalse(validator.isValid(CreditCardValidatorTest.__ERROR_DINERS), "Invalid")
         self.assertIsNone(
@@ -295,7 +301,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         )
 
     
-    def test_DiscoverValidator(self) -> None:
+    @pytest.mark.test
+    def testDiscoverValidator(self) -> None:
         validator = CreditCardValidator.DISCOVER_VALIDATOR
         regex = validator.getRegexValidator()
 
@@ -368,7 +375,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertTrue(validator.isValid("6011000000000012"), "Valid-C")
 
     
-    def test_DiscoverOption(self) -> None:
+    @pytest.mark.test
+    def testDiscoverOption(self) -> None:
         validator = CreditCardValidator(0, CreditCardValidator.DISCOVER, None, None)
         self.assertFalse(
             validator.isValid(CreditCardValidatorTest.__ERROR_DISCOVER),
@@ -415,7 +423,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         )
     
 
-    def test_MastercardValidator(self) -> None:
+    @pytest.mark.test
+    def testMastercardValidator(self) -> None:
         validator = CreditCardValidator.MASTERCARD_VALIDATOR
         regex = validator.getRegexValidator()
 
@@ -485,7 +494,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertFalse(rev.isValid("272100" + PAD), "272100")
 
     
-    def test_MastercardOption(self) -> None:
+    @pytest.mark.test
+    def testMastercardOption(self) -> None:
         validator = CreditCardValidator(0, CreditCardValidator.MASTERCARD, None, None)
         self.assertFalse(
             validator.isValid(CreditCardValidatorTest.__ERROR_MASTERCARD),
@@ -516,7 +526,8 @@ class CreditCardValidatorTest(unittest.TestCase):
             "Visa Short"
         )
 
-    def test_VisaValidator(self) -> None:
+    @pytest.mark.test
+    def testVisaValidator(self) -> None:
         validator = CreditCardValidator.VISA_VALIDATOR
         regex = validator.getRegexValidator()
 
@@ -578,7 +589,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertTrue(validator.isValid("4012888888881881"), "Valid-E")
     
 
-    def test_VisaOption(self) -> None:
+    @pytest.mark.test
+    def testVisaOption(self) -> None:
         validator = CreditCardValidator(0, CreditCardValidator.VISA, None, None)
         self.assertFalse(validator.isValid(CreditCardValidatorTest.__ERROR_VISA), "Invalid")
         self.assertFalse(
@@ -615,7 +627,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         )
 
     
-    def test_VPayOption(self) -> None:
+    @pytest.mark.test
+    def testVPayOption(self) -> None:
         validator = CreditCardValidator(0, CreditCardValidator.VPAY, None, None)
         self.assertTrue(validator.isValid(CreditCardValidatorTest.__VALID_VPAY), "Valid")
         self.assertTrue(validator.isValid(CreditCardValidatorTest.__VALID_VPAY2), "Valid")
@@ -646,7 +659,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         )
 
     
-    def test_MastercardUsingSeparators(self) -> None:
+    @pytest.mark.test
+    def testMastercardUsingSeparators(self) -> None:
         MASTERCARD_REGEX_SEP =\
             "^(5[1-5]\\d{2})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})$"
         validator = CodeValidator.CodeValidator5(
@@ -689,7 +703,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Generic(self) -> None:
+    @pytest.mark.test
+    def testGeneric(self) -> None:
         ccv = CreditCardValidator.genericCreditCardValidator2()
         for s in CreditCardValidatorTest.__VALID_CARDS:
             self.assertTrue(ccv.isValid(s), s)
@@ -697,7 +712,8 @@ class CreditCardValidatorTest(unittest.TestCase):
             self.assertFalse(ccv.isValid(s), s)
     
 
-    def test_RangeGeneratorNoLuhn(self) -> None:
+    @pytest.mark.test
+    def testRangeGeneratorNoLuhn(self) -> None:
         cv = CreditCardValidator.createRangeValidator(
             [
                 CreditCardValidator.CreditCardRange(0, "1", None, 6, 7, None),
@@ -719,6 +735,7 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertFalse(cv.isValid("66000000"))
 
     
+    @pytest.mark.test
     def testRangeGenerator(self) -> None:
         ccv = CreditCardValidator(
             3,
@@ -742,7 +759,8 @@ class CreditCardValidatorTest(unittest.TestCase):
             self.assertFalse(ccv.isValid(s), s)
 
     
-    def test_ValidLength(self) -> None:
+    @pytest.mark.test
+    def testValidLength(self) -> None:
         self.assertTrue(
             CreditCardValidator\
                 .validLength(14, CreditCardValidator.CreditCardRange(0, "", "", 14, 14, None))
@@ -799,7 +817,8 @@ class CreditCardValidatorTest(unittest.TestCase):
         )
     
 
-    def test_DisjointRange(self) -> None:
+    @pytest.mark.test
+    def testDisjointRange(self) -> None:
         ccv = CreditCardValidator(
             2,
             0,

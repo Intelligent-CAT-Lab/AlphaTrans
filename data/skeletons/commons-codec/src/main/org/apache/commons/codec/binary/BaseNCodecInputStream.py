@@ -37,7 +37,7 @@ class BaseNCodecInputStream:
     def available(self) -> int:
         pass
 
-    def read1(self, array: typing.List[int], offset: int, len: int) -> int:
+    def read1(self, array: typing.List[int], offset: int, len_: int) -> int:
         pass
 
     def read0(self) -> int:
@@ -48,7 +48,7 @@ class BaseNCodecInputStream:
 
     def __init__(
         self,
-        input: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
+        input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader],
         baseNCodec: BaseNCodec,
         doEncode: bool,
     ) -> None:

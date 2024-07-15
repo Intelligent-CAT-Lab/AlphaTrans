@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.digest.MurmurHash2 import *
+import unittest
 import typing
 from typing import *
 import io
@@ -9,7 +10,7 @@ import io
 # Imports End
 
 
-class MurmurHash2Test:
+class MurmurHash2Test(unittest.TestCase):
 
     # Class Fields Begin
     results32_standard: typing.List[int] = None

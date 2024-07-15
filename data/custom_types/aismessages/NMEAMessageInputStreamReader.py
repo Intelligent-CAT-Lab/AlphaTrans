@@ -1,0 +1,2 @@
+class NMEAMessageInputStreamReader:
+    pass

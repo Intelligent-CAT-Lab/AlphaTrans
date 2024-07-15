@@ -5,12 +5,13 @@ from src.main.org.apache.commons.codec.language.RefinedSoundex import *
 from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
+import unittest
 import io
 
 # Imports End
 
 
-class RefinedSoundexTest(StringEncoderAbstractTest):
+class RefinedSoundexTest(StringEncoderAbstractTest, unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

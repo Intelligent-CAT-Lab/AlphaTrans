@@ -4,12 +4,13 @@ from __future__ import annotations
 from src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder import *
 from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
+import unittest
 import io
 
 # Imports End
 
 
-class MatchRatingApproachEncoderTest:
+class MatchRatingApproachEncoderTest(unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

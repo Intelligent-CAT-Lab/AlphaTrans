@@ -52,7 +52,7 @@ class DefaultPathSourceSelector(PathSourceSelector):
         path: PredecessorsList[typing.Any, typing.Any, typing.Any],
         source: typing.Any,
         target: typing.Any,
-        next: typing.Dict[VertexPair[typing.Any], typing.Any],
+        next_: typing.Dict[VertexPair[typing.Any], typing.Any],
     ) -> None:
         pass
 

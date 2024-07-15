@@ -1,112 +1,112 @@
+import pytest
+
 from src.main.org.apache.commons.validator.UrlValidator import *
 from src.test.org.apache.commons.validator.ResultPair import ResultPair
 import unittest
 
 class UrlTest(unittest.TestCase):
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self.__printStatus = False
-        self.__printIndex = False
+    __printStatus = False
+    __printIndex = False
 
-        self.testUrlScheme = [
-            ResultPair("http://", True),
-            ResultPair("ftp://", True),
-            ResultPair("h3t://", True),
-            ResultPair("3ht://", False),
-            ResultPair("http:/", False),
-            ResultPair("http:", False),
-            ResultPair("http/", False),
-            ResultPair("://", False),
-            ResultPair("", True)
-        ]
-        self.testUrlAuthority = [
-            ResultPair("www.google.com", True),
-            ResultPair("go.com", True),
-            ResultPair("go.au", True),
-            ResultPair("0.0.0.0", True),
-            ResultPair("255.255.255.255", True),
-            ResultPair("256.256.256.256", False),
-            ResultPair("255.com", True),
-            ResultPair("1.2.3.4.5", False),
-            ResultPair("1.2.3.4.", False),
-            ResultPair("1.2.3", False),
-            ResultPair(".1.2.3.4", False),
-            ResultPair("go.a", False),
-            ResultPair("go.a1a", True),
-            ResultPair("go.1aa", False),
-            ResultPair("aaa.", False),
-            ResultPair(".aaa", False),
-            ResultPair("aaa", False),
-            ResultPair("", False)
-        ]
-        self.testUrlPort = [
-            ResultPair(":80", True),
-            ResultPair(":65535", True),
-            ResultPair(":0", True),
-            ResultPair("", True),
-            ResultPair(":-1", False),
-            ResultPair(":65636", True),
-            ResultPair(":65a", False)
-        ]
-        self.testPath = [
-            ResultPair("/test1", True),
-            ResultPair("/t123", True),
-            ResultPair("/$23", True),
-            ResultPair("/..", False),
-            ResultPair("/../", False),
-            ResultPair("/test1/", True),
-            ResultPair("", True),
-            ResultPair("/test1/file", True),
-            ResultPair("/..//file", False),
-            ResultPair("/test1//file", False)
-        ]
-        self.testUrlPathOptions = [
-            ResultPair("/test1", True),
-            ResultPair("/t123", True),
-            ResultPair("/$23", True),
-            ResultPair("/..", False),
-            ResultPair("/../", False),
-            ResultPair("/test1/", True),
-            ResultPair("/#", False),
-            ResultPair("", True),
-            ResultPair("/test1/file", True),
-            ResultPair("/t123/file", True),
-            ResultPair("/$23/file", True),
-            ResultPair("/../file", False),
-            ResultPair("/..//file", False),
-            ResultPair("/test1//file", True),
-            ResultPair("/#/file", False)
-        ]
+    testUrlScheme = [
+        ResultPair("http://", True),
+        ResultPair("ftp://", True),
+        ResultPair("h3t://", True),
+        ResultPair("3ht://", False),
+        ResultPair("http:/", False),
+        ResultPair("http:", False),
+        ResultPair("http/", False),
+        ResultPair("://", False),
+        ResultPair("", True)
+    ]
+    testUrlAuthority = [
+        ResultPair("www.google.com", True),
+        ResultPair("go.com", True),
+        ResultPair("go.au", True),
+        ResultPair("0.0.0.0", True),
+        ResultPair("255.255.255.255", True),
+        ResultPair("256.256.256.256", False),
+        ResultPair("255.com", True),
+        ResultPair("1.2.3.4.5", False),
+        ResultPair("1.2.3.4.", False),
+        ResultPair("1.2.3", False),
+        ResultPair(".1.2.3.4", False),
+        ResultPair("go.a", False),
+        ResultPair("go.a1a", True),
+        ResultPair("go.1aa", False),
+        ResultPair("aaa.", False),
+        ResultPair(".aaa", False),
+        ResultPair("aaa", False),
+        ResultPair("", False)
+    ]
+    testUrlPort = [
+        ResultPair(":80", True),
+        ResultPair(":65535", True),
+        ResultPair(":0", True),
+        ResultPair("", True),
+        ResultPair(":-1", False),
+        ResultPair(":65636", True),
+        ResultPair(":65a", False)
+    ]
+    testPath = [
+        ResultPair("/test1", True),
+        ResultPair("/t123", True),
+        ResultPair("/$23", True),
+        ResultPair("/..", False),
+        ResultPair("/../", False),
+        ResultPair("/test1/", True),
+        ResultPair("", True),
+        ResultPair("/test1/file", True),
+        ResultPair("/..//file", False),
+        ResultPair("/test1//file", False)
+    ]
+    testUrlPathOptions = [
+        ResultPair("/test1", True),
+        ResultPair("/t123", True),
+        ResultPair("/$23", True),
+        ResultPair("/..", False),
+        ResultPair("/../", False),
+        ResultPair("/test1/", True),
+        ResultPair("/#", False),
+        ResultPair("", True),
+        ResultPair("/test1/file", True),
+        ResultPair("/t123/file", True),
+        ResultPair("/$23/file", True),
+        ResultPair("/../file", False),
+        ResultPair("/..//file", False),
+        ResultPair("/test1//file", True),
+        ResultPair("/#/file", False)
+    ]
 
-        self.testUrlQuery = [
-            ResultPair("?action=view", True),
-            ResultPair("?action=edit&mode=up", True),
-            ResultPair("", True)
-        ]
+    testUrlQuery = [
+        ResultPair("?action=view", True),
+        ResultPair("?action=edit&mode=up", True),
+        ResultPair("", True)
+    ]
 
-        self.testUrlParts = [
-            self.testUrlScheme,
-            self.testUrlAuthority,
-            self.testUrlPort,
-            self.testPath,
-            self.testUrlQuery
-        ]
-        self.testUrlPartsOptions = [
-            self.testUrlScheme,
-            self.testUrlAuthority,
-            self.testUrlPort,
-            self.testUrlPathOptions,
-            self.testUrlQuery
-        ]
-        self.testPartsIndex = [0, 0, 0, 0, 0]
+    testUrlParts = [
+        testUrlScheme,
+        testUrlAuthority,
+        testUrlPort,
+        testPath,
+        testUrlQuery
+    ]
+    testUrlPartsOptions = [
+        testUrlScheme,
+        testUrlAuthority,
+        testUrlPort,
+        testUrlPathOptions,
+        testUrlQuery
+    ]
+    testPartsIndex = [0, 0, 0, 0, 0]
 
-        self.testScheme = [
-            ResultPair("http", True),
-            ResultPair("ftp", False),
-            ResultPair("httpd", False),
-            ResultPair("telnet", False)
-        ]
+    testScheme = [
+        ResultPair("http", True),
+        ResultPair("ftp", False),
+        ResultPair("httpd", False),
+        ResultPair("telnet", False)
+    ]
     
 
     def setUp(self) -> None:
@@ -115,7 +115,8 @@ class UrlTest(unittest.TestCase):
             self.testPartsIndex[index] = 0
 
     
-    def test_IsValid0(self) -> None:
+    @pytest.mark.test
+    def testIsValid0(self) -> None:
         self.checkTestIsValid1(self.testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES)
         self.setUp()
         options = UrlValidator.ALLOW_2_SLASHES +\
@@ -124,7 +125,8 @@ class UrlTest(unittest.TestCase):
         self.checkTestIsValid1(self.testUrlPartsOptions, options)
     
 
-    def test_IsValidScheme(self) -> None:
+    @pytest.mark.test
+    def testIsValidScheme(self) -> None:
         if self.__printStatus:
             print("\n testIsValidScheme() ")
         schemes = ["http", "gopher"]
@@ -146,7 +148,8 @@ class UrlTest(unittest.TestCase):
             print()
     
 
-    def test_Validator202(self) -> None:
+    @pytest.mark.test
+    def testValidator202(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator(schemes, UrlValidator.NO_FRAGMENTS)
         urlValidator.isValid(
@@ -161,7 +164,8 @@ class UrlTest(unittest.TestCase):
         )
 
 
-    def test_Validator204(self) -> None:
+    @pytest.mark.test
+    def testValidator204(self) -> None:
         schemes = ["http", "https"]
         urlValidator = UrlValidator.UrlValidator2(schemes)
         self.assertTrue(
@@ -171,7 +175,8 @@ class UrlTest(unittest.TestCase):
         )
     
 
-    def test_ValidateUrl(self) -> None:
+    @pytest.mark.test
+    def testValidateUrl(self) -> None:
         self.assertTrue(True)
     
 
@@ -179,8 +184,8 @@ class UrlTest(unittest.TestCase):
     def main(argv) -> None:
         fct = UrlTest()
         fct.setUp()
-        fct.test_IsValid0()
-        fct.test_IsValidScheme()
+        fct.testIsValid0()
+        fct.testIsValidScheme()
 
 
     def checkTestIsValid1(self, testObjects, options) -> None:

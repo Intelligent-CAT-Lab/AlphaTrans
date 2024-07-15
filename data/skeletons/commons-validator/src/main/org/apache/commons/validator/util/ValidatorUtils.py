@@ -7,6 +7,7 @@ from src.main.org.apache.commons.validator.Arg import *
 
 # from src.main.org.apache.commons.logging.LogFactory import *
 # from src.main.org.apache.commons.logging.Log import *
+import logging
 import typing
 from typing import *
 import io
@@ -22,7 +23,7 @@ class ValidatorUtils:
 
     # Class Methods Begin
     @staticmethod
-    def copyMap(map: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    def copyMap(map_: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
         pass
 
     @staticmethod

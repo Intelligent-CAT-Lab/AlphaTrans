@@ -1,0 +1,2 @@
+class LongUtil:
+    pass

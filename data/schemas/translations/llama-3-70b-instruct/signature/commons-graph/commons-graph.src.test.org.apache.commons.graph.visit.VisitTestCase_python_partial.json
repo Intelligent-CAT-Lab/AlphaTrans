@@ -1,0 +1,710 @@
+{
+    "path": "java_projects/cleaned_final_projects/commons-graph/src/test/java/org/apache/commons/graph/visit/VisitTestCase.java",
+    "imports": {
+        "34-34:import List": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "33-33:import ArrayList": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "26-26:import Graph": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "30-30:import UndirectedMutableGraph": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.graph.model.UndirectedMutableGraph;\n"
+            ]
+        },
+        "27-27:import AbstractGraphConnection": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.builder.AbstractGraphConnection;\n"
+            ]
+        },
+        "31-31:import Test": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "28-28:import BaseLabeledEdge": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledEdge;\n"
+            ]
+        },
+        "29-29:import BaseLabeledVertex": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledVertex;\n"
+            ]
+        },
+        "24-24:import static Assert.assertEquals": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "22-22:import static CommonsGraph.newUndirectedMutableGraph": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.newUndirectedMutableGraph;\n"
+            ]
+        },
+        "23-23:import static CommonsGraph.visit": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.visit;\n"
+            ]
+        }
+    },
+    "classes": {
+        "VisitTestCase": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "126-174:testVerifyDepthFirstSearch": {
+                    "start": 126,
+                    "end": 174,
+                    "body": [
+                        "    public void testVerifyDepthFirstSearch() {\n",
+                        "        final List<BaseLabeledVertex> expected = new ArrayList<BaseLabeledVertex>();\n",
+                        "\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> input =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex a = addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                BaseLabeledVertex b = addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                BaseLabeledVertex c = addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                BaseLabeledVertex d = addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                BaseLabeledVertex e = addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                BaseLabeledVertex f = addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                                BaseLabeledVertex g = addVertex(new BaseLabeledVertex(\"G\"));\n",
+                        "                                BaseLabeledVertex h = addVertex(new BaseLabeledVertex(\"H\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"S\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"S <-> A\")).from(s).to(a);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"S <-> B\")).from(s).to(b);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A <-> C\")).from(a).to(c);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A <-> D\")).from(a).to(d);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B <-> E\")).from(b).to(e);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B <-> F\")).from(b).to(f);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E <-> H\")).from(e).to(h);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E <-> G\")).from(e).to(g);\n",
+                        "\n",
+                        "                                expected.add(s);\n",
+                        "                                expected.add(b);\n",
+                        "                                expected.add(f);\n",
+                        "                                expected.add(e);\n",
+                        "                                expected.add(g);\n",
+                        "                                expected.add(h);\n",
+                        "                                expected.add(a);\n",
+                        "                                expected.add(d);\n",
+                        "                                expected.add(c);\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "\n",
+                        "        final List<BaseLabeledVertex> actual =\n",
+                        "                visit(input)\n",
+                        "                        .from(new BaseLabeledVertex(\"S\"))\n",
+                        "                        .applyingDepthFirstSearch1(new NodeSequenceVisitor());\n",
+                        "\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyDepthFirstSearch()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "201-204:newUndirectedMutableGraph"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.visit.NodeSequenceVisitor",
+                            "NodeSequenceVisitor",
+                            "NodeSequenceVisitor"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "354-357:visit"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyDepthFirstSearch(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                },
+                "55-119:testVerifyBreadthFirstSearch": {
+                    "start": 55,
+                    "end": 119,
+                    "body": [
+                        "    public void testVerifyBreadthFirstSearch() {\n",
+                        "\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> input =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex r = addVertex(new BaseLabeledVertex(\"r\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"s\"));\n",
+                        "                                BaseLabeledVertex t = addVertex(new BaseLabeledVertex(\"t\"));\n",
+                        "                                BaseLabeledVertex u = addVertex(new BaseLabeledVertex(\"u\"));\n",
+                        "                                BaseLabeledVertex v = addVertex(new BaseLabeledVertex(\"v\"));\n",
+                        "                                BaseLabeledVertex w = addVertex(new BaseLabeledVertex(\"w\"));\n",
+                        "                                BaseLabeledVertex x = addVertex(new BaseLabeledVertex(\"x\"));\n",
+                        "                                BaseLabeledVertex y = addVertex(new BaseLabeledVertex(\"y\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> r\")).from(s).to(r);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> w\")).from(s).to(w);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"r <-> v\")).from(r).to(v);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> t\")).from(w).to(t);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> x\")).from(w).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> u\")).from(t).to(u);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> x\")).from(t).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"y <-> u\")).from(y).to(u);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"x <-> y\")).from(x).to(y);\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> expected =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex r = addVertex(new BaseLabeledVertex(\"r\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"s\"));\n",
+                        "                                BaseLabeledVertex t = addVertex(new BaseLabeledVertex(\"t\"));\n",
+                        "                                BaseLabeledVertex u = addVertex(new BaseLabeledVertex(\"u\"));\n",
+                        "                                BaseLabeledVertex v = addVertex(new BaseLabeledVertex(\"v\"));\n",
+                        "                                BaseLabeledVertex w = addVertex(new BaseLabeledVertex(\"w\"));\n",
+                        "                                BaseLabeledVertex x = addVertex(new BaseLabeledVertex(\"x\"));\n",
+                        "                                BaseLabeledVertex y = addVertex(new BaseLabeledVertex(\"y\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> r\")).from(s).to(r);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> w\")).from(s).to(w);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"r <-> v\")).from(r).to(v);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> t\")).from(w).to(t);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> x\")).from(w).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> u\")).from(t).to(u);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"x <-> y\")).from(x).to(y);\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "\n",
+                        "        Graph<BaseLabeledVertex, BaseLabeledEdge> actual =\n",
+                        "                visit(input).from(new BaseLabeledVertex(\"s\")).applyingBreadthFirstSearch0();\n",
+                        "\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyBreadthFirstSearch()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "201-204:newUndirectedMutableGraph"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "354-357:visit"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyBreadthFirstSearch(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                },
+                "39-48:testNotExistVertex": {
+                    "start": 39,
+                    "end": 48,
+                    "body": [
+                        "    public void testNotExistVertex() {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> input =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {}\n",
+                        "                        });\n",
+                        "\n",
+                        "        visit(input).from(new BaseLabeledVertex(\"NOT EXIST\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = IllegalStateException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNotExistVertex()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "201-204:newUndirectedMutableGraph"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "354-357:visit"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNotExistVertex(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactical_validation_status": "pending",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "llama-3-70b-instruct",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class VisitTestCase(unittest.TestCase):\n\n"
+        },
+        "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }": {
+            "start": 42,
+            "end": 42,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "VisitTestCase",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "44-44:connect0": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "                            public void connect0() {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true
+                },
+                "61-84:connect0": {
+                    "start": 61,
+                    "end": 84,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex r = addVertex(new BaseLabeledVertex(\"r\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"s\"));\n",
+                        "                                BaseLabeledVertex t = addVertex(new BaseLabeledVertex(\"t\"));\n",
+                        "                                BaseLabeledVertex u = addVertex(new BaseLabeledVertex(\"u\"));\n",
+                        "                                BaseLabeledVertex v = addVertex(new BaseLabeledVertex(\"v\"));\n",
+                        "                                BaseLabeledVertex w = addVertex(new BaseLabeledVertex(\"w\"));\n",
+                        "                                BaseLabeledVertex x = addVertex(new BaseLabeledVertex(\"x\"));\n",
+                        "                                BaseLabeledVertex y = addVertex(new BaseLabeledVertex(\"y\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> r\")).from(s).to(r);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> w\")).from(s).to(w);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"r <-> v\")).from(r).to(v);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> t\")).from(w).to(t);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> x\")).from(w).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> u\")).from(t).to(u);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> x\")).from(t).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"y <-> u\")).from(y).to(u);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"x <-> y\")).from(x).to(y);\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledEdge",
+                            "BaseLabeledEdge",
+                            "35-37:BaseLabeledEdge"
+                        ]
+                    ],
+                    "is_overload": true
+                },
+                "91-112:connect0": {
+                    "start": 91,
+                    "end": 112,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex r = addVertex(new BaseLabeledVertex(\"r\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"s\"));\n",
+                        "                                BaseLabeledVertex t = addVertex(new BaseLabeledVertex(\"t\"));\n",
+                        "                                BaseLabeledVertex u = addVertex(new BaseLabeledVertex(\"u\"));\n",
+                        "                                BaseLabeledVertex v = addVertex(new BaseLabeledVertex(\"v\"));\n",
+                        "                                BaseLabeledVertex w = addVertex(new BaseLabeledVertex(\"w\"));\n",
+                        "                                BaseLabeledVertex x = addVertex(new BaseLabeledVertex(\"x\"));\n",
+                        "                                BaseLabeledVertex y = addVertex(new BaseLabeledVertex(\"y\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> r\")).from(s).to(r);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"s <-> w\")).from(s).to(w);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"r <-> v\")).from(r).to(v);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> t\")).from(w).to(t);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"w <-> x\")).from(w).to(x);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"t <-> u\")).from(t).to(u);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"x <-> y\")).from(x).to(y);\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledEdge",
+                            "BaseLabeledEdge",
+                            "35-37:BaseLabeledEdge"
+                        ]
+                    ],
+                    "is_overload": true
+                },
+                "133-165:connect0": {
+                    "start": 133,
+                    "end": 165,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                BaseLabeledVertex a = addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                BaseLabeledVertex b = addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                BaseLabeledVertex c = addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                BaseLabeledVertex d = addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                BaseLabeledVertex e = addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                BaseLabeledVertex f = addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                                BaseLabeledVertex g = addVertex(new BaseLabeledVertex(\"G\"));\n",
+                        "                                BaseLabeledVertex h = addVertex(new BaseLabeledVertex(\"H\"));\n",
+                        "                                BaseLabeledVertex s = addVertex(new BaseLabeledVertex(\"S\"));\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"S <-> A\")).from(s).to(a);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"S <-> B\")).from(s).to(b);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A <-> C\")).from(a).to(c);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A <-> D\")).from(a).to(d);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B <-> E\")).from(b).to(e);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B <-> F\")).from(b).to(f);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E <-> H\")).from(e).to(h);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E <-> G\")).from(e).to(g);\n",
+                        "\n",
+                        "                                expected.add(s);\n",
+                        "                                expected.add(b);\n",
+                        "                                expected.add(f);\n",
+                        "                                expected.add(e);\n",
+                        "                                expected.add(g);\n",
+                        "                                expected.add(h);\n",
+                        "                                expected.add(a);\n",
+                        "                                expected.add(d);\n",
+                        "                                expected.add(c);\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledEdge",
+                            "BaseLabeledEdge",
+                            "35-37:BaseLabeledEdge"
+                        ]
+                    ],
+                    "is_overload": true
+                },
+                "40-42:": {
+                    "start": 40,
+                    "end": 42,
+                    "body": [
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> input =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true
+                },
+                "57-59:": {
+                    "start": 57,
+                    "end": 59,
+                    "body": [
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> input =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true
+                },
+                "87-89:": {
+                    "start": 87,
+                    "end": 89,
+                    "body": [
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> expected =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true
+                },
+                "129-131:": {
+                    "start": 129,
+                    "end": 131,
+                    "body": [
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> input =\n",
+                        "                newUndirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": true
+                }
+            },
+            "fields": {}
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import unittest",
+        "from src.main.org.apache.commons.graph.CommonsGraph import *",
+        "from src.main.org.apache.commons.graph.Graph import *",
+        "from src.main.org.apache.commons.graph.builder.GraphConnection import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *",
+        "from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *",
+        "from src.main.org.apache.commons.graph.visit.GraphVisitHandler import *",
+        "from src.test.org.apache.commons.graph.visit.NodeSequenceVisitor import *",
+        "from src.main.org.apache.commons.graph.visit.VisitAlgorithmsSelector import *",
+        "from src.main.org.apache.commons.graph.visit.VisitSourceSelector import *",
+        "from src.main.org.apache.commons.graph.builder.AbstractGraphConnection import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *",
+        "from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *",
+        "from src.main.org.apache.commons.graph.builder.TailVertexConnector import *"
+    ]
+}

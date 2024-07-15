@@ -1,0 +1,2 @@
+class PositionReportClassAAssignedSchedule:
+    pass

@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.main.org.apache.commons.cli.ParseException import *
 from src.main.org.apache.commons.cli.Options import *
@@ -9,23 +10,18 @@ from src.main.org.apache.commons.cli.MissingOptionException import *
 from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
 
-# Imports End
-
-
 class OptionsTest(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def test_DuplicateLong(self) -> None:
+    @pytest.mark.test
+    def testDuplicateLong(self) -> None:
         opts = Options()
         opts.addOption3("a", "--a", False, "toggle -a")
         opts.addOption3("a", "--a", False, "toggle -a*")
         self.assertEqual("toggle -a*", opts.getOption("a").getDescription(), "last one in wins")
 
 
-    def test_DuplicateSimple(self) -> None:
+    @pytest.mark.test
+    def testDuplicateSimple(self) -> None:
         opts = Options()
         opts.addOption1("a", False, "toggle -a")
         opts.addOption1("a", True, "toggle -a*")
@@ -33,7 +29,8 @@ class OptionsTest(unittest.TestCase):
         self.assertEqual("toggle -a*", opts.getOption("a").getDescription(), "last one in wins")
 
 
-    def test_GetMatchingOpts(self) -> None:
+    @pytest.mark.test
+    def testGetMatchingOpts(self) -> None:
         options = Options()
         options.addOption0(OptionBuilder.withLongOpt("version").create0())
         options.addOption0(OptionBuilder.withLongOpt("verbose").create0())
@@ -43,7 +40,8 @@ class OptionsTest(unittest.TestCase):
         self.assertEqual(2, len(options.getMatchingOptions("ver")))
 
 
-    def test_GetOptionsGroups(self) -> None:
+    @pytest.mark.test
+    def testGetOptionsGroups(self) -> None:
         options = Options()
 
         group1 = OptionGroup()
@@ -61,7 +59,8 @@ class OptionsTest(unittest.TestCase):
         self.assertEqual(2, len(options.getOptionGroups()))
 
 
-    def test_HelpOptions(self) -> None:
+    @pytest.mark.test
+    def testHelpOptions(self) -> None:
         longOnly1 = OptionBuilder.withLongOpt("long-only1").create0()
         longOnly2 = OptionBuilder.withLongOpt("long-only2").create0()
         shortOnly1 = OptionBuilder.create2("1")
@@ -89,7 +88,8 @@ class OptionsTest(unittest.TestCase):
         )
     
     
-    def test_Long(self) -> None:
+    @pytest.mark.test
+    def testLong(self) -> None:
         opts = Options()
 
         opts.addOption3("a", "--a", False, "toggle -a")
@@ -99,7 +99,8 @@ class OptionsTest(unittest.TestCase):
         self.assertTrue(opts.hasOption("b"))
 
 
-    def test_MissingOptionException(self) -> None:
+    @pytest.mark.test
+    def testMissingOptionException(self) -> None:
         try:
             options = Options()
             options.addOption0(OptionBuilder.isRequired0().create2("f"))
@@ -112,7 +113,8 @@ class OptionsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_MissingOptionsException(self) -> None:
+    @pytest.mark.test
+    def testMissingOptionsException(self) -> None:
         try:
             options = Options()
             options.addOption0(OptionBuilder.isRequired0().create2("f"))
@@ -126,7 +128,8 @@ class OptionsTest(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_Simple(self) -> None:
+    @pytest.mark.test
+    def testSimple(self) -> None:
         opts = Options()
 
         opts.addOption1("a", False, "toggle -a")
@@ -136,7 +139,8 @@ class OptionsTest(unittest.TestCase):
         self.assertTrue(opts.hasOption("b"))
     
     
-    def test_ToString(self) -> None:
+    @pytest.mark.test
+    def testToString(self) -> None:
         options = Options()
         options.addOption3("f", "foo", True, "Foo")
         options.addOption3("b", "bar", False, "Bar")
@@ -145,6 +149,3 @@ class OptionsTest(unittest.TestCase):
         self.assertIsNotNone(s, "null string returned")
         self.assertTrue("foo" in s.lower(), "foo option missing")
         self.assertTrue("bar" in s.lower(), "bar option missing")
-
-
-    # Class Methods End

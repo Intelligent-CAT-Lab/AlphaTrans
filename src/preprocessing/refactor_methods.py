@@ -4,8 +4,8 @@ import sys
 
 projects_dir = sys.argv[1]
 project = sys.argv[2]
-os.system(f'rm -rf preprocessed_0/{project}')
-temp_project_path = f'preprocessed_0/'
+os.system(f'rm -rf java_projects/preprocessed_0/{project}')
+temp_project_path = f'java_projects/preprocessed_0/'
 os.makedirs(temp_project_path, exist_ok=True)
 os.system(f'cp -r {projects_dir}/{project} {temp_project_path}')
 
@@ -120,6 +120,10 @@ def get_overloaded_method_call_sites(overloaded_methods, all_methods):
         method_access_location, method_access_name, method_access_num_params, method_access_argument_location, method_access_signature, caller_name, caller_location, caller_class_name, callee_name, callee_location, callee_class_name = [x.strip() for x in res_row]
 
         if callee_location.endswith(':0:0:0:0'):
+            current_index += 1
+            continue
+
+        if caller_name.strip() == '<obinit>':
             current_index += 1
             continue
         

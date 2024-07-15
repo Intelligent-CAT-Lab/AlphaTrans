@@ -20,7 +20,7 @@ from abc import ABC
 # Imports End
 
 
-class EvictionIterator(Iterator):
+class EvictionIterator:
 
     # Class Fields Begin
     __idleObjects: typing.Deque[PooledObject[typing.Any]] = None
@@ -31,7 +31,7 @@ class EvictionIterator(Iterator):
     def remove(self) -> None:
         pass
 
-    def next(self) -> PooledObject[typing.Any]:
+    def next_(self) -> PooledObject[typing.Any]:
         pass
 
     def hasNext(self) -> bool:
@@ -144,6 +144,7 @@ class BaseGenericObjectPool(BaseObject, ABC):
     closed: bool = None
     evictionLock: typing.Any = None
     __evictor: Evictor = None
+    evictionIterator: EvictionIterator = None
     __borrowedCount: int = None
     __returnedCount: int = None
     createdCount: int = None

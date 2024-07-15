@@ -1,0 +1,2 @@
+class IntegerCODEC:
+    pass

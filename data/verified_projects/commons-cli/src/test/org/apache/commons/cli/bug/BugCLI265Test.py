@@ -1,19 +1,14 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.DefaultParser import *
 from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
 
-# Imports End
-
 
 class BugCLI265Test(unittest.TestCase):
 
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
     def setUp(self) -> None:
         self.__parser = DefaultParser(2, False, None)
 
@@ -33,7 +28,8 @@ class BugCLI265Test(unittest.TestCase):
                         .addOption0(optionLast)
 
     
-    def test_shouldParseConcatenatedShortOptions(self) -> None:
+    @pytest.mark.test
+    def testshouldParseConcatenatedShortOptions(self) -> None:
         try:
             concatenatedShortOptions = ["-t1", "-ab"]
 
@@ -48,7 +44,8 @@ class BugCLI265Test(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
     
     
-    def test_shouldParseShortOptionWithoutValue(self) -> None:
+    @pytest.mark.test
+    def testshouldParseShortOptionWithoutValue(self) -> None:
         try:
             twoShortOptions = ["-t1", "-last"]
 
@@ -65,7 +62,8 @@ class BugCLI265Test(unittest.TestCase):
             self.fail(f"An exception occurred: {e}")
 
     
-    def test_shouldParseShortOptionWithValue(self) -> None:
+    @pytest.mark.test
+    def testshouldParseShortOptionWithValue(self) -> None:
         try:
             shortOptionWithValue = ["-t1", "path/to/my/db"]
 
@@ -75,5 +73,3 @@ class BugCLI265Test(unittest.TestCase):
             self.assertFalse(commandLine.hasOption2("last"))
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
-
-    # Class Methods End

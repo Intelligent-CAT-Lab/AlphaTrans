@@ -42,11 +42,16 @@ def detect_and_remove_cycles(graph):
 
 
 def parse_dependencies(project_name):
-    os.makedirs(f'data/dependencies/{project_name}', exist_ok=True)
+    dependencies_dir = 'data/dependencies'
+    # dependencies_dir = 'data/dependencies-evosuite'
+    os.makedirs(f'{dependencies_dir}/{project_name}', exist_ok=True)
+
+    project_dir = f'java_projects/cleaned_final_projects'
+    # project_dir = f'java_projects/cleaned_final_projects_evosuite'
 
     class_dependencies = {}
     java_files = []
-    for root, dirs, files in os.walk(f'java_projects/cleaned_final_projects/{project_name}/src'):
+    for root, dirs, files in os.walk(f'{project_dir}/{project_name}/src'):
         for file in files:
             if file.endswith('.java'):
                 java_files.append(os.path.join(root, file))
@@ -55,11 +60,11 @@ def parse_dependencies(project_name):
         class_name = dot_class_file.split('/')[-1].split('.')[0]
         class_dependencies.setdefault(class_name, [])
     
-    os.system(f'jdeps -verbose -dotoutput data/dependencies/{project_name} java_projects/cleaned_final_projects/{project_name}/target/classes')
-    os.system(f'jdeps -verbose -dotoutput data/dependencies/{project_name} java_projects/cleaned_final_projects/{project_name}/target/test-classes')
-    os.remove(f'data/dependencies/{project_name}/summary.dot')
+    os.system(f'jdeps -verbose -dotoutput {dependencies_dir}/{project_name} {project_dir}/{project_name}/target/classes')
+    os.system(f'jdeps -verbose -dotoutput {dependencies_dir}/{project_name} {project_dir}/{project_name}/target/test-classes')
+    os.remove(f'{dependencies_dir}/{project_name}/summary.dot')
 
-    dependencies_dir = os.path.join(os.path.dirname(__file__), f'data/dependencies/{project_name}')
+    dependencies_dir = os.path.join(os.path.dirname(__file__), f'{dependencies_dir}/{project_name}')
     class_deps = os.listdir(dependencies_dir)
     for class_dep in class_deps:
 

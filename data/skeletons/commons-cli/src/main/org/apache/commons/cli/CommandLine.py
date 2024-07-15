@@ -68,13 +68,13 @@ class CommandLine:
     def getParsedOptionValue0(self, opt: str) -> typing.Any:
         pass
 
-    def getOptionValues2(self, opt: str) -> typing.List[str]:
+    def getOptionValues2(self, opt: str) -> typing.List[typing.List[str]]:
         pass
 
-    def getOptionValues1(self, option: Option) -> typing.List[str]:
+    def getOptionValues1(self, option: Option) -> typing.List[typing.List[str]]:
         pass
 
-    def getOptionValues0(self, opt: str) -> typing.List[str]:
+    def getOptionValues0(self, opt: str) -> typing.List[typing.List[str]]:
         pass
 
     def getOptionValue5(self, opt: str, defaultValue: str) -> str:
@@ -100,19 +100,15 @@ class CommandLine:
 
     def getOptionProperties1(
         self, opt: str
-    ) -> typing.Union[
-        configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
-    ]:
+    ) -> typing.Union[configparser.ConfigParser, typing.Dict]:
         pass
 
     def getOptionProperties0(
         self, option: Option
-    ) -> typing.Union[
-        configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict
-    ]:
+    ) -> typing.Union[configparser.ConfigParser, typing.Dict]:
         pass
 
-    def getArgs(self) -> typing.List[str]:
+    def getArgs(self) -> typing.List[typing.List[str]]:
         pass
 
     def getArgList(self) -> typing.List[str]:

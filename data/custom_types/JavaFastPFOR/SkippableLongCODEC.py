@@ -1,0 +1,2 @@
+class SkippableLongCODEC:
+    pass

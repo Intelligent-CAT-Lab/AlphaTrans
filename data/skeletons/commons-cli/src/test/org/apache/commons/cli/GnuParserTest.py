@@ -4,12 +4,13 @@ from __future__ import annotations
 from src.test.org.apache.commons.cli.ParserTestCase import *
 from src.main.org.apache.commons.cli.GnuParser import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
+import unittest
 import io
 
 # Imports End
 
 
-class GnuParserTest(ParserTestCase):
+class GnuParserTest(ParserTestCase, unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

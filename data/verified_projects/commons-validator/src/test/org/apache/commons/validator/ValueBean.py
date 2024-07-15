@@ -1,3 +1,5 @@
+import pytest
+
 class ValueBean:
 
     def __init__(self) -> None:

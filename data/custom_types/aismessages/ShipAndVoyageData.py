@@ -1,0 +1,2 @@
+class ShipAndVoyageData:
+    pass

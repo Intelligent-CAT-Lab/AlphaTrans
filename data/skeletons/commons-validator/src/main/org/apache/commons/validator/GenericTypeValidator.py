@@ -5,6 +5,7 @@ from src.main.org.apache.commons.validator.GenericValidator import *
 
 # from src.main.org.apache.commons.logging.LogFactory import *
 # from src.main.org.apache.commons.logging.Log import *
+import logging
 import datetime
 import typing
 from typing import *
@@ -28,13 +29,13 @@ class GenericTypeValidator:
     @staticmethod
     def formatDate1(
         value: str, datePattern: str, strict: bool
-    ) -> typing.Union[datetime.date, datetime.datetime]:
+    ) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     @staticmethod
     def formatDate0(
         value: str, locale: typing.Any
-    ) -> typing.Union[datetime.date, datetime.datetime]:
+    ) -> typing.Union[datetime.datetime, datetime.date]:
         pass
 
     @staticmethod

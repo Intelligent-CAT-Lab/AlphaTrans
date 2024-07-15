@@ -9,12 +9,13 @@ from src.main.org.apache.commons.cli.OptionBuilder import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.CommandLine import *
 from src.main.org.apache.commons.cli.AlreadySelectedException import *
+import unittest
 import io
 
 # Imports End
 
 
-class OptionGroupTest:
+class OptionGroupTest(unittest.TestCase):
 
     # Class Fields Begin
     __options: Options = None

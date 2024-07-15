@@ -6,6 +6,7 @@ from src.test.org.apache.commons.codec.binary.BaseNTestData import *
 from src.main.org.apache.commons.codec.binary.BaseNCodec import *
 from src.main.org.apache.commons.codec.binary.Base16OutputStream import *
 from src.main.org.apache.commons.codec.binary.Base16 import *
+import unittest
 import typing
 from typing import *
 import io
@@ -13,7 +14,7 @@ import io
 # Imports End
 
 
-class Base16OutputStreamTest:
+class Base16OutputStreamTest(unittest.TestCase):
 
     # Class Fields Begin
     __STRING_FIXTURE: str = None

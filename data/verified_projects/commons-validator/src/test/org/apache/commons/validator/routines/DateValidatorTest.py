@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.DateValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractCalendarValidatorTest import AbstractCalendarValidatorTest
 from src.main.org.apache.commons.validator.routines.AbstractCalendarValidator import *
@@ -8,10 +10,9 @@ from zoneinfo import ZoneInfo
 
 class DateValidatorTest(AbstractCalendarValidatorTest):
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self.__dateValidator = None
-        self._validator = None
+    __test__ = True
+    
+    __dateValidator = None
 
     
     def setUp(self) -> None:
@@ -23,7 +24,8 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
             self.fail(f"An exception occurred when setting up the test: {e}")
 
     
-    def test_LocaleProviders(self) -> None:
+    @pytest.mark.test
+    def testLocaleProviders(self) -> None:
         localeProviders = os.getenv('java.locale.providers')
         if localeProviders is not None:
             self.assertTrue(
@@ -41,7 +43,8 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
         )
 
     
-    def test_DateValidatorMethods(self) -> None:
+    @pytest.mark.test
+    def testDateValidatorMethods(self) -> None:
         setlocale(LC_TIME, 'en_US.UTF-8')
         locale = 'de_DE.UTF-8'
         pattern = "yyyy-MM-dd"
@@ -126,10 +129,12 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
         )
 
         now = datetime.now()
-        if now.astimezone(self._EET).utcoffset() == now.astimezone().utcoffset():
-            zone = self._EST
+        if now.astimezone(AbstractCalendarValidatorTest\
+            ._EET).utcoffset() == now\
+            .astimezone().utcoffset():
+            zone = AbstractCalendarValidatorTest._EST
         else:
-            zone = self._EET
+            zone = AbstractCalendarValidatorTest._EET
         expectedZone = self._createCalendar(zone, 20051231, 0)
         self.assertNotEqual(
             expected,
@@ -159,201 +164,394 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
         )
 
     
-    def test_Compare(self) -> None:
+    @pytest.mark.test
+    def testCompare(self) -> None:
         sameTime = 124522
         testDate = 20050823
-        diffHour = self._createDate(self._GMT, testDate, 115922)
+        diffHour = self._createDate(AbstractCalendarValidatorTest._GMT, testDate, 115922)
 
-        value = self._createDate(self._GMT, testDate, sameTime)
-        date20050824 = self._createDate(self._GMT, 20050824, sameTime)
-        date20050822 = self._createDate(self._GMT, 20050822, sameTime)
+        value = self._createDate(AbstractCalendarValidatorTest._GMT, testDate, sameTime)
+        date20050824 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20050824,
+            sameTime
+        )
+        date20050822 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20050822,
+            sameTime
+        )
 
-        date20050830 = self._createDate(self._GMT, 20050830, sameTime)
-        date20050816 = self._createDate(self._GMT, 20050816, sameTime)
+        date20050830 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20050830,
+            sameTime
+        )
+        date20050816 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20050816,
+            sameTime
+        )
 
-        date20050901 = self._createDate(self._GMT, 20050901, sameTime)
-        date20050801 = self._createDate(self._GMT, 20050801, sameTime)
-        date20050731 = self._createDate(self._GMT, 20050731, sameTime)
+        date20050901 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20050901,
+            sameTime
+        )
+        date20050801 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20050801,
+            sameTime
+        )
+        date20050731 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20050731,
+            sameTime
+        )
 
-        date20051101 = self._createDate(self._GMT, 20051101, sameTime)
-        date20051001 = self._createDate(self._GMT, 20051001, sameTime)
-        date20050701 = self._createDate(self._GMT, 20050701, sameTime)
-        date20050630 = self._createDate(self._GMT, 20050630, sameTime)
-        date20050110 = self._createDate(self._GMT, 20050110, sameTime)
+        date20051101 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20051101,
+            sameTime
+        )
+        date20051001 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20051001,
+            sameTime
+        )
+        date20050701 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20050701,
+            sameTime
+        )
+        date20050630 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20050630,
+            sameTime
+        )
+        date20050110 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20050110,
+            sameTime
+        )
 
-        date20060101 = self._createDate(self._GMT, 20060101, sameTime)
-        date20050101 = self._createDate(self._GMT, 20050101, sameTime)
-        date20041231 = self._createDate(self._GMT, 20041231, sameTime)
+        date20060101 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20060101,
+            sameTime
+        )
+        date20050101 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20050101,
+            sameTime
+        )
+        date20041231 = self._createDate(
+            AbstractCalendarValidatorTest._GMT,
+            20041231,
+            sameTime
+        )
 
         self.assertEqual(
-            self.__dateValidator.compareDates(value, date20050824, self._GMT),
+            self.__dateValidator.compareDates(
+                value,
+                date20050824,
+                AbstractCalendarValidatorTest._GMT
+            ),
             -1,
             "date LT"
         )
         self.assertEqual(
-            self.__dateValidator.compareDates(value, diffHour, self._GMT),
+            self.__dateValidator.compareDates(
+                value,
+                diffHour,
+                AbstractCalendarValidatorTest._GMT
+            ),
             0,
             "date EQ"
         )
         self.assertEqual(
-            self.__dateValidator.compareDates(value, date20050822, self._GMT),
+            self.__dateValidator.compareDates(
+                value,
+                date20050822,
+                AbstractCalendarValidatorTest._GMT
+            ),
             1,
             "date GT"
         )
 
         self.assertEqual(
-            self.__dateValidator.compareWeeks(value, date20050830, self._GMT),
+            self.__dateValidator.compareWeeks(
+                value,
+                date20050830,
+                AbstractCalendarValidatorTest._GMT
+            ),
             -1,
             "week LT"
         )
         self.assertEqual(
-            self.__dateValidator.compareWeeks(value, date20050824, self._GMT),
+            self.__dateValidator.compareWeeks(
+                value,
+                date20050824,
+                AbstractCalendarValidatorTest._GMT
+            ),
             0,
             "week =1"
         )
         self.assertEqual(
-            self.__dateValidator.compareWeeks(value, date20050822, self._GMT),
+            self.__dateValidator.compareWeeks(
+                value,
+                date20050822,
+                AbstractCalendarValidatorTest._GMT
+            ),
             0,
             "week =2"
         )
         self.assertEqual(
-            self.__dateValidator.compareWeeks(value, date20050822, self._GMT),
+            self.__dateValidator.compareWeeks(
+                value,
+                date20050822,
+                AbstractCalendarValidatorTest._GMT
+            ),
             0,
             "week =3"
         )
         self.assertEqual(
-            self.__dateValidator.compareWeeks(value, date20050816, self._GMT),
+            self.__dateValidator.compareWeeks(
+                value,
+                date20050816,
+                AbstractCalendarValidatorTest._GMT
+            ),
             1,
             "week GT"
         )
 
         self.assertEqual(
-            self.__dateValidator.compareMonths(value, date20050901, self._GMT),
+            self.__dateValidator.compareMonths(
+                value,
+                date20050901,
+                AbstractCalendarValidatorTest._GMT
+            ),
             -1,
             "mnth LT"
         )
         self.assertEqual(
-            self.__dateValidator.compareMonths(value, date20050830, self._GMT),
+            self.__dateValidator.compareMonths(
+                value,
+                date20050830,
+                AbstractCalendarValidatorTest._GMT
+            ),
             0,
             "mnth =1"
         )
         self.assertEqual(
-            self.__dateValidator.compareMonths(value, date20050801, self._GMT),
+            self.__dateValidator.compareMonths(
+                value,
+                date20050801,
+                AbstractCalendarValidatorTest._GMT
+            ),
             0,
             "mnth =2"
         )
         self.assertEqual(
-            self.__dateValidator.compareMonths(value, date20050816, self._GMT),
+            self.__dateValidator.compareMonths(
+                value,
+                date20050816,
+                AbstractCalendarValidatorTest._GMT
+            ),
             0,
             "mnth =3"
         )
         self.assertEqual(
-            self.__dateValidator.compareMonths(value, date20050731, self._GMT),
+            self.__dateValidator.compareMonths(
+                value,
+                date20050731,
+                AbstractCalendarValidatorTest._GMT
+            ),
             1,
             "mnth GT"
         )
 
         self.assertEqual(
-            self.__dateValidator.compareQuarters0(value, date20051101, self._GMT),
+            self.__dateValidator.compareQuarters0(
+                value,
+                date20051101,
+                AbstractCalendarValidatorTest._GMT
+            ),
             -1,
             "qtrA <1"
         )
         self.assertEqual(
-            self.__dateValidator.compareQuarters0(value, date20051001, self._GMT),
+            self.__dateValidator.compareQuarters0(
+                value,
+                date20051001,
+                AbstractCalendarValidatorTest._GMT
+            ),
             -1,
             "qtrA <2"
         )
         self.assertEqual(
-            self.__dateValidator.compareQuarters0(value, date20050901, self._GMT),
+            self.__dateValidator.compareQuarters0(
+                value,
+                date20050901,
+                AbstractCalendarValidatorTest._GMT
+            ),
             0,
             "qtrA =1"
         )
         self.assertEqual(
-            self.__dateValidator.compareQuarters0(value, date20050701, self._GMT),
+            self.__dateValidator.compareQuarters0(
+                value,
+                date20050701,
+                AbstractCalendarValidatorTest._GMT
+            ),
             0,
             "qtrA =2"
         )
         self.assertEqual(
-            self.__dateValidator.compareQuarters0(value, date20050731, self._GMT),
+            self.__dateValidator.compareQuarters0(
+                value,
+                date20050731,
+                AbstractCalendarValidatorTest._GMT
+            ),
             0,
             "qtrA =3"
         )
         self.assertEqual(
-            self.__dateValidator.compareQuarters0(value, date20050630, self._GMT),
+            self.__dateValidator.compareQuarters0(
+                value,
+                date20050630,
+                AbstractCalendarValidatorTest._GMT
+            ),
             1,
             "qtrA GT"
         )
 
         self.assertEqual(
-            self.__dateValidator.compareQuarters1(value, date20051101, self._GMT, 2),
+            self.__dateValidator.compareQuarters1(
+                value,
+                date20051101,
+                AbstractCalendarValidatorTest._GMT, 2
+            ),
             -1,
             "qtrB LT"
         )
         self.assertEqual(
-            self.__dateValidator.compareQuarters1(value, date20051001, self._GMT, 2),
+            self.__dateValidator.compareQuarters1(
+                value,
+                date20051001,
+                AbstractCalendarValidatorTest._GMT, 2
+            ),
             0,
             "qtrB =1"
         )
         self.assertEqual(
-            self.__dateValidator.compareQuarters1(value, date20050901, self._GMT, 2),
+            self.__dateValidator.compareQuarters1(
+                value,
+                date20050901,
+                AbstractCalendarValidatorTest._GMT, 2
+            ),
             0,
             "qtrB =2"
         )
         self.assertEqual(
-            self.__dateValidator.compareQuarters1(value, date20050701, self._GMT, 2),
+            self.__dateValidator.compareQuarters1(
+                value,
+                date20050701,
+                AbstractCalendarValidatorTest._GMT, 2
+            ),
             1,
             "qtrB =3"
         )
         self.assertEqual(
-            self.__dateValidator.compareQuarters1(value, date20050731, self._GMT, 2),
+            self.__dateValidator.compareQuarters1(
+                value,
+                date20050731,
+                AbstractCalendarValidatorTest._GMT, 2
+            ),
             1,
             "qtrB =4"
         )
         self.assertEqual(
-            self.__dateValidator.compareQuarters1(value, date20050630, self._GMT, 2),
+            self.__dateValidator.compareQuarters1(
+                value,
+                date20050630,
+                AbstractCalendarValidatorTest._GMT, 2
+            ),
             1,
             "qtrB GT"
         )
         self.assertEqual(
-            self.__dateValidator.compareQuarters1(value, date20050110, self._GMT, 2),
+            self.__dateValidator.compareQuarters1(
+                value,
+                date20050110,
+                AbstractCalendarValidatorTest._GMT, 2
+            ),
             1,
             "qtrB prev"
         )
 
         self.assertEqual(
-            self.__dateValidator.compareYears(value, date20060101, self._GMT),
+            self.__dateValidator.compareYears(
+                value,
+                date20060101,
+                AbstractCalendarValidatorTest._GMT
+            ),
             -1,
             "year LT"
         )
         self.assertEqual(
-            self.__dateValidator.compareYears(value, date20050101, self._GMT),
+            self.__dateValidator.compareYears(
+                value,
+                date20050101,
+                AbstractCalendarValidatorTest._GMT
+            ),
             0,
             "year EQ"
         )
         self.assertEqual(
-            self.__dateValidator.compareYears(value, date20041231, self._GMT),
+            self.__dateValidator.compareYears(
+                value,
+                date20041231,
+                AbstractCalendarValidatorTest._GMT
+            ),
             1,
             "year GT"
         )
 
-        sameDayTwoAm = self._createDate(self._GMT, testDate, 20000)
+        sameDayTwoAm = self._createDate(AbstractCalendarValidatorTest._GMT, testDate, 20000)
         self.assertEqual(
-            self.__dateValidator.compareDates(value, date20050824, self._EST),
+            self.__dateValidator.compareDates(
+                value,
+                date20050824,
+                AbstractCalendarValidatorTest._EST
+            ),
             -1,
             "date LT"
         )
         self.assertEqual(
-            self.__dateValidator.compareDates(value, diffHour, self._EST),
+            self.__dateValidator.compareDates(
+                value,
+                diffHour,
+                AbstractCalendarValidatorTest._EST
+            ),
             0,
             "date EQ"
         )
         self.assertEqual(
-            self.__dateValidator.compareDates(value, sameDayTwoAm, self._EST),
+            self.__dateValidator.compareDates(
+                value,
+                sameDayTwoAm,
+                AbstractCalendarValidatorTest._EST
+            ),
             1,
             "date EQ"
         )
         self.assertEqual(
-            self.__dateValidator.compareDates(value, date20050822, self._EST),
+            self.__dateValidator.compareDates(
+                value,
+                date20050822,
+                AbstractCalendarValidatorTest._EST
+            ),
             1,
             "date GT"
         )

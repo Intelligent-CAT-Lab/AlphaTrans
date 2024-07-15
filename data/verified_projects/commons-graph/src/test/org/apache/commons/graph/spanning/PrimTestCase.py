@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
 from src.main.org.apache.commons.graph.weight.Monoid import *
@@ -16,7 +17,6 @@ from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
 
-# Imports End
 
 
 class PrimTestCase(unittest.TestCase):
@@ -28,10 +28,11 @@ class PrimTestCase(unittest.TestCase):
             .fromSource(source)\
             .applyingPrimAlgorithm(DoubleWeightBaseOperations())
 
-        PrimTestCase.assertEquals(expected, actual)
+        unittest.TestCase().assertEquals(expected, actual)
     
     
-    def test_EmptyGraph(self) -> None:
+    @pytest.mark.test
+    def testEmptyGraph(self) -> None:
         with self.assertRaises(RuntimeError):
             input = UndirectedMutableGraph()
 
@@ -41,7 +42,8 @@ class PrimTestCase(unittest.TestCase):
                 .applyingPrimAlgorithm(DoubleWeightBaseOperations())
 
     
-    def test_NotExistVertex(self) -> None:
+    @pytest.mark.test
+    def testNotExistVertex(self) -> None:
         with self.assertRaises(RuntimeError):
             input = UndirectedMutableGraph()
 
@@ -50,7 +52,8 @@ class PrimTestCase(unittest.TestCase):
                 .fromSource(BaseLabeledVertex("NOT EXIST"))
     
 
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.minimumSpanningTree(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -58,7 +61,8 @@ class PrimTestCase(unittest.TestCase):
                 .applyingPrimAlgorithm(DoubleWeightBaseOperations())
 
     
-    def test_NullMonoid(self) -> None:
+    @pytest.mark.test
+    def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = None
             a = None
@@ -75,7 +79,8 @@ class PrimTestCase(unittest.TestCase):
                 .applyingBoruvkaAlgorithm(None)
     
 
-    def test_NullVertex(self) -> None:
+    @pytest.mark.test
+    def testNullVertex(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             input = UndirectedMutableGraph()
 
@@ -85,7 +90,8 @@ class PrimTestCase(unittest.TestCase):
                 .applyingPrimAlgorithm(DoubleWeightBaseOperations())
 
     
-    def test_VerifyMinimumSpanningTree2(self) -> None:
+    @pytest.mark.test
+    def testVerifyMinimumSpanningTree2(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("a")
@@ -139,7 +145,8 @@ class PrimTestCase(unittest.TestCase):
         PrimTestCase.__internalPrimAssertion(input, a, expected)
 
     
-    def test_VerifyWikipediaMinimumSpanningTree(self) -> None:
+    @pytest.mark.test
+    def testVerifyWikipediaMinimumSpanningTree(self) -> None:
         input = UndirectedMutableGraph()
 
         a = BaseLabeledVertex("A")

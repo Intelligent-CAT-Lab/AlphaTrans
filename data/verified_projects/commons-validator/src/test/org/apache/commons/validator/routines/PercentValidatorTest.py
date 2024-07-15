@@ -1,13 +1,15 @@
+import pytest
+
 import unittest
 from decimal import Decimal
 from src.main.org.apache.commons.validator.routines.PercentValidator import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
 from locale import getlocale, setlocale, LC_NUMERIC
+
+
 class PercentValidatorTest(unittest.TestCase):
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self._validator = None
+    _validator = None
 
     
     def setUp(self) -> None:
@@ -26,7 +28,8 @@ class PercentValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
-    def test_FormatType(self) -> None:
+    @pytest.mark.test
+    def testFormatType(self) -> None:
         self.assertEqual(
             2,
             PercentValidator.getInstance().getFormatType(),
@@ -39,7 +42,8 @@ class PercentValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Valid(self) -> None:
+    @pytest.mark.test
+    def testValid(self) -> None:
         origDefault = getlocale(LC_NUMERIC)
         setlocale(LC_NUMERIC, 'en_GB.UTF-8')
 
@@ -100,7 +104,8 @@ class PercentValidatorTest(unittest.TestCase):
         setlocale(LC_NUMERIC, origDefault)
 
     
-    def test_Invalid(self) -> None:
+    @pytest.mark.test
+    def testInvalid(self) -> None:
         validator = PercentValidator.getInstance()
 
         self.assertFalse(

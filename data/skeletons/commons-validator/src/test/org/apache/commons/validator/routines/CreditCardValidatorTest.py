@@ -35,8 +35,8 @@ class CreditCardValidatorTest(unittest.TestCase):
     __VALID_VPAY: str = None
     __VALID_VPAY2: str = None
     __ERROR_VPAY: str = None
-    __VALID_CARDS: typing.List[str] = None
-    __ERROR_CARDS: typing.List[str] = None
+    __VALID_CARDS: typing.List[typing.List[str]] = None
+    __ERROR_CARDS: typing.List[typing.List[str]] = None
     # Class Fields End
 
     # Class Methods Begin

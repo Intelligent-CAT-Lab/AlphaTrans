@@ -3,13 +3,14 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
+import unittest
 import io
 from io import StringIO
 
 # Imports End
 
 
-class BugCLI162Test:
+class BugCLI162Test(unittest.TestCase):
 
     # Class Fields Begin
     __PMODES: str = None

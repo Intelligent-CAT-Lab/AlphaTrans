@@ -1,3 +1,5 @@
+import pytest
+
 from src.main.org.apache.commons.validator.routines.CurrencyValidator import *
 from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
@@ -11,10 +13,8 @@ class CurrencyValidatorTest(unittest.TestCase):
 
     __CURRENCY_SYMBOL = '\u00A4'
 
-    def __init__(self, methodName='runTest') -> None:
-        super().__init__(methodName)
-        self.__US_DOLLAR = None
-        self.__UK_POUND = None
+    __US_DOLLAR = None
+    __UK_POUND = None
 
     
     def setUp(self) -> None:
@@ -37,7 +37,8 @@ class CurrencyValidatorTest(unittest.TestCase):
             self.fail(f"An exception occurred when cleaning up the test: {e}")
 
     
-    def test_FormatType(self) -> None:
+    @pytest.mark.test
+    def testFormatType(self) -> None:
         self.assertEqual(
             1,
             CurrencyValidator.getInstance().getFormatType(),
@@ -50,7 +51,8 @@ class CurrencyValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Valid(self) -> None:
+    @pytest.mark.test
+    def testValid(self) -> None:
         origDefault = getlocale(LC_MONETARY)
         setlocale(LC_MONETARY, 'en_GB.UTF-8')
 
@@ -131,7 +133,8 @@ class CurrencyValidatorTest(unittest.TestCase):
         setlocale(LC_MONETARY, origDefault)
 
     
-    def test_Invalid(self) -> None:
+    @pytest.mark.test
+    def testInvalid(self) -> None:
         validator = CurrencyValidator.getInstance()
 
         self.assertFalse(validator.isValid0(None), "isValid() Null Value")
@@ -158,7 +161,8 @@ class CurrencyValidatorTest(unittest.TestCase):
         )
 
     
-    def test_IntegerValid(self) -> None:
+    @pytest.mark.test
+    def testIntegerValid(self) -> None:
         origDefault = getlocale(LC_MONETARY)
         setlocale(LC_MONETARY, 'en_GB.UTF-8')
 
@@ -197,7 +201,8 @@ class CurrencyValidatorTest(unittest.TestCase):
         setlocale(LC_MONETARY, origDefault)
 
     
-    def test_IntegerInvalid(self) -> None:
+    @pytest.mark.test
+    def testIntegerInvalid(self) -> None:
         validator = CurrencyValidator(True, False)
 
         self.assertFalse(
@@ -219,7 +224,8 @@ class CurrencyValidatorTest(unittest.TestCase):
         )
 
     
-    def test_Pattern(self) -> None:
+    @pytest.mark.test
+    def testPattern(self) -> None:
         origDefault = getlocale(LC_MONETARY)
         setlocale(LC_MONETARY, 'en_GB.UTF-8')
 

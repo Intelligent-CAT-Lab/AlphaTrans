@@ -1,2 +1,0 @@
-class DistanceFromStringNoToString:
-    pass

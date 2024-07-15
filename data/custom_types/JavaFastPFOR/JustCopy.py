@@ -1,0 +1,2 @@
+class JustCopy:
+    pass

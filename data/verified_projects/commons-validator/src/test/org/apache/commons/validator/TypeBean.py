@@ -1,3 +1,5 @@
+import pytest
+
 class TypeBean:
 
     def __init__(self) -> None:

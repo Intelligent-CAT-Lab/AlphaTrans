@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *
 from src.main.org.apache.commons.graph.weight.OrderedMonoid import *
 from src.main.org.apache.commons.graph.weight.Monoid import *
@@ -18,16 +19,13 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-import typing
 from typing import *
-import pathlib
-
-# Imports End
 
 
 class BellmannFordTestCase(unittest.TestCase):
 
-    def test_FindShortestPathAndVerify(self) -> None:
+    @pytest.mark.test
+    def testFindShortestPathAndVerify(self) -> None:
         graph = DirectedMutableGraph()
 
         one = BaseLabeledVertex("1")
@@ -79,7 +77,8 @@ class BellmannFordTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
-    def test_NotConnectGraph(self) -> None:
+    @pytest.mark.test
+    def testNotConnectGraph(self) -> None:
         with self.assertRaises(PathNotFoundException):
             a = None
             b = None
@@ -101,7 +100,8 @@ class BellmannFordTestCase(unittest.TestCase):
             allVertexPairsShortestPath.findShortestPath(a, b)
 
     
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             CommonsGraph.findShortestPath(None)\
                 .whereEdgesHaveWeights(BaseWeightedEdge())\
@@ -109,7 +109,8 @@ class BellmannFordTestCase(unittest.TestCase):
                 .applyingBelmannFord(DoubleWeightBaseOperations())
 
     
-    def test_NullMonoid(self) -> None:
+    @pytest.mark.test
+    def testNullMonoid(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = None
             a = None
@@ -129,7 +130,8 @@ class BellmannFordTestCase(unittest.TestCase):
                 .applyingBelmannFord(None)
 
     
-    def test_NullVertices(self) -> None:
+    @pytest.mark.test
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = UndirectedMutableGraph()
 

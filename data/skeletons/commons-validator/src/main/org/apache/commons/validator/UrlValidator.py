@@ -40,7 +40,7 @@ class UrlValidator:
     __ALPHA_PATTERN: re.Pattern = None
     __options: Flags = None
     __allowedSchemes: typing.Set[str] = None
-    _defaultSchemes: typing.List[str] = None
+    _defaultSchemes: typing.List[typing.List[str]] = None
     __serialVersionUID: int = None
     ALLOW_ALL_SCHEMES: int = None
     ALLOW_2_SLASHES: int = None
@@ -78,14 +78,14 @@ class UrlValidator:
         pass
 
     @staticmethod
-    def UrlValidator2(schemes: typing.List[str]) -> UrlValidator:
+    def UrlValidator2(schemes: typing.List[typing.List[str]]) -> UrlValidator:
         pass
 
     @staticmethod
     def UrlValidator1(options: int) -> UrlValidator:
         pass
 
-    def __init__(self, schemes: typing.List[str], options: int) -> None:
+    def __init__(self, schemes: typing.List[typing.List[str]], options: int) -> None:
         pass
 
     # Class Methods End

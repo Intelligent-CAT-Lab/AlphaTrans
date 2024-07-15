@@ -1,0 +1,2 @@
+class SkippableBasicTest:
+    pass

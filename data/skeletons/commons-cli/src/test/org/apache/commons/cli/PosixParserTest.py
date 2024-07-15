@@ -4,13 +4,14 @@ from __future__ import annotations
 from src.main.org.apache.commons.cli.PosixParser import *
 from src.test.org.apache.commons.cli.ParserTestCase import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
+import unittest
 import os
 import io
 
 # Imports End
 
 
-class PosixParserTest(ParserTestCase):
+class PosixParserTest(ParserTestCase, unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End

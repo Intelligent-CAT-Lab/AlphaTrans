@@ -1,0 +1,2 @@
+class SafetyRelatedBroadcastMessage:
+    pass

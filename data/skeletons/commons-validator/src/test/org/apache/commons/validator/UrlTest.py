@@ -7,6 +7,7 @@ import unittest
 import typing
 from typing import *
 import io
+import pathlib
 
 # Imports End
 
@@ -14,6 +15,16 @@ import io
 class UrlTest(unittest.TestCase):
 
     # Class Fields Begin
+    testUrlScheme: typing.List[ResultPair] = None
+    testUrlAuthority: typing.List[ResultPair] = None
+    testUrlPort: typing.List[ResultPair] = None
+    testPath: typing.List[ResultPair] = None
+    testUrlPathOptions: typing.List[ResultPair] = None
+    testUrlQuery: typing.List[ResultPair] = None
+    testUrlParts: typing.List[typing.Any] = None
+    testUrlPartsOptions: typing.List[typing.Any] = None
+    testPartsIndex: typing.List[int] = None
+    testScheme: typing.List[ResultPair] = None
     __printStatus: bool = None
     __printIndex: bool = None
     # Class Fields End
@@ -23,7 +34,7 @@ class UrlTest(unittest.TestCase):
         pass
 
     @staticmethod
-    def main(argv: typing.List[str]) -> None:
+    def main(argv: typing.List[typing.List[str]]) -> None:
         pass
 
     def testValidateUrl(self) -> None:

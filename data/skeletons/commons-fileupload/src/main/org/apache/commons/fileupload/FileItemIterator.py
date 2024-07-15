@@ -17,7 +17,7 @@ class FileItemIterator(ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def next(self) -> FileItemStream:
+    def next_(self) -> FileItemStream:
         pass
 
     def hasNext(self) -> bool:

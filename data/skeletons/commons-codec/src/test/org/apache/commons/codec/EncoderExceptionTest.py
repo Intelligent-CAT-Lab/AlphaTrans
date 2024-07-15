@@ -2,12 +2,13 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.EncoderException import *
+import unittest
 import io
 
 # Imports End
 
 
-class EncoderExceptionTest:
+class EncoderExceptionTest(unittest.TestCase):
 
     # Class Fields Begin
     __MSG: str = None

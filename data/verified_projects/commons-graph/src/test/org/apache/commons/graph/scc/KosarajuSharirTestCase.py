@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -10,14 +11,13 @@ from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-import os
-import typing
 from typing import *
-# Imports End
+
 
 class KosarajuSharirTestCase(unittest.TestCase):
 
-    def test_NotExistVertex(self) -> None:
+    @pytest.mark.test
+    def testNotExistVertex(self) -> None:
         with self.assertRaises(RuntimeError):
             graph = DirectedMutableGraph()
 
@@ -25,14 +25,16 @@ class KosarajuSharirTestCase(unittest.TestCase):
                 .applyingKosarajuSharir1(BaseLabeledVertex("NOT EXISTS"))
     
     
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             graph = None
             CommonsGraph.findStronglyConnectedComponent(graph)\
                 .applyingKosarajuSharir0()
 
     
-    def test_NullVertices(self) -> None:
+    @pytest.mark.test
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             a = None
             graph = DirectedMutableGraph()
@@ -40,7 +42,8 @@ class KosarajuSharirTestCase(unittest.TestCase):
                 .applyingKosarajuSharir1(a)
 
     
-    def test_UnconnectedGraph(self) -> None:
+    @pytest.mark.test
+    def testUnconnectedGraph(self) -> None:
         a = BaseLabeledVertex("A")
         b = BaseLabeledVertex("B")
         c = BaseLabeledVertex("C")
@@ -90,7 +93,8 @@ class KosarajuSharirTestCase(unittest.TestCase):
         self.assertEqual({g, h, c}, actualG)
 
     
-    def test_VerifyHasStronglyConnectedComponents(self) -> None:
+    @pytest.mark.test
+    def testVerifyHasStronglyConnectedComponents(self) -> None:
         a = BaseLabeledVertex("A")
         b = BaseLabeledVertex("B")
         c = BaseLabeledVertex("C")

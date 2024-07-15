@@ -1,4 +1,5 @@
-# Imports Begin
+import pytest
+
 from src.test.org.apache.commons.graph.model.BaseLabeledWeightedEdge import *
 from src.main.org.apache.commons.graph.builder.TailVertexConnector import *
 from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *
@@ -17,11 +18,12 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
-# Imports End
+
 
 class EdmondsKarpTestCase(unittest.TestCase):
 
-    def test_FindMaxFlowAndVerify(self) -> None:
+    @pytest.mark.test
+    def testFindMaxFlowAndVerify(self) -> None:
         a = BaseLabeledVertex("A")
         g = BaseLabeledVertex("G")
 
@@ -40,7 +42,8 @@ class EdmondsKarpTestCase(unittest.TestCase):
         self.assertEqual(expected, actual)
     
     
-    def test_NullGraph(self) -> None:
+    @pytest.mark.test
+    def testNullGraph(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
             a = BaseLabeledVertex("A")
             g = BaseLabeledVertex("G")
@@ -52,7 +55,8 @@ class EdmondsKarpTestCase(unittest.TestCase):
                 .applyingEdmondsKarp(IntegerWeightBaseOperations())
 
     
-    def test_NullVertices(self) -> None:
+    @pytest.mark.test
+    def testNullVertices(self) -> None:
         with self.assertRaises((TypeError, AttributeError)):
 
             a = None
@@ -67,7 +71,8 @@ class EdmondsKarpTestCase(unittest.TestCase):
                 .applyingEdmondsKarp(IntegerWeightBaseOperations())
 
     
-    def test_Sparse(self) -> None:
+    @pytest.mark.test
+    def testSparse(self) -> None:
         a = BaseLabeledVertex("A")
         g = BaseLabeledVertex("G")
 
@@ -85,8 +90,6 @@ class EdmondsKarpTestCase(unittest.TestCase):
         
         self.assertEqual(expected, actual)
 
-
-    # Class Methods End
 
 
 class GraphConnectionEdmondsKarpTestCaseTestFindMaxFlowAndVerify(AbstractGraphConnection):
