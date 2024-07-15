@@ -42,8 +42,8 @@
                     "end": 101,
                     "body": [
                         "\tpublic void testCodec_intermediateHighPowerOfTwo() {\n",
-                        "\t\tAssert.assertEquals(1, LongTestUtils.compress((LongCODEC) codec, new long[] { 1L << 42 }).length);\n",
-                        "\t\tAssert.assertEquals(7, LongTestUtils.compress((ByteLongCODEC) codec, new long[] { 1L << 42 }).length);\n",
+                        "\t\tAssert.assertEquals(1, LongTestUtils.compress1((LongCODEC) codec, new long[] { 1L << 42 }).length);\n",
+                        "\t\tAssert.assertEquals(7, LongTestUtils.compress0((ByteLongCODEC) codec, new long[] { 1L << 42 }).length);\n",
                         "\t\tAssert.assertEquals(1, LongTestUtils.compressHeadless((SkippableLongCODEC) codec, new long[] { 1L << 42 }).length);\n",
                         "\t}\n"
                     ],
@@ -66,12 +66,12 @@
                         [
                             "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
                             "LongTestUtils",
-                            "79-85:compress"
+                            "79-85:compress1"
                         ],
                         [
                             "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
                             "LongTestUtils",
-                            "97-103:compress"
+                            "97-103:compress0"
                         ],
                         [
                             "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
@@ -343,15 +343,15 @@
                     "body": [
                         "\tprivate void checkConsistency(LongCODEC codec, long[] array) {\n",
                         "\t\t{\n",
-                        "\t\t\tlong[] compressed = LongTestUtils.compress(codec, array);\n",
-                        "\t\t\tlong[] uncompressed = LongTestUtils.uncompress(codec, compressed, array.length);\n",
+                        "\t\t\tlong[] compressed = LongTestUtils.compress1(codec, array);\n",
+                        "\t\t\tlong[] uncompressed = LongTestUtils.uncompress0(codec, compressed, array.length);\n",
                         "\n",
                         "\t\t\tAssert.assertArrayEquals(array, uncompressed);\n",
                         "\t\t}\n",
                         "\n",
                         "\t\tif (codec instanceof ByteLongCODEC) {\n",
-                        "\t\t\tbyte[] compressed = LongTestUtils.compress((ByteLongCODEC) codec, array);\n",
-                        "\t\t\tlong[] uncompressed = LongTestUtils.uncompress((ByteLongCODEC) codec, compressed, array.length);\n",
+                        "\t\t\tbyte[] compressed = LongTestUtils.compress0((ByteLongCODEC) codec, array);\n",
+                        "\t\t\tlong[] uncompressed = LongTestUtils.uncompress1((ByteLongCODEC) codec, compressed, array.length);\n",
                         "\n",
                         "\t\t\tAssert.assertArrayEquals(array, uncompressed);\n",
                         "\t\t}\n",
@@ -385,22 +385,22 @@
                         [
                             "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
                             "LongTestUtils",
-                            "79-85:compress"
+                            "79-85:compress1"
                         ],
                         [
                             "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
                             "LongTestUtils",
-                            "87-93:uncompress"
+                            "87-93:uncompress0"
                         ],
                         [
                             "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
                             "LongTestUtils",
-                            "97-103:compress"
+                            "97-103:compress0"
                         ],
                         [
                             "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
                             "LongTestUtils",
-                            "105-111:uncompress"
+                            "105-111:uncompress1"
                         ],
                         [
                             "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
@@ -413,216 +413,6 @@
                             "121-128:uncompressHeadless"
                         ]
                     ]
-                },
-                "97-97:testCodec_intermediateHighPowerOfTwo": {
-                    "start": 97,
-                    "end": 97,
-                    "body": [
-                        "\tpublic void testCodec_intermediateHighPowerOfTwo() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testCodec_intermediateHighPowerOfTwo()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "90-90:testCodec_ZeroThenAllPowerOfTwo": {
-                    "start": 90,
-                    "end": 90,
-                    "body": [
-                        "\tpublic void testCodec_ZeroThenAllPowerOfTwo() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testCodec_ZeroThenAllPowerOfTwo()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "82-82:testCodec_allPowerOfTwo": {
-                    "start": 82,
-                    "end": 82,
-                    "body": [
-                        "\tpublic void testCodec_allPowerOfTwo() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testCodec_allPowerOfTwo()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "77-77:testCodec_ZeroMinValue": {
-                    "start": 77,
-                    "end": 77,
-                    "body": [
-                        "\tpublic void testCodec_ZeroMinValue() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testCodec_ZeroMinValue()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "72-72:testCodec_MinValue": {
-                    "start": 72,
-                    "end": 72,
-                    "body": [
-                        "\tpublic void testCodec_MinValue() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testCodec_MinValue()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "65-65:testCodec_ZeroTimes128Minus1": {
-                    "start": 65,
-                    "end": 65,
-                    "body": [
-                        "\tpublic void testCodec_ZeroTimes128Minus1() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testCodec_ZeroTimes128Minus1()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "58-58:testCodec_ZeroTimes127Minus1": {
-                    "start": 58,
-                    "end": 58,
-                    "body": [
-                        "\tpublic void testCodec_ZeroTimes127Minus1() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testCodec_ZeroTimes127Minus1()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "53-53:testCodec_ZeroTimes8Minus1": {
-                    "start": 53,
-                    "end": 53,
-                    "body": [
-                        "\tpublic void testCodec_ZeroTimes8Minus1() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testCodec_ZeroTimes8Minus1()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "48-48:testCodec_ZeroMinus1": {
-                    "start": 48,
-                    "end": 48,
-                    "body": [
-                        "\tpublic void testCodec_ZeroMinus1() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testCodec_ZeroMinus1()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "23-23:checkConsistency": {
-                    "start": 23,
-                    "end": 23,
-                    "body": [
-                        "\tprivate void checkConsistency(LongCODEC codec, long[] array) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "checkConsistency(LongCODEC, long[])",
-                    "parameters": [],
-                    "calls": []
                 }
             },
             "fields": {
