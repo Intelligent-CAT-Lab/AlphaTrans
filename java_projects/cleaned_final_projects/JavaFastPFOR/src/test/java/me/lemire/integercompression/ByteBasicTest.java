@@ -41,12 +41,20 @@ public class ByteBasicTest {
 
 				IntWrapper aOffset = new IntWrapper(0);
 				IntWrapper bOffset = new IntWrapper(x);
+<<<<<<< HEAD
 				C.compress1(a, aOffset, a.length, b, bOffset);
+=======
+				C.compress(a, aOffset, a.length, b, bOffset);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
 				int len = bOffset.get() - x;
 
 				bOffset.set(x);
 				IntWrapper cOffset = new IntWrapper(0);
+<<<<<<< HEAD
 				C.uncompress1(b, bOffset, len, c, cOffset);
+=======
+				C.uncompress(b, bOffset, len, c, cOffset);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
 				if(!Arrays.equals(a, c)) {
 					System.out.println("Problem with "+C);
 				}
@@ -65,15 +73,25 @@ public class ByteBasicTest {
             data[k] = k;
         for (ByteIntegerCODEC c : codecs) {
             for (int L = 1; L <= 128; L++) {
+<<<<<<< HEAD
                 byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));
                 int[] answer = TestUtils.uncompress1(c, comp, L);
+=======
+                byte[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompress(c, comp, L);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug "+c.toString()+" "+k+" "+answer[k]+" "+data[k]);
             }
             for (int L = 128; L <= N; L *= 2) {
+<<<<<<< HEAD
                 byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));
                 int[] answer = TestUtils.uncompress1(c, comp, L);
+=======
+                byte[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompress(c, comp, L);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
@@ -100,15 +118,25 @@ public class ByteBasicTest {
                 e.printStackTrace();
             }
             for (int L = 1; L <= 128; L++) {
+<<<<<<< HEAD
                 byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));
                 int[] answer = TestUtils.uncompress1(c, comp, L);
+=======
+                byte[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompress(c, comp, L);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug at k = "+k+" "+answer[k]+" "+data[k]);
             }
             for (int L = 128; L <= N; L *= 2) {
+<<<<<<< HEAD
                 byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));
                 int[] answer = TestUtils.uncompress1(c, comp, L);
+=======
+                byte[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
+                int[] answer = TestUtils.uncompress(c, comp, L);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");

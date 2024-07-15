@@ -32,7 +32,11 @@ public class DeltaZigzagEncodingTest {
             int[] data,
             int[] expected)
     {
+<<<<<<< HEAD
         assertArrayEquals(expected, e.encodeArray3(data));
+=======
+        assertArrayEquals(expected, e.encodeArray(data));
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
         assertEquals(data[data.length - 1], e.getContextValue());
     }
 
@@ -41,7 +45,11 @@ public class DeltaZigzagEncodingTest {
             int[] data,
             int[] expected)
     {
+<<<<<<< HEAD
         int[] r = d.decodeArray2(data);
+=======
+        int[] r = d.decodeArray(data);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
         assertArrayEquals(expected, r);
         assertEquals(r[r.length - 1], d.getContextValue());
     }

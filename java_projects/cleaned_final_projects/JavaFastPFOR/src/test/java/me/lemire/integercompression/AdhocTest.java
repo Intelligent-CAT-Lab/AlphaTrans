@@ -36,11 +36,19 @@ public class AdhocTest {
 
           IntWrapper aOffset = new IntWrapper(0);
           IntWrapper bOffset = new IntWrapper(x);
+<<<<<<< HEAD
           codec.compress0(a, aOffset, a.length, b, bOffset);
           int len = bOffset.get() - x;
           bOffset.set(x);
           IntWrapper cOffset = new IntWrapper(0);
           codec.uncompress0(b, bOffset, len, c, cOffset);
+=======
+          codec.compress(a, aOffset, a.length, b, bOffset);
+          int len = bOffset.get() - x;
+          bOffset.set(x);
+          IntWrapper cOffset = new IntWrapper(0);
+          codec.uncompress(b, bOffset, len, c, cOffset);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
           Assert.assertArrayEquals(a,c);
     	    }
     }

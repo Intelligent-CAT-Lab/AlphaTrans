@@ -21,8 +21,13 @@ public class DeltaZigzagVariableByte implements IntegerCODEC {
         }
 
         @Override
+<<<<<<< HEAD
         public void compress0(int[] inBuf, IntWrapper inPos, int inLen,
                               int[] outBuf, IntWrapper outPos) {
+=======
+        public void compress(int[] inBuf, IntWrapper inPos, int inLen,
+                int[] outBuf, IntWrapper outPos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                 if (inLen == 0) {
                         return;
                 }
@@ -99,8 +104,13 @@ public class DeltaZigzagVariableByte implements IntegerCODEC {
         }
 
         @Override
+<<<<<<< HEAD
         public void uncompress0(int[] inBuf, IntWrapper inPos, int inLen,
                                 int[] outBuf, IntWrapper outPos) {
+=======
+        public void uncompress(int[] inBuf, IntWrapper inPos, int inLen,
+                int[] outBuf, IntWrapper outPos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                 DeltaZigzagEncoding.Decoder ctx = new DeltaZigzagEncoding.Decoder(0);
 
                 int ip = inPos.get();

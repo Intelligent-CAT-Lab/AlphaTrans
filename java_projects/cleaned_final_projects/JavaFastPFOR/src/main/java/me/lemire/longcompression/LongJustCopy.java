@@ -24,8 +24,13 @@ public final class LongJustCopy implements LongCODEC, SkippableLongCODEC {
         }
 
         @Override
+<<<<<<< HEAD
         public void uncompress1(long[] in, IntWrapper inpos, int inlength,
                                 long[] out, IntWrapper outpos) {
+=======
+        public void uncompress(long[] in, IntWrapper inpos, int inlength,
+        		long[] out, IntWrapper outpos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
             headlessUncompress(in,inpos,inlength,out,outpos,inlength);
         }
 
@@ -44,8 +49,13 @@ public final class LongJustCopy implements LongCODEC, SkippableLongCODEC {
         }
 
         @Override
+<<<<<<< HEAD
         public void compress0(long[] in, IntWrapper inpos, int inlength,
                               long[] out, IntWrapper outpos) {
+=======
+        public void compress(long[] in, IntWrapper inpos, int inlength,
+        		long[] out, IntWrapper outpos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
             headlessCompress(in,inpos,inlength,out,outpos);
         }
 

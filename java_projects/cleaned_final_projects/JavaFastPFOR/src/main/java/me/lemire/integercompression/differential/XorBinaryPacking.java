@@ -20,8 +20,13 @@ public final class XorBinaryPacking implements IntegratedIntegerCODEC {
         private static final int BLOCK_LENGTH = 128;
 
         @Override
+<<<<<<< HEAD
         public void compress0(final int[] inBuf, final IntWrapper inPos,
                               int inLen, final int[] outBuf, final IntWrapper outPos) {
+=======
+        public void compress(final int[] inBuf, final IntWrapper inPos,
+                int inLen, final int[] outBuf, final IntWrapper outPos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                 inLen = inLen - inLen % BLOCK_LENGTH;
                 if (inLen == 0)
                         return;
@@ -61,8 +66,13 @@ public final class XorBinaryPacking implements IntegratedIntegerCODEC {
         }
 
         @Override
+<<<<<<< HEAD
         public void uncompress0(int[] inBuf, IntWrapper inPos, int inLen,
                                 int[] outBuf, IntWrapper outPos) {
+=======
+        public void uncompress(int[] inBuf, IntWrapper inPos, int inLen,
+                int[] outBuf, IntWrapper outPos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                 if (inLen == 0)
                         return;
 

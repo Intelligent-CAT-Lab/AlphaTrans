@@ -33,8 +33,13 @@ SkippableIntegratedIntegerCODEC  {
     }
 
     @Override
+<<<<<<< HEAD
     public void compress0(int[] in, IntWrapper inpos, int inlength,
                           int[] out, IntWrapper outpos) {
+=======
+    public void compress(int[] in, IntWrapper inpos, int inlength,
+            int[] out, IntWrapper outpos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
         if (inlength == 0)
             return;
         int initoffset = 0;
@@ -76,8 +81,13 @@ SkippableIntegratedIntegerCODEC  {
     }
 
     @Override
+<<<<<<< HEAD
     public void compress1(int[] in, IntWrapper inpos, int inlength,
                           byte[] out, IntWrapper outpos) {
+=======
+    public void compress(int[] in, IntWrapper inpos, int inlength,
+            byte[] out, IntWrapper outpos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
         if (inlength == 0)
             return;
         int initoffset = 0;
@@ -112,8 +122,13 @@ SkippableIntegratedIntegerCODEC  {
     }
 
     @Override
+<<<<<<< HEAD
     public void uncompress0(int[] in, IntWrapper inpos, int inlength,
                             int[] out, IntWrapper outpos) {
+=======
+    public void uncompress(int[] in, IntWrapper inpos, int inlength,
+            int[] out, IntWrapper outpos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
         int s = 0;
         int val = 0;
         int p = inpos.get();
@@ -141,8 +156,13 @@ SkippableIntegratedIntegerCODEC  {
     }
 
     @Override
+<<<<<<< HEAD
     public void uncompress1(byte[] in, IntWrapper inpos, int inlength,
                             int[] out, IntWrapper outpos) {
+=======
+    public void uncompress(byte[] in, IntWrapper inpos, int inlength,
+            int[] out, IntWrapper outpos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
         int p = inpos.get();
         int initoffset = 0;
         int finalp = inpos.get() + inlength;

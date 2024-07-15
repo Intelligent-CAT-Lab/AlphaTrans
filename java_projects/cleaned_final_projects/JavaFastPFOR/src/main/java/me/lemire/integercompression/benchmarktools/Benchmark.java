@@ -110,9 +110,15 @@ public class Benchmark {
                                 inpos.set(1);
                                 outpos.set(0);
                                 if (!(c instanceof IntegratedIntegerCODEC)) {
+<<<<<<< HEAD
                                         Delta.delta0(backupdata);
                                 }
                                 c.compress0(backupdata, inpos, backupdata.length
+=======
+                                        Delta.delta(backupdata);
+                                }
+                                c.compress(backupdata, inpos, backupdata.length
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                         - inpos.get(), compressBuffer, outpos);
                                 long afterCompress = System.nanoTime() / 1000;
 
@@ -126,11 +132,19 @@ public class Benchmark {
                                 inpos.set(0);
                                 outpos.set(1);
                                 decompressBuffer[0] = backupdata[0];
+<<<<<<< HEAD
                                 c.uncompress0(compressBuffer, inpos,
                                         thiscompsize - 1, decompressBuffer,
                                         outpos);
                                 if (!(c instanceof IntegratedIntegerCODEC))
                                         Delta.fastinverseDelta0(decompressBuffer);
+=======
+                                c.uncompress(compressBuffer, inpos,
+                                        thiscompsize - 1, decompressBuffer,
+                                        outpos);
+                                if (!(c instanceof IntegratedIntegerCODEC))
+                                        Delta.fastinverseDelta(decompressBuffer);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                 long afterDecompress = System.nanoTime() / 1000;
 
                                 // measure time of extraction (uncompression).
@@ -232,9 +246,15 @@ public class Benchmark {
                                 inpos.set(1);
                                 outpos.set(0);
                                 if (!(c instanceof IntegratedByteIntegerCODEC)) {
+<<<<<<< HEAD
                                         Delta.delta0(backupdata);
                                 }
                                 c.compress1(backupdata, inpos, backupdata.length
+=======
+                                        Delta.delta(backupdata);
+                                }
+                                c.compress(backupdata, inpos, backupdata.length
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                         - inpos.get(), compressBuffer, outpos);
                                 long afterCompress = System.nanoTime() / 1000;
 
@@ -248,11 +268,19 @@ public class Benchmark {
                                 inpos.set(0);
                                 outpos.set(1);
                                 decompressBuffer[0] = backupdata[0];
+<<<<<<< HEAD
                                 c.uncompress1(compressBuffer, inpos,
                                         thiscompsize - 1, decompressBuffer,
                                         outpos);
                                 if (!(c instanceof IntegratedByteIntegerCODEC))
                                         Delta.fastinverseDelta0(decompressBuffer);
+=======
+                                c.uncompress(compressBuffer, inpos,
+                                        thiscompsize - 1, decompressBuffer,
+                                        outpos);
+                                if (!(c instanceof IntegratedByteIntegerCODEC))
+                                        Delta.fastinverseDelta(decompressBuffer);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                 long afterDecompress = System.nanoTime() / 1000;
 
                                 // measure time of extraction (uncompression).
@@ -382,7 +410,11 @@ public class Benchmark {
                                         data[k].length);
                                 //
                                 bef = System.nanoTime() / 1000;
+<<<<<<< HEAD
                                 Delta.delta0(backupdata);
+=======
+                                Delta.delta(backupdata);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                 ArrayList<int[]> dataout = new ArrayList<int[]>(
                                         data[k].length / 128);
                                 for (int K = 0; K < data[k].length; K += 128) {
@@ -410,7 +442,11 @@ public class Benchmark {
                                         PForDelta.decompressOneBlock(tmpbuf,
                                                 compbuf, 128);
                                         tmpbuf[0] += deltaoffset;
+<<<<<<< HEAD
                                         Delta.fastinverseDelta0(tmpbuf);
+=======
+                                        Delta.fastinverseDelta(tmpbuf);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                         deltaoffset = tmpbuf[127];
                                         datauncomp.add(tmpbuf);
                                 }

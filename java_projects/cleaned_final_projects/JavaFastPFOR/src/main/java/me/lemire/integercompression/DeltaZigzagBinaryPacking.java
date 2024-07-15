@@ -22,8 +22,13 @@ public final class DeltaZigzagBinaryPacking implements IntegerCODEC {
         private static final int BLOCK_LENGTH = 128;
 
         @Override
+<<<<<<< HEAD
         public void compress0(int[] inBuf, IntWrapper inPos, int inLen,
                               int[] outBuf, IntWrapper outPos) {
+=======
+        public void compress(int[] inBuf, IntWrapper inPos, int inLen,
+                int[] outBuf, IntWrapper outPos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                 inLen = inLen - inLen % BLOCK_LENGTH;
                 if (inLen == 0) {
                         return;
@@ -39,7 +44,11 @@ public final class DeltaZigzagBinaryPacking implements IntegerCODEC {
                 int ip = inPos.get();
                 final int inPosLast = ip + inLen;
                 for (; ip < inPosLast; ip += BLOCK_LENGTH) {
+<<<<<<< HEAD
                         ctx.encodeArray1(inBuf, ip, BLOCK_LENGTH, work);
+=======
+                        ctx.encodeArray(inBuf, ip, BLOCK_LENGTH, work);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                         final int bits1 = Util.maxbits32(work, 0);
                         final int bits2 = Util.maxbits32(work, 32);
                         final int bits3 = Util.maxbits32(work, 64);
@@ -57,8 +66,13 @@ public final class DeltaZigzagBinaryPacking implements IntegerCODEC {
         }
 
         @Override
+<<<<<<< HEAD
         public void uncompress0(int[] inBuf, IntWrapper inPos, int inLen,
                                 int[] outBuf, IntWrapper outPos) {
+=======
+        public void uncompress(int[] inBuf, IntWrapper inPos, int inLen,
+                int[] outBuf, IntWrapper outPos) {
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                 if (inLen == 0) {
                         return;
                 }
@@ -78,7 +92,11 @@ public final class DeltaZigzagBinaryPacking implements IntegerCODEC {
                         ip += unpack(inBuf, ip, work, 32, (n >> 16) & 0x3F);
                         ip += unpack(inBuf, ip, work, 64, (n >> 8) & 0x3F);
                         ip += unpack(inBuf, ip, work, 96, (n >> 0) & 0x3F);
+<<<<<<< HEAD
                         ctx.decodeArray0(work, 0, BLOCK_LENGTH, outBuf, op);
+=======
+                        ctx.decodeArray(work, 0, BLOCK_LENGTH, outBuf, op);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                 }
 
                 outPos.add(outLen);

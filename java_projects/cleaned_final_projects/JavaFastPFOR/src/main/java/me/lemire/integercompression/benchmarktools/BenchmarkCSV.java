@@ -203,12 +203,20 @@ public class BenchmarkCSV {
                                 int[] in = postings.get(k);
                                 IntWrapper inpos = new IntWrapper(0);
                                 IntWrapper outpos = new IntWrapper(0);
+<<<<<<< HEAD
                                 c.compress0(in, inpos, in.length, compbuffer,
+=======
+                                c.compress(in, inpos, in.length, compbuffer,
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                         outpos);
                                 int clength = outpos.get();
                                 inpos = new IntWrapper(0);
                                 outpos = new IntWrapper(0);
+<<<<<<< HEAD
                                 c.uncompress0(compbuffer, inpos, clength,
+=======
+                                c.uncompress(compbuffer, inpos, clength,
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                         decompbuffer, outpos);
                                 volumein += in.length;
                                 volumeout += clength;
@@ -226,7 +234,11 @@ public class BenchmarkCSV {
                         for (int[] cin : compdata) {
                                 IntWrapper inpos = new IntWrapper(0);
                                 IntWrapper outpos = new IntWrapper(0);
+<<<<<<< HEAD
                                 c.uncompress0(cin, inpos, cin.length,
+=======
+                                c.uncompress(cin, inpos, cin.length,
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                         decompbuffer, outpos);
                                 if (inpos.get() != cin.length)
                                         throw new RuntimeException("bug");
@@ -269,12 +281,20 @@ public class BenchmarkCSV {
                                 int[] in = postings.get(k);
                                 IntWrapper inpos = new IntWrapper(0);
                                 IntWrapper outpos = new IntWrapper(0);
+<<<<<<< HEAD
                                 c.compress1(in, inpos, in.length, compbuffer,
+=======
+                                c.compress(in, inpos, in.length, compbuffer,
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                         outpos);
                                 int clength = outpos.get();
                                 inpos = new IntWrapper(0);
                                 outpos = new IntWrapper(0);
+<<<<<<< HEAD
                                 c.uncompress1(compbuffer, inpos, clength,
+=======
+                                c.uncompress(compbuffer, inpos, clength,
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                         decompbuffer, outpos);
                                 volumein += in.length;
                                 volumeout += clength;
@@ -292,7 +312,11 @@ public class BenchmarkCSV {
                         for (byte[] cin : compdata) {
                                 IntWrapper inpos = new IntWrapper(0);
                                 IntWrapper outpos = new IntWrapper(0);
+<<<<<<< HEAD
                                 c.uncompress1(cin, inpos, cin.length,
+=======
+                                c.uncompress(cin, inpos, cin.length,
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
                                         decompbuffer, outpos);
                                 if (inpos.get() != cin.length)
                                         throw new RuntimeException("bug");

@@ -33,8 +33,13 @@ public interface ByteIntegerCODEC {
          * @param outpos
          *                where to write in the output array
          */
+<<<<<<< HEAD
         public void compress1(int[] in, IntWrapper inpos, int inlength,
                               byte[] out, IntWrapper outpos);
+=======
+        public void compress(int[] in, IntWrapper inpos, int inlength,
+                byte[] out, IntWrapper outpos);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
 
         /**
          * Uncompress data from an array to another array.
@@ -54,7 +59,12 @@ public interface ByteIntegerCODEC {
          * @param outpos
          *                where to write the compressed output in out
          */
+<<<<<<< HEAD
         public void uncompress1(byte[] in, IntWrapper inpos, int inlength,
                                 int[] out, IntWrapper outpos);
+=======
+        public void uncompress(byte[] in, IntWrapper inpos, int inlength,
+                int[] out, IntWrapper outpos);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
 
 }

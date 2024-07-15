@@ -22,15 +22,25 @@ public class TestLongAs2IntsCodec {
 
 	private void checkConsistency(LongCODEC codec, long[] array) {
 		{
+<<<<<<< HEAD
 			long[] compressed = LongTestUtils.compress1(codec, array);
 			long[] uncompressed = LongTestUtils.uncompress0(codec, compressed, array.length);
+=======
+			long[] compressed = LongTestUtils.compress(codec, array);
+			long[] uncompressed = LongTestUtils.uncompress(codec, compressed, array.length);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
 
 			Assert.assertArrayEquals(array, uncompressed);
 		}
 
 		if (codec instanceof ByteLongCODEC) {
+<<<<<<< HEAD
 			byte[] compressed = LongTestUtils.compress0((ByteLongCODEC) codec, array);
 			long[] uncompressed = LongTestUtils.uncompress1((ByteLongCODEC) codec, compressed, array.length);
+=======
+			byte[] compressed = LongTestUtils.compress((ByteLongCODEC) codec, array);
+			long[] uncompressed = LongTestUtils.uncompress((ByteLongCODEC) codec, compressed, array.length);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
 
 			Assert.assertArrayEquals(array, uncompressed);
 		}
@@ -100,7 +110,11 @@ public class TestLongAs2IntsCodec {
 
 	@Test
 	public void testCodec_intermediateHighPowerOfTwo() {
+<<<<<<< HEAD
 		Assert.assertEquals(3, LongTestUtils.compress1((LongCODEC) codec, new long[] { 1L << 42 }).length);
+=======
+		Assert.assertEquals(3, LongTestUtils.compress((LongCODEC) codec, new long[] { 1L << 42 }).length);
+>>>>>>> f66b6db3b (added JavaFastPFOR project)
 	}
 
 }
