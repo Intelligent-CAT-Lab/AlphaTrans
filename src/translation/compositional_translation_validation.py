@@ -26,7 +26,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
     """
     members_to_translate: [prompt, fragment, use_bam, project_name, schema, class_, fragment_]
     """
-    global i, RECORD_ALL
+    global i, RECORD_ALL, args
     i += 1
     # if i > 2:
     #     quit()
@@ -110,7 +110,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
             # generation = generation[generation.find('### Response:')+13:]
             
             # open the schema file
-            with open(f'data/schemas/{project_name}/{schema}', 'r') as f:
+            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{schema}', 'r') as f:
                 data = json.load(f)
                 
             # get the precomputed translation
@@ -133,7 +133,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
                 # prompt = ...
                 continue
             
-            syntactically_validated_members.append([parsed_fragment, schema, class_, fragment_, project_name])
+            syntactically_validated_members.append([parsed_fragment, schema, class_, fragment_, args])
             
             max_attempts = 5
     
@@ -281,7 +281,7 @@ def main(args):
     #     tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir)
     #     model = AutoModelForCausalLM.from_pretrained("deepseek-ai/deepseek-coder-33b-instruct", cache_dir=args.cache_dir, device_map='auto', **kwargs)
 
-    schemas = os.listdir(f'data/schemas/{args.project_name}')
+    schemas = os.listdir(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}')
 
     traversal = {}
     with open(f'data/dependencies/{args.project_name}/traversal.json', 'r') as f:
@@ -299,7 +299,7 @@ def main(args):
             continue
         SCHEMA_BREAK_PASSED = True
 
-        path_ = f'data/schemas/{args.project_name}/{schema}'
+        path_ = f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{schema}'
         with open(path_, 'r') as f:
             data = json.load(f)
 
@@ -641,6 +641,8 @@ if __name__ == '__main__':
     args.use_cuda = False
     args.include_call_graph = True
     args.dump_syntactically_validated_fragments = False
+    args.model_name = "deepseek-coder-33b-instruct"
+    args.prompt_type = "body"
     
     SCHEMA_BREAK = f'.{args.schema}_' if args.schema else None
     CLASS_BREAK = args.class_
