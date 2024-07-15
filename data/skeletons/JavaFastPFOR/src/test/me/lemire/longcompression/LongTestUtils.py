@@ -35,23 +35,23 @@ class LongTestUtils:
         pass
 
     @staticmethod
-    def _uncompress(
+    def _uncompress1(
         codec: ByteLongCODEC, data: typing.List[int], len_: int
     ) -> typing.List[int]:
         pass
 
     @staticmethod
-    def _compress(codec: ByteLongCODEC, data: typing.List[int]) -> typing.List[int]:
+    def _compress0(codec: ByteLongCODEC, data: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod
-    def _uncompress(
+    def _uncompress0(
         codec: LongCODEC, data: typing.List[int], len_: int
     ) -> typing.List[int]:
         pass
 
     @staticmethod
-    def _compress(codec: LongCODEC, data: typing.List[int]) -> typing.List[int]:
+    def _compress1(codec: LongCODEC, data: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod
@@ -64,46 +64,6 @@ class LongTestUtils:
 
     @staticmethod
     def _dumpIntArray(data: typing.List[int], label: str) -> None:
-        pass
-
-    @staticmethod
-    def longToBinaryWithLeading() -> str:
-        pass
-
-    @staticmethod
-    def _uncompressHeadless() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def _compressHeadless() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def _uncompress() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def _compress() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def _uncompress() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def _compress() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def assertSymmetry() -> None:
-        pass
-
-    @staticmethod
-    def _dumpIntArrayAsHex() -> None:
-        pass
-
-    @staticmethod
-    def _dumpIntArray() -> None:
         pass
 
     # Class Methods End

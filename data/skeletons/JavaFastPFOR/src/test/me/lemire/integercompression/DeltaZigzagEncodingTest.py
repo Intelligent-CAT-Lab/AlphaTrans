@@ -21,9 +21,6 @@ class SpotChecker:
     def check(self, value: int) -> None:
         pass
 
-    def check(self) -> None:
-        pass
-
     # Class Methods End
 
 
@@ -66,37 +63,6 @@ class DeltaZigzagEncodingTest(unittest.TestCase):
 
     @staticmethod
     def _zigzagEncode(e: Encoder, value: int) -> int:
-        pass
-
-    def checkSpots(self) -> None:
-        pass
-
-    def checkDecodeSimple(self) -> None:
-        pass
-
-    def checkEncodeSimple(self) -> None:
-        pass
-
-    def checkZigzagDecoder(self) -> None:
-        pass
-
-    def checkZigzagEncode(self) -> None:
-        pass
-
-    @staticmethod
-    def _checkDecode() -> None:
-        pass
-
-    @staticmethod
-    def _checkEncode() -> None:
-        pass
-
-    @staticmethod
-    def _zigzagDecode() -> int:
-        pass
-
-    @staticmethod
-    def _zigzagEncode() -> int:
         pass
 
     # Class Methods End

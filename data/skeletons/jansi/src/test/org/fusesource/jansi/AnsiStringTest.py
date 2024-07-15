@@ -18,7 +18,4 @@ class AnsiStringTest(unittest.TestCase):
     def testCursorPosition(self) -> None:
         pass
 
-    def testCursorPosition(self) -> None:
-        pass
-
     # Class Methods End

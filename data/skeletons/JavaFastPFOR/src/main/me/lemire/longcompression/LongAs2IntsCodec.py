@@ -24,7 +24,7 @@ class LongAs2IntsCodec(LongCODEC):
     # Class Fields End
 
     # Class Methods Begin
-    def uncompress(
+    def uncompress1(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -34,7 +34,7 @@ class LongAs2IntsCodec(LongCODEC):
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -51,19 +51,6 @@ class LongAs2IntsCodec(LongCODEC):
     def __init__(
         self, highPartsCodec: IntegerCODEC, lowPartsCodec: IntegerCODEC
     ) -> None:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    @staticmethod
-    def LongAs2IntsCodec1() -> LongAs2IntsCodec:
-        pass
-
-    def __init__(self) -> None:
         pass
 
     # Class Methods End

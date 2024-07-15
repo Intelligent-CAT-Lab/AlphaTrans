@@ -22,7 +22,7 @@ class XorBinaryPacking(IntegratedIntegerCODEC):
     def toString(self) -> str:
         pass
 
-    def uncompress(
+    def uncompress0(
         self,
         inBuf: typing.List[int],
         inPos: IntWrapper,
@@ -32,7 +32,7 @@ class XorBinaryPacking(IntegratedIntegerCODEC):
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         inBuf: typing.List[int],
         inPos: IntWrapper,
@@ -70,27 +70,6 @@ class XorBinaryPacking(IntegratedIntegerCODEC):
     def __xorMaxBits(
         buf: typing.List[int], offset: int, length: int, context: int
     ) -> int:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    @staticmethod
-    def __xorUnpack() -> int:
-        pass
-
-    @staticmethod
-    def __xorPack() -> int:
-        pass
-
-    @staticmethod
-    def __xorMaxBits() -> int:
         pass
 
     # Class Methods End

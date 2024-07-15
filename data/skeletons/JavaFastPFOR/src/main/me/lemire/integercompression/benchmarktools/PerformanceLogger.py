@@ -26,18 +26,6 @@ class Timer:
     def __init__(self) -> None:
         pass
 
-    def getDuration(self) -> int:
-        pass
-
-    def end(self) -> int:
-        pass
-
-    def start(self) -> None:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End
 
 
@@ -74,10 +62,6 @@ class PerformanceLogger:
         pass
 
     def addOriginalSize(self, value: int) -> int:
-        pass
-
-    @staticmethod
-    def __getMiS() -> float:
         pass
 
     # Class Methods End

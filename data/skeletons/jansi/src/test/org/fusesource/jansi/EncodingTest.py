@@ -25,10 +25,4 @@ class EncodingTest(unittest.TestCase):
     def testEncoding8859(self) -> None:
         pass
 
-    def testEncodingUtf8(self) -> None:
-        pass
-
-    def testEncoding8859(self) -> None:
-        pass
-
     # Class Methods End

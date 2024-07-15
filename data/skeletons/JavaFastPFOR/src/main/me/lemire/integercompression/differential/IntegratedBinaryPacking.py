@@ -47,7 +47,7 @@ class IntegratedBinaryPacking(IntegratedIntegerCODEC, SkippableIntegratedInteger
     def toString(self) -> str:
         pass
 
-    def uncompress(
+    def uncompress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -57,7 +57,7 @@ class IntegratedBinaryPacking(IntegratedIntegerCODEC, SkippableIntegratedInteger
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -65,21 +65,6 @@ class IntegratedBinaryPacking(IntegratedIntegerCODEC, SkippableIntegratedInteger
         out: typing.List[int],
         outpos: IntWrapper,
     ) -> None:
-        pass
-
-    def headlessUncompress(self) -> None:
-        pass
-
-    def headlessCompress(self) -> None:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def compress(self) -> None:
         pass
 
     # Class Methods End

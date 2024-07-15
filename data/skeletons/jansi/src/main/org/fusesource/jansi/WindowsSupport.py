@@ -21,12 +21,4 @@ class WindowsSupport:
     def getLastErrorMessage() -> str:
         pass
 
-    @staticmethod
-    def getErrorMessage() -> str:
-        pass
-
-    @staticmethod
-    def getLastErrorMessage() -> str:
-        pass
-
     # Class Methods End

@@ -18,7 +18,7 @@ class LongJustCopy(LongCODEC, SkippableLongCODEC):
     # Class Fields End
 
     # Class Methods Begin
-    def compress(
+    def compress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -42,7 +42,7 @@ class LongJustCopy(LongCODEC, SkippableLongCODEC):
     def toString(self) -> str:
         pass
 
-    def uncompress(
+    def uncompress1(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -60,21 +60,6 @@ class LongJustCopy(LongCODEC, SkippableLongCODEC):
         out: typing.List[int],
         outpos: IntWrapper,
     ) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    def headlessUncompress(self) -> None:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def headlessCompress(self) -> None:
         pass
 
     # Class Methods End

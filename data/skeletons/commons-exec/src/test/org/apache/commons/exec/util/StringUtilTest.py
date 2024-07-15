@@ -26,16 +26,4 @@ class StringUtilTest(unittest.TestCase):
     def testDefaultStringSubstitution(self) -> None:
         pass
 
-    def testNoStringSubstitution(self) -> None:
-        pass
-
-    def testIncompleteSubstitution(self) -> None:
-        pass
-
-    def testErroneousTemplate(self) -> None:
-        pass
-
-    def testDefaultStringSubstitution(self) -> None:
-        pass
-
     # Class Methods End

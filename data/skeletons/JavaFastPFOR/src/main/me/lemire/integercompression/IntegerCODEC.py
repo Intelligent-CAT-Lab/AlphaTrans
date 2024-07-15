@@ -17,7 +17,7 @@ class IntegerCODEC(ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def uncompress(
+    def uncompress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -27,7 +27,7 @@ class IntegerCODEC(ABC):
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,

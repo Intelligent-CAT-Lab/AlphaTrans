@@ -45,12 +45,6 @@ class CONSOLE_SCREEN_BUFFER_INFO:
     def windowWidth(self) -> int:
         pass
 
-    def windowHeight(self) -> int:
-        pass
-
-    def windowWidth(self) -> int:
-        pass
-
     @staticmethod
     def __init() -> None:
         pass
@@ -67,9 +61,6 @@ class COORD:
     # Class Fields End
 
     # Class Methods Begin
-    def copy(self) -> COORD:
-        pass
-
     def copy(self) -> COORD:
         pass
 
@@ -91,15 +82,6 @@ class SMALL_RECT:
     # Class Fields End
 
     # Class Methods Begin
-    def copy(self) -> SMALL_RECT:
-        pass
-
-    def height(self) -> int:
-        pass
-
-    def width(self) -> int:
-        pass
-
     def copy(self) -> SMALL_RECT:
         pass
 
@@ -186,9 +168,6 @@ class WINDOW_BUFFER_SIZE_RECORD:
     def toString(self) -> str:
         pass
 
-    def toString(self) -> str:
-        pass
-
     @staticmethod
     def __init() -> None:
         pass
@@ -228,9 +207,6 @@ class MOUSE_EVENT_RECORD:
     def toString(self) -> str:
         pass
 
-    def toString(self) -> str:
-        pass
-
     @staticmethod
     def __init() -> None:
         pass
@@ -260,9 +236,6 @@ class KEY_EVENT_RECORD:
     # Class Fields End
 
     # Class Methods Begin
-    def toString(self) -> str:
-        pass
-
     def toString(self) -> str:
         pass
 
@@ -317,22 +290,6 @@ class Kernel32:
     def readConsoleInputHelper(
         handle: int, count: int, peek: bool
     ) -> typing.List[INPUT_RECORD]:
-        pass
-
-    @staticmethod
-    def getErrorMessage() -> str:
-        pass
-
-    @staticmethod
-    def getLastErrorMessage() -> str:
-        pass
-
-    @staticmethod
-    def readConsoleKeyInput() -> typing.List[INPUT_RECORD]:
-        pass
-
-    @staticmethod
-    def readConsoleInputHelper() -> typing.List[INPUT_RECORD]:
         pass
 
     @staticmethod

@@ -64,40 +64,4 @@ class LongBasicTest(unittest.TestCase):
     def __testSpurious(c: LongCODEC) -> None:
         pass
 
-    def fastPfor128Test(self) -> None:
-        pass
-
-    def fastPforTest(self) -> None:
-        pass
-
-    def testUnsorted(self) -> None:
-        pass
-
-    def varyingLengthTest2(self) -> None:
-        pass
-
-    def varyingLengthTest(self) -> None:
-        pass
-
-    def saulTest(self) -> None:
-        pass
-
-    def __testUnsorted3(self) -> None:
-        pass
-
-    def __testUnsorted2(self) -> None:
-        pass
-
-    @staticmethod
-    def __testCodec() -> None:
-        pass
-
-    @staticmethod
-    def __testZeroInZeroOut() -> None:
-        pass
-
-    @staticmethod
-    def __testSpurious() -> None:
-        pass
-
     # Class Methods End

@@ -46,16 +46,4 @@ class SkippableComposition(SkippableIntegerCODEC):
     def __init__(self, f1: SkippableIntegerCODEC, f2: SkippableIntegerCODEC) -> None:
         pass
 
-    def toString(self) -> str:
-        pass
-
-    def headlessUncompress(self) -> None:
-        pass
-
-    def headlessCompress(self) -> None:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

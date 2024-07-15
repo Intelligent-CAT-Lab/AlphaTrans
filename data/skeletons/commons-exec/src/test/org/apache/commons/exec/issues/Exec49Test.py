@@ -30,10 +30,4 @@ class Exec49Test(unittest.TestCase):
     def testExec49_1(self) -> None:
         pass
 
-    def testExec49_2(self) -> None:
-        pass
-
-    def testExec49_1(self) -> None:
-        pass
-
     # Class Methods End

@@ -24,8 +24,4 @@ class ThreadUtil:
     ) -> threading.Thread:
         pass
 
-    @staticmethod
-    def newThread() -> threading.Thread:
-        pass
-
     # Class Methods End

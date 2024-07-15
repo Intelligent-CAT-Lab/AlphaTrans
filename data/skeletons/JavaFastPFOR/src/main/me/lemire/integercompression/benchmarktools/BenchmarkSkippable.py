@@ -91,28 +91,4 @@ class BenchmarkSkippable:
     ) -> int:
         pass
 
-    @staticmethod
-    def main() -> None:
-        pass
-
-    @staticmethod
-    def __test() -> None:
-        pass
-
-    @staticmethod
-    def __generateTestData() -> typing.List[typing.List[int]]:
-        pass
-
-    @staticmethod
-    def __testCodec() -> None:
-        pass
-
-    @staticmethod
-    def __decompressFromSkipTable() -> int:
-        pass
-
-    @staticmethod
-    def __compressWithSkipTable() -> int:
-        pass
-
     # Class Methods End

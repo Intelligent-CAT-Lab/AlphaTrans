@@ -30,10 +30,4 @@ class Exec41Test(unittest.TestCase):
     def testExec41WithoutStreams(self) -> None:
         pass
 
-    def testExec41WithStreams(self) -> None:
-        pass
-
-    def testExec41WithoutStreams(self) -> None:
-        pass
-
     # Class Methods End

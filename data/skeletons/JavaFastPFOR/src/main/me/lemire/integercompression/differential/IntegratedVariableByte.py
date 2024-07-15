@@ -47,7 +47,7 @@ class IntegratedVariableByte(
     def toString(self) -> str:
         pass
 
-    def uncompress(
+    def uncompress1(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -57,7 +57,7 @@ class IntegratedVariableByte(
     ) -> None:
         pass
 
-    def uncompress(
+    def uncompress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -67,7 +67,7 @@ class IntegratedVariableByte(
     ) -> None:
         pass
 
-    def compress(
+    def compress1(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -77,7 +77,7 @@ class IntegratedVariableByte(
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -96,38 +96,6 @@ class IntegratedVariableByte(
 
     @staticmethod
     def __extract7bits(i: int, val: int) -> int:
-        pass
-
-    def _makeBuffer(self) -> typing.Union[bytearray, memoryview]:
-        pass
-
-    def headlessUncompress(self) -> None:
-        pass
-
-    def headlessCompress(self) -> None:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    @staticmethod
-    def __extract7bitsmaskless() -> int:
-        pass
-
-    @staticmethod
-    def __extract7bits() -> int:
         pass
 
     # Class Methods End

@@ -30,16 +30,4 @@ class BenchmarkBitPacking:
     def __test(verbose: bool) -> None:
         pass
 
-    @staticmethod
-    def main() -> None:
-        pass
-
-    @staticmethod
-    def __testWithDeltas() -> None:
-        pass
-
-    @staticmethod
-    def __test() -> None:
-        pass
-
     # Class Methods End

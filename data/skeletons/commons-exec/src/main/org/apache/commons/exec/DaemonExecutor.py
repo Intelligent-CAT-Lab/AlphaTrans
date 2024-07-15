@@ -21,9 +21,6 @@ class Builder:
     def get(self) -> DefaultExecutor:
         pass
 
-    def get(self) -> DefaultExecutor:
-        pass
-
     # Class Methods End
 
 
@@ -46,16 +43,6 @@ class DaemonExecutor(DefaultExecutor):
         executeStreamHandler: ExecuteStreamHandler,
         workingDirectory: pathlib.Path,
     ) -> None:
-        pass
-
-    def _createThread(self) -> threading.Thread:
-        pass
-
-    @staticmethod
-    def builder() -> Builder:
-        pass
-
-    def __init__(self) -> None:
         pass
 
     # Class Methods End

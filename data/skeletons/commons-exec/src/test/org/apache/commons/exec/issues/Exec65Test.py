@@ -33,16 +33,4 @@ class Exec65Test(AbstractExecTest, unittest.TestCase):
     def testExec65WithSleepUsingShellScript(self) -> None:
         pass
 
-    def testExec65WitSleepUsingSleepCommandDirectly(self) -> None:
-        pass
-
-    def testExec65WithSudoUsingShellScript(self) -> None:
-        pass
-
-    def testExec65WithSleepUsingShellScriptAndJDKOnly(self) -> None:
-        pass
-
-    def testExec65WithSleepUsingShellScript(self) -> None:
-        pass
-
     # Class Methods End

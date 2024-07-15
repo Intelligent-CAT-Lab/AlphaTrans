@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 # Imports Begin
-import datetime
 import typing
 from typing import *
 import io
@@ -18,14 +17,10 @@ class AbstractFormatValidator(ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def _parse(
-        self, value: str, formatter: typing.Union[str, datetime.datetime]
-    ) -> typing.Any:
+    def _parse(self, value: str, formatter: Format) -> typing.Any:
         pass
 
-    def _format4(
-        self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]
-    ) -> str:
+    def _format4(self, value: typing.Any, formatter: Format) -> str:
         pass
 
     def format3(self, value: typing.Any, pattern: str, locale: typing.Any) -> str:
@@ -55,14 +50,10 @@ class AbstractFormatValidator(ABC):
     def __init__(self, strict: bool) -> None:
         pass
 
-    def _getFormat(
-        self, pattern: str, locale: typing.Any
-    ) -> typing.Union[str, datetime.datetime]:
+    def _getFormat(self, pattern: str, locale: typing.Any) -> Format:
         pass
 
-    def _processParsedValue(
-        self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]
-    ) -> typing.Any:
+    def _processParsedValue(self, value: typing.Any, formatter: Format) -> typing.Any:
         pass
 
     def isValid3(self, value: str, pattern: str, locale: typing.Any) -> bool:

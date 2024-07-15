@@ -374,7 +374,7 @@ class SynchronizedPooledObjectFactory:
 class TimerHolder:
 
     # Class Fields Begin
-    MIN_IDLE_TIMER: threading.Timer = None
+    MIN_IDLE_TIMER: Timer = None
     # Class Fields End
 
     # Class Methods Begin
@@ -493,7 +493,7 @@ class PoolUtils:
         pass
 
     @staticmethod
-    def __getMinIdleTimer() -> threading.Timer:
+    def __getMinIdleTimer() -> Timer:
         pass
 
     # Class Methods End

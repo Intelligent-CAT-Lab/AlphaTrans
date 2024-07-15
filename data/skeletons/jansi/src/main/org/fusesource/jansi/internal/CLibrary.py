@@ -77,10 +77,6 @@ class CLibrary:
         pass
 
     @staticmethod
-    def ioctl() -> int:
-        pass
-
-    @staticmethod
     def tcsetattr() -> int:
         pass
 

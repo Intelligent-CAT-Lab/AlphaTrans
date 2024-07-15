@@ -177,37 +177,4 @@ class AnsiProcessor:
     def __optionInt0(self, options: typing.List[typing.Any], index: int) -> int:
         pass
 
-    def _processChangeIconNameAndWindowTitle(self) -> None:
-        pass
-
-    def _processCursorRight(self) -> None:
-        pass
-
-    def _processCursorDownLine(self) -> None:
-        pass
-
-    def _processSetBackgroundColor0(self) -> None:
-        pass
-
-    def _processSetForegroundColor0(self) -> None:
-        pass
-
-    def _processCharsetSelect0(self) -> bool:
-        pass
-
-    def _processOperatingSystemCommand(self) -> bool:
-        pass
-
-    def _processEscapeCommand(self) -> bool:
-        pass
-
-    def _getNextOptionInt(self) -> int:
-        pass
-
-    def __optionInt1(self) -> int:
-        pass
-
-    def __optionInt0(self) -> int:
-        pass
-
     # Class Methods End

@@ -31,16 +31,4 @@ class AbstractExecTest(ABC):
     def _resolveTestScript0(self, baseName: str) -> pathlib.Path:
         pass
 
-    def _testNotSupportedForCurrentOperatingSystem(self) -> str:
-        pass
-
-    def _testIsBrokenForCurrentOperatingSystem(self) -> str:
-        pass
-
-    def _resolveTestScript1(self) -> pathlib.Path:
-        pass
-
-    def _resolveTestScript0(self) -> pathlib.Path:
-        pass
-
     # Class Methods End

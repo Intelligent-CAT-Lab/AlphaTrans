@@ -41,27 +41,4 @@ class EnvironmentUtils:
     def __parseEnvironmentVariable(keyAndValue: str) -> typing.List[typing.List[str]]:
         pass
 
-    @staticmethod
-    def toStrings() -> typing.List[typing.List[str]]:
-        pass
-
-    @staticmethod
-    def getProcEnvironment() -> typing.Dict[str, str]:
-        pass
-
-    @staticmethod
-    def addVariableToEnvironment() -> None:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
-    @staticmethod
-    def __toString() -> str:
-        pass
-
-    @staticmethod
-    def __parseEnvironmentVariable() -> typing.List[typing.List[str]]:
-        pass
-
     # Class Methods End

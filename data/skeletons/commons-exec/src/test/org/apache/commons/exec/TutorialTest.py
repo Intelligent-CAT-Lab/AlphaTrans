@@ -35,15 +35,6 @@ class PrintResultHandler(DefaultExecuteResultHandler):
     ) -> None:
         pass
 
-    def onProcessFailed(self) -> None:
-        pass
-
-    def onProcessComplete(self) -> None:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End
 
 
@@ -64,12 +55,6 @@ class TutorialTest(unittest.TestCase):
         printJobTimeout: datetime.timedelta,
         printInBackground: bool,
     ) -> PrintResultHandler:
-        pass
-
-    def testTutorialExample(self) -> None:
-        pass
-
-    def print_(self) -> PrintResultHandler:
         pass
 
     # Class Methods End

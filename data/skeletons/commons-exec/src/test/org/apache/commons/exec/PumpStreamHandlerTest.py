@@ -17,7 +17,4 @@ class PumpStreamHandlerTest(unittest.TestCase):
     def testSetStopTimeout(self) -> None:
         pass
 
-    def testSetStopTimeout(self) -> None:
-        pass
-
     # Class Methods End

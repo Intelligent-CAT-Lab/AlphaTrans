@@ -19,9 +19,7 @@ class CalendarValidator(AbstractCalendarValidator):
     # Class Fields End
 
     # Class Methods Begin
-    def _processParsedValue(
-        self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]
-    ) -> typing.Any:
+    def _processParsedValue(self, value: typing.Any, formatter: Format) -> typing.Any:
         pass
 
     def compareYears(

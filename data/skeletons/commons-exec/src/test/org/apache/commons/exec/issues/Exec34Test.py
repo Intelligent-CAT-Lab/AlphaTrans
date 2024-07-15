@@ -31,10 +31,4 @@ class Exec34Test(unittest.TestCase):
     def testExec34_1(self) -> None:
         pass
 
-    def testExec34_2(self) -> None:
-        pass
-
-    def testExec34_1(self) -> None:
-        pass
-
     # Class Methods End

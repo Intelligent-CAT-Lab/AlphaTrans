@@ -26,12 +26,4 @@ class InstallUninstallTest:
     def __print_(stream: typing.IO, text: str) -> None:
         pass
 
-    @staticmethod
-    def main() -> None:
-        pass
-
-    @staticmethod
-    def __print_() -> None:
-        pass
-
     # Class Methods End

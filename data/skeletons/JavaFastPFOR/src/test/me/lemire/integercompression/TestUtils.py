@@ -39,23 +39,23 @@ class TestUtils(unittest.TestCase):
         pass
 
     @staticmethod
-    def _uncompress(
+    def _uncompress1(
         codec: ByteIntegerCODEC, data: typing.List[int], len_: int
     ) -> typing.List[int]:
         pass
 
     @staticmethod
-    def _compress(codec: ByteIntegerCODEC, data: typing.List[int]) -> typing.List[int]:
+    def _compress0(codec: ByteIntegerCODEC, data: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod
-    def _uncompress(
+    def _uncompress0(
         codec: IntegerCODEC, data: typing.List[int], len_: int
     ) -> typing.List[int]:
         pass
 
     @staticmethod
-    def compress(codec: IntegerCODEC, data: typing.List[int]) -> typing.List[int]:
+    def compress1(codec: IntegerCODEC, data: typing.List[int]) -> typing.List[int]:
         pass
 
     @staticmethod
@@ -68,48 +68,6 @@ class TestUtils(unittest.TestCase):
 
     @staticmethod
     def _dumpIntArray(data: typing.List[int], label: str) -> None:
-        pass
-
-    @staticmethod
-    def _uncompressHeadless() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def _compressHeadless() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def _uncompress() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def _compress() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def _uncompress() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def compress() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def assertSymmetry() -> None:
-        pass
-
-    @staticmethod
-    def _dumpIntArrayAsHex() -> None:
-        pass
-
-    @staticmethod
-    def _dumpIntArray() -> None:
-        pass
-
-    def testPackingw(self) -> None:
-        pass
-
-    def testPacking(self) -> None:
         pass
 
     # Class Methods End

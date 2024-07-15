@@ -31,14 +31,4 @@ class UniformDataGenerator:
     def generateUniformHash(self, N: int, Max: int) -> typing.List[int]:
         pass
 
-    def generateUniform(self) -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def negate() -> typing.List[int]:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

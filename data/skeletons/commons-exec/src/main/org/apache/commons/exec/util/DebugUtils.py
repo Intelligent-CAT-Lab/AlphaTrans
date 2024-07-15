@@ -26,16 +26,4 @@ class DebugUtils:
     def handleException(msg: str, e: Exception) -> None:
         pass
 
-    @staticmethod
-    def isLenientEnabled() -> bool:
-        pass
-
-    @staticmethod
-    def isDebugEnabled() -> bool:
-        pass
-
-    @staticmethod
-    def handleException() -> None:
-        pass
-
     # Class Methods End

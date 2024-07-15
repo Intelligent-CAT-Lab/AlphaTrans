@@ -27,15 +27,6 @@ class Argument:
     def __init__(self, value: str, handleQuoting: bool) -> None:
         pass
 
-    def __isHandleQuoting(self) -> bool:
-        pass
-
-    def __getValue(self) -> str:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End
 
 
@@ -115,66 +106,6 @@ class CommandLine:
 
     @staticmethod
     def __translateCommandline(toProcess: str) -> typing.List[typing.List[str]]:
-        pass
-
-    def toStrings(self) -> typing.List[typing.List[str]]:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def setSubstitutionMap(self) -> None:
-        pass
-
-    def isFile(self) -> bool:
-        pass
-
-    def getSubstitutionMap(self) -> typing.Dict[str, typing.Any]:
-        pass
-
-    def getExecutable(self) -> str:
-        pass
-
-    def getArguments(self) -> typing.List[typing.List[str]]:
-        pass
-
-    def addArguments3(self) -> CommandLine:
-        pass
-
-    def addArguments2(self) -> CommandLine:
-        pass
-
-    def addArguments1(self) -> CommandLine:
-        pass
-
-    def addArguments0(self) -> CommandLine:
-        pass
-
-    def addArgument1(self) -> CommandLine:
-        pass
-
-    def addArgument0(self) -> CommandLine:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
-    @staticmethod
-    def parse1() -> CommandLine:
-        pass
-
-    @staticmethod
-    def parse0() -> CommandLine:
-        pass
-
-    def __toCleanExecutable(self) -> str:
-        pass
-
-    def __expandArgument(self) -> str:
-        pass
-
-    @staticmethod
-    def __translateCommandline() -> typing.List[typing.List[str]]:
         pass
 
     # Class Methods End

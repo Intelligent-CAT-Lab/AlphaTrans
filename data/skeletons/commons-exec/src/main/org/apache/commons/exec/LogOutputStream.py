@@ -22,12 +22,6 @@ class ByteArrayOutputStreamX:
     def __init__(self, size: int) -> None:
         pass
 
-    def toString(self) -> str:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End
 
 
@@ -69,30 +63,6 @@ class LogOutputStream(ABC):
         pass
 
     def _processLine1(self, line: str, logLevel: int) -> None:
-        pass
-
-    def write1(self) -> None:
-        pass
-
-    def write0(self) -> None:
-        pass
-
-    def _processLine0(self) -> None:
-        pass
-
-    def _processBuffer(self) -> None:
-        pass
-
-    def getMessageLevel(self) -> int:
-        pass
-
-    def flush(self) -> None:
-        pass
-
-    def close(self) -> None:
-        pass
-
-    def __init__(self) -> None:
         pass
 
     # Class Methods End

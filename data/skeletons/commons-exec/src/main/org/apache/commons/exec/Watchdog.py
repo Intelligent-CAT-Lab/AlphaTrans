@@ -29,15 +29,6 @@ class Builder:
     def setThreadFactory(self, threadFactory: threading.Thread) -> Builder:
         pass
 
-    def setTimeout(self) -> Builder:
-        pass
-
-    def setThreadFactory(self) -> Builder:
-        pass
-
-    def get(self) -> Watchdog:
-        pass
-
     # Class Methods End
 
 
@@ -80,35 +71,6 @@ class Watchdog(typing.Callable):
     def __init__(
         self, threadFactory: threading.Thread, timeout: datetime.timedelta
     ) -> None:
-        pass
-
-    def stop(self) -> None:
-        pass
-
-    def start(self) -> None:
-        pass
-
-    def run(self) -> None:
-        pass
-
-    def removeTimeoutObserver(self) -> None:
-        pass
-
-    def _fireTimeoutOccured(self) -> None:
-        pass
-
-    def addTimeoutObserver(self) -> None:
-        pass
-
-    @staticmethod
-    def Watchdog0() -> Watchdog:
-        pass
-
-    @staticmethod
-    def builder() -> Builder:
-        pass
-
-    def __init__(self) -> None:
         pass
 
     # Class Methods End

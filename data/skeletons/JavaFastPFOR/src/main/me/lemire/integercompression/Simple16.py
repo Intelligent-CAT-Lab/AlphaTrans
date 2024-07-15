@@ -26,7 +26,7 @@ class Simple16(IntegerCODEC, SkippableIntegerCODEC):
     def toString(self) -> str:
         pass
 
-    def uncompress(
+    def uncompress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -36,7 +36,7 @@ class Simple16(IntegerCODEC, SkippableIntegerCODEC):
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -100,37 +100,6 @@ class Simple16(IntegerCODEC, SkippableIntegerCODEC):
 
     @staticmethod
     def __shiftme(x: typing.List[typing.List[int]]) -> typing.List[typing.List[int]]:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    @staticmethod
-    def uncompress() -> None:
-        pass
-
-    def headlessUncompress(self) -> None:
-        pass
-
-    @staticmethod
-    def decompressblock() -> int:
-        pass
-
-    @staticmethod
-    def compressblock() -> int:
-        pass
-
-    def headlessCompress(self) -> None:
-        pass
-
-    @staticmethod
-    def __shiftme() -> typing.List[typing.List[int]]:
         pass
 
     # Class Methods End

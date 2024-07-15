@@ -25,10 +25,4 @@ class Exec57Test(AbstractExecTest, unittest.TestCase):
     def testExecutionOfBackgroundProcess(self) -> None:
         pass
 
-    def testExecutionOfDetachedProcess(self) -> None:
-        pass
-
-    def testExecutionOfBackgroundProcess(self) -> None:
-        pass
-
     # Class Methods End

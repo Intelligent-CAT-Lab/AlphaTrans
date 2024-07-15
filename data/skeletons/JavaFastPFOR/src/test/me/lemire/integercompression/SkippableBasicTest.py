@@ -42,13 +42,4 @@ class SkippableBasicTest(unittest.TestCase):
     def consistentTest(self) -> None:
         pass
 
-    def varyingLengthTest2(self) -> None:
-        pass
-
-    def varyingLengthTest(self) -> None:
-        pass
-
-    def consistentTest(self) -> None:
-        pass
-
     # Class Methods End

@@ -17,7 +17,4 @@ class JansiLoaderTest(unittest.TestCase):
     def testLoadJansi(self) -> None:
         pass
 
-    def testLoadJansi(self) -> None:
-        pass
-
     # Class Methods End

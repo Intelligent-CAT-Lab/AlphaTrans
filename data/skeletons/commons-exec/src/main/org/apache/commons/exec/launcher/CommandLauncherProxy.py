@@ -25,10 +25,4 @@ class CommandLauncherProxy(CommandLauncherImpl, ABC):
     def __init__(self, launcher: CommandLauncher) -> None:
         pass
 
-    def exec0(self) -> subprocess.Popen:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

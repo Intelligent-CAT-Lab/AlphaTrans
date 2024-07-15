@@ -15,13 +15,13 @@ class Delta:
 
     # Class Methods Begin
     @staticmethod
-    def fastinverseDelta(
+    def fastinverseDelta1(
         data: typing.List[int], start: int, length: int, init: int
     ) -> int:
         pass
 
     @staticmethod
-    def fastinverseDelta(data: typing.List[int]) -> None:
+    def fastinverseDelta0(data: typing.List[int]) -> None:
         pass
 
     @staticmethod
@@ -29,7 +29,7 @@ class Delta:
         pass
 
     @staticmethod
-    def delta(
+    def delta2(
         data: typing.List[int],
         start: int,
         length: int,
@@ -39,35 +39,11 @@ class Delta:
         pass
 
     @staticmethod
-    def delta(data: typing.List[int], start: int, length: int, init: int) -> int:
+    def delta1(data: typing.List[int], start: int, length: int, init: int) -> int:
         pass
 
     @staticmethod
-    def delta(data: typing.List[int]) -> None:
-        pass
-
-    @staticmethod
-    def fastinverseDelta() -> int:
-        pass
-
-    @staticmethod
-    def fastinverseDelta() -> None:
-        pass
-
-    @staticmethod
-    def inverseDelta() -> None:
-        pass
-
-    @staticmethod
-    def delta() -> int:
-        pass
-
-    @staticmethod
-    def delta() -> int:
-        pass
-
-    @staticmethod
-    def delta() -> None:
+    def delta0(data: typing.List[int]) -> None:
         pass
 
     # Class Methods End

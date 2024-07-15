@@ -92,28 +92,4 @@ class Benchmark:
     ) -> None:
         pass
 
-    @staticmethod
-    def testKamikaze() -> None:
-        pass
-
-    @staticmethod
-    def main() -> None:
-        pass
-
-    @staticmethod
-    def __test() -> None:
-        pass
-
-    @staticmethod
-    def __generateTestData() -> typing.List[typing.List[int]]:
-        pass
-
-    @staticmethod
-    def __testByteCodec() -> None:
-        pass
-
-    @staticmethod
-    def __testCodec() -> None:
-        pass
-
     # Class Methods End

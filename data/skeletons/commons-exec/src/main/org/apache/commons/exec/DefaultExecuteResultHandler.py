@@ -47,31 +47,4 @@ class DefaultExecuteResultHandler(ExecuteResultHandler):
     def __init__(self) -> None:
         pass
 
-    def waitFor2(self) -> None:
-        pass
-
-    def waitFor1(self) -> None:
-        pass
-
-    def waitFor0(self) -> None:
-        pass
-
-    def onProcessFailed(self) -> None:
-        pass
-
-    def onProcessComplete(self) -> None:
-        pass
-
-    def hasResult(self) -> bool:
-        pass
-
-    def getExitValue(self) -> int:
-        pass
-
-    def getException(self) -> ExecuteException:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

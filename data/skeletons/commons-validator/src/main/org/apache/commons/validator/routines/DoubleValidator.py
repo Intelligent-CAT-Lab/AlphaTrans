@@ -2,7 +2,6 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
-import datetime
 import typing
 from typing import *
 import numbers
@@ -19,9 +18,7 @@ class DoubleValidator(AbstractNumberValidator):
     # Class Fields End
 
     # Class Methods Begin
-    def _processParsedValue(
-        self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]
-    ) -> typing.Any:
+    def _processParsedValue(self, value: typing.Any, formatter: Format) -> typing.Any:
         pass
 
     def maxValue1(self, value: float, max_: float) -> bool:

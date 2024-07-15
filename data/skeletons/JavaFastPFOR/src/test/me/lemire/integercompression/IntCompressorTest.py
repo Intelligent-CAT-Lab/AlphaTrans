@@ -36,13 +36,4 @@ class IntCompressorTest(unittest.TestCase):
     def basicTest(self) -> None:
         pass
 
-    def basicIntegratedTest(self) -> None:
-        pass
-
-    def superSimpleExample(self) -> None:
-        pass
-
-    def basicTest(self) -> None:
-        pass
-
     # Class Methods End

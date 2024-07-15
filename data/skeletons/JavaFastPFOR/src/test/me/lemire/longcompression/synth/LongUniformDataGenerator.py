@@ -29,15 +29,4 @@ class LongUniformDataGenerator:
     def generateUniformHash(self, N: int, Max: int) -> typing.List[int]:
         pass
 
-    @staticmethod
-    def negate() -> typing.List[int]:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
-    @staticmethod
-    def __saturatedCast() -> int:
-        pass
-
     # Class Methods End

@@ -26,10 +26,4 @@ class Java13CommandLauncher(CommandLauncherImpl):
     def __init__(self) -> None:
         pass
 
-    def exec1(self) -> subprocess.Popen:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

@@ -48,16 +48,4 @@ class Simple16:
     ) -> int:
         pass
 
-    @staticmethod
-    def s16Decompress() -> int:
-        pass
-
-    @staticmethod
-    def s16Compress() -> int:
-        pass
-
-    @staticmethod
-    def __readBitsForS16() -> int:
-        pass
-
     # Class Methods End

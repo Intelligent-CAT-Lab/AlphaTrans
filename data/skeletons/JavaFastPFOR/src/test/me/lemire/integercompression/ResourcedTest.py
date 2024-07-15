@@ -37,7 +37,4 @@ class ResourcedTest(unittest.TestCase):
     def IntCompressorTest(self) -> None:
         pass
 
-    def IntCompressorTest(self) -> None:
-        pass
-
     # Class Methods End

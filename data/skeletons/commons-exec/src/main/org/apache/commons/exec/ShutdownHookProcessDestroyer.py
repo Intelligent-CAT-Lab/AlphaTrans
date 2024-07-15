@@ -26,15 +26,6 @@ class ProcessDestroyerThread(threading.Thread):
     def __init__(self) -> None:
         pass
 
-    def setShouldDestroy(self) -> None:
-        pass
-
-    def run(self) -> None:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End
 
 
@@ -64,33 +55,6 @@ class ShutdownHookProcessDestroyer(typing.Callable, ProcessDestroyer):
         pass
 
     def isAddedAsShutdownHook(self) -> bool:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
-    def __removeShutdownHook(self) -> None:
-        pass
-
-    def __addShutdownHook(self) -> None:
-        pass
-
-    def size(self) -> int:
-        pass
-
-    def run(self) -> None:
-        pass
-
-    def remove(self) -> bool:
-        pass
-
-    def isEmpty(self) -> bool:
-        pass
-
-    def isAddedAsShutdownHook(self) -> bool:
-        pass
-
-    def add(self) -> bool:
         pass
 
     def __init__(self) -> None:

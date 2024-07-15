@@ -24,7 +24,7 @@ class DeltaZigzagBinaryPacking(IntegerCODEC):
     def toString(self) -> str:
         pass
 
-    def uncompress(
+    def uncompress0(
         self,
         inBuf: typing.List[int],
         inPos: IntWrapper,
@@ -34,7 +34,7 @@ class DeltaZigzagBinaryPacking(IntegerCODEC):
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         inBuf: typing.List[int],
         inPos: IntWrapper,
@@ -62,23 +62,6 @@ class DeltaZigzagBinaryPacking(IntegerCODEC):
         outOff: int,
         validBits: int,
     ) -> int:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    @staticmethod
-    def __unpack() -> int:
-        pass
-
-    @staticmethod
-    def __pack() -> int:
         pass
 
     # Class Methods End

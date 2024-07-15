@@ -16,8 +16,4 @@ class LongUtil:
     def _longToBinaryWithLeading(l: int) -> str:
         pass
 
-    @staticmethod
-    def _longToBinaryWithLeading() -> str:
-        pass
-
     # Class Methods End
