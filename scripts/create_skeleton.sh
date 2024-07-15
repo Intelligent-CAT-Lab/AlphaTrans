@@ -7,7 +7,7 @@ for model in 'deepseek-coder-33b-instruct' 'llama-3-70b-instruct';
 do
     for type in 'body' 'signature';
     do
-        for project in 'commons-cli' 'commons-codec' 'commons-csv' 'commons-validator' 'commons-fileupload' 'commons-pool' 'commons-graph' 'commons-exec' 'jansi';
+        for project in 'commons-cli' 'commons-codec' 'commons-csv' 'commons-validator' 'commons-fileupload' 'commons-pool' 'commons-graph' 'commons-exec' 'jansi' 'JavaFastPFOR';
         do
             echo "creating skeleton for $project"
             export PYTHONPATH=$pwd/data/skeletons/$project
