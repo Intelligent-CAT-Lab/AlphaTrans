@@ -297,7 +297,7 @@
                         "                                        data[k].length);\n",
                         "                                //\n",
                         "                                bef = System.nanoTime() / 1000;\n",
-                        "                                Delta.delta(backupdata);\n",
+                        "                                Delta.delta0(backupdata);\n",
                         "                                ArrayList<int[]> dataout = new ArrayList<int[]>(\n",
                         "                                        data[k].length / 128);\n",
                         "                                for (int K = 0; K < data[k].length; K += 128) {\n",
@@ -325,7 +325,7 @@
                         "                                        PForDelta.decompressOneBlock(tmpbuf,\n",
                         "                                                compbuf, 128);\n",
                         "                                        tmpbuf[0] += deltaoffset;\n",
-                        "                                        Delta.fastinverseDelta(tmpbuf);\n",
+                        "                                        Delta.fastinverseDelta0(tmpbuf);\n",
                         "                                        deltaoffset = tmpbuf[127];\n",
                         "                                        datauncomp.add(tmpbuf);\n",
                         "                                }\n",
@@ -383,7 +383,7 @@
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.differential.Delta",
                             "Delta",
-                            "24-28:delta"
+                            "24-28:delta0"
                         ],
                         [
                             "JavaFastPFOR.src.main.com.kamikaze.pfordelta.PForDelta",
@@ -398,10 +398,10 @@
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.differential.Delta",
                             "Delta",
-                            "97-113:fastinverseDelta"
+                            "97-113:fastinverseDelta0"
                         ]
                     ],
-                    "is_overload": true,
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def testKamikaze(data: typing.List[typing.List[int]], repeat: int, verbose: bool) -> None:\n",
@@ -477,7 +477,7 @@
                             "482-690:test"
                         ]
                     ],
-                    "is_overload": true,
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def main(args: typing.List[typing.List[str]]) -> None:\n",
@@ -859,7 +859,7 @@
                             "DeltaZigzagVariableByte"
                         ]
                     ],
-                    "is_overload": true,
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def __test(csvLog: typing.Union[io.TextIOWrapper, io.StringIO], N: int, nbr: int, repeat: int) -> None:\n",
@@ -917,7 +917,7 @@
                             "69-73:generateClustered"
                         ]
                     ],
-                    "is_overload": true,
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def __generateTestData(dataGen: ClusteredDataGenerator, N: int, nbr: int, sparsity: int) -> typing.List[typing.List[int]]:\n",
@@ -979,9 +979,9 @@
                         "                                inpos.set(1);\n",
                         "                                outpos.set(0);\n",
                         "                                if (!(c instanceof IntegratedByteIntegerCODEC)) {\n",
-                        "                                        Delta.delta(backupdata);\n",
+                        "                                        Delta.delta0(backupdata);\n",
                         "                                }\n",
-                        "                                c.compress(backupdata, inpos, backupdata.length\n",
+                        "                                c.compress1(backupdata, inpos, backupdata.length\n",
                         "                                        - inpos.get(), compressBuffer, outpos);\n",
                         "                                long afterCompress = System.nanoTime() / 1000;\n",
                         "\n",
@@ -995,11 +995,11 @@
                         "                                inpos.set(0);\n",
                         "                                outpos.set(1);\n",
                         "                                decompressBuffer[0] = backupdata[0];\n",
-                        "                                c.uncompress(compressBuffer, inpos,\n",
+                        "                                c.uncompress1(compressBuffer, inpos,\n",
                         "                                        thiscompsize - 1, decompressBuffer,\n",
                         "                                        outpos);\n",
                         "                                if (!(c instanceof IntegratedByteIntegerCODEC))\n",
-                        "                                        Delta.fastinverseDelta(decompressBuffer);\n",
+                        "                                        Delta.fastinverseDelta0(decompressBuffer);\n",
                         "                                long afterDecompress = System.nanoTime() / 1000;\n",
                         "\n",
                         "                                // measure time of extraction (uncompression).\n",
@@ -1085,25 +1085,25 @@
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.differential.Delta",
                             "Delta",
-                            "24-28:delta"
+                            "24-28:delta0"
                         ],
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.ByteIntegerCODEC",
                             "ByteIntegerCODEC",
-                            "36-38:compress"
+                            "36-38:compress1"
                         ],
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.ByteIntegerCODEC",
                             "ByteIntegerCODEC",
-                            "57-59:uncompress"
+                            "57-59:uncompress1"
                         ],
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.differential.Delta",
                             "Delta",
-                            "97-113:fastinverseDelta"
+                            "97-113:fastinverseDelta0"
                         ]
                     ],
-                    "is_overload": true,
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def __testByteCodec(csvLog: typing.Union[io.TextIOWrapper, io.StringIO], sparsity: int, c: ByteIntegerCODEC, data: typing.List[typing.List[int]], repeat: int, verbose: bool) -> None:\n",
@@ -1167,9 +1167,9 @@
                         "                                inpos.set(1);\n",
                         "                                outpos.set(0);\n",
                         "                                if (!(c instanceof IntegratedIntegerCODEC)) {\n",
-                        "                                        Delta.delta(backupdata);\n",
+                        "                                        Delta.delta0(backupdata);\n",
                         "                                }\n",
-                        "                                c.compress(backupdata, inpos, backupdata.length\n",
+                        "                                c.compress0(backupdata, inpos, backupdata.length\n",
                         "                                        - inpos.get(), compressBuffer, outpos);\n",
                         "                                long afterCompress = System.nanoTime() / 1000;\n",
                         "\n",
@@ -1183,11 +1183,11 @@
                         "                                inpos.set(0);\n",
                         "                                outpos.set(1);\n",
                         "                                decompressBuffer[0] = backupdata[0];\n",
-                        "                                c.uncompress(compressBuffer, inpos,\n",
+                        "                                c.uncompress0(compressBuffer, inpos,\n",
                         "                                        thiscompsize - 1, decompressBuffer,\n",
                         "                                        outpos);\n",
                         "                                if (!(c instanceof IntegratedIntegerCODEC))\n",
-                        "                                        Delta.fastinverseDelta(decompressBuffer);\n",
+                        "                                        Delta.fastinverseDelta0(decompressBuffer);\n",
                         "                                long afterDecompress = System.nanoTime() / 1000;\n",
                         "\n",
                         "                                // measure time of extraction (uncompression).\n",
@@ -1274,260 +1274,28 @@
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.differential.Delta",
                             "Delta",
-                            "24-28:delta"
+                            "24-28:delta0"
                         ],
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
                             "IntegerCODEC",
-                            "36-38:compress"
+                            "36-38:compress0"
                         ],
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
                             "IntegerCODEC",
-                            "57-59:uncompress"
+                            "57-59:uncompress0"
                         ],
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.differential.Delta",
                             "Delta",
-                            "97-113:fastinverseDelta"
+                            "97-113:fastinverseDelta0"
                         ]
                     ],
-                    "is_overload": true,
+                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def __testCodec(csvLog: typing.Union[io.TextIOWrapper, io.StringIO], sparsity: int, c: IntegerCODEC, data: typing.List[typing.List[int]], repeat: int, verbose: bool) -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "350-352:testKamikaze": {
-                    "start": 350,
-                    "end": 352,
-                    "body": [
-                        "        public static void testKamikaze(int[][] data, int repeat,\n",
-                        "                boolean verbose) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public",
-                        "static"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testKamikaze(int[][], int, boolean)",
-                    "parameters": [],
-                    "calls": [],
-                    "is_overload": true,
-                    "partial_translation": [
-                        "    @staticmethod\n",
-                        "    def testKamikaze() -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "308-308:main": {
-                    "start": 308,
-                    "end": 308,
-                    "body": [
-                        "        public static void main(String args[]) throws FileNotFoundException  {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public",
-                        "static"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "main(String[])",
-                    "parameters": [],
-                    "calls": [],
-                    "is_overload": true,
-                    "partial_translation": [
-                        "    @staticmethod\n",
-                        "    def main() -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "482-482:test": {
-                    "start": 482,
-                    "end": 482,
-                    "body": [
-                        "        private static void test(PrintWriter csvLog, int N, int nbr, int repeat) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "static",
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "test(PrintWriter, int, int, int)",
-                    "parameters": [],
-                    "calls": [],
-                    "is_overload": true,
-                    "partial_translation": [
-                        "    @staticmethod\n",
-                        "    def __test() -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "459-461:generateTestData": {
-                    "start": 459,
-                    "end": 461,
-                    "body": [
-                        "        private static int[][] generateTestData(ClusteredDataGenerator dataGen,\n",
-                        "                int N, int nbr, int sparsity) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "static",
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "int[][]",
-                            "int[][]"
-                        ]
-                    ],
-                    "signature": "generateTestData(ClusteredDataGenerator, int, int, int)",
-                    "parameters": [],
-                    "calls": [],
-                    "is_overload": true,
-                    "partial_translation": [
-                        "    @staticmethod\n",
-                        "    def __generateTestData() -> typing.List[typing.List[int]]:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "194-196:testByteCodec": {
-                    "start": 194,
-                    "end": 196,
-                    "body": [
-                        "        private static void testByteCodec(PrintWriter csvLog, int sparsity,\n",
-                        "                ByteIntegerCODEC c, int[][] data, int repeat, boolean verbose) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "static",
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testByteCodec(PrintWriter, int, ByteIntegerCODEC, int[][], int, boolean)",
-                    "parameters": [],
-                    "calls": [],
-                    "is_overload": true,
-                    "partial_translation": [
-                        "    @staticmethod\n",
-                        "    def __testByteCodec() -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "70-72:testCodec": {
-                    "start": 70,
-                    "end": 72,
-                    "body": [
-                        "        private static void testCodec(PrintWriter csvLog, int sparsity,\n",
-                        "                IntegerCODEC c, int[][] data, int repeat, boolean verbose) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "static",
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testCodec(PrintWriter, int, IntegerCODEC, int[][], int, boolean)",
-                    "parameters": [],
-                    "calls": [],
-                    "is_overload": true,
-                    "partial_translation": [
-                        "    @staticmethod\n",
-                        "    def __testCodec() -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [],

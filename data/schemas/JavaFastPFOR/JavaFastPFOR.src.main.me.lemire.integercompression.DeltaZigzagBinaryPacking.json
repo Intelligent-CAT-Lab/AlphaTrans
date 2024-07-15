@@ -39,12 +39,12 @@
                     "parameters": [],
                     "calls": []
                 },
-                "60-86:uncompress": {
+                "60-86:uncompress0": {
                     "start": 60,
                     "end": 86,
                     "body": [
-                        "        public void uncompress(int[] inBuf, IntWrapper inPos, int inLen,\n",
-                        "                int[] outBuf, IntWrapper outPos) {\n",
+                        "        public void uncompress0(int[] inBuf, IntWrapper inPos, int inLen,\n",
+                        "                                int[] outBuf, IntWrapper outPos) {\n",
                         "                if (inLen == 0) {\n",
                         "                        return;\n",
                         "                }\n",
@@ -64,7 +64,7 @@
                         "                        ip += unpack(inBuf, ip, work, 32, (n >> 16) & 0x3F);\n",
                         "                        ip += unpack(inBuf, ip, work, 64, (n >> 8) & 0x3F);\n",
                         "                        ip += unpack(inBuf, ip, work, 96, (n >> 0) & 0x3F);\n",
-                        "                        ctx.decodeArray(work, 0, BLOCK_LENGTH, outBuf, op);\n",
+                        "                        ctx.decodeArray0(work, 0, BLOCK_LENGTH, outBuf, op);\n",
                         "                }\n",
                         "\n",
                         "                outPos.add(outLen);\n",
@@ -84,7 +84,7 @@
                             "void"
                         ]
                     ],
-                    "signature": "uncompress(int[], IntWrapper, int, int[], IntWrapper)",
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
                     "parameters": [
                         "inBuf",
                         "inPos",
@@ -116,7 +116,7 @@
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
                             "Decoder",
-                            "77-83:decodeArray"
+                            "77-83:decodeArray0"
                         ],
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
@@ -130,12 +130,12 @@
                         ]
                     ]
                 },
-                "25-57:compress": {
+                "25-57:compress0": {
                     "start": 25,
                     "end": 57,
                     "body": [
-                        "        public void compress(int[] inBuf, IntWrapper inPos, int inLen,\n",
-                        "                int[] outBuf, IntWrapper outPos) {\n",
+                        "        public void compress0(int[] inBuf, IntWrapper inPos, int inLen,\n",
+                        "                              int[] outBuf, IntWrapper outPos) {\n",
                         "                inLen = inLen - inLen % BLOCK_LENGTH;\n",
                         "                if (inLen == 0) {\n",
                         "                        return;\n",
@@ -151,7 +151,7 @@
                         "                int ip = inPos.get();\n",
                         "                final int inPosLast = ip + inLen;\n",
                         "                for (; ip < inPosLast; ip += BLOCK_LENGTH) {\n",
-                        "                        ctx.encodeArray(inBuf, ip, BLOCK_LENGTH, work);\n",
+                        "                        ctx.encodeArray1(inBuf, ip, BLOCK_LENGTH, work);\n",
                         "                        final int bits1 = Util.maxbits32(work, 0);\n",
                         "                        final int bits2 = Util.maxbits32(work, 32);\n",
                         "                        final int bits3 = Util.maxbits32(work, 64);\n",
@@ -181,7 +181,7 @@
                             "void"
                         ]
                     ],
-                    "signature": "compress(int[], IntWrapper, int, int[], IntWrapper)",
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
                     "parameters": [
                         "inBuf",
                         "inPos",
@@ -213,7 +213,7 @@
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
                             "Encoder",
-                            "49-52:encodeArray"
+                            "49-52:encodeArray1"
                         ],
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagBinaryPacking",
@@ -308,117 +308,6 @@
                             "1706-1812:fastpackwithoutmask"
                         ]
                     ]
-                },
-                "102-102:toString": {
-                    "start": 102,
-                    "end": 102,
-                    "body": [
-                        "        public String toString() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "String",
-                            "java.lang.String"
-                        ]
-                    ],
-                    "signature": "toString()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "60-62:uncompress": {
-                    "start": 60,
-                    "end": 62,
-                    "body": [
-                        "        public void uncompress(int[] inBuf, IntWrapper inPos, int inLen,\n",
-                        "                int[] outBuf, IntWrapper outPos) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "uncompress(int[], IntWrapper, int, int[], IntWrapper)",
-                    "parameters": [],
-                    "calls": []
-                },
-                "25-27:compress": {
-                    "start": 25,
-                    "end": 27,
-                    "body": [
-                        "        public void compress(int[] inBuf, IntWrapper inPos, int inLen,\n",
-                        "                int[] outBuf, IntWrapper outPos) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "compress(int[], IntWrapper, int, int[], IntWrapper)",
-                    "parameters": [],
-                    "calls": []
-                },
-                "95-97:unpack": {
-                    "start": 95,
-                    "end": 97,
-                    "body": [
-                        "        private static int unpack(int[] inBuf, int inOff, int[] outBuf,\n",
-                        "                int outOff, int validBits) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "static",
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "int",
-                            "int"
-                        ]
-                    ],
-                    "signature": "unpack(int[], int, int[], int, int)",
-                    "parameters": [],
-                    "calls": []
-                },
-                "88-90:pack": {
-                    "start": 88,
-                    "end": 90,
-                    "body": [
-                        "        private static int pack(int[] inBuf, int inOff, int[] outBuf,\n",
-                        "                int outOff, int validBits) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "static",
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "int",
-                            "int"
-                        ]
-                    ],
-                    "signature": "pack(int[], int, int[], int, int)",
-                    "parameters": [],
-                    "calls": []
                 }
             },
             "fields": {

@@ -246,12 +246,12 @@
                         "                                int[] in = postings.get(k);\n",
                         "                                IntWrapper inpos = new IntWrapper(0);\n",
                         "                                IntWrapper outpos = new IntWrapper(0);\n",
-                        "                                c.compress(in, inpos, in.length, compbuffer,\n",
+                        "                                c.compress1(in, inpos, in.length, compbuffer,\n",
                         "                                        outpos);\n",
                         "                                int clength = outpos.get();\n",
                         "                                inpos = new IntWrapper(0);\n",
                         "                                outpos = new IntWrapper(0);\n",
-                        "                                c.uncompress(compbuffer, inpos, clength,\n",
+                        "                                c.uncompress1(compbuffer, inpos, clength,\n",
                         "                                        decompbuffer, outpos);\n",
                         "                                volumein += in.length;\n",
                         "                                volumeout += clength;\n",
@@ -269,7 +269,7 @@
                         "                        for (byte[] cin : compdata) {\n",
                         "                                IntWrapper inpos = new IntWrapper(0);\n",
                         "                                IntWrapper outpos = new IntWrapper(0);\n",
-                        "                                c.uncompress(cin, inpos, cin.length,\n",
+                        "                                c.uncompress1(cin, inpos, cin.length,\n",
                         "                                        decompbuffer, outpos);\n",
                         "                                if (inpos.get() != cin.length)\n",
                         "                                        throw new RuntimeException(\"bug\");\n",
@@ -320,12 +320,12 @@
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.ByteIntegerCODEC",
                             "ByteIntegerCODEC",
-                            "36-38:compress"
+                            "36-38:compress1"
                         ],
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.ByteIntegerCODEC",
                             "ByteIntegerCODEC",
-                            "57-59:uncompress"
+                            "57-59:uncompress1"
                         ]
                     ]
                 },
@@ -357,12 +357,12 @@
                         "                                int[] in = postings.get(k);\n",
                         "                                IntWrapper inpos = new IntWrapper(0);\n",
                         "                                IntWrapper outpos = new IntWrapper(0);\n",
-                        "                                c.compress(in, inpos, in.length, compbuffer,\n",
+                        "                                c.compress0(in, inpos, in.length, compbuffer,\n",
                         "                                        outpos);\n",
                         "                                int clength = outpos.get();\n",
                         "                                inpos = new IntWrapper(0);\n",
                         "                                outpos = new IntWrapper(0);\n",
-                        "                                c.uncompress(compbuffer, inpos, clength,\n",
+                        "                                c.uncompress0(compbuffer, inpos, clength,\n",
                         "                                        decompbuffer, outpos);\n",
                         "                                volumein += in.length;\n",
                         "                                volumeout += clength;\n",
@@ -380,7 +380,7 @@
                         "                        for (int[] cin : compdata) {\n",
                         "                                IntWrapper inpos = new IntWrapper(0);\n",
                         "                                IntWrapper outpos = new IntWrapper(0);\n",
-                        "                                c.uncompress(cin, inpos, cin.length,\n",
+                        "                                c.uncompress0(cin, inpos, cin.length,\n",
                         "                                        decompbuffer, outpos);\n",
                         "                                if (inpos.get() != cin.length)\n",
                         "                                        throw new RuntimeException(\"bug\");\n",
@@ -431,12 +431,12 @@
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
                             "IntegerCODEC",
-                            "36-38:compress"
+                            "36-38:compress0"
                         ],
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
                             "IntegerCODEC",
-                            "57-59:uncompress"
+                            "57-59:uncompress0"
                         ]
                     ]
                 },
@@ -548,97 +548,6 @@
                         "filename",
                         "f"
                     ],
-                    "calls": []
-                },
-                "130-130:main": {
-                    "start": 130,
-                    "end": 130,
-                    "body": [
-                        "        public static void main(final String[] args) throws IOException {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public",
-                        "static"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "main(String[])",
-                    "parameters": [],
-                    "calls": []
-                },
-                "248-250:bytebench": {
-                    "start": 248,
-                    "end": 250,
-                    "body": [
-                        "        private static void bytebench(ArrayList<int[]> postings,\n",
-                        "                CompressionMode cm, boolean verbose) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "static",
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "bytebench(ArrayList<int[]>, CompressionMode, boolean)",
-                    "parameters": [],
-                    "calls": []
-                },
-                "182-184:bench": {
-                    "start": 182,
-                    "end": 184,
-                    "body": [
-                        "        private static void bench(ArrayList<int[]> postings, CompressionMode cm,\n",
-                        "                boolean verbose) {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "static",
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "bench(ArrayList<int[]>, CompressionMode, boolean)",
-                    "parameters": [],
-                    "calls": []
-                },
-                "31-33:loadIntegers": {
-                    "start": 31,
-                    "end": 33,
-                    "body": [
-                        "        private static ArrayList<int[]> loadIntegers(final String filename, final Format f)\n",
-                        "                throws IOException {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "static",
-                        "private"
-                    ],
-                    "return_types": [
-                        [
-                            "ArrayList<int[]>",
-                            "java.util.ArrayList<int[]>"
-                        ]
-                    ],
-                    "signature": "loadIntegers(String, Format)",
-                    "parameters": [],
                     "calls": []
                 }
             },

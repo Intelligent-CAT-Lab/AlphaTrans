@@ -59,15 +59,15 @@
                         "                e.printStackTrace();\n",
                         "            }\n",
                         "            for (int L = 1; L <= 128; L++) {\n",
-                        "                byte[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));\n",
-                        "                int[] answer = TestUtils.uncompress(c, comp, L);\n",
+                        "                byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress1(c, comp, L);\n",
                         "                for (int k = 0; k < L; ++k)\n",
                         "                    if (answer[k] != data[k])\n",
                         "                        throw new RuntimeException(\"bug at k = \"+k+\" \"+answer[k]+\" \"+data[k]);\n",
                         "            }\n",
                         "            for (int L = 128; L <= N; L *= 2) {\n",
-                        "                byte[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));\n",
-                        "                int[] answer = TestUtils.uncompress(c, comp, L);\n",
+                        "                byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress1(c, comp, L);\n",
                         "                for (int k = 0; k < L; ++k)\n",
                         "                    if (answer[k] != data[k])\n",
                         "                        throw new RuntimeException(\"bug\");\n",
@@ -95,12 +95,12 @@
                         [
                             "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
                             "TestUtils",
-                            "151-157:compress"
+                            "151-157:compress0"
                         ],
                         [
                             "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
                             "TestUtils",
-                            "159-165:uncompress"
+                            "159-165:uncompress1"
                         ]
                     ]
                 },
@@ -115,15 +115,15 @@
                         "            data[k] = k;\n",
                         "        for (ByteIntegerCODEC c : codecs) {\n",
                         "            for (int L = 1; L <= 128; L++) {\n",
-                        "                byte[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));\n",
-                        "                int[] answer = TestUtils.uncompress(c, comp, L);\n",
+                        "                byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress1(c, comp, L);\n",
                         "                for (int k = 0; k < L; ++k)\n",
                         "                    if (answer[k] != data[k])\n",
                         "                        throw new RuntimeException(\"bug \"+c.toString()+\" \"+k+\" \"+answer[k]+\" \"+data[k]);\n",
                         "            }\n",
                         "            for (int L = 128; L <= N; L *= 2) {\n",
-                        "                byte[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));\n",
-                        "                int[] answer = TestUtils.uncompress(c, comp, L);\n",
+                        "                byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress1(c, comp, L);\n",
                         "                for (int k = 0; k < L; ++k)\n",
                         "                    if (answer[k] != data[k])\n",
                         "                        throw new RuntimeException(\"bug\");\n",
@@ -151,12 +151,12 @@
                         [
                             "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
                             "TestUtils",
-                            "151-157:compress"
+                            "151-157:compress0"
                         ],
                         [
                             "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
                             "TestUtils",
-                            "159-165:uncompress"
+                            "159-165:uncompress1"
                         ]
                     ]
                 },
@@ -173,12 +173,12 @@
                         "\n",
                         "\t\t\t\tIntWrapper aOffset = new IntWrapper(0);\n",
                         "\t\t\t\tIntWrapper bOffset = new IntWrapper(x);\n",
-                        "\t\t\t\tC.compress(a, aOffset, a.length, b, bOffset);\n",
+                        "\t\t\t\tC.compress1(a, aOffset, a.length, b, bOffset);\n",
                         "\t\t\t\tint len = bOffset.get() - x;\n",
                         "\n",
                         "\t\t\t\tbOffset.set(x);\n",
                         "\t\t\t\tIntWrapper cOffset = new IntWrapper(0);\n",
-                        "\t\t\t\tC.uncompress(b, bOffset, len, c, cOffset);\n",
+                        "\t\t\t\tC.uncompress1(b, bOffset, len, c, cOffset);\n",
                         "\t\t\t\tif(!Arrays.equals(a, c)) {\n",
                         "\t\t\t\t\tSystem.out.println(\"Problem with \"+C);\n",
                         "\t\t\t\t}\n",
@@ -216,7 +216,7 @@
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.ByteIntegerCODEC",
                             "ByteIntegerCODEC",
-                            "36-38:compress"
+                            "36-38:compress1"
                         ],
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
@@ -226,72 +226,9 @@
                         [
                             "JavaFastPFOR.src.main.me.lemire.integercompression.ByteIntegerCODEC",
                             "ByteIntegerCODEC",
-                            "57-59:uncompress"
+                            "57-59:uncompress1"
                         ]
                     ]
-                },
-                "89-89:varyingLengthTest2": {
-                    "start": 89,
-                    "end": 89,
-                    "body": [
-                        "    public void varyingLengthTest2() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "varyingLengthTest2()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "61-61:varyingLengthTest": {
-                    "start": 61,
-                    "end": 61,
-                    "body": [
-                        "    public void varyingLengthTest() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "varyingLengthTest()",
-                    "parameters": [],
-                    "calls": []
-                },
-                "35-35:saulTest": {
-                    "start": 35,
-                    "end": 35,
-                    "body": [
-                        "\tpublic void saulTest() {\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "saulTest()",
-                    "parameters": [],
-                    "calls": []
                 }
             },
             "fields": {
