@@ -147,6 +147,18 @@ def create_schema(args):
         if 'public class' in ''.join(callable_body) or 'public static class' in ''.join(callable_body):
             continue
 
+        already_exists = False
+        for method in schemas[path]["classes"][class_name]["methods"].keys():
+            if callable_name in method \
+                and start_line == schemas[path]["classes"][class_name]["methods"][method]["start"] \
+                and end_line != schemas[path]["classes"][class_name]["methods"][method]["end"]:
+                
+                already_exists = True
+                break
+
+        if already_exists:
+            continue
+
         schemas[path]["classes"][class_name]["methods"].setdefault(pos_callable_name, {"start": start_line,
                                                                             "end": end_line,
                                                                             "body": callable_body,
