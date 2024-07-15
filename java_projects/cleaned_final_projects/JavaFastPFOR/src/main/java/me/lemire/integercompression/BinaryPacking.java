@@ -40,8 +40,8 @@ public final class BinaryPacking implements IntegerCODEC, SkippableIntegerCODEC 
         final static int BLOCK_SIZE = 32;
     
         @Override
-        public void compress(int[] in, IntWrapper inpos, int inlength,
-                int[] out, IntWrapper outpos) {
+        public void compress0(int[] in, IntWrapper inpos, int inlength,
+                              int[] out, IntWrapper outpos) {
             inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
             if (inlength == 0)
                     return;
@@ -89,8 +89,8 @@ public final class BinaryPacking implements IntegerCODEC, SkippableIntegerCODEC 
         }
 
         @Override
-        public void uncompress(int[] in, IntWrapper inpos, int inlength,
-                int[] out, IntWrapper outpos) {
+        public void uncompress0(int[] in, IntWrapper inpos, int inlength,
+                                int[] out, IntWrapper outpos) {
                 if (inlength == 0)
                         return;
                 final int outlength = in[inpos.get()];

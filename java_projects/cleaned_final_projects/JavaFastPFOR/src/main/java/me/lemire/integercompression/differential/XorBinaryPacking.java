@@ -20,8 +20,8 @@ public final class XorBinaryPacking implements IntegratedIntegerCODEC {
         private static final int BLOCK_LENGTH = 128;
 
         @Override
-        public void compress(final int[] inBuf, final IntWrapper inPos,
-                int inLen, final int[] outBuf, final IntWrapper outPos) {
+        public void compress0(final int[] inBuf, final IntWrapper inPos,
+                              int inLen, final int[] outBuf, final IntWrapper outPos) {
                 inLen = inLen - inLen % BLOCK_LENGTH;
                 if (inLen == 0)
                         return;
@@ -61,8 +61,8 @@ public final class XorBinaryPacking implements IntegratedIntegerCODEC {
         }
 
         @Override
-        public void uncompress(int[] inBuf, IntWrapper inPos, int inLen,
-                int[] outBuf, IntWrapper outPos) {
+        public void uncompress0(int[] inBuf, IntWrapper inPos, int inLen,
+                                int[] outBuf, IntWrapper outPos) {
                 if (inLen == 0)
                         return;
 

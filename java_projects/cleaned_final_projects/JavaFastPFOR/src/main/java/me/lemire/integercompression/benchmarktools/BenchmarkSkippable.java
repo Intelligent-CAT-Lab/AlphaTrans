@@ -56,7 +56,7 @@ public class BenchmarkSkippable {
             if (c instanceof SkippableIntegerCODEC) {
                 int size = blocksize > data.length - inpos.get() ? data.length
                         - inpos.get() : blocksize;
-                initvalue = Delta.delta(data, inpos.get(), size, initvalue);
+                initvalue = Delta.delta1(data, inpos.get(), size, initvalue);
 
                 ((SkippableIntegerCODEC) c).headlessCompress(data, inpos,
                         blocksize, output, outpos);
@@ -92,7 +92,7 @@ public class BenchmarkSkippable {
                 ((SkippableIntegerCODEC) c).headlessUncompress(compressed,
                         compressedpos, compressed.length - uncomppos.get(),
                         data, uncomppos, num);
-                initvalue = Delta.fastinverseDelta(data, outputlocation, num,
+                initvalue = Delta.fastinverseDelta1(data, outputlocation, num,
                         initvalue);
             } else if (c instanceof SkippableIntegratedIntegerCODEC) {
                 ival.set(initvalue);

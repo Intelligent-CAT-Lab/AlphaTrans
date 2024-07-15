@@ -59,7 +59,7 @@ public class LongTestUtils {
         long[] compressed = new long[orig.length + EXTEND];
         IntWrapper c_inpos = new IntWrapper(0);
         IntWrapper c_outpos = new IntWrapper(0);
-        codec.compress(orig, c_inpos, orig.length, compressed,
+        codec.compress0(orig, c_inpos, orig.length, compressed,
                 c_outpos);
 
         assertTrue(c_outpos.get() <= orig.length + EXTEND);
@@ -68,7 +68,7 @@ public class LongTestUtils {
         long[] uncompressed = new long[orig.length];
         IntWrapper u_inpos = new IntWrapper(0);
         IntWrapper u_outpos = new IntWrapper(0);
-        codec.uncompress(compressed, u_inpos, c_outpos.get(),
+        codec.uncompress1(compressed, u_inpos, c_outpos.get(),
                 uncompressed, u_outpos);
 
         // Compare between uncompressed and orig arrays.
@@ -76,37 +76,37 @@ public class LongTestUtils {
         assertArrayEquals(orig, target);
     }
 
-    protected static long[] compress(LongCODEC codec, long[] data) {
+    protected static long[] compress1(LongCODEC codec, long[] data) {
         long[] outBuf = new long[data.length * 8];
         IntWrapper inPos = IntWrapper.IntWrapper1();
         IntWrapper outPos = IntWrapper.IntWrapper1();
-        codec.compress(data, inPos, data.length, outBuf, outPos);
+        codec.compress0(data, inPos, data.length, outBuf, outPos);
         return Arrays.copyOf(outBuf, outPos.get());
     }
 
-    protected static long[] uncompress(LongCODEC codec, long[] data, int len) {
+    protected static long[] uncompress0(LongCODEC codec, long[] data, int len) {
         long[] outBuf = new long[len + 1024];
         IntWrapper inPos = IntWrapper.IntWrapper1();
         IntWrapper outPos = IntWrapper.IntWrapper1();
-        codec.uncompress(data, inPos, data.length, outBuf, outPos);
+        codec.uncompress1(data, inPos, data.length, outBuf, outPos);
         return Arrays.copyOf(outBuf, outPos.get());
     }
 
 
 
-    protected static byte[] compress(ByteLongCODEC codec, long[] data) {
+    protected static byte[] compress0(ByteLongCODEC codec, long[] data) {
         byte[] outBuf = new byte[data.length * 4 * 4];
         IntWrapper inPos = IntWrapper.IntWrapper1();
         IntWrapper outPos = IntWrapper.IntWrapper1();
-        codec.compress(data, inPos, data.length, outBuf, outPos);
+        codec.compress1(data, inPos, data.length, outBuf, outPos);
         return Arrays.copyOf(outBuf, outPos.get());
     }
 
-    protected static long[] uncompress(ByteLongCODEC codec, byte[] data, int len) {
+    protected static long[] uncompress1(ByteLongCODEC codec, byte[] data, int len) {
         long[] outBuf = new long[len + 1024];
         IntWrapper inPos = IntWrapper.IntWrapper1();
         IntWrapper outPos = IntWrapper.IntWrapper1();
-        codec.uncompress(data, inPos, data.length, outBuf, outPos);
+        codec.uncompress1(data, inPos, data.length, outBuf, outPos);
         return Arrays.copyOf(outBuf, outPos.get());
     }
 

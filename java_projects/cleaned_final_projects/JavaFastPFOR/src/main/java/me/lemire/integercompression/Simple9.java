@@ -269,7 +269,7 @@ public final class Simple9 implements IntegerCODEC, SkippableIntegerCODEC {
 	}
 
 	@Override
-	public void compress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
+	public void compress0(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
 		if (inlength == 0)
 			return;
 		out[outpos.get()] = inlength;
@@ -278,7 +278,7 @@ public final class Simple9 implements IntegerCODEC, SkippableIntegerCODEC {
 	}
 
 	@Override
-	public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
+	public void uncompress0(int[] in, IntWrapper inpos, int inlength, int[] out, IntWrapper outpos) {
 		if (inlength == 0)
 			return;
 		final int outlength = in[inpos.get()];

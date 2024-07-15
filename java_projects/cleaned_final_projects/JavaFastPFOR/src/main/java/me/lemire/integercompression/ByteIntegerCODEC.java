@@ -33,8 +33,8 @@ public interface ByteIntegerCODEC {
          * @param outpos
          *                where to write in the output array
          */
-        public void compress(int[] in, IntWrapper inpos, int inlength,
-                byte[] out, IntWrapper outpos);
+        public void compress1(int[] in, IntWrapper inpos, int inlength,
+                              byte[] out, IntWrapper outpos);
 
         /**
          * Uncompress data from an array to another array.
@@ -54,7 +54,7 @@ public interface ByteIntegerCODEC {
          * @param outpos
          *                where to write the compressed output in out
          */
-        public void uncompress(byte[] in, IntWrapper inpos, int inlength,
-                int[] out, IntWrapper outpos);
+        public void uncompress1(byte[] in, IntWrapper inpos, int inlength,
+                                int[] out, IntWrapper outpos);
 
 }

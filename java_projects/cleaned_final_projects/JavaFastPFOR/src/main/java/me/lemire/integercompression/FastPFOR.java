@@ -98,7 +98,7 @@ public class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
          * Compress data in blocks of BLOCK_SIZE integers (if fewer than BLOCK_SIZE integers
          * are provided, nothing is done).
          *
-         * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
+         * @see IntegerCODEC#compress0(int[], IntWrapper, int, int[], IntWrapper)
          */
         @Override
         public void headlessCompress(int[] in, IntWrapper inpos, int inlength,
@@ -228,7 +228,7 @@ public class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
          * the inlength parameter is ignored: it is deduced from the compressed
          * data.
          *
-         * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
+         * @see IntegerCODEC#compress0(int[], IntWrapper, int, int[], IntWrapper)
          */
         @Override
         public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,
@@ -318,8 +318,8 @@ public class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                 inpos.set(inexcept);
         }
         @Override
-        public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
-                IntWrapper outpos) {
+        public void compress0(int[] in, IntWrapper inpos, int inlength, int[] out,
+                              IntWrapper outpos) {
             inlength = Util.greatestMultiple(inlength,  BLOCK_SIZE);
             if (inlength == 0)
                     return;
@@ -329,8 +329,8 @@ public class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
         }
 
         @Override
-        public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
-                IntWrapper outpos) {
+        public void uncompress0(int[] in, IntWrapper inpos, int inlength, int[] out,
+                                IntWrapper outpos) {
             if (inlength == 0)
                 return;
             final int outlength = in[inpos.get()];

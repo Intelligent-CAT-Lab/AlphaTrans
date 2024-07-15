@@ -14,26 +14,10 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import me.lemire.integercompression.BinaryPacking;
-import me.lemire.integercompression.Composition;
 import me.lemire.integercompression.FastPFOR;
 import me.lemire.integercompression.FastPFOR128;
 import me.lemire.integercompression.IntWrapper;
-import me.lemire.integercompression.JustCopy;
-import me.lemire.integercompression.NewPFD;
-import me.lemire.integercompression.NewPFDS16;
-import me.lemire.integercompression.NewPFDS9;
-import me.lemire.integercompression.OptPFD;
-import me.lemire.integercompression.OptPFDS16;
-import me.lemire.integercompression.OptPFDS9;
-import me.lemire.integercompression.Simple9;
-import me.lemire.integercompression.VariableByte;
-import me.lemire.integercompression.differential.Delta;
-import me.lemire.integercompression.differential.IntegratedBinaryPacking;
-import me.lemire.integercompression.differential.IntegratedComposition;
-import me.lemire.integercompression.differential.IntegratedVariableByte;
 import me.lemire.longcompression.differential.LongDelta;
-import me.lemire.longcompression.synth.LongClusteredDataGenerator;
 
 /**
  * Just some basic sanity tests.
@@ -60,12 +44,12 @@ public class LongBasicTest {
 
 				IntWrapper aOffset = new IntWrapper(0);
 				IntWrapper bOffset = new IntWrapper(x);
-				C.compress(a, aOffset, a.length, b, bOffset);
+				C.compress0(a, aOffset, a.length, b, bOffset);
 				int len = bOffset.get() - x;
 
 				bOffset.set(x);
 				IntWrapper cOffset = new IntWrapper(0);
-				C.uncompress(b, bOffset, len, c, cOffset);
+				C.uncompress1(b, bOffset, len, c, cOffset);
 				if(!Arrays.equals(a, c)) {
 					System.out.println("Problem with "+C);
 				}
@@ -86,15 +70,15 @@ public class LongBasicTest {
         for (LongCODEC c : codecs) {
             System.out.println("[BasicTest.varyingLengthTest] codec = " + c);
             for (int L = 1; L <= 128; L++) {
-                long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress(c, comp, L);
+                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompress0(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
             }
             for (int L = 128; L <= N; L *= 2) {
-                long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress(c, comp, L);
+                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompress0(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k]) {
                         System.out.println(Arrays.toString(Arrays.copyOf(
@@ -144,15 +128,15 @@ public class LongBasicTest {
             }
 
             for (int L = 1; L <= 128; L++) {
-                long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress(c, comp, L);
+                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompress0(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
             }
             for (int L = 128; L <= N; L *= 2) {
-                long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress(c, comp, L);
+                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompress0(c, comp, L);
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
@@ -175,7 +159,7 @@ public class LongBasicTest {
         IntWrapper i0 = new IntWrapper(0);
         IntWrapper i1 = new IntWrapper(0);
         for (int inlength = 0; inlength < 32; ++inlength) {
-            c.compress(x, i0, inlength, y, i1);
+            c.compress0(x, i0, inlength, y, i1);
             assertEquals(0, i1.intValue());
         }
     }
@@ -185,12 +169,12 @@ public class LongBasicTest {
         long[] y = new long[0];
         IntWrapper i0 = new IntWrapper(0);
         IntWrapper i1 = new IntWrapper(0);
-        c.compress(x, i0, 0, y, i1);
+        c.compress0(x, i0, 0, y, i1);
         assertEquals(0, i1.intValue());
 
         long[] out = new long[0];
         IntWrapper outpos = new IntWrapper(0);
-        c.uncompress(y, i1, 0, out, outpos);
+        c.uncompress1(y, i1, 0, out, outpos);
         assertEquals(0, outpos.intValue());
     }
 
@@ -214,17 +198,17 @@ public class LongBasicTest {
             inpos.set(1);
             outpos.set(0);
             if (!(c instanceof IntegratedLongCODEC)) {
-                LongDelta.delta(backupdata);
+                LongDelta.delta0(backupdata);
             }
-            c.compress(backupdata, inpos, backupdata.length - inpos.get(),
+            c.compress0(backupdata, inpos, backupdata.length - inpos.get(),
                     dataout, outpos);
             final int thiscompsize = outpos.get() + 1;
             inpos.set(0);
             outpos.set(1);
             buffer[0] = backupdata[0];
-            co.uncompress(dataout, inpos, thiscompsize - 1, buffer, outpos);
+            co.uncompress1(dataout, inpos, thiscompsize - 1, buffer, outpos);
             if (!(c instanceof IntegratedLongCODEC))
-            	LongDelta.fastinverseDelta(buffer);
+            	LongDelta.fastinverseDelta0(buffer);
 
             // Check assertions.
             assertEquals("length is not match", outpos.get(), data[k].length);
@@ -255,14 +239,14 @@ public class LongBasicTest {
             long[] compressed = new long[(int) Math.ceil(N * 1.01) + 1024];
             IntWrapper inputoffset = new IntWrapper(0);
             IntWrapper outputoffset = new IntWrapper(0);
-            codec.compress(data, inputoffset, data.length, compressed,
+            codec.compress0(data, inputoffset, data.length, compressed,
                     outputoffset);
             // we can repack the data: (optional)
             compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
             long[] recovered = new long[N];
             IntWrapper recoffset = new IntWrapper(0);
-            codec.uncompress(compressed, new IntWrapper(0), compressed.length,
+            codec.uncompress1(compressed, new IntWrapper(0), compressed.length,
                     recovered, recoffset);
             assertArrayEquals(data, recovered);
         }
@@ -274,13 +258,13 @@ public class LongBasicTest {
         long[] compressed = new long[1024];
         IntWrapper inputoffset = new IntWrapper(0);
         IntWrapper outputoffset = new IntWrapper(0);
-        codec.compress(data, inputoffset, data.length, compressed, outputoffset);
+        codec.compress0(data, inputoffset, data.length, compressed, outputoffset);
         // we can repack the data: (optional)
         compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
         long[] recovered = new long[128];
         IntWrapper recoffset = new IntWrapper(0);
-        codec.uncompress(compressed, new IntWrapper(0), compressed.length,
+        codec.uncompress1(compressed, new IntWrapper(0), compressed.length,
                 recovered, recoffset);
         assertArrayEquals(data, recovered);
     }
@@ -291,13 +275,13 @@ public class LongBasicTest {
         long[] compressed = new long[1024];
         IntWrapper inputoffset = new IntWrapper(0);
         IntWrapper outputoffset = new IntWrapper(0);
-        codec.compress(data, inputoffset, data.length, compressed, outputoffset);
+        codec.compress0(data, inputoffset, data.length, compressed, outputoffset);
         // we can repack the data: (optional)
         compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
         long[] recovered = new long[128];
         IntWrapper recoffset = new IntWrapper(0);
-        codec.uncompress(compressed, new IntWrapper(0), compressed.length,
+        codec.uncompress1(compressed, new IntWrapper(0), compressed.length,
                 recovered, recoffset);
         assertArrayEquals(data, recovered);
     }
@@ -314,8 +298,8 @@ public class LongBasicTest {
 	        for (int i = 0; i < N; i++)
 	            data[i] = 0;
 	        data[126] = -1;
-	        long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));
-	        long[] answer = LongTestUtils.uncompress(codec, comp, N);
+	        long[] comp = LongTestUtils.compress1(codec, Arrays.copyOf(data, N));
+	        long[] answer = LongTestUtils.uncompress0(codec, comp, N);
 	        for (int k = 0; k < N; ++k)
 	            if (answer[k] != data[k])
 	                throw new RuntimeException("bug " + k + " " + answer[k]
@@ -335,8 +319,8 @@ public class LongBasicTest {
 	        for (int i = 0; i < N; i++)
 	            data[i] = 0;
 	        data[126] = -1;
-	        long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));
-	        long[] answer = LongTestUtils.uncompress(codec, comp, N);
+	        long[] comp = LongTestUtils.compress1(codec, Arrays.copyOf(data, N));
+	        long[] answer = LongTestUtils.uncompress0(codec, comp, N);
 	        for (int k = 0; k < N; ++k)
 	            if (answer[k] != data[k])
 	                throw new RuntimeException("bug " + k + " " + answer[k]

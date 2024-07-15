@@ -52,8 +52,8 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
     static final int BLOCK_SIZE = 32;
 
     @Override
-    public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
-            IntWrapper outpos) {
+    public void compress0(int[] in, IntWrapper inpos, int inlength, int[] out,
+                          IntWrapper outpos) {
         inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
         if (inlength == 0)
             return;
@@ -63,8 +63,8 @@ public class IntegratedBinaryPacking implements IntegratedIntegerCODEC,
     }
 
     @Override
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
-            IntWrapper outpos) {
+    public void uncompress0(int[] in, IntWrapper inpos, int inlength, int[] out,
+                            IntWrapper outpos) {
         if (inlength == 0)
             return;
         final int outlength = in[inpos.get()];

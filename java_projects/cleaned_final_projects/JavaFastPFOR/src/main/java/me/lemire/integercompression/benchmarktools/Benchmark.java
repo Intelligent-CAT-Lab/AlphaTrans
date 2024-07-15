@@ -110,9 +110,9 @@ public class Benchmark {
                                 inpos.set(1);
                                 outpos.set(0);
                                 if (!(c instanceof IntegratedIntegerCODEC)) {
-                                        Delta.delta(backupdata);
+                                        Delta.delta0(backupdata);
                                 }
-                                c.compress(backupdata, inpos, backupdata.length
+                                c.compress0(backupdata, inpos, backupdata.length
                                         - inpos.get(), compressBuffer, outpos);
                                 long afterCompress = System.nanoTime() / 1000;
 
@@ -126,11 +126,11 @@ public class Benchmark {
                                 inpos.set(0);
                                 outpos.set(1);
                                 decompressBuffer[0] = backupdata[0];
-                                c.uncompress(compressBuffer, inpos,
+                                c.uncompress0(compressBuffer, inpos,
                                         thiscompsize - 1, decompressBuffer,
                                         outpos);
                                 if (!(c instanceof IntegratedIntegerCODEC))
-                                        Delta.fastinverseDelta(decompressBuffer);
+                                        Delta.fastinverseDelta0(decompressBuffer);
                                 long afterDecompress = System.nanoTime() / 1000;
 
                                 // measure time of extraction (uncompression).
@@ -232,9 +232,9 @@ public class Benchmark {
                                 inpos.set(1);
                                 outpos.set(0);
                                 if (!(c instanceof IntegratedByteIntegerCODEC)) {
-                                        Delta.delta(backupdata);
+                                        Delta.delta0(backupdata);
                                 }
-                                c.compress(backupdata, inpos, backupdata.length
+                                c.compress1(backupdata, inpos, backupdata.length
                                         - inpos.get(), compressBuffer, outpos);
                                 long afterCompress = System.nanoTime() / 1000;
 
@@ -248,11 +248,11 @@ public class Benchmark {
                                 inpos.set(0);
                                 outpos.set(1);
                                 decompressBuffer[0] = backupdata[0];
-                                c.uncompress(compressBuffer, inpos,
+                                c.uncompress1(compressBuffer, inpos,
                                         thiscompsize - 1, decompressBuffer,
                                         outpos);
                                 if (!(c instanceof IntegratedByteIntegerCODEC))
-                                        Delta.fastinverseDelta(decompressBuffer);
+                                        Delta.fastinverseDelta0(decompressBuffer);
                                 long afterDecompress = System.nanoTime() / 1000;
 
                                 // measure time of extraction (uncompression).
@@ -382,7 +382,7 @@ public class Benchmark {
                                         data[k].length);
                                 //
                                 bef = System.nanoTime() / 1000;
-                                Delta.delta(backupdata);
+                                Delta.delta0(backupdata);
                                 ArrayList<int[]> dataout = new ArrayList<int[]>(
                                         data[k].length / 128);
                                 for (int K = 0; K < data[k].length; K += 128) {
@@ -410,7 +410,7 @@ public class Benchmark {
                                         PForDelta.decompressOneBlock(tmpbuf,
                                                 compbuf, 128);
                                         tmpbuf[0] += deltaoffset;
-                                        Delta.fastinverseDelta(tmpbuf);
+                                        Delta.fastinverseDelta0(tmpbuf);
                                         deltaoffset = tmpbuf[127];
                                         datauncomp.add(tmpbuf);
                                 }

@@ -70,7 +70,7 @@ public class ExampleTest {
 		 */
 		IntWrapper inputoffset = new IntWrapper(0);
 		IntWrapper outputoffset = new IntWrapper(0);
-		codec.compress(data, inputoffset, data.length, compressed, outputoffset);
+		codec.compress0(data, inputoffset, data.length, compressed, outputoffset);
 		// got it!
 		// inputoffset should be at data.length but outputoffset tells
 		// us where we are...
@@ -88,7 +88,7 @@ public class ExampleTest {
 		 */
 		int[] recovered = new int[data.length];
 		IntWrapper recoffset = new IntWrapper(0);
-		codec.uncompress(compressed, new IntWrapper(0), compressed.length, recovered, recoffset);
+		codec.uncompress0(compressed, new IntWrapper(0), compressed.length, recovered, recoffset);
 		if (Arrays.equals(data, recovered))
 			System.out.println("data is recovered without loss");
 		else
@@ -177,7 +177,7 @@ public class ExampleTest {
 		// compressing
 		IntWrapper inputoffset = new IntWrapper(0);
 		IntWrapper outputoffset = new IntWrapper(0);
-		codec.compress(data, inputoffset, data.length, compressed, outputoffset);
+		codec.compress0(data, inputoffset, data.length, compressed, outputoffset);
 		System.out.println("compressed unsorted integers from " + data.length * 4 / 1024 + "KB to "
 				+ outputoffset.intValue() * 4 / 1024 + "KB");
 		// we can repack the data: (optional)
@@ -185,7 +185,7 @@ public class ExampleTest {
 
 		int[] recovered = new int[N];
 		IntWrapper recoffset = new IntWrapper(0);
-		codec.uncompress(compressed, new IntWrapper(0), compressed.length, recovered, recoffset);
+		codec.uncompress0(compressed, new IntWrapper(0), compressed.length, recovered, recoffset);
 		if (Arrays.equals(data, recovered))
 			System.out.println("data is recovered without loss");
 		else
@@ -230,8 +230,8 @@ public class ExampleTest {
 		IntWrapper inputoffset = new IntWrapper(0);
 		IntWrapper outputoffset = new IntWrapper(0);
 		for (int k = 0; k < TotalSize / ChunkSize; ++k)
-			regularcodec.compress(data, inputoffset, ChunkSize, compressed, outputoffset);
-		lastcodec.compress(data, inputoffset, TotalSize % ChunkSize, compressed, outputoffset);
+			regularcodec.compress0(data, inputoffset, ChunkSize, compressed, outputoffset);
+		lastcodec.compress0(data, inputoffset, TotalSize % ChunkSize, compressed, outputoffset);
 		// got it!
 		// inputoffset should be at data.length but outputoffset tells
 		// us where we are...
@@ -255,10 +255,10 @@ public class ExampleTest {
 
 		while (compoff.get() < compressed.length) {
 			recoffset = new IntWrapper(0);
-			regularcodec.uncompress(compressed, compoff, compressed.length - compoff.get(), recovered, recoffset);
+			regularcodec.uncompress0(compressed, compoff, compressed.length - compoff.get(), recovered, recoffset);
 
 			if (recoffset.get() < ChunkSize) {// last chunk detected
-				ivb.uncompress(compressed, compoff, compressed.length - compoff.get(), recovered, recoffset);
+				ivb.uncompress0(compressed, compoff, compressed.length - compoff.get(), recovered, recoffset);
 			}
 			for (int i = 0; i < recoffset.get(); ++i) {
 				if (data[currentpos + i] != recovered[i])

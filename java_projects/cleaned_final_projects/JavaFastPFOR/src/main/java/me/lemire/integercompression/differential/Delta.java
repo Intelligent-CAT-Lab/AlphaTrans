@@ -21,7 +21,7 @@ public final class Delta {
          * @param data
          *                data to be modified
          */
-        public static void delta(int[] data) {
+        public static void delta0(int[] data) {
                 for (int i = data.length - 1; i > 0; --i) {
                         data[i] -= data[i - 1];
                 }
@@ -40,7 +40,7 @@ public final class Delta {
          *                initial value
          * @return next initial vale
          */
-        public static int delta(int[] data, int start, int length, int init) {
+        public static int delta1(int[] data, int start, int length, int init) {
                 final int nextinit = data[start + length - 1];
                 for (int i = length - 1; i > 0; --i) {
                         data[start + i] -= data[start + i - 1];
@@ -65,8 +65,8 @@ public final class Delta {
          *                output array
          * @return next initial vale
          */
-        public static int delta(int[] data, int start, int length, int init,
-                int[] out) {
+        public static int delta2(int[] data, int start, int length, int init,
+                                 int[] out) {
                 for (int i = length - 1; i > 0; --i) {
                         out[i] = data[start + i] - data[start + i - 1];
                 }
@@ -94,7 +94,7 @@ public final class Delta {
          * @param data
          *                to be modified
          */
-        public static void fastinverseDelta(int[] data) {
+        public static void fastinverseDelta0(int[] data) {
                 int sz0 = data.length / 4 * 4;
                 int i = 1;
                 if (sz0 >= 4) {
@@ -126,8 +126,8 @@ public final class Delta {
          *                initial value
          * @return next initial value
          */
-        public static int fastinverseDelta(int[] data, int start, int length,
-                int init) {
+        public static int fastinverseDelta1(int[] data, int start, int length,
+                                            int init) {
                 data[start] += init;
                 int sz0 = length / 4 * 4;
                 int i = 1;

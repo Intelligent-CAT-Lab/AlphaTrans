@@ -173,8 +173,8 @@ public final class OptPFDS16 implements IntegerCODEC,SkippableIntegerCODEC {
                 inpos.set(tmpinpos);
         }
         @Override
-        public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
-                IntWrapper outpos) {
+        public void compress0(int[] in, IntWrapper inpos, int inlength, int[] out,
+                              IntWrapper outpos) {
             inlength = inlength / BLOCK_SIZE * BLOCK_SIZE;
             if (inlength == 0)
                     return;
@@ -184,8 +184,8 @@ public final class OptPFDS16 implements IntegerCODEC,SkippableIntegerCODEC {
         }
 
         @Override
-        public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
-                IntWrapper outpos) {
+        public void uncompress0(int[] in, IntWrapper inpos, int inlength, int[] out,
+                                IntWrapper outpos) {
             if (inlength == 0)
                 return;
             final int outlength = in[inpos.get()];

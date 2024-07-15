@@ -36,31 +36,31 @@ public class LongComposition implements LongCODEC {
         }
 
         @Override
-        public void compress(long[] in, IntWrapper inpos, int inlength,
-        		long[] out, IntWrapper outpos) {
+        public void compress0(long[] in, IntWrapper inpos, int inlength,
+                              long[] out, IntWrapper outpos) {
             if (inlength == 0) {
                 return;
             }
             int inposInit = inpos.get();
             int outposInit = outpos.get();
-            F1.compress(in, inpos, inlength, out, outpos);
+            F1.compress0(in, inpos, inlength, out, outpos);
             if (outpos.get() == outposInit) {
                 out[outposInit] = 0;
                 outpos.increment();
             }
             inlength -= inpos.get() - inposInit;
-            F2.compress(in, inpos, inlength, out, outpos);
+            F2.compress0(in, inpos, inlength, out, outpos);
         }
 
         @Override
-        public void uncompress(long[] in, IntWrapper inpos, int inlength,
-        		long[] out, IntWrapper outpos) {
+        public void uncompress1(long[] in, IntWrapper inpos, int inlength,
+                                long[] out, IntWrapper outpos) {
                 if (inlength == 0)
                         return;
                 final int init = inpos.get();
-                F1.uncompress(in, inpos, inlength, out, outpos);
+                F1.uncompress1(in, inpos, inlength, out, outpos);
                 inlength -= inpos.get() - init;
-                F2.uncompress(in, inpos, inlength, out, outpos);
+                F2.uncompress1(in, inpos, inlength, out, outpos);
         }
 
         @Override

@@ -32,7 +32,7 @@ public class DeltaZigzagEncodingTest {
             int[] data,
             int[] expected)
     {
-        assertArrayEquals(expected, e.encodeArray(data));
+        assertArrayEquals(expected, e.encodeArray3(data));
         assertEquals(data[data.length - 1], e.getContextValue());
     }
 
@@ -41,7 +41,7 @@ public class DeltaZigzagEncodingTest {
             int[] data,
             int[] expected)
     {
-        int[] r = d.decodeArray(data);
+        int[] r = d.decodeArray2(data);
         assertArrayEquals(expected, r);
         assertEquals(r[r.length - 1], d.getContextValue());
     }

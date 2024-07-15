@@ -38,26 +38,26 @@ public final class DeltaZigzagEncoding {
                         return (n << 1) ^ (n >> 31);
                 }
 
-                int[] encodeArray(int[] src, int srcoff, int length,
-                        int[] dst, int dstoff) {
+                int[] encodeArray0(int[] src, int srcoff, int length,
+                                   int[] dst, int dstoff) {
                         for (int i = 0; i < length; ++i) {
                                 dst[dstoff + i] = encodeInt(src[srcoff + i]);
                         }
                         return dst;
                 }
 
-                int[] encodeArray(int[] src, int srcoff, int length,
-                        int[] dst) {
-                        return encodeArray(src, srcoff, length, dst, 0);
+                int[] encodeArray1(int[] src, int srcoff, int length,
+                                   int[] dst) {
+                        return encodeArray0(src, srcoff, length, dst, 0);
                 }
 
-                int[] encodeArray(int[] src, int offset, int length) {
-                        return encodeArray(src, offset, length,
+                int[] encodeArray2(int[] src, int offset, int length) {
+                        return encodeArray0(src, offset, length,
                                 new int[length], 0);
                 }
 
-                int[] encodeArray(int[] src) {
-                        return encodeArray(src, 0, src.length,
+                int[] encodeArray3(int[] src) {
+                        return encodeArray0(src, 0, src.length,
                                 new int[src.length], 0);
                 }
         }
@@ -74,21 +74,21 @@ public final class DeltaZigzagEncoding {
                         return n;
                 }
 
-                int[] decodeArray(int[] src, int srcoff, int length,
-                        int[] dst, int dstoff) {
+                int[] decodeArray0(int[] src, int srcoff, int length,
+                                   int[] dst, int dstoff) {
                         for (int i = 0; i < length; ++i) {
                                 dst[dstoff + i] = decodeInt(src[srcoff + i]);
                         }
                         return dst;
                 }
 
-                int[] decodeArray(int[] src, int offset, int length) {
-                        return decodeArray(src, offset, length,
+                int[] decodeArray1(int[] src, int offset, int length) {
+                        return decodeArray0(src, offset, length,
                                 new int[length], 0);
                 }
 
-                int[] decodeArray(int[] src) {
-                        return decodeArray(src, 0, src.length);
+                int[] decodeArray2(int[] src) {
+                        return decodeArray1(src, 0, src.length);
                 }
         }
 }
