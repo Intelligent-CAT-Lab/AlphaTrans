@@ -1,2 +1,0 @@
-class TestJDKStringConverters:
-    pass

@@ -1,2 +1,0 @@
-class LocalClass:
-    pass

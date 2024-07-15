@@ -1,2 +1,0 @@
-class TestGuavaTypeTokenStringConverter:
-    pass

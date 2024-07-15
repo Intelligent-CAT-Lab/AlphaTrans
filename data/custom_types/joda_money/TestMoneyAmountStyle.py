@@ -1,2 +1,0 @@
-class TestMoneyAmountStyle:
-    pass

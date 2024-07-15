@@ -1,2 +1,0 @@
-class BigMoney:
-    pass

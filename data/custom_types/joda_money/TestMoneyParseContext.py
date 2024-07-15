@@ -1,2 +1,0 @@
-class TestMoneyParseContext:
-    pass

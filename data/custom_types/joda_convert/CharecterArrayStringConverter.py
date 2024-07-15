@@ -1,2 +1,0 @@
-class CharecterArrayStringConverter:
-    pass

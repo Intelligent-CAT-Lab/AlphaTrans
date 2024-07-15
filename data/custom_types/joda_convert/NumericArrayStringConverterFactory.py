@@ -1,2 +1,0 @@
-class NumericArrayStringConverterFactory:
-    pass

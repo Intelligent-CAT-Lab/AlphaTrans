@@ -1,2 +1,0 @@
-class DistanceMethodConstructor:
-    pass
