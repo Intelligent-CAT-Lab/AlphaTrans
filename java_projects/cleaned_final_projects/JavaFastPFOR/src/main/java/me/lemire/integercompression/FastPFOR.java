@@ -98,11 +98,7 @@ public class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
          * Compress data in blocks of BLOCK_SIZE integers (if fewer than BLOCK_SIZE integers
          * are provided, nothing is done).
          *
-<<<<<<< HEAD
-         * @see IntegerCODEC#compress0(int[], IntWrapper, int, int[], IntWrapper)
-=======
          * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
->>>>>>> f66b6db3b (added JavaFastPFOR project)
          */
         @Override
         public void headlessCompress(int[] in, IntWrapper inpos, int inlength,
@@ -232,11 +228,7 @@ public class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
          * the inlength parameter is ignored: it is deduced from the compressed
          * data.
          *
-<<<<<<< HEAD
-         * @see IntegerCODEC#compress0(int[], IntWrapper, int, int[], IntWrapper)
-=======
          * @see IntegerCODEC#compress(int[], IntWrapper, int, int[], IntWrapper)
->>>>>>> f66b6db3b (added JavaFastPFOR project)
          */
         @Override
         public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,
@@ -326,13 +318,8 @@ public class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
                 inpos.set(inexcept);
         }
         @Override
-<<<<<<< HEAD
-        public void compress0(int[] in, IntWrapper inpos, int inlength, int[] out,
-                              IntWrapper outpos) {
-=======
         public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                 IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
             inlength = Util.greatestMultiple(inlength,  BLOCK_SIZE);
             if (inlength == 0)
                     return;
@@ -342,13 +329,8 @@ public class FastPFOR implements IntegerCODEC,SkippableIntegerCODEC {
         }
 
         @Override
-<<<<<<< HEAD
-        public void uncompress0(int[] in, IntWrapper inpos, int inlength, int[] out,
-                                IntWrapper outpos) {
-=======
         public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
                 IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
             if (inlength == 0)
                 return;
             final int outlength = in[inpos.get()];

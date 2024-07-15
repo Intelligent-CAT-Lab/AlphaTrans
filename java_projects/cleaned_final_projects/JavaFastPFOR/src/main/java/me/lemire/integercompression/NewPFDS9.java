@@ -156,13 +156,8 @@ public final class NewPFDS9 implements IntegerCODEC,SkippableIntegerCODEC {
                 inpos.set(tmpinpos);
         }
         @Override
-<<<<<<< HEAD
-        public void compress0(int[] in, IntWrapper inpos, int inlength, int[] out,
-                              IntWrapper outpos) {
-=======
         public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
                 IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
             inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);
             if (inlength == 0)
                     return;
@@ -172,13 +167,8 @@ public final class NewPFDS9 implements IntegerCODEC,SkippableIntegerCODEC {
         }
 
         @Override
-<<<<<<< HEAD
-        public void uncompress0(int[] in, IntWrapper inpos, int inlength, int[] out,
-                                IntWrapper outpos) {
-=======
         public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
                 IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
             if (inlength == 0)
                 return;
             final int outlength = in[inpos.get()];

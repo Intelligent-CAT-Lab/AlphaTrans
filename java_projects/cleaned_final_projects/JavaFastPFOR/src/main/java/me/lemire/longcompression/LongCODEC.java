@@ -35,13 +35,8 @@ public interface LongCODEC {
          * @param outpos
          *                where to write in the output array
          */
-<<<<<<< HEAD
-        public void compress0(long[] in, IntWrapper inpos, int inlength,
-                              long[] out, IntWrapper outpos);
-=======
         public void compress(long[] in, IntWrapper inpos, int inlength,
         		long[] out, IntWrapper outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 
         /**
          * Uncompress data from an array to another array.
@@ -61,12 +56,7 @@ public interface LongCODEC {
          * @param outpos
          *                where to write the compressed output in out
          */
-<<<<<<< HEAD
-        public void uncompress1(long[] in, IntWrapper inpos, int inlength,
-                                long[] out, IntWrapper outpos);
-=======
         public void uncompress(long[] in, IntWrapper inpos, int inlength,
         		long[] out, IntWrapper outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 
 }

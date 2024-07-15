@@ -63,20 +63,12 @@ public class BasicTest {
 
 				IntWrapper aOffset = new IntWrapper(0);
 				IntWrapper bOffset = new IntWrapper(x);
-<<<<<<< HEAD
-				C.compress0(a, aOffset, a.length, b, bOffset);
-=======
 				C.compress(a, aOffset, a.length, b, bOffset);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 				int len = bOffset.get() - x;
 
 				bOffset.set(x);
 				IntWrapper cOffset = new IntWrapper(0);
-<<<<<<< HEAD
-				C.uncompress0(b, bOffset, len, c, cOffset);
-=======
 				C.uncompress(b, bOffset, len, c, cOffset);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 				if(!Arrays.equals(a, c)) {
 					System.out.println("Problem with "+C);
 				}
@@ -97,25 +89,15 @@ public class BasicTest {
         for (IntegerCODEC c : codecs) {
             System.out.println("[BasicTest.varyingLengthTest] codec = " + c);
             for (int L = 1; L <= 128; L++) {
-<<<<<<< HEAD
-                int[] comp = TestUtils.compress1(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompress0(c, comp, L);
-=======
                 int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
                 int[] answer = TestUtils.uncompress(c, comp, L);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
             }
             for (int L = 128; L <= N; L *= 2) {
-<<<<<<< HEAD
-                int[] comp = TestUtils.compress1(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompress0(c, comp, L);
-=======
                 int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
                 int[] answer = TestUtils.uncompress(c, comp, L);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k]) {
                         System.out.println(Arrays.toString(Arrays.copyOf(
@@ -165,25 +147,15 @@ public class BasicTest {
             }
 
             for (int L = 1; L <= 128; L++) {
-<<<<<<< HEAD
-                int[] comp = TestUtils.compress1(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompress0(c, comp, L);
-=======
                 int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
                 int[] answer = TestUtils.uncompress(c, comp, L);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
             }
             for (int L = 128; L <= N; L *= 2) {
-<<<<<<< HEAD
-                int[] comp = TestUtils.compress1(c, Arrays.copyOf(data, L));
-                int[] answer = TestUtils.uncompress0(c, comp, L);
-=======
                 int[] comp = TestUtils.compress(c, Arrays.copyOf(data, L));
                 int[] answer = TestUtils.uncompress(c, comp, L);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
@@ -201,15 +173,9 @@ public class BasicTest {
         DeltaZigzagVariableByte codeco = new DeltaZigzagVariableByte();
 
         testZeroInZeroOut(codec);
-<<<<<<< HEAD
-        test0(codec, codeco, 5, 10);
-        test0(codec, codeco, 5, 14);
-        test0(codec, codeco, 2, 18);
-=======
         test(codec, codeco, 5, 10);
         test(codec, codeco, 5, 14);
         test(codec, codeco, 2, 18);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
     }
 
     /**
@@ -228,15 +194,9 @@ public class BasicTest {
 
         testZeroInZeroOut(compo);
         testUnsorted(compo);
-<<<<<<< HEAD
-        test0(compo, compo2, 5, 10);
-        test0(compo, compo2, 5, 14);
-        test0(compo, compo2, 2, 18);
-=======
         test(compo, compo2, 5, 10);
         test(compo, compo2, 5, 14);
         test(compo, compo2, 2, 18);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
     }
 
     /**
@@ -277,15 +237,9 @@ public class BasicTest {
                 new IntegratedVariableByte());
         IntegerCODEC co = new IntegratedComposition(new XorBinaryPacking(),
                 new IntegratedVariableByte());
-<<<<<<< HEAD
-        test0(c, co, 5, 10);
-        test0(c, co, 5, 14);
-        test0(c, co, 2, 18);
-=======
         test(c, co, 5, 10);
         test(c, co, 5, 14);
         test(c, co, 2, 18);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
     }
 
     /**
@@ -377,15 +331,9 @@ public class BasicTest {
      */
     @Test
     public void basictest() {
-<<<<<<< HEAD
-        test1(5, 10);
-        test1(5, 14);
-        test1(2, 18);
-=======
         test(5, 10);
         test(5, 14);
         test(2, 18);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
     }
 
     /**
@@ -445,11 +393,7 @@ public class BasicTest {
         IntWrapper i0 = new IntWrapper(0);
         IntWrapper i1 = new IntWrapper(0);
         for (int inlength = 0; inlength < 32; ++inlength) {
-<<<<<<< HEAD
-            c.compress0(x, i0, inlength, y, i1);
-=======
             c.compress(x, i0, inlength, y, i1);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
             assertEquals(0, i1.intValue());
         }
     }
@@ -459,28 +403,16 @@ public class BasicTest {
         int[] y = new int[0];
         IntWrapper i0 = new IntWrapper(0);
         IntWrapper i1 = new IntWrapper(0);
-<<<<<<< HEAD
-        c.compress0(x, i0, 0, y, i1);
-=======
         c.compress(x, i0, 0, y, i1);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         assertEquals(0, i1.intValue());
 
         int[] out = new int[0];
         IntWrapper outpos = new IntWrapper(0);
-<<<<<<< HEAD
-        c.uncompress0(y, i1, 0, out, outpos);
-        assertEquals(0, outpos.intValue());
-    }
-
-    private static void test0(IntegerCODEC c, IntegerCODEC co, int N, int nbr) {
-=======
         c.uncompress(y, i1, 0, out, outpos);
         assertEquals(0, outpos.intValue());
     }
 
     private static void test(IntegerCODEC c, IntegerCODEC co, int N, int nbr) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
         for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 4) {
             int[][] data = new int[N][];
@@ -492,11 +424,7 @@ public class BasicTest {
         }
     }
 
-<<<<<<< HEAD
-    private static void test1(int N, int nbr) {
-=======
     private static void test(int N, int nbr) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         ClusteredDataGenerator cdg = new ClusteredDataGenerator();
         System.out.println("[BasicTest.test] N = " + N + " " + nbr);
         for (int sparsity = 1; sparsity < 31 - nbr; sparsity += 4) {
@@ -565,29 +493,17 @@ public class BasicTest {
             inpos.set(1);
             outpos.set(0);
             if (!(c instanceof IntegratedIntegerCODEC)) {
-<<<<<<< HEAD
-                Delta.delta0(backupdata);
-            }
-            c.compress0(backupdata, inpos, backupdata.length - inpos.get(),
-=======
                 Delta.delta(backupdata);
             }
             c.compress(backupdata, inpos, backupdata.length - inpos.get(),
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                     dataout, outpos);
             final int thiscompsize = outpos.get() + 1;
             inpos.set(0);
             outpos.set(1);
             buffer[0] = backupdata[0];
-<<<<<<< HEAD
-            co.uncompress0(dataout, inpos, thiscompsize - 1, buffer, outpos);
-            if (!(c instanceof IntegratedIntegerCODEC))
-                Delta.fastinverseDelta0(buffer);
-=======
             co.uncompress(dataout, inpos, thiscompsize - 1, buffer, outpos);
             if (!(c instanceof IntegratedIntegerCODEC))
                 Delta.fastinverseDelta(buffer);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 
             // Check assertions.
             assertEquals("length is not match", outpos.get(), data[k].length);
@@ -675,22 +591,14 @@ public class BasicTest {
             int[] compressed = new int[(int) Math.ceil(N * 1.01) + 1024];
             IntWrapper inputoffset = new IntWrapper(0);
             IntWrapper outputoffset = new IntWrapper(0);
-<<<<<<< HEAD
-            codec.compress0(data, inputoffset, data.length, compressed,
-=======
             codec.compress(data, inputoffset, data.length, compressed,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                     outputoffset);
             // we can repack the data: (optional)
             compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
             int[] recovered = new int[N];
             IntWrapper recoffset = new IntWrapper(0);
-<<<<<<< HEAD
-            codec.uncompress0(compressed, new IntWrapper(0), compressed.length,
-=======
             codec.uncompress(compressed, new IntWrapper(0), compressed.length,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                     recovered, recoffset);
             assertArrayEquals(data, recovered);
         }
@@ -702,21 +610,13 @@ public class BasicTest {
         int[] compressed = new int[1024];
         IntWrapper inputoffset = new IntWrapper(0);
         IntWrapper outputoffset = new IntWrapper(0);
-<<<<<<< HEAD
-        codec.compress0(data, inputoffset, data.length, compressed, outputoffset);
-=======
         codec.compress(data, inputoffset, data.length, compressed, outputoffset);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         // we can repack the data: (optional)
         compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
         int[] recovered = new int[128];
         IntWrapper recoffset = new IntWrapper(0);
-<<<<<<< HEAD
-        codec.uncompress0(compressed, new IntWrapper(0), compressed.length,
-=======
         codec.uncompress(compressed, new IntWrapper(0), compressed.length,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 recovered, recoffset);
         assertArrayEquals(data, recovered);
     }
@@ -727,21 +627,13 @@ public class BasicTest {
         int[] compressed = new int[1024];
         IntWrapper inputoffset = new IntWrapper(0);
         IntWrapper outputoffset = new IntWrapper(0);
-<<<<<<< HEAD
-        codec.compress0(data, inputoffset, data.length, compressed, outputoffset);
-=======
         codec.compress(data, inputoffset, data.length, compressed, outputoffset);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         // we can repack the data: (optional)
         compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
         int[] recovered = new int[128];
         IntWrapper recoffset = new IntWrapper(0);
-<<<<<<< HEAD
-        codec.uncompress0(compressed, new IntWrapper(0), compressed.length,
-=======
         codec.uncompress(compressed, new IntWrapper(0), compressed.length,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 recovered, recoffset);
         assertArrayEquals(data, recovered);
     }
@@ -759,13 +651,8 @@ public class BasicTest {
         for (int i = 0; i < N; i++)
             data[i] = 0;
         data[126] = -1;
-<<<<<<< HEAD
-        int[] comp = TestUtils.compress1(codec1, Arrays.copyOf(data, N));
-        int[] answer = TestUtils.uncompress0(codec2, comp, N);
-=======
         int[] comp = TestUtils.compress(codec1, Arrays.copyOf(data, N));
         int[] answer = TestUtils.uncompress(codec2, comp, N);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         for (int k = 0; k < N; ++k)
             if (answer[k] != data[k])
                 throw new RuntimeException("bug " + k + " " + answer[k]
@@ -785,13 +672,8 @@ public class BasicTest {
         for (int i = 0; i < N; i++)
             data[i] = 0;
         data[126] = -1;
-<<<<<<< HEAD
-        int[] comp = TestUtils.compress1(codec1, Arrays.copyOf(data, N));
-        int[] answer = TestUtils.uncompress0(codec2, comp, N);
-=======
         int[] comp = TestUtils.compress(codec1, Arrays.copyOf(data, N));
         int[] answer = TestUtils.uncompress(codec2, comp, N);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         for (int k = 0; k < N; ++k)
             if (answer[k] != data[k])
                 throw new RuntimeException("bug " + k + " " + answer[k]

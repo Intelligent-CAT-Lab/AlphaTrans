@@ -21,11 +21,7 @@ public final class Delta {
          * @param data
          *                data to be modified
          */
-<<<<<<< HEAD
-        public static void delta0(int[] data) {
-=======
         public static void delta(int[] data) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int i = data.length - 1; i > 0; --i) {
                         data[i] -= data[i - 1];
                 }
@@ -44,11 +40,7 @@ public final class Delta {
          *                initial value
          * @return next initial vale
          */
-<<<<<<< HEAD
-        public static int delta1(int[] data, int start, int length, int init) {
-=======
         public static int delta(int[] data, int start, int length, int init) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 final int nextinit = data[start + length - 1];
                 for (int i = length - 1; i > 0; --i) {
                         data[start + i] -= data[start + i - 1];
@@ -73,13 +65,8 @@ public final class Delta {
          *                output array
          * @return next initial vale
          */
-<<<<<<< HEAD
-        public static int delta2(int[] data, int start, int length, int init,
-                                 int[] out) {
-=======
         public static int delta(int[] data, int start, int length, int init,
                 int[] out) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int i = length - 1; i > 0; --i) {
                         out[i] = data[start + i] - data[start + i - 1];
                 }
@@ -107,11 +94,7 @@ public final class Delta {
          * @param data
          *                to be modified
          */
-<<<<<<< HEAD
-        public static void fastinverseDelta0(int[] data) {
-=======
         public static void fastinverseDelta(int[] data) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 int sz0 = data.length / 4 * 4;
                 int i = 1;
                 if (sz0 >= 4) {
@@ -143,13 +126,8 @@ public final class Delta {
          *                initial value
          * @return next initial value
          */
-<<<<<<< HEAD
-        public static int fastinverseDelta1(int[] data, int start, int length,
-                                            int init) {
-=======
         public static int fastinverseDelta(int[] data, int start, int length,
                 int init) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 data[start] += init;
                 int sz0 = length / 4 * 4;
                 int i = 1;

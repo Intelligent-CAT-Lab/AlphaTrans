@@ -36,42 +36,19 @@ public class LongComposition implements LongCODEC {
         }
 
         @Override
-<<<<<<< HEAD
-        public void compress0(long[] in, IntWrapper inpos, int inlength,
-                              long[] out, IntWrapper outpos) {
-=======
         public void compress(long[] in, IntWrapper inpos, int inlength,
         		long[] out, IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
             if (inlength == 0) {
                 return;
             }
             int inposInit = inpos.get();
             int outposInit = outpos.get();
-<<<<<<< HEAD
-            F1.compress0(in, inpos, inlength, out, outpos);
-=======
             F1.compress(in, inpos, inlength, out, outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
             if (outpos.get() == outposInit) {
                 out[outposInit] = 0;
                 outpos.increment();
             }
             inlength -= inpos.get() - inposInit;
-<<<<<<< HEAD
-            F2.compress0(in, inpos, inlength, out, outpos);
-        }
-
-        @Override
-        public void uncompress1(long[] in, IntWrapper inpos, int inlength,
-                                long[] out, IntWrapper outpos) {
-                if (inlength == 0)
-                        return;
-                final int init = inpos.get();
-                F1.uncompress1(in, inpos, inlength, out, outpos);
-                inlength -= inpos.get() - init;
-                F2.uncompress1(in, inpos, inlength, out, outpos);
-=======
             F2.compress(in, inpos, inlength, out, outpos);
         }
 
@@ -84,7 +61,6 @@ public class LongComposition implements LongCODEC {
                 F1.uncompress(in, inpos, inlength, out, outpos);
                 inlength -= inpos.get() - init;
                 F2.uncompress(in, inpos, inlength, out, outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         }
 
         @Override

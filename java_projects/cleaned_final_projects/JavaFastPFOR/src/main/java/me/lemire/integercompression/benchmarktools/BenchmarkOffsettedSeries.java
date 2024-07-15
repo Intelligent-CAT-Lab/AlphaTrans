@@ -52,15 +52,9 @@ public class BenchmarkOffsettedSeries {
                         .format("\"Dataset\",\"CODEC\",\"Bits per int\","
                                 + "\"Compress speed (MiS)\",\"Decompress speed (MiS)\"\n");
 
-<<<<<<< HEAD
-                benchmark0(csvWriter, codecs, count, length, DEFAULT_MEAN,
-                        DEFAULT_RANGE);
-                benchmark0(csvWriter, codecs, count, length, DEFAULT_MEAN >> 5,
-=======
                 benchmark(csvWriter, codecs, count, length, DEFAULT_MEAN,
                         DEFAULT_RANGE);
                 benchmark(csvWriter, codecs, count, length, DEFAULT_MEAN >> 5,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                         DEFAULT_RANGE);
 
                 IntegerCODEC[] codecs2 = { new JustCopy(), new BinaryPacking(),
@@ -97,16 +91,6 @@ public class BenchmarkOffsettedSeries {
                         "(mean=%1$d range=%2$d freq=%3$d)", mean, range, freq);
                 int[][] data = generateSineDataChunks(0, count, length, mean,
                         range, freq);
-<<<<<<< HEAD
-                benchmark1(csvWriter, "Sine " + dataProp, codecs, data,
-                        DEFAULT_REPEAT, DEFAULT_WARMUP);
-                benchmark1(csvWriter, "Sine+delta " + dataProp, codecs, data,
-                        DEFAULT_REPEAT, DEFAULT_WARMUP);
-        }
-
-        private static void benchmark0(final PrintWriter csvWriter, final IntegerCODEC[] codecs,
-                                       final int count, final int length, final int mean, final int range) {
-=======
                 benchmark(csvWriter, "Sine " + dataProp, codecs, data,
                         DEFAULT_REPEAT, DEFAULT_WARMUP);
                 benchmark(csvWriter, "Sine+delta " + dataProp, codecs, data,
@@ -115,7 +99,6 @@ public class BenchmarkOffsettedSeries {
 
         private static void benchmark(final PrintWriter csvWriter, final IntegerCODEC[] codecs,
                 final int count, final int length, final int mean, final int range) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 String dataProp = String.format("(mean=%1$d range=%2$d)", mean,
                         range);
 
@@ -125,20 +108,6 @@ public class BenchmarkOffsettedSeries {
                 int[][] sortedData = sortDataChunks(randData);
                 int[][] sortedDeltaData = deltaDataChunks(sortedData);
 
-<<<<<<< HEAD
-                benchmark1(csvWriter, "Random " + dataProp, codecs, randData,
-                        DEFAULT_REPEAT, DEFAULT_WARMUP);
-                benchmark1(csvWriter, "Random+delta " + dataProp, codecs,
-                        deltaData, DEFAULT_REPEAT, DEFAULT_WARMUP);
-                benchmark1(csvWriter, "Sorted " + dataProp, codecs, sortedData,
-                        DEFAULT_REPEAT, DEFAULT_WARMUP);
-                benchmark1(csvWriter, "Sorted+delta " + dataProp, codecs,
-                        sortedDeltaData, DEFAULT_REPEAT, DEFAULT_WARMUP);
-        }
-
-        private static void benchmark1(final PrintWriter csvWriter, final String dataName,
-                                       final IntegerCODEC[] codecs, final int[][] data, final int repeat, final int warmup) {
-=======
                 benchmark(csvWriter, "Random " + dataProp, codecs, randData,
                         DEFAULT_REPEAT, DEFAULT_WARMUP);
                 benchmark(csvWriter, "Random+delta " + dataProp, codecs,
@@ -151,31 +120,19 @@ public class BenchmarkOffsettedSeries {
 
         private static void benchmark(final PrintWriter csvWriter, final String dataName,
                 final IntegerCODEC[] codecs, final int[][] data, final int repeat, final int warmup) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 System.out.println("Processing: " + dataName);
                 for (IntegerCODEC codec : codecs) {
                         String codecName = codec.toString();
                         for (int i = 0; i < warmup; ++i) {
-<<<<<<< HEAD
-                                benchmark2(null, null, null, codec, data, repeat);
-                        }
-                        benchmark2(csvWriter, dataName, codecName, codec, data,
-=======
                                 benchmark(null, null, null, codec, data, repeat);
                         }
                         benchmark(csvWriter, dataName, codecName, codec, data,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                                 repeat);
                 }
         }
 
-<<<<<<< HEAD
-        private static void benchmark2(PrintWriter csvWriter, String dataName,
-                                       String codecName, IntegerCODEC codec, int[][] data, int repeat) {
-=======
         private static void benchmark(PrintWriter csvWriter, String dataName,
                 String codecName, IntegerCODEC codec, int[][] data, int repeat) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 PerformanceLogger logger = new PerformanceLogger();
 
                 int maxLen = getMaxLen(data);
@@ -226,11 +183,7 @@ public class BenchmarkOffsettedSeries {
                 IntWrapper inpos = IntWrapper.IntWrapper1();
                 IntWrapper outpos = IntWrapper.IntWrapper1();
                 logger.compressionTimer.start();
-<<<<<<< HEAD
-                codec.compress0(src, inpos, src.length, dst, outpos);
-=======
                 codec.compress(src, inpos, src.length, dst, outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 logger.compressionTimer.end();
                 int outSize = outpos.get();
                 logger.addOriginalSize(src.length);
@@ -243,11 +196,7 @@ public class BenchmarkOffsettedSeries {
                 IntWrapper inpos = IntWrapper.IntWrapper1();
                 IntWrapper outpos = IntWrapper.IntWrapper1();
                 logger.decompressionTimer.start();
-<<<<<<< HEAD
-                codec.uncompress0(src, inpos, srcLen, dst, outpos);
-=======
                 codec.uncompress(src, inpos, srcLen, dst, outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 logger.decompressionTimer.end();
                 return outpos.get();
         }

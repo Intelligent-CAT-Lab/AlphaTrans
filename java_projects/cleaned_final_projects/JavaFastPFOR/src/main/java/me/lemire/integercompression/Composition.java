@@ -34,42 +34,19 @@ public class Composition implements IntegerCODEC {
         }
 
         @Override
-<<<<<<< HEAD
-        public void compress0(int[] in, IntWrapper inpos, int inlength,
-                              int[] out, IntWrapper outpos) {
-=======
         public void compress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
             if (inlength == 0) {
                 return;
             }
             int inposInit = inpos.get();
             int outposInit = outpos.get();
-<<<<<<< HEAD
-            F1.compress0(in, inpos, inlength, out, outpos);
-=======
             F1.compress(in, inpos, inlength, out, outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
             if (outpos.get() == outposInit) {
                 out[outposInit] = 0;
                 outpos.increment();
             }
             inlength -= inpos.get() - inposInit;
-<<<<<<< HEAD
-            F2.compress0(in, inpos, inlength, out, outpos);
-        }
-
-        @Override
-        public void uncompress0(int[] in, IntWrapper inpos, int inlength,
-                                int[] out, IntWrapper outpos) {
-                if (inlength == 0)
-                        return;
-                final int init = inpos.get();
-                F1.uncompress0(in, inpos, inlength, out, outpos);
-                inlength -= inpos.get() - init;
-                F2.uncompress0(in, inpos, inlength, out, outpos);
-=======
             F2.compress(in, inpos, inlength, out, outpos);
         }
 
@@ -82,7 +59,6 @@ public class Composition implements IntegerCODEC {
                 F1.uncompress(in, inpos, inlength, out, outpos);
                 inlength -= inpos.get() - init;
                 F2.uncompress(in, inpos, inlength, out, outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         }
 
         @Override

@@ -33,13 +33,8 @@ public interface IntegerCODEC {
          * @param outpos
          *                where to write in the output array
          */
-<<<<<<< HEAD
-        public void compress0(int[] in, IntWrapper inpos, int inlength,
-                              int[] out, IntWrapper outpos);
-=======
         public void compress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 
         /**
          * Uncompress data from an array to another array.
@@ -59,12 +54,7 @@ public interface IntegerCODEC {
          * @param outpos
          *                where to write the compressed output in out
          */
-<<<<<<< HEAD
-        public void uncompress0(int[] in, IntWrapper inpos, int inlength,
-                                int[] out, IntWrapper outpos);
-=======
         public void uncompress(int[] in, IntWrapper inpos, int inlength,
                 int[] out, IntWrapper outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 
 }

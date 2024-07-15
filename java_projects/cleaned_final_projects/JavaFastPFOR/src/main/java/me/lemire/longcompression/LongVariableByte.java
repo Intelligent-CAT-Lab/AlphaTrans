@@ -31,13 +31,8 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
         return (byte) ((val >>> (7 * i)));
     }
     @Override
-<<<<<<< HEAD
-    public void compress0(long[] in, IntWrapper inpos, int inlength, long[] out,
-                          IntWrapper outpos) {
-=======
     public void compress(long[] in, IntWrapper inpos, int inlength, long[] out,
             IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         headlessCompress(in, inpos, inlength, out, outpos);
     }
 
@@ -129,13 +124,8 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
     }
 
     @Override
-<<<<<<< HEAD
-    public void compress1(long[] in, IntWrapper inpos, int inlength, byte[] out,
-                          IntWrapper outpos) {
-=======
     public void compress(long[] in, IntWrapper inpos, int inlength, byte[] out,
             IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         if (inlength == 0)
             return;
         int outpostmp = outpos.get();
@@ -213,13 +203,8 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
     }
 
     @Override
-<<<<<<< HEAD
-    public void uncompress1(long[] in, IntWrapper inpos, int inlength, long[] out,
-                            IntWrapper outpos) {
-=======
     public void uncompress(long[] in, IntWrapper inpos, int inlength, long[] out,
             IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         int s = 0;
         long val = 0;
         int p = inpos.get();
@@ -248,13 +233,8 @@ public class LongVariableByte implements LongCODEC, ByteLongCODEC, SkippableLong
     }
 
     @Override
-<<<<<<< HEAD
-    public void uncompress1(byte[] in, IntWrapper inpos, int inlength,
-                            long[] out, IntWrapper outpos) {
-=======
     public void uncompress(byte[] in, IntWrapper inpos, int inlength,
     		long[] out, IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         int p = inpos.get();
         int finalp = inpos.get() + inlength;
         int tmpoutpos = outpos.get();

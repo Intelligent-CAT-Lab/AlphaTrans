@@ -40,11 +40,7 @@ public class LongAs2IntsCodec implements LongCODEC {
 // 	}
 
 	@Override
-<<<<<<< HEAD
-	public void compress0(long[] in, IntWrapper inpos, int inlength, long[] out, IntWrapper outpos) {
-=======
 	public void compress(long[] in, IntWrapper inpos, int inlength, long[] out, IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 		if (inlength == 0) {
 			return;
 		}
@@ -69,11 +65,7 @@ public class LongAs2IntsCodec implements LongCODEC {
 			// The first integer is reserved to hold the number of compressed ints
 			IntWrapper highPartsOutPosition = new IntWrapper(1);
 
-<<<<<<< HEAD
-			highPartsCodec.compress0(highParts, IntWrapper.IntWrapper1(), inlength, buffer, highPartsOutPosition);
-=======
 			highPartsCodec.compress(highParts, IntWrapper.IntWrapper1(), inlength, buffer, highPartsOutPosition);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 
 			// Record the compressedHighparts length
 			buffer[0] = highPartsOutPosition.get() - 1;
@@ -100,11 +92,7 @@ public class LongAs2IntsCodec implements LongCODEC {
 				lowPartsOutPosition.set(2);
 			}
 
-<<<<<<< HEAD
-			lowPartsCodec.compress0(lowParts, new IntWrapper(0), inlength, buffer, lowPartsOutPosition);
-=======
 			lowPartsCodec.compress(lowParts, new IntWrapper(0), inlength, buffer, lowPartsOutPosition);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 
 			// Record the compressedHighparts length
 			buffer[hasLeftover ? 1 : 0] = lowPartsOutPosition.get() - (hasLeftover ? 2 : 1);
@@ -129,11 +117,7 @@ public class LongAs2IntsCodec implements LongCODEC {
 	 * inlength is ignored by this codec. We may rely on it instead of storing the compressedLowPart length
 	 */
 	@Override
-<<<<<<< HEAD
-	public void uncompress1(long[] in, IntWrapper inpos, int inlength, long[] out, IntWrapper outpos) {
-=======
 	public void uncompress(long[] in, IntWrapper inpos, int inlength, long[] out, IntWrapper outpos) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 		if (inlength == 0) {
 			return;
 		}
@@ -161,11 +145,7 @@ public class LongAs2IntsCodec implements LongCODEC {
 		int[] buffer = new int[inlength * 16];
 
 		IntWrapper highPartsOutPosition = IntWrapper.IntWrapper1();
-<<<<<<< HEAD
-		highPartsCodec.uncompress0(compressedHighParts,
-=======
 		highPartsCodec.uncompress(compressedHighParts,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 				IntWrapper.IntWrapper1(),
 				compressedHighParts.length,
 				buffer,
@@ -196,11 +176,7 @@ public class LongAs2IntsCodec implements LongCODEC {
 		}
 
 		IntWrapper lowPartsOutPosition = IntWrapper.IntWrapper1();
-<<<<<<< HEAD
-		lowPartsCodec.uncompress0(compressedLowParts,
-=======
 		lowPartsCodec.uncompress(compressedLowParts,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 				IntWrapper.IntWrapper1(),
 				compressedLowParts.length,
 				buffer,

@@ -34,22 +34,14 @@ public class BoundaryTest {
         int[] compressed = new int[length];
         IntWrapper c_inpos = new IntWrapper(0);
         IntWrapper c_outpos = new IntWrapper(0);
-<<<<<<< HEAD
-        c.compress0(source, c_inpos, source.length, compressed, c_outpos);
-=======
         c.compress(source, c_inpos, source.length, compressed, c_outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         assertTrue(c_outpos.get() <= length);
 
         // Uncompress an array.
         int[] uncompressed = new int[length];
         IntWrapper u_inpos = new IntWrapper(0);
         IntWrapper u_outpos = new IntWrapper(0);
-<<<<<<< HEAD
-        c.uncompress0(compressed, u_inpos, c_outpos.get(), uncompressed,
-=======
         c.uncompress(compressed, u_inpos, c_outpos.get(), uncompressed,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 u_outpos);
 
         // Compare between uncompressed and original arrays.

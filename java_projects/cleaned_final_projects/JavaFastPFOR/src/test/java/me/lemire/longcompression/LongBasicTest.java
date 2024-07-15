@@ -14,12 +14,6 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-<<<<<<< HEAD
-import me.lemire.integercompression.FastPFOR;
-import me.lemire.integercompression.FastPFOR128;
-import me.lemire.integercompression.IntWrapper;
-import me.lemire.longcompression.differential.LongDelta;
-=======
 import me.lemire.integercompression.BinaryPacking;
 import me.lemire.integercompression.Composition;
 import me.lemire.integercompression.FastPFOR;
@@ -40,7 +34,6 @@ import me.lemire.integercompression.differential.IntegratedComposition;
 import me.lemire.integercompression.differential.IntegratedVariableByte;
 import me.lemire.longcompression.differential.LongDelta;
 import me.lemire.longcompression.synth.LongClusteredDataGenerator;
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 
 /**
  * Just some basic sanity tests.
@@ -67,20 +60,12 @@ public class LongBasicTest {
 
 				IntWrapper aOffset = new IntWrapper(0);
 				IntWrapper bOffset = new IntWrapper(x);
-<<<<<<< HEAD
-				C.compress0(a, aOffset, a.length, b, bOffset);
-=======
 				C.compress(a, aOffset, a.length, b, bOffset);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 				int len = bOffset.get() - x;
 
 				bOffset.set(x);
 				IntWrapper cOffset = new IntWrapper(0);
-<<<<<<< HEAD
-				C.uncompress1(b, bOffset, len, c, cOffset);
-=======
 				C.uncompress(b, bOffset, len, c, cOffset);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 				if(!Arrays.equals(a, c)) {
 					System.out.println("Problem with "+C);
 				}
@@ -101,25 +86,15 @@ public class LongBasicTest {
         for (LongCODEC c : codecs) {
             System.out.println("[BasicTest.varyingLengthTest] codec = " + c);
             for (int L = 1; L <= 128; L++) {
-<<<<<<< HEAD
-                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress0(c, comp, L);
-=======
                 long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));
                 long[] answer = LongTestUtils.uncompress(c, comp, L);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
             }
             for (int L = 128; L <= N; L *= 2) {
-<<<<<<< HEAD
-                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress0(c, comp, L);
-=======
                 long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));
                 long[] answer = LongTestUtils.uncompress(c, comp, L);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k]) {
                         System.out.println(Arrays.toString(Arrays.copyOf(
@@ -169,25 +144,15 @@ public class LongBasicTest {
             }
 
             for (int L = 1; L <= 128; L++) {
-<<<<<<< HEAD
-                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress0(c, comp, L);
-=======
                 long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));
                 long[] answer = LongTestUtils.uncompress(c, comp, L);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
             }
             for (int L = 128; L <= N; L *= 2) {
-<<<<<<< HEAD
-                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress0(c, comp, L);
-=======
                 long[] comp = LongTestUtils.compress(c, Arrays.copyOf(data, L));
                 long[] answer = LongTestUtils.uncompress(c, comp, L);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 for (int k = 0; k < L; ++k)
                     if (answer[k] != data[k])
                         throw new RuntimeException("bug");
@@ -210,11 +175,7 @@ public class LongBasicTest {
         IntWrapper i0 = new IntWrapper(0);
         IntWrapper i1 = new IntWrapper(0);
         for (int inlength = 0; inlength < 32; ++inlength) {
-<<<<<<< HEAD
-            c.compress0(x, i0, inlength, y, i1);
-=======
             c.compress(x, i0, inlength, y, i1);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
             assertEquals(0, i1.intValue());
         }
     }
@@ -224,20 +185,12 @@ public class LongBasicTest {
         long[] y = new long[0];
         IntWrapper i0 = new IntWrapper(0);
         IntWrapper i1 = new IntWrapper(0);
-<<<<<<< HEAD
-        c.compress0(x, i0, 0, y, i1);
-=======
         c.compress(x, i0, 0, y, i1);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         assertEquals(0, i1.intValue());
 
         long[] out = new long[0];
         IntWrapper outpos = new IntWrapper(0);
-<<<<<<< HEAD
-        c.uncompress1(y, i1, 0, out, outpos);
-=======
         c.uncompress(y, i1, 0, out, outpos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         assertEquals(0, outpos.intValue());
     }
 
@@ -261,29 +214,17 @@ public class LongBasicTest {
             inpos.set(1);
             outpos.set(0);
             if (!(c instanceof IntegratedLongCODEC)) {
-<<<<<<< HEAD
-                LongDelta.delta0(backupdata);
-            }
-            c.compress0(backupdata, inpos, backupdata.length - inpos.get(),
-=======
                 LongDelta.delta(backupdata);
             }
             c.compress(backupdata, inpos, backupdata.length - inpos.get(),
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                     dataout, outpos);
             final int thiscompsize = outpos.get() + 1;
             inpos.set(0);
             outpos.set(1);
             buffer[0] = backupdata[0];
-<<<<<<< HEAD
-            co.uncompress1(dataout, inpos, thiscompsize - 1, buffer, outpos);
-            if (!(c instanceof IntegratedLongCODEC))
-            	LongDelta.fastinverseDelta0(buffer);
-=======
             co.uncompress(dataout, inpos, thiscompsize - 1, buffer, outpos);
             if (!(c instanceof IntegratedLongCODEC))
             	LongDelta.fastinverseDelta(buffer);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 
             // Check assertions.
             assertEquals("length is not match", outpos.get(), data[k].length);
@@ -314,22 +255,14 @@ public class LongBasicTest {
             long[] compressed = new long[(int) Math.ceil(N * 1.01) + 1024];
             IntWrapper inputoffset = new IntWrapper(0);
             IntWrapper outputoffset = new IntWrapper(0);
-<<<<<<< HEAD
-            codec.compress0(data, inputoffset, data.length, compressed,
-=======
             codec.compress(data, inputoffset, data.length, compressed,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                     outputoffset);
             // we can repack the data: (optional)
             compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
             long[] recovered = new long[N];
             IntWrapper recoffset = new IntWrapper(0);
-<<<<<<< HEAD
-            codec.uncompress1(compressed, new IntWrapper(0), compressed.length,
-=======
             codec.uncompress(compressed, new IntWrapper(0), compressed.length,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                     recovered, recoffset);
             assertArrayEquals(data, recovered);
         }
@@ -341,21 +274,13 @@ public class LongBasicTest {
         long[] compressed = new long[1024];
         IntWrapper inputoffset = new IntWrapper(0);
         IntWrapper outputoffset = new IntWrapper(0);
-<<<<<<< HEAD
-        codec.compress0(data, inputoffset, data.length, compressed, outputoffset);
-=======
         codec.compress(data, inputoffset, data.length, compressed, outputoffset);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         // we can repack the data: (optional)
         compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
         long[] recovered = new long[128];
         IntWrapper recoffset = new IntWrapper(0);
-<<<<<<< HEAD
-        codec.uncompress1(compressed, new IntWrapper(0), compressed.length,
-=======
         codec.uncompress(compressed, new IntWrapper(0), compressed.length,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 recovered, recoffset);
         assertArrayEquals(data, recovered);
     }
@@ -366,21 +291,13 @@ public class LongBasicTest {
         long[] compressed = new long[1024];
         IntWrapper inputoffset = new IntWrapper(0);
         IntWrapper outputoffset = new IntWrapper(0);
-<<<<<<< HEAD
-        codec.compress0(data, inputoffset, data.length, compressed, outputoffset);
-=======
         codec.compress(data, inputoffset, data.length, compressed, outputoffset);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         // we can repack the data: (optional)
         compressed = Arrays.copyOf(compressed, outputoffset.intValue());
 
         long[] recovered = new long[128];
         IntWrapper recoffset = new IntWrapper(0);
-<<<<<<< HEAD
-        codec.uncompress1(compressed, new IntWrapper(0), compressed.length,
-=======
         codec.uncompress(compressed, new IntWrapper(0), compressed.length,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 recovered, recoffset);
         assertArrayEquals(data, recovered);
     }
@@ -397,13 +314,8 @@ public class LongBasicTest {
 	        for (int i = 0; i < N; i++)
 	            data[i] = 0;
 	        data[126] = -1;
-<<<<<<< HEAD
-	        long[] comp = LongTestUtils.compress1(codec, Arrays.copyOf(data, N));
-	        long[] answer = LongTestUtils.uncompress0(codec, comp, N);
-=======
 	        long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));
 	        long[] answer = LongTestUtils.uncompress(codec, comp, N);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 	        for (int k = 0; k < N; ++k)
 	            if (answer[k] != data[k])
 	                throw new RuntimeException("bug " + k + " " + answer[k]
@@ -423,13 +335,8 @@ public class LongBasicTest {
 	        for (int i = 0; i < N; i++)
 	            data[i] = 0;
 	        data[126] = -1;
-<<<<<<< HEAD
-	        long[] comp = LongTestUtils.compress1(codec, Arrays.copyOf(data, N));
-	        long[] answer = LongTestUtils.uncompress0(codec, comp, N);
-=======
 	        long[] comp = LongTestUtils.compress(codec, Arrays.copyOf(data, N));
 	        long[] answer = LongTestUtils.uncompress(codec, comp, N);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
 	        for (int k = 0; k < N; ++k)
 	            if (answer[k] != data[k])
 	                throw new RuntimeException("bug " + k + " " + answer[k]

@@ -113,11 +113,7 @@ public class TestUtils {
         int[] compressed = new int[orig.length + EXTEND];
         IntWrapper c_inpos = new IntWrapper(0);
         IntWrapper c_outpos = new IntWrapper(0);
-<<<<<<< HEAD
-        codec.compress0(orig, c_inpos, orig.length, compressed,
-=======
         codec.compress(orig, c_inpos, orig.length, compressed,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 c_outpos);
 
         assertTrue(c_outpos.get() <= orig.length + EXTEND);
@@ -126,11 +122,7 @@ public class TestUtils {
         int[] uncompressed = new int[orig.length];
         IntWrapper u_inpos = new IntWrapper(0);
         IntWrapper u_outpos = new IntWrapper(0);
-<<<<<<< HEAD
-        codec.uncompress0(compressed, u_inpos, c_outpos.get(),
-=======
         codec.uncompress(compressed, u_inpos, c_outpos.get(),
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 uncompressed, u_outpos);
 
         // Compare between uncompressed and orig arrays.
@@ -138,21 +130,6 @@ public class TestUtils {
         assertArrayEquals(orig, target);
     }
 
-<<<<<<< HEAD
-    public static int[] compress1(IntegerCODEC codec, int[] data) {
-        int[] outBuf = new int[data.length * 4];
-        IntWrapper inPos = IntWrapper.IntWrapper1();
-        IntWrapper outPos = IntWrapper.IntWrapper1();
-        codec.compress0(data, inPos, data.length, outBuf, outPos);
-        return Arrays.copyOf(outBuf, outPos.get());
-    }
-
-    protected static int[] uncompress0(IntegerCODEC codec, int[] data, int len) {
-        int[] outBuf = new int[len + 1024];
-        IntWrapper inPos = IntWrapper.IntWrapper1();
-        IntWrapper outPos = IntWrapper.IntWrapper1();
-        codec.uncompress0(data, inPos, data.length, outBuf, outPos);
-=======
     public static int[] compress(IntegerCODEC codec, int[] data) {
         int[] outBuf = new int[data.length * 4];
         IntWrapper inPos = IntWrapper.IntWrapper1();
@@ -166,27 +143,11 @@ public class TestUtils {
         IntWrapper inPos = IntWrapper.IntWrapper1();
         IntWrapper outPos = IntWrapper.IntWrapper1();
         codec.uncompress(data, inPos, data.length, outBuf, outPos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         return Arrays.copyOf(outBuf, outPos.get());
     }
 
 
 
-<<<<<<< HEAD
-    protected static byte[] compress0(ByteIntegerCODEC codec, int[] data) {
-        byte[] outBuf = new byte[data.length * 4 * 4];
-        IntWrapper inPos = IntWrapper.IntWrapper1();
-        IntWrapper outPos = IntWrapper.IntWrapper1();
-        codec.compress1(data, inPos, data.length, outBuf, outPos);
-        return Arrays.copyOf(outBuf, outPos.get());
-    }
-
-    protected static int[] uncompress1(ByteIntegerCODEC codec, byte[] data, int len) {
-        int[] outBuf = new int[len + 1024];
-        IntWrapper inPos = IntWrapper.IntWrapper1();
-        IntWrapper outPos = IntWrapper.IntWrapper1();
-        codec.uncompress1(data, inPos, data.length, outBuf, outPos);
-=======
     protected static byte[] compress(ByteIntegerCODEC codec, int[] data) {
         byte[] outBuf = new byte[data.length * 4 * 4];
         IntWrapper inPos = IntWrapper.IntWrapper1();
@@ -200,7 +161,6 @@ public class TestUtils {
         IntWrapper inPos = IntWrapper.IntWrapper1();
         IntWrapper outPos = IntWrapper.IntWrapper1();
         codec.uncompress(data, inPos, data.length, outBuf, outPos);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
         return Arrays.copyOf(outBuf, outPos.get());
     }
 

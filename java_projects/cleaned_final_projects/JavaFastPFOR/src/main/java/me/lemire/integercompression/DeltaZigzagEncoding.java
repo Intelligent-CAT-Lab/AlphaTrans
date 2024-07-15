@@ -38,33 +38,14 @@ public final class DeltaZigzagEncoding {
                         return (n << 1) ^ (n >> 31);
                 }
 
-<<<<<<< HEAD
-                int[] encodeArray0(int[] src, int srcoff, int length,
-                                   int[] dst, int dstoff) {
-=======
                 int[] encodeArray(int[] src, int srcoff, int length,
                         int[] dst, int dstoff) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                         for (int i = 0; i < length; ++i) {
                                 dst[dstoff + i] = encodeInt(src[srcoff + i]);
                         }
                         return dst;
                 }
 
-<<<<<<< HEAD
-                int[] encodeArray1(int[] src, int srcoff, int length,
-                                   int[] dst) {
-                        return encodeArray0(src, srcoff, length, dst, 0);
-                }
-
-                int[] encodeArray2(int[] src, int offset, int length) {
-                        return encodeArray0(src, offset, length,
-                                new int[length], 0);
-                }
-
-                int[] encodeArray3(int[] src) {
-                        return encodeArray0(src, 0, src.length,
-=======
                 int[] encodeArray(int[] src, int srcoff, int length,
                         int[] dst) {
                         return encodeArray(src, srcoff, length, dst, 0);
@@ -77,7 +58,6 @@ public final class DeltaZigzagEncoding {
 
                 int[] encodeArray(int[] src) {
                         return encodeArray(src, 0, src.length,
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                                 new int[src.length], 0);
                 }
         }
@@ -94,28 +74,14 @@ public final class DeltaZigzagEncoding {
                         return n;
                 }
 
-<<<<<<< HEAD
-                int[] decodeArray0(int[] src, int srcoff, int length,
-                                   int[] dst, int dstoff) {
-=======
                 int[] decodeArray(int[] src, int srcoff, int length,
                         int[] dst, int dstoff) {
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                         for (int i = 0; i < length; ++i) {
                                 dst[dstoff + i] = decodeInt(src[srcoff + i]);
                         }
                         return dst;
                 }
 
-<<<<<<< HEAD
-                int[] decodeArray1(int[] src, int offset, int length) {
-                        return decodeArray0(src, offset, length,
-                                new int[length], 0);
-                }
-
-                int[] decodeArray2(int[] src) {
-                        return decodeArray1(src, 0, src.length);
-=======
                 int[] decodeArray(int[] src, int offset, int length) {
                         return decodeArray(src, offset, length,
                                 new int[length], 0);
@@ -123,7 +89,6 @@ public final class DeltaZigzagEncoding {
 
                 int[] decodeArray(int[] src) {
                         return decodeArray(src, 0, src.length);
->>>>>>> f66b6db3b (added JavaFastPFOR project)
                 }
         }
 }
