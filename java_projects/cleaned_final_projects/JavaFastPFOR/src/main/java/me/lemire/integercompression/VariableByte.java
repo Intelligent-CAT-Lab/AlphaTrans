@@ -29,8 +29,8 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
         return (byte) ((val >> (7 * i)));
     }
     @Override
-    public void compress(int[] in, IntWrapper inpos, int inlength, int[] out,
-            IntWrapper outpos) {
+    public void compress0(int[] in, IntWrapper inpos, int inlength, int[] out,
+                          IntWrapper outpos) {
         headlessCompress(in, inpos, inlength, out, outpos);
     }
 
@@ -77,8 +77,8 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
     }
 
     @Override
-    public void compress(int[] in, IntWrapper inpos, int inlength, byte[] out,
-            IntWrapper outpos) {
+    public void compress1(int[] in, IntWrapper inpos, int inlength, byte[] out,
+                          IntWrapper outpos) {
         if (inlength == 0)
             return;
         int outpostmp = outpos.get();
@@ -112,8 +112,8 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
     }
 
     @Override
-    public void uncompress(int[] in, IntWrapper inpos, int inlength, int[] out,
-            IntWrapper outpos) {
+    public void uncompress0(int[] in, IntWrapper inpos, int inlength, int[] out,
+                            IntWrapper outpos) {
         int s = 0;
         int val = 0;
         int p = inpos.get();
@@ -141,8 +141,8 @@ public class VariableByte implements IntegerCODEC, ByteIntegerCODEC, SkippableIn
     }
 
     @Override
-    public void uncompress(byte[] in, IntWrapper inpos, int inlength,
-            int[] out, IntWrapper outpos) {
+    public void uncompress1(byte[] in, IntWrapper inpos, int inlength,
+                            int[] out, IntWrapper outpos) {
         int p = inpos.get();
         int finalp = inpos.get() + inlength;
         int tmpoutpos = outpos.get();

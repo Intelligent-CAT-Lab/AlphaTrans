@@ -90,13 +90,13 @@ public class BenchmarkBitPacking {
                                 int[] tmpdata = Arrays
                                         .copyOf(data, data.length);
                                 long time1 = System.nanoTime();
-                                Delta.delta(tmpdata);
+                                Delta.delta0(tmpdata);
                                 BitPacking.fastpackwithoutmask(tmpdata, 0,
                                         compressed, 0, bit);
                                 long time2 = System.nanoTime();
                                 BitPacking.fastunpack(compressed, 0,
                                         uncompressed, 0, bit);
-                                Delta.fastinverseDelta(uncompressed);
+                                Delta.fastinverseDelta0(uncompressed);
                                 long time3 = System.nanoTime();
                                 if (!Arrays.equals(data, uncompressed))
                                         throw new RuntimeException("bug");

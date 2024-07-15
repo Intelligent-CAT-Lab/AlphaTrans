@@ -23,8 +23,8 @@ public final class JustCopy implements IntegerCODEC, SkippableIntegerCODEC {
         }
 
         @Override
-        public void uncompress(int[] in, IntWrapper inpos, int inlength,
-                int[] out, IntWrapper outpos) {
+        public void uncompress0(int[] in, IntWrapper inpos, int inlength,
+                                int[] out, IntWrapper outpos) {
             headlessUncompress(in,inpos,inlength,out,outpos,inlength);
         }
 
@@ -43,8 +43,8 @@ public final class JustCopy implements IntegerCODEC, SkippableIntegerCODEC {
         }
 
         @Override
-        public void compress(int[] in, IntWrapper inpos, int inlength,
-                int[] out, IntWrapper outpos) {
+        public void compress0(int[] in, IntWrapper inpos, int inlength,
+                              int[] out, IntWrapper outpos) {
             headlessCompress(in,inpos,inlength,out,outpos);
         }
 

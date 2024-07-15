@@ -30,8 +30,8 @@ public final class XorBinaryPackingTest
 
     private static void checkCompressAndUncompress(String label, int[] data) {
         XorBinaryPacking codec = new XorBinaryPacking();
-        int[] compBuf = TestUtils.compress(codec, data);
-        int[] decompBuf = TestUtils.uncompress(codec, compBuf, data.length);
+        int[] compBuf = TestUtils.compress1(codec, data);
+        int[] decompBuf = TestUtils.uncompress0(codec, compBuf, data.length);
         assertArrayEquals(data, decompBuf);
     }
 

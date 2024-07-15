@@ -36,11 +36,11 @@ public class AdhocTest {
 
           IntWrapper aOffset = new IntWrapper(0);
           IntWrapper bOffset = new IntWrapper(x);
-          codec.compress(a, aOffset, a.length, b, bOffset);
+          codec.compress0(a, aOffset, a.length, b, bOffset);
           int len = bOffset.get() - x;
           bOffset.set(x);
           IntWrapper cOffset = new IntWrapper(0);
-          codec.uncompress(b, bOffset, len, c, cOffset);
+          codec.uncompress0(b, bOffset, len, c, cOffset);
           Assert.assertArrayEquals(a,c);
     	    }
     }
