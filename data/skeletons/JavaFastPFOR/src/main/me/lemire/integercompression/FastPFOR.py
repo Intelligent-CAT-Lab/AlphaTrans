@@ -32,7 +32,7 @@ class FastPFOR(IntegerCODEC, SkippableIntegerCODEC):
     def toString(self) -> str:
         pass
 
-    def uncompress(
+    def uncompress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -42,7 +42,7 @@ class FastPFOR(IntegerCODEC, SkippableIntegerCODEC):
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -104,40 +104,6 @@ class FastPFOR(IntegerCODEC, SkippableIntegerCODEC):
         pass
 
     def __getBestBFromData(self, in_: typing.List[int], pos: int) -> None:
-        pass
-
-    def _makeBuffer(self) -> typing.Union[bytearray, memoryview]:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    def headlessUncompress(self) -> None:
-        pass
-
-    def headlessCompress(self) -> None:
-        pass
-
-    @staticmethod
-    def FastPFOR1() -> FastPFOR:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
-    def __decodePage(self) -> None:
-        pass
-
-    def __encodePage(self) -> None:
-        pass
-
-    def __getBestBFromData(self) -> None:
         pass
 
     # Class Methods End

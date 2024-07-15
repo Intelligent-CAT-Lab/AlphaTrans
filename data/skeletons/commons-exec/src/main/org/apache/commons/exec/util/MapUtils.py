@@ -33,16 +33,4 @@ class MapUtils:
     ) -> typing.Dict[typing.Any, typing.Any]:
         pass
 
-    @staticmethod
-    def prefix() -> typing.Dict[str, typing.Any]:
-        pass
-
-    @staticmethod
-    def merge() -> typing.Dict[typing.Any, typing.Any]:
-        pass
-
-    @staticmethod
-    def copy() -> typing.Dict[typing.Any, typing.Any]:
-        pass
-
     # Class Methods End

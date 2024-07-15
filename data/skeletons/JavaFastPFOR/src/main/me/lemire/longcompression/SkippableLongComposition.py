@@ -46,16 +46,4 @@ class SkippableLongComposition(SkippableLongCODEC):
     def __init__(self, f1: SkippableLongCODEC, f2: SkippableLongCODEC) -> None:
         pass
 
-    def toString(self) -> str:
-        pass
-
-    def headlessUncompress(self) -> None:
-        pass
-
-    def headlessCompress(self) -> None:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

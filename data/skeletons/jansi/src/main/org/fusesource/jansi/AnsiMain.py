@@ -58,36 +58,4 @@ class AnsiMain:
     def __getJansiVersion() -> str:
         pass
 
-    @staticmethod
-    def main() -> None:
-        pass
-
-    @staticmethod
-    def __closeQuietly() -> None:
-        pass
-
-    @staticmethod
-    def __writeFileContent() -> None:
-        pass
-
-    @staticmethod
-    def __printJansiLogoDemo() -> None:
-        pass
-
-    @staticmethod
-    def __getPomPropertiesVersion() -> str:
-        pass
-
-    @staticmethod
-    def __testAnsi() -> None:
-        pass
-
-    @staticmethod
-    def __diagnoseTty() -> None:
-        pass
-
-    @staticmethod
-    def __getJansiVersion() -> str:
-        pass
-
     # Class Methods End

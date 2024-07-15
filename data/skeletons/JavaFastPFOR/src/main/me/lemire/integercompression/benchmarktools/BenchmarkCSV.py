@@ -75,20 +75,4 @@ class BenchmarkCSV:
     def __loadIntegers(filename: str, f: Format) -> typing.List[typing.List[int]]:
         pass
 
-    @staticmethod
-    def main() -> None:
-        pass
-
-    @staticmethod
-    def __bytebench() -> None:
-        pass
-
-    @staticmethod
-    def __bench() -> None:
-        pass
-
-    @staticmethod
-    def __loadIntegers() -> typing.List[typing.List[int]]:
-        pass
-
     # Class Methods End

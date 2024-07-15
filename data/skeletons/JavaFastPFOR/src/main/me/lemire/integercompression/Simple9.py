@@ -23,7 +23,7 @@ class Simple9(IntegerCODEC, SkippableIntegerCODEC):
     def toString(self) -> str:
         pass
 
-    def uncompress(
+    def uncompress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -33,7 +33,7 @@ class Simple9(IntegerCODEC, SkippableIntegerCODEC):
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -62,21 +62,6 @@ class Simple9(IntegerCODEC, SkippableIntegerCODEC):
         out: typing.List[int],
         outpos: IntWrapper,
     ) -> None:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    def headlessUncompress(self) -> None:
-        pass
-
-    def headlessCompress(self) -> None:
         pass
 
     # Class Methods End

@@ -50,25 +50,4 @@ class Exec36Test(unittest.TestCase):
     def _testExec36_4(self) -> None:
         pass
 
-    def testExec36_2(self) -> None:
-        pass
-
-    def testExec36_1(self) -> None:
-        pass
-
-    def tearDown(self) -> None:
-        pass
-
-    def setUp(self) -> None:
-        pass
-
-    def _testExec36_6(self) -> None:
-        pass
-
-    def _testExec36_5(self) -> None:
-        pass
-
-    def _testExec36_4(self) -> None:
-        pass
-
     # Class Methods End

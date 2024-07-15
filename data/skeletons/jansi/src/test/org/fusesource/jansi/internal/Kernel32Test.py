@@ -17,7 +17,4 @@ class Kernel32Test(unittest.TestCase):
     def testErrorMessage(self) -> None:
         pass
 
-    def testErrorMessage(self) -> None:
-        pass
-
     # Class Methods End

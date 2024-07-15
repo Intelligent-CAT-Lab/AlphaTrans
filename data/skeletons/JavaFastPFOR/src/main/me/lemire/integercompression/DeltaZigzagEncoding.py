@@ -33,15 +33,15 @@ class Decoder(Context):
     # Class Fields End
 
     # Class Methods Begin
-    def decodeArray(self, src: typing.List[int]) -> typing.List[int]:
+    def decodeArray2(self, src: typing.List[int]) -> typing.List[int]:
         pass
 
-    def decodeArray(
+    def decodeArray1(
         self, src: typing.List[int], offset: int, length: int
     ) -> typing.List[int]:
         pass
 
-    def decodeArray(
+    def decodeArray0(
         self,
         src: typing.List[int],
         srcoff: int,
@@ -66,20 +66,20 @@ class Encoder(Context):
     # Class Fields End
 
     # Class Methods Begin
-    def encodeArray(self, src: typing.List[int]) -> typing.List[int]:
+    def encodeArray3(self, src: typing.List[int]) -> typing.List[int]:
         pass
 
-    def encodeArray(
+    def encodeArray2(
         self, src: typing.List[int], offset: int, length: int
     ) -> typing.List[int]:
         pass
 
-    def encodeArray(
+    def encodeArray1(
         self, src: typing.List[int], srcoff: int, length: int, dst: typing.List[int]
     ) -> typing.List[int]:
         pass
 
-    def encodeArray(
+    def encodeArray0(
         self,
         src: typing.List[int],
         srcoff: int,

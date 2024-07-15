@@ -27,15 +27,4 @@ class TestUtil:
     def __init__(self) -> None:
         pass
 
-    @staticmethod
-    def resolveScriptForOS() -> pathlib.Path:
-        pass
-
-    @staticmethod
-    def getTestScriptCodesForOS() -> typing.List[int]:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

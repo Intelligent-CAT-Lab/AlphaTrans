@@ -20,10 +20,4 @@ class ExecuteException:
     def __init__(self, message: str, exitValue: int, cause: BaseException) -> None:
         pass
 
-    def getExitValue(self) -> int:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

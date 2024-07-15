@@ -21,9 +21,7 @@ class AbstractCalendarValidator(AbstractFormatValidator, ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def _getFormat(
-        self, pattern: str, locale: typing.Any
-    ) -> typing.Union[str, datetime.datetime]:
+    def _getFormat(self, pattern: str, locale: typing.Any) -> Format:
         pass
 
     def isValid3(self, value: str, pattern: str, locale: typing.Any) -> bool:
@@ -89,12 +87,10 @@ class AbstractCalendarValidator(AbstractFormatValidator, ABC):
     ) -> int:
         pass
 
-    def _getFormat1(self, locale: typing.Any) -> typing.Union[str, datetime.datetime]:
+    def _getFormat1(self, locale: typing.Any) -> Format:
         pass
 
-    def _getFormat0(
-        self, pattern: str, locale: typing.Any
-    ) -> typing.Union[str, datetime.datetime]:
+    def _getFormat0(self, pattern: str, locale: typing.Any) -> Format:
         pass
 
     def _parse(
@@ -106,9 +102,7 @@ class AbstractCalendarValidator(AbstractFormatValidator, ABC):
     ) -> typing.Any:
         pass
 
-    def _format5(
-        self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]
-    ) -> str:
+    def _format5(self, value: typing.Any, formatter: Format) -> str:
         pass
 
     def format4(
@@ -182,9 +176,7 @@ class AbstractCalendarValidator(AbstractFormatValidator, ABC):
     ) -> int:
         pass
 
-    def _processParsedValue(
-        self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]
-    ) -> typing.Any:
+    def _processParsedValue(self, value: typing.Any, formatter: Format) -> typing.Any:
         pass
 
     # Class Methods End

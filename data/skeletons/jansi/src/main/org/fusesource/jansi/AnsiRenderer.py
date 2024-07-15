@@ -80,21 +80,6 @@ class Code:
     def __init__(self, n: enum.Enum, background: bool) -> None:
         pass
 
-    def isBackground(self) -> bool:
-        pass
-
-    def getAttribute(self) -> Attribute:
-        pass
-
-    def isAttribute(self) -> bool:
-        pass
-
-    def getColor(self) -> Ansi.Color:
-        pass
-
-    def isColor(self) -> bool:
-        pass
-
     # Class Methods End
 
 
@@ -141,34 +126,6 @@ class AnsiRenderer:
 
     @staticmethod
     def __render3(ansi: Ansi, names: typing.List[typing.List[str]]) -> Ansi:
-        pass
-
-    @staticmethod
-    def test() -> bool:
-        pass
-
-    @staticmethod
-    def renderCodes1() -> str:
-        pass
-
-    @staticmethod
-    def renderCodes0() -> str:
-        pass
-
-    @staticmethod
-    def render2() -> str:
-        pass
-
-    @staticmethod
-    def render1() -> typing.Union[typing.List, io.TextIOBase]:
-        pass
-
-    @staticmethod
-    def render0() -> str:
-        pass
-
-    @staticmethod
-    def __render3() -> Ansi:
         pass
 
     # Class Methods End

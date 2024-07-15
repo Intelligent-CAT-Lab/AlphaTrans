@@ -30,13 +30,4 @@ class ByteBasicTest(unittest.TestCase):
     def saulTest(self) -> None:
         pass
 
-    def varyingLengthTest2(self) -> None:
-        pass
-
-    def varyingLengthTest(self) -> None:
-        pass
-
-    def saulTest(self) -> None:
-        pass
-
     # Class Methods End

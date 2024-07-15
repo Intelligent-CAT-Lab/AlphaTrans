@@ -28,7 +28,7 @@ class NewPFDS16(IntegerCODEC, SkippableIntegerCODEC):
     def toString(self) -> str:
         pass
 
-    def uncompress(
+    def uncompress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -38,7 +38,7 @@ class NewPFDS16(IntegerCODEC, SkippableIntegerCODEC):
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -96,34 +96,6 @@ class NewPFDS16(IntegerCODEC, SkippableIntegerCODEC):
     def __getBestBFromData(
         in_: typing.List[int], pos: int, bestb: IntWrapper, bestexcept: IntWrapper
     ) -> None:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    def headlessUncompress(self) -> None:
-        pass
-
-    def headlessCompress(self) -> None:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
-    def __decodePage(self) -> None:
-        pass
-
-    def __encodePage(self) -> None:
-        pass
-
-    @staticmethod
-    def __getBestBFromData() -> None:
         pass
 
     # Class Methods End

@@ -35,16 +35,4 @@ class FastBufferedOutputStream:
     def __flushBuffer(self) -> None:
         pass
 
-    def flush(self) -> None:
-        pass
-
-    def write1(self) -> None:
-        pass
-
-    def write0(self) -> None:
-        pass
-
-    def __flushBuffer(self) -> None:
-        pass
-
     # Class Methods End

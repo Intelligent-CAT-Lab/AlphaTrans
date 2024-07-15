@@ -3,7 +3,6 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
-import datetime
 import decimal
 import typing
 from typing import *
@@ -22,9 +21,7 @@ class PercentValidator(BigDecimalValidator):
     # Class Fields End
 
     # Class Methods Begin
-    def _parse(
-        self, value: str, formatter: typing.Union[str, datetime.datetime]
-    ) -> typing.Any:
+    def _parse(self, value: str, formatter: Format) -> typing.Any:
         pass
 
     @staticmethod

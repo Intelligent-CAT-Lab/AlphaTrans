@@ -49,20 +49,4 @@ class StreamPumper(typing.Callable):
     ) -> StreamPumper:
         pass
 
-    def waitFor(self) -> None:
-        pass
-
-    def run(self) -> None:
-        pass
-
-    def isFinished(self) -> bool:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
-    @staticmethod
-    def StreamPumper0() -> StreamPumper:
-        pass
-
     # Class Methods End

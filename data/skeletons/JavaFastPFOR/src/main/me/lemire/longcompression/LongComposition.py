@@ -22,7 +22,7 @@ class LongComposition(LongCODEC):
     def toString(self) -> str:
         pass
 
-    def uncompress(
+    def uncompress1(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -32,7 +32,7 @@ class LongComposition(LongCODEC):
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -43,18 +43,6 @@ class LongComposition(LongCODEC):
         pass
 
     def __init__(self, f1: LongCODEC, f2: LongCODEC) -> None:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    def __init__(self) -> None:
         pass
 
     # Class Methods End

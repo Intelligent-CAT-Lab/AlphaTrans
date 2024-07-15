@@ -23,11 +23,4 @@ class CommandLauncherFactory:
     def __init__(self) -> None:
         pass
 
-    @staticmethod
-    def createVMLauncher() -> CommandLauncher:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

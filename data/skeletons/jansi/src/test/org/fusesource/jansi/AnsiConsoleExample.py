@@ -22,8 +22,4 @@ class AnsiConsoleExample:
     def __init__(self) -> None:
         pass
 
-    @staticmethod
-    def main() -> None:
-        pass
-
     # Class Methods End

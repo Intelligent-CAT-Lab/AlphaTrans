@@ -43,26 +43,4 @@ class XorBinaryPackingTest(unittest.TestCase):
     def __checkCompressAndUncompress(label: str, data: typing.List[int]) -> None:
         pass
 
-    def compressAndUncompress5(self) -> None:
-        pass
-
-    def compressAndUncompress4(self) -> None:
-        pass
-
-    def compressAndUncompress3(self) -> None:
-        pass
-
-    def compressAndUncompress2(self) -> None:
-        pass
-
-    def compressAndUncompress1(self) -> None:
-        pass
-
-    def compressAndUncompress0(self) -> None:
-        pass
-
-    @staticmethod
-    def __checkCompressAndUncompress() -> None:
-        pass
-
     # Class Methods End

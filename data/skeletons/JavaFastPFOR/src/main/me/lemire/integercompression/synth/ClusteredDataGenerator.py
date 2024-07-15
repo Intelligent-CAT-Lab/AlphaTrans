@@ -36,14 +36,4 @@ class ClusteredDataGenerator:
     ) -> None:
         pass
 
-    @staticmethod
-    def main() -> None:
-        pass
-
-    def generateClustered(self) -> typing.List[int]:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

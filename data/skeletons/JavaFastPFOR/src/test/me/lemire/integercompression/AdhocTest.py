@@ -45,22 +45,4 @@ class AdhocTest(unittest.TestCase):
     def testIssue29(self) -> None:
         pass
 
-    def biggerCompressedArray2(self) -> None:
-        pass
-
-    def biggerCompressedArray1(self) -> None:
-        pass
-
-    def biggerCompressedArray0(self) -> None:
-        pass
-
-    def testIssue41(self) -> None:
-        pass
-
-    def testIssue29b(self) -> None:
-        pass
-
-    def testIssue29(self) -> None:
-        pass
-
     # Class Methods End

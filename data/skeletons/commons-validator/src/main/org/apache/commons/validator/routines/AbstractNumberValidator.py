@@ -2,7 +2,6 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.AbstractFormatValidator import *
-import datetime
 import typing
 from typing import *
 import numbers
@@ -24,23 +23,19 @@ class AbstractNumberValidator(AbstractFormatValidator, ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def _getFormat(
-        self, pattern: str, locale: typing.Any
-    ) -> typing.Union[str, datetime.datetime]:
+    def _getFormat(self, pattern: str, locale: typing.Any) -> Format:
         pass
 
     def isValid3(self, value: str, pattern: str, locale: typing.Any) -> bool:
         pass
 
-    def _getFormat1(self, locale: typing.Any) -> typing.Union[str, datetime.datetime]:
+    def _getFormat1(self, locale: typing.Any) -> Format:
         pass
 
     def _determineScale(self, format_: typing.Any) -> int:
         pass
 
-    def _getFormat0(
-        self, pattern: str, locale: typing.Any
-    ) -> typing.Union[str, datetime.datetime]:
+    def _getFormat0(self, pattern: str, locale: typing.Any) -> Format:
         pass
 
     def _parse(self, value: str, pattern: str, locale: typing.Any) -> typing.Any:
@@ -77,9 +72,7 @@ class AbstractNumberValidator(AbstractFormatValidator, ABC):
     def __init__(self, strict: bool, formatType: int, allowFractions: bool) -> None:
         pass
 
-    def _processParsedValue(
-        self, value: typing.Any, formatter: typing.Union[str, datetime.datetime]
-    ) -> typing.Any:
+    def _processParsedValue(self, value: typing.Any, formatter: Format) -> typing.Any:
         pass
 
     # Class Methods End

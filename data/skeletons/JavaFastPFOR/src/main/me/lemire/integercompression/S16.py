@@ -73,32 +73,4 @@ class S16:
     def __fakecompressblock(in_: typing.List[int], inOffset: int, n: int) -> int:
         pass
 
-    @staticmethod
-    def uncompress() -> None:
-        pass
-
-    @staticmethod
-    def decompressblock() -> int:
-        pass
-
-    @staticmethod
-    def compressblock() -> int:
-        pass
-
-    @staticmethod
-    def estimatecompress() -> int:
-        pass
-
-    @staticmethod
-    def compress() -> int:
-        pass
-
-    @staticmethod
-    def __shiftme() -> typing.List[typing.List[int]]:
-        pass
-
-    @staticmethod
-    def __fakecompressblock() -> int:
-        pass
-
     # Class Methods End

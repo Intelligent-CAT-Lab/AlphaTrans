@@ -30,13 +30,4 @@ class IntegratedIntCompressor:
     def __init__(self, constructorId: int, c: SkippableIntegratedIntegerCODEC) -> None:
         pass
 
-    def uncompress(self) -> typing.List[int]:
-        pass
-
-    def compress(self) -> typing.List[int]:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

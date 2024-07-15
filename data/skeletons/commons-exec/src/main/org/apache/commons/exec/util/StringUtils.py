@@ -45,28 +45,4 @@ class StringUtils:
     def fixFileSeparatorChar(arg: str) -> str:
         pass
 
-    @staticmethod
-    def toString() -> str:
-        pass
-
-    @staticmethod
-    def stringSubstitution() -> str:
-        pass
-
-    @staticmethod
-    def split() -> typing.List[typing.List[str]]:
-        pass
-
-    @staticmethod
-    def quoteArgument() -> str:
-        pass
-
-    @staticmethod
-    def isQuoted() -> bool:
-        pass
-
-    @staticmethod
-    def fixFileSeparatorChar() -> str:
-        pass
-
     # Class Methods End

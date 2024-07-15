@@ -72,48 +72,4 @@ class OSInfo:
     ) -> str:
         pass
 
-    @staticmethod
-    def translateArchNameToFolderName() -> str:
-        pass
-
-    @staticmethod
-    def translateOSNameToFolderName() -> str:
-        pass
-
-    @staticmethod
-    def getArchName() -> str:
-        pass
-
-    @staticmethod
-    def resolveArmArchType() -> str:
-        pass
-
-    @staticmethod
-    def getHardwareName() -> str:
-        pass
-
-    @staticmethod
-    def isAlpine() -> bool:
-        pass
-
-    @staticmethod
-    def isAndroid() -> bool:
-        pass
-
-    @staticmethod
-    def getOSName() -> str:
-        pass
-
-    @staticmethod
-    def getNativeLibFolderPathForCurrentOS() -> str:
-        pass
-
-    @staticmethod
-    def main() -> None:
-        pass
-
-    @staticmethod
-    def __readFully() -> str:
-        pass
-
     # Class Methods End

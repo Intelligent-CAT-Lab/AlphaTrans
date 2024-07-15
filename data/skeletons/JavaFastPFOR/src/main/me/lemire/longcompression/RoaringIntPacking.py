@@ -46,32 +46,4 @@ class RoaringIntPacking:
     def __init__(self) -> None:
         pass
 
-    @staticmethod
-    def toUnsignedString() -> str:
-        pass
-
-    @staticmethod
-    def compareUnsigned() -> int:
-        pass
-
-    @staticmethod
-    def unsignedComparator() -> typing.Callable[[int, int], int]:
-        pass
-
-    @staticmethod
-    def highestHigh() -> int:
-        pass
-
-    @staticmethod
-    def pack() -> int:
-        pass
-
-    @staticmethod
-    def low() -> int:
-        pass
-
-    @staticmethod
-    def high() -> int:
-        pass
-
     # Class Methods End

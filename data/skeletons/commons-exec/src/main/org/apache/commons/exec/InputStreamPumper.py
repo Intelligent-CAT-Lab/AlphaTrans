@@ -35,13 +35,4 @@ class InputStreamPumper(typing.Callable):
     ) -> None:
         pass
 
-    def stopProcessing(self) -> None:
-        pass
-
-    def run(self) -> None:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

@@ -61,41 +61,4 @@ class AnsiPrintStream(typing.IO):
     def __determineEncoding(args: typing.Any) -> str:
         pass
 
-    def toString(self) -> str:
-        pass
-
-    def uninstall(self) -> None:
-        pass
-
-    def install(self) -> None:
-        pass
-
-    def getTerminalWidth(self) -> int:
-        pass
-
-    def setResetAtUninstall(self) -> None:
-        pass
-
-    def isResetAtUninstall(self) -> bool:
-        pass
-
-    def setMode(self) -> None:
-        pass
-
-    def getMode(self) -> AnsiMode:
-        pass
-
-    def getColors(self) -> AnsiColors:
-        pass
-
-    def getType(self) -> AnsiType:
-        pass
-
-    def _getOut(self) -> AnsiOutputStream:
-        pass
-
-    @staticmethod
-    def __determineEncoding() -> str:
-        pass
-
     # Class Methods End

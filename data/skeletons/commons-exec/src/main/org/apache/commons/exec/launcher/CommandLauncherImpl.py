@@ -30,10 +30,4 @@ class CommandLauncherImpl(CommandLauncher, ABC):
     ) -> subprocess.Popen:
         pass
 
-    def isFailure(self) -> bool:
-        pass
-
-    def exec0(self) -> subprocess.Popen:
-        pass
-
     # Class Methods End

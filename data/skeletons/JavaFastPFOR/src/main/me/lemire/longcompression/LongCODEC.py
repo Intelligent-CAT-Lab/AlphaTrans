@@ -17,7 +17,7 @@ class LongCODEC(ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def uncompress(
+    def uncompress1(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,
@@ -27,7 +27,7 @@ class LongCODEC(ABC):
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         in_: typing.List[int],
         inpos: IntWrapper,

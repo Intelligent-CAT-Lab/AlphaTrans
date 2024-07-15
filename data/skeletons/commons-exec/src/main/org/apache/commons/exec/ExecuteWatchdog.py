@@ -28,15 +28,6 @@ class Builder:
     def setThreadFactory(self, threadFactory: threading.Thread) -> Builder:
         pass
 
-    def setTimeout(self) -> Builder:
-        pass
-
-    def setThreadFactory(self) -> Builder:
-        pass
-
-    def get(self) -> ExecuteWatchdog:
-        pass
-
     # Class Methods End
 
 
@@ -100,47 +91,6 @@ class ExecuteWatchdog(TimeoutObserver):
         pass
 
     def setProcessNotStarted(self) -> None:
-        pass
-
-    def timeoutOccured(self) -> None:
-        pass
-
-    def stop(self) -> None:
-        pass
-
-    def start(self) -> None:
-        pass
-
-    def killedProcess(self) -> bool:
-        pass
-
-    def isWatching(self) -> bool:
-        pass
-
-    def failedToStart(self) -> None:
-        pass
-
-    def destroyProcess(self) -> None:
-        pass
-
-    def _cleanUp(self) -> None:
-        pass
-
-    def checkException(self) -> None:
-        pass
-
-    @staticmethod
-    def ExecuteWatchdog0() -> ExecuteWatchdog:
-        pass
-
-    @staticmethod
-    def builder() -> Builder:
-        pass
-
-    def __ensureStarted(self) -> None:
-        pass
-
-    def __init__(self) -> None:
         pass
 
     # Class Methods End

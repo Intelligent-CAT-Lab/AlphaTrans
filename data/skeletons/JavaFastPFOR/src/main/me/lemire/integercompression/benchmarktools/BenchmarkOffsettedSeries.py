@@ -97,7 +97,7 @@ class BenchmarkOffsettedSeries:
         pass
 
     @staticmethod
-    def __benchmark(
+    def __benchmark2(
         csvWriter: typing.Union[io.TextIOWrapper, io.StringIO],
         dataName: str,
         codecName: str,
@@ -108,7 +108,7 @@ class BenchmarkOffsettedSeries:
         pass
 
     @staticmethod
-    def __benchmark(
+    def __benchmark1(
         csvWriter: typing.Union[io.TextIOWrapper, io.StringIO],
         dataName: str,
         codecs: typing.List[IntegerCODEC],
@@ -119,7 +119,7 @@ class BenchmarkOffsettedSeries:
         pass
 
     @staticmethod
-    def __benchmark(
+    def __benchmark0(
         csvWriter: typing.Union[io.TextIOWrapper, io.StringIO],
         codecs: typing.List[IntegerCODEC],
         count: int,
@@ -139,62 +139,6 @@ class BenchmarkOffsettedSeries:
         range_: int,
         freq: int,
     ) -> None:
-        pass
-
-    @staticmethod
-    def main() -> None:
-        pass
-
-    @staticmethod
-    def run() -> None:
-        pass
-
-    @staticmethod
-    def __sortDataChunks() -> typing.List[typing.List[int]]:
-        pass
-
-    @staticmethod
-    def __deltaDataChunks() -> typing.List[typing.List[int]]:
-        pass
-
-    @staticmethod
-    def __generateDataChunks() -> typing.List[typing.List[int]]:
-        pass
-
-    @staticmethod
-    def __generateSineDataChunks() -> typing.List[typing.List[int]]:
-        pass
-
-    @staticmethod
-    def __getMaxLen() -> int:
-        pass
-
-    @staticmethod
-    def __decompress() -> int:
-        pass
-
-    @staticmethod
-    def __compress() -> int:
-        pass
-
-    @staticmethod
-    def __checkArray() -> None:
-        pass
-
-    @staticmethod
-    def __benchmark() -> None:
-        pass
-
-    @staticmethod
-    def __benchmark() -> None:
-        pass
-
-    @staticmethod
-    def __benchmark() -> None:
-        pass
-
-    @staticmethod
-    def __benchmarkSine() -> None:
         pass
 
     # Class Methods End

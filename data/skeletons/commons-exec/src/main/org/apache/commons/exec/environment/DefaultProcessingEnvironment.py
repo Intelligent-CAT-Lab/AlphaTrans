@@ -32,19 +32,4 @@ class DefaultProcessingEnvironment:
     def __createEnvironmentMap(self) -> typing.Dict[str, str]:
         pass
 
-    def _runProcEnvCommand(self) -> io.BufferedReader:
-        pass
-
-    def getProcEnvironment(self) -> typing.Dict[str, str]:
-        pass
-
-    def _getProcEnvCommand(self) -> CommandLine:
-        pass
-
-    def _createProcEnvironment(self) -> typing.Dict[str, str]:
-        pass
-
-    def __createEnvironmentMap(self) -> typing.Dict[str, str]:
-        pass
-
     # Class Methods End

@@ -34,17 +34,4 @@ class MingwSupport:
     def __waitAndCapture(p: subprocess.Popen) -> str:
         pass
 
-    def getTerminalWidth(self) -> int:
-        pass
-
-    def getConsoleName(self) -> str:
-        pass
-
-    def __getRedirect(self) -> typing.Any:
-        pass
-
-    @staticmethod
-    def __waitAndCapture() -> str:
-        pass
-
     # Class Methods End

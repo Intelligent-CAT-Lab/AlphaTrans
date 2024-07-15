@@ -49,30 +49,4 @@ class BoundaryTest(unittest.TestCase):
     def __compressAndUncompress(length: int, c: IntegerCODEC) -> None:
         pass
 
-    def testComposition(self) -> None:
-        pass
-
-    def testIntegratedComposition(self) -> None:
-        pass
-
-    @staticmethod
-    def __testBoundary() -> None:
-        pass
-
-    @staticmethod
-    def __around256() -> None:
-        pass
-
-    @staticmethod
-    def __around128() -> None:
-        pass
-
-    @staticmethod
-    def __around32() -> None:
-        pass
-
-    @staticmethod
-    def __compressAndUncompress() -> None:
-        pass
-
     # Class Methods End

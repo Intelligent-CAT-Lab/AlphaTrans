@@ -39,13 +39,4 @@ class ColorsAnsiProcessor(AnsiProcessor):
     ) -> None:
         pass
 
-    def _processCharsetSelect0(self) -> bool:
-        pass
-
-    def _processOperatingSystemCommand(self) -> bool:
-        pass
-
-    def _processEscapeCommand(self) -> bool:
-        pass
-
     # Class Methods End

@@ -96,48 +96,4 @@ class PForDelta:
     ) -> int:
         pass
 
-    @staticmethod
-    def readBits() -> int:
-        pass
-
-    @staticmethod
-    def decompressBBitSlotsWithHardCodes() -> int:
-        pass
-
-    @staticmethod
-    def writeBits() -> None:
-        pass
-
-    @staticmethod
-    def decompressBlockByS16() -> int:
-        pass
-
-    @staticmethod
-    def decompressBBitSlots() -> int:
-        pass
-
-    @staticmethod
-    def compressOneBlock() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def checkBigNumbers() -> bool:
-        pass
-
-    @staticmethod
-    def estimateCompressedSize() -> int:
-        pass
-
-    @staticmethod
-    def decompressOneBlock() -> int:
-        pass
-
-    @staticmethod
-    def compressOneBlockOpt() -> typing.List[int]:
-        pass
-
-    @staticmethod
-    def __compressBlockByS16() -> int:
-        pass
-
     # Class Methods End

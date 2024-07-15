@@ -57,18 +57,6 @@ class Builder:
     def asThis(self) -> typing.Any:
         pass
 
-    def setWorkingDirectory(self) -> typing.Any:
-        pass
-
-    def setThreadFactory(self) -> typing.Any:
-        pass
-
-    def setExecuteStreamHandler(self) -> typing.Any:
-        pass
-
-    def get(self) -> DefaultExecutor:
-        pass
-
     # Class Methods End
 
 
@@ -199,91 +187,6 @@ class DefaultExecutor(Executor):
         executeStreamHandler: ExecuteStreamHandler,
         workingDirectory: pathlib.Path,
     ) -> None:
-        pass
-
-    def setWorkingDirectory(self) -> None:
-        pass
-
-    def setWatchdog(self) -> None:
-        pass
-
-    def setStreamHandler(self) -> None:
-        pass
-
-    def setProcessDestroyer(self) -> None:
-        pass
-
-    def setExitValues(self) -> None:
-        pass
-
-    def setExitValue(self) -> None:
-        pass
-
-    def _launch(self) -> subprocess.Popen:
-        pass
-
-    def isFailure(self) -> bool:
-        pass
-
-    def getWorkingDirectory(self) -> pathlib.Path:
-        pass
-
-    def getWatchdog(self) -> ExecuteWatchdog:
-        pass
-
-    def getStreamHandler(self) -> ExecuteStreamHandler:
-        pass
-
-    def getProcessDestroyer(self) -> ProcessDestroyer:
-        pass
-
-    def _getExecutorThread(self) -> threading.Thread:
-        pass
-
-    def execute3(self) -> None:
-        pass
-
-    def execute2(self) -> int:
-        pass
-
-    def execute1(self) -> None:
-        pass
-
-    def execute0(self) -> int:
-        pass
-
-    def _createThread(self) -> threading.Thread:
-        pass
-
-    def DefaultExecutor0(self) -> DefaultExecutor:
-        pass
-
-    @staticmethod
-    def builder() -> Builder:
-        pass
-
-    def __setStreams(self) -> None:
-        pass
-
-    def __setExceptionCaught(self) -> None:
-        pass
-
-    def __getExceptionCaught(self) -> typing.Union[IOError, OSError]:
-        pass
-
-    def __executeInternal(self) -> int:
-        pass
-
-    def __closeProcessStreams(self) -> None:
-        pass
-
-    def __closeCatch(self) -> None:
-        pass
-
-    def __checkWorkingDirectory1(self) -> None:
-        pass
-
-    def __checkWorkingDirectory0(self) -> None:
         pass
 
     # Class Methods End

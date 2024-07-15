@@ -25,7 +25,4 @@ class Exec60Test(AbstractExecTest, unittest.TestCase):
     def testExec_60(self) -> None:
         pass
 
-    def testExec_60(self) -> None:
-        pass
-
     # Class Methods End

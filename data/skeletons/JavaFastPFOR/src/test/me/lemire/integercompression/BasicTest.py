@@ -121,11 +121,11 @@ class BasicTest(unittest.TestCase):
         pass
 
     @staticmethod
-    def __test(N: int, nbr: int) -> None:
+    def __test1(N: int, nbr: int) -> None:
         pass
 
     @staticmethod
-    def __test(c: IntegerCODEC, co: IntegerCODEC, N: int, nbr: int) -> None:
+    def __test0(c: IntegerCODEC, co: IntegerCODEC, N: int, nbr: int) -> None:
         pass
 
     @staticmethod
@@ -134,93 +134,6 @@ class BasicTest(unittest.TestCase):
 
     @staticmethod
     def __testSpurious(c: IntegerCODEC) -> None:
-        pass
-
-    def fastPfor128Test(self) -> None:
-        pass
-
-    def fastPforTest(self) -> None:
-        pass
-
-    def testUnsorted(self) -> None:
-        pass
-
-    def testUnsortedExample(self) -> None:
-        pass
-
-    def zeroinzerouttest(self) -> None:
-        pass
-
-    def spuriousouttest(self) -> None:
-        pass
-
-    def basictest(self) -> None:
-        pass
-
-    def verifyWithExceptions(self) -> None:
-        pass
-
-    @staticmethod
-    def maskArray() -> None:
-        pass
-
-    def verifyWithoutMask(self) -> None:
-        pass
-
-    def verifyBitPacking(self) -> None:
-        pass
-
-    def checkXorBinaryPacking3(self) -> None:
-        pass
-
-    def checkXorBinaryPacking2(self) -> None:
-        pass
-
-    def checkXorBinaryPacking1(self) -> None:
-        pass
-
-    def checkXorBinaryPacking(self) -> None:
-        pass
-
-    def checkDeltaZigzagPacking(self) -> None:
-        pass
-
-    def checkDeltaZigzagVB(self) -> None:
-        pass
-
-    def varyingLengthTest2(self) -> None:
-        pass
-
-    def varyingLengthTest(self) -> None:
-        pass
-
-    def saulTest(self) -> None:
-        pass
-
-    def __testUnsorted3(self) -> None:
-        pass
-
-    def __testUnsorted2(self) -> None:
-        pass
-
-    @staticmethod
-    def __testCodec() -> None:
-        pass
-
-    @staticmethod
-    def __test() -> None:
-        pass
-
-    @staticmethod
-    def __test() -> None:
-        pass
-
-    @staticmethod
-    def __testZeroInZeroOut() -> None:
-        pass
-
-    @staticmethod
-    def __testSpurious() -> None:
         pass
 
     # Class Methods End

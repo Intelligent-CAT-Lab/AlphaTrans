@@ -18,7 +18,7 @@ class DeltaZigzagVariableByte(IntegerCODEC):
     # Class Fields End
 
     # Class Methods Begin
-    def uncompress(
+    def uncompress0(
         self,
         inBuf: typing.List[int],
         inPos: IntWrapper,
@@ -28,7 +28,7 @@ class DeltaZigzagVariableByte(IntegerCODEC):
     ) -> None:
         pass
 
-    def compress(
+    def compress0(
         self,
         inBuf: typing.List[int],
         inPos: IntWrapper,
@@ -42,18 +42,6 @@ class DeltaZigzagVariableByte(IntegerCODEC):
         pass
 
     def _makeBuffer(self, sizeInBytes: int) -> typing.Union[bytearray, memoryview]:
-        pass
-
-    def _makeBuffer(self) -> typing.Union[bytearray, memoryview]:
-        pass
-
-    def uncompress(self) -> None:
-        pass
-
-    def compress(self) -> None:
-        pass
-
-    def toString(self) -> str:
         pass
 
     # Class Methods End

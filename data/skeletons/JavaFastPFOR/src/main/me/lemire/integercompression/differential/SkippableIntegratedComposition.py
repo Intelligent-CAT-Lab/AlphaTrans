@@ -50,16 +50,4 @@ class SkippableIntegratedComposition(SkippableIntegratedIntegerCODEC):
     ) -> None:
         pass
 
-    def headlessUncompress(self) -> None:
-        pass
-
-    def headlessCompress(self) -> None:
-        pass
-
-    def toString(self) -> str:
-        pass
-
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End

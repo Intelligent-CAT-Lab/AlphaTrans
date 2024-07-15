@@ -43,16 +43,4 @@ class S9:
     def estimatecompress(in_: typing.List[int], currentPos: int, inlength: int) -> int:
         pass
 
-    @staticmethod
-    def uncompress() -> None:
-        pass
-
-    @staticmethod
-    def compress() -> int:
-        pass
-
-    @staticmethod
-    def estimatecompress() -> int:
-        pass
-
     # Class Methods End

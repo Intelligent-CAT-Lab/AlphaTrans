@@ -50,9 +50,6 @@ class ZeroWidthSupplier:
     def getTerminalWidth(self) -> int:
         pass
 
-    def getTerminalWidth(self) -> int:
-        pass
-
     # Class Methods End
 
 
@@ -148,51 +145,6 @@ class AnsiOutputStream:
         pass
 
     def __processEscapeCommand(self, data: int) -> None:
-        pass
-
-    def __processOperatingSystemCommand(self) -> None:
-        pass
-
-    def __processCharsetSelect(self) -> None:
-        pass
-
-    def close(self) -> None:
-        pass
-
-    def uninstall(self) -> None:
-        pass
-
-    def install(self) -> None:
-        pass
-
-    def write(self) -> None:
-        pass
-
-    def setResetAtUninstall(self) -> None:
-        pass
-
-    def isResetAtUninstall(self) -> bool:
-        pass
-
-    def setMode(self) -> None:
-        pass
-
-    def getMode(self) -> AnsiMode:
-        pass
-
-    def getColors(self) -> AnsiColors:
-        pass
-
-    def getType(self) -> AnsiType:
-        pass
-
-    def getTerminalWidth(self) -> int:
-        pass
-
-    def __reset(self) -> None:
-        pass
-
-    def __processEscapeCommand(self) -> None:
         pass
 
     def __processOperatingSystemCommand(self) -> None:

@@ -46,22 +46,4 @@ class ExampleTest(unittest.TestCase):
     def superSimpleExample(self) -> None:
         pass
 
-    def headlessDemo(self) -> None:
-        pass
-
-    def advancedExample(self) -> None:
-        pass
-
-    def unsortedExample(self) -> None:
-        pass
-
-    def basicExampleHeadless(self) -> None:
-        pass
-
-    def basicExample(self) -> None:
-        pass
-
-    def superSimpleExample(self) -> None:
-        pass
-
     # Class Methods End

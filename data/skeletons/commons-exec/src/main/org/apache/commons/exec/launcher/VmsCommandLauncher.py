@@ -34,16 +34,4 @@ class VmsCommandLauncher(Java13CommandLauncher):
     ) -> pathlib.Path:
         pass
 
-    def isFailure(self) -> bool:
-        pass
-
-    def exec1(self) -> subprocess.Popen:
-        pass
-
-    def exec0(self) -> subprocess.Popen:
-        pass
-
-    def __createCommandFile(self) -> pathlib.Path:
-        pass
-
     # Class Methods End

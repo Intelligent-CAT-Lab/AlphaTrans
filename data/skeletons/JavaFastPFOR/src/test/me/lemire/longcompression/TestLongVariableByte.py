@@ -51,34 +51,4 @@ class TestLongVariableByte(unittest.TestCase):
     def __checkConsistency(self, codec: LongCODEC, array: typing.List[int]) -> None:
         pass
 
-    def testCodec_intermediateHighPowerOfTwo(self) -> None:
-        pass
-
-    def testCodec_ZeroThenAllPowerOfTwo(self) -> None:
-        pass
-
-    def testCodec_allPowerOfTwo(self) -> None:
-        pass
-
-    def testCodec_ZeroMinValue(self) -> None:
-        pass
-
-    def testCodec_MinValue(self) -> None:
-        pass
-
-    def testCodec_ZeroTimes128Minus1(self) -> None:
-        pass
-
-    def testCodec_ZeroTimes127Minus1(self) -> None:
-        pass
-
-    def testCodec_ZeroTimes8Minus1(self) -> None:
-        pass
-
-    def testCodec_ZeroMinus1(self) -> None:
-        pass
-
-    def __checkConsistency(self) -> None:
-        pass
-
     # Class Methods End

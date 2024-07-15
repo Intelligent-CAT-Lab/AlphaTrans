@@ -34,16 +34,4 @@ class Exec62Test(unittest.TestCase):
     def __execute(self, scriptName: str) -> None:
         pass
 
-    def testMe(self) -> None:
-        pass
-
-    def tearDown(self) -> None:
-        pass
-
-    def setUp(self) -> None:
-        pass
-
-    def __execute(self) -> None:
-        pass
-
     # Class Methods End
