@@ -5,7 +5,7 @@ import json
 import keyword
 import xml.etree.ElementTree as ET
  
-from src.compositional_glue_tests.utils import IMMUTABLES, get_enum_field_body, get_method_parameter_types, publicize_methods_of_anoymous_classes, schema_filter, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
+from src.compositional_glue_tests.utils import IMMUTABLES, add_obj_to_clone_method, get_enum_field_body, get_method_parameter_types, publicize_methods_of_anoymous_classes, schema_filter, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
 from src.compositional_glue_tests.constants import *
 
 ERROR = "error"
@@ -49,6 +49,9 @@ class Project:
             with open(f'{self.schema_dir}/{self.name}/{schema}') as f:
                 data = json.load(f)
             self.project_classes.update(data['classes'].keys())
+
+        # load call graph and resolve method calls arising from each test method
+        self.__resolve_test_dependencies()
 
     def __initialize_java_project(self):
         """       
@@ -196,10 +199,8 @@ class Project:
                         # add default constructor
                         python_file_contents.append("\n".join([
                             f"    @staticmethod",
-                            f"    def getDefaultInstance(javaObj):",
-                            f"        obj = {_class}.__new__({_class})",
-                            f"        obj.javaObj = javaObj",
-                            f"        return obj"
+                            f"    def getDefaultInstance():",
+                            f"        return {_class}.__new__({_class})",
                         ]))
                         
                         # modify __getattr__ method to handle cases like 
@@ -230,11 +231,11 @@ class Project:
         is_constructor = method_schema_data['is_constructor']
         is_static = 'static' in method_schema_data['modifiers']
         java_method_body = "".join(method_schema_data['body'])
-        
+
         # if the method was not implemented in Java, just return the partial translation
         if java_method_body.strip()[-1] != '}':
             return "".join(method_schema_data['partial_translation'])
-        
+
         # get the method declaration from the partial translation
         method_declaration_lines = []
         for line in method_schema_data['partial_translation']:
@@ -242,17 +243,23 @@ class Project:
                 break
             method_declaration_lines.append(line)
         method_declaration = "\n".join(method_declaration_lines)
-        
+
+        parameter_list = method_schema_data['parameters']
         parameter_types = get_method_parameter_types(method_schema_data)
-        
+
+        # check if any parameter name is a 'keyword' and in that case, append an underscore to it
+        for i, param in enumerate(parameter_list):
+            if keyword.iskeyword(param):
+                parameter_list[i] = f"{param}_"
+
         # build the method body            
         casted_parameters = [
             type_mapping(param, parameter_types[i], calling_from_python=True, include_idMap=True, idMap_name="idMapPyToJ")
-            for i, param in enumerate(method_schema_data['parameters'])
+            for i, param in enumerate(parameter_list)
         ]
         
         translated_args = [f"translatedArg{i} = {param}" for i, param in enumerate(casted_parameters)]
-        retranslated_args = [f"JavaHandler.mapping(translatedArg{i}, idMapJToPy, {param})" for i, param in enumerate(method_schema_data['parameters'])]
+        retranslated_args = [f"JavaHandler.mapping(translatedArg{i}, idMapJToPy, {param})" for i, param in enumerate(parameter_list)]
         
         args_buildup = ", ".join([f"translatedArg{i}" for i in range(len(casted_parameters))])
         
@@ -264,7 +271,12 @@ class Project:
         if is_constructor:
             java_call = f"{caller}({args_buildup})"
         else:
-            java_call = f"{caller}.{original_method_name}({args_buildup})"
+            # if the method name is a python keyword, we refer to the method using the string name
+            if keyword.iskeyword(original_method_name):
+                java_call = f"getattr({caller}, \"{original_method_name}\")({args_buildup})"
+            else:
+                # otherwise for readability, prefer the usual style
+                java_call = f"{caller}.{original_method_name}({args_buildup})"
             
         method_content = []
         if is_constructor:
@@ -275,7 +287,7 @@ class Project:
                 f"        try:",
                 f"            self.javaObj = {java_call}",
                 f"            self.javaObj.setPythonObject(self)",
-                f"            idMapJToPy = " + ("self.javaObj.jToPy()" if not is_static else "dict()"),
+                f"            self.javaObj.jToPy(idMapJToPy)" if not is_static else "",
                 f"        except:",
                 f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
                 f"        finally:",
@@ -286,33 +298,91 @@ class Project:
             method_content.append("\n".join([
                 f"        idMapPyToJ = " + ("self.javaObj.pyToJ()" if not is_static else "JavaHandler.valueToObject(dict(), \"Map\")"),
                 f"        " + "\n        ".join(translated_args),
+                f"        idMapJToPy = dict()",
                 f"        try:",
                 f"            {java_call}",
                 f"        except:",
                 f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
                 f"        finally:",
-                f"            idMapJToPy = " + ("self.javaObj.jToPy()" if not is_static else "dict()"),
+                f"            pass",
+                f"            self.javaObj.jToPy(idMapJToPy)" if not is_static else "",
                 f"            " + "\n            ".join(retranslated_args)
             ]))
         else:
             method_content.append("\n".join([
                 f"        idMapPyToJ = " + ("self.javaObj.pyToJ()" if not is_static else "JavaHandler.valueToObject(dict(), \"Map\")"),
                 f"        " + "\n        ".join(translated_args),
+                f"        idMapJToPy = dict()",
                 f"        try:",
-                f"            val = JavaHandler.mapping({java_call})",
-                f"            idMapJToPy = " + ("self.javaObj.jToPy()" if not is_static else "dict()"),
-                f"            " + "\n            ".join(retranslated_args),
+                f"            val = JavaHandler.mapping({java_call}, id_map=idMapJToPy)",
                 f"            return val",
                 f"        except:",
                 f"            raise JavaHandler.mapping(java.type(\"{self.package}.ExceptionHandler\").ERR)",
                 f"        finally:",
-                f"            idMapJToPy = " + ("self.javaObj.jToPy()" if not is_static else "dict()"),
+                f"            pass",
+                f"            self.javaObj.jToPy(idMapJToPy)" if not is_static else "",
                 f"            " + "\n            ".join(retranslated_args)
             ]))
 
         method_body = method_declaration + "\n" + "\n".join(method_content)
-        return method_body        
-    
+        return method_body
+
+    def __resolve_test_dependencies(self):
+        """
+        Determine the dependencies of each test method on other methods.
+        """
+        self.test_dependencies = dict() # { (schema, class, method): { (schema, class, method) } }
+
+        # load the call graph data
+        with open(f"{self.root_dir}/{CALLGRAPH_DIR}/{self.name}/call_graph.json") as f:
+            self.call_graph = json.load(f)
+
+        def recursively_explore_dependencies(schema_name: str, class_name: str, method_name: str, dep_list: list, reachable_methods=None):
+            """
+            Recursively explore the dependencies of the given method.
+            reachable_methods is a set of all methods reachable from the root method.
+            """
+            if not reachable_methods:
+                reachable_methods = set()
+                
+            # add the current method to the set
+            reachable_methods.add((schema_name, class_name, method_name))
+            
+            for dep in dep_list:
+                item = (dep['schema'], dep['class'], dep['method'])
+                if item in reachable_methods:
+                    continue # avoid RecursionError due to cycles
+
+                reachable_methods.add(item)
+                
+                # search for the method in the call graph and recursively explore its dependencies
+                for cls in self.call_graph:
+                    schema_of_cls = self.name + self.call_graph[cls]['schema_file'].split(self.name, 1)[1][:-5].replace("/java/", "/").replace('/', '.')
+                    if all([
+                        cls == dep['class'],
+                        schema_of_cls == dep['schema'],
+                        dep['method'] in self.call_graph[cls]
+                    ]):
+                        recursively_explore_dependencies(*item, self.call_graph[cls][dep['method']], reachable_methods)
+                        
+            return reachable_methods
+
+        for cls in self.call_graph:
+            # check if this is a test class
+            if "/src/test/" in self.call_graph[cls]["schema_file"] and "Test" in cls:
+                for method in self.call_graph[cls]:
+                    if method == "schema_file":
+                        continue
+                    
+                    reachable_methods = recursively_explore_dependencies(
+                        self.call_graph[cls]["schema_file"],
+                        cls,
+                        method,
+                        self.call_graph[cls][method]
+                    )
+                    
+                    self.test_dependencies[(self.call_graph[cls]["schema_file"], cls, method)] = reachable_methods
+
     def derive_compositional_tests(self, components: dict[str, dict[str, list[str]]], debug: bool = False):
         """
         Derive compositional tests for the given components.
@@ -352,6 +422,9 @@ class CompositionalTest:
         # log of files to be written
         # { file_name: { original_content: str, new_content: str }}
         self.scheduled_writes = dict()
+
+        # set of test items to execute
+        self.test_items = set()
         
         # set the schemas to process
         self.__set_schemas_to_process(list(components.keys()))
@@ -425,6 +498,9 @@ class CompositionalTest:
                 schema_object.add_class(_class, schema_data['classes'][_class], methods_to_process)
                 
                 self.__exceptions.extend(schema_object.get_exceptions())
+
+            # add the required tests from this Schema
+            self.test_items.update(schema_object.tests_to_execute)
                 
             # write back into the java file (with glue-instrumentation)
             local_path = schema_data['path'].split('/src/')[-1]
@@ -527,14 +603,7 @@ class CompositionalTest:
                     code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/src/{self.project.main_path.replace('/java/', '/')}",
                     test_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/src/{self.project.test_path.replace('/java/', '/')}",
                     package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/",
-                    # ----------------------------------------------------------------------------------------------
-                    # mappings = ""               
-                    # ----------------------------------------------------------------------------------------------
-                    mappings = ctx_mappings # We shouldn't need these anymore due to IntegrationUtils.valueToObject
-                                            # but sometimes we need this for implicitly handling null values
-                                            # We also need this for handling Arrays (Type[])
-                                            # TODO: FIXME
-                    # ----------------------------------------------------------------------------------------------
+                    mappings = ""
                 ),
                 priority = 1
             )
@@ -614,15 +683,6 @@ class CompositionalTest:
                     if import_to_add:
                         imports.append(import_to_add)
 
-        # This is no longer required due to 'javaObj' field in all classes
-        # but we will keep it here for some time
-        # --------------------------------------------------------------------------------------
-        # # code for the mappings
-        # mapping_code = "".join([
-        #     f"if(exceptionType.equals(\"{_class}\")){{ return new {_class}(exceptionObj);}}\n" 
-        #     for _class in classes_to_map
-        # ])
-        # --------------------------------------------------------------------------------------
         mapping_code = ""
         
         for exception, method in self.__exceptions:
@@ -711,19 +771,66 @@ class CompositionalTest:
             os.makedirs(f"{self.project.root_dir}/logs/glue/{self.project.name}/", exist_ok=True)
             subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/{self.project.name}/"], check=True)
 
+        if not self.test_items:
+            # run all tests
+            test_selection_specification = "*"
+        else:
+            tests_to_run = dict() # { test_class: [test_method] }
+            for test_item in self.test_items:
+                _, test_class, test_method = test_item
+                if test_class not in tests_to_run:
+                    tests_to_run[test_class] = []
+                tests_to_run[test_class].append(test_method.split(':')[-1].strip())
+
+            test_selection_specification = ",".join(
+                test_class + "#" + "+".join(tests_to_run[test_class])
+                for test_class in tests_to_run
+            ) # e.g., "TestClass1#testMethod1+testMethod2,TestClass2#testMethod3"
+
+        test_command = [
+            'mvn', 'clean', 'test', 
+            '-Drat.skip', '-Dcheckstyle.skip', '-Djacoco.skip',
+            '-Dtest=' + test_selection_specification
+        ]
+        
+        if self.debug:
+            # save the command that was executed
+            with open(f"{self.project.root_dir}/logs/glue/{self.project.name}/run.sh", "w") as f:
+                f.write(" ".join(test_command))
+
         failure_flag = False
         try:
-            subprocess.run(
-                ['mvn', 'clean', 'test', '-Drat.skip', '-q'],
+            stdout, stderr = "", ""
+            output = subprocess.run(
+                test_command,
                 cwd=self.project.glue_dir,
-                stderr=open(f"{self.project.root_dir}/glue_err.log", "w") if self.debug else subprocess.DEVNULL,
-                stdout=open(f"{self.project.root_dir}/glue.log", "w") if self.debug else subprocess.DEVNULL,
+                capture_output=True,
+                text=True,
                 check=True
             )
+            stdout, stderr = output.stdout, output.stderr            
         except Exception:
             failure_flag = True # check if the failure is due to the tests or something else
 
         self.__revert_writes()
+
+        if self.debug:
+            with open(f"{self.project.root_dir}/glue.{self.project.name}.log", "w") as f:
+                f.write(stdout)
+            with open(f"{self.project.root_dir}/glue_err.{self.project.name}.log", "w") as f:
+                f.write(stderr)
+
+        # check if any unsupported operation was encountered
+        unsupported_operation_keywords = [
+            "[JavaHandler.mapping] Unhandled Java object type",
+            "[valueToObject] Unhandled Python object type",
+            "[ExceptionHandler] Unhandled exception type"
+        ]
+        if any(x in stdout for x in unsupported_operation_keywords):
+            return {
+                "status": ERROR, # unsupported operation encountered
+                "failed_tests": []
+            }
         
         # collect the results
         failed_tests = self.__get_failed_tests_from_surefire()
@@ -801,6 +908,8 @@ class SyncMethod:
         # compose name of field in Python
         if 'private' in field_schema_data['modifiers']:
             python_field_name = f"_{self.class_name}__{field_name}"
+        elif 'protected' in field_schema_data['modifiers']:
+            python_field_name = f"_{field_name}"
         else:
             python_field_name = field_name
         
@@ -833,6 +942,7 @@ class SyncMethod:
             }}
             public Value jToPy(Value idMap) {{
                 {"super.jToPy(idMap);" if self.call_super else ""}
+                this.obj.invokeMember("__setattr__", "javaObj", this);
                 {fields_body}
                 return idMap;
             }}
@@ -845,10 +955,13 @@ class Schema:
     """
     
     def __init__(self, name: str, project: Project, schema_data: dict):
-        self.name = name
+        self.name = name # example: commons-cli.src.main.org.apache.commons.cli.Option_python_partial.json
         self.project = project
         self.schema_data = schema_data
-        
+
+        # extract principle name of the schema (example: commons-cli.src.main.org.apache.commons.cli.Option)
+        self.principle_name = self.name.split('_python_partial')[0]
+
         self.__resolve_subpackage()
         self.__resolve_imports()
         
@@ -859,6 +972,10 @@ class Schema:
         
         # list of exception-method pairs to map
         self.__exceptions = []
+
+        # set of (testMethod, testClass) pairs which should be executed
+        # in order to test the instrumented methods in this schema
+        self.tests_to_execute = set()
         
     def add_class(self, class_name: str, class_schema_data: dict, methods_to_process: list[str] = None, dont_process: bool = False):
         if 'new' in class_name or '{' in class_name:
@@ -930,7 +1047,7 @@ class Schema:
                 # ------------------------------------------------
                 
                 # 'transient' so that it is not part of serialization
-                f"private transient Value obj = {class_obj['classref']}.invokeMember(\"getDefaultInstance\", this);"
+                f"private transient Value obj = {class_obj['classref']}.invokeMember(\"getDefaultInstance\");"
             ]
 
             # add getPythonObject() and setPythonObject() methods
@@ -1080,7 +1197,9 @@ class Schema:
         is_constructor = method_schema_data['is_constructor']
         is_static = 'static' in method_schema_data['modifiers']
         is_void = 'void' in method_schema_data['return_types'][0]
-        method_name = method_name.split(':', 1)[1].strip() if not is_constructor else "__init__"
+        
+        original_method_name = method_name # example: "68-70:build"
+        method_name = method_name.split(':', 1)[1].strip() if not is_constructor else "__init__" # example: "build"
 
         # if method is private, take mangling into account
         # except for constructors
@@ -1146,11 +1265,16 @@ class Schema:
                     """
                 
                 method_content += """
-                catch (Exception ExceptionObjectForCaching) {
+                catch (Throwable ExceptionObjectForCaching) {
                     ExceptionHandler.ERR = ExceptionObjectForCaching;
                     throw ExceptionObjectForCaching;
                 }"""
-                
+
+            # check if this method was a clone method
+            if "@Override" in method_signature and method_name == "clone":
+                # add more code to the clone method to handle the copying of the obj field
+                method_content = add_obj_to_clone_method(method_content, class_obj)
+
             class_obj["methods"].append(f"{method_signature}\n{method_content}\n}}")
             return
         
@@ -1210,7 +1334,6 @@ class Schema:
             {pyToJ0}
             try {{
                 {content}
-                {pyToJ1}
                 {'return val;' if not is_void else ''}
             }} catch (PolyglotException e) {{
                 throw ({exception_name}) ExceptionHandler.handle(e, "{class_obj['name']}.{method_name}");
@@ -1226,16 +1349,25 @@ class Schema:
                 final_method_content = final_method_content + f"\nreturn val;"
             
         class_obj["methods"].append(f"{method_signature}\n{final_method_content}\n}}")
-        
+
+        # since this method was instrumented, we will add any tests that depend on this
+        # method, to the list of tests to be executed
+        self.__add_tests_to_execute(original_method_name, class_obj["name"])
+
     def __resolve_subpackage(self):
         """find subpackage name (if exists)"""
         self.subpackage = ""
+        path_tail = ""
+
         if self.project.main_path in self.schema_data['path']:
             path_tail = self.schema_data['path'].split(self.project.main_path)[-1]
-            if "/" in path_tail:
-                # remove the last segment
-                path_tail = path_tail[:path_tail.rfind('/')]
-                self.subpackage = "." + path_tail.replace('/', '.')
+        elif self.project.test_path in self.schema_data['path']:
+            path_tail = self.schema_data['path'].split(self.project.test_path)[-1]
+
+        if "/" in path_tail:
+            # remove the last segment
+            path_tail = path_tail[:path_tail.rfind('/')]
+            self.subpackage = "." + path_tail.replace('/', '.')
     
     def __resolve_imports(self):
         """resolve imports for the schema"""
@@ -1313,6 +1445,18 @@ class Schema:
                     class_order.append(class_)
         
         return class_order
+
+    def __add_tests_to_execute(self, method_name: str, class_name: str):
+        """
+        Add tests to the list of tests to be executed by searching for test methods that depend on the given method.
+        """
+        relevant_tests = set()
+
+        for test_item in self.project.test_dependencies:
+            if (self.principle_name, class_name, method_name) in self.project.test_dependencies[test_item]:
+                relevant_tests.add(test_item)
+
+        self.tests_to_execute.update(relevant_tests)
     
     @staticmethod
     def is_class_enclosed_in_method(class_name: str, schema_data: dict):

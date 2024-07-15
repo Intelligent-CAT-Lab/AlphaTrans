@@ -1,9 +1,7 @@
 package {project};
 
 import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -96,9 +94,9 @@ public final class IntegrationUtils {{
     // but first call 'pyToJ' on the javaObj
     if (value.hasMember("javaObj")) {{
       Value javaObj = value.getMember("javaObj");
-      javaObj.invokeMember("pyToJ");
       Object hostObj = javaObj.asHostObject();
       idMap.put(id, hostObj);
+      javaObj.invokeMember("pyToJ", idMap);
       return hostObj;
     }}
 
@@ -149,7 +147,7 @@ public final class IntegrationUtils {{
     }}
 
     // handle Properties
-    if (value.hasMembers() && primaryClassName.equals("Properties")) {{
+    if (value.hasHashEntries() && primaryClassName.equals("Properties")) {{
       Properties properties = new Properties();
 
       if (targetObject != null) {{
@@ -158,8 +156,11 @@ public final class IntegrationUtils {{
       }}
 
       idMap.put(id, properties);
-      for (String key : value.getMemberKeys()) {{
-        properties.setProperty(key, (String) valueToObject(value.getMember(key), "String", idMap));
+      for (Object key : value.getHashKeysIterator().as(Iterable.class)) {{
+        properties.put(
+          valueToObject(Value.asValue(key), "String", idMap),
+          valueToObject(value.getHashValue(key), "String", idMap)
+        );
       }}
 
       putObjectsToMaps(properties, value);
@@ -189,8 +190,9 @@ public final class IntegrationUtils {{
       idMap.put(id, map);
       for (Object key : value.getHashKeysIterator().as(Iterable.class)) {{
         map.put(
-            valueToObject(Value.asValue(key), keyClassName, idMap),
-            valueToObject(value.getHashValue(key), valueClassName, idMap));
+          valueToObject(Value.asValue(key), keyClassName, idMap),
+          valueToObject(value.getHashValue(key), valueClassName, idMap)
+        );
       }}
 
       putObjectsToMaps(map, value);

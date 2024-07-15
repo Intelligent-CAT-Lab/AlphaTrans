@@ -209,3 +209,35 @@ def publicize_methods_of_anoymous_classes(body: str) -> str:
             body = body[:method_signature_start] + "\n" + method_signature + body[method_signature_end:]
 
     return body
+
+
+def add_obj_to_clone_method(method_content: str, class_obj: dict) -> str:
+    """
+    Modify the method body (assuming that the method is a clone method) to account
+    for the embedded python object too.
+    """
+    clone_method_content = [] # this list will be flattened later
+
+    # first search for all return statements and get their positions
+    return_statement_matches = re.compile(r"return\s+.*;").finditer(method_content)
+
+    for return_statement_match in return_statement_matches:
+        return_statement = return_statement_match.group()
+        return_statement_start_pos = return_statement_match.start()
+        return_statement_end_pos = return_statement_match.end()
+
+        return_value = return_statement[6:-1].strip()
+
+        handling_code = f"""if ({return_value} != null) {{
+            {return_value}.setPythonObject({class_obj['classref']}.invokeMember("getDefaultInstance"));
+            {return_value}.jToPy();
+        }}"""
+
+        clone_method_content.extend([
+            method_content[:return_statement_start_pos],
+            handling_code,
+            return_statement,
+            method_content[return_statement_end_pos:]
+        ])
+
+    return "".join(clone_method_content)
