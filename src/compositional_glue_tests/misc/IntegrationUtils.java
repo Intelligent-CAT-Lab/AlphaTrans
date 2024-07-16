@@ -66,6 +66,32 @@ public final class IntegrationUtils {{
       return value.asHostObject();
     }}
 
+    // try inferring the class name from the target object if it is not provided
+    if (classDescriptor == null && targetObject != null) {{
+      classDescriptor = targetObject.getClass().getName();
+
+      // we don't need the fully qualified name
+      if (classDescriptor.contains(".")) {{
+        classDescriptor = classDescriptor.substring(classDescriptor.lastIndexOf(".") + 1);
+      }}
+    }}
+
+    // try inferring the class name from the class object if it is not provided
+    if (classDescriptor == null && clazz != null) {{
+      classDescriptor = clazz.getName();
+
+      // we don't need the fully qualified name
+      if (classDescriptor.contains(".")) {{
+        classDescriptor = classDescriptor.substring(classDescriptor.lastIndexOf(".") + 1);
+      }}
+    }}
+
+    // try inferring the class from the target object if it is not provided
+    if (clazz == null && targetObject != null) {{
+      clazz = (Class<T>) targetObject.getClass();
+    }}
+
+
     boolean skipMap = false; // skip procedures related to the map (due to possible type-conflicts)
 
     // check if the object has already been mapped
