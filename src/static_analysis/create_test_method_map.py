@@ -8,16 +8,19 @@ def main(args):
     schema_dir = f'data/schemas'
     for project_name in os.listdir(schema_dir):
 
+        if project_name == 'translations':
+            continue
+
         os.makedirs(f'data/call_graphs/{project_name}', exist_ok=True)
 
         global_call_graph = {}
-        for schema_file in os.listdir(f'{schema_dir}/{project_name}'):
+        for schema_file in os.listdir(f'{schema_dir}/translations/deepseek-coder-33b-instruct/body/{project_name}'):
 
-            if not schema_file.endswith('_python_partial.json'):
+            if 'ESTest' in schema_file:
                 continue
 
             data = {}
-            with open(f'{schema_dir}/{project_name}/{schema_file}', 'r') as f:
+            with open(f'{schema_dir}/translations/deepseek-coder-33b-instruct/body/{project_name}/{schema_file}', 'r') as f:
                 data = json.load(f)
             
             for class_ in data['classes']:
