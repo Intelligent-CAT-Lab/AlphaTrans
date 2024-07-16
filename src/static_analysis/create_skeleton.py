@@ -139,9 +139,6 @@ def main(args):
 
     for schema_fname in schemas:
 
-        if 'python_partial' in schema_fname:
-            continue
-
         if args.evosuite and not schema_fname.endswith('ESTest.json'):
             continue
 
@@ -421,10 +418,18 @@ def main(args):
                 return_type = '<placeholder>'
                 if len(schema['classes'][class_]['methods'][method]['return_types']) == 1 and schema['classes'][class_]['methods'][method]['return_types'][0][0] in extracted_types:
                     return_type = extracted_types[schema['classes'][class_]['methods'][method]['return_types'][0][0]]
-                    # if return_type == class_:
-                    #     return_type = f'"{class_}"'
-                    # elif return_type in class_order:
-                    #     return_type = f'"{return_type}"'
+
+                if 'src.test' in schema_fname:
+                    has_setup_method = False
+                    setup_method = ''
+                    for m in schema['classes'][class_]['methods']:
+                        if 'Before' in [x.split('(')[0] for x in schema['classes'][class_]['methods'][m]['annotations']]:
+                            has_setup_method = True
+                            setup_method = m
+                            break
+                    
+                    if has_setup_method:
+                        schema['classes'][class_]['methods'][method]['calls'].append([schema_fname.replace('.json', ''), class_, setup_method])
 
                 skeleton += f'{return_type}:\n\t\tpass\n\n'
                 current_method[-1] = current_method[-1] + f'{return_type}:\n'
