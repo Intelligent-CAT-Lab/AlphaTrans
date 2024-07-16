@@ -1,16 +1,14 @@
 import argparse
 import json
 from dotenv import load_dotenv
-import torch
 import tqdm
 import os
 import time
 import datetime
-import requests
-from transformers import AutoTokenizer, AutoModelForCausalLM
-from syntactic_validation import l0_validation
-from semantic_validation import l1_validation
-from functional_validation import l2_validation
+from syntactic_validation import syntactic_validation
+from execution_validaton import execution_validation
+from test_validation import test_validation
+from graal_validation import graal_validation
 from get_traversal import get_traversal
 from prompt_generator import PromptGenerator
 
@@ -23,247 +21,245 @@ from genai.schema import (
 )
 
 
-def get_dependency_path(dependent_class, project_name):
-    if os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'):
-        return f'src.main.{dependent_class}'
-    elif os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'):
-        return f'src.test.{dependent_class}'
-    else:
-        return f'src.main.{dependent_class}'
+def translate(fragment, args, prompt_gen):
 
+    model_info = {
+                    'deepseek-coder-33b-instruct': {'total': 16384, 'max_new_tokens': 4096, 'model_id': 'deepseek-ai/deepseek-coder-33b-instruct'},
+                    'llama-3-70b-instruct': {'total': 8192, 'max_new_tokens': 2048, 'model_id': 'meta-llama/llama-3-70b-instruct'},
+                }
 
-def translate(model, tokenizer, device, members_to_translate: list[list], processed_fragments, args):
-    """
-    members_to_translate: [prompt, fragment, use_bam, project_name, schema, class_, fragment_]
-    """
-    for member in members_to_translate:
-        prompt = member['prompt']
-        fragment = member['fragment_type']
-        use_bam = member['use_bam']
-        project_name = member['project_name']
-        schema = member['schema']
-        class_ = member['class']
-        fragment_ = member['fragment']
-    
-        max_attempts = 0
-        parsed_fragment = None
-        feedback = ''
-        start_time = time.time()
-        fixing_same_fragment = True
-        translated_fragment = False
-        original_schema, original_class, original_fragment = schema, class_, fragment_
-        while max_attempts < 5:
+    client = Client(credentials=Credentials.from_env())
+    model_id = model_info[args.model_name]['model_id']
 
-            schema_data = {}
-            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{schema}', 'r') as f:
-                schema_data = json.load(f)
+    max_attempts = 0
+    start_time = time.time()
 
-            if feedback == '':
-                prompt = generate_prompt(schema_data, schema, class_, fragment_, args, fragment, args.model_name)
+    while max_attempts < 5:
 
+        prompt = prompt_gen.generate_prompt()
+
+        if args.debug:
+            print('=======================PROMPT=======================', flush=True)
             print(prompt, flush=True)
             print('=======================GENERATING=======================', flush=True)
 
-            model_info = {
-                            'deepseek-coder-33b-instruct': {'total': 16384, 'max_new_tokens': 4096, 'model_id': 'deepseek-ai/deepseek-coder-33b-instruct'},
-                            'llama-3-70b-instruct': {'total': 8192, 'max_new_tokens': 2048, 'model_id': 'meta-llama/llama-3-70b-instruct'},
-                        }
-
-            client = Client(credentials=Credentials.from_env())
-            model_id = model_info[args.model_name]['model_id']
-
-            total_tokens = 0
-            for response in client.text.tokenization.create(model_id=model_id, input=prompt):
-                total_tokens = response.results[0].token_count
+        total_tokens = 0
+        for response in client.text.tokenization.create(model_id=model_id, input=prompt):
+            total_tokens = response.results[0].token_count
+        
+        # if prompt size exceeds model token limit, mark translation as failed
+        if total_tokens > model_info[args.model_name]['total']:
+            schema_data = {}
+            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+                schema_data = json.load(f)
             
-            if total_tokens > model_info[args.model_name]['total']:
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['translation_status'] = 'token_limit_exceeded'
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['syntactical_validation_status'] = 'pending'
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['test_validation_status'] = 'pending'
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['graal_validation_status'] = 'pending'
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['elapsed_time'] = time.time() - start_time
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['generation_timestamp'] = datetime.datetime.now().isoformat()
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['model_name'] = args.model_name
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['include_implementation'] = args.include_implementation
-                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{schema}', 'w') as f:
-                    json.dump(schema_data, f, indent=4)
-                    f.flush()
-                    os.fsync(f.fileno())
-                break
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation_status'] = 'failed'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['syntactical_validation_status'] = 'failed'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['execution_validation_status'] = 'failed'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['test_validation_status'] = 'failed'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['graal_validation_status'] = 'failed'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = -1 # elapsed time is -1 for token limit exceeded
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
 
-            max_new_tokens = model_info[args.model_name]['total'] - total_tokens
-            max_new_tokens = min(max_new_tokens, model_info[args.model_name]['max_new_tokens'])
+            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
+                json.dump(schema_data, f, indent=4)
+                f.flush()
+                os.fsync(f.fileno())
 
-            parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
-                                                    min_new_tokens=1,
-                                                    max_new_tokens=max_new_tokens,
-                                                    return_options=TextGenerationReturnOptions(
-                                                        input_text=True,
-                                                    ),
-                                                    time_limit=60000,
-                                                )
+            break
 
-            for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
-                generation = response.results[0].input_text + response.results[0].generated_text
+        max_new_tokens = model_info[args.model_name]['total'] - total_tokens
+        max_new_tokens = min(max_new_tokens, model_info[args.model_name]['max_new_tokens'])
 
-            generation = generation[generation.find('### Response:') + len('### Response:'):]
+        parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
+                                                min_new_tokens=1,
+                                                max_new_tokens=max_new_tokens,
+                                                return_options=TextGenerationReturnOptions(
+                                                    input_text=True,
+                                                ),
+                                                time_limit=60000,
+                                            )
 
+        for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
+            generation = response.results[0].input_text + response.results[0].generated_text
+
+        generation = generation[generation.find('### Response:') + len('### Response:'):]
+
+        if args.debug:
             print(generation, flush=True)
             print('---' * 50, flush=True)
+        
+        status, generation, feedback = syntactic_validation(generation, fragment, args)
 
-            status, parsed_fragment, feedback = l0_validation(generation, fragment)
+        if not status:
+            # TODO: re-prompt the model with feedback
 
-            if not status:
-                max_attempts += 1
-                # TODO: create feedback prompt
-                # prompt = create_feedback_prompt(feedback, project_name, schema, class_, fragment_, parsed_fragment, args)
-                continue
+            # immediately store syntactic validation status
+            schema_data = {}
+            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+                schema_data = json.load(f)
             
-            schema_data['classes'][class_][f'{fragment}s'][fragment_]['translation'] = parsed_fragment
-            schema_data['classes'][class_][f'{fragment}s'][fragment_]['translation_status'] = 'success' if fragment == 'field' or 'src.test' in schema else 'pending'
-            schema_data['classes'][class_][f'{fragment}s'][fragment_]['syntactical_validation_status'] = 'success'
-            schema_data['classes'][class_][f'{fragment}s'][fragment_]['test_validation_status'] = 'pending'
-            schema_data['classes'][class_][f'{fragment}s'][fragment_]['graal_validation_status'] = 'pending'
-            schema_data['classes'][class_][f'{fragment}s'][fragment_]['elapsed_time'] = time.time() - start_time
-            schema_data['classes'][class_][f'{fragment}s'][fragment_]['generation_timestamp'] = datetime.datetime.now().isoformat()
-            schema_data['classes'][class_][f'{fragment}s'][fragment_]['model_name'] = args.model_name
-            schema_data['classes'][class_][f'{fragment}s'][fragment_]['include_implementation'] = args.include_implementation
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation_status'] = 'failed'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['syntactical_validation_status'] = 'failed'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['execution_validation_status'] = 'failed'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['test_validation_status'] = 'failed'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['graal_validation_status'] = 'failed'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = time.time() - start_time
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
 
-            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{schema}', 'w') as f:
+            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
                 json.dump(schema_data, f, indent=4)
                 f.flush()
                 os.fsync(f.fileno())
 
-            if fragment == 'field' or 'src.test' in schema: # do not proceed to semantic validation for fields and test methods
-                translated_fragment = True
-                break
+            max_attempts = 5 # change this later
+            continue
 
-            if args.validate_by_graal:
-                status, _, feedback = l2_validation([[parsed_fragment, schema, class_, fragment_, args]])
+        # immediately store syntactic validation status
+        schema_data = {}
+        with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+            schema_data = json.load(f)
+        
+        schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation'] = generation
+        schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation_status'] = 'pending'
+        schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['syntactical_validation_status'] = 'success'
+        schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['execution_validation_status'] = 'pending'
+        schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['test_validation_status'] = 'pending'
+        schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['graal_validation_status'] = 'pending'
+        schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = time.time() - start_time
+        schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
 
-                if status == "failure":
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['translation_status'] = 'failed'
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['graal_validation_status'] = 'failed'
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['elapsed_time'] = time.time() - start_time
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['generation_timestamp'] = datetime.datetime.now().isoformat()
+        with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
+            json.dump(schema_data, f, indent=4)
+            f.flush()
+            os.fsync(f.fileno())
 
-                    with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{schema}', 'w') as f:
-                        json.dump(schema_data, f, indent=4)
-                        f.flush()
-                        os.fsync(f.fileno())
+        # perform execution check if fragment is a field
+        if fragment['fragment_type'] in ['field', 'static_initializer']:
+            status, feedback = execution_validation(fragment, args)
 
-                    #TODO: create new prompt with feedback
-                    max_attempts += 1
-                    break
-                    continue
+            if not status:
+                # TODO: re-prompt the model with feedback
 
-                elif status == "success":
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['translation_status'] = 'success'
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['graal_validation_status'] = 'success'
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['elapsed_time'] = time.time() - start_time
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['generation_timestamp'] = datetime.datetime.now().isoformat()
-
-                    with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{schema}', 'w') as f:
-                        json.dump(schema_data, f, indent=4)
-                        f.flush()
-                        os.fsync(f.fileno())
-                    
-                    translated_fragment = True
-                    break
-
-                elif status == "error":
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['translation_status'] = 'failed'
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['graal_validation_status'] = 'error'
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['elapsed_time'] = time.time() - start_time
-                    schema_data['classes'][class_][f'{fragment}s'][fragment_]['generation_timestamp'] = datetime.datetime.now().isoformat()
-
-                    with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{schema}', 'w') as f:
-                        json.dump(schema_data, f, indent=4)
-                        f.flush()
-                        os.fsync(f.fileno())
-                    
-                    translated_fragment = True
-                    break
-
-            elif args.validate_by_test:
-                status, feedback, file_path, function_name, is_attr_error = l1_validation(schema, class_, fragment_, project_name, processed_fragments, args.model_name, args.prompt_type)
-
-                if not status:
-
-                    if not is_attr_error:
-                        schema_data['classes'][class_][f'{fragment}s'][fragment_]['translation_status'] = 'failed'
-                        schema_data['classes'][class_][f'{fragment}s'][fragment_]['reprompt_attempt'] = f'not_attribute_error: {feedback}'
-
-                        with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{schema}', 'w') as f:
-                            json.dump(schema_data, f, indent=4)
-                            f.flush()
-                            os.fsync(f.fileno())
-
-                        break # breaking the loop because the issue is not an attribute error and cant be fixed with re-prompting
-                    
-                    else:
-
-                        incorrect_schema, incorrect_class_, incorrect_fragment_ = get_incorrect_fragment(file_path, project_name, function_name)
-
-                        assert incorrect_schema is not None, f"Could not find incorrect fragment for {file_path} {function_name}"
-                        assert incorrect_class_ is not None, f"Could not find incorrect fragment for {file_path} {function_name}"
-                        assert incorrect_fragment_ is not None, f"Could not find incorrect fragment for {file_path} {function_name}"
-
-                        schema_data = {}
-                        with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{incorrect_schema}', 'r') as f:
-                            schema_data = json.load(f)
-                        
-                        schema_data['classes'][incorrect_class_][f'{fragment}s'][incorrect_fragment_]['translation_status'] = 'failed'
-                        schema_data['classes'][incorrect_class_][f'{fragment}s'][incorrect_fragment_]['reprompt_attempt'] = 'attribute_error'
-
-                        with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{incorrect_schema}', 'w') as f:
-                            json.dump(schema_data, f, indent=4)
-                            f.flush()
-                            os.fsync(f.fileno())
-
-                        if f'{incorrect_schema.replace("_python_partial.json", "")}|{incorrect_class_}|{incorrect_fragment_}' != f'{schema.replace("_python_partial.json", "")}|{class_}|{fragment_}':
-                            schema = incorrect_schema
-                            class_ = incorrect_class_
-                            fragment_ = incorrect_fragment_
-                            fixing_same_fragment = False
-
-                    max_attempts += 1
-                    ### TODO: create new prompt with feedback
-                    prompt = create_feedback_prompt(feedback, project_name, schema, class_, fragment_, parsed_fragment, args)
-
-                    continue
+                # immediately store execution validation status
+                schema_data = {}
+                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+                    schema_data = json.load(f)
                 
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['translation_status'] = 'success'
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['test_validation_status'] = 'success'
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['elapsed_time'] = time.time() - start_time
-                schema_data['classes'][class_][f'{fragment}s'][fragment_]['generation_timestamp'] = datetime.datetime.now().isoformat()
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation_status'] = 'failed'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['syntactical_validation_status'] = 'success'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['execution_validation_status'] = 'failed'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['test_validation_status'] = 'failed'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['graal_validation_status'] = 'failed'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = time.time() - start_time
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
 
-                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{schema}', 'w') as f:
+                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
                     json.dump(schema_data, f, indent=4)
                     f.flush()
                     os.fsync(f.fileno())
-                
-                feedback = ''
 
-                if not fixing_same_fragment:
-                    schema, class_, fragment_ = original_schema, original_class, original_fragment
-                    fixing_same_fragment = True
-                    continue
+                max_attempts = 5 # change this later
+                continue
 
-                translated_fragment = True
-                break
-
-        if not translated_fragment:
+            # immediately store execution validation status and end the loop
             schema_data = {}
-            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{original_schema}', 'r') as f:
+            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
                 schema_data = json.load(f)
+            
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation_status'] = 'success'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['syntactical_validation_status'] = 'success'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['execution_validation_status'] = 'success'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['test_validation_status'] = 'success'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['graal_validation_status'] = 'success'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = time.time() - start_time
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
 
-            schema_data['classes'][original_class][f'{fragment}s'][original_fragment]['translation_status'] = 'failed'
-
-            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{project_name}/{original_schema}', 'w') as f:
+            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
                 json.dump(schema_data, f, indent=4)
                 f.flush()
                 os.fsync(f.fileno())
+            
+            break
+
+        # make sure all field translation does not reach this point
+        assert fragment['fragment_type'] != 'field'
+
+        # if a fragment is a test method, end the loop after syntactic validation
+        if fragment['fragment_type'] == 'method' and 'src.test' in fragment['schema_name']:
+
+            schema_data = {}
+            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+                schema_data = json.load(f)
+            
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation'] = generation
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation_status'] = 'success'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['syntactical_validation_status'] = 'success'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['execution_validation_status'] = 'pending'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['test_validation_status'] = 'pending'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['graal_validation_status'] = 'pending'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = time.time() - start_time
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
+
+            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
+                json.dump(schema_data, f, indent=4)
+                f.flush()
+                os.fsync(f.fileno())
+
+            break
+
+        if args.validate_by_graal:
+            status, feedback = graal_validation(generation, fragment, args)
+
+            # graal could not validate the fragment. no feedback required
+            if status == 'error':
+                pass
+
+            elif status == 'failure':
+                # TODO: re-prompt the model with feedback
+
+                # immediately store graal validation status
+                schema_data = {}
+                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+                    schema_data = json.load(f)
+                
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation_status'] = 'failed'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['syntactical_validation_status'] = 'success'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['execution_validation_status'] = 'pending'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['test_validation_status'] = 'pending'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['graal_validation_status'] = 'failed'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = time.time() - start_time
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
+
+                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
+                    json.dump(schema_data, f, indent=4)
+                    f.flush()
+                    os.fsync(f.fileno())
+            
+            elif status == 'success':
+                
+                # immediately store graal validation status
+                schema_data = {}
+                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+                    schema_data = json.load(f)
+                
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation_status'] = 'pending'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['syntactical_validation_status'] = 'success'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['execution_validation_status'] = 'success'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['test_validation_status'] = 'pending'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['graal_validation_status'] = 'success'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = time.time() - start_time
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
+
+                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
+                    json.dump(schema_data, f, indent=4)
+                    f.flush()
+                    os.fsync(f.fileno())
+
+        # TODO: perform test execution
+
+        break
+        
 
 
 def main(args):
@@ -272,11 +268,39 @@ def main(args):
 
     fragment_traversal = get_traversal(args)
 
-    for fragment in fragment_traversal:
+    for fragment in tqdm.tqdm(fragment_traversal):
+
+        schema_data = {}
+        with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+            schema_data = json.load(f)
+
+        if schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation_status'] in ['success', 'failed']:
+            continue
 
         prompt_gen = PromptGenerator(is_feedback=False, args=args, fragment_details=fragment)
-        prompt = prompt_gen.generate_prompt()
         prompt_status = prompt_gen.prompt_status
+
+        # if a field is already deterministically translated, skip it
+        if fragment['fragment_type'] == 'field' and prompt_status == 'error':
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation'] = schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['partial_translation']
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = 0
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation_status'] = 'success'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['syntactical_validation_status'] = 'success'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['execution_validation_status'] = 'success'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['test_validation_status'] = 'success'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['graal_validation_status'] = 'success'
+
+            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
+                json.dump(schema_data, f, indent=4)
+                f.flush()
+                os.fsync(f.fileno())
+
+            continue
+
+        translate(fragment, args, prompt_gen)
+
+        break
 
 
 if __name__ == '__main__':
@@ -290,5 +314,6 @@ if __name__ == '__main__':
     parser_.add_argument('--include_implementation', action='store_true', help='include implementation of dependent methods')
     parser_.add_argument('--validate_by_graal', action='store_true', help='validate translation by GraalVM')
     parser_.add_argument('--translate_evosuite', action='store_true', help='translate evosuite generated tests')
+    parser_.add_argument('--debug', action='store_true', help='debug mode')
     args = parser_.parse_args()
     main(args)

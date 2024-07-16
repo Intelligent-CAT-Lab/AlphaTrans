@@ -102,7 +102,13 @@ def main(args):
             intialize_later_fields = []
             for field in field_order:
 
-                total_fragments += 1
+                if args.fragment_name:
+                    if args.fragment_name != field:
+                        recomposed_file += ''.join(data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', f'None')
+                        recomposed_file += '\n'
+                        total_fragments += 1
+                        continue
+
                 if data['classes'][class_]['fields'][field]['translation'] == []:
                     recomposed_file += '\n'.join([''] + data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', 'None # LLM could not translate this field')
                     recomposed_file += '\n'
@@ -163,6 +169,7 @@ def main(args):
 
                 recomposed_file += '\n'.join(data['classes'][class_]['fields'][field]['translation'])
                 recomposed_file += '\n'
+                total_fragments += 1
 
             if 'static_initializers' in data['classes'][class_]:
                 for static_initializer in data['classes'][class_]['static_initializers']:
@@ -184,6 +191,13 @@ def main(args):
                     class_initialize_methods.append(f'{class_}.initialize_fields()')
                         
             for method in data['classes'][class_]['methods']:
+
+                if args.fragment_name:
+                    if args.fragment_name != method:
+                        recomposed_file += '\n'.join(data['classes'][class_]['methods'][method]['partial_translation']).replace('pass', 'pass # LLM could not translate this method')
+                        recomposed_file += '\n'
+                        total_fragments += 1
+                        continue
 
                 # ignore constructors in test files
                 # if data['classes'][class_]['methods'][method]['is_constructor'] and 'src.test' in schema and has_test_method(data['classes'][class_]['methods']):
@@ -326,6 +340,7 @@ if __name__ == '__main__':
     parser_.add_argument('--output_dir', type=str, dest='output_dir', help='directory to store recomposed projects')
     parser_.add_argument('--type', type=str, dest='type', help='prompting type signature/body')
     parser_.add_argument('--file_name', type=str, dest='file_name', help='file name to recompose')
+    parser_.add_argument('--fragment_name', type=str, dest='fragment_name', help='fragment name to recompose')
     parser_.add_argument('--recompose_evosuite', action='store_true', dest='recompose_evosuite', help='recompose evosuite tests')
     args = parser_.parse_args()
     main(args)

@@ -61,14 +61,20 @@ def extract_fragment_location(traceback, project_name):
     if match:
         file_path = match.group(1)
         function_name = match.group(2)
-        return traceback.replace(file_path, 'script.py'), file_path, function_name.replace('_', '')
+        if function_name.strip() == '__init__':
+            function_name = file_path.split('/')[-1].replace('.py', '')
+        elif function_name.strip().startswith('__'):
+            function_name = function_name.strip()[2:]
+        elif function_name.strip().startswith('_'):
+            function_name = function_name.strip()[1:]
+        return traceback.replace(file_path, 'script.py'), file_path, function_name
     else:
         raise Exception("No match found")
 
 
-def l1_validation(schema, fragment_class, fragment_method, project_name, processed_fragments):
+def test_validation(schema, fragment_class, fragment_method, project_name, processed_fragments, model_name, type_):
 
-    os.system(f'python3 src/postprocessing/recompose.py --project_name={project_name} --model_name=deepseek-coder-33b-instruct --translation_dir=data/schemas/{project_name} --output_dir=data/recomposed_projects')
+    os.system(f'python3 src/postprocessing/recompose.py --project_name={project_name} --model_name={model_name} --output_dir=data/recomposed_projects --type={type_}')
 
     global_call_graph = {}
     with open(f'data/call_graphs/{project_name}/call_graph.json', 'r') as f:
@@ -101,7 +107,7 @@ def l1_validation(schema, fragment_class, fragment_method, project_name, process
         test_path = test_path[test_path.index(project_name):].replace('test/java/org', 'test/org').replace('.java', '.py')
         test_method = test_method.split(':')[1]
 
-        p = Popen(['python3', '-m', 'pytest', f'data/recomposed_projects/deepseek-coder-33b-instruct/{test_path}::{test_class}::{test_method}'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = Popen(['python3', '-m', 'pytest', f'data/recomposed_projects/{model_name}/{type_}/{test_path}::{test_class}::{test_method}'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         try:
             stdout, stderr = p.communicate(timeout=100)
@@ -114,8 +120,11 @@ def l1_validation(schema, fragment_class, fragment_method, project_name, process
 
         if parsed_output[1] or parsed_output[2]:
             green_tests = False
-            feedback = parsed_output[1]
-            feedback, file_path, function_name = extract_fragment_location(feedback, project_name)
+            feedback = parsed_output[2]
+            try:
+                feedback, file_path, function_name = extract_fragment_location(feedback, project_name)
+            except Exception as e:
+                pass
             break
     
-    return green_tests, feedback, file_path, function_name
+    return green_tests, feedback, file_path, function_name, 'AttributeError' in feedback if feedback else False
