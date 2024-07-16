@@ -18,9 +18,11 @@ class Project:
     Represents a project under testing.
     """
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, schema_dir: str):
         """
         Initialize the project with the given name.
+
+        schema_dir: the directory containing the (python partial) schemas for the project.
         """
         if name not in paths:
             raise ValueError(f"Project {name} not found!")
@@ -33,7 +35,7 @@ class Project:
 
         # meta information for the file
         self.script_dir = os.path.dirname(__file__)
-        self.schema_dir = os.path.join(self.script_dir, SCRIPT_DIR_DEPTH, SCHEMAS_DIR)
+        self.schema_dir = os.path.join(self.script_dir, SCRIPT_DIR_DEPTH, schema_dir)
         self.root_dir = os.path.join(self.script_dir, SCRIPT_DIR_DEPTH)
         self.project_dir = os.path.join(self.root_dir, ORIGINAL_DIR, self.name)
         self.glue_dir = os.path.join(self.root_dir, OUTPUT_DIR, self.name)

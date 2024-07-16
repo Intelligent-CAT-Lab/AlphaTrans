@@ -237,7 +237,13 @@ class StaticFieldRedirector(abc.ABCMeta):
     def __setattr__(cls, name, value):
         cleaned_name = StaticFieldRedirector.unmangle_name(name)        
         if hasattr(cls.javaClz, cleaned_name):
-            setattr(cls.javaClz, cleaned_name, value) # TODO: type-casting
+            translated_value = JavaHandler.valueToObject(
+                value,
+                JavaHandler.valueToObject(None, "Object"), # classDescriptior: None
+                JavaHandler.valueToObject(dict(), "Map"), # idMap
+                getattr(cls.javaClz, cleaned_name) # targetObject
+            )
+            setattr(cls.javaClz, cleaned_name, translated_value)
 
         object.__setattr__(cls, name, value)
         

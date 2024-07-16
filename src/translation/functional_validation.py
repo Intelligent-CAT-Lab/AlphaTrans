@@ -10,11 +10,14 @@ def l2_validation(members_to_validate: list[list]):
         ...
     ]
     """    
-    global project    
-    project_name = members_to_validate[0][4]
+    global project
+    args = members_to_validate[0][4]
+    project_name = args.project_name
+
+    schema_dir = f'data/schemas/translations/{args.model_name}/{args.prompt_type}'
     
     if not project:
-        project = Project(project_name)
+        project = Project(project_name, schema_dir)
         
     components = dict()
     injected_translations = dict()
