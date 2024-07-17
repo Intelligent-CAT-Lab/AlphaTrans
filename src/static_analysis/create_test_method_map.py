@@ -33,6 +33,8 @@ def main(args):
                 for method_ in data['classes'][class_]['methods']:
                     global_call_graph[class_].setdefault(method_, [])
                     for call_ in data['classes'][class_]['methods'][method_]['calls']:
+                        if ':' not in call_[2]:
+                            continue
                         global_call_graph[class_][method_].append({'schema': call_[0], 'class': call_[1], 'method': call_[2]})
 
             with open(f'data/call_graphs/{project_name}/call_graph.json', 'w') as f:
