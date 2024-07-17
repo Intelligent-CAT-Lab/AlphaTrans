@@ -1,5 +1,6 @@
 ORIGINAL_DIR = "java_projects/cleaned_final_projects"
 OUTPUT_DIR = "java_projects/compositional_glue_tests"
+OVERRIDES_DIR = "java_projects/overrides"
 TRANSLATION_DIR = "data/translated_projects" # was: "data/verified_projects"
 SKELETON_DIR = "data/skeletons"
 SCHEMAS_DIR = "data/schemas"
