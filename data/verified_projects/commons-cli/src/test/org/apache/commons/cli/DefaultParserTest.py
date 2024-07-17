@@ -29,7 +29,7 @@ class DefaultParserTest(ParserTestCase):
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(False).build()
             args = ["--bfile", "\"quoted string\""]
-            cl = parser.parse0(self.options, args)
+            cl = parser.parse0(self._options, args)
             self.assertEqual(
                 "\"quoted string\"",
                 cl.getOptionValue4("b"),
@@ -43,7 +43,7 @@ class DefaultParserTest(ParserTestCase):
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(True).build()
             args = ["--bfile", "\"quoted string\""]
-            cl = parser.parse0(self.options, args)
+            cl = parser.parse0(self._options, args)
             self.assertEqual(
                 "quoted string",
                 cl.getOptionValue4("b"),
@@ -56,7 +56,7 @@ class DefaultParserTest(ParserTestCase):
     def testLongOptionWithEqualsQuoteHandling(self) -> None:
         try:
             args = ["--bfile=\"quoted string\""]
-            cl = self._parser.parse0(self.options, args)
+            cl = self._parser.parse0(self._options, args)
             self.assertEqual(
                 "\"quoted string\"",
                 cl.getOptionValue4("b"),
@@ -70,7 +70,7 @@ class DefaultParserTest(ParserTestCase):
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(False).build()
             args = ["--bfile=\"quoted string\""]
-            cl = parser.parse0(self.options, args)
+            cl = parser.parse0(self._options, args)
             self.assertEqual(
                 "\"quoted string\"",
                 cl.getOptionValue4("b"),
@@ -84,7 +84,7 @@ class DefaultParserTest(ParserTestCase):
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(True).build()
             args = ["--bfile=\"quoted string\""]
-            cl = parser.parse0(self.options, args)
+            cl = parser.parse0(self._options, args)
             self.assertEqual(
                 "\"quoted string\"",
                 cl.getOptionValue4("b"),
@@ -97,7 +97,7 @@ class DefaultParserTest(ParserTestCase):
     def testShortOptionConcatenatedQuoteHandling(self) -> None:
         try:
             args = ["-b", "\"quoted string\""]
-            cl = self._parser.parse0(self.options, args)
+            cl = self._parser.parse0(self._options, args)
             self.assertEqual(
                 "\"quoted string\"", 
                 cl.getOptionValue4("b"), 
@@ -111,7 +111,7 @@ class DefaultParserTest(ParserTestCase):
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(False).build()
             args = ["-b", "\"quoted string\""]
-            cl = parser.parse0(self.options, args)
+            cl = parser.parse0(self._options, args)
             self.assertEqual(
                 "\"quoted string\"", 
                 cl.getOptionValue4("b"),
@@ -126,7 +126,7 @@ class DefaultParserTest(ParserTestCase):
         try:
             parser = DefaultParser.builder().setStripLeadingAndTrailingQuotes(True).build()
             args = ["-b", "\"quoted string\""]
-            cl = parser.parse0(self.options, args)
+            cl = parser.parse0(self._options, args)
             self.assertEqual(
                 "quoted string", 
                 cl.getOptionValue4("b"), 
