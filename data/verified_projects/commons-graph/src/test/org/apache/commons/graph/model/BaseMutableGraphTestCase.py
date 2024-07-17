@@ -5,7 +5,7 @@ from src.test.org.apache.commons.graph.utils.MultiThreadedTestRunner import *
 from src.test.org.apache.commons.graph.utils.GraphUtils import *
 from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *
 from src.main.org.apache.commons.graph.model.DirectedMutableGraph import *
-from src.main.org.apache.commons.graph.model.BaseLabeledEdge import *
+from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *
 from src.main.org.apache.commons.graph.MutableGraph import *
 from src.main.org.apache.commons.graph.GraphException import *
 from src.main.org.apache.commons.graph.Graph import *
