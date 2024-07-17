@@ -1,6 +1,5 @@
 import pytest
 
-from src.test.org.apache.commons.graph.utils.MultiThreadedTestRunner import MultiThreadedTestRunner
 from abc import ABC, abstractmethod
 
 class TestRunner(ABC):
@@ -18,5 +17,5 @@ class TestRunner(ABC):
     def runTest(self) -> None:
         pass
 
-    def setTestRunner(self, runner: MultiThreadedTestRunner) -> None:
+    def setTestRunner(self, runner) -> None:
         self.__runner = runner
