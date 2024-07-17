@@ -9,7 +9,7 @@ import time
 import datetime
 # from transformers import AutoTokenizer, AutoModelForCausalLM
 from syntactic_validation import l0_validation
-from functional_validation import l2_validation
+from src.translation.graal_validation import graal_validation
 
 # from genai.client import Client
 # from genai.credentials import Credentials
@@ -153,7 +153,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
         elapsed_time = time.time() - start_time
         return syntactically_validated_members, elapsed_time
 
-    status, functionally_validated_members, feedback = l2_validation(syntactically_validated_members)
+    status, functionally_validated_members, feedback = graal_validation(syntactically_validated_members)
     
     if status == 'success':
         print("PASSED!")
