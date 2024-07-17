@@ -39,6 +39,7 @@ class Project:
         self.root_dir = os.path.join(self.script_dir, SCRIPT_DIR_DEPTH)
         self.project_dir = os.path.join(self.root_dir, ORIGINAL_DIR, self.name)
         self.glue_dir = os.path.join(self.root_dir, OUTPUT_DIR, self.name)
+        self.overrides_dir = os.path.join(self.root_dir, OVERRIDES_DIR, self.name)
 
         self.__initialize_java_project()
         
@@ -60,12 +61,7 @@ class Project:
         Copy original java project to glue_code directory
         but first check if pom.xml exists in the output directory and
         and if it does, store its contents      
-        """        
-        pom_contents = None
-        if os.path.exists(f"{self.glue_dir}/pom.xml"):
-            with open(f"{self.glue_dir}/pom.xml") as f:
-                pom_contents = f.read()
-
+        """
         if not os.path.exists(f"{self.glue_dir}/"):
             os.makedirs(f"{self.glue_dir}/") # make all directories in the path
             
@@ -76,10 +72,8 @@ class Project:
         if os.path.exists(f"{self.glue_dir}/target"):
             subprocess.run(['rm', '-r', f"{self.glue_dir}/target"], check=True)
 
-        # if pom.xml existed, write it back
-        if pom_contents:
-            with open(f"{self.glue_dir}/pom.xml", "w") as f:
-                f.write(pom_contents)
+        # now copy over contents from the override directory
+        subprocess.run(['cp', '-r', f"{self.overrides_dir}/.", f"{self.glue_dir}/"], check=True)
         
         # IntegrationUtils.java
         with open(f"{self.script_dir}/misc/IntegrationUtils.java") as f:
