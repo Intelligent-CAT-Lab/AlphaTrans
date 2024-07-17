@@ -1,7 +1,8 @@
 import pytest
 
 import unittest
-from datetime import datetime, timedelta
+import datetime
+from datetime import timedelta
 from abc import ABC
 import typing
 from src.main.org.apache.commons.pool2.BasePooledObjectFactory import *
@@ -9,8 +10,8 @@ from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *
 
 class TestPoolImplUtils(unittest.TestCase):
 
-    __INSTANT_1 = datetime.fromtimestamp(1)
-    __INSTANT_0 = datetime.fromtimestamp(0)
+    __INSTANT_1 = datetime.datetime.fromtimestamp(1)
+    __INSTANT_0 = datetime.datetime.fromtimestamp(0)
 
     
     A = typing.TypeVar('A')
@@ -22,7 +23,7 @@ class TestPoolImplUtils(unittest.TestCase):
 
 
     
-    class FactoryAB(typing.Generic[A, B], BasePooledObjectFactory[B], ABC):
+    class FactoryAB(typing.Generic[A, B], BasePooledObjectFactory, ABC):
         pass
 
     
@@ -55,7 +56,7 @@ class TestPoolImplUtils(unittest.TestCase):
             return None
 
     
-    class SimpleFactory(BasePooledObjectFactory[str]):
+    class SimpleFactory(BasePooledObjectFactory):
         
         def create(self):
             try:

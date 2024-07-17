@@ -46,17 +46,17 @@ class TestBaseObjectPool(TestObjectPool):
         return False
 
     
-    def _makeEmptyPool0(self, minCapacity: int) -> ObjectPool[str]:
+    def _makeEmptyPool0(self, minCapacity: int) -> ObjectPool:
         if self.__class__ != TestBaseObjectPool:
             self.fail("Subclasses of TestBaseObjectPool must reimplement this method.")
         raise NotImplementedError("BaseObjectPool isn't a complete implementation.")
 
     
-    def _makeEmptyPool(self, factory) -> ObjectPool[str]:
+    def _makeEmptyPool(self, factory) -> ObjectPool:
         return self._makeEmptyPool1(factory)
 
     
-    def _makeEmptyPool1(self, factory) -> ObjectPool[str]:
+    def _makeEmptyPool1(self, factory) -> ObjectPool:
         if self.__class__ != TestBaseObjectPool:
             self.fail("Subclasses of TestBaseObjectPool must reimplement this method.")
         raise NotImplementedError("BaseObjectPool isn't a complete implementation.")

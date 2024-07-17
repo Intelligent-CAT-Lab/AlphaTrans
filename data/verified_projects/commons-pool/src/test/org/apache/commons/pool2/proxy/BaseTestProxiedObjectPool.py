@@ -47,7 +47,7 @@ class BaseTestProxiedObjectPool(unittest.TestCase, ABC):
 
 
     @abstractmethod
-    def _getproxySource(self) -> ProxySource[TestObject]:
+    def _getproxySource(self) -> ProxySource:
         pass
 
     

@@ -1,6 +1,6 @@
 import pytest
 
-from src.main.org.apache.commons.pool2.Waiter import *
+from src.test.org.apache.commons.pool2.Waiter import *
 from src.main.org.apache.commons.pool2.PooledObject import *
 import threading
 import typing
@@ -13,7 +13,7 @@ class SleepingObjectFactory:
         self.__debug = False
 
     
-    def activateObject(self, obj: PooledObject[int]) -> None:
+    def activateObject(self, obj: PooledObject) -> None:
         try:
             self.__debug("activateObject", obj)
             Waiter.sleepQuietly(10)
@@ -27,7 +27,7 @@ class SleepingObjectFactory:
             print(thread + ": " + method + " " + str(obj))
     
     
-    def destroyObject(self, obj: PooledObject[int]) -> None:
+    def destroyObject(self, obj: PooledObject) -> None:
         try:
             self.__debug("destroyObject", obj)
             Waiter.sleepQuietly(250)
@@ -39,7 +39,7 @@ class SleepingObjectFactory:
         return self.__debug
 
 
-    def passivateObject(self, obj: PooledObject[int]) -> None:
+    def passivateObject(self, obj: PooledObject) -> None:
         try:
             self.__debug("passivateObject", obj)
             Waiter.sleepQuietly(10)
@@ -51,7 +51,7 @@ class SleepingObjectFactory:
         self.__debug = b
 
     
-    def validateObject(self, obj: PooledObject[int]) -> bool:
+    def validateObject(self, obj: PooledObject) -> bool:
         self.__debug("validateObject", obj)
         Waiter.sleepQuietly(30)
         return True
