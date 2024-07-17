@@ -763,105 +763,110 @@ class CompositionalTest:
         Run the compositional tests.
         """
         self.__execute_writes()
-
-        if self.debug:
-            # create a snapshot of the project in logs/glue/
-            os.makedirs(f"{self.project.root_dir}/logs/glue/{self.project.name}/", exist_ok=True)
-            subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/{self.project.name}/"], check=True)
-
-        if not self.test_items:
-            # run all tests
-            test_selection_specification = "*"
-        else:
-            tests_to_run = dict() # { test_class: [test_method] }
-            for test_item in self.test_items:
-                _, test_class, test_method = test_item
-                if test_class not in tests_to_run:
-                    tests_to_run[test_class] = []
-                tests_to_run[test_class].append(test_method.split(':')[-1].strip())
-
-            test_selection_specification = ",".join(
-                test_class + "#" + "+".join(tests_to_run[test_class])
-                for test_class in tests_to_run
-            ) # e.g., "TestClass1#testMethod1+testMethod2,TestClass2#testMethod3"
-
-        test_command = [
-            'mvn', 'clean', 'test', 
-            '-Drat.skip', '-Dcheckstyle.skip', '-Djacoco.skip',
-            '-Dtest=' + test_selection_specification
-        ]
-        
-        if self.debug:
-            # save the command that was executed
-            with open(f"{self.project.root_dir}/logs/glue/{self.project.name}/run.sh", "w") as f:
-                f.write(" ".join(test_command))
-
-        failure_flag = False
         try:
-            stdout, stderr = "", ""
-            output = subprocess.run(
-                test_command,
-                cwd=self.project.glue_dir,
-                capture_output=True,
-                text=True,
-                check=True
-            )
-            stdout, stderr = output.stdout, output.stderr            
-        except Exception:
-            failure_flag = True # check if the failure is due to the tests or something else
+            if self.debug:
+                # create a snapshot of the project in logs/glue/
+                os.makedirs(f"{self.project.root_dir}/logs/glue/{self.project.name}/", exist_ok=True)
+                subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/{self.project.name}/"], check=True)
 
-        self.__revert_writes()
+            if not self.test_items:
+                # run all tests
+                test_selection_specification = "*"
+            else:
+                tests_to_run = dict() # { test_class: [test_method] }
+                for test_item in self.test_items:
+                    _, test_class, test_method = test_item
+                    if test_class not in tests_to_run:
+                        tests_to_run[test_class] = []
+                    tests_to_run[test_class].append(test_method.split(':')[-1].strip())
 
-        if self.debug:
-            with open(f"{self.project.root_dir}/glue.{self.project.name}.log", "w") as f:
-                f.write(stdout)
-            with open(f"{self.project.root_dir}/glue_err.{self.project.name}.log", "w") as f:
-                f.write(stderr)
+                test_selection_specification = ",".join(
+                    test_class + "#" + "+".join(tests_to_run[test_class])
+                    for test_class in tests_to_run
+                ) # e.g., "TestClass1#testMethod1+testMethod2,TestClass2#testMethod3"
 
-        # check if any unsupported operation was encountered
-        unsupported_operation_keywords = [
-            "[JavaHandler.mapping] Unhandled Java object type",
-            "[valueToObject] Unhandled Python object type",
-            "[ExceptionHandler] Unhandled exception type"
-        ]
-        if any(x in stdout for x in unsupported_operation_keywords):
+            test_command = [
+                'mvn', 'clean', 'test', 
+                '-Drat.skip', '-Dcheckstyle.skip', '-Djacoco.skip',
+                '-Dtest=' + test_selection_specification
+            ]
+            
+            if self.debug:
+                # save the command that was executed
+                with open(f"{self.project.root_dir}/logs/glue/{self.project.name}/run.sh", "w") as f:
+                    f.write(" ".join(test_command))
+
+            failure_flag = False
+            try:
+                stdout, stderr = "", ""
+                output = subprocess.run(
+                    test_command,
+                    cwd=self.project.glue_dir,
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
+                stdout, stderr = output.stdout, output.stderr            
+            except Exception:
+                failure_flag = True # check if the failure is due to the tests or something else
+
+            if self.debug:
+                with open(f"{self.project.root_dir}/glue.{self.project.name}.log", "w") as f:
+                    f.write(stdout)
+                with open(f"{self.project.root_dir}/glue_err.{self.project.name}.log", "w") as f:
+                    f.write(stderr)
+
+            # check if any unsupported operation was encountered
+            unsupported_operation_keywords = [
+                "[JavaHandler.mapping] Unhandled Java object type",
+                "[valueToObject] Unhandled Python object type",
+                "[ExceptionHandler] Unhandled exception type"
+            ]
+            if any(x in stdout for x in unsupported_operation_keywords):
+                return {
+                    "status": ERROR, # unsupported operation encountered
+                    "feedback": dict()
+                }
+            
+            # collect the results
+            feedback = self.__get_feedback_from_surefire()
+            
+            if failure_flag and not feedback:
+                return {
+                    "status": ERROR, # error in running the tests
+                    "feedback": dict()
+                }
+            
             return {
-                "status": ERROR, # unsupported operation encountered
-                "failed_tests": []
+                "status": SUCCESS if not feedback else FAILURE,
+                "feedback": feedback
             }
-        
-        # collect the results
-        failed_tests = self.__get_failed_tests_from_surefire()
-        
-        if failure_flag and not failed_tests:
-            return {
-                "status": ERROR, # error in running the tests
-                "failed_tests": []
-            }
-        
-        return {
-            "status": SUCCESS if not failed_tests else FAILURE,
-            "failed_tests": failed_tests
-        }
-    
-    def __get_failed_tests_from_surefire(self):
+        finally:
+            # revert the writes before returning
+            self.__revert_writes()
+
+    def __get_feedback_from_surefire(self):
         """
         Get the failed tests from the surefire reports.
         """
+        feedback = dict() # { test_class.method: [error_message] }
+
         surefire_dir = f"{self.project.glue_dir}/target/surefire-reports"
         if not os.path.exists(surefire_dir):
-            return []
-        
-        failed_tests = []
+            return feedback
+
         for file_name in os.listdir(surefire_dir):
             if file_name.startswith('TEST-') and file_name.endswith('.xml'):
                 tree = ET.parse(f"{surefire_dir}/{file_name}")
                 root = tree.getroot()
                 for test_case in root.findall('testcase'):
-                    if test_case.find('error') is not None or test_case.find('failure') is not None:
-                        failed_tests.append(test_case.attrib['classname'] + '.' + test_case.attrib['name'])
-                        
-        return failed_tests
+                    test_identifier = test_case.attrib['classname'] + '.' + test_case.attrib['name']
+                    if test_case.find('error') is not None:
+                        feedback[test_identifier] = test_case.find('error').attrib['type']
+                    elif test_case.find('failure') is not None:
+                        feedback[test_identifier] = test_case.find('failure').attrib['type']
+
+        return feedback
 
     @staticmethod
     def  __check_if_supported_class(schema_data: dict, class_name: str):
