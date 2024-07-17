@@ -1,5 +1,6 @@
 package {project};
 
+import java.io.StringReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,6 +92,10 @@ public final class IntegrationUtils {{
       clazz = (Class<T>) targetObject.getClass();
     }}
 
+    Value valueType = value.getMember("__class__");
+    String ValueTypeName = valueType.getMember("__name__").asString();
+    Value valueTypeType = valueType.getMember("__class__");
+    String ValueTypeTypeName = valueTypeType.getMember("__name__").asString();
 
     boolean skipMap = false; // skip procedures related to the map (due to possible type-conflicts)
 
@@ -262,8 +267,31 @@ public final class IntegrationUtils {{
       return value.asString();
     }}
 
-    // TODO: handle StringReader
-    // TODO: handle StringWriter
+    // "StringReader"
+    if (ValueTypeName.equals("StringIO") && classDescriptor.endsWith("Reader")) {{
+      String str = value.invokeMember("getvalue").asString();
+      StringReader reader = new StringReader();
+      if (targetObject != null) {{
+        reader = (StringReader) targetObject;
+        reader.mark(0);
+        reader.reset();
+      }}
+      idMap.put(id, reader);
+      return reader;
+    }}
+
+    // "StringWriter"
+    if (ValueTypeName.equals("StringIO") && classDescriptor.endsWith("Writer")) {{
+      String str = value.invokeMember("getvalue").asString();
+      StringWriter writer = new StringWriter();
+      if (targetObject != null) {{
+        writer = (StringWriter) targetObject;
+
+      }}
+      idMap.put(id, writer);
+      writer.write(str);
+      return writer;
+    }}
 
     // handle other types
     if (value.isBoolean()) {{
@@ -290,10 +318,6 @@ public final class IntegrationUtils {{
     }}
 
     // handle python classes
-    Value valueType = value.getMember("__class__");
-    String ValueTypeName = valueType.getMember("__name__").asString();
-    Value valueTypeType = valueType.getMember("__class__");
-    String ValueTypeTypeName = valueTypeType.getMember("__name__").asString();
     if (ValueTypeName.equals("type") || ValueTypeTypeName.equals("type")) {{
       String className = value.getMember("__name__").asString();
       switch (className) {{
