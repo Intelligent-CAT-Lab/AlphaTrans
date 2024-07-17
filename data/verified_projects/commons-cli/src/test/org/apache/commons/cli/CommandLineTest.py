@@ -98,7 +98,7 @@ class CommandLineTest(unittest.TestCase):
 
     @pytest.mark.test
     def testGetOptions(self) -> None:
-        cmd = commandLine()
+        cmd = CommandLine()
         self.assertIsNotNone(cmd.getOptions())
         self.assertEqual(0, cmd.getOptions().length)
 
