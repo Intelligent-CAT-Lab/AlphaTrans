@@ -9,7 +9,6 @@ import os
 import typing
 from typing import *
 import numbers
-from io import BytesIO
 import io
 
 # Imports End
@@ -43,7 +42,7 @@ class LCPForDelta:
     @staticmethod
     def _decompressBlockByS16WithIntBufferIntegrated(
         outDecompBlock: typing.List[int],
-        inCompBlock: io.BytesIO,
+        inCompBlock: typing.Union[array.array, typing.List],
         blockSize: int,
         expPosBuffer: typing.List[int],
         oribits: int,
@@ -52,7 +51,9 @@ class LCPForDelta:
 
     @staticmethod
     def _decompressBlockByS16WithIntBuffer(
-        outDecompBlock: typing.List[int], inCompBlock: io.BytesIO, blockSize: int
+        outDecompBlock: typing.List[int],
+        inCompBlock: typing.Union[array.array, typing.List],
+        blockSize: int,
     ) -> None:
         pass
 
@@ -68,7 +69,7 @@ class LCPForDelta:
     @staticmethod
     def _decompressBBitSlotsWithHardCodesWithIntBuffer(
         outDecompSlots: typing.List[int],
-        inCompBlock: io.BytesIO,
+        inCompBlock: typing.Union[array.array, typing.List],
         blockSize: int,
         bits: int,
     ) -> int:
@@ -107,7 +108,7 @@ class LCPForDelta:
     @staticmethod
     def _decompressOneBlockWithSizeWithIntBuffer(
         decompBlock: typing.List[int],
-        inBlock: io.BytesIO,
+        inBlock: typing.Union[array.array, typing.List],
         blockSize: int,
         expPosBuffer: typing.List[int],
         expHighBitsBuffer: typing.List[int],

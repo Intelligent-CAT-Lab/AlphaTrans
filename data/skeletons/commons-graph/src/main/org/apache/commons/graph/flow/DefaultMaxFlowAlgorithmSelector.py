@@ -66,7 +66,7 @@ class MapperWrapper(Mapper):
     # Class Methods End
 
 
-class DefaultMaxFlowAlgorithmSelector:
+class DefaultMaxFlowAlgorithmSelector(MaxFlowAlgorithmSelector):
 
     # Class Fields Begin
     __graph: DirectedGraph[typing.Any, typing.Any] = None
