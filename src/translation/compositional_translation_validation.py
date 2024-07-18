@@ -280,7 +280,8 @@ def translate(fragment, args, processed_fragments, fragment_test_stats):
                     os.fsync(f.fileno())
 
         eligible_tests = get_eligible_tests(fragment, processed_fragments, args)
-
+        available_eligible_tests = []
+        
         # if there are no tests ready to be executed, end the loop and store the results
         if eligible_tests == []:
             schema_data = {}
@@ -301,7 +302,6 @@ def translate(fragment, args, processed_fragments, fragment_test_stats):
 
         # if there are tests ready to be executed, translate them
         else:
-            available_eligible_tests = []
             for test in eligible_tests:
 
                 test_schema_data = {}
@@ -385,7 +385,8 @@ def translate(fragment, args, processed_fragments, fragment_test_stats):
             # re-prompt suspicious fragments with feedback
             translate_feedback(suspicious_methods, feedback, args)
 
-            # after re-prompting, attempt to translate the current fragment again
+            # after re-prompting, attempt to translate the current fragment again with base prompt
+            prompt = PromptGenerator(is_feedback=False, args=args, fragment_details=fragment).generate_prompt()
             max_attempts += 1
             continue
         
@@ -417,6 +418,9 @@ def main(args):
     fragment_test_stats = {}
 
     for fragment in tqdm.tqdm(fragment_traversal):
+
+        if f'{fragment["schema_name"]}|{fragment["class_name"]}|{fragment["fragment_name"]}' in processed_fragments:
+            continue
 
         schema_data = {}
         with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
