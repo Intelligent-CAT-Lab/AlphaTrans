@@ -207,7 +207,7 @@ def main(args):
 
                 if args.fragment_name:
                     if args.fragment_name != method:
-                        recomposed_file += '\n'.join(data['classes'][class_]['methods'][method]['partial_translation']).replace('pass', 'pass # LLM could not translate this method')
+                        recomposed_file += '\n'.join(data['classes'][class_]['methods'][method]['partial_translation']).replace('    pass', '    pass # LLM could not translate this method')
                         recomposed_file += '\n'
                         total_fragments += 1
                         continue
@@ -232,7 +232,7 @@ def main(args):
                     continue
 
                 if data['classes'][class_]['methods'][method]['translation'] == []:
-                    recomposed_file += '\n'.join([''] + data['classes'][class_]['methods'][method]['partial_translation']).replace('pass', 'pass # LLM could not translate this method')
+                    recomposed_file += '\n'.join([''] + data['classes'][class_]['methods'][method]['partial_translation']).replace('    pass', '    pass # LLM could not translate this method')
                     recomposed_file += '\n'
                     total_unsuccessful += 1
                     continue
