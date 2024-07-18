@@ -52,6 +52,6 @@ def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, st
 
     output = test.run()
     status = output['status']
-    feedback = output['failed_tests']
+    feedback = output['feedback']
 
     return status, feedback
