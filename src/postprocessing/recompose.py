@@ -118,7 +118,7 @@ def main(args):
                         total_fragments += 1
                         continue
 
-                if data['classes'][class_]['fields'][field]['translation'] == []:
+                if data['classes'][class_]['fields'][field]['translation'] == [] or data['classes'][class_]['fields'][field]['execution_validation_status'] == 'failed':
                     recomposed_file += '\n'.join([''] + data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', 'None # LLM could not translate this field')
                     recomposed_file += '\n'
                     total_unsuccessful += 1
@@ -182,7 +182,11 @@ def main(args):
 
             if 'static_initializers' in data['classes'][class_]:
                 for static_initializer in data['classes'][class_]['static_initializers']:
-                    recomposed_file += '\n'.join(data['classes'][class_]['static_initializers'][static_initializer]['translation'])
+                    static_init_translation = data['classes'][class_]['static_initializers'][static_initializer]['translation']
+                    if static_init_translation == [] or data['classes'][class_]['static_initializers'][static_initializer]['execution_validation_status'] == 'failed':
+                        recomposed_file += '    def run_static_init():\n        pass # LLM could not translate this static initializer\n'
+                    else:
+                        recomposed_file += '\n'.join(data['classes'][class_]['static_initializers'][static_initializer]['translation'])
                     recomposed_file += '\n'
                 class_initialize_methods.append(f'{class_}.run_static_init()')
 
