@@ -49,6 +49,9 @@ def get_traversal(args):
     processed_fragments = []
     for schema in schemas:
 
+        if '_python_partial.json' not in schema:
+            continue
+
         schema_base_name = schema.replace('_python_partial.json', '')
 
         if args.translate_evosuite and 'ESTest' not in schema:

@@ -37,7 +37,7 @@ def syntactic_validation(generation, fragment, args):
             if args.debug:
                 print(f'=======================PARSE ERROR=======================\n{e}\n' + '---' * 50, flush=True)
 
-            feedback = e
+            feedback = e.msg if hasattr(e, 'msg') else str(e)
             return False, None, feedback
     else:
         return False, None, 'the model did not generate any code'

@@ -9,7 +9,6 @@ def execution_validation(fragment, args):
                                                         --model_name={args.model_name} \
                                                         --output_dir=data/recomposed_projects \
                                                         --type={args.prompt_type} \
-                                                        --file_name={fragment['schema_name'].split('.')[-1]} \
                                                         --fragment_name={fragment['fragment_name']}")
 
     current_path = os.getcwd()

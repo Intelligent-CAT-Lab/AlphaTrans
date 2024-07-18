@@ -22,9 +22,6 @@ def main(args):
         if not schema.endswith('_python_partial.json'):
             continue
 
-        if args.file_name != None and f'.{args.file_name}_python_partial.json' not in schema:
-            continue
-
         if args.recompose_evosuite and 'ESTest' not in schema:
             continue
 
@@ -100,10 +97,22 @@ def main(args):
             field_order = [field_val[x]['key'] for x in field_order]
 
             intialize_later_fields = []
+
+            exempt_fields = []
+            if args.fragment_name:
+                for k in field_val:
+                    if field_val[k]['key'] == args.fragment_name:
+                        exempt_fields = [k]
+                        break
+                
+                if len(exempt_fields) == 1:
+                    exempt_fields = [field_val[x]['key'] for x in field_dependencies[exempt_fields[0]]]
+                    exempt_fields.append(args.fragment_name)
+
             for field in field_order:
 
                 if args.fragment_name:
-                    if args.fragment_name != field:
+                    if field not in exempt_fields:
                         recomposed_file += ''.join(data['classes'][class_]['fields'][field]['partial_translation']).replace('<placeholder>', f'None')
                         recomposed_file += '\n'
                         total_fragments += 1
@@ -339,7 +348,6 @@ if __name__ == '__main__':
     parser_.add_argument('--model_name', type=str, dest='model_name', help='model name to translate')
     parser_.add_argument('--output_dir', type=str, dest='output_dir', help='directory to store recomposed projects')
     parser_.add_argument('--type', type=str, dest='type', help='prompting type signature/body')
-    parser_.add_argument('--file_name', type=str, dest='file_name', help='file name to recompose')
     parser_.add_argument('--fragment_name', type=str, dest='fragment_name', help='fragment name to recompose')
     parser_.add_argument('--recompose_evosuite', action='store_true', dest='recompose_evosuite', help='recompose evosuite tests')
     args = parser_.parse_args()

@@ -4,10 +4,11 @@ import os
 
 class PromptGenerator:
         
-    def __init__(self, is_feedback, args, fragment_details):
+    def __init__(self, is_feedback, args, fragment_details, feedback=''):
         self.is_feedback = is_feedback
         self.args = args
         self.prompt = ''
+        self.feedback = feedback
         self.prompt_status = 'success'
         self.meta_data = {
                             'persona': 'You are an AI programming assistant, utilizing the DeepSeek Coder model, developed by DeepSeek Company, and you only answer questions related to computer science. For politically sensitive questions, security and privacy issues, and other non-computer science questions, you will refuse to answer.',
@@ -15,15 +16,12 @@ class PromptGenerator:
                                 'field': 'Java code:\n```\npublic class Calculator {\n    public int x;\n}\n```\n\nPartial Python translation:\n```\nclass Calculator:\n    x: int = \n```\n\nPython field translation:\n```\n    x: int = 0\n```',
                                 'method': 'Java code:\n```\npublic class Calculator {\n    public int add(int a, int b) {\n        return a + b;\n    }\n}\n```\n\nPartial Python translation:\n```\nclass Calculator:\n    def add(self, a: int, b: int) -> int:\n        pass\n```\n\nPython method translation:\n```\n    def add(self, a: int, b: int) -> int:\n        return a + b\n```',
                                 'static_initializer': 'Java code:\n```\npublic class Calculator {\n    public int add(int a, int b) {\n        return a + b;\n    }\n}\n```\n\nPartial Python translation:\n```\nclass Calculator:\n    def add(self, a: int, b: int) -> int:\n        pass\n```\n\nPython method translation:\n```\n    def add(self, a: int, b: int) -> int:\n        return a + b\n```',
+                                'feedback': "Java code:\n```\npublic class Calculator {\n    public int add(int a, int b) {\n        return a + b;\n    }\n}\n```" + "\n\nIncorrect Python translation:\n```\nclass Calculator:\n    def add(self, a: int, b: int) -> int:\n        return a + c\n```\n\nExecution feedback:\n```\n  File \"script.py\", line 5, in add\n    return a + c\nNameError: name 'c' is not defined\n```\n\nPartial Python translation:\n```\nclass Calculator:\n    def add(self, a: int, b: int) -> int:\n        pass\n```\n\nPython method translation:\n```\n    def add(self, a: int, b: int) -> int:\n        return a + b\n```",
                             }
                         }
         
         self.load_fragment(fragment_details)
-
-        if self.is_feedback:
-            pass
-        else:
-            self.build_base_prompt()
+        self.build_base_prompt()
     
     def build_base_prompt(self):
         # add persona
@@ -33,7 +31,10 @@ class PromptGenerator:
         self.double_line_break()
 
         # add in-context learning example
-        self.prompt += self.meta_data['icl'][self.fragment_type]
+        if self.is_feedback:
+            self.prompt += self.meta_data['icl']['feedback']
+        else:
+            self.prompt += self.meta_data['icl'][self.fragment_type]
 
         self.double_line_break()
 
@@ -46,6 +47,12 @@ class PromptGenerator:
         self.add_source_code()
 
         self.double_line_break()
+
+        if self.is_feedback:
+            self.add_incorrect_translation()
+            self.double_line_break()
+            self.add_feedback()
+            self.double_line_break()
 
         # add partial translation
         self.add_partial_translation()
@@ -84,10 +91,22 @@ class PromptGenerator:
         self.source_fragment_code = f'class {self.class_name} {{\n{self.source_class_dependent_fields}\n{self.source_fragment_body}\n}}'
 
     def add_instruction(self):
-        self.prompt += f'### Instruction:\nTranslate the following {self.args.from_lang} {self.fragment_type} to {self.args.to_lang} 3.10 like the example above. You only need to translate the \"{self.fragment_actual_name}\" {self.fragment_type}. All necessary dependencies are available in partial {self.args.to_lang} translation.'
+        if self.is_feedback:
+            self.prompt += f'### Instruction:\nBased on the feedback provided, identify the error in the following Python translation of the {self.fragment_type} and correct it. You only need to correct the \"{self.fragment_actual_name}\" {self.fragment_type}. All necessary dependencies are available in partial {self.args.to_lang} translation. Only complete the given \"{self.fragment_actual_name}\" method like the example above and do not add anything else in your response.'
+        else:
+            self.prompt += f'### Instruction:\nTranslate the following {self.args.from_lang} {self.fragment_type} to {self.args.to_lang} 3.10 like the example above. You only need to translate the \"{self.fragment_actual_name}\" {self.fragment_type}. All necessary dependencies are available in partial {self.args.to_lang} translation.'
 
     def add_source_code(self):
         self.prompt += f'{self.args.from_lang} code:\n```\n{self.source_fragment_code}\n```'
+
+    def add_incorrect_translation(self):
+        translation = '\n'.join(self.schema_data['classes'][self.class_name][f'{self.fragment_type}s'][self.fragment_name]['translation'])
+        self.prompt += f'Incorrect {self.args.to_lang} translation:\n```\nclass {self.class_name}:\n{translation}\n```'
+
+    def add_feedback(self):
+        self.prompt += 'Execution feedback:\n```\n'
+        self.prompt += self.feedback
+        self.prompt += '\n```'
 
     def add_partial_translation(self):
         self.build_partial_translation()
