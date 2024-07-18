@@ -237,7 +237,20 @@ def translate(fragment, args, processed_fragments, fragment_test_stats):
 
             # graal could not validate the fragment. no feedback required
             if status == 'error':
-                pass
+
+                # immediately store graal validation status
+                schema_data = {}
+                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+                    schema_data = json.load(f)
+                
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['graal_validation_status'] = 'error'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = time.time() - start_time
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
+
+                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
+                    json.dump(schema_data, f, indent=4)
+                    f.flush()
+                    os.fsync(f.fileno())
 
             elif status == 'failure':
 
