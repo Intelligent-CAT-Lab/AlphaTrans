@@ -11,12 +11,17 @@ def test_validation(args, eligible_tests, fragment_test_stats):
     os.system(f'python3 src/postprocessing/recompose.py --project_name={args.project_name} --model_name={args.model_name} --output_dir=data/recomposed_projects --type={args.prompt_type}')
 
     green_tests = True
-    feedback = None
+    feedback = 'the test did not execute successfully'
     for test in eligible_tests:
         test_path = test['schema_name'].replace('.', '/') + '.java'
         test_path = test_path[test_path.index(args.project_name):].replace('test/java/org', 'test/org').replace('.java', '.py')
         test_class = test['class_name']
         test_method = test['fragment_name'].split(':')[1]
+
+        if os.path.exists(f'{args.project_name}-pytest-report.xml'):
+            os.remove(f'{args.project_name}-pytest-report.xml')
+        if os.path.exists(f'{args.project_name}-coverage.xml'):
+            os.remove(f'{args.project_name}-coverage.xml')
 
         try:
             subprocess.run(
@@ -35,9 +40,13 @@ def test_validation(args, eligible_tests, fragment_test_stats):
         except subprocess.CalledProcessError as e:
             green_tests = False
         
-        covered_methods = calculate_method_coverage(args, f'data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.project_name}')
+        if not os.path.exists(f'{args.project_name}-coverage.xml'):
+            green_tests = False
+            covered_methods = []
+        else:
+            covered_methods = calculate_method_coverage(args, f'data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.project_name}')
 
-        os.path.exists(f'{args.project_name}-pytest-report.xml')
+        assert os.path.exists(f'{args.project_name}-pytest-report.xml')
         with open(f'{args.project_name}-pytest-report.xml', 'r') as f:
             tree = ET.parse(f)
             root = tree.getroot()
@@ -47,8 +56,6 @@ def test_validation(args, eligible_tests, fragment_test_stats):
                         feedback = testcase.find('failure').text
                     elif testcase.find('error') is not None:
                         feedback = testcase.find('error').text
-                    else:
-                        feedback = 'the test did not execute successfully'
                     break
 
         for covered_method in covered_methods:

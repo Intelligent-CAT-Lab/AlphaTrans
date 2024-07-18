@@ -84,6 +84,16 @@ def main(args):
                     if field_ in field_val[field]['value']:
                         field_dependencies[field].append(field_)
 
+            cycles = []
+            for field in field_dependencies:
+                for field_ in field_dependencies[field]:
+                    if field in field_dependencies[field_]:
+                        if (field_, field) not in cycles:
+                            cycles.append((field, field_))
+            
+            for cycle in cycles:
+                field_dependencies[cycle[0]].remove(cycle[1])
+
             field_order = []
             while len(field_order) != len(field_val):
                 for field in field_val:
