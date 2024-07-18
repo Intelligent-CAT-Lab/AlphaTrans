@@ -31,6 +31,18 @@ def translate_feedback(suspicious_fragments, feedback, args):
 
         fragment = {'schema_name': fragment.split('|')[0], 'class_name': fragment.split('|')[1], 'fragment_name': fragment.split('|')[2], 'fragment_type': 'method'}
 
+        schema_data = {}
+        with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+            schema_data = json.load(f)
+        
+        schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']].setdefault('re_prompt_count', 0)
+        schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['re_prompt_count'] += 1
+
+        with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
+            json.dump(schema_data, f, indent=4)
+            f.flush()
+            os.fsync(f.fileno())
+
         while max_attempts < 5:
             
             prompt_gen = PromptGenerator(is_feedback=True, args=args, fragment_details=fragment, feedback=feedback)
@@ -87,7 +99,7 @@ def translate_feedback(suspicious_fragments, feedback, args):
                 print(generation, flush=True)
                 print('---' * 50, flush=True)
             
-            status, generation, feedback = syntactic_validation(generation, fragment, args)
+            status, generation, _ = syntactic_validation(generation, fragment, args)
 
             # if there is a syntax error, mark translation as failed and repeat the process at most 5 times
             if not status:

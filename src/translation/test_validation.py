@@ -47,6 +47,8 @@ def test_validation(args, eligible_tests, fragment_test_stats):
                         feedback = testcase.find('failure').text
                     elif testcase.find('error') is not None:
                         feedback = testcase.find('error').text
+                    else:
+                        feedback = 'the test did not execute successfully'
                     break
 
         for covered_method in covered_methods:

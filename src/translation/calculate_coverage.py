@@ -27,7 +27,7 @@ def calculate_method_coverage(args, project_root):
         for method in methods:
             method_lines = range(method.lineno + 1, method.end_lineno + 1)
             if any(line in covered_lines for line in method_lines):
-                if method.name == 'initialize_fields':
+                if method.name in ['initialize_fields', 'run_static_init']:
                     continue
                 class_name = None
                 for class_ in classes:
@@ -46,12 +46,16 @@ def calculate_method_coverage(args, project_root):
                     method_name = class_name
 
                 for method_ in covered_method_schema_data['classes'][class_name]['methods']:
-                    if 'protected' in covered_method_schema_data['classes'][class_name]['methods'][method_]['modifiers']:
-                        if method_.split(':')[1] == f'_{method_name}':
+                    if method_name == class_name:
+                        if method_.split(':')[1] == method_name:
+                            method_name = method_
+                            break
+                    elif 'protected' in covered_method_schema_data['classes'][class_name]['methods'][method_]['modifiers']:
+                        if f"_{method_.split(':')[1]}" == method_name:
                             method_name = method_
                             break
                     elif 'private' in covered_method_schema_data['classes'][class_name]['methods'][method_]['modifiers']:
-                        if method_.split(':')[1] == f'__{method_name}':
+                        if f"__{method_.split(':')[1]}" == method_name:
                             method_name = method_
                             break
                     else:
@@ -59,7 +63,7 @@ def calculate_method_coverage(args, project_root):
                             method_name = method_
                             break
                 
-                assert ':' in method_name
+                assert ':' in method_name, f'{method_name} not found in schema {py_file_path}::{class_name}'
                 covered_methods.append({'file': py_file_path, 'class': class_name, 'method': method_name})
 
     return covered_methods
