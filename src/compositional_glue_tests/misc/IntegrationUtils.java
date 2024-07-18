@@ -1,5 +1,6 @@
 package {project};
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.StringReader;
+import java.io.StringWriter;
 import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Value;
 
@@ -92,11 +95,6 @@ public final class IntegrationUtils {{
       clazz = (Class<T>) targetObject.getClass();
     }}
 
-    Value valueType = value.getMember("__class__");
-    String ValueTypeName = valueType.getMember("__name__").asString();
-    Value valueTypeType = valueType.getMember("__class__");
-    String ValueTypeTypeName = valueTypeType.getMember("__name__").asString();
-
     boolean skipMap = false; // skip procedures related to the map (due to possible type-conflicts)
 
     // check if the object has already been mapped
@@ -145,21 +143,25 @@ public final class IntegrationUtils {{
         result = (T[]) targetObject;
       }}
 
-      if (!skipMap) idMap.put(id, result);
+      if (!skipMap)
+        idMap.put(id, result);
       for (int i = 0; i < length; i++) {{
         result[i] = (T) valueToObject(value.getArrayElement(i), innerClassName, idMap);
       }}
 
-      if (!skipMap) putObjectsToMaps(result, value);
+      if (!skipMap)
+        putObjectsToMaps(result, value);
       return result;
     }}
 
     // handle lists
-    // need not check `primaryClassName.equals("List")` because arrays are already handled before
+    // need not check `primaryClassName.equals("List")` because arrays are already
+    // handled before
     if (value.hasArrayElements()) {{
       String innerClassName = "";
       if (classDescriptor.contains("<")) {{
-        innerClassName = classDescriptor.substring(classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
+        innerClassName = classDescriptor.substring(
+            classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
       }}
       List<Object> list = new ArrayList<>();
 
@@ -168,12 +170,14 @@ public final class IntegrationUtils {{
         list.clear();
       }}
 
-      if (!skipMap) idMap.put(id, list);
+      if (!skipMap)
+        idMap.put(id, list);
       for (int i = 0; i < value.getArraySize(); i++) {{
         list.add(valueToObject(value.getArrayElement(i), innerClassName, idMap));
       }}
 
-      if (!skipMap) putObjectsToMaps(list, value);
+      if (!skipMap)
+        putObjectsToMaps(list, value);
       return list;
     }}
 
@@ -267,14 +271,35 @@ public final class IntegrationUtils {{
       return value.asString();
     }}
 
+    // handle other types
+    if (value.isBoolean()) {{
+      return value.asBoolean();
+    }}
+
+    if (value.isNumber()) {{
+      if (classDescriptor.equals("int")) {{
+        return (int) value.asLong();
+      }}
+      return value.as(Number.class);
+    }}
+
+    Value valueType = value.getMember("__class__");
+    String ValueTypeName = valueType.getMember("__name__").asString();
+    Value valueTypeType = valueType.getMember("__class__");
+    String ValueTypeTypeName = valueTypeType.getMember("__name__").asString();
+
     // "StringReader"
     if (ValueTypeName.equals("StringIO") && classDescriptor.endsWith("Reader")) {{
       String str = value.invokeMember("getvalue").asString();
-      StringReader reader = new StringReader();
+      StringReader reader = new StringReader(str);
       if (targetObject != null) {{
-        reader = (StringReader) targetObject;
-        reader.mark(0);
-        reader.reset();
+        try {{
+          reader = (StringReader) targetObject;
+          reader.mark(0);
+          reader.reset();
+        }} catch (IOException e) {{
+          reader = new StringReader(str);
+        }}
       }}
       idMap.put(id, reader);
       return reader;
@@ -286,23 +311,10 @@ public final class IntegrationUtils {{
       StringWriter writer = new StringWriter();
       if (targetObject != null) {{
         writer = (StringWriter) targetObject;
-
       }}
       idMap.put(id, writer);
       writer.write(str);
       return writer;
-    }}
-
-    // handle other types
-    if (value.isBoolean()) {{
-      return value.asBoolean();
-    }}
-
-    if (value.isNumber()) {{
-      if (classDescriptor.equals("int")) {{
-        return (int) value.asLong();
-      }}
-      return value.as(Number.class);
     }}
 
     // handle Error objects
