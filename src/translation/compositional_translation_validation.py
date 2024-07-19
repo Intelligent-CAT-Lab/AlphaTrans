@@ -132,7 +132,12 @@ def translate(fragment, args, processed_fragments, fragment_test_stats):
             with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
                 schema_data = json.load(f)
             
+            if max_attempts == 4:
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['translation_status'] = 'attempted'
+
             schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['syntactical_validation_status'] = 'failed'
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']].setdefault('re_prompt_count', 0)
+            schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['re_prompt_count'] += 1
             schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = time.time() - start_time
             schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
 
@@ -176,6 +181,8 @@ def translate(fragment, args, processed_fragments, fragment_test_stats):
                     schema_data = json.load(f)
                 
                 schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['execution_validation_status'] = 'failed'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']].setdefault('re_prompt_count', 0)
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['re_prompt_count'] += 1
                 schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = time.time() - start_time
                 schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
 
@@ -260,6 +267,8 @@ def translate(fragment, args, processed_fragments, fragment_test_stats):
                     schema_data = json.load(f)
                 
                 schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['graal_validation_status'] = 'failed'
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']].setdefault('re_prompt_count', 0)
+                schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['re_prompt_count'] += 1
                 schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['elapsed_time'] = time.time() - start_time
                 schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']]['generation_timestamp'] = datetime.datetime.now().isoformat()
 
@@ -320,7 +329,13 @@ def translate(fragment, args, processed_fragments, fragment_test_stats):
                 test_schema_data = {}
                 with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{test["schema_name"]}_python_partial.json', 'r') as f:
                     test_schema_data = json.load(f)
-                
+
+                if test['class_name'] not in test_schema_data['classes']:
+                    continue
+
+                if test['fragment_name'] not in test_schema_data['classes'][test['class_name']]['methods']:
+                    continue
+
                 if test_schema_data['classes'][test['class_name']]['methods'][test['fragment_name']]['translation_status'] == 'attempted':
                     available_eligible_tests.append(test)
                     continue
@@ -374,8 +389,8 @@ def translate(fragment, args, processed_fragments, fragment_test_stats):
                 # suspiciousness score = (total failed tests / total tests)
                 suspicious_methods[f'{covered_method_file}|{covered_method_class}|{covered_method_name}'] = len(fragment_test_stats[f'{covered_method_file}|{covered_method_class}|{covered_method_name}']['fail']) / len(fragment_test_stats[f'{covered_method_file}|{covered_method_class}|{covered_method_name}']['total'])
             
-            # extract top-3 methods with highest suspiciousness score
-            suspicious_methods = {k: v for k, v in sorted(suspicious_methods.items(), key=lambda item: item[1], reverse=True)[:3]}
+            # extract top-k methods with highest suspiciousness score. make k a hyperparameter later.
+            suspicious_methods = {k: v for k, v in sorted(suspicious_methods.items(), key=lambda item: item[1], reverse=True)}
 
             # immediately store test validation status
             schema_data = {}
