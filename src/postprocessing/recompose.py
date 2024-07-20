@@ -193,7 +193,7 @@ def main(args):
             if 'static_initializers' in data['classes'][class_]:
                 for static_initializer in data['classes'][class_]['static_initializers']:
                     static_init_translation = data['classes'][class_]['static_initializers'][static_initializer]['translation']
-                    if static_init_translation == [] or data['classes'][class_]['static_initializers'][static_initializer]['execution_validation_status'] == 'failed':
+                    if static_init_translation == [] or data['classes'][class_]['static_initializers'][static_initializer]['execution_validation_status'] == 'failed' or (args.fragment_name and args.fragment_name != static_initializer):
                         recomposed_file += '    def run_static_init():\n        pass # LLM could not translate this static initializer\n'
                     else:
                         recomposed_file += '\n'.join(data['classes'][class_]['static_initializers'][static_initializer]['translation'])
@@ -214,6 +214,9 @@ def main(args):
                     class_initialize_methods.append(f'{class_}.initialize_fields()')
                         
             for method in data['classes'][class_]['methods']:
+
+                if data['classes'][class_]['methods'][method]['is_overload']:
+                    continue
 
                 if args.fragment_name:
                     if args.fragment_name != method:
