@@ -446,6 +446,10 @@ def main(args):
     processed_fragments = []
     fragment_test_stats = {}
 
+    if os.path.exists(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/fragment_test_stats.json'):
+        with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/fragment_test_stats.json', 'r') as f:
+            fragment_test_stats = json.load(f)
+
     for fragment in tqdm.tqdm(fragment_traversal):
 
         if f'{fragment["schema_name"]}|{fragment["class_name"]}|{fragment["fragment_name"]}' in processed_fragments:
