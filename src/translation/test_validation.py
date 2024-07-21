@@ -23,6 +23,10 @@ def test_validation(args, eligible_tests, fragment_test_stats):
         if os.path.exists(f'{args.project_name}-coverage.xml'):
             os.remove(f'{args.project_name}-coverage.xml')
 
+        current_dir = os.getcwd()
+        env = os.environ.copy()
+        env['PYTHONPATH'] = f'{current_dir}/data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.project_name}'
+        
         try:
             subprocess.run(
                 [
@@ -36,6 +40,7 @@ def test_validation(args, eligible_tests, fragment_test_stats):
                 check=True,
                 capture_output=True,
                 text=True,
+                env=env
             )
         except subprocess.CalledProcessError as e:
             green_tests = False
@@ -64,6 +69,9 @@ def test_validation(args, eligible_tests, fragment_test_stats):
             covered_method_name = covered_method['method']
 
             fragment_test_stats.setdefault(f'{covered_method_file}|{covered_method_class}|{covered_method_name}', {'total': [], 'pass': [], 'fail': []})
+
+            if f'{test_path}|{test_class}|{test_method}' in fragment_test_stats[f'{covered_method_file}|{covered_method_class}|{covered_method_name}']['total']:
+                continue
 
             fragment_test_stats[f'{covered_method_file}|{covered_method_class}|{covered_method_name}']['total'].append(f'{test_path}|{test_class}|{test_method}')
             if green_tests:
