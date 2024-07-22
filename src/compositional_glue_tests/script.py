@@ -80,7 +80,8 @@ class Project:
             write_to_file(
                 f"{self.glue_dir}/src/{self.main_path}IntegrationUtils.java",
                 f.read().format(
-                    project = self.package
+                    project = self.package,
+                    main_python_path = self.main_path.replace('/java/', '/')
                 )
             )
             
@@ -109,7 +110,7 @@ class Project:
         os.makedirs(f"{self.root_dir}/{TRANSLATION_DIR}/{self.name}/", exist_ok=True)
             
         # process all the schemas to create instrumented python files
-        for schema_file_name in os.listdir(f"{self.schema_dir}/{self.name}"):        
+        for schema_file_name in os.listdir(f"{self.schema_dir}/{self.name}"):
             if schema_filter(schema_file_name):                          
                 schema_file_name_without_ext = ".".join(schema_file_name.split('.')[:-1])
                 
@@ -181,8 +182,7 @@ class Project:
                         python_file_contents.append(method_body)
                     
                     # add other graal stuff
-                    # load up the Java class            
-                    subpackage = schema_object.subpackage
+                    # load up the Java class
                     # if the class is nested inside another class, add the parent class to the class name
                     class_name_for_import = _class
                     outer_class_name = schema_data['classes'][_class]['nested_inside']
@@ -192,7 +192,7 @@ class Project:
                         
                     # skip instrumenting classes that are enclosed in methods
                     if not Schema.is_class_enclosed_in_method(_class, schema_data):
-                        python_file_contents.append(f"    javaClz = java.type(\"{self.package}{subpackage}.{class_name_for_import}\")")
+                        python_file_contents.append(f"    javaClz = java.type(\"{schema_object.full_package_name}.{class_name_for_import}\")")
             
                         # add default constructor
                         python_file_contents.append("\n".join([
@@ -598,8 +598,7 @@ class CompositionalTest:
                 f.read().format(
                     project = self.project.package,
                     imports = ctx_imports,
-                    code_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/src/{self.project.main_path.replace('/java/', '/')}",
-                    test_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/src/{self.project.test_path.replace('/java/', '/')}",
+                    src_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/src/",
                     package_directory = f"{DIR_DEPTH}{TRANSLATION_DIR}/{self.project.name}/",
                     mappings = ""
                 ),
@@ -964,8 +963,10 @@ class Schema:
 
         # extract principle name of the schema (example: commons-cli.src.main.org.apache.commons.cli.Option)
         self.principle_name = self.name.split('_python_partial')[0]
+        
+        # get full package name (including subpackages)
+        self.full_package_name = ".".join(self.principle_name.split('.')[3:-1])
 
-        self.__resolve_subpackage()
         self.__resolve_imports()
         
         # list of classes to be added to the schema
@@ -1002,10 +1003,9 @@ class Schema:
             if class_schema_data['extends'][0] in self.project.project_classes:
                 extends_project_class = True 
 
-        python_file_dir = self.subpackage.replace('.', '/')
-        python_file_dir = python_file_dir[:-1] if not python_file_dir else python_file_dir
-        current_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
-        python_file = f'{python_file_dir}/{current_file_name}.py'
+        python_file_dir = "/".join(self.schema_data["path"].split('/src/', 1)[1].replace('/java/', '/').split('/')[:-1])
+        python_file_name = self.schema_data["path"].split('/')[-1].split('.')[0]
+        python_file_path = f'{python_file_dir}/{python_file_name}.py'
         
         # if the class is not public, make it public
         if 'public' not in class_declaration:
@@ -1028,9 +1028,7 @@ class Schema:
             "is_interface": is_interface,
             "is_enum": is_enum,
             "static_initializer": "",
-            "classref": f"ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\", " + 
-                            ("true" if is_in_test_dir else "false")
-                        + ")"
+            "classref": f"ContextInitializer.getPythonClass(\"{python_file_path}\", \"{class_name}\")"
         }
         
         value_fields = [] # fields that are related to graal
@@ -1038,17 +1036,6 @@ class Schema:
         # add graal-related members (unless it is an interface)
         if not is_interface:            
             value_fields += [
-                # ------- TODO: Better to not have this ----------
-                # (
-                #     f"private static final Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");"
-                #     if not (not is_static and is_nested) and not is_enum
-                #     else
-                #     # compromise for non-static nested classes (which we do not support)
-                #     # and also for enums
-                #     f"private final Value clz = ContextInitializer.getPythonClass(\"{python_file}\", \"{class_name}\");"
-                #  ),
-                # ------------------------------------------------
-                
                 # 'transient' so that it is not part of serialization
                 f"private transient Value obj = {class_obj['classref']}.invokeMember(\"getDefaultInstance\");"
             ]
@@ -1356,21 +1343,6 @@ class Schema:
         # since this method was instrumented, we will add any tests that depend on this
         # method, to the list of tests to be executed
         self.__add_tests_to_execute(original_method_name, class_obj["name"])
-
-    def __resolve_subpackage(self):
-        """find subpackage name (if exists)"""
-        self.subpackage = ""
-        path_tail = ""
-
-        if self.project.main_path in self.schema_data['path']:
-            path_tail = self.schema_data['path'].split(self.project.main_path)[-1]
-        elif self.project.test_path in self.schema_data['path']:
-            path_tail = self.schema_data['path'].split(self.project.test_path)[-1]
-
-        if "/" in path_tail:
-            # remove the last segment
-            path_tail = path_tail[:path_tail.rfind('/')]
-            self.subpackage = "." + path_tail.replace('/', '.')
     
     def __resolve_imports(self):
         """resolve imports for the schema"""
@@ -1414,9 +1386,9 @@ class Schema:
         class_bodies = "".join([
             self.__get_class_body(_class) for _class in self.__classes
         ])
-        
+
         return f"""
-        package {package_names[self.project.name]}{self.subpackage};
+        package {self.full_package_name};
         {"".join(self.imports)}
         {class_bodies}
         """
@@ -1495,19 +1467,3 @@ class Schema:
             return super_call, method_content[super_call_end:]
         
         return "", method_content
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate glue code for Compositional Testing.')
-    parser.add_argument('--project', type=str, dest='project_name', help='<Required> name of the project', required=True)
-    parser.add_argument('--class', type=str, dest='class_name', help='list of class name(s)', required=False)
-    parser.add_argument('--method', type=str, dest='method_name', help='name of the method', required=False)
-    args = parser.parse_args()
-    
-    project = Project(args.project_name)
-    test = project.derive_compositional_tests({
-        args.class_name: {
-            args.class_name: [args.method_name]
-        }
-    })
-    print(test.run())

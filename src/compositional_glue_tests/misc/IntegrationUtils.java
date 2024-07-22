@@ -384,7 +384,7 @@ public final class IntegrationUtils {{
     return null; // Return null if no match is found
   }}
 
-  private static Value JavaHandler = ContextInitializer.getPythonClass("java_handler.py", "JavaHandler");
+  private static Value JavaHandler = ContextInitializer.getPythonClass("{main_python_path}/java_handler.py", "JavaHandler");
 
   public static Value mapToPython(Object obj) {{
     return JavaHandler.invokeMember("mapping", obj);
