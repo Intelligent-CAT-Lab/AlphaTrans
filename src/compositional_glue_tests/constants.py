@@ -9,8 +9,27 @@ CALLGRAPH_DIR = "data/call_graphs"
 DIR_DEPTH = "../" * (len(list(filter(None, ORIGINAL_DIR.split("/")))) + 1) # the depth of a glued project from the root directory of this repository
 SCRIPT_DIR_DEPTH = "../../" # the depth of this script from the root directory of this repository
 
-paths = dict()
-package_names = dict()
+
+class CaseInsensitiveDict:
+    """
+    Light-weight implementation of case-insensitive dictionary for constants.
+    """
+
+    def __init__(self):
+        self.__store = dict()
+
+    def __setitem__(self, key, value):
+        self.__store[key.lower()] = (key, value)
+
+    def __getitem__(self, key):
+        return self.__store[key.lower()][1]
+
+    def __contains__(self, key):
+        return key.lower() in self.__store
+
+
+paths = CaseInsensitiveDict()
+package_names = CaseInsensitiveDict()
 
 commons_projects = [
     ("commons-cli", "cli"),
@@ -31,13 +50,13 @@ for project, code in commons_projects:
     package_names[project] = f"org.apache.commons.{code}"
 
 paths["jansi"] = {
-    "main": "src/main/java/org/fusesource/jansi/",
-    "test": "src/test/java/org/fusesource/jansi/",
+    "main": "main/java/org/fusesource/jansi/",
+    "test": "test/java/org/fusesource/jansi/",
 }
 package_names["jansi"] = "org.fusesource.jansi"
 
 paths["javafastpfor"] = {
-    "main": "src/main/java/com/kamikaze/pfordelta/",
-    "test": "src/test/java/com/kamikaze/pfordelta/",
+    "main": "main/java/com/kamikaze/pfordelta/",
+    "test": "test/java/com/kamikaze/pfordelta/",
 }
 package_names["javafastpfor"] = "com.kamikaze.pfordelta"
