@@ -902,6 +902,13 @@ class SyncMethod:
         self.fields = []
         
     def add_field(self, field_name: str, field_schema_data: dict):
+        self.fields.append(self.get_interop_code(field_name, field_schema_data, self.class_name, self.reverse))
+
+    @staticmethod
+    def get_interop_code(field_name: str, field_schema_data: dict, class_name: str, reverse=False, idMap_name="idMap"):
+        """
+        Get the Java code for getting a field from Python (reverse=False) or setting a field in Python (reverse=True).
+        """
         field_type = field_schema_data['types'][0][0].strip()
         
         # if field_type has any '<>', don't keep it in the formatted_field_type
@@ -909,18 +916,18 @@ class SyncMethod:
         
         # compose name of field in Python
         if 'private' in field_schema_data['modifiers']:
-            python_field_name = f"_{self.class_name}__{field_name}"
+            python_field_name = f"_{class_name}__{field_name}"
         elif 'protected' in field_schema_data['modifiers']:
             python_field_name = f"_{field_name}"
         else:
             python_field_name = field_name
         
-        if not self.reverse:
-            field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True, target_object=field_name)
-            self.fields.append(f"{field_name} = ({formatted_field_type}) {field_from_python};")
+        if not reverse:
+            field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True, target_object=field_name, idMap_name=idMap_name)
+            return f"this.{field_name} = ({formatted_field_type}) {field_from_python};"
         else:
-            self.fields.append(f"this.obj.invokeMember(\"__setattr__\", \"{python_field_name}\", IntegrationUtils.mapToPython({field_name}, idMap, this.obj.getMember(\"{python_field_name}\")));")
-    
+            return f"this.obj.invokeMember(\"__setattr__\", \"{python_field_name}\", IntegrationUtils.mapToPython({field_name}, {idMap_name}, this.obj.getMember(\"{python_field_name}\")));"
+
     def get_body(self):
         fields_body = "\n".join(self.fields)
         
@@ -1021,6 +1028,7 @@ class Schema:
             "name": class_name,
             "declaration": class_declaration,
             "fields": [],
+            "uninitialized_final_fields": [], # (field_name, field_schema_data) pairs
             "methods": [],
             "pyToJ": SyncMethod(class_name, call_super=extends_project_class) if not (is_interface) else None,
             "jToPy": SyncMethod(class_name, reverse=True, call_super=extends_project_class) if not (is_interface) else None,
@@ -1171,6 +1179,10 @@ class Schema:
         if not skip_body:
             class_obj["fields"].append(field_body)
 
+        # check if this field not initialized, but was a final field (after making mutable fields non-final)
+        if '=' not in field_body and is_final and field_type in IMMUTABLES:
+            class_obj["uninitialized_final_fields"].append((field_name, field_schema_data))
+
     def __add_method_to_class(self, class_obj: dict, method_name: str, method_schema_data: dict, dont_process: bool = False):
         method_body = "".join(method_schema_data['body'])
         # check if the method is not implemented
@@ -1305,6 +1317,14 @@ class Schema:
             "pyToJ(idMapPyToJ);" if not is_static else "",
             retranslated_args
         ])
+        
+        if is_constructor:
+            # we must ininitialize all uninitialized final fields in the constructor
+            # since these are skipped from pyToJ
+            pyToJ1 += "".join(
+                SyncMethod.get_interop_code(field_name, field_schema_data, class_obj['name'], idMap_name="idMapPyToJ") 
+                for field_name, field_schema_data in class_obj["uninitialized_final_fields"]
+            )
 
         if is_void:
             content = f"{python_call};"
