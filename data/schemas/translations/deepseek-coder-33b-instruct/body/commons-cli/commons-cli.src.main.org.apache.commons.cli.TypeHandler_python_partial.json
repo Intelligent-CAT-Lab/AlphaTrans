@@ -92,8 +92,7 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "SuppressWarnings(\"unchecked\")",
-                        "SuppressWarnings(\"unchecked\")"
+                        "SuppressWarnings"
                     ],
                     "modifiers": [
                         "public",
@@ -157,22 +156,43 @@
                             "30-32:ParseException"
                         ]
                     ],
-                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def createValue0(str_: str, clazz: typing.Type[typing.Any]) -> typing.Any:\n",
+                        "    def createValue0(str: str, clazz: typing.Type[typing.Any]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def createValue0(str: str, clazz: typing.Type[typing.Any]) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        if clazz == PatternOptionBuilder.STRING_VALUE:",
+                        "            return str",
+                        "        elif clazz == PatternOptionBuilder.OBJECT_VALUE:",
+                        "            return TypeHandler.createObject(str)",
+                        "        elif clazz == PatternOptionBuilder.NUMBER_VALUE:",
+                        "            return TypeHandler.createNumber(str)",
+                        "        elif clazz == PatternOptionBuilder.DATE_VALUE:",
+                        "            return TypeHandler.createDate(str)",
+                        "        elif clazz == PatternOptionBuilder.CLASS_VALUE:",
+                        "            return TypeHandler.createClass(str)",
+                        "        elif clazz == PatternOptionBuilder.FILE_VALUE:",
+                        "            return TypeHandler.createFile(str)",
+                        "        elif clazz == PatternOptionBuilder.EXISTING_FILE_VALUE:",
+                        "            return TypeHandler.openFile(str)",
+                        "        elif clazz == PatternOptionBuilder.FILES_VALUE:",
+                        "            return TypeHandler.createFiles(str)",
+                        "        elif clazz == PatternOptionBuilder.URL_VALUE:",
+                        "            return TypeHandler.createURL(str)",
+                        "        else:",
+                        "            raise ParseException(\"Unable to handle the class: \" + str(clazz))",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 26.150585174560547,
+                    "generation_timestamp": "2024-06-09T14:04:00.795097",
+                    "model_name": "deepseek-coder-33b-instruct"
                 },
                 "203-209:openFile": {
                     "start": 203,
@@ -209,22 +229,27 @@
                             "30-32:ParseException"
                         ]
                     ],
-                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def openFile(str_: str) -> typing.Union[io.FileIO, io.BufferedReader]:\n",
+                        "    def openFile(str: str) -> typing.Union[io.FileIO, io.BufferedReader]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def openFile(str: str) -> typing.Union[io.FileIO, io.BufferedReader]:",
+                        "        ",
+                        "",
+                        "        try:",
+                        "            return open(str, 'r')",
+                        "        except FileNotFoundError:",
+                        "            raise ParseException(\"Unable to find file: \" + str)",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 50.52988028526306,
+                    "generation_timestamp": "2024-06-09T13:57:37.373266",
+                    "model_name": "deepseek-coder-33b-instruct"
                 },
                 "192-194:createValue1": {
                     "start": 192,
@@ -258,22 +283,24 @@
                             "153-182:createValue0"
                         ]
                     ],
-                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def createValue1(str_: str, obj: typing.Any) -> typing.Any:\n",
+                        "    def createValue1(str: str, obj: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def createValue1(str: str, obj: typing.Any) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        return TypeHandler.createValue0(str, typing.cast(typing.Type[typing.Any], obj))",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 50.328256607055664,
+                    "generation_timestamp": "2024-06-09T14:04:51.126180",
+                    "model_name": "deepseek-coder-33b-instruct"
                 },
                 "135-141:createURL": {
                     "start": 135,
@@ -310,22 +337,27 @@
                             "30-32:ParseException"
                         ]
                     ],
-                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def createURL(str_: str) -> typing.Union[urllib.parse.ParseResult, urllib.parse.SplitResult, urllib.parse.DefragResult, str]:\n",
+                        "    def createURL(str: str) -> typing.Union[urllib.parse.ParseResult, urllib.parse.SplitResult, urllib.parse.DefragResult, str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def createURL(str: str) -> typing.Union[urllib.parse.ParseResult, urllib.parse.SplitResult, urllib.parse.DefragResult, str]:",
+                        "        ",
+                        "",
+                        "        try:",
+                        "            return urllib.parse.urlparse(str)",
+                        "        except ValueError:",
+                        "            raise ParseException(\"Unable to parse the URL: \" + str)",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 50.69565558433533,
+                    "generation_timestamp": "2024-06-09T13:58:28.074858",
+                    "model_name": "deepseek-coder-33b-instruct"
                 },
                 "111-126:createObject": {
                     "start": 111,
@@ -371,22 +403,33 @@
                             "30-32:ParseException"
                         ]
                     ],
-                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def createObject(classname: str) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def createObject(classname: str) -> typing.Any:",
+                        "        ",
+                        "",
+                        "        try:",
+                        "            cl = getattr(__import__('builtins'), classname)",
+                        "        except AttributeError:",
+                        "            raise ParseException(\"Unable to find the class: \" + classname)",
+                        "",
+                        "        try:",
+                        "            return cl()",
+                        "        except Exception as e:",
+                        "            raise ParseException(",
+                        "                e.__class__.__name__ + \"; Unable to create an instance of: \" + classname)",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 50.6760356426239,
+                    "generation_timestamp": "2024-06-09T13:59:18.755917",
+                    "model_name": "deepseek-coder-33b-instruct"
                 },
                 "93-102:createNumber": {
                     "start": 93,
@@ -426,22 +469,29 @@
                             "30-32:ParseException"
                         ]
                     ],
-                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def createNumber(str_: str) -> typing.Union[int, float, numbers.Number]:\n",
+                        "    def createNumber(str: str) -> typing.Union[int, float, numbers.Number]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def createNumber(str: str) -> typing.Union[int, float, numbers.Number]:",
+                        "        ",
+                        "",
+                        "        try:",
+                        "            if '.' in str:",
+                        "                return float(str)",
+                        "            return int(str)",
+                        "        except ValueError as e:",
+                        "            raise ParseException(e.args[0])",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 49.710484981536865,
+                    "generation_timestamp": "2024-06-09T14:00:08.470615",
+                    "model_name": "deepseek-coder-33b-instruct"
                 },
                 "82-84:createFiles": {
                     "start": 82,
@@ -468,22 +518,32 @@
                         "str"
                     ],
                     "calls": [],
-                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def createFiles(str_: str) -> typing.List[pathlib.Path]:\n",
+                        "    def createFiles(str: str) -> typing.List[pathlib.Path]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def createFiles(str: str) -> typing.List[pathlib.Path]:",
+                        "        ",
+                        "",
+                        "        # The Java code does not specify how to create the files, so I'll assume that the string is a list of file paths.",
+                        "        # If the string is not a list of file paths, you will need to modify this code.",
+                        "",
+                        "        file_paths = str.split(\",\")",
+                        "        files = []",
+                        "        for path in file_paths:",
+                        "            file = pathlib.Path(path.strip())",
+                        "            files.append(file)",
+                        "        return files",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 52.65660381317139,
+                    "generation_timestamp": "2024-06-09T14:01:01.131726",
+                    "model_name": "deepseek-coder-33b-instruct"
                 },
                 "68-70:createFile": {
                     "start": 68,
@@ -510,22 +570,24 @@
                         "str"
                     ],
                     "calls": [],
-                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def createFile(str_: str) -> pathlib.Path:\n",
+                        "    def createFile(str: str) -> pathlib.Path:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def createFile(str: str) -> pathlib.Path:",
+                        "        ",
+                        "",
+                        "        return pathlib.Path(str)",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 48.91626834869385,
+                    "generation_timestamp": "2024-06-09T14:01:50.049865",
+                    "model_name": "deepseek-coder-33b-instruct"
                 },
                 "58-60:createDate": {
                     "start": 58,
@@ -552,22 +614,36 @@
                         "str"
                     ],
                     "calls": [],
-                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
-                        "    def createDate(str_: str) -> typing.Union[datetime.datetime, datetime.date]:\n",
+                        "    def createDate(str: str) -> typing.Union[datetime.date, datetime.datetime]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def createDate(str: str) -> typing.Union[datetime.date, datetime.datetime]:",
+                        "        ",
+                        "",
+                        "        # Convert the string to a datetime object",
+                        "        try:",
+                        "            return datetime.datetime.strptime(str, \"%Y-%m-%d\")",
+                        "        except ValueError:",
+                        "            pass",
+                        "",
+                        "        # Convert the string to a date object",
+                        "        try:",
+                        "            return datetime.datetime.strptime(str, \"%Y-%m-%d\").date()",
+                        "        except ValueError:",
+                        "            pass",
+                        "",
+                        "        raise ValueError(\"Invalid date format. Please use 'YYYY-MM-DD'.\")",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 51.39131498336792,
+                    "generation_timestamp": "2024-06-09T14:02:41.443017",
+                    "model_name": "deepseek-coder-33b-instruct"
                 },
                 "40-46:createClass": {
                     "start": 40,
@@ -604,26 +680,30 @@
                             "30-32:ParseException"
                         ]
                     ],
-                    "is_overload": false,
                     "partial_translation": [
                         "    @staticmethod\n",
                         "    def createClass(classname: str) -> typing.Type[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
+                    "translation": [
+                        "",
+                        "    @staticmethod",
+                        "    def createClass(classname: str) -> typing.Type[typing.Any]:",
+                        "        ",
+                        "",
+                        "        try:",
+                        "            return globals()[classname]",
+                        "        except KeyError:",
+                        "            raise ParseException(\"Unable to find the class: \" + classname)",
+                        ""
+                    ],
+                    "translation_status": "success",
+                    "elapsed_time": 53.17939877510071,
+                    "generation_timestamp": "2024-06-09T14:03:34.640160",
+                    "model_name": "deepseek-coder-33b-instruct"
                 }
             },
             "fields": {},
-            "is_enum": false,
             "python_class_declaration": "class TypeHandler:\n\n"
         }
     },
@@ -634,7 +714,6 @@
         "import numbers",
         "import typing\nfrom typing import *",
         "import datetime",
-        "import urllib",
         "from src.main.org.apache.commons.cli.ParseException import *",
         "from src.main.org.apache.commons.cli.PatternOptionBuilder import *"
     ]
