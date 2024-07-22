@@ -176,7 +176,7 @@ class Project:
                             method_body = injected_translations[(schema_file_name_without_ext, _class, _method)]
                         else:
                             # skip overridden overloaded methods that were retained only for java compatibility
-                            if not schema_data['classes'][_class]['methods'][_method]['is_overload']:
+                            if 'is_overload' not in schema_data['classes'][_class]['methods'][_method] or not schema_data['classes'][_class]['methods'][_method]['is_overload']:
                                 method_body = self.__get_instrumented_python_method_body(_method, schema_data['classes'][_class]['methods'][_method], _class)
                                                    
                         python_file_contents.append(method_body)
@@ -1090,7 +1090,11 @@ class Schema:
                 class_obj, 
                 _method, 
                 class_schema_data['methods'][_method], 
-                dont_process = dont_process or _method not in methods_to_process or class_schema_data['methods'][_method]['is_overload']
+                dont_process = (
+                    dont_process 
+                    or _method not in methods_to_process 
+                    or ('is_overload' in class_schema_data['methods'][_method] and class_schema_data['methods'][_method]['is_overload'])
+                )
             )
 
         # check if the class has a static initializer
