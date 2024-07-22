@@ -153,12 +153,19 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
         elapsed_time = time.time() - start_time
         return syntactically_validated_members, elapsed_time
 
-    status, functionally_validated_members, feedback = graal_validation(syntactically_validated_members)
+    fragment_obj = {
+        "fragment_type": fragment,
+        "schema_name": schema.replace('_python_partial.json', '').replace('.json', ''),
+        "fragment_name": fragment_,
+        "class_name": class_,
+    }
+    status, feedback = graal_validation(generation.split('\n'), fragment_obj, args)
+    functionally_validated_members = syntactically_validated_members if status == 'success' else None
     
     if status == 'success':
-        print("PASSED!")
+        print("\033[92mPASSED!\033[0m")
     else:
-        print(status.upper())
+        print("\033[93m" + status.upper() + "\033[0m")
         if not RECORD_ALL:
             if input("Do you want to interrupt? (no=Enter)"):
                 quit()
