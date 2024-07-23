@@ -42,7 +42,7 @@ class LCPForDelta:
     @staticmethod
     def _decompressBlockByS16WithIntBufferIntegrated(
         outDecompBlock: typing.List[int],
-        inCompBlock: typing.Union[array.array, typing.List],
+        inCompBlock: typing.Union[array.array, typing.List[int]],
         blockSize: int,
         expPosBuffer: typing.List[int],
         oribits: int,
@@ -52,7 +52,7 @@ class LCPForDelta:
     @staticmethod
     def _decompressBlockByS16WithIntBuffer(
         outDecompBlock: typing.List[int],
-        inCompBlock: typing.Union[array.array, typing.List],
+        inCompBlock: typing.Union[array.array, typing.List[int]],
         blockSize: int,
     ) -> None:
         pass
@@ -69,7 +69,7 @@ class LCPForDelta:
     @staticmethod
     def _decompressBBitSlotsWithHardCodesWithIntBuffer(
         outDecompSlots: typing.List[int],
-        inCompBlock: typing.Union[array.array, typing.List],
+        inCompBlock: typing.Union[array.array, typing.List[int]],
         blockSize: int,
         bits: int,
     ) -> int:
@@ -108,7 +108,7 @@ class LCPForDelta:
     @staticmethod
     def _decompressOneBlockWithSizeWithIntBuffer(
         decompBlock: typing.List[int],
-        inBlock: typing.Union[array.array, typing.List],
+        inBlock: typing.Union[array.array, typing.List[int]],
         blockSize: int,
         expPosBuffer: typing.List[int],
         expHighBitsBuffer: typing.List[int],
