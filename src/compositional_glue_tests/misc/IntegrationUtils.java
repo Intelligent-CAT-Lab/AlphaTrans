@@ -2,6 +2,7 @@ package {project};
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,8 +12,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.io.StringReader;
-import java.io.StringWriter;
 import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Value;
 
@@ -132,108 +131,6 @@ public final class IntegrationUtils {{
     // Get the "primary" class name, i.e., everything before <...>
     String primaryClassName = classDescriptor.split("<")[0];
 
-    // handle arrays
-    if (value.hasArrayElements() && classDescriptor.endsWith("[]")) {{
-      String innerClassName = classDescriptor.substring(0, classDescriptor.length() - 2);
-
-      int length = (int) value.getArraySize();
-      T[] result = (T[]) Array.newInstance(clazz, length);
-
-      if (targetObject != null && targetObject.getClass().isArray()) {{
-        result = (T[]) targetObject;
-      }}
-
-      if (!skipMap)
-        idMap.put(id, result);
-      for (int i = 0; i < length; i++) {{
-        result[i] = (T) valueToObject(value.getArrayElement(i), innerClassName, idMap);
-      }}
-
-      if (!skipMap)
-        putObjectsToMaps(result, value);
-      return result;
-    }}
-
-    // handle lists
-    // need not check `primaryClassName.equals("List")` because arrays are already
-    // handled before
-    if (value.hasArrayElements()) {{
-      String innerClassName = "";
-      if (classDescriptor.contains("<")) {{
-        innerClassName = classDescriptor.substring(
-            classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
-      }}
-      List<Object> list = new ArrayList<>();
-
-      if (targetObject != null) {{
-        list = (List<Object>) targetObject;
-        list.clear();
-      }}
-
-      if (!skipMap)
-        idMap.put(id, list);
-      for (int i = 0; i < value.getArraySize(); i++) {{
-        list.add(valueToObject(value.getArrayElement(i), innerClassName, idMap));
-      }}
-
-      if (!skipMap)
-        putObjectsToMaps(list, value);
-      return list;
-    }}
-
-    // handle Properties
-    if (value.hasHashEntries() && primaryClassName.equals("Properties")) {{
-      Properties properties = new Properties();
-
-      if (targetObject != null) {{
-        properties = (Properties) targetObject;
-        properties.clear();
-      }}
-
-      idMap.put(id, properties);
-      for (Object key : value.getHashKeysIterator().as(Iterable.class)) {{
-        properties.put(
-          valueToObject(Value.asValue(key), "String", idMap),
-          valueToObject(value.getHashValue(key), "String", idMap)
-        );
-      }}
-
-      putObjectsToMaps(properties, value);
-      return properties;
-    }}
-
-    // handle maps
-    // need not check `primaryClassName.equals("Map")` because there is no other case
-    if (value.hasHashEntries()) {{
-      String keyClassName = "";
-      String valueClassName = "";
-      if (classDescriptor.contains("<")) {{
-        String[] types = extractTypesFromMap(classDescriptor);
-        if (types != null) {{
-          keyClassName = types[0];
-          valueClassName = types[1];
-        }}
-      }}
-
-      Map<Object, Object> map = new LinkedHashMap<>();
-
-      if (targetObject != null) {{
-        map = (Map<Object, Object>) targetObject;
-        map.clear();
-      }}
-
-      idMap.put(id, map);
-      for (Object key : value.getHashKeysIterator().as(Iterable.class)) {{
-        map.put(
-          valueToObject(Value.asValue(key), keyClassName, idMap),
-          valueToObject(value.getHashValue(key), valueClassName, idMap)
-        );
-      }}
-
-      putObjectsToMaps(map, value);
-      return map;
-    }}
-
     // handle strings and characters
     if (value.isString()) {{
       if (classDescriptor.equals("Character")) {{
@@ -283,10 +180,104 @@ public final class IntegrationUtils {{
       return value.as(Number.class);
     }}
 
-    Value valueType = value.getMember("__class__");
-    String ValueTypeName = valueType.getMember("__name__").asString();
-    Value valueTypeType = valueType.getMember("__class__");
-    String ValueTypeTypeName = valueTypeType.getMember("__name__").asString();
+    // handle arrays
+    if (value.hasArrayElements() && classDescriptor.endsWith("[]")) {{
+      String innerClassName = classDescriptor.substring(0, classDescriptor.length() - 2);
+
+      int length = (int) value.getArraySize();
+      T[] result = (T[]) Array.newInstance(clazz, length);
+
+      if (targetObject != null && targetObject.getClass().isArray()) {{
+        result = (T[]) targetObject;
+      }}
+
+      if (!skipMap) idMap.put(id, result);
+      for (int i = 0; i < length; i++) {{
+        result[i] = (T) valueToObject(value.getArrayElement(i), innerClassName, idMap);
+      }}
+
+      if (!skipMap) putObjectsToMaps(result, value);
+      return result;
+    }}
+
+    // handle lists
+    // need not check `primaryClassName.equals("List")` because arrays are already
+    // handled before
+    if (value.hasArrayElements()) {{
+      String innerClassName = "";
+      if (classDescriptor.contains("<")) {{
+        innerClassName =
+            classDescriptor.substring(
+                classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
+      }}
+      List<Object> list = new ArrayList<>();
+
+      if (targetObject != null) {{
+        list = (List<Object>) targetObject;
+        list.clear();
+      }}
+
+      if (!skipMap) idMap.put(id, list);
+      for (int i = 0; i < value.getArraySize(); i++) {{
+        list.add(valueToObject(value.getArrayElement(i), innerClassName, idMap));
+      }}
+
+      if (!skipMap) putObjectsToMaps(list, value);
+      return list;
+    }}
+
+    // handle Properties
+    if (value.hasHashEntries() && primaryClassName.equals("Properties")) {{
+      Properties properties = new Properties();
+
+      if (targetObject != null) {{
+        properties = (Properties) targetObject;
+        properties.clear();
+      }}
+
+      idMap.put(id, properties);
+      for (Object key : value.getHashKeysIterator().as(Iterable.class)) {{
+        properties.put(
+            valueToObject(Value.asValue(key), "String", idMap),
+            valueToObject(value.getHashValue(key), "String", idMap));
+      }}
+
+      putObjectsToMaps(properties, value);
+      return properties;
+    }}
+
+    // handle maps
+    // need not check `primaryClassName.equals("Map")` because there is no other case
+    if (value.hasHashEntries()) {{
+      String keyClassName = "";
+      String valueClassName = "";
+      if (classDescriptor.contains("<")) {{
+        String[] types = extractTypesFromMap(classDescriptor);
+        if (types != null) {{
+          keyClassName = types[0];
+          valueClassName = types[1];
+        }}
+      }}
+
+      Map<Object, Object> map = new LinkedHashMap<>();
+
+      if (targetObject != null) {{
+        map = (Map<Object, Object>) targetObject;
+        map.clear();
+      }}
+
+      idMap.put(id, map);
+      for (Object key : value.getHashKeysIterator().as(Iterable.class)) {{
+        map.put(
+            valueToObject(Value.asValue(key), keyClassName, idMap),
+            valueToObject(value.getHashValue(key), valueClassName, idMap));
+      }}
+
+      putObjectsToMaps(map, value);
+      return map;
+    }}
+
+    String ValueTypeName = value.getMember("__class__").getMember("__name__").asString();
 
     // "StringReader"
     if (ValueTypeName.equals("StringIO") && classDescriptor.endsWith("Reader")) {{
@@ -330,7 +321,7 @@ public final class IntegrationUtils {{
     }}
 
     // handle python classes
-    if (ValueTypeName.equals("type") || ValueTypeTypeName.equals("type")) {{
+    if (isPythonClass(value)) {{
       String className = value.getMember("__name__").asString();
       switch (className) {{
         case "str":
@@ -343,10 +334,21 @@ public final class IntegrationUtils {{
           return Boolean.class;
         case "Number":
           return Number.class;
-        // TODO: handle other classes
+          // TODO: handle other classes
         default:
           break;
       }}
+    }}
+
+    // Path
+    if (ValueTypeName.endsWith("Path")) {{
+      String path = value.invokeMember("resolve").invokeMember("__str__").asString();
+      java.io.File file = new java.io.File(path);
+      if (targetObject != null) {{
+        file = (java.io.File) targetObject;
+      }}
+      idMap.put(id, file);
+      return file;
     }}
 
     System.out.println("[valueToObject] Unhandled Python object type: " + value);
@@ -378,7 +380,7 @@ public final class IntegrationUtils {{
       if (splitIndex != -1) {{
         String something = insideBrackets.substring(0, splitIndex).trim();
         String somethingElse = insideBrackets.substring(splitIndex + 1).trim();
-        return new String[] {{ something, somethingElse }};
+        return new String[] {{something, somethingElse}};
       }}
     }}
     return null; // Return null if no match is found
@@ -404,6 +406,10 @@ public final class IntegrationUtils {{
 
   public static Long getPythonObjectId(Value obj) {{
     return JavaHandler.invokeMember("getPythonId", obj).asLong();
+  }}
+
+  public static boolean isPythonClass(Value obj) {{
+    return JavaHandler.invokeMember("isPythonClass", obj).asBoolean();
   }}
 
   public static boolean hasTypeMismatch(String classDescriptor, Object obj) {{

@@ -1,8 +1,8 @@
-import argparse
 import os
 import subprocess
 import json
 import keyword
+import builtins
 import xml.etree.ElementTree as ET
  
 from src.compositional_glue_tests.utils import IMMUTABLES, add_obj_to_clone_method, get_enum_field_body, get_method_parameter_types, publicize_methods_of_anoymous_classes, schema_filter, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
@@ -161,7 +161,21 @@ class Project:
                         if class_declaration_suffix[bracket_left+1:bracket_right].strip() == "":
                             class_declaration_suffix = "(metaclass=StaticFieldRedirector):"
                         else:
-                            class_declaration_suffix = class_declaration_suffix[:bracket_right] + ", metaclass=StaticFieldRedirector" + class_declaration_suffix[bracket_right:]
+                            # get all inherited classes from (...)
+                            inherited_classes = [x.strip() for x in class_declaration_suffix[bracket_left+1:bracket_right].split(",")]
+
+                            # add StaticFieldRedirector as a metaclass
+                            inherited_classes.append("metaclass=StaticFieldRedirector")
+
+                            # filter out the typing module classes
+                            # TODO: this is a temporary fix and should eventually be made at the translation level
+                            filtered_inherited_classes = list(filter(lambda x: not x.startswith("typing."), inherited_classes))
+
+                            class_declaration_suffix = "".join([
+                                class_declaration_suffix[:bracket_left+1],
+                                ", ".join(filtered_inherited_classes),
+                                class_declaration_suffix[bracket_right:]
+                            ])
                             
                     class_declaration = class_declaration_prefix + class_declaration_suffix
                     python_file_contents.append(class_declaration)
@@ -247,7 +261,7 @@ class Project:
 
         # check if any parameter name is a 'keyword' and in that case, append an underscore to it
         for i, param in enumerate(parameter_list):
-            if keyword.iskeyword(param):
+            if keyword.iskeyword(param) or param in dir(builtins):
                 parameter_list[i] = f"{param}_"
 
         # build the method body            
