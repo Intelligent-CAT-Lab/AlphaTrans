@@ -1,7 +1,9 @@
 import numbers
 import java # type: ignore
 import abc
+import inspect
 import io
+import pathlib
 
 
 class JavaHandler:
@@ -84,10 +86,12 @@ class JavaHandler:
             return JavaHandler.stringwriter_to_stringio(x, id_map, target_object)
 
         # Array
-        # placed at the end since hasattr(x, 'length') is too broad
-        # TODO: can we try using getClass().getName()?
-        if hasattr(x, 'length'):
+        if x.getClass().isArray():
             return JavaHandler.array_to_list(x, id_map, target_object)
+
+        # File
+        if x.getClass().getName() == "java.io.File":
+            return JavaHandler.file_to_path(x, id_map, target_object)
         
         print("[JavaHandler.mapping] Unhandled Java object type: " + repr(x))
         return x # return untranslated object
@@ -167,9 +171,20 @@ class JavaHandler:
         id_map[id] = S
         S.write(x.toString())
         return S
-    
+
+    def file_to_path(x, id_map, target_object=None):
+        P = pathlib.Path(x.getAbsolutePath())
+        if target_object:
+            P = target_object
+        id = JavaHandler.getJavaId(x)
+        id_map[id] = P
+        return P
+
     def getPythonId(obj):
         return id(obj)
+
+    def isPythonClass(obj):
+        return inspect.isclass(obj)
 
     IntegrationUtils = java.type('{project}.IntegrationUtils')
 
