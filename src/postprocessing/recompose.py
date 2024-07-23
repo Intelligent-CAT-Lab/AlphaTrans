@@ -215,7 +215,7 @@ def main(args):
                         
             for method in data['classes'][class_]['methods']:
 
-                if data['classes'][class_]['methods'][method]['is_overload']:
+                if not args.recompose_evosuite and data['classes'][class_]['methods'][method]['is_overload']:
                     continue
 
                 if args.fragment_name:

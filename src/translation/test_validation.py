@@ -18,10 +18,10 @@ def test_validation(args, eligible_tests, fragment_test_stats):
         test_class = test['class_name']
         test_method = test['fragment_name'].split(':')[1]
 
-        if os.path.exists(f'{args.project_name}-pytest-report.xml'):
-            os.remove(f'{args.project_name}-pytest-report.xml')
-        if os.path.exists(f'{args.project_name}-coverage.xml'):
-            os.remove(f'{args.project_name}-coverage.xml')
+        if os.path.exists(f'{args.project_name}-{args.model_name}-pytest-report.xml'):
+            os.remove(f'{args.project_name}-{args.model_name}-pytest-report.xml')
+        if os.path.exists(f'{args.project_name}-{args.model_name}-coverage.xml'):
+            os.remove(f'{args.project_name}-{args.model_name}-coverage.xml')
 
         current_dir = os.getcwd()
         env = os.environ.copy()
@@ -34,8 +34,8 @@ def test_validation(args, eligible_tests, fragment_test_stats):
                     '--cov=src.main',
                     '--cov=src.test',
                     '--cov-report=term-missing',
-                    f'--cov-report=xml:{args.project_name}-coverage.xml',
-                    f'--junitxml={args.project_name}-pytest-report.xml'
+                    f'--cov-report=xml:{args.project_name}-{args.model_name}-coverage.xml',
+                    f'--junitxml={args.project_name}-{args.model_name}-pytest-report.xml'
                 ],
                 check=True,
                 capture_output=True,
@@ -45,14 +45,14 @@ def test_validation(args, eligible_tests, fragment_test_stats):
         except subprocess.CalledProcessError as e:
             green_tests = False
         
-        if not os.path.exists(f'{args.project_name}-coverage.xml'):
+        if not os.path.exists(f'{args.project_name}-{args.model_name}-coverage.xml'):
             green_tests = False
             covered_methods = []
         else:
             covered_methods = calculate_method_coverage(args, f'data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.project_name}')
 
-        assert os.path.exists(f'{args.project_name}-pytest-report.xml')
-        with open(f'{args.project_name}-pytest-report.xml', 'r') as f:
+        assert os.path.exists(f'{args.project_name}-{args.model_name}-pytest-report.xml')
+        with open(f'{args.project_name}-{args.model_name}-pytest-report.xml', 'r') as f:
             tree = ET.parse(f)
             root = tree.getroot()
             for testcase in root.findall('.//testcase'):

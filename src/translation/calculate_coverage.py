@@ -25,7 +25,7 @@ def calculate_method_coverage(args, project_root):
             methods = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
             classes = [node for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]
 
-        covered_lines = get_covered_lines(f'{args.project_name}-coverage.xml', py_file_path)
+        covered_lines = get_covered_lines(f'{args.project_name}-{args.model_name}-coverage.xml', py_file_path)
         for method in methods:
             method_lines = range(method.lineno + 1, method.end_lineno + 1)
             if any(line in covered_lines for line in method_lines):
