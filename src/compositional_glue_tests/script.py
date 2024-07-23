@@ -809,19 +809,14 @@ class CompositionalTest:
                 with open(f"{self.project.root_dir}/logs/glue/{self.project.name}/run.sh", "w") as f:
                     f.write(" ".join(test_command))
 
-            failure_flag = False
-            try:
-                stdout, stderr = "", ""
-                output = subprocess.run(
-                    test_command,
-                    cwd=self.project.glue_dir,
-                    capture_output=True,
-                    text=True,
-                    check=True
-                )
-                stdout, stderr = output.stdout, output.stderr            
-            except Exception:
-                failure_flag = True # check if the failure is due to the tests or something else
+            output = subprocess.run(
+                test_command,
+                cwd=self.project.glue_dir,
+                capture_output=True,
+                text=True
+            )
+            failure_flag = (output.returncode != 0) # check if the failure is due to the tests or something else
+            stdout, stderr = output.stdout, output.stderr
 
             if self.debug:
                 with open(f"{self.project.root_dir}/glue.{self.project.name}.log", "w") as f:
