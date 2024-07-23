@@ -85,14 +85,21 @@
                         "    def uncompress(self, compressed: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def uncompress(self, compressed: typing.List[int]) -> typing.List[int]:",
+                        "        ",
+                        "        decompressed = [0] * compressed[0]",
+                        "        inpos = IntWrapper(1)",
+                        "        self.codec.headlessUncompress(compressed, inpos, len(compressed) - inpos.intValue(), decompressed, IntWrapper(0), len(decompressed), IntWrapper(0))",
+                        "        return decompressed"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.829782009124756,
+                    "generation_timestamp": "2024-07-21T05:03:11.213385",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -157,14 +164,28 @@
                         "    def compress(self, input_: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def compress(self, input_: typing.List[int]) -> typing.List[int]:",
+                        "        ",
+                        "        compressed = [0] * (len(input_) + len(input_) // 100 + 1024)",
+                        "        compressed[0] = len(input_)",
+                        "        outpos = IntWrapper(1)",
+                        "        initvalue = IntWrapper(0)",
+                        "        try:",
+                        "            self.codec.headlessCompress(input_, IntWrapper(0), len(input_), compressed, outpos, initvalue)",
+                        "        except IndexOutOfBoundsException:",
+                        "            raise UncompressibleInputException(",
+                        "                \"Your input is too poorly compressible with the current codec : \" + str(self.codec))",
+                        "        compressed = compressed[:outpos.intValue()]",
+                        "        return compressed"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "failed",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 272.6090865135193,
+                    "generation_timestamp": "2024-07-21T05:34:11.212898",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -222,14 +243,20 @@
                         "    def __init__(self, constructorId: int, c: SkippableIntegratedIntegerCODEC) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, c: SkippableIntegratedIntegerCODEC) -> None:",
+                        "         if constructorId == 0:",
+                        "             self.codec = c",
+                        "         else:",
+                        "             self.codec = SkippableIntegratedComposition(IntegratedBinaryPacking(), IntegratedVariableByte())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.85893440246582,
+                    "generation_timestamp": "2024-07-21T02:16:30.994662",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 }
@@ -252,14 +279,17 @@
                         "    codec: SkippableIntegratedIntegerCODEC = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    codec: SkippableIntegratedIntegerCODEC = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T00:51:40.782734",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 }

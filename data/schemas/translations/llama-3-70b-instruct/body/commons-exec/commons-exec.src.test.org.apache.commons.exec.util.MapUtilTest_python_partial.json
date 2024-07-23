@@ -96,14 +96,22 @@
                         "    def testPrefixMap(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testPrefixMap(self) -> None:",
+                        "         proc_environment: typing.Dict[str, str] = {}",
+                        "         proc_environment[\"JAVA_HOME\"] = \"/usr/opt/java\"",
+                        "",
+                        "         result: typing.Dict[str, str] = MapUtils.prefix(proc_environment, \"env\")",
+                        "         self.assertEqual(len(proc_environment), len(result))",
+                        "         self.assertEqual(\"/usr/opt/java\", result.get(\"env.JAVA_HOME\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.250301837921143,
+                    "generation_timestamp": "2024-07-21T12:07:06.858441",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -154,16 +162,26 @@
                         "    def testMergeMap(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testMergeMap(self) -> None:",
+                        "         proc_environment: typing.Dict[str, str] = EnvironmentUtils.getProcEnvironment()",
+                        "         application_environment: typing.Dict[str, str] = {}",
+                        "",
+                        "         application_environment[\"appMainClass\"] = \"foo.bar.Main\"",
+                        "         result: typing.Dict[str, str] = MapUtils.merge(proc_environment, application_environment)",
+                        "         self.assertEqual(len(proc_environment) + len(application_environment), len(result))",
+                        "         self.assertEqual(\"foo.bar.Main\", result.get(\"appMainClass\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.371123313903809,
+                    "generation_timestamp": "2024-07-21T12:45:53.216105",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 },
                 "36-49:testCopyMap": {
                     "start": 36,
@@ -211,14 +229,25 @@
                         "    def testCopyMap(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testCopyMap(self) -> None:",
+                        "         proc_environment = {\"JAVA_HOME\": \"/usr/opt/java\"}",
+                        "         result = MapUtils.copy(proc_environment)",
+                        "         self.assertEqual(1, len(result))",
+                        "         self.assertEqual(1, len(proc_environment))",
+                        "         self.assertEqual(\"/usr/opt/java\", result.get(\"JAVA_HOME\"))",
+                        "",
+                        "         result.pop(\"JAVA_HOME\")",
+                        "         self.assertTrue(not result)",
+                        "         self.assertEqual(1, len(proc_environment))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.809309482574463,
+                    "generation_timestamp": "2024-07-21T12:07:23.887883",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

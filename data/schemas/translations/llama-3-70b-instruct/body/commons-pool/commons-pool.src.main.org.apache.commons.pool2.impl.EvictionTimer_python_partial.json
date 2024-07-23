@@ -98,14 +98,25 @@
                         "    def run(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def run(self) -> None:",
+                        "         with threading.Lock():",
+                        "            for key, value in EvictionTimer._Reaper__taskMap.items():",
+                        "                if key() is None:",
+                        "                    EvictionTimer._Reaper__executor.remove(value)",
+                        "                    del EvictionTimer._Reaper__taskMap[key]",
+                        "            if not EvictionTimer._Reaper__taskMap and EvictionTimer._Reaper__executor is not None:",
+                        "                EvictionTimer._Reaper__executor.shutdown()",
+                        "                EvictionTimer._Reaper__executor._max_workers = 0",
+                        "                EvictionTimer._Reaper__executor = None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 18.21403741836548,
+                    "generation_timestamp": "2024-07-21T12:52:09.429765",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -158,14 +169,19 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         builder = \"\"",
+                        "         builder += \"EvictionTimer []\"",
+                        "         return builder"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.653546094894409,
+                    "generation_timestamp": "2024-07-21T12:52:17.093914",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -198,14 +214,18 @@
                         "    def getNumTasks() -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getNumTasks() -> int:",
+                        "         return len(EvictionTimer.__taskMap)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.1115922927856445,
+                    "generation_timestamp": "2024-07-21T12:52:22.214412",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -263,14 +283,27 @@
                         "    def cancel(evictor: Evictor[typing.Any], timeout: datetime.timedelta, restarting: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def cancel(evictor: Evictor[typing.Any], timeout: datetime.timedelta, restarting: bool) -> None:",
+                        "         if evictor is not None:",
+                        "             evictor.cancel()",
+                        "             EvictionTimer.__remove(evictor)",
+                        "         if not restarting and EvictionTimer.__executor is not None and EvictionTimer.__taskMap == {}:",
+                        "             EvictionTimer.__executor.shutdown(wait=True)",
+                        "             try:",
+                        "                 EvictionTimer.__executor._adjust_thread_count(0)",
+                        "             except Exception:",
+                        "                 pass",
+                        "             EvictionTimer.__executor = None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.485801935195923,
+                    "generation_timestamp": "2024-07-21T12:52:56.600212",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -299,14 +332,17 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "         raise NotImplementedError(\"Private constructor, cannot be instantiated.\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.8524181842803955,
+                    "generation_timestamp": "2024-07-21T12:52:27.075515",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -347,14 +383,22 @@
                         "    def __remove(evictor: Evictor[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __remove(evictor: Evictor[typing.Any]) -> None:",
+                        "         for key, value in EvictionTimer.__taskMap.items():",
+                        "             if key() == evictor:",
+                        "                 EvictionTimer.__executor.remove(value)",
+                        "                 del EvictionTimer.__taskMap[key]",
+                        "                 break"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.021025896072388,
+                    "generation_timestamp": "2024-07-21T12:52:36.105236",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -382,14 +426,17 @@
                         "    __taskMap: typing.Dict[weakref.ref, weakRunner] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __taskMap: typing.Dict[weakref.ref, weakRunner] = {}",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T12:01:50.703821",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -413,14 +460,17 @@
                         "    __executor: typing.Union[concurrent.futures.ThreadPoolExecutor, concurrent.futures.Future] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __executor: typing.Union[concurrent.futures.ThreadPoolExecutor, concurrent.futures.Future] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T12:01:50.711911",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -475,14 +525,22 @@
                         "    def run(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def run(self) -> None:",
+                        "         task = self.__ref()",
+                        "         if task is not None:",
+                        "             task.run()",
+                        "         else:",
+                        "             EvictionTimer.__executor.remove(self)",
+                        "             EvictionTimer.__taskMap.pop(self.__ref, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.373334884643555,
+                    "generation_timestamp": "2024-07-21T12:53:00.978257",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -515,14 +573,17 @@
                         "    def __init__(self, ref: weakref.ref) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, ref: weakref.ref) -> None:",
+                        "         self.__ref = ref"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7618143558502197,
+                    "generation_timestamp": "2024-07-21T12:53:02.744476",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -548,14 +609,17 @@
                         "    __ref: weakref.ref = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __ref: weakref.ref = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T12:01:50.714550",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

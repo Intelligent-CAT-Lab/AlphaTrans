@@ -143,16 +143,24 @@
                         "    def testBase64ImpossibleSamplesStrict(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testBase64ImpossibleSamplesStrict(self) -> None:",
+                        "         codec = BCodec(CharEncoding.UTF_8, CodecPolicy.STRICT)",
+                        "         self.assertTrue(codec.isStrictDecoding())",
+                        "         for s in self.__BASE64_IMPOSSIBLE_CASES:",
+                        "             with self.assertRaises(DecoderException):",
+                        "                 codec.decode0(s)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.5129101276397705,
+                    "generation_timestamp": "2024-07-21T22:15:53.598989",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 },
                 "168-174:testBase64ImpossibleSamplesLenient": {
                     "start": 168,
@@ -203,14 +211,20 @@
                         "    def testBase64ImpossibleSamplesLenient(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testBase64ImpossibleSamplesLenient(self) -> None:",
+                        "         codec = BCodec(CharEncoding.UTF_8, CodecPolicy.LENIENT)",
+                        "         self.assertFalse(codec.isStrictDecoding())",
+                        "         for s in self.__BASE64_IMPOSSIBLE_CASES:",
+                        "             codec.decode0(s)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9849512577056885,
+                    "generation_timestamp": "2024-07-21T22:10:09.067796",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -263,14 +277,20 @@
                         "    def testBase64ImpossibleSamplesDefault(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testBase64ImpossibleSamplesDefault(self) -> None:",
+                        "         codec: BCodec = BCodec.BCodec0()",
+                        "         self.assertFalse(codec.isStrictDecoding())",
+                        "         for s in self.__BASE64_IMPOSSIBLE_CASES:",
+                        "             codec.decode0(s)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9463937282562256,
+                    "generation_timestamp": "2024-07-21T22:10:11.019745",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -327,16 +347,30 @@
                         "    def testDecodeObjects(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testDecodeObjects(self) -> None:",
+                        "         bcodec: BCodec = BCodec.BCodec0()",
+                        "         decoded: str = \"=?UTF-8?B?d2hhdCBub3Q=?=\"",
+                        "         plain: str = bcodec.decode1(decoded)",
+                        "         self.assertEqual(\"what not\", plain, \"Basic B decoding test\")",
+                        "",
+                        "         result: typing.Any = bcodec.decode1(None)",
+                        "         self.assertIsNone(result, \"Decoding a null Object should return null\")",
+                        "",
+                        "         with self.assertRaises(DecoderException):",
+                        "             dObj: float = 3.0",
+                        "             bcodec.decode1(dObj)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.138070821762085,
+                    "generation_timestamp": "2024-07-21T22:24:55.404832",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 },
                 "136-138:testInvalidEncoding": {
                     "start": 136,
@@ -373,16 +407,21 @@
                         "    def testInvalidEncoding(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testInvalidEncoding(self) -> None:",
+                        "         with self.assertRaises(UnsupportedCharsetException):",
+                        "             BCodec.BCodec2(\"NONSENSE\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.110687255859375,
+                    "generation_timestamp": "2024-07-21T21:09:44.929582",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 },
                 "117-133:testEncodeObjects": {
                     "start": 117,
@@ -438,16 +477,31 @@
                         "    def testEncodeObjects(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testEncodeObjects(self) -> None:",
+                        "         bcodec = BCodec.BCodec0()",
+                        "         plain = \"what not\"",
+                        "         encoded = bcodec.encode3(plain)",
+                        "",
+                        "         self.assertEqual(\"Basic B encoding test\", \"=?UTF-8?B?d2hhdCBub3Q=?=\", encoded)",
+                        "",
+                        "         result = bcodec.encode3(None)",
+                        "         self.assertIsNone(result)",
+                        "",
+                        "         with self.assertRaises(EncoderException):",
+                        "             dObj = 3.0",
+                        "             bcodec.encode3(dObj)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.561023473739624,
+                    "generation_timestamp": "2024-07-21T22:40:41.920942",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 },
                 "109-114:testDecodeStringWithNull": {
                     "start": 109,
@@ -492,14 +546,20 @@
                         "    def testDecodeStringWithNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testDecodeStringWithNull(self) -> None:",
+                        "         bcodec = BCodec.BCodec0()",
+                        "         test = None",
+                        "         result = bcodec.decode0(test)",
+                        "         self.assertIsNone(result, \"Result should be null\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.6404006481170654,
+                    "generation_timestamp": "2024-07-21T22:10:12.665643",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -546,16 +606,23 @@
                         "    def testEncodeStringWithNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testEncodeStringWithNull(self) -> None:",
+                        "         bcodec = BCodec.BCodec0()",
+                        "         test = None",
+                        "         result = bcodec.encode1(test, \"charset\")",
+                        "         self.assertIsNone(result, \"Result should be null\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.2069170475006104,
+                    "generation_timestamp": "2024-07-21T22:41:17.078437",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 },
                 "94-98:testEncodeDecodeNull": {
                     "start": 94,
@@ -604,14 +671,19 @@
                         "    def testEncodeDecodeNull(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testEncodeDecodeNull(self) -> None:",
+                        "         bcodec = BCodec.BCodec0()",
+                        "         self.assertIsNone(\"Null string B encoding test\", bcodec.encode2(None))",
+                        "         self.assertIsNone(\"Null string B decoding test\", bcodec.decode0(None))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.8707144260406494,
+                    "generation_timestamp": "2024-07-21T22:10:14.541864",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -664,14 +736,21 @@
                         "    def testBasicEncodeDecode(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testBasicEncodeDecode(self) -> None:",
+                        "         bcodec: BCodec = BCodec.BCodec0()",
+                        "         plain: str = \"Hello there\"",
+                        "         encoded: str = bcodec.encode2(plain)",
+                        "         self.assertEqual(\"Basic B encoding test\", \"=?UTF-8?B?SGVsbG8gdGhlcmU=?=\", encoded)",
+                        "         self.assertEqual(\"Basic B decoding test\", plain, bcodec.decode0(encoded))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.1061465740203857,
+                    "generation_timestamp": "2024-07-21T22:10:17.653647",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -735,14 +814,26 @@
                         "    def testUTF8RoundTrip(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testUTF8RoundTrip(self) -> None:",
+                        "         ru_msg = self.__constructString(self.RUSSIAN_STUFF_UNICODE)",
+                        "         ch_msg = self.__constructString(self.SWISS_GERMAN_STUFF_UNICODE)",
+                        "",
+                        "         bcodec = BCodec.BCodec2(CharEncoding.UTF_8)",
+                        "",
+                        "         self.assertEqual(\"=?UTF-8?B?0JLRgdC10Lxf0L/RgNC40LLQtdGC?=\", bcodec.encode2(ru_msg))",
+                        "         self.assertEqual(\"=?UTF-8?B?R3LDvGV6aV96w6Rtw6Q=?=\", bcodec.encode2(ch_msg))",
+                        "",
+                        "         self.assertEqual(ru_msg, bcodec.decode0(bcodec.encode2(ru_msg)))",
+                        "         self.assertEqual(ch_msg, bcodec.decode0(bcodec.encode2(ch_msg)))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.7093799114227295,
+                    "generation_timestamp": "2024-07-21T22:10:23.368708",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -793,14 +884,19 @@
                         "    def testNullInput(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testNullInput(self) -> None:",
+                        "         bcodec = BCodec.BCodec0()",
+                        "         self.assertIsNone(bcodec._doDecoding(None))",
+                        "         self.assertIsNone(bcodec._doEncoding(None))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.16214919090271,
+                    "generation_timestamp": "2024-07-22T01:35:21.453925",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -839,14 +935,21 @@
                         "    def __constructString(self, unicodeChars: typing.List[int]) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __constructString(self, unicodeChars: typing.List[int]) -> str:",
+                        "         buffer = \"\"",
+                        "         if unicodeChars is not None:",
+                        "             for unicodeChar in unicodeChars:",
+                        "                 buffer += chr(unicodeChar)",
+                        "         return buffer"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.856487512588501,
+                    "generation_timestamp": "2024-07-21T20:45:19.387163",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -874,14 +977,16 @@
                         "    RUSSIAN_STUFF_UNICODE: typing.List[int] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    RUSSIAN_STUFF_UNICODE: typing.List[int] = [0x412, 0x441, 0x435, 0x43C, 0x5F, 0x43F, 0x440, 0x438, 0x432, 0x435, 0x442]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 24.7157301902771,
+                    "generation_timestamp": "2024-07-21T17:30:41.641462",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -907,14 +1012,16 @@
                         "    SWISS_GERMAN_STUFF_UNICODE: typing.List[int] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    SWISS_GERMAN_STUFF_UNICODE: typing.List[int] = [0x47, 0x72, 0xFC, 0x65, 0x7A, 0x69, 0x5F, 0x7A, 0xE4, 0x6D, 0xE4]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 25.684194564819336,
+                    "generation_timestamp": "2024-07-21T17:31:07.331458",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -945,14 +1052,22 @@
                         "    __BASE64_IMPOSSIBLE_CASES: typing.List[typing.List[str]] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __BASE64_IMPOSSIBLE_CASES: typing.List[str] = [",
+                        "        \"=?ASCII?B?ZE==?=\",",
+                        "        \"=?ASCII?B?ZmC=?=\",",
+                        "        \"=?ASCII?B?Zm9vYE==?=\",",
+                        "        \"=?ASCII?B?Zm9vYmC=?=\",",
+                        "        \"=?ASCII?B?AB==?=\"",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 25.196737051010132,
+                    "generation_timestamp": "2024-07-21T17:31:32.540999",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

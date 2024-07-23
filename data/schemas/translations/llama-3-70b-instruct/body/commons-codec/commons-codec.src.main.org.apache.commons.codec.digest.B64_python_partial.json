@@ -55,14 +55,21 @@
                         "    def getRandomSalt(num: int, random: random.Random) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getRandomSalt(num: int, random: random.Random) -> str:",
+                        "         salt_string = \"\"",
+                        "         for _ in range(num):",
+                        "             salt_string += B64.B64T_STRING[random.randint(0, len(B64.B64T_STRING) - 1)]",
+                        "         return salt_string"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.061267375946045,
+                    "generation_timestamp": "2024-07-22T08:23:50.001760",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -110,16 +117,28 @@
                         "    def b64from24bit(b2: int, b1: int, b0: int, outLen: int, buffer: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def b64from24bit(b2: int, b1: int, b0: int, outLen: int, buffer: str) -> None:",
+                        "         w = ((b2 << 16) & 0x00ffffff) | ((b1 << 8) & 0x00ffff) | (b0 & 0xff)",
+                        "         n = outLen",
+                        "         buffer_obj = io.StringIO(buffer)",
+                        "         while n > 0:",
+                        "             buffer_obj.write(B64.B64T_ARRAY[w & 0x3f])",
+                        "             w >>= 6",
+                        "             n -= 1",
+                        "         buffer = buffer_obj.getvalue()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "failed",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.371337890625,
+                    "generation_timestamp": "2024-07-22T08:28:04.980261",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 }
             },
             "fields": {
@@ -143,14 +162,18 @@
                         "    B64T_ARRAY: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    B64T_STRING: str = \"./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\"",
+                        "",
+                        "    B64T_ARRAY: typing.List[str] = list(B64T_STRING)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 29.051173448562622,
+                    "generation_timestamp": "2024-07-21T19:41:29.749122",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -175,16 +198,19 @@
                         "    B64T_STRING: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    B64T_STRING: str = \"./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 24.66498064994812,
+                    "generation_timestamp": "2024-07-21T19:41:54.417412",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 }
             },
             "is_enum": false,

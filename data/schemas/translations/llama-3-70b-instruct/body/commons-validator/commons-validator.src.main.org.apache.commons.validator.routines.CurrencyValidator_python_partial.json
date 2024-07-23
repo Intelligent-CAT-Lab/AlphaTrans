@@ -85,14 +85,30 @@
                         "    def _parse(self, value: str, formatter: Format) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _parse(self, value: str, formatter: Format) -> typing.Any:",
+                        "         parsed_value = super()._parse(value, formatter)",
+                        "         if parsed_value is not None or not isinstance(formatter, DecimalFormat):",
+                        "             return parsed_value",
+                        "",
+                        "         decimal_format = typing.cast(DecimalFormat, formatter)",
+                        "         pattern = decimal_format.to_pattern()",
+                        "         if self.CURRENCY_SYMBOL in pattern:",
+                        "             buffer = io.StringIO()",
+                        "             for char in pattern:",
+                        "                 if char != self.CURRENCY_SYMBOL:",
+                        "                     buffer.write(char)",
+                        "             decimal_format.apply_pattern(buffer.getvalue())",
+                        "             parsed_value = super()._parse(value, decimal_format)",
+                        "         return parsed_value"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.908672332763672,
+                    "generation_timestamp": "2024-07-21T16:37:39.392454",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -131,16 +147,21 @@
                         "    def CurrencyValidator1() -> CurrencyValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def CurrencyValidator1() -> CurrencyValidator:",
+                        "         return CurrencyValidator(True, True)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7161369323730469,
+                    "generation_timestamp": "2024-07-21T19:36:49.773828",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 10
                 },
                 "65-67:CurrencyValidator": {
                     "start": 65,
@@ -178,16 +199,20 @@
                         "    def __init__(self, strict: bool, allowFractions: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, strict: bool, allowFractions: bool) -> None:",
+                        "         super().__init__(strict, CurrencyValidator.CURRENCY_FORMAT, allowFractions)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.0495555400848389,
+                    "generation_timestamp": "2024-07-21T19:36:50.825120",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 9
                 },
                 "60-62:getInstance": {
                     "start": 60,
@@ -218,14 +243,18 @@
                         "    def getInstance() -> BigDecimalValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> BigDecimalValidator:",
+                        "         return CurrencyValidator.__VALIDATOR"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8252880573272705,
+                    "generation_timestamp": "2024-07-21T15:45:17.924948",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -252,14 +281,16 @@
                         "    __CURRENCY_SYMBOL: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    CURRENCY_SYMBOL: str = '\\u00A4'"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 26.399290561676025,
+                    "generation_timestamp": "2024-07-21T11:54:34.824963",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -284,16 +315,19 @@
                         "    __VALIDATOR: CurrencyValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __VALIDATOR: 'CurrencyValidator' = CurrencyValidator.CurrencyValidator1()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 40.760470151901245,
+                    "generation_timestamp": "2024-07-21T11:55:15.596678",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 },
                 "48-48:serialVersionUID": {
                     "start": 48,
@@ -316,14 +350,16 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = -4201640771171486514"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.51235556602478,
+                    "generation_timestamp": "2024-07-21T11:55:36.119133",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

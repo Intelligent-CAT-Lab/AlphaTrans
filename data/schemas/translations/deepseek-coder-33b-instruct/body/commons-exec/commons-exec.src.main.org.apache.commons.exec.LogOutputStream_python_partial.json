@@ -80,14 +80,18 @@
                         "    def flush(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def flush(self) -> None:",
+                        "         if self.__buffer.size() > 0:",
+                        "             self._processBuffer()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.1633212566375732,
+                    "generation_timestamp": "2024-07-20T20:57:08.790495",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -129,14 +133,19 @@
                         "    def close(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def close(self) -> None:",
+                        "         if self.__buffer.size() > 0:",
+                        "             self._processBuffer()",
+                        "         super().close()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.067968130111694,
+                    "generation_timestamp": "2024-07-20T20:57:13.862051",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -184,14 +193,24 @@
                         "    def write1(self, cc: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def write1(self, cc: int) -> None:",
+                        "        ",
+                        "        c = bytes([cc])",
+                        "        if c == b'\\n' or c == b'\\r':",
+                        "            if not self.__skip:",
+                        "                self._processBuffer()",
+                        "        else:",
+                        "            self.__buffer.write(cc)",
+                        "        self.__skip = c == b'\\r'"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.228272914886475,
+                    "generation_timestamp": "2024-07-20T20:57:20.093875",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -253,14 +272,32 @@
                         "    def write0(self, b: typing.List[int], off: int, len_: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def write0(self, b: typing.List[int], off: int, len_: int) -> None:",
+                        "        ",
+                        "        offset = off",
+                        "        blockStartOffset = offset",
+                        "        remaining = len_",
+                        "        while remaining > 0:",
+                        "            while remaining > 0 and b[offset] != self.__LF and b[offset] != self.__CR:",
+                        "                offset += 1",
+                        "                remaining -= 1",
+                        "            blockLength = offset - blockStartOffset",
+                        "            if blockLength > 0:",
+                        "                self.__buffer.write(b[blockStartOffset:offset])",
+                        "            while remaining > 0 and (b[offset] == self.__LF or b[offset] == self.__CR):",
+                        "                self.write1(b[offset])",
+                        "                offset += 1",
+                        "                remaining -= 1",
+                        "            blockStartOffset = offset"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.524772882461548,
+                    "generation_timestamp": "2024-07-20T20:57:26.623571",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -299,14 +336,17 @@
                         "    def _processLine0(self, line: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _processLine0(self, line: str) -> None:",
+                        "         self._processLine1(line, self.__level)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.7400662899017334,
+                    "generation_timestamp": "2024-07-20T20:56:58.297185",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -349,14 +389,18 @@
                         "    def _processBuffer(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _processBuffer(self) -> None:",
+                        "         self._processLine0(self.__buffer.toString(self.__charset))",
+                        "         self.__buffer.reset()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.505722999572754,
+                    "generation_timestamp": "2024-07-20T20:57:04.932623",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -387,14 +431,17 @@
                         "    def getMessageLevel(self) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getMessageLevel(self) -> int:",
+                        "         return self.__level"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.576977014541626,
+                    "generation_timestamp": "2024-07-20T20:56:48.779993",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -438,14 +485,26 @@
                         "    def __init__(self, constructorId: int, level: int, charset: str) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, level: int, charset: str) -> None:",
+                        "        ",
+                        "        if constructorId == 0:",
+                        "            self.__level = 999",
+                        "            self.__charset = None",
+                        "        elif constructorId == 1:",
+                        "            self.__level = level",
+                        "            self.__charset = None",
+                        "        else:",
+                        "            self.__level = level",
+                        "            self.__charset = charset if charset else os.environ['PYTHONIOENCODING']"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.7445409297943115,
+                    "generation_timestamp": "2024-07-20T20:56:53.527421",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -478,14 +537,17 @@
                         "    def _processLine1(self, line: str, logLevel: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _processLine1(self, line: str, logLevel: int) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.0239741802215576,
+                    "generation_timestamp": "2024-07-20T20:56:56.554127",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 }
@@ -511,14 +573,17 @@
                         "    __charset: str = ''",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __charset: str = ''",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-20T20:34:58.724999",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -542,14 +607,17 @@
                         "    __level: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __level: int = 0",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-20T20:34:58.727847",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -572,14 +640,17 @@
                         "    __skip: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __skip: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-20T20:34:58.730614",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -603,14 +674,18 @@
                         "    __buffer: ByteArrayOutputStreamX = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __INTIAL_SIZE: int = 132",
+                        "",
+                        "    __buffer: ByteArrayOutputStreamX = ByteArrayOutputStreamX(__INTIAL_SIZE)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 12.907734155654907,
+                    "generation_timestamp": "2024-07-20T20:35:11.641701",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -635,14 +710,16 @@
                         "    __LF: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __LF: int = 0x0a"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.62380075454712,
+                    "generation_timestamp": "2024-07-20T20:35:21.272084",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -667,14 +744,16 @@
                         "    __CR: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __CR: int = 0x0d"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.036144018173218,
+                    "generation_timestamp": "2024-07-20T20:35:31.312430",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -699,14 +778,16 @@
                         "    __INTIAL_SIZE: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __INTIAL_SIZE: int = 132"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.606190919876099,
+                    "generation_timestamp": "2024-07-20T20:35:40.922023",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 }
@@ -754,14 +835,17 @@
                         "    def toString(self, charset: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self, charset: str) -> str:",
+                        "         return str(self.buf[0:self.count], charset)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.1186914443969727,
+                    "generation_timestamp": "2024-07-20T20:57:01.423958",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -794,14 +878,17 @@
                         "    def __init__(self, size: int) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, size: int) -> None:",
+                        "         super().__init__(size)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.681368350982666,
+                    "generation_timestamp": "2024-07-20T20:57:05.617893",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 }
