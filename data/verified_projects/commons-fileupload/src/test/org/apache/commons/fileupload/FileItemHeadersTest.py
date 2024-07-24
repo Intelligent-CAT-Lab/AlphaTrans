@@ -5,8 +5,8 @@ from typing import *
 from src.main.org.apache.commons.fileupload.util.FileItemHeadersImpl import FileItemHeadersImpl
 
 class PeekableIterator:
-    def __init__(self, iterable):
-        self.iterator = iter(iterable)
+    def __init__(self, iterator):
+        self.iterator = iterator
         self.peeked = None
 
     def __iter__(self):
