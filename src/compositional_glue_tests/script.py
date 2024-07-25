@@ -386,8 +386,10 @@ class Project:
                     if method == "schema_file":
                         continue
                     
+                    schema_name = self.name + self.call_graph[cls]["schema_file"].split(self.name, 1)[1][:-5].replace("/java/", "/").replace('/', '.')
+
                     reachable_methods = recursively_explore_dependencies(
-                        self.call_graph[cls]["schema_file"],
+                        schema_name,
                         cls,
                         method,
                         self.call_graph[cls][method]
@@ -771,9 +773,12 @@ class CompositionalTest:
                 
         return class_to_map, import_to_make
     
-    def run(self):
+    def run(self, tests_to_run=None):
         """
         Run the compositional tests.
+        
+        tests_to_run: { test_class: [test_method] }. Tests to be executed. 
+        If None, test selection will be done automatically.
         """
         self.__execute_writes()
         try:
@@ -782,17 +787,18 @@ class CompositionalTest:
                 os.makedirs(f"{self.project.root_dir}/logs/glue/{self.project.name}/", exist_ok=True)
                 subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/{self.project.name}/"], check=True)
 
-            if not self.test_items:
+            if not tests_to_run and not self.test_items:
                 # run all tests
                 test_selection_specification = "*"
             else:
-                tests_to_run = dict() # { test_class: [test_method] }
-                for test_item in self.test_items:
-                    _, test_class, test_method = test_item
-                    if test_class not in tests_to_run:
-                        tests_to_run[test_class] = []
-                    tests_to_run[test_class].append(test_method.split(':')[-1].strip())
-
+                if not tests_to_run:
+                    tests_to_run = dict()
+                    for test_item in self.test_items:
+                        _, test_class, test_method = test_item
+                        if test_class not in tests_to_run:
+                            tests_to_run[test_class] = []
+                        tests_to_run[test_class].append(test_method.split(':')[-1].strip())
+                
                 test_selection_specification = ",".join(
                     test_class + "#" + "+".join(tests_to_run[test_class])
                     for test_class in tests_to_run
