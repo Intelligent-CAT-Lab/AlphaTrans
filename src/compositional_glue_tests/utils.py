@@ -231,7 +231,7 @@ def add_obj_to_clone_method(method_content: str, class_obj: dict) -> str:
         # check if the return value already has a type cast to the class itself
         if not return_value.startswith("(" + class_obj["name"]):
             # and if not, perform the cast
-            return_value = f"({class_obj["name"]}) " + return_value
+            return_value = f"({class_obj['name']}) " + return_value
         
         # enclose in parentheses
         return_value = f"({return_value})"
