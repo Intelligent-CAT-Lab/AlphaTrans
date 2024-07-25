@@ -226,7 +226,15 @@ def add_obj_to_clone_method(method_content: str, class_obj: dict) -> str:
         return_statement_start_pos = return_statement_match.start()
         return_statement_end_pos = return_statement_match.end()
 
-        return_value = "(" + return_statement[6:-1].strip() + ")"
+        return_value = return_statement[6:-1].strip()
+        
+        # check if the return value already has a type cast to the class itself
+        if not return_value.startswith("(" + class_obj["name"]):
+            # and if not, perform the cast
+            return_value = f"({class_obj["name"]}) " + return_value
+        
+        # enclose in parentheses
+        return_value = f"({return_value})"
 
         handling_code = f"""if ({return_value} != null) {{
             {return_value}.setPythonObject({class_obj['classref']}.invokeMember("getDefaultInstance"));
